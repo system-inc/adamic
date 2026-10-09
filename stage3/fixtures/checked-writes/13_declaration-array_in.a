@@ -1,0 +1,16 @@
+// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read
+// Survey Declaration[]: 6 class-d sites; representative ID 147, src/compiler/checker.ts:19242:61.
+// TypeScript 6.0.3: core.ts:288, types.ts:1760-1795.
+// Real array mutator extracted into a reduced consumer. This exercises container-element writes, not only named object fields.
+interface Node { readonly kind: "Declaration" | "Expression"; }
+interface Declaration { readonly kind: "Declaration"; }
+function collect(array: Node[], node: Node): void {
+    array.push(node);
+}
+
+const declaration: Declaration = { kind: "Declaration" };
+const expression: Node = { kind: "Expression" };
+const array: Declaration[] = [];
+console.log("before write");
+collect(array, declaration);
+console.log(`stored ${array[0]?.kind ?? "missing"}`);

@@ -1,0 +1,18 @@
+// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read
+// Survey NodeBuilderContext: 11 class-d sites; representative ID 48, src/compiler/checker.ts:10280:75.
+// TypeScript 6.0.3: checker.ts:54279-54294.
+// Tracker methods and context are reduced; writeTracker is a boundary driver for the audited tracker widening.
+interface SymbolTracker { readonly reportInferenceFallback: () => void; }
+interface SymbolTrackerImpl extends SymbolTracker { readonly trackSymbol: (symbol: string) => boolean; }
+interface SyntacticTypeNodeBuilderContext { tracker: SymbolTracker; }
+interface NodeBuilderContext { tracker: SymbolTrackerImpl; }
+function writeTracker(context: SyntacticTypeNodeBuilderContext, tracker: SymbolTracker): void {
+    context.tracker = tracker;
+}
+
+const tracker: SymbolTrackerImpl = { reportInferenceFallback: () => {}, trackSymbol: (symbol: string) => symbol.length > 0 };
+const fallback: SymbolTracker = { reportInferenceFallback: () => {} };
+const context: NodeBuilderContext = { tracker };
+console.log("before write");
+writeTracker(context, tracker);
+console.log(`stored ${context.tracker === tracker ? "complete" : "fallback"}`);

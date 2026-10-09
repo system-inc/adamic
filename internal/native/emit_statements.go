@@ -182,12 +182,18 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.returnStatement(statement)
 	case ir.SetIndex:
 		array := e.value(statement.Array)
+		if e.program.CheckedElements && statement.Array.Type() == ir.Array {
+			array = e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", array))
+		}
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
 			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
 			e.end()
 			break
+		}
+		if e.program.CheckedElements {
+			e.line("adamic_array_check_never(%s, %d, %s, %s);", array, statement.Element, borrowed(statement.Element, value), cString(statement.WriteOrigin.Expression))
 		}
 		if statement.Element.IsReference() {
 			value = retained(value)
@@ -201,6 +207,9 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		object := e.value(statement.Object)
+		if statement.WriteCheck != "" {
+			object = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", object))
+		}
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
@@ -209,6 +218,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+		if statement.WriteCheck != "" {
+			e.line("adamic_object_check_contract(%s, %s, %d, (adamic_value){.%s = %s}, %d, %s);", object, cString(statement.Name), statement.Value.Type(), member(statement.Value.Type()), slotted(statement.Value.Type(), value), statement.WriteType, cString(statement.WriteCheck))
+		}
 		records := e.hasRecordStorage()
 		keptValue := value
 		if statement.Value.Type().IsReference() {
@@ -237,7 +249,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.fieldTypesNeeded() {
 			cache = e.cache()
 		}
-		if e.program.CheckedFields[statement.Name] {
+		if e.program.CheckedFields[statement.Name] && !(statement.WriteCheck != "" && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean)) {
 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
@@ -263,10 +275,18 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("void *%s = %s->reference;", old, slot)
 			e.line("%s->reference = %s;", slot, keptValue)
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+		} else if (statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean) {
+			actual := fmt.Sprintf("adamic_object_field_types(%s)[%s.index]", object, cache)
+			plain, packed := value, fmt.Sprintf("adamic_maybe_boolean_pack((adamic_maybe_boolean){true, %s})", value)
+			if statement.Value.Type() == ir.MaybeBoolean {
+				plain, packed = "("+value+").boolean", slotted(ir.MaybeBoolean, value)
+			}
+			e.line("if (%s == %d) { %s->boolean = %s; } else { %s->maybe_boolean = %s; }", actual, ir.Boolean, slot, plain, slot, packed)
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		if e.fieldTypesNeeded() {
+		// Checked boolean stores retain the actual slot representation.
+		if e.fieldTypesNeeded() && !((statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean)) {
 			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(statement.Value))
 		}
 		if converted {

@@ -23,6 +23,8 @@ static void *allocate_zeroed(size_t count, size_t size) {
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	adamic_map *map = adamic_allocate(sizeof *map, adamic_kind_map);
+	map->element_contract = NULL;
+	map->allocation_type = 0;
 	map->count = 0;
 	map->used = 0;
 	map->capacity = 0;
@@ -169,7 +171,12 @@ adamic_value *adamic_map_get(const adamic_map *map, adamic_value key) {
 	return index == SIZE_MAX ? NULL : &map->entries[index].value;
 }
 
+void adamic_map_check_contract(const adamic_map *map, unsigned char kind, adamic_value value, const char *expression) {
+	if (map->element_contract != NULL) { adamic_check_contract(map->element_contract, kind==0 ? map->element_contract->kind : kind, value, 0, expression); }
+}
+
 void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
+	adamic_map_check_contract(map, 0, value, "Map[value]");
 	size_t index = find(map, key);
 	if (index != SIZE_MAX) {
 		// The key it already has stays; the one passed in is let go, and so is the old value.

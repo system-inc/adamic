@@ -88,7 +88,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
-	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
+	builder.WriteString("const adamicSetIndex = (array, index, value, expression = \"array[]\") => {\n\tadamicArrayNeverCheck(array, value, expression);\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
@@ -477,6 +477,10 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
+		if statement.WriteCheck != "" {
+			e.line("adamicCheckedWrite(%s, %s, %s, %d, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type(), statement.WriteType, quote(statement.WriteCheck))
+			break
+		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
 			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
@@ -487,7 +491,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
-		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
+		e.line("adamicSetIndex(%s, %s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value), quote(statement.WriteOrigin.Expression))
 	case ir.Return:
 		if statement.Value == nil {
 			e.line("return;")
@@ -849,7 +853,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			if expression.SpreadReadiness != "" {
 				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
 			}
-			if len(e.program.CheckedFields) != 0 {
+			if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 {
 				spreadValue = spread
 				spread = "adamicSpreadSource"
 			}
@@ -871,7 +875,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(unready) > 0 {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
-		if len(e.program.CheckedFields) != 0 {
+		if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 {
 			types := []string{}
 			for _, field := range expression.Fields {
 				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
@@ -881,9 +885,26 @@ func (e *emitter) value(expression ir.Expression) string {
 				parentTypes = "...adamicFieldRepresentations.get(adamicSpreadSource), "
 			}
 			object = "adamicRecordFieldTypes(" + object + ", {" + parentTypes + strings.Join(types, ", ") + "})"
-			if spreadValue != "" {
-				object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
+		}
+		if len(e.program.CheckedWrites) != 0 {
+			contracts := []string{}
+			for _, field := range expression.Fields {
+				if c := field.Contract; c != nil {
+					contracts = append(contracts, quote(field.Name)+": "+e.writeContract(c))
+				}
 			}
+			parentContracts := ""
+			if expression.Spread != nil {
+				parentContracts = "...adamicFieldContracts.get(adamicSpreadSource), "
+			}
+			allocationType := fmt.Sprint(expression.ContractType)
+			if expression.Spread != nil {
+				allocationType = "adamicAllocationContracts.get(adamicSpreadSource) || 0"
+			}
+			object = "adamicRecordFieldContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "}, " + allocationType + ")"
+		}
+		if spreadValue != "" {
+			object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
 		}
 		return object
 	case ir.Property:
@@ -897,6 +918,18 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.ContractResult:
+		fields := []string{}
+		for _, field := range expression.Fields {
+			fields = append(fields, quote(field.Name)+": "+e.writeContract(field.Contract))
+		}
+		return fmt.Sprintf("adamicContractResult(%s, {%s}, %s)", e.value(expression.Value), strings.Join(fields, ", "), quote(expression.Expression))
+	case ir.ContractContainer:
+		contract := "null"
+		if expression.Contract != nil {
+			contract = e.writeContract(expression.Contract)
+		}
+		return fmt.Sprintf("adamicContractContainer(%s, %s, %d)", e.value(expression.Value), contract, expression.AllocationType)
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {
@@ -906,7 +939,11 @@ func (e *emitter) value(expression ir.Expression) string {
 				elements = append(elements, e.value(element))
 			}
 		}
-		return "[" + strings.Join(elements, ", ") + "]"
+		value := "[" + strings.Join(elements, ", ") + "]"
+		if expression.Never {
+			value = "adamicNeverArray(" + value + ")"
+		}
+		return value
 	case ir.Length:
 		if expression.Optional {
 			return e.value(expression.Array) + "?.length"
@@ -1015,6 +1052,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedPush(" + e.value(expression.Array) + ", " + e.value(expression.Value) + ", " + quote(expression.WriteOrigin.Expression) + ")"
+		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
 	case ir.ArrayJoin:
 		return e.value(expression.Array) + ".join(" + e.value(expression.Separator) + ")"
@@ -1062,12 +1102,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.End != nil {
 			arguments = append(arguments, expression.End)
 		}
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedFill(" + e.value(expression.Array) + ", " + quote(expression.WriteOrigin.Expression) + ", " + e.values(arguments) + ")"
+		}
 		return e.value(expression.Array) + ".fill(" + e.values(arguments) + ")"
 	case ir.ArraySplice:
 		arguments := []ir.Expression{expression.Start}
 		if expression.Count != nil {
 			arguments = append(arguments, expression.Count)
 			arguments = append(arguments, expression.Items...)
+		}
+		if e.program.CheckedElements {
+			return "adamicArrayCheckedSplice(" + e.value(expression.Array) + ", " + quote(expression.WriteOrigin.Expression) + ", " + e.values(arguments) + ")"
 		}
 		return e.value(expression.Array) + ".splice(" + e.values(arguments) + ")"
 	case ir.ArrayConcat:
@@ -1142,6 +1188,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapGet:
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
+		if e.program.CheckedElements {
+			return fmt.Sprintf("adamicMapCheckedSet(%s, %s, %s, %s)", e.value(expression.Map), e.value(expression.Key), e.value(expression.Value), quote(expression.WriteOrigin.Expression))
+		}
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {

@@ -1,0 +1,14 @@
+// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+// Survey Node: 7 class-d sites; representative ID 4, src/compiler/binder.ts:1104:14.
+// TypeScript 6.0.3: binder.ts:1104.
+// Real compound store parameterized by flags; NodeFlags represented as numbers and driver keeps one literal flag domain.
+interface Node { readonly pos: number; readonly flags: number; }
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+function bindChildren(node: Node, flags: number): void {
+    (node as Mutable<Node>).flags &= flags;
+}
+
+const node: { readonly pos: 0; readonly flags: 1; } = { pos: 0, flags: 1 };
+console.log("before write");
+bindChildren(node, 0);
+console.log(`stored ${node.flags}`);

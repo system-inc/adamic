@@ -215,11 +215,32 @@ extern char adamic_literal_mark;
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+typedef struct adamic_field_contract {
+ bool nullish_only;
+	unsigned char kind;
+	bool nullable;
+	const char *declared;
+	size_t count;
+	const adamic_value *allowed;
+ int type_id;
+ bool reference;
+ bool structural;
+ size_t write_proof_count;
+ const int *write_proofs;
+ size_t field_proof_count;
+ const int *field_proofs;
+ size_t field_count;
+ const char *const *field_names;
+ const bool *field_optional;
+ const struct adamic_field_contract *field_contracts;
+} adamic_field_contract;
+
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
 	const bool *references;
 	const adamic_methods *methods;
+	const adamic_field_contract *contracts;
 } adamic_shape;
 
 typedef struct adamic_object adamic_object;
@@ -409,6 +430,9 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	bool never_elements;
+	const adamic_field_contract *element_contract;
+	int allocation_type;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
@@ -471,6 +495,8 @@ typedef struct adamic_map_entry {
 
 typedef struct adamic_map {
 	adamic_heap heap;
+	const adamic_field_contract *element_contract;
+	int allocation_type;
 	size_t count;
 	size_t used;
 	size_t capacity;
@@ -645,6 +671,7 @@ adamic_array *adamic_array_reverse(adamic_array *array);
 // once per element; the caller keeps its own.
 adamic_array *adamic_array_filled(double length, adamic_value value, bool references);
 adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end);
+adamic_array *adamic_array_fill_checked(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end, unsigned char kind, const char *expression);
 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
 // caller owns. The items' references are the array's from then on.
@@ -1082,5 +1109,11 @@ void *adamic_library_identity(size_t index);
 #define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
 #endif
 #endif
+
+void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression);
+
+void adamic_check_contract(const adamic_field_contract *, unsigned char, adamic_value, int, const char *);
+void adamic_map_check_contract(const adamic_map *, unsigned char, adamic_value, const char *);
+void adamic_array_check_never(const adamic_array *, unsigned char, adamic_value, const char *);
 
 #endif

@@ -1,0 +1,199 @@
+=== RUN   TestAgreementParameterPropertyWitness
+=== PAUSE TestAgreementParameterPropertyWitness
+=== RUN   TestCheckedCastProofAndElision
+=== PAUSE TestCheckedCastProofAndElision
+=== RUN   TestCheckPragmaNeighborsCompile
+=== PAUSE TestCheckPragmaNeighborsCompile
+=== RUN   TestInheritanceAllowsSoundOverrides
+=== PAUSE TestInheritanceAllowsSoundOverrides
+=== RUN   TestClassArgumentsUseCheckerIdentity
+=== PAUSE TestClassArgumentsUseCheckerIdentity
+=== RUN   TestEntriesRecordBoundaries
+=== PAUSE TestEntriesRecordBoundaries
+=== RUN   TestStringEnumsStayClosed
+=== PAUSE TestStringEnumsStayClosed
+=== RUN   TestGenericUnionFixtureHasSeparateInstances
+=== PAUSE TestGenericUnionFixtureHasSeparateInstances
+=== RUN   TestIteratorDescriptorReasons
+=== PAUSE TestIteratorDescriptorReasons
+=== RUN   TestNodeFSFileRefusesVoidValues
+=== PAUSE TestNodeFSFileRefusesVoidValues
+=== RUN   TestConsoleLowersToWriteLine
+=== PAUSE TestConsoleLowersToWriteLine
+=== RUN   TestNamespaceCallGraphCycleUnion
+=== PAUSE TestNamespaceCallGraphCycleUnion
+=== RUN   TestNestedEnvironmentHasOneAllocationSite
+=== PAUSE TestNestedEnvironmentHasOneAllocationSite
+=== RUN   TestOptionalWideningAllowed
+=== PAUSE TestOptionalWideningAllowed
+=== RUN   TestEveryNeedsCallbackEffects
+=== PAUSE TestEveryNeedsCallbackEffects
+=== RUN   TestRegExpNativeRefusals
+=== PAUSE TestRegExpNativeRefusals
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== CONT  TestAgreementParameterPropertyWitness
+=== CONT  TestNodeFSFileRefusesVoidValues
+=== CONT  TestOptionalWideningAllowed
+=== CONT  TestIteratorDescriptorReasons
+=== RUN   TestIteratorDescriptorReasons/required_boolean_done
+=== PAUSE TestIteratorDescriptorReasons/required_boolean_done
+=== RUN   TestIteratorDescriptorReasons/represented_value_field
+=== PAUSE TestIteratorDescriptorReasons/represented_value_field
+=== RUN   TestIteratorDescriptorReasons/optional_iterator_method
+=== PAUSE TestIteratorDescriptorReasons/optional_iterator_method
+=== RUN   TestIteratorDescriptorReasons/arguments_or_overloads
+=== PAUSE TestIteratorDescriptorReasons/arguments_or_overloads
+=== RUN   TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== PAUSE TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== RUN   TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== PAUSE TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== RUN   TestIteratorDescriptorReasons/object_spread
+=== PAUSE TestIteratorDescriptorReasons/object_spread
+=== CONT  TestGenericUnionFixtureHasSeparateInstances
+=== CONT  TestStringEnumsStayClosed
+=== RUN   TestOptionalWideningAllowed/class
+=== PAUSE TestOptionalWideningAllowed/class
+=== RUN   TestOptionalWideningAllowed/fresh
+=== PAUSE TestOptionalWideningAllowed/fresh
+=== RUN   TestOptionalWideningAllowed/declared
+=== PAUSE TestOptionalWideningAllowed/declared
+=== CONT  TestEntriesRecordBoundaries
+=== RUN   TestEntriesRecordBoundaries/spread_into_record_storage
+=== PAUSE TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestEntriesRecordBoundaries/closed_const_literal_origin
+=== PAUSE TestEntriesRecordBoundaries/closed_const_literal_origin
+=== RUN   TestEntriesRecordBoundaries/indexed_record_field_read
+=== PAUSE TestEntriesRecordBoundaries/indexed_record_field_read
+=== CONT  TestClassArgumentsUseCheckerIdentity
+=== RUN   TestClassArgumentsUseCheckerIdentity/separate_literals
+=== PAUSE TestClassArgumentsUseCheckerIdentity/separate_literals
+=== RUN   TestClassArgumentsUseCheckerIdentity/property_order
+=== PAUSE TestClassArgumentsUseCheckerIdentity/property_order
+=== RUN   TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== PAUSE TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== RUN   TestClassArgumentsUseCheckerIdentity/tuples
+=== PAUSE TestClassArgumentsUseCheckerIdentity/tuples
+=== RUN   TestClassArgumentsUseCheckerIdentity/unions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/unions
+=== RUN   TestClassArgumentsUseCheckerIdentity/functions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/functions
+=== RUN   TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== PAUSE TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== RUN   TestClassArgumentsUseCheckerIdentity/different_fields
+=== PAUSE TestClassArgumentsUseCheckerIdentity/different_fields
+=== RUN   TestClassArgumentsUseCheckerIdentity/optional_field
+=== PAUSE TestClassArgumentsUseCheckerIdentity/optional_field
+=== RUN   TestClassArgumentsUseCheckerIdentity/same_representation
+=== PAUSE TestClassArgumentsUseCheckerIdentity/same_representation
+=== CONT  TestInheritanceAllowsSoundOverrides
+--- PASS: TestGenericUnionFixtureHasSeparateInstances (0.17s)
+=== CONT  TestCheckPragmaNeighborsCompile
+--- PASS: TestStringEnumsStayClosed (0.32s)
+=== CONT  TestCheckedCastProofAndElision
+=== RUN   TestCheckedCastProofAndElision/enum_member
+=== PAUSE TestCheckedCastProofAndElision/enum_member
+=== RUN   TestCheckedCastProofAndElision/invariant_mutable_payload
+=== PAUSE TestCheckedCastProofAndElision/invariant_mutable_payload
+=== RUN   TestCheckedCastProofAndElision/sub-union
+=== PAUSE TestCheckedCastProofAndElision/sub-union
+=== RUN   TestCheckedCastProofAndElision/class_downcast
+=== PAUSE TestCheckedCastProofAndElision/class_downcast
+=== RUN   TestCheckedCastProofAndElision/empty_subclass
+=== PAUSE TestCheckedCastProofAndElision/empty_subclass
+=== RUN   TestCheckedCastProofAndElision/generic_ancestry
+=== PAUSE TestCheckedCastProofAndElision/generic_ancestry
+=== RUN   TestCheckedCastProofAndElision/class_upcast
+=== PAUSE TestCheckedCastProofAndElision/class_upcast
+=== RUN   TestCheckedCastProofAndElision/flow_narrowing
+=== PAUSE TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestRegExpNativeRefusals
+--- PASS: TestAgreementParameterPropertyWitness (0.45s)
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+--- PASS: TestInheritanceAllowsSoundOverrides (0.49s)
+=== CONT  TestNamespaceCallGraphCycleUnion
+--- PASS: TestNamespaceCallGraphCycleUnion (0.07s)
+=== CONT  TestNestedEnvironmentHasOneAllocationSite
+=== RUN   TestTypedArraysLower/Int32Array
+--- PASS: TestRegExpNativeRefusals (0.48s)
+=== CONT  TestEveryNeedsCallbackEffects
+--- PASS: TestCheckPragmaNeighborsCompile (0.63s)
+=== CONT  TestConsoleLowersToWriteLine
+--- PASS: TestEveryNeedsCallbackEffects (0.13s)
+=== CONT  TestIteratorDescriptorReasons/required_boolean_done
+--- PASS: TestConsoleLowersToWriteLine (0.14s)
+=== CONT  TestIteratorDescriptorReasons/declare_or_abstract_class_field
+--- PASS: TestNodeFSFileRefusesVoidValues (0.97s)
+=== CONT  TestIteratorDescriptorReasons/object_spread
+=== CONT  TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== CONT  TestIteratorDescriptorReasons/optional_iterator_method
+=== CONT  TestIteratorDescriptorReasons/arguments_or_overloads
+=== CONT  TestIteratorDescriptorReasons/represented_value_field
+--- PASS: TestNestedEnvironmentHasOneAllocationSite (0.54s)
+=== CONT  TestOptionalWideningAllowed/class
+=== CONT  TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestTypedArraysLower/Float64Array
+=== CONT  TestOptionalWideningAllowed/declared
+--- PASS: TestIteratorDescriptorReasons (0.00s)
+    --- PASS: TestIteratorDescriptorReasons/required_boolean_done (0.13s)
+    --- PASS: TestIteratorDescriptorReasons/declare_or_abstract_class_field (0.19s)
+    --- PASS: TestIteratorDescriptorReasons/object_spread (0.17s)
+    --- PASS: TestIteratorDescriptorReasons/replacing_an_iterator_protocol (0.07s)
+    --- PASS: TestIteratorDescriptorReasons/represented_value_field (0.10s)
+    --- PASS: TestIteratorDescriptorReasons/arguments_or_overloads (0.17s)
+    --- PASS: TestIteratorDescriptorReasons/optional_iterator_method (0.18s)
+=== CONT  TestOptionalWideningAllowed/fresh
+=== CONT  TestEntriesRecordBoundaries/indexed_record_field_read
+=== CONT  TestEntriesRecordBoundaries/closed_const_literal_origin
+--- PASS: TestOptionalWideningAllowed (0.01s)
+    --- PASS: TestOptionalWideningAllowed/class (0.18s)
+    --- PASS: TestOptionalWideningAllowed/fresh (0.12s)
+    --- PASS: TestOptionalWideningAllowed/declared (0.20s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/separate_literals
+=== CONT  TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== CONT  TestClassArgumentsUseCheckerIdentity/tuples
+--- PASS: TestEntriesRecordBoundaries (0.00s)
+    --- PASS: TestEntriesRecordBoundaries/spread_into_record_storage (0.27s)
+    --- PASS: TestEntriesRecordBoundaries/indexed_record_field_read (0.20s)
+    --- PASS: TestEntriesRecordBoundaries/closed_const_literal_origin (0.17s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/functions
+--- PASS: TestTypedArraysLower (1.42s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.32s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.51s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.60s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/unions
+=== CONT  TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== CONT  TestClassArgumentsUseCheckerIdentity/optional_field
+=== CONT  TestClassArgumentsUseCheckerIdentity/same_representation
+=== CONT  TestClassArgumentsUseCheckerIdentity/different_fields
+=== CONT  TestClassArgumentsUseCheckerIdentity/property_order
+=== CONT  TestCheckedCastProofAndElision/enum_member
+=== CONT  TestCheckedCastProofAndElision/empty_subclass
+=== CONT  TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestCheckedCastProofAndElision/class_upcast
+=== CONT  TestCheckedCastProofAndElision/generic_ancestry
+=== CONT  TestCheckedCastProofAndElision/sub-union
+=== CONT  TestCheckedCastProofAndElision/class_downcast
+=== CONT  TestCheckedCastProofAndElision/invariant_mutable_payload
+--- PASS: TestClassArgumentsUseCheckerIdentity (0.04s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/recursive_interfaces (0.42s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/separate_literals (0.50s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/tuples (0.48s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/functions (0.44s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/unions (0.50s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/nested_arrays (0.57s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/same_representation (0.49s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/optional_field (0.65s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/different_fields (0.72s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/property_order (0.57s)
+--- PASS: TestCheckedCastProofAndElision (0.00s)
+    --- PASS: TestCheckedCastProofAndElision/empty_subclass (0.13s)
+    --- PASS: TestCheckedCastProofAndElision/enum_member (0.20s)
+    --- PASS: TestCheckedCastProofAndElision/class_upcast (0.20s)
+    --- PASS: TestCheckedCastProofAndElision/flow_narrowing (0.23s)
+    --- PASS: TestCheckedCastProofAndElision/sub-union (0.18s)
+    --- PASS: TestCheckedCastProofAndElision/generic_ancestry (0.23s)
+    --- PASS: TestCheckedCastProofAndElision/class_downcast (0.13s)
+    --- PASS: TestCheckedCastProofAndElision/invariant_mutable_payload (0.15s)
+PASS

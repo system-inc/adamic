@@ -1,0 +1,19 @@
+// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace
+// Survey CapturedThis: 6 class-d sites; representative ID 566, src/compiler/transformers/es2015.ts:1308:59.
+// TypeScript 6.0.3: types.ts:1725, factory/emitNode.ts:77, transformers/es2015.ts:1328-1329.
+// writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.
+interface AutoGenerateInfo { readonly id: number; }
+interface EmitNode { flags: number; }
+interface GeneratedEmitNode extends EmitNode { autoGenerate: AutoGenerateInfo; }
+interface Node { emitNode: EmitNode | undefined; }
+interface GeneratedIdentifier { readonly emitNode: GeneratedEmitNode; }
+interface CapturedThis extends GeneratedIdentifier { readonly escapedText: "__this"; }
+function writeEmitNode(node: Node, emitNode: EmitNode | undefined): void {
+    node.emitNode = emitNode;
+}
+
+const emitNode: GeneratedEmitNode = { flags: 0, autoGenerate: { id: 1 } };
+const node: CapturedThis = { emitNode, escapedText: "__this" };
+console.log("before write");
+writeEmitNode(node, undefined);
+console.log(`stored ${node.emitNode === undefined ? "undefined" : "generated"}`);

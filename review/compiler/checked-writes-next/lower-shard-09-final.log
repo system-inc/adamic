@@ -1,0 +1,349 @@
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestOptionalFunctionValueRelation
+=== PAUSE TestOptionalFunctionValueRelation
+=== RUN   TestCheckedSignatureEveryReceivingOverload
+=== PAUSE TestCheckedSignatureEveryReceivingOverload
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes
+=== RUN   TestClassWrongOutputIteratorReceiver
+=== PAUSE TestClassWrongOutputIteratorReceiver
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (5.64s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.47s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.48s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.39s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.53s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (1.19s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (1.21s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (1.36s)
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestNodeFSFileQualifiedErrorType
+=== PAUSE TestNodeFSFileQualifiedErrorType
+=== RUN   TestAMutableLocationSeenWiderIsRefused
+=== PAUSE TestAMutableLocationSeenWiderIsRefused
+=== RUN   TestMissingBindingSymbolHasStructuredLocation
+=== PAUSE TestMissingBindingSymbolHasStructuredLocation
+=== RUN   TestClosedFrameInputRejectsMutation
+=== PAUSE TestClosedFrameInputRejectsMutation
+=== RUN   TestAbfe962OverrideDefaultAddedRefusesNativeSignature
+=== PAUSE TestAbfe962OverrideDefaultAddedRefusesNativeSignature
+=== RUN   TestPredicateUsesBelongToEachCall
+=== PAUSE TestPredicateUsesBelongToEachCall
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== CONT  TestTypedArrayFromArray
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+=== CONT  TestClosedFrameInputRejectsMutation
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumNeverDefault
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (0.39s)
+=== CONT  TestClassWrongOutputIteratorReceiver
+--- PASS: TestClosedFrameInputRejectsMutation (0.74s)
+=== CONT  TestOptionalFunctionValueRelation
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestCheckedSignatureEveryReceivingOverload
+--- PASS: TestCheckedSignatureEveryReceivingOverload (0.22s)
+=== CONT  TestPredicateUsesBelongToEachCall
+--- PASS: TestEnumNeverDefault (1.00s)
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+--- PASS: TestPredicateUsesBelongToEachCall (0.24s)
+=== CONT  TestAMutableLocationSeenWiderIsRefused
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_shorthand_property
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_shorthand_property
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_parameter's_default
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_parameter's_default
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_object_spread
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_object_spread
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_as
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_as
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_union_target
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_union_target
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_union_source
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_union_source
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_method's_return
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_method's_return
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_class_target
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_class_target
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring
+=== RUN   TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
+=== RUN   TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
+=== PAUSE TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
+=== CONT  TestMissingBindingSymbolHasStructuredLocation
+--- PASS: TestNativeAgreementRejectsWrongOutput (1.42s)
+=== CONT  TestAbfe962OverrideDefaultAddedRefusesNativeSignature
+--- PASS: TestMissingBindingSymbolHasStructuredLocation (0.30s)
+=== CONT  TestNodeFSFileQualifiedErrorType
+--- PASS: TestAbfe962OverrideDefaultAddedRefusesNativeSignature (0.17s)
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+--- PASS: TestTypedArrayFromArray (1.72s)
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+--- PASS: TestRegExpSlashClassSourceAgreesWithNode (1.09s)
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+--- PASS: TestInheritanceRejectsUnsupportedConstructorShapes (0.09s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object (0.16s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/declare_field (0.24s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/computed_base (0.15s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch (0.16s)
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+--- PASS: TestClassWrongOutputIteratorReceiver (2.35s)
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+--- PASS: TestNodeFSFileQualifiedErrorType (2.14s)
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_parameter's_default
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array
+--- PASS: TestOptionalFunctionValueRelation (0.03s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.18s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.23s)
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/variable (0.66s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.21s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.09s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.19s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.26s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.43s)
+    --- PASS: TestEnumSlotViews/function_view (1.15s)
+    --- PASS: TestEnumSlotViews/map_alias (0.69s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (1.04s)
+    --- PASS: TestEnumSlotViews/object_assign (0.24s)
+    --- PASS: TestEnumSlotViews/optional_union (1.04s)
+    --- PASS: TestEnumSlotViews/class_field (0.88s)
+    --- PASS: TestEnumSlotViews/override (0.89s)
+    --- PASS: TestEnumSlotViews/array_literal (0.74s)
+    --- PASS: TestEnumSlotViews/array_alias (0.88s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.99s)
+    --- PASS: TestEnumSlotViews/compound (0.81s)
+    --- PASS: TestEnumSlotViews/increment (0.92s)
+    --- PASS: TestEnumSlotViews/argument (0.91s)
+    --- PASS: TestEnumSlotViews/assignment (0.71s)
+    --- PASS: TestEnumSlotViews/literal_property (0.80s)
+    --- PASS: TestEnumSlotViews/initializer (0.69s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.99s)
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_target
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_method's_return
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_source
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_union_target
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_as
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_object_spread
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_shorthand_property
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array
+=== CONT  TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed
+=== CONT  TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field
+--- PASS: TestAMutableLocationSeenWiderIsRefused (0.00s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array (0.19s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_parameter's_default (0.30s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array (0.19s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider (0.20s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array (0.30s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider (0.28s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class (0.29s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring (0.34s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_target (0.24s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element (0.26s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_return (0.32s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider (0.37s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc (0.42s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider (0.35s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch (0.31s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_union_source (0.18s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_as (0.27s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer (0.30s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_spread (0.42s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_union_target (0.47s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's (0.38s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable (0.16s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable (0.26s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_shorthand_property (0.42s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array (0.27s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type (0.34s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one (0.25s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only (0.26s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot (0.23s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak (0.30s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property (0.24s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array (0.31s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array (0.18s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter (0.34s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe (0.38s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly (0.20s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed (0.18s)
+    --- PASS: TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field (0.15s)
+PASS

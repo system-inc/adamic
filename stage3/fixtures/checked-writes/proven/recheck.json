@@ -1,0 +1,2667 @@
+{
+  "evidence_kind": "stock TypeScript receiver audit, not Adamic compiler proof",
+  "records": [
+    {
+      "id": 30,
+      "where": "src/compiler/binder.ts:3288:21",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "constructorSymbol",
+        "source_expression_where": "src/compiler/binder.ts:3288:21",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/binder.ts:3288:21",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 31,
+      "where": "src/compiler/binder.ts:3373:13",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "namespaceSymbol",
+        "source_expression_where": "src/compiler/binder.ts:3373:13",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/binder.ts:3373:13",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 43,
+      "where": "src/compiler/checker.ts:10069:44",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "aliasDecl",
+        "source_expression_where": "src/compiler/checker.ts:10069:44",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:10069:44",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 50,
+      "where": "src/compiler/checker.ts:10661:32",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "aliasDecl",
+        "source_expression_where": "src/compiler/checker.ts:10661:32",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:10661:32",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 51,
+      "where": "src/compiler/checker.ts:10669:40",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "first",
+        "source_expression_where": "src/compiler/checker.ts:10669:40",
+        "original_type": "Identifier | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:10669:40",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 52,
+      "where": "src/compiler/checker.ts:10830:26",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "baseType",
+        "source_expression_where": "src/compiler/checker.ts:10830:26",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:10830:26",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 54,
+      "where": "src/compiler/checker.ts:11608:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol",
+        "source_expression_where": "src/compiler/checker.ts:11608:16",
+        "original_type": "Symbol",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:11608:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 55,
+      "where": "src/compiler/checker.ts:11691:62",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "parentAccess.flowNode",
+        "source_expression_where": "src/compiler/checker.ts:11691:62",
+        "original_type": "FlowNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:11691:13",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 2
+      }
+    },
+    {
+      "id": 57,
+      "where": "src/compiler/checker.ts:12091:41",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol.valueDeclaration",
+        "source_expression_where": "src/compiler/checker.ts:12091:41",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12091:41",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 61,
+      "where": "src/compiler/checker.ts:12694:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:12694:16",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12694:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 62,
+      "where": "src/compiler/checker.ts:12699:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "parameter",
+        "source_expression_where": "src/compiler/checker.ts:12699:16",
+        "original_type": "ParameterDeclaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12699:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 63,
+      "where": "src/compiler/checker.ts:12722:17",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "getter && getter.body",
+        "source_expression_where": "src/compiler/checker.ts:12722:17",
+        "original_type": "Block | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12722:17",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 64,
+      "where": "src/compiler/checker.ts:12723:17",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "accessor",
+        "source_expression_where": "src/compiler/checker.ts:12723:17",
+        "original_type": "AutoAccessorPropertyDeclaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12723:17",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 65,
+      "where": "src/compiler/checker.ts:12789:29",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol.valueDeclaration",
+        "source_expression_where": "src/compiler/checker.ts:12789:29",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:12789:29",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 83,
+      "where": "src/compiler/checker.ts:13468:51",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol.valueDeclaration",
+        "source_expression_where": "src/compiler/checker.ts:13468:51",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:13468:51",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 90,
+      "where": "src/compiler/checker.ts:14332:105",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "sig.thisParameter",
+        "source_expression_where": "src/compiler/checker.ts:14332:105",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:14332:105",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 102,
+      "where": "src/compiler/checker.ts:16313:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typeTag?.typeExpression",
+        "source_expression_where": "src/compiler/checker.ts:16313:16",
+        "original_type": "JSDocTypeExpression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:16313:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 103,
+      "where": "src/compiler/checker.ts:16325:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "signature",
+        "source_expression_where": "src/compiler/checker.ts:16325:16",
+        "original_type": "Signature | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:16325:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 105,
+      "where": "src/compiler/checker.ts:16463:22",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node.type",
+        "source_expression_where": "src/compiler/checker.ts:16463:22",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:16463:22",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 117,
+      "where": "src/compiler/checker.ts:1720:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:1720:20",
+        "original_type": "AssignmentPattern | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1720:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 132,
+      "where": "src/compiler/checker.ts:17641:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol",
+        "source_expression_where": "src/compiler/checker.ts:17641:16",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:17641:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 134,
+      "where": "src/compiler/checker.ts:1769:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:1769:20",
+        "original_type": "CallLikeExpression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1769:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 136,
+      "where": "src/compiler/checker.ts:1773:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:1773:20",
+        "original_type": "JsxAttributeLike | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1773:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 141,
+      "where": "src/compiler/checker.ts:18161:41",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "keyProperty",
+        "source_expression_where": "src/compiler/checker.ts:18161:41",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:18161:41",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 143,
+      "where": "src/compiler/checker.ts:1894:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "moduleSpecifier",
+        "source_expression_where": "src/compiler/checker.ts:1894:20",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1894:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 145,
+      "where": "src/compiler/checker.ts:1899:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:1899:20",
+        "original_type": "Node | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1899:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 146,
+      "where": "src/compiler/checker.ts:1903:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:1903:20",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:1903:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 160,
+      "where": "src/compiler/checker.ts:21589:33",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "indexInfo",
+        "source_expression_where": "src/compiler/checker.ts:21589:33",
+        "original_type": "IndexInfo | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:21589:33",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 171,
+      "where": "src/compiler/checker.ts:22974:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "prop",
+        "source_expression_where": "src/compiler/checker.ts:22974:34",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:22974:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 191,
+      "where": "src/compiler/checker.ts:28730:21",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "origin",
+        "source_expression_where": "src/compiler/checker.ts:28730:21",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:28730:21",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 193,
+      "where": "src/compiler/checker.ts:28782:32",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "prop",
+        "source_expression_where": "src/compiler/checker.ts:28782:32",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:28782:32",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 200,
+      "where": "src/compiler/checker.ts:31403:42",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node.flowNode",
+        "source_expression_where": "src/compiler/checker.ts:31403:42",
+        "original_type": "FlowNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:31403:17",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 202,
+      "where": "src/compiler/checker.ts:31526:24",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "fileSymbol",
+        "source_expression_where": "src/compiler/checker.ts:31526:24",
+        "original_type": "Symbol",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:31526:24",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 203,
+      "where": "src/compiler/checker.ts:31943:13",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "iife",
+        "source_expression_where": "src/compiler/checker.ts:31943:13",
+        "original_type": "CallExpression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:31943:13",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 204,
+      "where": "src/compiler/checker.ts:32265:30",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "lhsSymbol",
+        "source_expression_where": "src/compiler/checker.ts:32265:30",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:32265:30",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 205,
+      "where": "src/compiler/checker.ts:32270:29",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "overallAnnotation",
+        "source_expression_where": "src/compiler/checker.ts:32270:29",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:32270:29",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 206,
+      "where": "src/compiler/checker.ts:32271:56",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "decl.initializer",
+        "source_expression_where": "src/compiler/checker.ts:32271:56",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:32271:56",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 215,
+      "where": "src/compiler/checker.ts:34056:23",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "file",
+        "source_expression_where": "src/compiler/checker.ts:34056:23",
+        "original_type": "SourceFile | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:34056:23",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 216,
+      "where": "src/compiler/checker.ts:34081:23",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "location",
+        "source_expression_where": "src/compiler/checker.ts:34081:23",
+        "original_type": "Node | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:34081:23",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 217,
+      "where": "src/compiler/checker.ts:34125:51",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "jsxElementAttribPropInterfaceSym",
+        "source_expression_where": "src/compiler/checker.ts:34125:51",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:34125:51",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 220,
+      "where": "src/compiler/checker.ts:3439:13",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "expression",
+        "source_expression_where": "src/compiler/checker.ts:3439:13",
+        "original_type": "EntityNameExpression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:3439:13",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 221,
+      "where": "src/compiler/checker.ts:34610:24",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "thisParameter?.type",
+        "source_expression_where": "src/compiler/checker.ts:34610:24",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:34610:24",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 225,
+      "where": "src/compiler/checker.ts:35056:33",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "prop",
+        "source_expression_where": "src/compiler/checker.ts:35056:33",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:35056:33",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 227,
+      "where": "src/compiler/checker.ts:35143:27",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "superProperty",
+        "source_expression_where": "src/compiler/checker.ts:35143:27",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:35143:27",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 228,
+      "where": "src/compiler/checker.ts:35174:17",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "promisedType",
+        "source_expression_where": "src/compiler/checker.ts:35174:17",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:35174:17",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 234,
+      "where": "src/compiler/checker.ts:35760:19",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "signature.target",
+        "source_expression_where": "src/compiler/checker.ts:35760:19",
+        "original_type": "Signature | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:35760:19",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 262,
+      "where": "src/compiler/checker.ts:37379:53",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "relatedInformation ? addRelatedInfo(diagnostic, relatedInformation) : diagnostic",
+        "source_expression_where": "src/compiler/checker.ts:37379:53",
+        "original_type": "DiagnosticWithLocation",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:10353:10",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:10356:18",
+            "operation": "identity/presence test"
+          },
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [
+          {
+            "where": "src/compiler/utilities.ts:10354:9",
+            "path": "relatedInformation",
+            "operation": "=",
+            "original_domains": [
+              "DiagnosticRelatedInformation[] | undefined"
+            ],
+            "written_type": "never[]",
+            "value": "[]",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          },
+          {
+            "where": "src/compiler/utilities.ts:10357:5",
+            "path": "relatedInformation.[]",
+            "operation": "push",
+            "original_domains": [
+              "DiagnosticRelatedInformation"
+            ],
+            "written_type": "DiagnosticRelatedInformation",
+            "value": "...relatedInformation",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": false,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [
+          {
+            "where": "src/compiler/checker.ts:37382:79",
+            "name": "diagnostic",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:10349:54",
+            "name": "diagnostic",
+            "path": "",
+            "references": 6
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/checker.ts:37379:9",
+            "target": "src/compiler/checker.ts:37382:5",
+            "parameter": "src/compiler/checker.ts:37382:79",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "target": "src/compiler/utilities.ts:10349:1",
+            "parameter": "src/compiler/utilities.ts:10349:54",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 13
+      }
+    },
+    {
+      "id": 267,
+      "where": "src/compiler/checker.ts:37483:71",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "diag",
+        "source_expression_where": "src/compiler/checker.ts:37483:71",
+        "original_type": "DiagnosticWithLocation",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:10353:10",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:10356:18",
+            "operation": "identity/presence test"
+          },
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [
+          {
+            "where": "src/compiler/utilities.ts:10354:9",
+            "path": "relatedInformation",
+            "operation": "=",
+            "original_domains": [
+              "DiagnosticRelatedInformation[] | undefined"
+            ],
+            "written_type": "never[]",
+            "value": "[]",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          },
+          {
+            "where": "src/compiler/utilities.ts:10357:5",
+            "path": "relatedInformation.[]",
+            "operation": "push",
+            "original_domains": [
+              "DiagnosticRelatedInformation"
+            ],
+            "written_type": "DiagnosticRelatedInformation",
+            "value": "...relatedInformation",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": false,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [
+          {
+            "where": "src/compiler/checker.ts:37382:79",
+            "name": "diagnostic",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:10349:54",
+            "name": "diagnostic",
+            "path": "",
+            "references": 6
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/checker.ts:37483:13",
+            "target": "src/compiler/checker.ts:37382:5",
+            "parameter": "src/compiler/checker.ts:37382:79",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/checker.ts:37393:13",
+            "target": "src/compiler/utilities.ts:10349:1",
+            "parameter": "src/compiler/utilities.ts:10349:54",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 13
+      }
+    },
+    {
+      "id": 269,
+      "where": "src/compiler/checker.ts:37540:22",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typeSymbol",
+        "source_expression_where": "src/compiler/checker.ts:37540:22",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:37540:22",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 271,
+      "where": "src/compiler/checker.ts:37739:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "decl",
+        "source_expression_where": "src/compiler/checker.ts:37739:34",
+        "original_type": "Declaration",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:37739:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 272,
+      "where": "src/compiler/checker.ts:3784:36",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "resolvedModule",
+        "source_expression_where": "src/compiler/checker.ts:3784:36",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:3784:36",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 275,
+      "where": "src/compiler/checker.ts:38683:21",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "type",
+        "source_expression_where": "src/compiler/checker.ts:38683:21",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:38683:21",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 288,
+      "where": "src/compiler/checker.ts:39751:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "writableProp",
+        "source_expression_where": "src/compiler/checker.ts:39751:34",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:39751:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 289,
+      "where": "src/compiler/checker.ts:39758:17",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "writableProp",
+        "source_expression_where": "src/compiler/checker.ts:39758:17",
+        "original_type": "Symbol",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:39758:17",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 290,
+      "where": "src/compiler/checker.ts:3989:27",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "moduleSpecifier",
+        "source_expression_where": "src/compiler/checker.ts:3989:27",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:3989:27",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 291,
+      "where": "src/compiler/checker.ts:3990:26",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "moduleSpecifier",
+        "source_expression_where": "src/compiler/checker.ts:3990:26",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:3990:26",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 301,
+      "where": "src/compiler/checker.ts:41550:44",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "context.signature",
+        "source_expression_where": "src/compiler/checker.ts:41550:44",
+        "original_type": "Signature | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:41550:44",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 302,
+      "where": "src/compiler/checker.ts:41551:49",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "returnType",
+        "source_expression_where": "src/compiler/checker.ts:41551:49",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:41551:49",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 303,
+      "where": "src/compiler/checker.ts:4176:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "specifier",
+        "source_expression_where": "src/compiler/checker.ts:4176:34",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:4176:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 304,
+      "where": "src/compiler/checker.ts:4185:13",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "commonJSPropertyAccess",
+        "source_expression_where": "src/compiler/checker.ts:4185:13",
+        "original_type": "PropertyAccessExpression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:4185:13",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 305,
+      "where": "src/compiler/checker.ts:4210:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "specifier",
+        "source_expression_where": "src/compiler/checker.ts:4210:34",
+        "original_type": "Expression | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:4210:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 314,
+      "where": "src/compiler/checker.ts:4465:78",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "getDeclarationOfAliasSymbol(symbol)",
+        "source_expression_where": "src/compiler/checker.ts:4465:78",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:4465:78",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 318,
+      "where": "src/compiler/checker.ts:45377:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "testedNode",
+        "source_expression_where": "src/compiler/checker.ts:45377:34",
+        "original_type": "MemberName | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:45377:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 320,
+      "where": "src/compiler/checker.ts:46134:28",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "ctorType",
+        "source_expression_where": "src/compiler/checker.ts:46134:28",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:46134:28",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 323,
+      "where": "src/compiler/checker.ts:46650:63",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "clause.fallthroughFlowNode",
+        "source_expression_where": "src/compiler/checker.ts:46650:63",
+        "original_type": "FlowNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:46650:17",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 325,
+      "where": "src/compiler/checker.ts:4681:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol",
+        "source_expression_where": "src/compiler/checker.ts:4681:20",
+        "original_type": "Symbol",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:4681:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 326,
+      "where": "src/compiler/checker.ts:47007:42",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "constraint",
+        "source_expression_where": "src/compiler/checker.ts:47007:42",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:47007:42",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 327,
+      "where": "src/compiler/checker.ts:47017:39",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "source.default",
+        "source_expression_where": "src/compiler/checker.ts:47017:39",
+        "original_type": "TypeNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:47017:39",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 329,
+      "where": "src/compiler/checker.ts:47418:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "member.name",
+        "source_expression_where": "src/compiler/checker.ts:47418:34",
+        "original_type": "PropertyName | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:47418:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 338,
+      "where": "src/compiler/checker.ts:49351:43",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node.flowNode",
+        "source_expression_where": "src/compiler/checker.ts:49351:43",
+        "original_type": "FlowNode | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:49351:18",
+            "operation": "discard/control read"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 2
+      }
+    },
+    {
+      "id": 344,
+      "where": "src/compiler/checker.ts:50064:20",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typeParameter",
+        "source_expression_where": "src/compiler/checker.ts:50064:20",
+        "original_type": "TypeParameterDeclaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:50064:20",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 346,
+      "where": "src/compiler/checker.ts:50310:24",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "objectType",
+        "source_expression_where": "src/compiler/checker.ts:50310:24",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:50310:24",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 347,
+      "where": "src/compiler/checker.ts:50508:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typeOfObjectLiteral",
+        "source_expression_where": "src/compiler/checker.ts:50508:16",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:50508:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 348,
+      "where": "src/compiler/checker.ts:50788:28",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "container",
+        "source_expression_where": "src/compiler/checker.ts:50788:28",
+        "original_type": "SourceFile | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:50788:28",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 351,
+      "where": "src/compiler/checker.ts:51439:32",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:51439:32",
+        "original_type": "Declaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:51439:32",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 352,
+      "where": "src/compiler/checker.ts:51498:32",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:51498:32",
+        "original_type": "IndexSignatureDeclaration",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/checker.ts:51498:31",
+            "path": "modifiers",
+            "operation": "||=",
+            "original_domains": [
+              "NodeArray<ModifierLike> | undefined"
+            ],
+            "written_type": "NodeArray<ModifierLike>",
+            "value": "(node as Mutable<typeof node>).modifiers ||= factory.createNodeArray()",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 359,
+      "where": "src/compiler/checker.ts:5217:22",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "lookupTable && exportNode",
+        "source_expression_where": "src/compiler/checker.ts:5217:22",
+        "original_type": "ExportDeclaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:5217:22",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 383,
+      "where": "src/compiler/checker.ts:5985:13",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol",
+        "source_expression_where": "src/compiler/checker.ts:5985:13",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:5985:13",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 384,
+      "where": "src/compiler/checker.ts:6019:16",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/checker.ts:6019:16",
+        "original_type": "Node | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:6019:16",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 385,
+      "where": "src/compiler/checker.ts:6393:42",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typeViaParent",
+        "source_expression_where": "src/compiler/checker.ts:6393:42",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:6393:42",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 391,
+      "where": "src/compiler/checker.ts:6951:46",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "constraint",
+        "source_expression_where": "src/compiler/checker.ts:6951:46",
+        "original_type": "Type",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:6951:46",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 393,
+      "where": "src/compiler/checker.ts:7289:76",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "context.enclosingDeclaration",
+        "source_expression_where": "src/compiler/checker.ts:7289:76",
+        "original_type": "Node | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:7289:76",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 395,
+      "where": "src/compiler/checker.ts:8021:34",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "signature.typeParameters",
+        "source_expression_where": "src/compiler/checker.ts:8021:34",
+        "original_type": "readonly TypeParameter[] | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:8021:34",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 396,
+      "where": "src/compiler/checker.ts:8346:42",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "defaultParameter",
+        "source_expression_where": "src/compiler/checker.ts:8346:42",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:8346:42",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 398,
+      "where": "src/compiler/checker.ts:8357:36",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "constraint",
+        "source_expression_where": "src/compiler/checker.ts:8357:36",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:8357:36",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 399,
+      "where": "src/compiler/checker.ts:8368:30",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "typePredicate.type",
+        "source_expression_where": "src/compiler/checker.ts:8368:30",
+        "original_type": "Type | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:8368:30",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 400,
+      "where": "src/compiler/checker.ts:9064:36",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "symbol",
+        "source_expression_where": "src/compiler/checker.ts:9064:36",
+        "original_type": "Symbol | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/checker.ts:9064:36",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 415,
+      "where": "src/compiler/emitter.ts:3499:112",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "body.statements",
+        "source_expression_where": "src/compiler/emitter.ts:3499:112",
+        "original_type": "NodeArray<Statement>",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/emitter.ts:5121:33",
+            "operation": "truthiness only; object is not the && result"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5121:77",
+            "operation": "primitive field read",
+            "path": "end"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5121:102",
+            "operation": "primitive field read",
+            "path": "end"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/emitter.ts:5110:123",
+            "name": "childrenTextRange",
+            "path": "",
+            "references": 3
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:3499:16",
+            "target": "src/compiler/emitter.ts:5110:5",
+            "parameter": "src/compiler/emitter.ts:5110:123",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 4
+      }
+    },
+    {
+      "id": 418,
+      "where": "src/compiler/emitter.ts:4711:127",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "children",
+        "source_expression_where": "src/compiler/emitter.ts:4711:127",
+        "original_type": "Children",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/emitter.ts:4841:64",
+            "operation": "primitive field read",
+            "path": "end"
+          },
+          {
+            "where": "src/compiler/emitter.ts:4841:89",
+            "operation": "primitive field read",
+            "path": "end"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5121:33",
+            "operation": "truthiness only; object is not the && result"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5121:77",
+            "operation": "primitive field read",
+            "path": "end"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5121:102",
+            "operation": "primitive field read",
+            "path": "end"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/emitter.ts:4729:274",
+            "name": "childrenTextRange",
+            "path": "",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/emitter.ts:5110:123",
+            "name": "childrenTextRange",
+            "path": "",
+            "references": 3
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:4711:13",
+            "target": "src/compiler/emitter.ts:4729:5",
+            "parameter": "src/compiler/emitter.ts:4729:274",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/emitter.ts:4850:44",
+            "target": "src/compiler/emitter.ts:5110:5",
+            "parameter": "src/compiler/emitter.ts:5110:123",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 7
+      }
+    },
+    {
+      "id": 420,
+      "where": "src/compiler/emitter.ts:5461:90",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "name",
+        "source_expression_where": "src/compiler/emitter.ts:5461:90",
+        "original_type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:323:12",
+            "operation": "primitive field read",
+            "path": "kind"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:322:37",
+            "name": "node",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:5461:70",
+            "target": "src/compiler/factory/nodeTests.ts:322:1",
+            "parameter": "src/compiler/factory/nodeTests.ts:322:37",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 2
+      }
+    },
+    {
+      "id": 421,
+      "where": "src/compiler/emitter.ts:5774:155",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "name",
+        "source_expression_where": "src/compiler/emitter.ts:5774:155",
+        "original_type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:323:12",
+            "operation": "primitive field read",
+            "path": "kind"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:322:37",
+            "name": "node",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:5774:135",
+            "target": "src/compiler/factory/nodeTests.ts:322:1",
+            "parameter": "src/compiler/factory/nodeTests.ts:322:37",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 2
+      }
+    },
+    {
+      "id": 424,
+      "where": "src/compiler/emitter.ts:5784:41",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "name",
+        "source_expression_where": "src/compiler/emitter.ts:5784:41",
+        "original_type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:323:12",
+            "operation": "primitive field read",
+            "path": "kind"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/factory/nodeTests.ts:322:37",
+            "name": "node",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:5784:21",
+            "target": "src/compiler/factory/nodeTests.ts:322:1",
+            "parameter": "src/compiler/factory/nodeTests.ts:322:37",
+            "path": ""
+          }
+        ],
+        "unresolved": [],
+        "steps": 2
+      }
+    },
+    {
+      "id": 426,
+      "where": "src/compiler/emitter.ts:6270:26",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/emitter.ts:6270:26",
+        "original_type": "Node | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/emitter.ts:6270:26",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    },
+    {
+      "id": 446,
+      "where": "src/compiler/factory/nodeFactory.ts:2646:14",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "node.assertions",
+        "source_expression_where": "src/compiler/factory/nodeFactory.ts:2646:14",
+        "original_type": "ImportTypeAssertionContainer",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/factory/nodeFactory.ts:2646:13",
+            "path": "assertClause",
+            "operation": "=",
+            "original_domains": [
+              "AssertClause"
+            ],
+            "written_type": "ImportAttributes",
+            "value": "node.attributes",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 514,
+      "where": "src/compiler/parser.ts:4286:54",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/parser.ts:4286:54",
+        "original_type": "PropertySignature",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/parser.ts:4286:53",
+            "path": "initializer",
+            "operation": "=",
+            "original_domains": [
+              "Expression | undefined"
+            ],
+            "written_type": "Expression | undefined",
+            "value": "parseInitializer()",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 516,
+      "where": "src/compiler/parser.ts:7939:10",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/parser.ts:7939:10",
+        "original_type": "ClassStaticBlockDeclaration",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/parser.ts:7939:9",
+            "path": "modifiers",
+            "operation": "=",
+            "original_domains": [
+              "NodeArray<ModifierLike> | undefined"
+            ],
+            "written_type": "NodeArray<ModifierLike> | undefined",
+            "value": "modifiers",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": false,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 536,
+      "where": "src/compiler/program.ts:3388:22",
+      "expected": "b",
+      "unchanged": true,
+      "actual": {
+        "classification": "b",
+        "source_expression": "node.name",
+        "source_expression_where": "src/compiler/program.ts:3388:22",
+        "original_type": "ModuleName",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/program.ts:3388:21",
+            "path": "parent",
+            "operation": "=",
+            "original_domains": [
+              "Node",
+              "Node"
+            ],
+            "written_type": "AmbientModuleDeclaration",
+            "value": "node",
+            "compatible": true,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 3
+      }
+    },
+    {
+      "id": 607,
+      "where": "src/compiler/utilities.ts:4763:12",
+      "expected": "a",
+      "unchanged": true,
+      "actual": {
+        "classification": "a",
+        "source_expression": "parameter",
+        "source_expression_where": "src/compiler/utilities.ts:4763:12",
+        "original_type": "ParameterDeclaration | undefined",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [
+          {
+            "where": "src/compiler/utilities.ts:4763:12",
+            "operation": "truthiness only; object is not the && result"
+          }
+        ],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [],
+        "steps": 1
+      }
+    }
+  ],
+  "unchanged": 98
+}
