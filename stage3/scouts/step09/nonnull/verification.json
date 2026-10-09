@@ -1,0 +1,22 @@
+{
+  "base_commit": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "compiler_feature_commit": "93ebcf520c87eb55b47ada1d39189796959b2778",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compiler_build_command": "source /workspace/adamic-tools/env.sh; go build -buildvcs=false -o /tmp/step09-nonnull-adamic ./cmd/adamic",
+  "compiler_build_cwd": "/tmp/step09-nonnull-compiler",
+  "compiler_build_exit": 0,
+  "control_identity": {
+    "command": "cmp /tmp/step09-nonnull-bundle/control.cjs /tmp/step09-nonnull-bundle-final/control.cjs",
+    "exit": 0,
+    "sha256": "377afb5b12ff71d6d4b4de08ed4750e0df8fd40c2a78ded6b63449c66e1c6a19"
+  },
+  "instrumented_bundle_sha256": "ac117fefb558f4d4b24db7aa256428778c12ef714c1a6ab143ee9f008a0284d5",
+  "mutants": {
+    "native_fixture": 3,
+    "measurement": 5,
+    "known_nullish_probe_log": 1,
+    "a_check_header": 3,
+    "total_caught": 12
+  },
+  "full_packages_or_gate_run": false
+}
