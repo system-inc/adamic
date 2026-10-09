@@ -20,6 +20,8 @@ import (
 
 const repository = "../../.."
 
+const testCSSStringsShards = 287
+
 // run is one execution's observable behavior.
 type run struct {
 	stdout   []byte
@@ -109,11 +111,15 @@ func enumerateStrings(t *testing.T) stringsCorpus {
 
 // TestCSSStrings builds each input once before the parallel units. ADAMIC_TEST_SHARD=i/n
 // (zero-based i) selects units whose stable ordinal modulo n equals i; unset runs all.
+// Stable shard-NNN names use the same zero-based ordinals for direct -run selection.
 // No corpus is sampled: batch ranges, raw files, mutants and throughput sides form the census.
 func TestCSSStrings(t *testing.T) {
 	t.Parallel()
 	corpus := enumerateStrings(t)
 	units := stringsUnits(corpus)
+	if len(units) != testCSSStringsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
+	}
 	verifyStringsUnion(t, corpus, units)
 	selected := selectedStringsUnits(t, units)
 	root, err := filepath.Abs(repository)
@@ -178,6 +184,7 @@ func TestCSSStrings(t *testing.T) {
 	for _, unit := range selected {
 		t.Run(unit.name, func(t *testing.T) {
 			t.Parallel()
+			t.Logf("%s: %s range [%d,%d), side %s, %d case IDs", unit.name, unit.kind, unit.lo, unit.hi, unit.side, len(unit.ids))
 			start := time.Now()
 			defer func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
