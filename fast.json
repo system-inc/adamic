@@ -1,0 +1,22 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T191244-fd0aef24",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "12556c1068022d0e328c14af57d99c5bab75e351",
+  "branch": "cloud/land-stack-host24-counts-ab8989c3",
+  "base": "0535a80bd5201e57a157f14716f1a677e8dd1b27",
+  "candidate": "ab8989c3c0928982dac181ac52d6d9255d2f60b8",
+  "gated": "12556c1068022d0e328c14af57d99c5bab75e351",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ]
+}
