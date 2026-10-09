@@ -1,0 +1,11 @@
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -174,7 +174,7 @@
+ 			lowered.slots[key] = slot
+ 			meta.Methods = append(meta.Methods, -1)
+ 		}
+-		meta.Methods[slot] = function
++		meta.Methods[slot] = function - 1
+ 		if accessorMember(member) {
+ 			l.registerAccessor(lowered.class, member, function)
+ 		}

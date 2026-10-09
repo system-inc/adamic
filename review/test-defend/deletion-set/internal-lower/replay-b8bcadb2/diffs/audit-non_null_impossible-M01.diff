@@ -1,0 +1,11 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -103,7 +103,7 @@
+ }
+ 
+ func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+-	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
++	return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")
+ }
+ 
+ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {

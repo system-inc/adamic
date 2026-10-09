@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./internal/lower/",
+    "-skip",
+    "^(TestAdamicNullishAssertionsAreRefused|TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestClassFeaturesReadonlyChecker|TestClassFeaturesStaticParentCycle|TestClassWrongOutputPrivateRepair|TestDefaultTaggedInterfaceNeedsNoFlag|TestDefiniteAssignmentSoundNeighbors|TestEveryNeedsCallbackEffects|TestInheritanceGenericFactoryLayouts|TestInputSpreadArgumentsAreNotYet|TestOptionalWideningAllowed|TestOptionalWideningCensus|TestPredicateOverloadCallback)($|_|/)"
+  ],
+  "exit": 0,
+  "seconds": 60.613313555000786
+}

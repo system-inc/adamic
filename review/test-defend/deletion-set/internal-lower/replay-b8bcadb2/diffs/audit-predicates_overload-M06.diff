@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -474,7 +474,7 @@
+ 
+ func (l *lowering) predicateArguments(node *ast.Node) error {
+ 	signature := l.checker.GetResolvedSignature(node)
+-	if signature == nil {
++	if signature != nil {
+ 		return nil
+ 	}
+ 	if overload := signature.Declaration(); overload != nil && overload.Kind == ast.KindFunctionDeclaration && overload.Body() == nil && overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {

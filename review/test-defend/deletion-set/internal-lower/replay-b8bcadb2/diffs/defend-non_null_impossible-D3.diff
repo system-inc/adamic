@@ -1,0 +1,13 @@
+diff --git a/internal/lower/optional_widening.go b/internal/lower/optional_widening.go
+index 6d61eb6c..31de85fb 100644
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -111,7 +111,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
+ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
+ 	node = ast.SkipParentheses(node)
+ 	switch node.Kind {
+-	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
++	case ast.KindNewExpression, ast.KindArrayLiteralExpression:
+ 		// The literal's fields, spreads and elements are checked separately at their own sites.
+ 		return nil
+ 	case ast.KindConditionalExpression:

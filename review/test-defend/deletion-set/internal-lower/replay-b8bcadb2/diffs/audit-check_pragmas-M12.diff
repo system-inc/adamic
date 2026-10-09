@@ -1,0 +1,14 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -418,11 +418,6 @@
+ 				queue = append(queue, cycleNode{proven: argument})
+ 			}
+ 		default:
+-			if f.l.isStaticType(proven) {
+-				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+-					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+-				}
+-			}
+ 			for _, accessor := range f.l.accessorCaptures {
+ 				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+ 					for _, local := range f.l.result.Functions[accessor.function].Environment {

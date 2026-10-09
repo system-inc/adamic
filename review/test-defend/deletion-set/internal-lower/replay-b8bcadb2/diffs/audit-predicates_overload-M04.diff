@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -125,7 +125,7 @@
+ func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) predicateFlowPath {
+ 	flags := ast.FlowFlagsFalseCondition
+ 	if truth {
+-		flags = ast.FlowFlagsTrueCondition
++		flags = ast.FlowFlagsFalseCondition
+ 	}
+ 	return predicateFlowPath{flow: &ast.FlowNode{Flags: flags, Node: expression, Antecedent: path.flow}, checked: true}
+ }

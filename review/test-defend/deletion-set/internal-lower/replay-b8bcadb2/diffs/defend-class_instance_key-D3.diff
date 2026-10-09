@@ -1,0 +1,13 @@
+diff --git a/internal/lower/assignments.go b/internal/lower/assignments.go
+index 1b1e965f..56d77d2b 100644
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -83,7 +83,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+ 		statements = append(statements, l.namespaceReadyStatements(target, true)...)
+ 		value = ir.Read{Local: temporary, Of: value.Type()}
+ 	}
+-	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
++	return statements, nil
+ }
+ 
+ // tupleField reads element index of the tuple held in the local held, as the tuple's element type

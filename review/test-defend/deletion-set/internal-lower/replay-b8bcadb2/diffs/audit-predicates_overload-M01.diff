@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -79,7 +79,7 @@
+ 		return false
+ 	}
+ 	function.Body().ForEachChild(visit)
+-	if changed != nil {
++	if changed == nil {
+ 		return p.refused(changed, "the predicate parameter is assigned")
+ 	}
+ 	return p.proveBody(node)

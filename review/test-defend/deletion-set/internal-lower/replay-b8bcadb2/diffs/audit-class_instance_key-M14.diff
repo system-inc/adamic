@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..e7efd246 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -766,7 +766,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
+ 		return nil
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+-		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
++		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind != ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
+ 			return nil
+ 		}
+ 	}

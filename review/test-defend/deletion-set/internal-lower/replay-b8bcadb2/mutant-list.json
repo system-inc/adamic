@@ -1,0 +1,1203 @@
+[
+  {
+    "key": "audit-arguments_length-M01",
+    "mutant": "M01",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M01.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M01.diff",
+    "file_line": "internal/lower/arguments_length.go:41",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-arguments_length-M02",
+    "mutant": "M02",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M02.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M02.diff",
+    "file_line": "internal/lower/arguments_length.go:26",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-arguments_length-M03",
+    "mutant": "M03",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M03.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M03.diff",
+    "file_line": "internal/lower/arguments_length.go:20",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-arguments_length-M07",
+    "mutant": "M07",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M07.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M07.diff",
+    "file_line": "internal/lower/library_array_predicate.go:48",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-arguments_length-M14",
+    "mutant": "M14",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M14.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M14.diff",
+    "file_line": "internal/lower/invariance.go:125",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestAMethodReadAsAValueIsRefused",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestArgumentsLengthReadNeighbors",
+      "TestCensusOverloadRelation",
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestEnumSlotViews",
+      "TestFunctionValueUnionViewsStayNotYet",
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceNativeSignatureLimits",
+      "TestInheritanceNativeSignatureNeighbors",
+      "TestIteratorMapperIndexHasNumberRepresentation",
+      "TestLibraryMapSetGapsStayRefused",
+      "TestLibraryMethodValueBoundaries",
+      "TestLibraryMethodValues",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestOptionalFunctionValueRelation",
+      "TestPredicateCallbackContracts",
+      "TestPredicateOverloadRuntime",
+      "TestProvenRelationsRefuse",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-arguments_length-M17",
+    "mutant": "M17",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-arguments_length-M17.diff",
+    "source_file": "review/test-audit/internal-lower-arguments_length/diffs/M17.diff",
+    "file_line": "internal/lower/expression.go:1299",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors",
+      "TestCensusMarkerZeroCallIsNotAssumedSafe",
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestClosedFrameInputRejectsMutation",
+      "TestEnumInitializationReach",
+      "TestLibraryMethodValues",
+      "TestLiteralMethodViewsDoNotLoseThis",
+      "TestNamespaceAmbientHostInitialization",
+      "TestNestedCallbackCycleIsRefused",
+      "TestNestedCapturedParametersAreOwned",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "TestNestedEnvironmentHasOneAllocationSite",
+      "TestNestedFunctionCycleIsRefused",
+      "TestNestedRestIsSupported",
+      "TestOptionalIndexingMapShapeRefused",
+      "TestParameterPropertiesSoundness",
+      "TestParameterPropertyCallbackReceiver",
+      "TestParserFactoryBindingHoisting",
+      "TestPredicateCallbackContracts",
+      "TestPredicateOverloadRuntime",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-arguments_length/kill-matrix.json",
+      "review/test-audit/internal-lower-arguments_length/results.json",
+      "review/test-audit/internal-lower-arguments_length/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-arguments_length-D02",
+    "mutant": "D02",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-arguments_length-D02.diff",
+    "source_file": "review/test-defend/internal-lower-arguments_length/D02.diff",
+    "file_line": "internal/lower/arguments_length.go:44",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "metadata": [
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-arguments_length-D03",
+    "mutant": "D03",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-arguments_length-D03.diff",
+    "source_file": "review/test-defend/internal-lower-arguments_length/D03.diff",
+    "file_line": "internal/lower/arguments_length.go:27",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "metadata": [
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-arguments_length-D04",
+    "mutant": "D04",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-arguments_length-D04.diff",
+    "source_file": "review/test-defend/internal-lower-arguments_length/D04.diff",
+    "file_line": "internal/lower/arguments_length.go:46",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "metadata": [
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-arguments_length-D07",
+    "mutant": "D07",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-arguments_length-D07.diff",
+    "source_file": "review/test-defend/internal-lower-arguments_length/D07.diff",
+    "file_line": "internal/lower/library_array_predicate.go:48",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/rows.json",
+      "review/test-defend/internal-lower-arguments_length/runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-check_pragmas-M10",
+    "mutant": "M10",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-check_pragmas-M10.diff",
+    "source_file": "review/test-audit/internal-lower-check_pragmas/M10.diff",
+    "file_line": "internal/lower/cycles.go:61",
+    "branch": "test-audit/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestClassFeaturesStaticSoundness"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-check_pragmas-M12",
+    "mutant": "M12",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-check_pragmas-M12.diff",
+    "source_file": "review/test-audit/internal-lower-check_pragmas/M12.diff",
+    "file_line": "internal/lower/cycles.go:418",
+    "branch": "test-audit/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-check_pragmas-M14",
+    "mutant": "M14",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-check_pragmas-M14.diff",
+    "source_file": "review/test-audit/internal-lower-check_pragmas/M14.diff",
+    "file_line": "internal/lower/class_static.go:24",
+    "branch": "test-audit/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-check_pragmas-M16",
+    "mutant": "M16",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-check_pragmas-M16.diff",
+    "source_file": "review/test-audit/internal-lower-check_pragmas/M16.diff",
+    "file_line": "internal/load/load.go:230",
+    "branch": "test-audit/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesPrivateChecker",
+      "TestTsgoHonorsNoCheckInAdamicFiles"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-check_pragmas-M18",
+    "mutant": "M18",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-check_pragmas-M18.diff",
+    "source_file": "review/test-audit/internal-lower-check_pragmas/M18.diff",
+    "file_line": "internal/lower/lower.go:55",
+    "branch": "test-audit/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestClassFeaturesStaticSoundness"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json",
+      "review/test-audit/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-check_pragmas-D04",
+    "mutant": "D04",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-check_pragmas-D04.diff",
+    "source_file": "review/test-defend/internal-lower-check_pragmas/D04.diff",
+    "file_line": "internal/lower/cycles.go:420",
+    "branch": "test-defend/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-check_pragmas/matrix.json",
+      "review/test-defend/internal-lower-check_pragmas/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-check_pragmas-D3",
+    "mutant": "D3",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-check_pragmas-D3.diff",
+    "source_file": "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/D3.diff",
+    "file_line": "internal/lower/class_inheritance.go:432",
+    "branch": "test-defend/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [
+      "TestAgreementInheritedFieldWitness",
+      "TestClassFeaturesPrivateStorage",
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/matrix.json",
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-check_pragmas-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-check_pragmas-D4.diff",
+    "source_file": "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/D4.diff",
+    "file_line": "internal/lower/class_inheritance.go:339",
+    "branch": "test-defend/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [
+      "TestAMethodReadAsAValueIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestAgreementParameterPropertyWitness",
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassWrongOutputKeysRepair",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestEnumSlotViews",
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestParameterPropertyCheckerContracts",
+      "TestParameterPropertyValueMatchesNode",
+      "TestPredicateOverloadRuntime",
+      "TestReadinessErrorIncludesReceiverExpression",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/matrix.json",
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-check_pragmas-D5",
+    "mutant": "D5",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-check_pragmas-D5.diff",
+    "source_file": "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/D5.diff",
+    "file_line": "internal/lower/class.go:445",
+    "branch": "test-defend/internal-lower-check_pragmas",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "other_rows_failed": [
+      "TestAMethodReadAsAValueIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestClassFeaturesPrivateStorage",
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestEnumSlotViews",
+      "TestFlagEnumsDomain",
+      "TestInheritanceGenericMonomorphizations",
+      "TestParameterPropertyCheckerContracts",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/matrix.json",
+      "review/test-defend/internal-lower-check_pragmas/checker-and-pragma-neighbors/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-class_inheritance-M13",
+    "mutant": "M13",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-class_inheritance-M13.diff",
+    "source_file": "review/test-audit/internal-lower-class_inheritance/M13.diff",
+    "file_line": "internal/lower/class_inheritance.go:930",
+    "branch": "test-audit/internal-lower-class_inheritance",
+    "candidates_failed": [
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "other_rows_failed": [
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceNativeSignatureLimits"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-class_inheritance-M17",
+    "mutant": "M17",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-class_inheritance-M17.diff",
+    "source_file": "review/test-audit/internal-lower-class_inheritance/M17.diff",
+    "file_line": "internal/lower/class_inheritance.go:17",
+    "branch": "test-audit/internal-lower-class_inheritance",
+    "candidates_failed": [
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "other_rows_failed": [
+      "TestInheritance family",
+      "TestInheritanceConditionalThisRules",
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceHasClassIdentity",
+      "TestInheritanceNativeSignatureLimits",
+      "TestInheritanceRefusesGrowingGenericClasses",
+      "TestInheritanceRefusesThisBeforeSuperReturns",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestInheritanceRejectsUnsupportedConstructorShapes"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json",
+      "review/test-audit/internal-lower-class_inheritance/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_inheritance-D5",
+    "mutant": "D5",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_inheritance-D5.diff",
+    "source_file": "review/test-defend/internal-lower-class_inheritance/constructor-fields-7b9d4272/D5.diff",
+    "file_line": "internal/lower/cycles.go:236",
+    "branch": "test-defend/internal-lower-class_inheritance",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestClassFeaturesStaticSoundness",
+      "TestInheritanceCycleFinderIncludesInheritedFields",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_inheritance/constructor-fields-7b9d4272/results.json",
+      "review/test-defend/internal-lower-class_inheritance/constructor-fields-7b9d4272/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_inheritance-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_inheritance-D4.diff",
+    "source_file": "review/test-defend/internal-lower-class_inheritance/factory-constraints-7b9d4272/D4.diff",
+    "file_line": "internal/lower/class_inheritance.go:930",
+    "branch": "test-defend/internal-lower-class_inheritance",
+    "candidates_failed": [
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "other_rows_failed": [
+      "TestCheckedCastProofAndElision",
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceNativeSignatureLimits"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_inheritance/factory-constraints-7b9d4272/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-class_instance_key-M14",
+    "mutant": "M14",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-class_instance_key-M14.diff",
+    "source_file": "review/test-audit/internal-lower-class_instance_key/M14.diff",
+    "file_line": "internal/lower/class.go:766",
+    "branch": "test-audit/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [],
+    "metadata": [
+      "review/test-audit/internal-lower-class_instance_key/interim.json",
+      "review/test-audit/internal-lower-class_instance_key/interim.json",
+      "review/test-audit/internal-lower-class_instance_key/results.json",
+      "review/test-audit/internal-lower-class_instance_key/results.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_instance_key-D2",
+    "mutant": "D2",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_instance_key-D2.diff",
+    "source_file": "review/test-defend/internal-lower-class_instance_key/D2.diff",
+    "file_line": "internal/lower/class_inheritance.go:424",
+    "branch": "test-defend/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [
+      "TestAgreementInheritedFieldWitness",
+      "TestClassFeaturesPrivateStorage",
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_instance_key/matrix.json",
+      "review/test-defend/internal-lower-class_instance_key/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_instance_key-D3",
+    "mutant": "D3",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_instance_key-D3.diff",
+    "source_file": "review/test-defend/internal-lower-class_instance_key/D3.diff",
+    "file_line": "internal/lower/assignments.go:83",
+    "branch": "test-defend/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [
+      "TestClosedFrameInputRejectsMutation",
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestEnumSlotViews",
+      "TestFlagEnumAliasBoundaries",
+      "TestFlagEnumsDomain",
+      "TestFlagEnumsOpen",
+      "TestNestedEnvironmentHasOneAllocationSite",
+      "TestNumericEnumsAreOpen",
+      "TestSwitchConditionalBreakFallsThrough",
+      "TestSwitchEmptyBlockFallsThrough",
+      "TestSwitchEmptyCaseFallsThrough",
+      "TestSwitchEmptyElseFallsThrough"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_instance_key/matrix.json",
+      "review/test-defend/internal-lower-class_instance_key/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_instance_key-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_instance_key-D4.diff",
+    "source_file": "review/test-defend/internal-lower-class_instance_key/D4.diff",
+    "file_line": "internal/lower/class.go:766",
+    "branch": "test-defend/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "other_rows_failed": [
+      "TestAMethodReadAsAValueIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestClassFeaturesPrivateStorage",
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestEnumSlotViews",
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceRefusesGrowingGenericClasses",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_instance_key/matrix.json",
+      "review/test-defend/internal-lower-class_instance_key/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_instance_key-D4-27",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_instance_key-D4-27.diff",
+    "source_file": "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/D4.diff",
+    "file_line": "internal/lower/class_static.go:199",
+    "branch": "test-defend/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestClassWrongOutputPrivateRepair"
+    ],
+    "other_rows_failed": [
+      "TestPrivateAndPublicStaticsAgreeWithNode"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/matrix.json",
+      "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-class_instance_key-D5",
+    "mutant": "D5",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-class_instance_key-D5.diff",
+    "source_file": "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/D5.diff",
+    "file_line": "internal/lower/class_static.go:174",
+    "branch": "test-defend/internal-lower-class_instance_key",
+    "candidates_failed": [
+      "TestClassWrongOutputPrivateRepair"
+    ],
+    "other_rows_failed": [
+      "TestPrivateAndPublicStaticsAgreeWithNode"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/matrix.json",
+      "review/test-defend/internal-lower-class_instance_key/session-7b9d4272-current-rows/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-enums-M12",
+    "mutant": "M12",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-enums-M12.diff",
+    "source_file": "review/test-audit/internal-lower-enums/diffs/M12.diff",
+    "file_line": "internal/lower/input.go:33",
+    "branch": "test-audit/internal-lower-enums",
+    "candidates_failed": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "other_rows_failed": [
+      "TestInputSpreadCoverage"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-enums/rows.json",
+      "review/test-audit/internal-lower-enums/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-enums-M13",
+    "mutant": "M13",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-enums-M13.diff",
+    "source_file": "review/test-audit/internal-lower-enums/diffs/M13.diff",
+    "file_line": "internal/lower/input.go:27",
+    "branch": "test-audit/internal-lower-enums",
+    "candidates_failed": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "other_rows_failed": [
+      "TestInputSpreadCoverage"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-enums/rows.json",
+      "review/test-audit/internal-lower-enums/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-enums-D2",
+    "mutant": "D2",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-enums-D2.diff",
+    "source_file": "review/test-defend/internal-lower-enums/D2.diff",
+    "file_line": "internal/lower/input.go:27",
+    "branch": "test-defend/internal-lower-enums",
+    "candidates_failed": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "other_rows_failed": [
+      "TestInputSpreadCoverage"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-enums/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-enums-D3",
+    "mutant": "D3",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-enums-D3.diff",
+    "source_file": "review/test-defend/internal-lower-enums/D3.diff",
+    "file_line": "internal/lower/input.go:33",
+    "branch": "test-defend/internal-lower-enums",
+    "candidates_failed": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "other_rows_failed": [
+      "TestInputSpreadCoverage"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-enums/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-enums-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-enums-D4.diff",
+    "source_file": "review/test-defend/internal-lower-enums/D4.diff",
+    "file_line": "internal/lower/input.go:32",
+    "branch": "test-defend/internal-lower-enums",
+    "candidates_failed": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "other_rows_failed": [
+      "TestInputSpreadCoverage"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-enums/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-interface_cast-M01",
+    "mutant": "M01",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-interface_cast-M01.diff",
+    "source_file": "review/test-audit/internal-lower-interface_cast/M01.diff",
+    "file_line": "internal/lower/interface_cast.go:66",
+    "branch": "test-audit/internal-lower-interface_cast",
+    "candidates_failed": [
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "other_rows_failed": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestPredicateBodyProof",
+      "TestPredicateOverloadRuntime",
+      "TestViewObjectContractsAreAvailableToEraser"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/package-kills.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-interface_cast-M06",
+    "mutant": "M06",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-interface_cast-M06.diff",
+    "source_file": "review/test-audit/internal-lower-interface_cast/M06.diff",
+    "file_line": "internal/lower/cycles.go:61",
+    "branch": "test-audit/internal-lower-interface_cast",
+    "candidates_failed": [
+      "TestClassFeaturesStaticParentCycle"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestClassFeaturesStaticSoundness",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestNamespaceAmbientHostInitialization",
+      "TestNestedCallbackCycleIsRefused",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "TestNestedFunctionCycleIsRefused",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/package-kills.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-interface_cast-M08",
+    "mutant": "M08",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-interface_cast-M08.diff",
+    "source_file": "review/test-audit/internal-lower-interface_cast/M08.diff",
+    "file_line": "internal/lower/class.go:414",
+    "branch": "test-audit/internal-lower-interface_cast",
+    "candidates_failed": [
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestInheritanceGenericFactoryLayouts"
+    ],
+    "other_rows_failed": [
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestEnumSlotViews",
+      "TestFlagEnumsDomain",
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceRefusesGrowingGenericClasses",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestIteratorDescriptorReasons",
+      "TestParameterPropertyCheckerContracts",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestRepresentedMethodReplacementIsNotYet",
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/audit.json",
+      "review/test-audit/internal-lower-interface_cast/package-kills.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-non_null_impossible-M01",
+    "mutant": "M01",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-non_null_impossible-M01.diff",
+    "source_file": "review/test-audit/internal-lower-non_null_impossible/diffs/M01.diff",
+    "file_line": "internal/lower/non_null.go:103",
+    "branch": "test-audit/internal-lower-non_null_impossible",
+    "candidates_failed": [
+      "TestAdamicNullishAssertionsAreRefused"
+    ],
+    "other_rows_failed": [
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased",
+      "TestPredicateOverloadRuntime",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-non_null_impossible/matrix.json",
+      "review/test-audit/internal-lower-non_null_impossible/rows.json",
+      "review/test-audit/internal-lower-non_null_impossible/rows.json",
+      "review/test-audit/internal-lower-non_null_impossible/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-non_null_impossible-M08",
+    "mutant": "M08",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-non_null_impossible-M08.diff",
+    "source_file": "review/test-audit/internal-lower-non_null_impossible/diffs/M08.diff",
+    "file_line": "internal/lower/optional_widening.go:83",
+    "branch": "test-audit/internal-lower-non_null_impossible",
+    "candidates_failed": [
+      "TestOptionalWideningAllowed"
+    ],
+    "other_rows_failed": [
+      "TestClassWrongOutputIteratorReceiver",
+      "TestIteratorMapperIndexHasNumberRepresentation",
+      "TestOptionalWideningRefused"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-non_null_impossible/matrix.json",
+      "review/test-audit/internal-lower-non_null_impossible/rows.json",
+      "review/test-audit/internal-lower-non_null_impossible/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-non_null_impossible-D2",
+    "mutant": "D2",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-non_null_impossible-D2.diff",
+    "source_file": "review/test-defend/internal-lower-non_null_impossible/D2.diff",
+    "file_line": "internal/lower/optional_widening.go:83",
+    "branch": "test-defend/internal-lower-non_null_impossible",
+    "candidates_failed": [
+      "TestOptionalWideningAllowed"
+    ],
+    "other_rows_failed": [
+      "TestClassWrongOutputIteratorReceiver",
+      "TestIteratorMapperIndexHasNumberRepresentation"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-non_null_impossible/matrix.json",
+      "review/test-defend/internal-lower-non_null_impossible/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-non_null_impossible-D3",
+    "mutant": "D3",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-non_null_impossible-D3.diff",
+    "source_file": "review/test-defend/internal-lower-non_null_impossible/D3.diff",
+    "file_line": "internal/lower/optional_widening.go:111",
+    "branch": "test-defend/internal-lower-non_null_impossible",
+    "candidates_failed": [
+      "TestOptionalWideningAllowed"
+    ],
+    "other_rows_failed": [
+      "TestIteratorDescriptorReasons",
+      "TestIteratorGapsAreExplicit",
+      "TestLibraryLanguageBoundaries",
+      "TestNumericEnumsAreOpen",
+      "TestObjectRefusalsExplainSoundness",
+      "TestOptionalWideningRefused",
+      "TestProvenRelationsRefuse"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-non_null_impossible/matrix.json",
+      "review/test-defend/internal-lower-non_null_impossible/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-non_null_impossible-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-non_null_impossible-D4.diff",
+    "source_file": "review/test-defend/internal-lower-non_null_impossible/D4.diff",
+    "file_line": "internal/lower/optional_widening.go:111",
+    "branch": "test-defend/internal-lower-non_null_impossible",
+    "candidates_failed": [
+      "TestOptionalWideningAllowed"
+    ],
+    "other_rows_failed": [
+      "TestIteratorDescriptorReasons",
+      "TestIteratorGapsAreExplicit",
+      "TestLibraryLanguageBoundaries",
+      "TestNumericEnumsAreOpen",
+      "TestObjectRefusalsExplainSoundness",
+      "TestOptionalWideningRefused",
+      "TestProvenRelationsRefuse"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-non_null_impossible/matrix.json",
+      "review/test-defend/internal-lower-non_null_impossible/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-predicates_overload-M01",
+    "mutant": "M01",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-predicates_overload-M01.diff",
+    "source_file": "review/test-audit/internal-lower-predicates_overload/diffs/M01.diff",
+    "file_line": "internal/lower/predicates.go:79",
+    "branch": "test-audit/internal-lower-predicates_overload",
+    "candidates_failed": [
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestPredicateBodiesAreProven",
+      "TestPredicateBodyProof",
+      "TestPredicateCallbackContracts",
+      "TestPredicateOverloadRuntime",
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-predicates_overload/matrix.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-predicates_overload-M04",
+    "mutant": "M04",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-predicates_overload-M04.diff",
+    "source_file": "review/test-audit/internal-lower-predicates_overload/diffs/M04.diff",
+    "file_line": "internal/lower/predicates.go:125",
+    "branch": "test-audit/internal-lower-predicates_overload",
+    "candidates_failed": [
+      "TestEveryNeedsCallbackEffects"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract",
+      "TestPredicateBodiesAreProven",
+      "TestPredicateCallbackContracts",
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-predicates_overload/matrix.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-predicates_overload-M05",
+    "mutant": "M05",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-predicates_overload-M05.diff",
+    "source_file": "review/test-audit/internal-lower-predicates_overload/diffs/M05.diff",
+    "file_line": "internal/lower/predicates.go:354",
+    "branch": "test-audit/internal-lower-predicates_overload",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestPredicateBodyProof",
+      "TestPredicateCallbackContracts",
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-predicates_overload/matrix.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "audit-predicates_overload-M06",
+    "mutant": "M06",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/audit-predicates_overload-M06.diff",
+    "source_file": "review/test-audit/internal-lower-predicates_overload/diffs/M06.diff",
+    "file_line": "internal/lower/predicates.go:474",
+    "branch": "test-audit/internal-lower-predicates_overload",
+    "candidates_failed": [
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateCallbackContracts"
+    ],
+    "metadata": [
+      "review/test-audit/internal-lower-predicates_overload/matrix.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json",
+      "review/test-audit/internal-lower-predicates_overload/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "key": "defend-predicates_overload-D5",
+    "mutant": "D5",
+    "file": "review/test-defend/deletion-set/internal-lower/replay-b8bcadb2/diffs/defend-predicates_overload-D5.diff",
+    "source_file": "review/test-defend/internal-lower-predicates_overload/predicate-callback-and-regions/D5.diff",
+    "file_line": "internal/lower/predicates.go:403",
+    "branch": "test-defend/internal-lower-predicates_overload",
+    "candidates_failed": [
+      "TestPredicateOverloadCallback"
+    ],
+    "other_rows_failed": [
+      "TestPredicateOverloadRuntime"
+    ],
+    "metadata": [
+      "review/test-defend/internal-lower-predicates_overload/predicate-callback-and-regions/matrix.json",
+      "review/test-defend/internal-lower-predicates_overload/predicate-callback-and-regions/rows.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  }
+]

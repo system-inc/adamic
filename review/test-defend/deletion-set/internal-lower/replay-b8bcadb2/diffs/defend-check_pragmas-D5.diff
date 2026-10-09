@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..804de04c 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -445,7 +445,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
+ 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+ 	}
+ 	// A #private field is stored under its name, # and all, which nothing else can spell.
+-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
++	return []ir.Statement{ir.SetProperty{Object: value, Name: l.fieldName(target.Name()), Value: object, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+ }
+ 
+ // absentOptionalWrite refuses a write to an optional own field of a plain object when some literal left

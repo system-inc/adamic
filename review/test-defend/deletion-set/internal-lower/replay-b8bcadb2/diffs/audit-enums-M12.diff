@@ -1,0 +1,11 @@
+--- a/internal/lower/input.go
++++ b/internal/lower/input.go
+@@ -33,7 +33,7 @@
+ 		}
+ 		for _, argument := range arguments {
+ 			if argument.Kind == ast.KindSpreadElement {
+-				return nil, true, l.notYet(argument, "a spread argument to "+name)
++				return nil, true, l.notYet(argument, "a spread into "+name)
+ 			}
+ 		}
+ 	}
