@@ -1,0 +1,250 @@
+[
+  {
+    "id": "M01",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 49,
+    "old": "fmt.Fprintf(hash, \"%d:\", len(part))",
+    "new": "_ = part",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M02",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 56,
+    "old": "\"test262-compiler-v1\", program, compiler, command, context",
+    "new": "\"test262-compiler-v1\", \"\", compiler, command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 56,
+    "old": "\"test262-compiler-v1\", program, compiler, command, context",
+    "new": "\"test262-compiler-v1\", program, \"\", command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 60,
+    "old": "\"test262-node-v1\", program, version, adaptation, command, context",
+    "new": "\"test262-node-v1\", \"\", version, adaptation, command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 60,
+    "old": "\"test262-node-v1\", program, version, adaptation, command, context",
+    "new": "\"test262-node-v1\", program, \"\", adaptation, command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M06",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 60,
+    "old": "\"test262-node-v1\", program, version, adaptation, command, context",
+    "new": "\"test262-node-v1\", program, version, \"\", command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M07",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 63,
+    "old": "\"test262-native-v1\", code, library, command, context",
+    "new": "\"test262-native-v1\", \"\", library, command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M08",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 63,
+    "old": "\"test262-native-v1\", code, library, command, context",
+    "new": "\"test262-native-v1\", code, \"\", command, context",
+    "menu": "change constant"
+  },
+  {
+    "id": "M09",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 35,
+    "old": "[]byte(value.Stdout), []byte(value.Stderr)",
+    "new": "[]byte{}, []byte(value.Stderr)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 35,
+    "old": "value.Exit, value.Signal, value.TimedOut",
+    "new": "value.Exit, \"\", value.TimedOut",
+    "menu": "change constant"
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 67,
+    "old": "os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"1\"",
+    "new": "os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"0\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 84,
+    "old": "envelope.Digest == cacheKey(string(envelope.Value))",
+    "new": "true",
+    "menu": "change condition option"
+  },
+  {
+    "id": "M13",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 90,
+    "old": "!reusable || result.TimedOut ||",
+    "new": "!reusable || false ||",
+    "menu": "change condition option"
+  },
+  {
+    "id": "M14",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 90,
+    "old": "result.Exit == -1 && result.Signal == \"\"",
+    "new": "result.Exit == -2 && result.Signal == \"\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M15",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 109,
+    "old": "_ = os.Rename(temporary.Name(), path)",
+    "new": "_ = path",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M16",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 358,
+    "old": "importedProgram.MatchString(codeOnly(program)) || referencedProgram.MatchString(program)",
+    "new": "importedProgram.MatchString(codeOnly(program)) && referencedProgram.MatchString(program)",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M17",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 154,
+    "old": "attempted >= limit",
+    "new": "attempted > limit",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M18",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 213,
+    "old": "(index+1)%50 == 0",
+    "new": "(index+1)%49 == 0",
+    "menu": "change constant"
+  },
+  {
+    "id": "M19",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 120,
+    "old": "worker.encoder.Encode(path)",
+    "new": "worker.encoder.Encode(\"\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M20",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 146,
+    "old": "return execution{Exit: -1, TimedOut: true}",
+    "new": "return execution{Exit: -1, TimedOut: false}",
+    "menu": "change constant"
+  },
+  {
+    "id": "P01",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 75,
+    "old": "func (cache *resultCache) reuse(key string, execute func() (execution, bool)) execution {",
+    "new": "func (cache *resultCache) reuse(key string, execute func() (execution, bool)) execution {\n\treturn execution{}",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P02",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 66,
+    "old": "func (cache *resultCache) observe(key string, execute func() (execution, bool)) execution {",
+    "new": "func (cache *resultCache) observe(key string, execute func() (execution, bool)) execution {\n\treturn execution{}",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P03",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 46,
+    "old": "func cacheKey(parts ...string) string {",
+    "new": "func cacheKey(parts ...string) string {\n\treturn \"\"",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P04",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 55,
+    "old": "func compilerResultKey(program, compiler, command, context string) string {",
+    "new": "func compilerResultKey(program, compiler, command, context string) string {\n\treturn \"\"",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P05",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 59,
+    "old": "func nodeResultKey(program, version, adaptation, command, context string) string {",
+    "new": "func nodeResultKey(program, version, adaptation, command, context string) string {\n\treturn \"\"",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P06",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 62,
+    "old": "func nativeResultKey(code, library, command, context string) string {",
+    "new": "func nativeResultKey(code, library, command, context string) string {\n\treturn \"\"",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P07",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 127,
+    "old": "func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {",
+    "new": "func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {\n\treturn filterReport{}, nil",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P08",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 232,
+    "old": "func (e *engine) attempt(test classified) result {",
+    "new": "func (e *engine) attempt(test classified) result {\n\treturn result{}",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P09",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 94,
+    "old": "func (worker *compilerWorker) compile(path string) execution {",
+    "new": "func (worker *compilerWorker) compile(path string) execution {\n\treturn execution{}",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P10",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 38,
+    "old": "func compileInProcess(path string) (result execution) {",
+    "new": "func compileInProcess(path string) (result execution) {\n\treturn execution{}",
+    "menu": "empty-answer probe"
+  },
+  {
+    "id": "P11",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 357,
+    "old": "func dependentProgram(program string) bool {",
+    "new": "func dependentProgram(program string) bool {\n\treturn false",
+    "menu": "empty-answer probe"
+  }
+]
