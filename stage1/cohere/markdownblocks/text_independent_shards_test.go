@@ -119,7 +119,7 @@ func textShardFor(key string, count int) int {
 
 func textVerifyLeaves(t *testing.T) {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "text_shards_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "text_independent_shards_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
