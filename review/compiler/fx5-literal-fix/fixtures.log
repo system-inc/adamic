@@ -1,0 +1,26 @@
+=== RUN   TestFX5NumberLiteralAgrees
+=== PAUSE TestFX5NumberLiteralAgrees
+=== RUN   TestFX5AssignedNumberLiteralAgrees
+=== PAUSE TestFX5AssignedNumberLiteralAgrees
+=== RUN   TestFX5NumberValueRefused
+=== PAUSE TestFX5NumberValueRefused
+=== RUN   TestFX5MixedLiteralAgrees
+=== PAUSE TestFX5MixedLiteralAgrees
+=== RUN   TestFX5NestedNumberLiteralAgrees
+=== PAUSE TestFX5NestedNumberLiteralAgrees
+=== RUN   TestFX5ConstTupleUsesSeparatePath
+=== PAUSE TestFX5ConstTupleUsesSeparatePath
+=== CONT  TestFX5NumberLiteralAgrees
+=== CONT  TestFX5MixedLiteralAgrees
+=== CONT  TestFX5ConstTupleUsesSeparatePath
+=== CONT  TestFX5NestedNumberLiteralAgrees
+=== CONT  TestFX5AssignedNumberLiteralAgrees
+--- PASS: TestFX5ConstTupleUsesSeparatePath (0.25s)
+=== CONT  TestFX5NumberValueRefused
+--- PASS: TestFX5NumberValueRefused (0.26s)
+--- PASS: TestFX5MixedLiteralAgrees (1.32s)
+--- PASS: TestFX5NumberLiteralAgrees (1.41s)
+--- PASS: TestFX5AssignedNumberLiteralAgrees (1.67s)
+--- PASS: TestFX5NestedNumberLiteralAgrees (1.69s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.720s

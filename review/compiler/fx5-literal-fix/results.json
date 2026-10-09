@@ -39,5 +39,9 @@
     "native_stdout": "",
     "node_stdout": "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
   },
-  "const_tuple": "does not take literal path; existing tuple-to-array NotYet pinned at main.a:1:45"
+  "const_tuple": "does not take literal path; existing tuple-to-array NotYet pinned at main.a:1:45",
+  "implementation_commit": "1e00f447",
+  "counts_seconds": 135.581,
+  "counts_rows_changed": 0,
+  "lane": "lane checks 2.3 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages"
 }

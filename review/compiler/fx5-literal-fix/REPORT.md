@@ -1,5 +1,5 @@
 Built declared union layout conversion for nonempty array literals toward task #8ng1j76, item 130.
-Base: fd27bb0e on origin/compiler/fx5-refusals; implementation and evidence commits are on compiler/fx5-literal-fix.
+Base: fd27bb0e on origin/compiler/fx5-refusals; implementation commit 1e00f447; final evidence commit is compiler/fx5-literal-fix HEAD.
 Validation: focused FX5 leaves, full internal/lower, TestCallTargetReaders, counts refresh and integration lane checks; logs are beside this report.
 Mutant: restore source layout by excluding ir.Union from contextual selection; flat, assignment and nested native stdout comparisons fail against Node.
 Not covered: const tuple-to-array conversion, existing number[] value variance, empty union literals or spread representation conversion.
@@ -35,3 +35,5 @@ Setup succeeded. Timing lines: Node 0.035s, Go 0.038s, submodules 0.118s, markdo
 New fixtures are lowering test sources, not registered oracle fixtures. The counts refresh checks the existing corpus; no new oracle rows are required. No code was copied from cohere. The prescribed fd27bb0e base is retained, including the separate every-narrowing refusals for 127 and 128.
 
 Full internal/lower: PASS, 115.897s. Final TestCallTargetReaders: PASS, 4.500s. Changed leaf times: flat initialization 1.09s, later assignment 0.94s, nested literal 1.10s, mixed control 0.92s, existing number[] value refusal 0.08s, separate const-tuple boundary 0.09s. Full test output is in lower-full.json.gz.
+
+Counts refresh: PASS, 135.581s. Existing rows before and after are identical, with zero rows moved; counts-before-after.json records matching SHA-256 hashes. Lane checks: PASS: lane checks 2.3 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages. The third Go file is inherited from the prescribed refusal base; this unit edits only object.go and fx5_literal_test.go.

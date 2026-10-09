@@ -1,0 +1,21 @@
+=== RUN   TestFX5NumberLiteralAgrees
+=== PAUSE TestFX5NumberLiteralAgrees
+=== RUN   TestFX5AssignedNumberLiteralAgrees
+=== PAUSE TestFX5AssignedNumberLiteralAgrees
+=== RUN   TestFX5NestedNumberLiteralAgrees
+=== PAUSE TestFX5NestedNumberLiteralAgrees
+=== CONT  TestFX5NumberLiteralAgrees
+=== CONT  TestFX5NestedNumberLiteralAgrees
+=== CONT  TestFX5AssignedNumberLiteralAgrees
+=== NAME  TestFX5NestedNumberLiteralAgrees
+    fx5_literal_test.go:48: Native backend stdout = "", source Node = "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
+--- FAIL: TestFX5NestedNumberLiteralAgrees (0.86s)
+=== NAME  TestFX5NumberLiteralAgrees
+    fx5_literal_test.go:15: Native backend stdout = "", source Node = "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
+--- FAIL: TestFX5NumberLiteralAgrees (0.88s)
+=== NAME  TestFX5AssignedNumberLiteralAgrees
+    fx5_literal_test.go:23: Native backend stdout = "", source Node = "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
+--- FAIL: TestFX5AssignedNumberLiteralAgrees (1.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.051s
+FAIL

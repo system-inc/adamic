@@ -1,0 +1,24 @@
+=== RUN   TestFX5NumberLiteralAgrees
+=== PAUSE TestFX5NumberLiteralAgrees
+=== RUN   TestFX5NumberValueRefused
+=== PAUSE TestFX5NumberValueRefused
+=== RUN   TestFX5MixedLiteralAgrees
+=== PAUSE TestFX5MixedLiteralAgrees
+=== RUN   TestFX5NestedNumberLiteralAgrees
+=== PAUSE TestFX5NestedNumberLiteralAgrees
+=== RUN   TestFX5ConstLiteralPath
+=== PAUSE TestFX5ConstLiteralPath
+=== CONT  TestFX5NumberLiteralAgrees
+=== CONT  TestFX5ConstLiteralPath
+=== CONT  TestFX5MixedLiteralAgrees
+=== CONT  TestFX5NumberValueRefused
+=== CONT  TestFX5NestedNumberLiteralAgrees
+--- PASS: TestFX5NumberValueRefused (0.22s)
+=== NAME  TestFX5ConstLiteralPath
+    fx5_literal_test.go:47: const tuple path: /tmp/adamic-gate/TestFX5ConstLiteralPath3323788437/001/main.a:1:45: stage 0 can't lower a tuple where an array goes (as readonly (string | number)[]) yet
+--- PASS: TestFX5ConstLiteralPath (0.34s)
+--- PASS: TestFX5MixedLiteralAgrees (1.00s)
+--- PASS: TestFX5NestedNumberLiteralAgrees (1.11s)
+--- PASS: TestFX5NumberLiteralAgrees (1.11s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.128s
