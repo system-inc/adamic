@@ -433,7 +433,7 @@ class RecordTests(unittest.TestCase):
 class ConfigurationTests(unittest.TestCase):
     def test_lanes_and_launchd(self):
         configured = floor.lanes(Path(__file__).with_name('fleet-floor') / 'lanes.tsv')
-        self.assertEqual([l['floor'] for l in configured], [30, 30, 10, 8, 8, 4])
+        self.assertEqual([l['floor'] for l in configured], [30, 1, 10, 8, 8, 4])
         with (Path(__file__).with_name('fleet-floor') / 'com.adamic.fleet-floor.plist').open('rb') as file:
             plist = plistlib.load(file)
         for flag in ['KeepAlive', 'RunAtLoad', 'AbandonProcessGroup']:
