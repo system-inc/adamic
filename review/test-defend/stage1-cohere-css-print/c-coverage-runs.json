@@ -1,0 +1,20 @@
+[
+  {
+    "row": "shared",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestSharedSliceAppendAgreesWithNode$"
+    ],
+    "exit": 124,
+    "seconds": 120.00642359400081
+  }
+]

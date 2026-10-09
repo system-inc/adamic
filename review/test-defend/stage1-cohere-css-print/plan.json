@@ -1,0 +1,29 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/native/runtime/string_share.c",
+    "line": 61,
+    "before": "shared->owner = owner->heap.references == 0 ? NULL : adamic_retain((adamic_string *)owner);",
+    "after": "shared->owner = owner->heap.references != 0 ? NULL : adamic_retain((adamic_string *)owner);",
+    "menu": "flip condition",
+    "aim": "Remove owner retention for a view of dynamically owned bytes; fixture replaces its sole original reference with that view."
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/native/runtime/string_append.c",
+    "line": 90,
+    "before": "\t\tadamic_release(string);",
+    "after": "",
+    "menu": "drop statement",
+    "aim": "Lose the release of the old shared view when append allocates replacement storage; leak guard should reject retained view and owner."
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/native/runtime/string_append.c",
+    "line": 77,
+    "before": "memcpy((char *)result->bytes, string->bytes, length);",
+    "after": "memcpy((char *)result->bytes, string->bytes, length - 1);",
+    "menu": "off by one copy bound",
+    "aim": "Omit the last byte of the shared prefix while preserving append length metadata; test only checks length."
+  }
+]
