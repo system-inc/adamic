@@ -66,9 +66,15 @@ func boundedPortIDs(cases []boundedPortCase) []string {
 // 64 fixed hash shards leave headroom for the live repository corpus. Keys are
 // repository-relative fixture paths plus case index/mode; new files move no cases.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every live fixture and EOF case.
-func TestBoundedPortParser(t *testing.T) {
+func boundedPortParserShard(t *testing.T, shard int) {
 	finishSetup := miscStart(t)
 	cases := boundedPortCases(t)
+	ids := boundedPortIDs(cases)
+	indexes := estreeScopedIndexes(t, testBoundedPortParserShards, ids, shard)
+	if estreeScopedProof(t, "TestBoundedPortParser", ids, indexes) || len(indexes) == 0 {
+		finishSetup()
+		return
+	}
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -87,7 +93,7 @@ func TestBoundedPortParser(t *testing.T) {
 		byID[item.id] = answers[i]
 	}
 	finishSetup()
-	miscRunShards(t, testBoundedPortParserShards, boundedPortIDs(cases), func(t *testing.T, i int) {
+	for _, i := range indexes {
 		item := cases[i]
 		path := filepath.Join(t.TempDir(), item.filename)
 		if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
@@ -106,17 +112,11 @@ func TestBoundedPortParser(t *testing.T) {
 				refusedBeforeDeadline(t, argv, "ESTree parser")
 			}
 		}
-	})
+	}
 }
 
 func TestBoundedPortParserPlantedDisagreement(t *testing.T) {
-	miscPlantedProof(t, testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)), func(planted bool) error {
-		got := []byte("agree")
-		if planted {
-			got = []byte("disagree")
-		}
-		return miscCompare([]byte("agree"), got, false)
-	})
+	estreeTopPlantedProof(t, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)))
 }
 
 const testPortStallControlShards = 1
@@ -130,12 +130,18 @@ func portStallControlResult(timedOut bool, err error) error {
 
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs the single guard-disabled
 // mutant case. Both source Node and sanitized native stay together in its leaf.
-func TestPortStallControl(t *testing.T) {
+func portStallControlShard(t *testing.T, shard int) {
 	finishSetup := miscStart(t)
+	ids := []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"}
+	indexes := estreeScopedIndexes(t, testPortStallControlShards, ids, shard)
+	if estreeScopedProof(t, "TestPortStallControl", ids, indexes) || len(indexes) == 0 {
+		finishSetup()
+		return
+	}
 	main := miscMutant(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := miscBuild(t, main)
 	finishSetup()
-	miscRunShards(t, testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"}, func(t *testing.T, _ int) {
+	for range indexes {
 		path := filepath.Join(t.TempDir(), "input.ts")
 		if err := os.WriteFile(path, []byte("class C { ) }"), 0644); err != nil {
 			t.Fatal(err)
@@ -158,11 +164,9 @@ func TestPortStallControl(t *testing.T) {
 			}
 			t.Logf("%s guard-disabled control caught by 500ms deadline", argv[0])
 		}
-	})
+	}
 }
 
 func TestPortStallControlPlantedSurvivor(t *testing.T) {
-	miscPlantedProof(t, testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"}, func(planted bool) error {
-		return portStallControlResult(!planted, nil)
-	})
+	estreeTopPlantedProof(t, "TestPortStallControl", testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"})
 }
