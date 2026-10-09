@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/flow/build.go",
+    "file_line": "internal/flow/build.go:177",
+    "change": "return early for a literal-number Evaluate"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/flow/liveness.go",
+    "file_line": "internal/flow/liveness.go:25",
+    "change": "off by one: omit the first instruction transfer"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/flow/liveness.go",
+    "file_line": "internal/flow/liveness.go:33",
+    "change": "drop the whole definition-kill loop; preserve future-read overapproximations"
+  },
+  {
+    "mutant": "D4",
+    "file": "internal/flow/liveness.go",
+    "file_line": "internal/flow/liveness.go:25",
+    "change": "off by one: omit the final instruction transfer, including a return read"
+  }
+]

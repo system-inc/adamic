@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:12:32.575553392Z","Action":"start","Package":"github.com/system-inc/adamic/internal/flow"}
+{"Time":"2026-10-09T18:12:32.584082328Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction"}
+{"Time":"2026-10-09T18:12:32.584137676Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction","Output":"=== RUN   TestDebuggerHasNoFlowInstruction\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:12:32.584187275Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction","Output":"=== PAUSE TestDebuggerHasNoFlowInstruction\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:12:32.584189984Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction"}
+{"Time":"2026-10-09T18:12:32.584192025Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction"}
+{"Time":"2026-10-09T18:12:32.584193784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction","Output":"=== CONT  TestDebuggerHasNoFlowInstruction\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:12:32.584199667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction","Output":"--- PASS: TestDebuggerHasNoFlowInstruction (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:12:32.584202231Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestDebuggerHasNoFlowInstruction","Elapsed":0}
+{"Time":"2026-10-09T18:12:32.584213304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:12:32.585482442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"coverage: 10.8% of statements in ./internal/flow\n"}
+{"Time":"2026-10-09T18:12:32.587479149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"ok  \tgithub.com/system-inc/adamic/internal/flow\t0.011s\tcoverage: 10.8% of statements in ./internal/flow\n"}
+{"Time":"2026-10-09T18:12:32.587531534Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Elapsed":0.012}

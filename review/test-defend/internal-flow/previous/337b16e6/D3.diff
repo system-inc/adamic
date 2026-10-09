@@ -1,0 +1,15 @@
+diff --git a/internal/flow/liveness.go b/internal/flow/liveness.go
+index d3837836..4b3b4cf8 100644
+--- a/internal/flow/liveness.go
++++ b/internal/flow/liveness.go
+@@ -30,9 +30,7 @@ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
+ 				}
+ 				result[id] = after
+ 				instruction := function.Instructions[id]
+-				for _, define := range instruction.Defines {
+-					delete(live, declaration(define))
+-				}
++
+ 				// An instruction that throws never gives its variables their values, so on the way to
+ 				// the handler what was live there is still live before it: in local = f() with a catch
+ 				// that reads local, local's old value must outlive the call.
