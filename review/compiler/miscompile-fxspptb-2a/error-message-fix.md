@@ -21,3 +21,5 @@ Final validation on main acd029d9 plus this fix:
 - `python3 review/compiler/miscompile-fxspptb-2a/mutants.py` and the final `--optional-only` run: all five stops and both runtime semantics mutants caught. The final old-native-read runs are separate, uncached commands, with UBSan symbolization disabled but sanitizer checks enabled. Each final negative leaf is below 60 s. The earlier parallel attempt took 70.84 s for the census driver and is retained in parallel-error-mutant-attempt.log; the separate final driver took 4.19 s.
 
 Every new or changed test's final seconds are in error-fix-seconds.json. No evidence source under this branch's review directory is compilable Go. Full packages and the full gate were not run.
+
+Integration lane checks pass in 4.0 s: gofmt and tools on six Go files, t.Parallel on two test packages, vet on two packages. The final main merge is 6d53fa22 and changes only unrelated stage 1 test product declarations.
