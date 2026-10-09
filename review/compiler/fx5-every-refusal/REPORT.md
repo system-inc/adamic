@@ -1,6 +1,6 @@
 Built the item 127 boxed-union every refusal, item 128 findLast guard, and item 131 visit comment correction.
-Delivery: compiler/fx5-every-refusal, based on d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb.
-Checks: full internal/lower 50.354s; TestCallTargetReaders 24.986s; counts refresh 89.206s, unchanged.
+Delivery: compiler/fx5-every-refusal. Implementation e49ae19ee17b2830d731030bfc345ebe4fd67f0d; merged main a7448d73cd17f16362b6cbc5c5c111080da64e43 in e02662335700f4b3e938aca364d1fa7037389b35.
+Checks: full internal/lower 69.406s; TestCallTargetReaders 2.386s; counts refresh 78.306s, unchanged.
 Mutants: every compiles with wrong native stdout; findLast compiles to C that clang rejects. Both refusal tests fail when reverted.
 Limits: this refuses unsupported narrowing; it does not implement stored-layout reads or fix the separately observed all-number union-literal storage issue.
 
@@ -19,7 +19,7 @@ Exact final commands, each with output redirected to its named log:
 - timeout 780 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 12m -args -update-counts > review/compiler/fx5-every-refusal/counts-final.log 2>&1
 - timeout 380 python3 review/compiler/fx5-every-refusal/run-mutants.py > review/compiler/fx5-every-refusal/mutants.log 2>&1
 
-The every reverting diff removes only the new guard. TestArrayNarrowingEveryRefused detects acceptance. The independent native witness still agrees with source Node through the JavaScript backend, then native prints total 9.36276791094653e-310 with exit 0 versus Node total 3 with exit 0. This kill is a behavior comparison, not a build warning. The number reflects the observed run, not a deterministic expected value.
+The every reverting diff removes only the new guard. TestArrayNarrowingEveryRefused detects acceptance. The independent native witness still agrees with source Node through the JavaScript backend, then native prints total 9.2730926099636e-310 with exit 0 versus Node total 3 with exit 0. This kill is a behavior comparison, not a build warning. The number reflects the observed run, not a deterministic expected value.
 
 The findLast reverting diff removes findLast from the find name test. TestArrayNarrowingFindLastRefused detects acceptance. Its witness agrees with Node through JavaScript, then clang rejects assignment to adamic_maybe_number from incompatible adamic_heap *. That build error is the specifically requested item 128 reproduction. The runner restores source and removes its temporary Go witness in finally blocks.
 
@@ -30,20 +30,24 @@ The first full lower run exposed missing pinned Node types. timeout 120 npm ci -
 Counts regeneration rewrote the existing table with identical bytes. These are lower testdata fixtures, so they add no registered oracle counts rows.
 
 New test leaf times from the final full package run:
-- TestArrayNarrowingBooleanCallbackAgrees: 0.72s
-- TestArrayNarrowingForwardRefused: 0.18s
-- TestArrayNarrowingPropertyRefused: 0.20s
-- TestArrayNarrowingEarlyReturnRefused: 0.19s
-- TestArrayNarrowingReadonlyRefused: 0.10s
-- TestArrayNarrowingInferredRefused: 0.16s
-- TestArrayNarrowingEveryRefused: 0.16s
-- TestArrayNarrowingPreservedUnionAgrees: 1.31s
-- TestArrayNarrowingFindLastIndexAgrees: 1.80s
-- TestArrayNarrowingFindLastRefused: 0.19s
-- TestArrayNarrowingSomeNegatedAgrees: 1.71s
-- TestArrayNarrowingFindRefused: 0.17s
-- TestArrayNarrowingCatRefused: 0.14s
-- TestArrayNarrowingOptionalStringAgrees: 1.51s
-- TestArrayNarrowingOptionalNumberAgrees: 1.85s
+- TestArrayNarrowingBooleanCallbackAgrees: 0.73s
+- TestArrayNarrowingCatRefused: 0.08s
+- TestArrayNarrowingEarlyReturnRefused: 0.17s
+- TestArrayNarrowingEveryRefused: 0.15s
+- TestArrayNarrowingFindLastIndexAgrees: 0.61s
+- TestArrayNarrowingFindLastRefused: 0.09s
+- TestArrayNarrowingFindRefused: 0.08s
+- TestArrayNarrowingForwardRefused: 0.07s
+- TestArrayNarrowingInferredRefused: 0.14s
+- TestArrayNarrowingOptionalNumberAgrees: 0.74s
+- TestArrayNarrowingOptionalStringAgrees: 0.75s
+- TestArrayNarrowingPreservedUnionAgrees: 0.71s
+- TestArrayNarrowingPropertyRefused: 0.18s
+- TestArrayNarrowingReadonlyRefused: 0.14s
+- TestArrayNarrowingSomeNegatedAgrees: 0.72s
 
-Lane validation is recorded in lane-checks.log after the implementation commit. The initial prescribed multi-ref fetch did not create origin/cloud/merge-tree in this single-branch checkout, so the two lane refs were fetched with explicit destination refspecs before retrying the prescribed command.
+After merging current main, the full lower package, call-target reader guard, counts regeneration, and both mutants were rerun and passed their intended checks. No production source changed in the main merge. Counts remain unchanged relative to the merged main table.
+
+Committed-tree lane output: lane checks 2.0 s: gofmt and tools on 2 Go files, t.Parallel on 1 test packages; vet 1 packages
+
+Lane command: timeout 180 bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'. The initial multi-ref fetch did not create origin/cloud/merge-tree in this single-branch checkout; explicit destination refspecs for both lane refs made the prescribed command work.
