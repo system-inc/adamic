@@ -1,0 +1,10 @@
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -89,7 +89,6 @@
+ 		// Also fail loudly if an opted-in IR is sent to an ordinary backend.
+ 		message := len(l.result.Strings)
+ 		l.result.Strings = append(l.result.Strings, "tsgo requires the native checker library renderer")
+-		declared.Body = append([]ir.Statement{ir.Panic{Message: ir.StringConstant{Index: message}}}, declared.Body...)
+ 		l.result.Functions = append(l.result.Functions, declared)
+ 	}
+ 	return ir.Call{Function: function, Arguments: arguments, Returns: returns}, true, nil

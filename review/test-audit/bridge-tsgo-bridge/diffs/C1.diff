@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/units_test.go
++++ b/bridge/tsgo/units_test.go
+@@ -138,7 +138,7 @@
+ 	return []string{filepath.Join(repository, "bridge/tsgo/testdata/sample.ts")}
+ }
+ func bridgePositions(text []byte) []int {
+-	count := min(400, len(text))
++	count := min(399, len(text))
+ 	positions := make([]int, count)
+ 	for index := range positions {
+ 		positions[index] = index * len(text) / count

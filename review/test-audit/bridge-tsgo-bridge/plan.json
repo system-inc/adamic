@@ -1,0 +1,102 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "file": "internal/lower/tsgo.go",
+    "line": 27,
+    "before": "if !l.program.TSGoEnabled() {",
+    "after": "if l.program.TSGoEnabled() {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "file": "internal/lower/tsgo.go",
+    "line": 90,
+    "before": "\t\tmessage := len(l.result.Strings)\n\t\tl.result.Strings = append(l.result.Strings, \"tsgo requires the native checker library renderer\")\n\t\tdeclared.Body = append([]ir.Statement{ir.Panic{Message: ir.StringConstant{Index: message}}}, declared.Body...)\n",
+    "after": "",
+    "menu": "drop the full panic setup block to avoid an unused local",
+    "repair": "Original single-statement deletion failed go vet. Expanded to delete its setup too; rerun independently."
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "file": "internal/native/tsgo.go",
+    "line": 18,
+    "before": "\t\t\treturn true\n",
+    "after": "\t\t\treturn false\n",
+    "menu": "change constant"
+  },
+  {
+    "id": "C1",
+    "kind": "construction",
+    "file": "bridge/tsgo/units_test.go",
+    "line": 141,
+    "before": "count := min(400, len(text))",
+    "after": "count := min(399, len(text))",
+    "menu": "change constant"
+  },
+  {
+    "id": "C2",
+    "kind": "construction",
+    "file": "bridge/tsgo/units_test.go",
+    "line": 48,
+    "before": "index%count == shard",
+    "after": "index%(count+1) == shard",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "C3",
+    "kind": "construction",
+    "file": "bridge/tsgo/units_test.go",
+    "line": 44,
+    "before": "return file == \"\" || (file == \"sample.ts\")",
+    "after": "return file == \"\" && (file == \"sample.ts\")",
+    "menu": "flip condition"
+  },
+  {
+    "id": "C4",
+    "kind": "construction",
+    "file": "bridge/tsgo/product_cache_test.go",
+    "line": 16,
+    "before": "\tif err == nil {\n\t\terr = bridgeProductCheck(directory)\n\t}\n",
+    "after": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "C5",
+    "kind": "construction",
+    "file": "bridge/tsgo/product_cache_test.go",
+    "line": 31,
+    "before": "if len(hashes) != len(bridgeProductNames) {",
+    "after": "if false && len(hashes) != len(bridgeProductNames) {",
+    "menu": "change boolean constant to disable count guard"
+  },
+  {
+    "id": "C6",
+    "kind": "construction",
+    "file": "bridge/tsgo/product_cache_test.go",
+    "line": 39,
+    "before": "if hashes[name] != fmt.Sprintf(\"%x\", sha256.Sum256(data)) {",
+    "after": "if false && hashes[name] != fmt.Sprintf(\"%x\", sha256.Sum256(data)) {",
+    "menu": "change boolean constant to disable digest guard"
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }",
+    "menu": "empty Lower at entry"
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "file": "internal/native/tsgo.go",
+    "line": 15,
+    "before": "func UsesTSGo(program *ir.Program) bool {",
+    "after": "func UsesTSGo(program *ir.Program) bool {\n\tif true { return false }",
+    "menu": "empty UsesTSGo at entry"
+  }
+]

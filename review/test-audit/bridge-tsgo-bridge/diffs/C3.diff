@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/units_test.go
++++ b/bridge/tsgo/units_test.go
+@@ -41,7 +41,7 @@
+ }
+ 
+ func bridgeFileActive(file string) bool {
+-	return file == "" || (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
++	return file == "" && (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
+ }
+ func bridgeCaseActive(index int) bool {
+ 	shard, count, err := bridgeShard()

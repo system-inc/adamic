@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/units_test.go
++++ b/bridge/tsgo/units_test.go
+@@ -45,7 +45,7 @@
+ }
+ func bridgeCaseActive(index int) bool {
+ 	shard, count, err := bridgeShard()
+-	return err == nil && bridgeFileActive(bridgeCases[index].file) && index%count == shard
++	return err == nil && bridgeFileActive(bridgeCases[index].file) && index%(count+1) == shard
+ }
+ 
+ // Not parallel: bridge subprocess timing and sanitizer probes share the machine.

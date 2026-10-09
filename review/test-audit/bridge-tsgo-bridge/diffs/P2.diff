@@ -1,0 +1,10 @@
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -13,6 +13,7 @@
+ )
+ 
+ func UsesTSGo(program *ir.Program) bool {
++	if true { return false }
+ 	for _, function := range program.Functions {
+ 		if _, found := spec.Name(function.Name); found {
+ 			return true

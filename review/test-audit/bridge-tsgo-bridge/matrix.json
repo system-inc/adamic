@@ -1,0 +1,269 @@
+[
+  {
+    "id": "switch-control",
+    "command": "ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/switch-control timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 0,
+    "wall_seconds": 2.5842079469985038,
+    "failed": [],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": []
+  },
+  {
+    "id": "M1",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.650361187999806,
+    "failed": [
+      "TestTSGoRequiresLink"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "bridge_test.go:30: lowering accepted an unlinked checker call"
+    ]
+  },
+  {
+    "id": "M2",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M2-final timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ (standalone M2.diff applied)",
+    "exit": 0,
+    "wall_seconds": 3.007436163999955,
+    "failed": [],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": []
+  },
+  {
+    "id": "M3",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.3560233139978664,
+    "failed": [
+      "TestTSGoRequiresLink"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "bridge_test.go:38: opted-in bridge calls lost"
+    ]
+  },
+  {
+    "id": "C1",
+    "command": "ADAMIC_MUTANT=C1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 0,
+    "wall_seconds": 2.503620024999691,
+    "failed": [],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": []
+  },
+  {
+    "id": "C2",
+    "command": "ADAMIC_MUTANT=C2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.2334688829978404,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": [
+      "TestBridgeProductCacheIsVerified",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "coverage_test.go:108: shard coverage 1/1: TestBridgeInputLength owns 0, want 1"
+    ]
+  },
+  {
+    "id": "C3",
+    "command": "ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.5334350019984413,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": [
+      "TestBridgeProductCacheIsVerified",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "coverage_test.go:90: active bridge coverage count: 0, want 16"
+    ]
+  },
+  {
+    "id": "C4",
+    "command": "ADAMIC_MUTANT=C4 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C4 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.376547482002934,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "coverage_test.go:148: corrupt product was accepted"
+    ]
+  },
+  {
+    "id": "C5",
+    "command": "ADAMIC_MUTANT=C5 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C5 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.550012804000289,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "coverage_test.go:171: wrong product count was accepted"
+    ]
+  },
+  {
+    "id": "C6",
+    "command": "ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.4875411149987485,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestTSGoRequiresLink"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "coverage_test.go:148: corrupt product was accepted"
+    ]
+  },
+  {
+    "id": "P1",
+    "command": "ADAMIC_MUTANT=P1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.465794622999965,
+    "failed": [
+      "TestTSGoRequiresLink"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "bridge_test.go:30: lowering accepted an unlinked checker call"
+    ]
+  },
+  {
+    "id": "P2",
+    "command": "ADAMIC_MUTANT=P2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "exit": 1,
+    "wall_seconds": 2.385190079003223,
+    "failed": [
+      "TestTSGoRequiresLink"
+    ],
+    "passed": [
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "unknown": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "failure_lines": [
+      "bridge_test.go:38: opted-in bridge calls lost"
+    ]
+  }
+]

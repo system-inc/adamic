@@ -1,0 +1,12 @@
+--- a/bridge/tsgo/product_cache_test.go
++++ b/bridge/tsgo/product_cache_test.go
+@@ -13,9 +13,6 @@
+ // Main owns the cache; this adapter verifies every member of the test bundle.
+ func bridgeProductGet(key string, build func(string) error) (string, error) {
+ 	directory, err := buildcache.Get(buildcache.Inputs{Name: "bridge-test-bundle", Flags: []string{key}}, build)
+-	if err == nil {
+-		err = bridgeProductCheck(directory)
+-	}
+ 	return directory, err
+ }
+ 

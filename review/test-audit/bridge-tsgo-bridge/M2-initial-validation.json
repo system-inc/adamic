@@ -1,0 +1,7 @@
+{
+  "id": "M2",
+  "applies": true,
+  "command": "timeout 90 go vet ./internal/lower/",
+  "exit": 1,
+  "wall_seconds": 0.5100644970007124
+}

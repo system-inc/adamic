@@ -1,0 +1,7 @@
+Starting commit: b3f83786a0ea00c23d47d774d3b6c98f9dd71336
+
+CODE UNDER TEST: Adamic Lower, lower.tsgo, native.UsesTSGo. Suite construction: bridgeShard, bridgeFileActive, bridgeCaseActive, bridgeRoots, bridgePositions, bridgeProductGet, bridgeProductCheck, bridgeCases, bridgeBindings, bridgeProductNames. See reached-functions.txt for the 302 covered production functions, including load preparation and package initializers. Test files are not instrumented by Go production coverage; the construction function list comes from reading units_test.go, registered_units_test.go and product_cache_test.go.
+
+ORACLE: self for all three rows. Linkage checks only non-nil error for the unlinked case, nil error and UsesTSGo for the linked case, with no diagnostic identity assertion. Coverage compares self-written counts, names, positions and shard ownership. Cache compares self-written build count/path equality and non-nil errors for corrupt bytes and extra hash entries; it does not check error identity.
+
+Mutant plan fixed before mutant outcomes: three production changes and six construction edits permitted by setup-check exception. The two probes are separate, never verdict evidence. Construction rows have no single production entry, so their vacuity field stays null. Matrix narrowed to requested rows after clean whole package timed out building sanitizer archive. No family member expansion is needed for these three standalone tests.

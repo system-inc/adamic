@@ -1,0 +1,182 @@
+[
+  {
+    "name": "baseline-bounded",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.26909168900238
+  },
+  {
+    "name": "TestTSGoRequiresLink-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestTSGoRequiresLink$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.529734281997662
+  },
+  {
+    "name": "TestTSGoRequiresLink-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestTSGoRequiresLink$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.5759752449994266
+  },
+  {
+    "name": "TestTSGoRequiresLink-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestTSGoRequiresLink$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.5297941969984095
+  },
+  {
+    "name": "TestBridgeUnitsCoverEveryPiece-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.3217586040009337
+  },
+  {
+    "name": "TestBridgeUnitsCoverEveryPiece-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.4456527850015846
+  },
+  {
+    "name": "TestBridgeUnitsCoverEveryPiece-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.7002674039977137
+  },
+  {
+    "name": "TestBridgeProductCacheIsVerified-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.728019461999793
+  },
+  {
+    "name": "TestBridgeProductCacheIsVerified-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.326832123999338
+  },
+  {
+    "name": "TestBridgeProductCacheIsVerified-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.0605114540012437
+  }
+]

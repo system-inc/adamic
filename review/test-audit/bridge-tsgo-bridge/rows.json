@@ -1,0 +1,116 @@
+[
+  {
+    "test": "TestTSGoRequiresLink",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/bridge_test.go:22",
+    "seconds": 0.072,
+    "oracle": "Self-written requirement: unlinked Lower must return some error; linked Lower must succeed and UsesTSGo must be true. The negative assertion does not verify diagnostic identity.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M3"
+    ],
+    "last_proven_fail": "M3 bridge_test.go:38: opted-in bridge calls lost",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > M3.log 2>&1; bridge_test.go:38: opted-in bridge calls lost",
+    "timing_samples": [
+      0.072,
+      0.066,
+      0.076
+    ]
+  },
+  {
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/coverage_test.go:16",
+    "seconds": 0.024,
+    "oracle": "Self-written 36 bindings, helper identities, query counts and arithmetic spacing, corpus-mode active counts, and exactly one shard owner for counts 1..40.",
+    "oracle_kind": "self",
+    "kills": [
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "unique_kills": [
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "last_proven_fail": "C3 coverage_test.go:90: active bridge coverage count: 0, want 16",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "evidence": "ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > C3.log 2>&1; coverage_test.go:90: active bridge coverage count: 0, want 16",
+    "timing_samples": [
+      0.026,
+      0.021,
+      0.024
+    ],
+    "mutation_kind": "construction edits permitted for setup-check; no production-mutant verdict"
+  },
+  {
+    "test": "TestBridgeProductCacheIsVerified",
+    "package": "bridge/tsgo",
+    "file": "bridge/tsgo/coverage_test.go:116",
+    "seconds": 0.015,
+    "oracle": "Self-written build count/path equality and rejection of corrupt bytes and an extra manifest entry. Rejections check only non-nil error, not its identity.",
+    "oracle_kind": "self",
+    "kills": [
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "unique_kills": [
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "last_proven_fail": "C6 coverage_test.go:148: corrupt product was accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSGoRequiresLink",
+      "TestBridgeUnitsCoverEveryPiece",
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "evidence": "ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > C6.log 2>&1; coverage_test.go:148: corrupt product was accepted",
+    "timing_samples": [
+      0.021,
+      0.012,
+      0.015
+    ],
+    "mutation_kind": "construction edits permitted for setup-check; no production-mutant verdict"
+  }
+]

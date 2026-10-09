@@ -1,0 +1,79 @@
+[
+  {
+    "id": "M1",
+    "applies": true,
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall_seconds": 4.9026110129998415
+  },
+  {
+    "id": "M2",
+    "applies": true,
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall_seconds": 0.7820172450010432
+  },
+  {
+    "id": "M3",
+    "applies": true,
+    "command": "timeout 90 go vet ./internal/native/",
+    "exit": 0,
+    "wall_seconds": 1.061734365997836
+  },
+  {
+    "id": "C1",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.23858692700014217
+  },
+  {
+    "id": "C2",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.24563822300115135
+  },
+  {
+    "id": "C3",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.2571147929993458
+  },
+  {
+    "id": "C4",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.3885723109997343
+  },
+  {
+    "id": "C5",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.48490149099961855
+  },
+  {
+    "id": "C6",
+    "applies": true,
+    "command": "timeout 90 go vet ./bridge/tsgo/",
+    "exit": 0,
+    "wall_seconds": 0.26024800700179185
+  },
+  {
+    "id": "P1",
+    "applies": true,
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall_seconds": 0.6970269119992736
+  },
+  {
+    "id": "P2",
+    "applies": true,
+    "command": "timeout 90 go vet ./internal/native/",
+    "exit": 0,
+    "wall_seconds": 0.47519980300057796
+  }
+]

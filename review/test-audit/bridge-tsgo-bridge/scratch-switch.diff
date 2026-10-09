@@ -1,0 +1,143 @@
+diff --git a/bridge/tsgo/product_cache_test.go b/bridge/tsgo/product_cache_test.go
+index b0f261d3..d6ae6450 100644
+--- a/bridge/tsgo/product_cache_test.go
++++ b/bridge/tsgo/product_cache_test.go
+@@ -13,8 +13,10 @@ import (
+ // Main owns the cache; this adapter verifies every member of the test bundle.
+ func bridgeProductGet(key string, build func(string) error) (string, error) {
+ 	directory, err := buildcache.Get(buildcache.Inputs{Name: "bridge-test-bundle", Flags: []string{key}}, build)
+-	if err == nil {
+-		err = bridgeProductCheck(directory)
++	if !(os.Getenv("ADAMIC_MUTANT") == "C4") {
++		if err == nil {
++			err = bridgeProductCheck(directory)
++		}
+ 	}
+ 	return directory, err
+ }
+@@ -28,7 +30,7 @@ func bridgeProductCheck(directory string) error {
+ 	if err := json.Unmarshal(data, &hashes); err != nil {
+ 		return err
+ 	}
+-	if len(hashes) != len(bridgeProductNames) {
++	if !(os.Getenv("ADAMIC_MUTANT") == "C5") && len(hashes) != len(bridgeProductNames) {
+ 		return fmt.Errorf("product count: %d, want %d", len(hashes), len(bridgeProductNames))
+ 	}
+ 	for _, name := range bridgeProductNames {
+@@ -36,7 +38,7 @@ func bridgeProductCheck(directory string) error {
+ 		if err != nil {
+ 			return err
+ 		}
+-		if hashes[name] != fmt.Sprintf("%x", sha256.Sum256(data)) {
++		if !(os.Getenv("ADAMIC_MUTANT") == "C6") && hashes[name] != fmt.Sprintf("%x", sha256.Sum256(data)) {
+ 			return fmt.Errorf("product digest: %s", name)
+ 		}
+ 	}
+diff --git a/bridge/tsgo/units_test.go b/bridge/tsgo/units_test.go
+index e8c8e711..98109e59 100644
+--- a/bridge/tsgo/units_test.go
++++ b/bridge/tsgo/units_test.go
+@@ -41,11 +41,21 @@ func bridgeShard() (int, int, error) {
+ }
+ 
+ func bridgeFileActive(file string) bool {
+-	return file == "" || (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
++	return func() bool {
++		if os.Getenv("ADAMIC_MUTANT") == "C3" {
++			return file == "" && (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
++		}
++		return file == "" || (file == "sample.ts") == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
++	}() // == (os.Getenv("ADAMIC_TSGO_CORPUS") == "")
+ }
+ func bridgeCaseActive(index int) bool {
+ 	shard, count, err := bridgeShard()
+-	return err == nil && bridgeFileActive(bridgeCases[index].file) && index%count == shard
++	return err == nil && bridgeFileActive(bridgeCases[index].file) && index%(count+func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "C2" {
++			return 1
++		}
++		return 0
++	}()) == shard
+ }
+ 
+ // Not parallel: bridge subprocess timing and sanitizer probes share the machine.
+@@ -139,6 +149,9 @@ func bridgeRoots(repository string) []string {
+ }
+ func bridgePositions(text []byte) []int {
+ 	count := min(400, len(text))
++	if os.Getenv("ADAMIC_MUTANT") == "C1" {
++		count = min(399, len(text))
++	}
+ 	positions := make([]int, count)
+ 	for index := range positions {
+ 		positions[index] = index * len(text) / count
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..0a15d5e7 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/tsgo.go b/internal/lower/tsgo.go
+index 36de4505..979ade46 100644
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"fmt"
++	"os"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/system-inc/adamic/bridge/tsgo/spec"
+@@ -24,7 +25,7 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+ 	if name == "" {
+ 		return nil, false, nil
+ 	}
+-	if !l.program.TSGoEnabled() {
++	if (!l.program.TSGoEnabled()) != (os.Getenv("ADAMIC_MUTANT") == "M1") {
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+ 	}
+ 	arguments := []ir.Expression{}
+@@ -89,7 +90,9 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+ 		// Also fail loudly if an opted-in IR is sent to an ordinary backend.
+ 		message := len(l.result.Strings)
+ 		l.result.Strings = append(l.result.Strings, "tsgo requires the native checker library renderer")
+-		declared.Body = append([]ir.Statement{ir.Panic{Message: ir.StringConstant{Index: message}}}, declared.Body...)
++		if !(os.Getenv("ADAMIC_MUTANT") == "M2") {
++			declared.Body = append([]ir.Statement{ir.Panic{Message: ir.StringConstant{Index: message}}}, declared.Body...)
++		}
+ 		l.result.Functions = append(l.result.Functions, declared)
+ 	}
+ 	return ir.Call{Function: function, Arguments: arguments, Returns: returns}, true, nil
+diff --git a/internal/native/tsgo.go b/internal/native/tsgo.go
+index 61f484b0..68f3983f 100644
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -13,9 +13,12 @@ import (
+ )
+ 
+ func UsesTSGo(program *ir.Program) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "P2" {
++		return false
++	}
+ 	for _, function := range program.Functions {
+ 		if _, found := spec.Name(function.Name); found {
+-			return true
++			return !(os.Getenv("ADAMIC_MUTANT") == "M3")
+ 		}
+ 	}
+ 	return false
