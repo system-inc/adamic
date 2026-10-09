@@ -1,0 +1,147 @@
+{
+  "version": "6.0.3",
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": []
+  },
+  "results": [
+    {
+      "file": "01_readFile_utf8.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "02_readFile_utf16le.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "03_readFile_utf16be.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "04_readFile_missing.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "05_writeFile.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "06_fileExists.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "07_directoryExists.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "08_getDirectories.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "09_realpath.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "10_getModifiedTime.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "11_setModifiedTime.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "12_deleteFile.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "13_createDirectory.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "14_getCurrentDirectory.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "15_getExecutingFilePath.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "16_getEnvironmentVariable.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "17_write.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "18_exit_0.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "19_exit_1.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "20_exit_2.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "21_createHash.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "22_createHash_fallback.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "23_newLine.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "24_useCaseSensitiveFileNames.a",
+      "exit": 0,
+      "diagnostics": []
+    },
+    {
+      "file": "25_readDirectory.a",
+      "exit": 0,
+      "diagnostics": []
+    }
+  ]
+}

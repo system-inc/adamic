@@ -1,0 +1,27 @@
+{
+  "normal_check_seconds": 0.7087202930001695,
+  "baseline_byte_seconds": 0.04632193699990239,
+  "candidate_shard": {
+    "shard": 121,
+    "case": "tests/cases/fourslash/getOccurrencesProtected1.ts",
+    "neighbor": 122
+  },
+  "planted_failure": [
+    "",
+    "fourslash tests",
+    "tests/cases/fourslash/getOccurrencesProtected1.ts",
+    "fourslash test getOccurrencesProtected1.ts runs correctly"
+  ],
+  "baseline_diffs": [
+    "getOccurrencesProtected1.baseline.jsonc"
+  ],
+  "merged_replay_errors": [
+    "baseline.diff does not exactly describe the API snapshots (extra, missing, or changed diff lines)",
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106365, 'failing': 2, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106365, 'failing': 2, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change', 'fourslash tests tests/cases/fourslash/getOccurrencesProtected1.ts fourslash test getOccurrencesProtected1.ts runs correctly']",
+    "number of reported failure titles: expected 1, observed 2",
+    "baseline paths: expected ['api/typescript.d.ts'], observed ['api/typescript.d.ts', 'getOccurrencesProtected1.baseline.jsonc']"
+  ],
+  "scope": "Arithmetic replay of whole-run evidence with one replaced task; other candidate shards were not run."
+}

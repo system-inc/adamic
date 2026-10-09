@@ -1,0 +1,138 @@
+[
+  {
+    "mutant": "missing-unit",
+    "exit": 1,
+    "wall_seconds": 4.943,
+    "catcher": "fixture directory assertions has no top-level test",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "duplicate-unit",
+    "exit": 1,
+    "wall_seconds": 5.547,
+    "catcher": "has duplicate units",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "non-literal-directory",
+    "exit": 1,
+    "wall_seconds": 5.499,
+    "catcher": "must name a literal fixture directory",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "extra-statement",
+    "exit": 1,
+    "wall_seconds": 5.668,
+    "catcher": "must call its test parameter's Parallel() then testFixtureDirectory directly",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "missing-parallel",
+    "exit": 1,
+    "wall_seconds": 5.403,
+    "catcher": "must call its test parameter's Parallel() then testFixtureDirectory directly",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "wrong-parallel-receiver",
+    "exit": 1,
+    "wall_seconds": 5.001,
+    "catcher": "must call its test parameter's Parallel() first",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "reversed-statements",
+    "exit": 1,
+    "wall_seconds": 5.258,
+    "catcher": "must call its test parameter's Parallel() first",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "wrong-helper-parameter",
+    "exit": 1,
+    "wall_seconds": 5.349,
+    "catcher": "must pass its own test parameter",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]
