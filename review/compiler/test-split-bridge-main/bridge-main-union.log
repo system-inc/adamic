@@ -1,0 +1,36 @@
+[
+  {
+    "mode": "sample",
+    "positions": 162,
+    "roots": [
+      "/workspace/adamic/bridge/tsgo/testdata/sample.ts"
+    ],
+    "source_sha256": {
+      "sample.ts": "9e1c0e6ad70ab2e8d9e540d1f12a84d75799e51d2cfdfc181e2d933ce4444589"
+    },
+    "answer_bytes": 3261,
+    "answer_sha256": "9c014afdb9f0f3c516deeb417e3829e7af520f46f47111bc2da0dbc48f752aa6",
+    "whole_equals_split": true,
+    "whole_equals_native": true
+  },
+  {
+    "mode": "corpus",
+    "positions": 1600,
+    "roots": [
+      "/workspace/test-split-typescript/src/compiler/checker.ts",
+      "/workspace/test-split-typescript/src/compiler/parser.ts",
+      "/workspace/test-split-typescript/src/compiler/types.ts",
+      "/workspace/test-split-typescript/src/compiler/utilities.ts"
+    ],
+    "source_sha256": {
+      "checker.ts": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "parser.ts": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "types.ts": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utilities.ts": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    "answer_bytes": 54982,
+    "answer_sha256": "5fa88118fb5a97d749db1bc893786092cba6fd90ec9aba19f59cc955cb9b43e4",
+    "whole_equals_split": true,
+    "whole_equals_native": true
+  }
+]
