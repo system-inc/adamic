@@ -1,0 +1,17 @@
+package lower
+
+import "os"
+
+func auditU027Selected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditU027Bool(id string, original, changed func() bool) bool {
+	if auditU027Selected(id) {
+		return changed()
+	}
+	return original()
+}
+func auditU027String(id, original, changed string) string {
+	if auditU027Selected(id) {
+		return changed
+	}
+	return original
+}

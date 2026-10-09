@@ -1,0 +1,50 @@
+[
+  {
+    "probe": "dead",
+    "mutant": "baseline",
+    "command": "ADAMIC_MUTANT= timeout 90 /tmp/u027-adamic c /tmp/u027-dead.a",
+    "exit": 0,
+    "stdout_bytes": 1865,
+    "stderr": ""
+  },
+  {
+    "probe": "dead",
+    "mutant": "M11",
+    "command": "ADAMIC_MUTANT=M11 timeout 90 /tmp/u027-adamic c /tmp/u027-dead.a",
+    "exit": 0,
+    "stdout_bytes": 1865,
+    "stderr": ""
+  },
+  {
+    "probe": "contradiction",
+    "mutant": "baseline",
+    "command": "ADAMIC_MUTANT= timeout 90 /tmp/u027-adamic c /tmp/u027-contradiction.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "adamic: /tmp/u027-contradiction.a:1:59: stage 0 can't lower console.log with a non-string argument yet\n"
+  },
+  {
+    "probe": "contradiction",
+    "mutant": "M11",
+    "command": "ADAMIC_MUTANT=M11 timeout 90 /tmp/u027-adamic c /tmp/u027-contradiction.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "adamic: /tmp/u027-contradiction.a:1:59: stage 0 can't lower console.log with a non-string argument yet\n"
+  },
+  {
+    "probe": "undefined",
+    "mutant": "baseline",
+    "command": "ADAMIC_MUTANT= timeout 90 /tmp/u027-adamic c /tmp/u027-undefined.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "/tmp/u027-undefined.a:1:81: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'string'.\n"
+  },
+  {
+    "probe": "undefined",
+    "mutant": "M11",
+    "command": "ADAMIC_MUTANT=M11 timeout 90 /tmp/u027-adamic c /tmp/u027-undefined.a",
+    "exit": 1,
+    "stdout_bytes": 0,
+    "stderr": "/tmp/u027-undefined.a:1:81: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'string'.\n"
+  }
+]

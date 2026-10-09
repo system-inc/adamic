@@ -1,0 +1,130 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -185,7 +185,7 @@
+ 			// enters, is the same field.
+ 			return &widening{source: source, target: target, readonlyField: viewed.Name}
+ 		}
+-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
++		if auditU027Bool("M12", func() bool { return !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) }, func() bool { return fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) }) {
+ 			return &widening{source: source, target: target}
+ 		}
+ 		if found := l.widened(source, target, visited); found != nil {
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -131,7 +131,7 @@
+ // Use the same nominal, invariant and strictly contravariant relation as class overrides.
+ func (l *lowering) censusRelated(from, to *checker.Type) bool {
+ 	from, to = l.concrete(from), l.concrete(to)
+-	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
++	return auditU027Bool("M04", func() bool { return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil }, func() bool { return l.classAssignable(from, to) || l.widened(from, to, map[[2]*checker.Type]bool{}) == nil })
+ }
+ 
+ func (l *lowering) censusOverloads(implementation *ast.Node) error {
+@@ -142,7 +142,7 @@
+ 	if symbol == nil {
+ 		return nil
+ 	}
+-	ordinal := 0
++	ordinal := 0; if auditU027Selected("M06") { ordinal = 1 }
+ 	for _, overload := range symbol.Declarations {
+ 		if overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+ 			continue
+@@ -223,7 +223,7 @@
+ 		if givenRest && !takesRest {
+ 			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+ 		}
+-		if !l.censusRelated(given, takes) {
++		if auditU027Bool("M05", func() bool { return !l.censusRelated(given, takes) }, func() bool { return !l.censusRelated(takes, given) }) {
+ 			name := func(node *ast.Node) string {
+ 				if ast.IsIdentifier(node.Name()) {
+ 					return node.Name().Text()
+@@ -377,7 +377,7 @@
+ 	if err != nil || !boolean(of) {
+ 		// Two booleans give a boolean whatever the checker narrowed the whole to: a branch it
+ 		// knows is dead types the expression never, and that branch must still lower.
+-		if left.Type() != ir.Boolean || right.Type() != ir.Boolean {
++		if auditU027Bool("M11", func() bool { return left.Type() != ir.Boolean || right.Type() != ir.Boolean }, func() bool { return left.Type() == ir.Boolean || right.Type() == ir.Boolean }) {
+ 			return nil, false
+ 		}
+ 		of = ir.Boolean
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -44,7 +44,7 @@
+ 	annotation := node.AsTypePredicateNode()
+ 	function := node.Parent
+ 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
+-		return (&predicateFlowProof{l: l}).refused(node, "there is no body proving this parameter")
++		return (&predicateFlowProof{l: l}).refused(node, auditU027String("M09", "there is no body proving this parameter", ""))
+ 	}
+ 	var parameter *ast.Node
+ 	for _, candidate := range function.Parameters() {
+@@ -469,7 +469,7 @@
+ 	for _, file := range l.program.Files() {
+ 		file.AsNode().ForEachChild(visit)
+ 	}
+-	return found && safe
++	if auditU027Selected("M08") { return found || safe }; return found && safe
+ }
+ 
+ func (l *lowering) predicateArguments(node *ast.Node) error {
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -24,7 +24,7 @@
+ // the promise. They must not bless a brand or a mutable representation change.
+ func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+ 	produced, promised = l.concrete(produced), l.concrete(promised)
+-	if !l.censusHasUndefined(produced) || l.censusHasUndefined(promised) {
++	if auditU027Bool("M03", func() bool { return !l.censusHasUndefined(produced) || l.censusHasUndefined(promised) }, func() bool { return !l.censusHasUndefined(produced) && l.censusHasUndefined(promised) }) {
+ 		return false
+ 	}
+ 	for _, member := range produced.Types() {
+@@ -40,7 +40,7 @@
+ // captured write in a nested function, disables the proof. Unknown control flow
+ // keeps the call-site check rather than guessing that the annotation is true.
+ func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+-	return l.censusReturnProof(implementation, overload, nil, nil)
++	if auditU027Selected("M02") { return false }; return l.censusReturnProof(implementation, overload, nil, nil)
+ }
+ 
+ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {
+@@ -99,7 +99,7 @@
+ 		return false
+ 	}
+ 	implementation.Body().ForEachChild(scan)
+-	if !unchanged {
++	if auditU027Bool("M01", func() bool { return !unchanged }, func() bool { return false }) {
+ 		return false
+ 	}
+ 	narrowed := func(index int, flow *ast.FlowNode) *checker.Type {
+--- a/internal/lower/element_access_fields.go
++++ b/internal/lower/element_access_fields.go
+@@ -73,7 +73,7 @@
+ 		tests = append(tests, test)
+ 		fields = append(fields, field)
+ 	}
+-	if len(names) == 0 {
++	if auditU027Bool("M10", func() bool { return len(names) == 0 }, func() bool { return len(names) != 0 }) {
+ 		return nil, l.notYet(node, "a computed key without finite alternatives")
+ 	}
+ 	result, err := l.typeOf(node)
+--- a/internal/lower/census_predicate_marker.go
++++ b/internal/lower/census_predicate_marker.go
+@@ -62,7 +62,7 @@
+ 					}
+ 				}
+ 			}
+-			safe = safe && accepted
++			if auditU027Selected("M07") { safe = safe || accepted } else { safe = safe && accepted }
+ 		}
+ 		node.ForEachChild(visit)
+ 		return false
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,7 @@
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++ if auditU027Selected("P01") { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

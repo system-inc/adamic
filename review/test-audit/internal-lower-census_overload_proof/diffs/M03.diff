@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -24,7 +24,7 @@
+ // the promise. They must not bless a brand or a mutable representation change.
+ func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+ 	produced, promised = l.concrete(produced), l.concrete(promised)
+-	if !l.censusHasUndefined(produced) || l.censusHasUndefined(promised) {
++	if !l.censusHasUndefined(produced) && l.censusHasUndefined(promised) {
+ 		return false
+ 	}
+ 	for _, member := range produced.Types() {

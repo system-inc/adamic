@@ -1,0 +1,11 @@
+--- a/internal/lower/census_predicate_marker.go
++++ b/internal/lower/census_predicate_marker.go
+@@ -62,7 +62,7 @@
+ 					}
+ 				}
+ 			}
+-			safe = safe && accepted
++			safe = safe || accepted
+ 		}
+ 		node.ForEachChild(visit)
+ 		return false

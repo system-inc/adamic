@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:11:52.40931834Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:11:52.420324037Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T10:11:52.420415757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== RUN   TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.420446391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== PAUSE TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.420449039Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T10:11:52.420452087Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T10:11:52.420454644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== CONT  TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.469141304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"    census_predicate_marker_test.go:32: expected erased marker call refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:11:52.469237907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"--- FAIL: TestCensusPredicateMarkerCallStaysNotYet (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.469244447Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Elapsed":0.05}
+{"Time":"2026-10-09T10:11:52.469358414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.471647639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.062s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:11:52.471690681Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.062}

@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -223,7 +223,7 @@
+ 		if givenRest && !takesRest {
+ 			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+ 		}
+-		if !l.censusRelated(given, takes) {
++		if !l.censusRelated(takes, given) {
+ 			name := func(node *ast.Node) string {
+ 				if ast.IsIdentifier(node.Name()) {
+ 					return node.Name().Text()

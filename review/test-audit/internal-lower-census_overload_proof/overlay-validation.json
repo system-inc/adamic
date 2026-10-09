@@ -1,0 +1,93 @@
+[
+  {
+    "id": "M01",
+    "apply_check_exit": 0,
+    "exit": 1,
+    "seconds": 1.0819389330026752,
+    "command": "git apply --cached --check diffs/M01.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M01.json ./internal/lower/"
+  },
+  {
+    "id": "M02",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 1.8209547490005207,
+    "command": "git apply --cached --check diffs/M02.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M02.json ./internal/lower/"
+  },
+  {
+    "id": "M03",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 2.2809628399991198,
+    "command": "git apply --cached --check diffs/M03.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M03.json ./internal/lower/"
+  },
+  {
+    "id": "M04",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 5.125223332997848,
+    "command": "git apply --cached --check diffs/M04.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M04.json ./internal/lower/"
+  },
+  {
+    "id": "M05",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.8653488230011135,
+    "command": "git apply --cached --check diffs/M05.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M05.json ./internal/lower/"
+  },
+  {
+    "id": "M06",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.7697091640002327,
+    "command": "git apply --cached --check diffs/M06.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M06.json ./internal/lower/"
+  },
+  {
+    "id": "M07",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.8499133510013053,
+    "command": "git apply --cached --check diffs/M07.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M07.json ./internal/lower/"
+  },
+  {
+    "id": "M08",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.9247317330009537,
+    "command": "git apply --cached --check diffs/M08.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M08.json ./internal/lower/"
+  },
+  {
+    "id": "M09",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.9177498610006296,
+    "command": "git apply --cached --check diffs/M09.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M09.json ./internal/lower/"
+  },
+  {
+    "id": "M10",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.844495689998439,
+    "command": "git apply --cached --check diffs/M10.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M10.json ./internal/lower/"
+  },
+  {
+    "id": "M11",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 0.8694993859971873,
+    "command": "git apply --cached --check diffs/M11.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M11.json ./internal/lower/"
+  },
+  {
+    "id": "M12",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 1.0690743120030675,
+    "command": "git apply --cached --check diffs/M12.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M12.json ./internal/lower/"
+  },
+  {
+    "id": "P01",
+    "apply_check_exit": 0,
+    "exit": 1,
+    "seconds": 1.4350022969993006,
+    "command": "git apply --cached --check diffs/P01.diff; timeout 90 go vet -overlay=/tmp/u027-vet/P01.json ./internal/lower/"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestAMutableLocationSeenWiderIsRefused$",
+    "exit": 0,
+    "wall": 4.135339333999582
+  },
+  {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestAMutableLocationSeenWiderIsRefused$",
+    "exit": 0,
+    "wall": 3.31721839599777
+  },
+  {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestAMutableLocationSeenWiderIsRefused$",
+    "exit": 0,
+    "wall": 3.62780846899841
+  }
+]

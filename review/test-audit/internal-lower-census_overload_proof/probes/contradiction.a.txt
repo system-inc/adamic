@@ -1,0 +1,1 @@
+function dead(flag: boolean): void { if (flag && !flag) { console.log(flag && flag); } } dead(false);

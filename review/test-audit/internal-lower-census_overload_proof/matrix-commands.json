@@ -1,0 +1,282 @@
+[
+  {
+    "id": "M01",
+    "label": "M01",
+    "command": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M01.log 2>&1",
+    "exit": 1,
+    "wall": 72.43202362900047
+  },
+  {
+    "id": "M02",
+    "label": "M02",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M02.log 2>&1",
+    "exit": 1,
+    "wall": 94.51755772099932
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusOverloadReturnProof",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusOverloadReturnProof.log 2>&1",
+    "exit": 1,
+    "wall": 18.596989788002247
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusPredicateInteractionBoundary",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusPredicateInteractionBoundary.log 2>&1",
+    "exit": 0,
+    "wall": 6.010971245999826
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusPredicateInteractionEscapes",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusPredicateInteractionEscapes.log 2>&1",
+    "exit": 0,
+    "wall": 2.595147400003043
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusPredicateMarkerKeepsProofBoundaries",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusPredicateMarkerKeepsProofBoundaries.log 2>&1",
+    "exit": 0,
+    "wall": 2.773487100002967
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusPredicateMarkerCallStaysNotYet",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusPredicateMarkerCallStaysNotYet.log 2>&1",
+    "exit": 0,
+    "wall": 2.83432864399947
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusOverloadRelation",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusOverloadRelation.log 2>&1",
+    "exit": 0,
+    "wall": 3.629770154002472
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusSmallFiniteKeyRead",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusSmallFiniteKeyRead.log 2>&1",
+    "exit": 0,
+    "wall": 3.0976127319991065
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusRestMutableElements",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusRestMutableElements.log 2>&1",
+    "exit": 0,
+    "wall": 3.193504958999256
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestCensusBooleanDeadBranch",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$' > review/test-audit/internal-lower-census_overload_proof/M02.TestCensusBooleanDeadBranch.log 2>&1",
+    "exit": 0,
+    "wall": 3.2175854529996286
+  },
+  {
+    "id": "M03",
+    "label": "M03",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M03.log 2>&1",
+    "exit": 1,
+    "wall": 45.6571763259999
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusOverloadReturnProof",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusOverloadReturnProof.log 2>&1",
+    "exit": 0,
+    "wall": 7.425958286999958
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusPredicateInteractionBoundary",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusPredicateInteractionBoundary.log 2>&1",
+    "exit": 0,
+    "wall": 3.5724747940003
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusPredicateInteractionEscapes",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusPredicateInteractionEscapes.log 2>&1",
+    "exit": 0,
+    "wall": 3.013637282001582
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusPredicateMarkerKeepsProofBoundaries",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusPredicateMarkerKeepsProofBoundaries.log 2>&1",
+    "exit": 0,
+    "wall": 2.962434569002653
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusPredicateMarkerCallStaysNotYet",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusPredicateMarkerCallStaysNotYet.log 2>&1",
+    "exit": 0,
+    "wall": 2.648111575999792
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusOverloadRelation",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusOverloadRelation.log 2>&1",
+    "exit": 1,
+    "wall": 2.549836057001812
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusSmallFiniteKeyRead",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusSmallFiniteKeyRead.log 2>&1",
+    "exit": 0,
+    "wall": 3.0627949190020445
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusRestMutableElements",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusRestMutableElements.log 2>&1",
+    "exit": 0,
+    "wall": 2.7093045540023013
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestCensusBooleanDeadBranch",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$' > review/test-audit/internal-lower-census_overload_proof/M03.TestCensusBooleanDeadBranch.log 2>&1",
+    "exit": 0,
+    "wall": 3.00687881200065
+  },
+  {
+    "id": "M04",
+    "label": "M04",
+    "command": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M04.log 2>&1",
+    "exit": 1,
+    "wall": 79.98170368299907
+  },
+  {
+    "id": "M05",
+    "label": "M05",
+    "command": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M05.log 2>&1",
+    "exit": 1,
+    "wall": 53.68006998599958
+  },
+  {
+    "id": "M06",
+    "label": "M06",
+    "command": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M06.log 2>&1",
+    "exit": 1,
+    "wall": 46.83730932199978
+  },
+  {
+    "id": "M07",
+    "label": "M07",
+    "command": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M07.log 2>&1",
+    "exit": 1,
+    "wall": 50.83050309900136
+  },
+  {
+    "id": "M08",
+    "label": "M08",
+    "command": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M08.log 2>&1",
+    "exit": 1,
+    "wall": 51.00941016299839
+  },
+  {
+    "id": "M09",
+    "label": "M09",
+    "command": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M09.log 2>&1",
+    "exit": 1,
+    "wall": 54.92949023800247
+  },
+  {
+    "id": "M10",
+    "label": "M10",
+    "command": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M10.log 2>&1",
+    "exit": 1,
+    "wall": 53.012189585999295
+  },
+  {
+    "id": "M11",
+    "label": "M11",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M11.log 2>&1",
+    "exit": 0,
+    "wall": 46.95714588199917
+  },
+  {
+    "id": "M12",
+    "label": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M12.log 2>&1",
+    "exit": 1,
+    "wall": 48.68944348199875
+  },
+  {
+    "id": "P01",
+    "label": "P01",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/P01.log 2>&1",
+    "exit": 1,
+    "wall": 2.6812784440007817
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusOverloadReturnProof",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusOverloadReturnProof.log 2>&1",
+    "exit": 1,
+    "wall": 2.738652154999727
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusPredicateInteractionBoundary",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusPredicateInteractionBoundary.log 2>&1",
+    "exit": 1,
+    "wall": 2.841701342000306
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusPredicateInteractionEscapes",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusPredicateInteractionEscapes.log 2>&1",
+    "exit": 1,
+    "wall": 3.4104798049993406
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusPredicateMarkerKeepsProofBoundaries",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusPredicateMarkerKeepsProofBoundaries.log 2>&1",
+    "exit": 1,
+    "wall": 2.5016727239999454
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusPredicateMarkerCallStaysNotYet",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusPredicateMarkerCallStaysNotYet.log 2>&1",
+    "exit": 1,
+    "wall": 2.584241493997979
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusOverloadRelation",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusOverloadRelation.log 2>&1",
+    "exit": 1,
+    "wall": 3.7939828720009245
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusSmallFiniteKeyRead",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusSmallFiniteKeyRead.log 2>&1",
+    "exit": 0,
+    "wall": 3.023022156998195
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusRestMutableElements",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusRestMutableElements.log 2>&1",
+    "exit": 1,
+    "wall": 2.5066275549979764
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestCensusBooleanDeadBranch",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$' > review/test-audit/internal-lower-census_overload_proof/P01.TestCensusBooleanDeadBranch.log 2>&1",
+    "exit": 0,
+    "wall": 2.9402993190014968
+  }
+]

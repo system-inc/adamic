@@ -1,0 +1,136 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 102,
+    "old": "!unchanged",
+    "new": "unchanged && false",
+    "menu": "change option",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 43,
+    "old": "return l.censusReturnProof(implementation, overload, nil, nil)",
+    "new": "return false",
+    "menu": "return early",
+    "mode": "return",
+    "occ": 0
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/census_overload_proof.go",
+    "line": 27,
+    "old": "!l.censusHasUndefined(produced) || l.censusHasUndefined(promised)",
+    "new": "!l.censusHasUndefined(produced) && l.censusHasUndefined(promised)",
+    "menu": "flip condition",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/census_small.go",
+    "line": 134,
+    "old": "l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil",
+    "new": "l.classAssignable(from, to) || l.widened(from, to, map[[2]*checker.Type]bool{}) == nil",
+    "menu": "flip condition",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/census_small.go",
+    "line": 226,
+    "old": "!l.censusRelated(given, takes)",
+    "new": "!l.censusRelated(takes, given)",
+    "menu": "swap two arguments",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/census_small.go",
+    "line": 145,
+    "old": "ordinal := 0",
+    "new": "ordinal := 1",
+    "menu": "change constant",
+    "mode": "statement",
+    "occ": 0
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/census_predicate_marker.go",
+    "line": 65,
+    "old": "safe = safe && accepted",
+    "new": "safe = safe || accepted",
+    "menu": "flip condition",
+    "mode": "statement",
+    "occ": 0
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/predicates.go",
+    "line": 472,
+    "old": "return found && safe",
+    "new": "return found || safe",
+    "menu": "flip condition",
+    "mode": "return",
+    "occ": 0
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/predicates.go",
+    "line": 47,
+    "old": "\"there is no body proving this parameter\"",
+    "new": "\"\"",
+    "menu": "change constant",
+    "mode": "string",
+    "occ": 0
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/element_access_fields.go",
+    "line": 76,
+    "old": "len(names) == 0",
+    "new": "len(names) != 0",
+    "menu": "flip condition",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/census_small.go",
+    "line": 380,
+    "old": "left.Type() != ir.Boolean || right.Type() != ir.Boolean",
+    "new": "left.Type() == ir.Boolean || right.Type() == ir.Boolean",
+    "menu": "flip condition",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/invariance.go",
+    "line": 188,
+    "old": "!fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source))",
+    "new": "fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source))",
+    "menu": "flip condition",
+    "mode": "bool",
+    "occ": 0
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}",
+    "menu": "empty-answer probe",
+    "mode": "probe",
+    "occ": 0,
+    "remove_imports": [
+      "\t\"fmt\"\n",
+      "\t\"path/filepath\"\n"
+    ]
+  }
+]

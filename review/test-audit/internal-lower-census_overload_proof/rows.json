@@ -1,0 +1,381 @@
+[
+  {
+    "test": "TestCensusOverloadReturnProof",
+    "package": "internal/lower",
+    "file": "internal/lower/census_overload_proof_test.go:8",
+    "seconds": 0.24,
+    "oracle": "Handwritten presence/absence of overload-result diagnostic strings in IR",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M04",
+      "M05"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M05 census_overload_proof_test.go:34: /tmp/adamic-gate/TestCensusOverloadReturnProofparameter_return1831455193/001/main.a:1:17: Adamic 0.1 refuses overload 1 of choose parameter value cannot be served by implementation parameter value; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M05.log 2>&1; census_overload_proof_test.go:34: /tmp/adamic-gate/TestCensusOverloadReturnProofparameter_return1831455193/001/main.a:1:17: Adamic 0.1 refuses overload 1 of choose parameter value cannot be served by implementation parameter value; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "timing_samples": [
+      0.24,
+      0.269,
+      0.211
+    ]
+  },
+  {
+    "test": "TestCensusPredicateInteractionBoundary",
+    "package": "internal/lower",
+    "file": "internal/lower/census_predicate_interaction_test.go:15",
+    "seconds": 0.189,
+    "oracle": "Node executes the fixture and equals handwritten stdout; Adamic refusal text and fix are handwritten",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M09 census_predicate_interaction_test.go:36: want marker proof boundary diagnostic, got /tmp/adamic-gate/TestCensusPredicateInteractionBoundary2490994239/001/main.a:3:53: Adamic 0.1 refuses a type predicate whose return is not proven (); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionEscapes"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.137,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M09.log 2>&1; census_predicate_interaction_test.go:36: want marker proof boundary diagnostic, got /tmp/adamic-gate/TestCensusPredicateInteractionBoundary2490994239/001/main.a:3:53: Adamic 0.1 refuses a type predicate whose return is not proven (); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "timing_samples": [
+      0.189,
+      0.249,
+      0.177
+    ],
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestCensusPredicateInteractionEscapes",
+    "package": "internal/lower",
+    "file": "internal/lower/census_predicate_interaction_test.go:40",
+    "seconds": 0.137,
+    "oracle": "Handwritten Refused class and diagnostic substring",
+    "oracle_kind": "self",
+    "kills": [
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M09 census_predicate_interaction_test.go:58: want unproven live callback refused, got /tmp/adamic-gate/TestCensusPredicateInteractionEscapesfunction_alias2510949209/001/main.a:1:45: Adamic 0.1 refuses a type predicate whose return is not proven (); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionBoundary"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.189,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M09.log 2>&1; census_predicate_interaction_test.go:58: want unproven live callback refused, got /tmp/adamic-gate/TestCensusPredicateInteractionEscapesfunction_alias2510949209/001/main.a:1:45: Adamic 0.1 refuses a type predicate whose return is not proven (); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "timing_samples": [
+      0.129,
+      0.184,
+      0.137
+    ],
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "package": "internal/lower",
+    "file": "internal/lower/census_predicate_marker_test.go:8",
+    "seconds": 0.246,
+    "oracle": "Handwritten Refused class only; stops at first failing source",
+    "oracle_kind": "self",
+    "kills": [
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08 census_predicate_marker_test.go:20: unobservable marker exception escaped its boundary: <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionEscapes"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.137,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M08.log 2>&1; census_predicate_marker_test.go:20: unobservable marker exception escaped its boundary: <nil>",
+    "timing_samples": [
+      0.246,
+      0.249,
+      0.222
+    ],
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestCensusPredicateMarkerCallStaysNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/census_predicate_marker_test.go:25",
+    "seconds": 0.069,
+    "oracle": "Handwritten NotYet class only, with no diagnostic-specific assertion",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "No production mutant failed this row; see matrix.json and per-run logs.",
+    "timing_samples": [
+      0.069,
+      0.071,
+      0.068
+    ],
+    "reason": "The fixed plan did not mutate the erased-marker call guard in expression.go:1302. No meaningful call-guard mutant was built within this run; no untrue claim is made."
+  },
+  {
+    "test": "TestCensusOverloadRelation",
+    "package": "internal/lower",
+    "file": "internal/lower/census_small_test.go:10",
+    "seconds": 0.185,
+    "oracle": "Handwritten strict overload diagnostic substrings",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [
+      "M03",
+      "M06"
+    ],
+    "last_proven_fail": "M06 census_small_test.go:44: expected strict overload refusal naming \"overload 1 of serve parameter dogs\"; got /tmp/adamic-gate/TestCensusOverloadRelationmutable_parameters2316757739/001/main.a:3:16: Adamic 0.1 refuses overload 2 of serve parameter dogs cannot be served by implementation parameter animals; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M06.log 2>&1; census_small_test.go:44: expected strict overload refusal naming \"overload 1 of serve parameter dogs\"; got /tmp/adamic-gate/TestCensusOverloadRelationmutable_parameters2316757739/001/main.a:3:16: Adamic 0.1 refuses overload 2 of serve parameter dogs cannot be served by implementation parameter animals; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "timing_samples": [
+      0.162,
+      0.185,
+      0.255
+    ]
+  },
+  {
+    "test": "TestCensusSmallFiniteKeyRead",
+    "package": "internal/lower",
+    "file": "internal/lower/census_small_test.go:50",
+    "seconds": 0.075,
+    "oracle": "Only err == nil; no IR or execution assertion",
+    "oracle_kind": "self",
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M10 census_small_test.go:57: finite-key read did not lower: /tmp/adamic-gate/TestCensusSmallFiniteKeyRead2692246209/001/main.a:2:76: stage 0 can't lower a computed key without finite alternatives yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M10.log 2>&1; census_small_test.go:57: finite-key read did not lower: /tmp/adamic-gate/TestCensusSmallFiniteKeyRead2692246209/001/main.a:2:76: stage 0 can't lower a computed key without finite alternatives yet",
+    "timing_samples": [
+      0.061,
+      0.075,
+      0.09
+    ]
+  },
+  {
+    "test": "TestCensusRestMutableElements",
+    "package": "internal/lower",
+    "file": "internal/lower/census_small_test.go:61",
+    "seconds": 0.068,
+    "oracle": "Handwritten Refused class only",
+    "oracle_kind": "self",
+    "kills": [
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12 census_small_test.go:75: a rest copy still shares mutable elements; expected refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestAMutableLocationSeenWiderIsRefused"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.953,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u027/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-census_overload_proof/M12.log 2>&1; census_small_test.go:75: a rest copy still shares mutable elements; expected refusal, got <nil>",
+    "timing_samples": [
+      0.072,
+      0.067,
+      0.068
+    ],
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestCensusBooleanDeadBranch",
+    "package": "internal/lower",
+    "file": "internal/lower/census_small_test.go:81",
+    "seconds": 0.105,
+    "oracle": "Only err == nil; no IR or execution assertion",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "evidence": "No production mutant failed this row; see matrix.json and per-run logs.",
+    "timing_samples": [
+      0.105,
+      0.196,
+      0.077
+    ],
+    "reason": "No catch in this 12-mutant set; the boolean fallback mutation M11 survived and is an equivalent candidate, not proven unguarded behavior."
+  }
+]

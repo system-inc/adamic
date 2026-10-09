@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -377,7 +377,7 @@
+ 	if err != nil || !boolean(of) {
+ 		// Two booleans give a boolean whatever the checker narrowed the whole to: a branch it
+ 		// knows is dead types the expression never, and that branch must still lower.
+-		if left.Type() != ir.Boolean || right.Type() != ir.Boolean {
++		if left.Type() == ir.Boolean || right.Type() == ir.Boolean {
+ 			return nil, false
+ 		}
+ 		of = ir.Boolean

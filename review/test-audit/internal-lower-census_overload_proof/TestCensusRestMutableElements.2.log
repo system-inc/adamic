@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:57:26.042529703Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:57:26.055140129Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T09:57:26.055221024Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== RUN   TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:26.05525764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== PAUSE TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:26.055261168Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T09:57:26.05526528Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T09:57:26.055268158Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== CONT  TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:26.10619601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"    census_small_test.go:77: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements3635007421/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"}
+{"Time":"2026-10-09T09:57:26.106305101Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"--- PASS: TestCensusRestMutableElements (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:26.106312545Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Elapsed":0.05}
+{"Time":"2026-10-09T09:57:26.106335929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:26.109159763Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.066s\n"}
+{"Time":"2026-10-09T09:57:26.109204115Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.067}

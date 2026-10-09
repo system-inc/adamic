@@ -1,0 +1,327 @@
+[
+  {
+    "id": "M01",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusOverloadReturnProof"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "fail",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M02",
+    "bounded": true,
+    "scope": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadReturnProof"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "fail",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M03",
+    "bounded": true,
+    "scope": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadRelation"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "fail",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M04",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusOverloadBinderGuards",
+      "TestCensusOverloadRelation",
+      "TestCensusOverloadReturnProof"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "fail",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "fail",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M05",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusOverloadRelation",
+      "TestCensusOverloadReturnProof",
+      "TestPredicateOverloadCallback",
+      "TestPredicateOverloadRuntime"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "fail",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "fail",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M06",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusOverloadRelation"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "fail",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M07",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "fail",
+      "TestCensusPredicateInteractionEscapes": "fail",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "fail",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M08",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "fail",
+      "TestCensusPredicateInteractionEscapes": "fail",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "fail",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M09",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "fail",
+      "TestCensusPredicateInteractionEscapes": "fail",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M10",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestCensusSmallFiniteKeyRead"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "fail",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "M11",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "pass",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": true
+  },
+  {
+    "id": "M12",
+    "bounded": false,
+    "scope": "whole package, default enabled rows",
+    "failed_rows": [
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestCensusRestMutableElements",
+      "TestFlagEnumAliasBoundaries",
+      "TestLibraryStringRefusals",
+      "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "TestProvenRelationsRefuse",
+      "TestUncheckableCastsStayRefused",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "pass",
+      "TestCensusPredicateInteractionBoundary": "pass",
+      "TestCensusPredicateInteractionEscapes": "pass",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "pass",
+      "TestCensusPredicateMarkerCallStaysNotYet": "pass",
+      "TestCensusOverloadRelation": "pass",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "fail",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "observed",
+    "survivor": false
+  },
+  {
+    "id": "P01",
+    "bounded": true,
+    "scope": [
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusOverloadRelation",
+      "TestCensusSmallFiniteKeyRead",
+      "TestCensusRestMutableElements",
+      "TestCensusBooleanDeadBranch"
+    ],
+    "failed_rows": [
+      "TestCensusOverloadRelation",
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusRestMutableElements"
+    ],
+    "observations": {
+      "TestCensusOverloadReturnProof": "fail",
+      "TestCensusPredicateInteractionBoundary": "fail",
+      "TestCensusPredicateInteractionEscapes": "fail",
+      "TestCensusPredicateMarkerKeepsProofBoundaries": "fail",
+      "TestCensusPredicateMarkerCallStaysNotYet": "fail",
+      "TestCensusOverloadRelation": "fail",
+      "TestCensusSmallFiniteKeyRead": "pass",
+      "TestCensusRestMutableElements": "fail",
+      "TestCensusBooleanDeadBranch": "pass"
+    },
+    "outside_scope": "unknown",
+    "survivor": false
+  }
+]

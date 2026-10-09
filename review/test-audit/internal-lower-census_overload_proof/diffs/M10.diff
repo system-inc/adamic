@@ -1,0 +1,11 @@
+--- a/internal/lower/element_access_fields.go
++++ b/internal/lower/element_access_fields.go
+@@ -73,7 +73,7 @@
+ 		tests = append(tests, test)
+ 		fields = append(fields, field)
+ 	}
+-	if len(names) == 0 {
++	if len(names) != 0 {
+ 		return nil, l.notYet(node, "a computed key without finite alternatives")
+ 	}
+ 	result, err := l.typeOf(node)

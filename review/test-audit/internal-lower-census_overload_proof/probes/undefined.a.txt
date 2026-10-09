@@ -1,0 +1,1 @@
+function mix(x: boolean | undefined): void { if (x === undefined) { console.log((x && x) || x); } } mix(undefined);

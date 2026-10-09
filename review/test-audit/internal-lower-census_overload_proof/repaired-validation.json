@@ -1,0 +1,16 @@
+[
+  {
+    "id": "M01",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 2.179643801999191,
+    "command": "git apply --cached --check diffs/M01.diff; timeout 90 go vet -overlay=/tmp/u027-vet/M01.json ./internal/lower/"
+  },
+  {
+    "id": "P01",
+    "apply_check_exit": 0,
+    "exit": 0,
+    "seconds": 1.8303299649996916,
+    "command": "git apply --cached --check diffs/P01.diff; timeout 90 go vet -overlay=/tmp/u027-vet/P01.json ./internal/lower/"
+  }
+]

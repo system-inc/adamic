@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -99,7 +99,7 @@
+ 		return false
+ 	}
+ 	implementation.Body().ForEachChild(scan)
+-	if !unchanged {
++	if unchanged && false {
+ 		return false
+ 	}
+ 	narrowed := func(index int, flow *ast.FlowNode) *checker.Type {

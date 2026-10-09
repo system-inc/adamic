@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -142,7 +142,7 @@
+ 	if symbol == nil {
+ 		return nil
+ 	}
+-	ordinal := 0
++	ordinal := 1
+ 	for _, overload := range symbol.Declarations {
+ 		if overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+ 			continue

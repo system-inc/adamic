@@ -1,0 +1,170 @@
+[
+  {
+    "label": "coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverprofile=review/test-audit/internal-lower-census_overload_proof/coverage.out ./internal/lower/ -run '^(TestCensusOverloadReturnProof|TestCensusPredicateInteractionBoundary|TestCensusPredicateInteractionEscapes|TestCensusPredicateMarkerKeepsProofBoundaries|TestCensusPredicateMarkerCallStaysNotYet|TestCensusOverloadRelation|TestCensusSmallFiniteKeyRead|TestCensusRestMutableElements|TestCensusBooleanDeadBranch)$'",
+    "exit": 0,
+    "wall": 18.774287092001032
+  },
+  {
+    "label": "TestCensusOverloadReturnProof.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$'",
+    "exit": 0,
+    "wall": 3.534119705000194
+  },
+  {
+    "label": "TestCensusOverloadReturnProof.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$'",
+    "exit": 0,
+    "wall": 2.856625915999757
+  },
+  {
+    "label": "TestCensusOverloadReturnProof.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadReturnProof$'",
+    "exit": 0,
+    "wall": 2.884997928998928
+  },
+  {
+    "label": "TestCensusPredicateInteractionBoundary.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$'",
+    "exit": 0,
+    "wall": 2.992817789003311
+  },
+  {
+    "label": "TestCensusPredicateInteractionBoundary.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$'",
+    "exit": 0,
+    "wall": 2.9530277810008556
+  },
+  {
+    "label": "TestCensusPredicateInteractionBoundary.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionBoundary$'",
+    "exit": 0,
+    "wall": 2.922709416001453
+  },
+  {
+    "label": "TestCensusPredicateInteractionEscapes.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$'",
+    "exit": 0,
+    "wall": 2.8944794410017494
+  },
+  {
+    "label": "TestCensusPredicateInteractionEscapes.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$'",
+    "exit": 0,
+    "wall": 2.8066105709986005
+  },
+  {
+    "label": "TestCensusPredicateInteractionEscapes.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateInteractionEscapes$'",
+    "exit": 0,
+    "wall": 3.340965628998674
+  },
+  {
+    "label": "TestCensusPredicateMarkerKeepsProofBoundaries.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$'",
+    "exit": 0,
+    "wall": 4.210443339001358
+  },
+  {
+    "label": "TestCensusPredicateMarkerKeepsProofBoundaries.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$'",
+    "exit": 0,
+    "wall": 2.94205123500069
+  },
+  {
+    "label": "TestCensusPredicateMarkerKeepsProofBoundaries.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerKeepsProofBoundaries$'",
+    "exit": 0,
+    "wall": 2.9331107290017826
+  },
+  {
+    "label": "TestCensusPredicateMarkerCallStaysNotYet.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$'",
+    "exit": 0,
+    "wall": 2.5355079720029607
+  },
+  {
+    "label": "TestCensusPredicateMarkerCallStaysNotYet.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$'",
+    "exit": 0,
+    "wall": 2.9207557730005647
+  },
+  {
+    "label": "TestCensusPredicateMarkerCallStaysNotYet.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusPredicateMarkerCallStaysNotYet$'",
+    "exit": 0,
+    "wall": 2.7737640669984103
+  },
+  {
+    "label": "TestCensusOverloadRelation.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$'",
+    "exit": 0,
+    "wall": 2.5399097109984723
+  },
+  {
+    "label": "TestCensusOverloadRelation.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$'",
+    "exit": 0,
+    "wall": 2.6684000800014473
+  },
+  {
+    "label": "TestCensusOverloadRelation.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusOverloadRelation$'",
+    "exit": 0,
+    "wall": 3.4627812430007907
+  },
+  {
+    "label": "TestCensusSmallFiniteKeyRead.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$'",
+    "exit": 0,
+    "wall": 2.555602363001526
+  },
+  {
+    "label": "TestCensusSmallFiniteKeyRead.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$'",
+    "exit": 0,
+    "wall": 2.6553682739977376
+  },
+  {
+    "label": "TestCensusSmallFiniteKeyRead.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusSmallFiniteKeyRead$'",
+    "exit": 0,
+    "wall": 2.8551987089995237
+  },
+  {
+    "label": "TestCensusRestMutableElements.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$'",
+    "exit": 0,
+    "wall": 3.9606502540009387
+  },
+  {
+    "label": "TestCensusRestMutableElements.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$'",
+    "exit": 0,
+    "wall": 2.8353786480001872
+  },
+  {
+    "label": "TestCensusRestMutableElements.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusRestMutableElements$'",
+    "exit": 0,
+    "wall": 2.665518082001654
+  },
+  {
+    "label": "TestCensusBooleanDeadBranch.1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$'",
+    "exit": 0,
+    "wall": 3.2845826119992125
+  },
+  {
+    "label": "TestCensusBooleanDeadBranch.2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$'",
+    "exit": 0,
+    "wall": 2.979069247998268
+  },
+  {
+    "label": "TestCensusBooleanDeadBranch.3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCensusBooleanDeadBranch$'",
+    "exit": 0,
+    "wall": 2.873363637998409
+  }
+]

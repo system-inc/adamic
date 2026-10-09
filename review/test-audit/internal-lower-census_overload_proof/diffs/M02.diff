@@ -1,0 +1,11 @@
+--- a/internal/lower/census_overload_proof.go
++++ b/internal/lower/census_overload_proof.go
+@@ -40,7 +40,7 @@
+ // captured write in a nested function, disables the proof. Unknown control flow
+ // keeps the call-site check rather than guessing that the annotation is true.
+ func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+-	return l.censusReturnProof(implementation, overload, nil, nil)
++	return false
+ }
+ 
+ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {

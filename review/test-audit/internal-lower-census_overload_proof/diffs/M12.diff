@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -185,7 +185,7 @@
+ 			// enters, is the same field.
+ 			return &widening{source: source, target: target, readonlyField: viewed.Name}
+ 		}
+-		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
++		if fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+ 			return &widening{source: source, target: target}
+ 		}
+ 		if found := l.widened(source, target, visited); found != nil {

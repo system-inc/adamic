@@ -1,0 +1,14 @@
+| ID | Origin file:line | Change | Failed rows |
+|---|---|---|---|
+| M01 | internal/lower/census_overload_proof.go:102 | !unchanged -> unchanged && false | TestCensusOverloadReturnProof |
+| M02 | internal/lower/census_overload_proof.go:43 | return l.censusReturnProof(implementation, overload, nil, nil) -> return false | TestCensusOverloadReturnProof (bounded) |
+| M03 | internal/lower/census_overload_proof.go:27 | !l.censusHasUndefined(produced) \|\| l.censusHasUndefined(promised) -> !l.censusHasUndefined(produced) && l.censusHasUndefined(promised) | TestCensusOverloadRelation (bounded) |
+| M04 | internal/lower/census_small.go:134 | l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil -> l.classAssignable(from, to) \|\| l.widened(from, to, map[[2]*checker.Type]bool{}) == nil | TestCensusOverloadBinderGuards, TestCensusOverloadRelation, TestCensusOverloadReturnProof |
+| M05 | internal/lower/census_small.go:226 | !l.censusRelated(given, takes) -> !l.censusRelated(takes, given) | TestCensusOverloadRelation, TestCensusOverloadReturnProof, TestPredicateOverloadCallback, TestPredicateOverloadRuntime |
+| M06 | internal/lower/census_small.go:145 | ordinal := 0 -> ordinal := 1 | TestCensusOverloadRelation |
+| M07 | internal/lower/census_predicate_marker.go:65 | safe = safe && accepted -> safe = safe \|\| accepted | TestCensusPredicateInteractionBoundary, TestCensusPredicateInteractionEscapes, TestCensusPredicateMarkerKeepsProofBoundaries |
+| M08 | internal/lower/predicates.go:472 | return found && safe -> return found \|\| safe | TestCensusPredicateInteractionBoundary, TestCensusPredicateInteractionEscapes, TestCensusPredicateMarkerKeepsProofBoundaries |
+| M09 | internal/lower/predicates.go:47 | "there is no body proving this parameter" -> "" | TestCensusPredicateInteractionBoundary, TestCensusPredicateInteractionEscapes, TestUnprovenPredicateReturnsAreRefused |
+| M10 | internal/lower/element_access_fields.go:76 | len(names) == 0 -> len(names) != 0 | TestCensusSmallFiniteKeyRead |
+| M11 | internal/lower/census_small.go:380 | left.Type() != ir.Boolean \|\| right.Type() != ir.Boolean -> left.Type() == ir.Boolean \|\| right.Type() == ir.Boolean |  |
+| M12 | internal/lower/invariance.go:188 | !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) \|\| !l.checker.IsTypeAssignableTo(target, source)) -> fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) \|\| !l.checker.IsTypeAssignableTo(target, source)) | TestAMutableLocationSeenWiderIsRefused, TestCensusRestMutableElements, TestFlagEnumAliasBoundaries, TestLibraryStringRefusals, TestNodeFSFileDoesNotAuthorizeMutableWidening, TestProvenRelationsRefuse, TestUncheckableCastsStayRefused, TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat |
