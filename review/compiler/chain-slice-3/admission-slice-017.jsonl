@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a:2:17: stage 0 can't lower filter predicate element representation conversion from boxed union to string; use a loop with an explicit narrowed copy yet"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p23_find_declared_predicate.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p23_find_declared_predicate.a:5:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a","Status":"*lower.Refused","Error":": Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p48_callable_destructure_wrong.a","Status":"*lower.Refused","Error":": Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a","Status":"*lower.NotYet","Error":": stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p75_callable_from_map_value.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p75_callable_from_map_value.a:10:17: Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p76_union_member_class_field.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p76_union_member_class_field.a:14:15: Adamic 0.1 refuses checked view read of field value with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/review/refused/fxspptb_p24_filter_proven_number.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_p24_filter_proven_number.a:5:17: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet"}
+{"Path":"internal/oracle/testdata/review/refused/non_null.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/review/refused/non_null.a:1:23: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/route_targets_accessor.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_bound_method.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_callbacks.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_recursive.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_sort_values.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_try_loop.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_unknown.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/route_targets_virtual_fresh.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/runtime_last_index_of.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/scanner_nested_overload.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/search_from.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/search_from_sweep.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/search_halves.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/searches.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/self_assignments.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_arrays.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_closures.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_fnexpr.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_keep.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_named_closures.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_named_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_named_more.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_named_objects.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_numbers.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_foreach_objects.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_maybe_numbers.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/set_undefined.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/sets.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/shadowing.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/shared_slice_append.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/shared_slices.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/size_class_churn.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/sort_releases.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/sort_top_level.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/sorting.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/sorts.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/splice_empty.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/splices.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/spread_calls.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/spread_snapshot.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/spread_undefined.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/spreads.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/stack_forever.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/stack_over.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/stack_overflow.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/stack_tail_call.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/statements_small_parameters.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/statements_small_prefix.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/statements_small_stopped/capture.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/capture.a:2:11: stage 0 can't lower a function value that captures the variable its own initializer declares yet"}
+{"Path":"internal/oracle/testdata/statements_small_stopped/nonnull.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/nonnull.a:2:1: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/statements_small_stopped/structural_error.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/structural_error.a:3:11: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"}
+{"Path":"internal/oracle/testdata/statements_small_stopped/template.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/template.a:5:18: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"}

@@ -68,13 +68,13 @@ func TestCallSpreadEvaluatedTwiceMutant(t *testing.T) {
 			continue
 		}
 		insertion, ok := text.Value.(ir.Call)
-		if !ok || program.Functions[insertion.Function].Name != "array_unshift_arguments" {
+		if !ok || program.Functions[program.CallTargets(insertion)[0]].Name != "array_unshift_arguments" {
 			continue
 		}
 		packed := insertion.Arguments[1].(ir.ArrayLiteral)
 		for index, value := range packed.Elements {
 			call, ok := value.(ir.Call)
-			if ok && call.Function == target {
+			if ok && len(program.CallTargets(call)) == 1 && program.CallTargets(call)[0] == target {
 				packed.Elements[index] = ir.Comma{Left: call, Right: call}
 				changed = true
 				break

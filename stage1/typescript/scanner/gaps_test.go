@@ -3,6 +3,9 @@ package scanner
 import (
 	"context"
 	"errors"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -28,10 +31,24 @@ func TestGapStandsWhereGapsMdSays(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "push with other than one value" {
-		t.Fatalf("gap changed: %v; update GAPS.md and undo gap 1 workaround", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "push")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := execute(t, "", binary)
+	emitted := filepath.Join(t.TempDir(), "push.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted)
+	for _, side := range []execution{actual, backend} {
+		if string(side.output) != string(result.output) {
+			t.Fatalf("closed push output %q, Node %q", side.output, result.output)
+		}
 	}
 }
 

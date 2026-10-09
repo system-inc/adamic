@@ -1,0 +1,254 @@
+[
+  {
+    "name": "check-optional-receiver",
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.111937880000028,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/check-optional-receiver/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCall79$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "javascript-required-panic",
+    "exit": 1,
+    "caught": true,
+    "seconds": 7.835106310000015,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/javascript-required-panic/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "native-required-panic",
+    "exit": 1,
+    "caught": true,
+    "seconds": 8.528145998000014,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/native-required-panic/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "drop-flow-throw-edge",
+    "exit": 1,
+    "caught": true,
+    "seconds": 21.486296647000017,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/drop-flow-throw-edge/overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestOptionalAfterCallFlowEdges$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-computed-read",
+    "exit": 1,
+    "caught": true,
+    "seconds": 23.848855947999994,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/merged-computed-read/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldTypeScriptComputedChecked$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-declaration",
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.553829089000033,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/merged-declaration/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldAdamicUnusedRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-read",
+    "exit": 1,
+    "caught": true,
+    "seconds": 56.642045279999934,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/merged-read/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldTypeScriptMissingChecked$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-annotation",
+    "exit": 1,
+    "caught": true,
+    "seconds": 34.44242151100002,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/function-annotation/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionAdamicUnusedAnnotationRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-call",
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.303151154000034,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/function-call/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionTypeScriptCallRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-length",
+    "exit": 1,
+    "caught": true,
+    "seconds": 41.08483313099998,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/function-length/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionTypeScriptLengthAgreesWithNode$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "drop-required-propagation",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.331015289000106,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/drop-required-propagation/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallPropagation$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "erase-earlier-throw",
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.175631602000067,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-3/mutants/erase-earlier-throw/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalAfterCallPreservesEarlierThrow$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  }
+]
