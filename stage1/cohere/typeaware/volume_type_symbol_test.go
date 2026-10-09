@@ -143,6 +143,7 @@ func typeSymbolIDs(shard int) []int {
 }
 
 func TestVolumeTypeSymbolUnion(t *testing.T) {
+	t.Parallel()
 	seen := make(map[int]bool)
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
 		for _, id := range typeSymbolIDs(shard) {
@@ -174,6 +175,7 @@ func typeSymbolSurvived(observed, truth result) error {
 }
 
 func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	caught := []int{}
 	// Plant identical finding bytes in the assigned shard, using the same validator.
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
@@ -271,6 +273,7 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 }
 
 func TestVolumeTypeSymbolCommandDeadline(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD") == "1" {
 		time.Sleep(30 * time.Second)
 		return
