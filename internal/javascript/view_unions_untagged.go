@@ -120,18 +120,20 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 			continue
 		}
 		parameters := make([]ir.Type, len(contract.Parameters))
+		masks := make([]uint16, len(parameters)+1)
 		known := true
 		for i, parameter := range contract.Parameters {
 			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
 			known = known && parameters[i] != 0
 		}
 		result := e.program.ViewContracts[contract.Result-1].Of
 		if !known || result == 0 {
 			continue
 		}
-		choices = append(choices, unionCallableSignature(parameters, result, root.Name))
+		choices = append(choices, unionCallableSignature(parameters, result, root.Name, masks))
 	}
-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
+	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" + recorded + ")"
 }
 
 func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {

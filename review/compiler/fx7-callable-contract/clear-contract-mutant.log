@@ -1,0 +1,10 @@
+=== RUN   TestCallableContractChecksBeforeArguments
+=== PAUSE TestCallableContractChecksBeforeArguments
+=== CONT  TestCallableContractChecksBeforeArguments
+    callable_contract_retention_test.go:86: backend 0: exit 0 stdout "before\nargument\n99\n" stderr ""; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:86: backend 1: exit 0 stdout "before\nargument\n7\n" stderr ""; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:90: callable contract must reject before argument effects: exit 0 stdout "before\nargument\n99\n" stderr ""
+--- FAIL: TestCallableContractChecksBeforeArguments (0.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.372s
+FAIL

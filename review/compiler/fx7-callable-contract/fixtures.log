@@ -1,0 +1,37 @@
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractChecksBeforeArguments
+=== PAUSE TestCallableContractChecksBeforeArguments
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== CONT  TestCallableContractP18
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+=== CONT  TestCallableContractSpreadRefused
+=== CONT  TestCallableContractChecksBeforeArguments
+=== CONT  TestCallableContractWideProducer
+--- PASS: TestCallableContractSpreadRefused (0.16s)
+=== CONT  TestCallableContractReceiverBinding
+=== NAME  TestCallableContractChecksBeforeArguments
+    callable_contract_retention_test.go:86: backend 0: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:86: backend 1: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+--- PASS: TestCallableContractChecksBeforeArguments (0.68s)
+=== CONT  TestCallableContractP20
+=== CONT  TestCallableContractPlainSpread
+--- PASS: TestCallableContractWideProducer (1.32s)
+--- PASS: TestCallableContractP18 (1.37s)
+--- PASS: TestCallableContractReceiverEvaluatedOnce (1.54s)
+--- PASS: TestCallableContractP20 (1.05s)
+--- PASS: TestCallableContractPlainSpread (0.65s)
+--- PASS: TestCallableContractReceiverBinding (6.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	6.576s

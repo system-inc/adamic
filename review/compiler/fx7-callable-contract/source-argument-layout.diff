@@ -1,0 +1,11 @@
+--- a/internal/native/view_callable_arguments.go
++++ b/internal/native/view_callable_arguments.go
+@@ -24,7 +24,7 @@
+ 				tests = append(tests, e.unionClosureCodeIdentity(closure, producer.Function))
+ 			}
+ 		}
+-		if len(tests) != 0 && argument.Type() != ir.Union {
++		if false && len(tests) != 0 && argument.Type() != ir.Union {
+ 			boxed, fresh := converted(argument.Type(), ir.Union, value)
+ 			if fresh {
+ 				boxed = e.own(ir.Union, boxed)

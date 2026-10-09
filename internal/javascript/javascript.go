@@ -1106,6 +1106,15 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
+			if property.View != "" {
+				property.Method = false
+				callee, checked := readUnionViewAt(e, property, "receiver")
+				if !checked {
+					panic("compiler bug: unavailable callable view read")
+				}
+				arguments := e.callValues(expression.Arguments, expression.Spread)
+				return "((receiver)=>((fn)=>adamicCall(fn,fn.receiver ? [receiver," + arguments + "] : [" + arguments + "]))(" + callee + "))(" + e.value(property.Object) + ")"
+			}
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
 				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"

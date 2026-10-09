@@ -1,0 +1,8 @@
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== CONT  TestCallableContractSpreadRefused
+    callable_contract_retention_test.go:100: want located checked-callable spread refusal, got <nil>
+--- FAIL: TestCallableContractSpreadRefused (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.074s
+FAIL

@@ -1,0 +1,11 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -285,7 +285,7 @@
+ 				}
+ 				node = expression
+ 			case ir.Property:
+-				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID]) {
++				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil

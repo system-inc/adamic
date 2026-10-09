@@ -3,6 +3,7 @@ package javascript
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"slices"
 	"strings"
 )
 
@@ -64,11 +65,22 @@ func (e *emitter) unionCallableRecorded(value string) string {
 				parameters[i] = 0
 			}
 		}
+		masks := make([]uint16, len(parameters)+1)
+		// Exact checker identity certified these producer contracts in lowering.
+		for _, contract := range e.program.ViewContracts {
+			if contract.Kind != ir.ViewCallable || !contract.ProducerCertified || !slices.Contains(contract.Functions, index) {
+				continue
+			}
+			for i, child := range contract.Parameters {
+				parameters[i] = e.program.ViewContracts[child-1].Of
+				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
+			}
+		}
 		result := unionCallableProducerResult(function.Returns)
 		if result != ir.Number && result != ir.Boolean && result != ir.String && result != 254 {
 			result = 0
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? ({...%s,function:%d}) : ", functionName(e.program, index), unionCallableSignature(parameters, result, function.Name), index))
+		choices = append(choices, fmt.Sprintf("code === %s ? ({...%s,function:%d}) : ", functionName(e.program, index), unionCallableSignature(parameters, result, function.Name, masks), index))
 	}
 	return "((code)=>" + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
 }

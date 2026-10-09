@@ -8,6 +8,10 @@ import (
 func init() { checkedViewReadAdapter = readUnionView }
 
 func readUnionView(e *emitter, property ir.Property) (string, bool) {
+	return readUnionViewAt(e, property, "")
+}
+
+func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
 		return "", false
@@ -19,7 +23,10 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
 		panic("compiler bug: unavailable checked union read")
 	}
-	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", e.value(property.Object), quote(property.Name), quote(property.View), quote(contract.Name))
+	if object == "" {
+		object = e.value(property.Object)
+	}
+	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", object, quote(property.Name), quote(property.View), quote(contract.Name))
 	if contract.Of == ir.Closure {
 		recorded := e.unionCallableRecorded("v")
 		expected := e.untaggedCallableUnionExpected(property, recorded, e.unionCallableExpected(property))

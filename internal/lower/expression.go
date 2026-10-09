@@ -1318,6 +1318,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 {
+		contract := l.result.ViewContracts[property.ViewContract-1]
+		if contract.Of == ir.Closure && contract.Unsupported == "" && (contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewCallable) {
+			return nil, l.notYet(node, "spread arguments through a checked callable view")
+		}
+	}
 	var returns ir.Type
 	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
