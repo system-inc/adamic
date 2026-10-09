@@ -1,0 +1,24 @@
+--- a/internal/javascript/readiness.go
++++ b/internal/javascript/readiness.go
+@@ -5,7 +5,7 @@
+ // Hidden readiness state leaves own keys and object spread unchanged.
+ const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
+ const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
+-const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
++const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || true) && !(value instanceof Map);
+ const adamicFieldReadiness = new WeakMap();
+ const adamicFieldRepresentations = new WeakMap();
+ const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -83,8 +83,8 @@
+   if(contract.Kind===6) return value===null;
+   if(contract.Kind===7) return value===undefined;
+   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
+-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
+-  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
++  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !true) || value instanceof Map) return false;
++  if(contract.FixedTuple && (!Array.isArray(value) || !true || value.length !== contract.Tuple.length)) return false;
+   const fields=contract.Fields || [];
+   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
+   if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}

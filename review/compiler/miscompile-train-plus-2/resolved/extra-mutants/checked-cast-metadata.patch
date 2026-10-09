@@ -1,0 +1,12 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -450,9 +450,6 @@
+ 	}
+ 	needed := false
+ 	walkExpressions(e.program, func(expression ir.Expression) {
+-		if cast, ok := expression.(ir.CheckedCast); ok && cast.CheckedFields {
+-			needed = true
+-		}
+ 		if property, ok := expression.(ir.Property); ok && property.View != "" {
+ 			needed = true
+ 		}

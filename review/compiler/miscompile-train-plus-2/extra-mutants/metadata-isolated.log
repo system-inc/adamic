@@ -1,0 +1,9 @@
+=== RUN   TestCheckedCastWithoutReadSummary
+=== PAUSE TestCheckedCastWithoutReadSummary
+=== CONT  TestCheckedCastWithoutReadSummary
+    checked_cast_metadata_test.go:29: /tmp/adamic-gate/TestCheckedCastWithoutReadSummary1107355678/001/native: exit status 70
+        adamic: panic: field read failed: value is not a number; expected number, found unsupported representation
+--- FAIL: TestCheckedCastWithoutReadSummary (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.096s
+FAIL
