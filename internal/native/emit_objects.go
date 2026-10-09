@@ -142,7 +142,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
 				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
@@ -177,6 +177,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
+	if literal.Tuple {
+		e.line("%s->tuple = true;", object)
+	}
 	if len(literal.Fields) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}
@@ -200,7 +203,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	for index, field := range literal.Fields {
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
 		}
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
@@ -466,4 +469,24 @@ func (e *emitter) fieldReadinessNeeded(name string) bool {
 		}
 	})
 	return needed
+}
+
+// Preserve null/undefined semantic tags before a checked read normalizes the
+// physical slot. Uninitialized boxed slots retain their original layout tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value.(type) {
+	case ir.Null:
+		return int(ir.NullRepresentation)
+	case ir.Undefined:
+		if value.Type().IsReference() {
+			return int(ir.UndefinedRepresentation)
+		}
+	}
+	return int(value.Type())
+}
+func fieldInitialRepresentation(field ir.Field) int {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return int(ir.Union)
+	}
+	return fieldRepresentation(field.Value)
 }

@@ -143,48 +143,12 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
-	directory := serializationPort(t)
-	for _, change := range []struct{ name, from, to string }{
-		{"rule.a", "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"},
-		{"oracle.go", "d.Fixes = nil", "d.Fixes[0].Text = \";\""},
-	} {
-		path := filepath.Join(directory, "rules/no-debugger", change.name)
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if bytes.Count(data, []byte(change.from)) != 1 {
-			t.Fatal("automatic fix anchor changed")
-		}
-		if err := os.WriteFile(path, bytes.Replace(data, []byte(change.from), []byte(change.to), 1), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	source := filepath.Join(t.TempDir(), "mixed.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\tno-debugger"})
-	got := compare(t, goOracleFrom(t, directory), buildPort(t, directory, true), directory, path)
-	if !bytes.Contains(got, []byte("fixed\t/*\\ud83d\\ude00*/;\\u000a")) {
-		t.Fatalf("automatic fix lost: %s", got)
-	}
-	t.Log("automatic fix remains applied while all three suggestions remain unapplied and serialized")
+	suggestionAlongsideSetup(t)
+	suggestionAlongsideUnion(t)
 }
 
 func TestWitnessScriptKind(t *testing.T) {
-	directory := mutant(t, "", "")
-	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
-	if err := os.Rename(witness, strings.TrimSuffix(witness, ".ts.txt")+".tsx.txt"); err != nil {
-		t.Fatal(err)
-	}
-	witness = strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
-	if err := os.WriteFile(witness, []byte("const node = 1; debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	sources := ownedWitnesses(t, directory, "no-debugger")
-	if filepath.Ext(sources[0]) != ".tsx" {
-		t.Fatal("witness script kind lost")
-	}
-	compare(t, goOracleFrom(t, directory), buildPort(t, directory, true), directory, manifest(t, []string{sources[0] + "\tno-debugger"}))
+	witnessScriptKindSetup(t)
+	witnessScriptKindUnion(t)
+	t.Logf("TestWitnessScriptKind (setup): %s", strings.Join(witnessScriptKindState.keys, ", "))
 }
