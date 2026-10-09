@@ -112,6 +112,12 @@ class RedSort(unittest.TestCase):
         self.assertEqual(info['main_ref'], refs[0].removeprefix('refs/heads/'))
         self.assertEqual(found['tools_fingerprint'], 'tools')
 
+    def test_inherited_setup_failure_is_not_a_second_bug(self):
+        result = sort.sort_reds(record(unit('TestAnswer/sub'), unit('TestAnswer (setup)')), record())
+        self.assertEqual(result['candidate_reds'], 1)
+        result = sort.sort_reds(record(unit('TestAnswer/sub'), unit('TestAnswer (setup)', detail='setup exceeded budget')), record())
+        self.assertEqual(result['candidate_reds'], 2)
+
     def test_lookup_failure_is_explicit_and_closed(self):
         with mock.patch.object(sort.MainRecords, 'newest', side_effect=TimeoutError('limit')):
             result = sort.sort_record(record(unit()), '/unused')

@@ -51,6 +51,7 @@ import datetime
 import traceback
 
 from input_hashes import InputHashes, tools_fingerprint
+from sort_reds import sort_record
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
@@ -1924,7 +1925,7 @@ class Gate:
         except BaseException:
             code = None
             self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
-        row.update(seconds=round(time.monotonic() - before, 6), status="passed" if code == 0 else "failed")
+        row.update(seconds=round(time.monotonic() - before, 6), exit=code, status="passed" if code == 0 else "failed")
         if code != 0:
             self.fail("products", "%s %s failed or was killed" % (package, name))
 
@@ -1937,6 +1938,7 @@ class Gate:
         with self.lock:
             row = next(row for row in self.result["test_outcomes"] if row["package"] == importPath and row["test"] == name)
             row["status"] = "not run" if code is None else ("passed" if code == 0 else "failed")
+            row["exit"] = code
         if code == 0:
             with self.lock:
                 tally["passed"] += 1
@@ -2350,7 +2352,8 @@ class Gate:
 
     def status(self, line):
         with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
-            handle.write(line + "\n")
+            suffix = self.result.get("red_sort", {}).get("status")
+            handle.write(line + ("; " + suffix if suffix else "") + "\n")
 
     def recordInputHashes(self):
         identities = InputHashes(self.arguments.tree)
@@ -2367,9 +2370,13 @@ class Gate:
                 attach(row, {"packages": [row["package"]], "paths": []})
         phases = []
         for phase in self.planned:
-            if phase == "tests":
+            if phase == "tests" or (phase == "products" and self.result.get("product_units")) or (phase in ("audit", "upload") and self.result.get("cache_drain_units")):
                 continue
             rows = self.result.get(phase + "_units", [])
+            codes = self.result.get(phase + "_exits", {})
+            if not rows and codes:
+                rows = [{"name": name, "exit": code, "status": "passed" if code == 0 else "failed"}
+                        for name, code in sorted(codes.items())]
             if not rows:
                 rows = [{"name": phase, "exit": self.exits.get(phase),
                          "status": "not run" if phase not in self.exits else
@@ -2391,6 +2398,49 @@ class Gate:
         self.result["phase_units"] = phases
         if errors:
             self.result["input_hash_errors"] = sorted(set(errors))
+
+    def recordRedDetails(self):
+        outputs = {}
+        try:
+            with open(os.path.join(self.arguments.out, "test.jsonl")) as handle:
+                for line in handle:
+                    try:
+                        event = json.loads(line)
+                    except ValueError:
+                        continue
+                    if not isinstance(event, dict) or event.get("Action") != "output":
+                        continue
+                    key = (event.get("Package", ""), event.get("Test", ""))
+                    outputs[key] = (outputs.get(key, "") + event.get("Output", ""))[-16000:]
+        except OSError:
+            pass
+        for field in ("units", "test_outcomes", "product_units", "cache_drain_units"):
+            for row in self.result.get(field, []):
+                name = row["test"].removesuffix(" (setup)")
+                detail = outputs.get((row["package"], name), "")
+                if detail:
+                    row["detail"] = detail
+        # Budget reds can be passing answers: keep their unit identity instead of one anonymous budget red.
+        for over in self.result.get("budget_over", []):
+            for row in self.result.get("units", []):
+                if over.startswith(row["package"] + " " + row["test"] + " "):
+                    row.update(action="fail", detail=row.get("detail", "") + "\nnew test unit over budget")
+        failure = self.failure or {}
+        for row in self.result.get("phase_units", []):
+            phase = row["unit"].split(" ", 1)[0]
+            if row.get("status") != "passed" and (failure.get("step") == phase or
+                    failure.get("step") == phase + "/" + row["name"]):
+                row["detail"] = row.get("detail", "") + "\n" + failure.get("detail", "")
+                if failure.get("tool_crash"):
+                    row["tool_crash"] = True
+            path = row.get("log") or os.path.join(self.arguments.out, row["name"] + ".log")
+            try:
+                with open(path, errors="replace") as handle:
+                    handle.seek(0, 2)
+                    handle.seek(max(0, handle.tell() - 16000))
+                    row["detail"] = row.get("detail", "") + "\n" + handle.read()
+            except OSError:
+                pass
 
     def finish(self):
         if getattr(self, "stopThread", None):
@@ -2447,6 +2497,8 @@ class Gate:
                                                for status in ("passed", "failed", "not run")}
         self.result["gate_kind"] = self.kind
         self.recordInputHashes()
+        self.recordRedDetails()
+        self.result["red_sort"] = sort_record(self.result, self.arguments.tree)
         with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")

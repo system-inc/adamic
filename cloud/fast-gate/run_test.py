@@ -158,6 +158,7 @@ class FailClosed(unittest.TestCase):
 
         listing = mock.Mock(stdout="example.com/p\n")
         with mock.patch.object(run.Gate, "recordInputHashes", lambda gate: None), \
+                mock.patch.object(run, "sort_record", side_effect=lambda record, tree: __import__("sort_reds").sort_reds(record)), \
                 mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: (mock.Mock(stdout="p\t" + self.tree + "\n") if "-f" in command else listing) if command[:2] == ["go", "list"] else realRun(command, **options)), \
@@ -1564,7 +1565,7 @@ class StopTests(unittest.TestCase):
             self.assertIn("stopped: " + reason, status)
             self.assertEqual(result["failure"]["detail"], "p TestFailed\n")
         else:
-            self.assertEqual(status.strip(), "void: stopped before a verdict: " + reason)
+            self.assertEqual(status.strip(), "void: stopped before a verdict: " + reason + "; no main record on these tools")
 
     def test_sigterm_mid_tests_preserves_red_and_marks_killed_not_run(self):
         self.stopped(True)
@@ -2284,7 +2285,8 @@ elif sys.argv[2] == 'upload':
                 gate.cacheDrain(name)
             row = gate.result["cache_drain_units"][-1]
             self.assertNotEqual(row["exit"], 0)
-            self.assertIn("killed at 90 s", row["detail"])
+            # The deadline is patched to 0.05 s above; the runner formats whole seconds.
+            self.assertIn("killed at 0 s", row["detail"])
             self.assertTrue(all(process.poll() is not None for process in gate.processes))
             self.assertEqual(gate.failure is not None, name == "audit")
             self.assertEqual(gate.exits[name] == 0, name == "upload")
@@ -2514,3 +2516,51 @@ class UnitInputHashes(unittest.TestCase):
         identity.packages = {}
         with self.assertRaises(ValueError):
             identity.hash({'packages': ['missing'], 'paths': []})
+
+
+class FinishRedSort(unittest.TestCase):
+    def test_both_record_kinds_publish_the_sort_and_status(self):
+        import sort_reds
+        for full in (False, True):
+            with self.subTest(full=full), tempfile.TemporaryDirectory() as out:
+                gate = run.Gate.__new__(run.Gate)
+                gate.arguments = types.SimpleNamespace(tree=out, tools=out, out=out, sha='candidate',
+                                                       base='main', full=full, branch='', session='')
+                gate.kind = 'full' if full else 'fast'
+                gate.started = time.monotonic()
+                gate.lock, gate.processes = threading.Lock(), []
+                gate.steps, gate.exits, gate.planned = {}, {'tests': 1}, ['tests']
+                gate.counts = {'pass': 0, 'fail': 1, 'skip': 0}
+                gate.census = {'required_input': [], 'unclassified': []}
+                gate.failedTests = ['p TestAnswer']
+                gate.complete = True
+                gate.failure = {'step': 'tests', 'detail': 'p TestAnswer\nassertion diff', 'after_seconds': 0}
+                gate.result = {'sha': 'candidate', 'tools_fingerprint': 'tools'}
+                with open(os.path.join(out, 'test.jsonl'), 'w') as handle:
+                    handle.write(json.dumps({'Package': 'p', 'Test': 'TestAnswer', 'Action': 'fail', 'Elapsed': 1})+'\n')
+                def hashes():
+                    for row in gate.result['units']:
+                        row.update(input_hash='candidate-input', input_paths=['p/p.go'])
+                main = {'finished': True, 'tools_fingerprint': 'tools', 'units': []}
+                with mock.patch.object(gate, 'recordInputHashes', side_effect=hashes), \
+                     mock.patch.object(run, 'sort_record', side_effect=lambda record, tree: sort_reds.sort_reds(record, main)), \
+                     mock.patch('builtins.print'):
+                    gate.finish()
+                with open(os.path.join(out, gate.kind + '.json')) as handle:
+                    result = json.load(handle)
+                with open(os.path.join(out, 'status.txt')) as handle:
+                    status = handle.read()
+                self.assertEqual(result['red_sort']['candidate_reds'], 1)
+                self.assertIn('candidate reds: 1', status)
+                self.assertTrue(status.startswith('red:'))
+
+    def test_void_also_names_missing_main_tools_record(self):
+        import sort_reds
+        gate = run.Gate.__new__(run.Gate)
+        with tempfile.TemporaryDirectory() as out:
+            gate.arguments = types.SimpleNamespace(out=out)
+            gate.result = {'red_sort': sort_reds.sort_reds({'void': True})}
+            gate.status('void: stopped before a verdict')
+            with open(os.path.join(out, 'status.txt')) as handle:
+                self.assertIn('no main record on these tools', handle.read())
+
