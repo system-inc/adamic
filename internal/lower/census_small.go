@@ -223,23 +223,40 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if givenRest && !takesRest {
 			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
 		}
-		if !l.censusRelated(given, takes) {
+		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) {
+			if admitted, err := l.admitOverloadVisitor(implementation, overload, index, ordinal); err != nil {
+				return err
+			} else if admitted {
+				continue
+			}
 			name := func(node *ast.Node) string {
 				if ast.IsIdentifier(node.Name()) {
 					return node.Name().Text()
 				}
 				return fmt.Sprintf("%d", index+1)
 			}
-			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual) + l.overloadCallbackParameterRelation(given, takes), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
 		}
 	}
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
-		if l.censusNullableOverloadResult(produced, promised) {
-			return nil // Each resolved call proves the result or checks its presence.
+		if l.overloadStructuralProof(implementation, overload) {
+			return l.overloadDirectUses(implementation)
 		}
-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
+		if l.censusNullableOverloadResult(produced, promised) {
+			if l.overloadHasDeferredParameters(implementation, overload) {
+				return l.overloadDirectUses(implementation)
+			}
+			return nil
+		}
+		if l.overloadFieldHatch(overload, produced, promised) != "" || l.overloadCheckableResult(implementation, produced, promised) || promised.Flags()&checker.TypeFlagsTypeParameter != 0 && len(overload.TypeParameters()) > 0 {
+			return l.overloadDirectUses(implementation) // Every use must resolve its checked boundary.
+		}
+		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}) + "; " + l.overloadResultRelation(produced, promised), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
+	}
+	if l.overloadHasDeferredParameters(implementation, overload) {
+		return l.overloadDirectUses(implementation)
 	}
 	return nil
 }
@@ -300,6 +317,11 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 						break
 					}
 				}
+			}
+			produced := l.overloadImplementationType(implementation, resolved, l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)))
+			promised := l.concrete(l.checker.GetReturnTypeOfSignature(resolved))
+			if !l.censusRelated(produced, promised) && !l.censusNullableOverloadResult(produced, promised) || l.overloadCallDeferredParameters(implementation, resolved) {
+				return l.overloadSpecialization(call, value, implementation, overload, ordinal, produced, promised)
 			}
 			if !l.censusProveOverloadResult(implementation, overload) {
 				promised := l.checker.GetReturnTypeOfSignature(resolved)

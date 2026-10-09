@@ -1,0 +1,22 @@
+{
+  "side": "stack",
+  "query": {
+    "label": "hidden-14",
+    "file": "utilities.ts",
+    "start": 455532,
+    "end": 462634
+  },
+  "command": [
+    "/tmp/hidden-census-stack-memo",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/utilities.ts",
+    "-region-start",
+    "455532",
+    "-region-end",
+    "462634"
+  ],
+  "exit": 0,
+  "seconds": 29.044
+}

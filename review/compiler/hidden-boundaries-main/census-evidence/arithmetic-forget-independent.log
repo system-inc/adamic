@@ -1,0 +1,21 @@
+test_attempted_parent_cannot_expose_skipped_child (__main__.Arithmetic.test_attempted_parent_cannot_expose_skipped_child) ... ok
+test_dependency_skip_exposes_no_expression_body (__main__.Arithmetic.test_dependency_skip_exposes_no_expression_body) ... ok
+test_fake_skipped_span_grows_exactly (__main__.Arithmetic.test_fake_skipped_span_grows_exactly) ... ok
+test_legacy_and_invalid_ranges_fail (__main__.Arithmetic.test_legacy_and_invalid_ranges_fail) ... ok
+test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part) ... FAIL
+test_overlapping_skipped_span_does_not_double_count (__main__.Arithmetic.test_overlapping_skipped_span_does_not_double_count) ... ok
+test_ranges_against_independent_byte_sets (__main__.Arithmetic.test_ranges_against_independent_byte_sets) ... ok
+test_signature_failure_keeps_whole_body_hidden (__main__.Arithmetic.test_signature_failure_keeps_whole_body_hidden) ... ok
+
+======================================================================
+FAIL: test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/hidden-census-pin/stage3/census/hidden/test_hidden.py", line 73, in test_nested_attempt_exposes_only_its_examined_part
+    self.assertEqual(total(rows, stock), 45, '80 blocked - (45 child bytes - 10 failed bytes)')
+AssertionError: 80 != 45 : 80 blocked - (45 child bytes - 10 failed bytes)
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.032s
+
+FAILED (failures=1)

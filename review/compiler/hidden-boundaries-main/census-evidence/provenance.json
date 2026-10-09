@@ -1,0 +1,1404 @@
+{
+  "main": "68db8ddd145281a62655452496bdc32ef848bdf3",
+  "stack": "f742bb83173dcd151abb8f4513985693112c1ea8",
+  "source_pin": "388096e6a83a4e9d287fb827f793c599ba1bf0ad",
+  "products": {
+    "main": {
+      "sha256": "1df4e2c6bc621562e451c4a76d157e724de2c0983321773da6af93126a92193f"
+    },
+    "stack": {
+      "sha256": "74731fb5abe583a6c13312d9e6400a3e351faa1b72b68a5a527c96b9d9269f95"
+    },
+    "main-memo": {
+      "sha256": "35daf1f74f7e8283820e1345c6f45c959dab39665bf21b356763c23d4c04703a"
+    },
+    "stack-memo": {
+      "sha256": "b28dae08ac2e80cc19d2475f770f782379ae6cc5563be95331da33a5b36303a8"
+    }
+  },
+  "overlays": {
+    "main": {
+      "/workspace/adamic/internal/lower/lower.go": {
+        "sha256": "3a62f6ac5384060d91c47a76569eaf1f25de17bfaa092017b01064f31d48e653",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_lower.go"
+      },
+      "/workspace/adamic/internal/lower/latent_state.go": {
+        "sha256": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_state.go"
+      },
+      "/workspace/adamic/internal/lower/statements.go": {
+        "sha256": "b39cf030c3dcb7565516c330e42598003da833acdc1b20e909f9401ae86ca5e4",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_statements.go"
+      },
+      "/workspace/adamic/internal/lower/latent_full.go": {
+        "sha256": "d3c955de8c1cc39e999602fda5e75e40baa9be45b1631ac73da775dab2c50ce5",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_full.go"
+      },
+      "/workspace/adamic/internal/lower/latent_units.go": {
+        "sha256": "d538a88b6a6c048efd44302c84da224810a6df7d63fc496bd12fa53d2d9afaba",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_units.go"
+      },
+      "/workspace/adamic/internal/lower/latent_replay.go": {
+        "sha256": "2571e793760594bd3fc592516fc9975a0b7a2f39ddc48aa9286dd7175f24f716",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_replay.go"
+      },
+      "/workspace/adamic/internal/lower/refusals.go": {
+        "sha256": "7413f39ec7d509be852f41f273f4b01928d3c5c80e1aeab71ba0ba0d8ee93295",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_refusals.go"
+      },
+      "/workspace/adamic/internal/load/load.go": {
+        "sha256": "fcd2e7ec98df2a9f3f3d31f0864e22be3630efdba8c426aa4be656df96fa90da",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_load.go"
+      },
+      "/workspace/adamic/internal/load/latent_hook.go": {
+        "sha256": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_latent_hook.go"
+      },
+      "/workspace/adamic/internal/lower/expression.go": {
+        "sha256": "5889d439ee72a8f1be63d871663b51821f543754645759afc6853ac6dcc0d841",
+        "source": "/tmp/hidden-census-main-overlay/lower_expression.go.txt"
+      },
+      "/workspace/adamic/internal/lower/functions.go": {
+        "sha256": "e98b3826dba59394634b2b244594fcbad29fe5ac7ce1f4cb1a0e96f26c0ee691",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_functions.go"
+      },
+      "/workspace/adamic/internal/lower/locals.go": {
+        "sha256": "caebd8fd256375745a4fff2a6b168b176f0bdc9531967fa6c203224c01fa935e",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_locals.go"
+      },
+      "/workspace/adamic/internal/lower/latent_hook.go": {
+        "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_hook.go"
+      },
+      "/workspace/adamic/stage3/census/latent/tool/main.go": {
+        "sha256": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_tool_main.go"
+      },
+      "/workspace/adamic/stage3/census/latent/replay/worker/main.go": {
+        "sha256": "0ee1a6ba507e66562c79a4f2147ef5bb91b7f79c230464f4bb3db19ccb77f594",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_replay_worker_main.go"
+      },
+      "/workspace/adamic/internal/lower/assignments.go": {
+        "sha256": "c1c449e37d4a7b3c14adfa664b916658f3ebe4e0887cd7857985e3cce46458a6",
+        "source": "/tmp/hidden-census-main-overlay/lower_assignments.go.txt"
+      },
+      "/workspace/adamic/internal/lower/borrow.go": {
+        "sha256": "50c421f5903835f69729a213ec95d87427ed6f3ed7275e247d3540c0eab45b06",
+        "source": "/tmp/hidden-census-main-overlay/lower_borrow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cast.go": {
+        "sha256": "55bca408adb0116d388dfc6fe0a1d3fe0ceba83f0c439eaaa970e36d14431c5c",
+        "source": "/tmp/hidden-census-main-overlay/lower_cast.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cast_proof.go": {
+        "sha256": "442a45150d7f4dfeaabfe3b586d78447729ab09a4f1eb58ac4265cb44670dabc",
+        "source": "/tmp/hidden-census-main-overlay/lower_cast_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class.go": {
+        "sha256": "339231c7cd7dff60b100b588de6e385bb5dc8b45fafe611291ec1ce607a3fc99",
+        "source": "/tmp/hidden-census-main-overlay/lower_class.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_accessors.go": {
+        "sha256": "8052da28659f77fd4bead771c2a5eedda68f77d2c5e409d6192ade159cadd93a",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_accessors.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_features.go": {
+        "sha256": "1edfb3d2d9d7b7820beeb65ad1a2babce4d1093d6b8429af133b147cbf5c4cc2",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_features.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_generic_calls.go": {
+        "sha256": "88fe1c4b02d771988bdb4db4fe73d83be6b786636d3aa49822507ae6133d0e32",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_generic_calls.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_inheritance.go": {
+        "sha256": "059b4e7c9d19b40e26254cbd9a3fa1c96072729cf10f2f2821cfb0b89b08abcb",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_inheritance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_static.go": {
+        "sha256": "ab359b987a258d1c369ca6671129c7a7424547bdec193bdf5c348dccf65702c9",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_static.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_static_private.go": {
+        "sha256": "69d36d972bbd77e2683d322800dfc5459d00966ba81fe54c869fbf18213f7408",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_static_private.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_super.go": {
+        "sha256": "fd2feba87fe70e32cdcd039e7501fbe2b7e7cc210abeb9e347dc3f1fca4d5eb5",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_super.go.txt"
+      },
+      "/workspace/adamic/internal/lower/collections.go": {
+        "sha256": "66fec64ee0399fad6faf73e1c0ca002b0f300fad96210a16f82b3408c5b7323a",
+        "source": "/tmp/hidden-census-main-overlay/lower_collections.go.txt"
+      },
+      "/workspace/adamic/internal/lower/control.go": {
+        "sha256": "dda1cfb35a6215f8a04fc56025d80aaf7a5f977a9e9ee68949813c38098b53b9",
+        "source": "/tmp/hidden-census-main-overlay/lower_control.go.txt"
+      },
+      "/workspace/adamic/internal/lower/counters.go": {
+        "sha256": "523c222635238b2822bac0f3aeba0a5b64ba930432247545f0beb644af1db5f7",
+        "source": "/tmp/hidden-census-main-overlay/lower_counters.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cycles.go": {
+        "sha256": "463b02ae4bcac5b1d07864fe38c483c18db8bb7c8521e005725acf531e7eb120",
+        "source": "/tmp/hidden-census-main-overlay/lower_cycles.go.txt"
+      },
+      "/workspace/adamic/internal/lower/diagnostics.go": {
+        "sha256": "5e87371776bbf572c8ac3a987224ffceb8cecc510433203269ba06486df4e820",
+        "source": "/tmp/hidden-census-main-overlay/lower_diagnostics.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_flags.go": {
+        "sha256": "0e58adb4a2c27ba2e2c1f76c5e26ae8abe87bb54c959da541762f77461f8e703",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_flags.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_initialization.go": {
+        "sha256": "347b5e8b7b2f5efc4791036b90d9684d987de688a790534b998363179f90f56b",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_initialization.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_never.go": {
+        "sha256": "f9a7648470fe683c4aa1f9b3d8836261de97294ceb57b08c3e7c633f1e3a11fe",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_never.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enums.go": {
+        "sha256": "6ef79579b6cd2656755165927c75d56b7bd21dd72eaffb3fd08b9e83c9d1dbbd",
+        "source": "/tmp/hidden-census-main-overlay/lower_enums.go.txt"
+      },
+      "/workspace/adamic/internal/lower/exceptions.go": {
+        "sha256": "67bffe1d5b0b70b09a3ea044e8f8addaf6280c3f7048667b4043274445ebc255",
+        "source": "/tmp/hidden-census-main-overlay/lower_exceptions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/fresh.go": {
+        "sha256": "9820603ec015b7c41d41b0ede5354a7db3b885102db0bf7a427d4a3d81a0229e",
+        "source": "/tmp/hidden-census-main-overlay/lower_fresh.go.txt"
+      },
+      "/workspace/adamic/internal/lower/from.go": {
+        "sha256": "31b1ab95fb64c108e33ecc5ced6e1352c7d85afd69065a5fa973a72f61686cdc",
+        "source": "/tmp/hidden-census-main-overlay/lower_from.go.txt"
+      },
+      "/workspace/adamic/internal/lower/generic.go": {
+        "sha256": "6342c9c5374a8ac643bdb36ab43ff19493e256682be99845ec9dba25dbe09740",
+        "source": "/tmp/hidden-census-main-overlay/lower_generic.go.txt"
+      },
+      "/workspace/adamic/internal/lower/input.go": {
+        "sha256": "4a5bd78c0bc70eadb770930194b21c2518dc85210b17481b6861570f370970b6",
+        "source": "/tmp/hidden-census-main-overlay/lower_input.go.txt"
+      },
+      "/workspace/adamic/internal/lower/instantiate.go": {
+        "sha256": "d0b5cf69eeee6dde872eb81ce01520c2fe75f323d586814574468f68ac5aa312",
+        "source": "/tmp/hidden-census-main-overlay/lower_instantiate.go.txt"
+      },
+      "/workspace/adamic/internal/lower/invariance.go": {
+        "sha256": "200558b193a0e18defd7efdd1972363e949ec29d35e2399c9e953b13563889ec",
+        "source": "/tmp/hidden-census-main-overlay/lower_invariance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration.go": {
+        "sha256": "7012dba5249b2f698f23c920a337b83baefc538a8a25285d9354717a9008ab3b",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration_consume.go": {
+        "sha256": "58aa0a8e51006267a51b13904fbb7acc3d2e524bcb9f02a47dace853d7f0ae8c",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration_consume.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration_origin.go": {
+        "sha256": "ffe62a5a751940a1151d7ef830294cbf086d18769ad12adbf329a23f58549bb5",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration_origin.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_array.go": {
+        "sha256": "02734589835957c8afaae978e9c1e3211513b66650f8539abe1251e25047d35b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_array.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_for_in.go": {
+        "sha256": "84fce867c062c2cf8b3cce189c2c4c7b2e9a3eadda1b0b7e09bc3fef2aa57a4b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_for_in.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_function_expressions.go": {
+        "sha256": "9392a3b3f91875c1d9e434b1ea6d090440431766dbb3695c8feeefc049d3a707",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_function_expressions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_globals.go": {
+        "sha256": "a23171f4618958041a70023ef6f111871bc4c059d2f4ff8d35b92957296f6466",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_globals.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_json_stringify.go": {
+        "sha256": "846dc20e2065a3f58989cbb2083c1e31472b35307c83c2e393e679a5cba5844a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_json_stringify.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_map_set.go": {
+        "sha256": "0d113abe53ebf86d6eb4d8e19512f3ce74492d0c3df0fd85d014fd65e0185e2b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_map_set.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_math_number.go": {
+        "sha256": "9a75649e0d1af6d5537f8f10e0a9e85395b26ef185a1d0b3a4d65f82708a1205",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_math_number.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_object.go": {
+        "sha256": "5a85a4c449d8988c55b04b1a8f10aba2c62f622eaf5717d9c4aca663550187f9",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_object.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_string.go": {
+        "sha256": "9254dc309b3869c1c37324bd4f4a32ba162c8aa91262a06765ff15c53f8b07be",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_string.go.txt"
+      },
+      "/workspace/adamic/internal/lower/load_time_reads.go": {
+        "sha256": "c87a2ae841a4b386dde76679dd2fd9164f9435f2e7b50383c2bbe5db12473c63",
+        "source": "/tmp/hidden-census-main-overlay/lower_load_time_reads.go.txt"
+      },
+      "/workspace/adamic/internal/lower/modules.go": {
+        "sha256": "96ff48b64c90ef6d3ecfc1293bd1c99326a2046ffa8745f141a1c9a80e3c1538",
+        "source": "/tmp/hidden-census-main-overlay/lower_modules.go.txt"
+      },
+      "/workspace/adamic/internal/lower/narrowed.go": {
+        "sha256": "8b17470ce08db929b6121f8c043f3531315cf3ab57b693e3683322e26c4a8caa",
+        "source": "/tmp/hidden-census-main-overlay/lower_narrowed.go.txt"
+      },
+      "/workspace/adamic/internal/lower/object.go": {
+        "sha256": "a51ad0afb13aacb7f7cd009c1711d32facb8255845fd28945185e5e506db07fe",
+        "source": "/tmp/hidden-census-main-overlay/lower_object.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional.go": {
+        "sha256": "8191edce715e1ad86ba0244fbf8ff730e16c8114a6cfc64c77768066b2ce6999",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_node_host.go": {
+        "sha256": "7c1fa7d403eee9147fffa3b9e8c1788d437f68f3f58cb285b71ef16d552661ce",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_node_host.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_widening.go": {
+        "sha256": "55ab757ed741ce24995c21aa2a6c985d36612b9ad3f0a39c47f69dea1377092d",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_widening.go.txt"
+      },
+      "/workspace/adamic/internal/lower/predicates.go": {
+        "sha256": "4ada25b188638d51e2978f46471854ac056440ef13b1378a7d1c164e0f453f32",
+        "source": "/tmp/hidden-census-main-overlay/lower_predicates.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prelude.go": {
+        "sha256": "7e653f010648af110e353012dd611cb953645d729757854ca86f473112219241",
+        "source": "/tmp/hidden-census-main-overlay/lower_prelude.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prototype.go": {
+        "sha256": "94461b7090c5b2411c48f99a5e0cef82c73323e5fd3c79fa8131eb13d31b3041",
+        "source": "/tmp/hidden-census-main-overlay/lower_prototype.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prototype_own.go": {
+        "sha256": "10f132aad36fb819222659875affa5f478806b69ccf6bd2ae924fa9532d7dd7f",
+        "source": "/tmp/hidden-census-main-overlay/lower_prototype_own.go.txt"
+      },
+      "/workspace/adamic/internal/lower/proven_relations.go": {
+        "sha256": "13788b1fed224dd080fbb3e55e7d010d571f7415f5afe9255c8ac1e4d7db290e",
+        "source": "/tmp/hidden-census-main-overlay/lower_proven_relations.go.txt"
+      },
+      "/workspace/adamic/internal/lower/regexp.go": {
+        "sha256": "8934a3994b1a51a30ce474a0000da0b48424a0d8093f48fcb286da86e9c158d6",
+        "source": "/tmp/hidden-census-main-overlay/lower_regexp.go.txt"
+      },
+      "/workspace/adamic/internal/lower/set.go": {
+        "sha256": "9b61e3070d24b2eb622057c5929e48ce6628cedb65edc0059edf647e3c949d53",
+        "source": "/tmp/hidden-census-main-overlay/lower_set.go.txt"
+      },
+      "/workspace/adamic/internal/lower/switch.go": {
+        "sha256": "b1c008aa4967b20dcbdf345a031efc59180381a423f408bd5223e648599cefd7",
+        "source": "/tmp/hidden-census-main-overlay/lower_switch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/tsgo.go": {
+        "sha256": "2c1dba572a08f4a1c125ce6cd7e7071f75b65c577e879a27c248e1d861ed1435",
+        "source": "/tmp/hidden-census-main-overlay/lower_tsgo.go.txt"
+      },
+      "/workspace/adamic/internal/lower/typeof.go": {
+        "sha256": "4b8468f93ead2dfe724960ab6c34fb264d5bd485ad4cfa57bc103603a0c36b1c",
+        "source": "/tmp/hidden-census-main-overlay/lower_typeof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_intrinsic.go": {
+        "sha256": "312e7e0068008aca860dd221c855f00d2d536c0e0b7078cd7e47cc8ed53496be",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_intrinsic.go.txt"
+      },
+      "/workspace/adamic/internal/lower/predicates_proof.go": {
+        "sha256": "1903ea1dcc50e48578945ea9f0a990d1b3c5144f2577b1308bdbc09454ffd8df",
+        "source": "/tmp/hidden-census-main-overlay/lower_predicates_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespace_receiver_scope.go": {
+        "sha256": "5361e9aa36258b093f70e570c944afc7f7010e5c63709c5246f52d06b6f0a09a",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespace_receiver_scope.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_file_options.go": {
+        "sha256": "f5a187488599499ec8c5ad147adeaab70bcaf66d6232a6c7f35651e8176f37be",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_file_options.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces_returns.go": {
+        "sha256": "920b5dda4f575805d3b9887286869acf92bd6764f79948caca0c4df0d7e30a0e",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces_returns.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_flow.go": {
+        "sha256": "fb223a8473e55621491cedec8bb466caae9fcc23eba8a77943807450c96cdb21",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_flow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/generic_constraint_storage.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_generic_constraint_storage.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing.go": {
+        "sha256": "c88f18e8e382004ec95d1a5c938d046598d94926deada401356051cc10d2ae1c",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing.go.txt"
+      },
+      "/workspace/adamic/internal/lower/logical_assignment.go": {
+        "sha256": "b78df67fff485e3cd492fb8ff852c143299f9cdff7651ca04bea6552817e442c",
+        "source": "/tmp/hidden-census-main-overlay/lower_logical_assignment.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_structural.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_structural.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_regex_callback_shape.go": {
+        "sha256": "a9ad15cc745ba573fcbefbdbfb3f353716a8eef27fbb42ca6beda8ee7549243f",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_regex_callback_shape.go.txt"
+      },
+      "/workspace/adamic/internal/lower/clock_generic_returns_t_01.go": {
+        "sha256": "8903324f5896c5c6f281aa993c0f10184af4644a512c505f20e1a4a518130565",
+        "source": "/tmp/hidden-census-main-overlay/lower_clock_generic_returns_t_01.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_dispatch.go": {
+        "sha256": "5d1e3391516a717e1dd2fb1dd27bdc036e34aa3af3bd427b6d9f9d0f3716dbe9",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_dispatch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/switch_bindings.go": {
+        "sha256": "a4a6556ec1672d56833aad5624d4480a62fe1a87dfbd855becd2ad9020758446",
+        "source": "/tmp/hidden-census-main-overlay/lower_switch_bindings.go.txt"
+      },
+      "/workspace/adamic/internal/lower/evolving_local.go": {
+        "sha256": "70a10168983fa910e0b4c6343d11ca3bf7271532a6357d6d1895fdd03a36d5c2",
+        "source": "/tmp/hidden-census-main-overlay/lower_evolving_local.go.txt"
+      },
+      "/workspace/adamic/internal/lower/closed_frame_inputs.go": {
+        "sha256": "ea731df624a01d5dbe0302a6e1c6253bd28b2902abd9db4f470d627e7f5b97e6",
+        "source": "/tmp/hidden-census-main-overlay/lower_closed_frame_inputs.go.txt"
+      },
+      "/workspace/adamic/internal/lower/element_access_fields.go": {
+        "sha256": "8469d0999adc56e2e2fec59f0dd3152662f563ea838d0c01cfd5511aacc8c9b2",
+        "source": "/tmp/hidden-census-main-overlay/lower_element_access_fields.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_buffer.go": {
+        "sha256": "d10709e73efd633a45a222023799b990ff530bb259346fab33bc2511da0ce7f5",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_buffer.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_return_call.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_return_call.go.txt"
+      },
+      "/workspace/adamic/internal/lower/literal_callable_branch.go": {
+        "sha256": "ec3a88e1221e012021f2c28abaee58b0b69c2c78d7d2fd54f17c18071e0930bf",
+        "source": "/tmp/hidden-census-main-overlay/lower_literal_callable_branch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/assignment_value.go": {
+        "sha256": "a6b435d10c430238ba21ec8cf3ee57c893897d6b398a78d9ff8417cd72cd2cbf",
+        "source": "/tmp/hidden-census-main-overlay/lower_assignment_value.go.txt"
+      },
+      "/workspace/adamic/internal/lower/method_destructuring.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_method_destructuring.go.txt"
+      },
+      "/workspace/adamic/internal/lower/shape_flow.go": {
+        "sha256": "6191ea3c934a8754a907a88f423f506be47e4063654df956f867fe80b5d73a08",
+        "source": "/tmp/hidden-census-main-overlay/lower_shape_flow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/labels.go": {
+        "sha256": "f7386fb72658d5c7957ceb29265f071455ab55f1c5afa4046b95199403be9570",
+        "source": "/tmp/hidden-census-main-overlay/lower_labels.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespace_callable.go": {
+        "sha256": "68d52c9c79cfac710a1abd9bc820f41e9e3fddc5d1fb175a7aea4d904568ddef",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespace_callable.go.txt"
+      },
+      "/workspace/adamic/internal/lower/arguments_length.go": {
+        "sha256": "ebcacc03dce91bf01dc2fbf0884f522dbaafbf27bec3413415dd20db06a7618e",
+        "source": "/tmp/hidden-census-main-overlay/lower_arguments_length.go.txt"
+      },
+      "/workspace/adamic/internal/lower/typed_arrays.go": {
+        "sha256": "9a1e5d2488866c923894e8521c631a2884dd103a3b623781e5f532268c660c02",
+        "source": "/tmp/hidden-census-main-overlay/lower_typed_arrays.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_small.go": {
+        "sha256": "70568dc0c6209637e3263baf55c861f5e44064eaa34d15d54e202a18f4693cba",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_small.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_coercion.go": {
+        "sha256": "1db00e89476fc1a7b9083c98f2ee34d565c5ee61aeff298f1b7814fc4eccfac4",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_coercion.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_relations.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_relations.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces_call_graph.go": {
+        "sha256": "664ceefb67b96500d0e6cea2f5bf902310cf8aeeeac162f97420be9b6f1728dc",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces_call_graph.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_objects.go": {
+        "sha256": "f84029aba231ce343f9bc3bab324bf7f1e64b5d469f1689bd7106e250dd2b13f",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_objects.go.txt"
+      },
+      "/workspace/adamic/internal/lower/element_access_tuples.go": {
+        "sha256": "ca2ef89727d36f14497074de6ddaf4bf248d6ffa0c3b5ab2984b1a1d2db6c9ea",
+        "source": "/tmp/hidden-census-main-overlay/lower_element_access_tuples.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_overload_proof.go": {
+        "sha256": "1186fdfe9c7bc84741c967250ddee0e006b06fc5b89415b5c2295cdc761a4221",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_overload_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_regexp_replace.go": {
+        "sha256": "e4f7018dd03258d37ac7e062ef4c4954982490e7e7f603fd18c025482dda7776",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_regexp_replace.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_visitor_domain.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_visitor_domain.go.txt"
+      },
+      "/workspace/adamic/internal/lower/readiness.go": {
+        "sha256": "5c5adf6dbfc3e5f06ac7f6edfaa9b52f90fd5d431a6823c32006ad3f87c79234",
+        "source": "/tmp/hidden-census-main-overlay/lower_readiness.go.txt"
+      },
+      "/workspace/adamic/internal/lower/void.go": {
+        "sha256": "57c476f1c5a1f03609b03306a5ab2b62e44f0efeba32523298b76f4e884cda5f",
+        "source": "/tmp/hidden-census-main-overlay/lower_void.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_result_fields.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_result_fields.go.txt"
+      },
+      "/workspace/adamic/internal/lower/unknown.go": {
+        "sha256": "0c7c7f6941028438d958c6a7e3b0e2acd56613fcdc9ddcf8d4d20fd27c4ada2e",
+        "source": "/tmp/hidden-census-main-overlay/lower_unknown.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing_chain.go": {
+        "sha256": "848337f113ef877c2d3cd6729354cdf6b6e274587fc0049b403322241deaaddf",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing_chain.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_file.go": {
+        "sha256": "54f016613684946867236ed5c56db61aed42c21253f5fca874f25a31235c4873",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_file.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_untagged.go": {
+        "sha256": "27cebe154daa979cea2598f180e2971cd75378697e0c85fc58914547f12f4df8",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_untagged.go.txt"
+      },
+      "/workspace/adamic/internal/lower/comma.go": {
+        "sha256": "1b604d4022df653d95a5dc378f99e202968335dd5579a7aac377086b4eaa47dd",
+        "source": "/tmp/hidden-census-main-overlay/lower_comma.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_primitive_brands.go": {
+        "sha256": "227de3df261cd4f675203afc1a4556c3b472153f4e1c301fa8722c76d8538026",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_primitive_brands.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_values.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_values.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_lazy.go": {
+        "sha256": "035ef0aa057b7de9716cd0cb17ddc0e7acd0f2cac47f7a1dae82e821dd6819fa",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_lazy.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_join.go": {
+        "sha256": "be9ee8a09317dfdea1bf80e6d04fecbae66af62f25afeb9d8c26d316d8dc4ea5",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_join.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing_map.go": {
+        "sha256": "183f9d50a51e1d5db384e543294521ba8818cdc5ed85347112053668b796b1cd",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing_map.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_contracts.go": {
+        "sha256": "9b38975c1e3275721e16cda4879e736d041b48de08635425a96f60a425177856",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_contracts.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_interfaces.go": {
+        "sha256": "8d11025021d52bdac444964404d5f2dec79d1df4da28ec27aa087e68c7ba499a",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_interfaces.go.txt"
+      },
+      "/workspace/adamic/internal/lower/interface_cast.go": {
+        "sha256": "f41a9526828dafa2eaffa5c2b090d5c1bc6285ccfe71c822886ba37ed8c8b919",
+        "source": "/tmp/hidden-census-main-overlay/lower_interface_cast.go.txt"
+      },
+      "/workspace/adamic/internal/lower/nested_functions.go": {
+        "sha256": "f03aad4c61fbcea34a960dd6916f92444505a433ee29021aca6ff3684dd1d6c2",
+        "source": "/tmp/hidden-census-main-overlay/lower_nested_functions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/entries_records.go": {
+        "sha256": "da03fee9b80471a40e2a2c32378ad0eb5670b1d6ca3ab89a5baa15cd85f685df",
+        "source": "/tmp/hidden-census-main-overlay/lower_entries_records.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_field_hatch.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_field_hatch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/new_class_value.go": {
+        "sha256": "f65d0aa3307e12236de8feeaf888b66ae636caeee8e31a9e244899441212bf18",
+        "source": "/tmp/hidden-census-main-overlay/lower_new_class_value.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_array_predicate.go": {
+        "sha256": "784f8ba49b63320b9d7eff2b65d8bfff3cc6fc22855f68596422315b99863d4a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_array_predicate.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_results.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_results.go.txt"
+      },
+      "/workspace/adamic/internal/lower/nested_references.go": {
+        "sha256": "2fcb325f3e76cd15b6ca5f1ee2a5f98f2e10020d1c8d0d82951c497d6d15afc8",
+        "source": "/tmp/hidden-census-main-overlay/lower_nested_references.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_method_values.go": {
+        "sha256": "3429531452880ca2b83422b2fd992de327b14b449dce767f14a084739ddc58cd",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_method_values.go.txt"
+      },
+      "/workspace/adamic/internal/lower/non_null.go": {
+        "sha256": "463a548fc17a50cfab9c0bb0fe4c79e8fab30c697095f4d57fb5705442f99209",
+        "source": "/tmp/hidden-census-main-overlay/lower_non_null.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_callable_members.go": {
+        "sha256": "0dddc251d1efd815a067add8d8b920bf64026a6e3cc2274fcc5ff2d5a8360511",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_callable_members.go.txt"
+      },
+      "/workspace/adamic/internal/lower/parameter_properties.go": {
+        "sha256": "e145a71e6d6b4b0868bcdbf4eb513497ef606b91969c29f82f0d41e5281366aa",
+        "source": "/tmp/hidden-census-main-overlay/lower_parameter_properties.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node.go": {
+        "sha256": "f0c6faa4f15eb0aec625c218108a7ac4f6a4ebf7a0617bd4304f570667d6309b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_mixed.go": {
+        "sha256": "bd955da4eb136e5af73113ad49d0691de3fcf72d85e7ec5f9acb13a49274d289",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_mixed.go.txt"
+      },
+      "/workspace/adamic/internal/lower/empty_literal.go": {
+        "sha256": "ba3b87023d8f8faf3c0e88049c13c9843602e28af2f095492b32f3f1a82b9a5c",
+        "source": "/tmp/hidden-census-main-overlay/lower_empty_literal.go.txt"
+      },
+      "/workspace/adamic/internal/lower/entries_provenance.go": {
+        "sha256": "e8e7da75a1addd3dddc17043f6712d6079cca148f9e30319a64ba249c619092b",
+        "source": "/tmp/hidden-census-main-overlay/lower_entries_provenance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_adapters.go": {
+        "sha256": "6c949f0f72094214e71e0b4cc0ed043f96d9289680034b013b205287b526c9b1",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_adapters.go.txt"
+      },
+      "/workspace/adamic/internal/lower/string_substr.go": {
+        "sha256": "03c887a266f7bb6513ebf8c58c652b320bdf59cdd69510d669b95a30df831c58",
+        "source": "/tmp/hidden-census-main-overlay/lower_string_substr.go.txt"
+      },
+      "/workspace/adamic/internal/lower/never_branch.go": {
+        "sha256": "53af763ef74376b988a5141133cebf45b6b9965d3cbb46dfdf47b596831ff113",
+        "source": "/tmp/hidden-census-main-overlay/lower_never_branch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_buffer.go": {
+        "sha256": "467fd9764c774a4dda49b07df8db690e98c01b82c19ee6f803ddfa74a21e9d7a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_buffer.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_predicate_marker.go": {
+        "sha256": "69f0854c6fbf00183c49479f8f4bc33aed4259b92eeb4fb15a1dd233104f0fb4",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_predicate_marker.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_host.go": {
+        "sha256": "237e33e031f18ae4a5c9d2f83dc26ffe0d4926eba21f500ceffc2b853a59587f",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_host.go.txt"
+      },
+      "/workspace/adamic/internal/lower/module_namespace.go": {
+        "sha256": "99f9d1946b300b521988b7f0fb33209d2a1f555910377ee230cc8d9923b83b0b",
+        "source": "/tmp/hidden-census-main-overlay/lower_module_namespace.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_visitor_calls.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_visitor_calls.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_callback.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_callback.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces.go": {
+        "sha256": "9b7685b586e438067864eb9a9048ba81d7e3880b6da20863cc8a605c8fdad140",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces.go.txt"
+      },
+      "/workspace/adamic/internal/lower/case_label.go": {
+        "sha256": "bba1f32518e46666b8631526c430d5724c4cfd53025789c1998c9673e49e0d59",
+        "source": "/tmp/hidden-census-main-overlay/lower_case_label.go.txt"
+      },
+      "/workspace/adamic/internal/load/declarations.go": {
+        "sha256": "eb4c114f4ae563e1cbee57183f13aa8453b07dd275431711768bd83841279669",
+        "source": "/tmp/hidden-census-main-overlay/load_declarations.go.txt"
+      },
+      "/workspace/adamic/internal/load/regexp_library.go": {
+        "sha256": "87916994a006f4fa7758d942da223970fd90abf28820feebbcb8089dfb3cdf12",
+        "source": "/tmp/hidden-census-main-overlay/load_regexp_library.go.txt"
+      },
+      "/workspace/adamic/internal/load/source_fs.go": {
+        "sha256": "434286bc1d35c153987667c50f8313387422e5036e1dd13f6d34e4331eda1a20",
+        "source": "/tmp/hidden-census-main-overlay/load_source_fs.go.txt"
+      },
+      "/workspace/adamic/internal/load/tsgo.go": {
+        "sha256": "a677693f0aa78a7c3de4649d8708122b769c0862df04759b012f611ee65be41c",
+        "source": "/tmp/hidden-census-main-overlay/load_tsgo.go.txt"
+      },
+      "/workspace/adamic/internal/load/node_library.go": {
+        "sha256": "bfd46c413ba0d66753418b0d2c20eb4e0b94dda872e18234348a968fe091d209",
+        "source": "/tmp/hidden-census-main-overlay/load_node_library.go.txt"
+      },
+      "/workspace/adamic/internal/load/export_collision.go": {
+        "sha256": "b6ec4576a5744b8324565c4a402b65299aab3930e12375dd08b68fa9156b1a95",
+        "source": "/tmp/hidden-census-main-overlay/load_export_collision.go.txt"
+      }
+    },
+    "stack": {
+      "/workspace/adamic/internal/lower/lower.go": {
+        "sha256": "3a62f6ac5384060d91c47a76569eaf1f25de17bfaa092017b01064f31d48e653",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_lower.go"
+      },
+      "/workspace/adamic/internal/lower/latent_state.go": {
+        "sha256": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_state.go"
+      },
+      "/workspace/adamic/internal/lower/statements.go": {
+        "sha256": "b39cf030c3dcb7565516c330e42598003da833acdc1b20e909f9401ae86ca5e4",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_statements.go"
+      },
+      "/workspace/adamic/internal/lower/latent_full.go": {
+        "sha256": "d3c955de8c1cc39e999602fda5e75e40baa9be45b1631ac73da775dab2c50ce5",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_full.go"
+      },
+      "/workspace/adamic/internal/lower/latent_units.go": {
+        "sha256": "d538a88b6a6c048efd44302c84da224810a6df7d63fc496bd12fa53d2d9afaba",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_units.go"
+      },
+      "/workspace/adamic/internal/lower/latent_replay.go": {
+        "sha256": "2571e793760594bd3fc592516fc9975a0b7a2f39ddc48aa9286dd7175f24f716",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_replay.go"
+      },
+      "/workspace/adamic/internal/lower/refusals.go": {
+        "sha256": "7413f39ec7d509be852f41f273f4b01928d3c5c80e1aeab71ba0ba0d8ee93295",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_refusals.go"
+      },
+      "/workspace/adamic/internal/load/load.go": {
+        "sha256": "fcd2e7ec98df2a9f3f3d31f0864e22be3630efdba8c426aa4be656df96fa90da",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_load.go"
+      },
+      "/workspace/adamic/internal/load/latent_hook.go": {
+        "sha256": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_latent_hook.go"
+      },
+      "/workspace/adamic/internal/lower/expression.go": {
+        "sha256": "39f274cda0130e8f320051ad2da4ae85a213d9ba73586cede7c8e96f1df728d0",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_expression.go"
+      },
+      "/workspace/adamic/internal/lower/functions.go": {
+        "sha256": "e98b3826dba59394634b2b244594fcbad29fe5ac7ce1f4cb1a0e96f26c0ee691",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_functions.go"
+      },
+      "/workspace/adamic/internal/lower/locals.go": {
+        "sha256": "caebd8fd256375745a4fff2a6b168b176f0bdc9531967fa6c203224c01fa935e",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_locals.go"
+      },
+      "/workspace/adamic/internal/lower/latent_hook.go": {
+        "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_hook.go"
+      },
+      "/workspace/adamic/stage3/census/latent/tool/main.go": {
+        "sha256": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_tool_main.go"
+      },
+      "/workspace/adamic/stage3/census/latent/replay/worker/main.go": {
+        "sha256": "0ee1a6ba507e66562c79a4f2147ef5bb91b7f79c230464f4bb3db19ccb77f594",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_replay_worker_main.go"
+      }
+    },
+    "main-memo": {
+      "/workspace/adamic/internal/lower/lower.go": {
+        "sha256": "3a62f6ac5384060d91c47a76569eaf1f25de17bfaa092017b01064f31d48e653",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_lower.go"
+      },
+      "/workspace/adamic/internal/lower/latent_state.go": {
+        "sha256": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_state.go"
+      },
+      "/workspace/adamic/internal/lower/statements.go": {
+        "sha256": "b39cf030c3dcb7565516c330e42598003da833acdc1b20e909f9401ae86ca5e4",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_statements.go"
+      },
+      "/workspace/adamic/internal/lower/latent_full.go": {
+        "sha256": "d3c955de8c1cc39e999602fda5e75e40baa9be45b1631ac73da775dab2c50ce5",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_full.go"
+      },
+      "/workspace/adamic/internal/lower/latent_units.go": {
+        "sha256": "d538a88b6a6c048efd44302c84da224810a6df7d63fc496bd12fa53d2d9afaba",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_units.go"
+      },
+      "/workspace/adamic/internal/lower/latent_replay.go": {
+        "sha256": "2571e793760594bd3fc592516fc9975a0b7a2f39ddc48aa9286dd7175f24f716",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_replay.go"
+      },
+      "/workspace/adamic/internal/lower/refusals.go": {
+        "sha256": "7413f39ec7d509be852f41f273f4b01928d3c5c80e1aeab71ba0ba0d8ee93295",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_refusals.go"
+      },
+      "/workspace/adamic/internal/load/load.go": {
+        "sha256": "fcd2e7ec98df2a9f3f3d31f0864e22be3630efdba8c426aa4be656df96fa90da",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_load.go"
+      },
+      "/workspace/adamic/internal/load/latent_hook.go": {
+        "sha256": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_latent_hook.go"
+      },
+      "/workspace/adamic/internal/lower/expression.go": {
+        "sha256": "5889d439ee72a8f1be63d871663b51821f543754645759afc6853ac6dcc0d841",
+        "source": "/tmp/hidden-census-main-overlay/lower_expression.go.txt"
+      },
+      "/workspace/adamic/internal/lower/functions.go": {
+        "sha256": "e98b3826dba59394634b2b244594fcbad29fe5ac7ce1f4cb1a0e96f26c0ee691",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_functions.go"
+      },
+      "/workspace/adamic/internal/lower/locals.go": {
+        "sha256": "caebd8fd256375745a4fff2a6b168b176f0bdc9531967fa6c203224c01fa935e",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_locals.go"
+      },
+      "/workspace/adamic/internal/lower/latent_hook.go": {
+        "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_hook.go"
+      },
+      "/workspace/adamic/stage3/census/latent/tool/main.go": {
+        "sha256": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_tool_main.go"
+      },
+      "/workspace/adamic/stage3/census/latent/replay/worker/main.go": {
+        "sha256": "0ee1a6ba507e66562c79a4f2147ef5bb91b7f79c230464f4bb3db19ccb77f594",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_replay_worker_main.go"
+      },
+      "/workspace/adamic/internal/lower/assignments.go": {
+        "sha256": "c1c449e37d4a7b3c14adfa664b916658f3ebe4e0887cd7857985e3cce46458a6",
+        "source": "/tmp/hidden-census-main-overlay/lower_assignments.go.txt"
+      },
+      "/workspace/adamic/internal/lower/borrow.go": {
+        "sha256": "50c421f5903835f69729a213ec95d87427ed6f3ed7275e247d3540c0eab45b06",
+        "source": "/tmp/hidden-census-main-overlay/lower_borrow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cast.go": {
+        "sha256": "55bca408adb0116d388dfc6fe0a1d3fe0ceba83f0c439eaaa970e36d14431c5c",
+        "source": "/tmp/hidden-census-main-overlay/lower_cast.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cast_proof.go": {
+        "sha256": "442a45150d7f4dfeaabfe3b586d78447729ab09a4f1eb58ac4265cb44670dabc",
+        "source": "/tmp/hidden-census-main-overlay/lower_cast_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class.go": {
+        "sha256": "339231c7cd7dff60b100b588de6e385bb5dc8b45fafe611291ec1ce607a3fc99",
+        "source": "/tmp/hidden-census-main-overlay/lower_class.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_accessors.go": {
+        "sha256": "8052da28659f77fd4bead771c2a5eedda68f77d2c5e409d6192ade159cadd93a",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_accessors.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_features.go": {
+        "sha256": "1edfb3d2d9d7b7820beeb65ad1a2babce4d1093d6b8429af133b147cbf5c4cc2",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_features.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_generic_calls.go": {
+        "sha256": "88fe1c4b02d771988bdb4db4fe73d83be6b786636d3aa49822507ae6133d0e32",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_generic_calls.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_inheritance.go": {
+        "sha256": "059b4e7c9d19b40e26254cbd9a3fa1c96072729cf10f2f2821cfb0b89b08abcb",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_inheritance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_static.go": {
+        "sha256": "ab359b987a258d1c369ca6671129c7a7424547bdec193bdf5c348dccf65702c9",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_static.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_static_private.go": {
+        "sha256": "69d36d972bbd77e2683d322800dfc5459d00966ba81fe54c869fbf18213f7408",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_static_private.go.txt"
+      },
+      "/workspace/adamic/internal/lower/class_super.go": {
+        "sha256": "fd2feba87fe70e32cdcd039e7501fbe2b7e7cc210abeb9e347dc3f1fca4d5eb5",
+        "source": "/tmp/hidden-census-main-overlay/lower_class_super.go.txt"
+      },
+      "/workspace/adamic/internal/lower/collections.go": {
+        "sha256": "66fec64ee0399fad6faf73e1c0ca002b0f300fad96210a16f82b3408c5b7323a",
+        "source": "/tmp/hidden-census-main-overlay/lower_collections.go.txt"
+      },
+      "/workspace/adamic/internal/lower/control.go": {
+        "sha256": "dda1cfb35a6215f8a04fc56025d80aaf7a5f977a9e9ee68949813c38098b53b9",
+        "source": "/tmp/hidden-census-main-overlay/lower_control.go.txt"
+      },
+      "/workspace/adamic/internal/lower/counters.go": {
+        "sha256": "523c222635238b2822bac0f3aeba0a5b64ba930432247545f0beb644af1db5f7",
+        "source": "/tmp/hidden-census-main-overlay/lower_counters.go.txt"
+      },
+      "/workspace/adamic/internal/lower/cycles.go": {
+        "sha256": "463b02ae4bcac5b1d07864fe38c483c18db8bb7c8521e005725acf531e7eb120",
+        "source": "/tmp/hidden-census-main-overlay/lower_cycles.go.txt"
+      },
+      "/workspace/adamic/internal/lower/diagnostics.go": {
+        "sha256": "5e87371776bbf572c8ac3a987224ffceb8cecc510433203269ba06486df4e820",
+        "source": "/tmp/hidden-census-main-overlay/lower_diagnostics.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_flags.go": {
+        "sha256": "0e58adb4a2c27ba2e2c1f76c5e26ae8abe87bb54c959da541762f77461f8e703",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_flags.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_initialization.go": {
+        "sha256": "347b5e8b7b2f5efc4791036b90d9684d987de688a790534b998363179f90f56b",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_initialization.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enum_never.go": {
+        "sha256": "f9a7648470fe683c4aa1f9b3d8836261de97294ceb57b08c3e7c633f1e3a11fe",
+        "source": "/tmp/hidden-census-main-overlay/lower_enum_never.go.txt"
+      },
+      "/workspace/adamic/internal/lower/enums.go": {
+        "sha256": "6ef79579b6cd2656755165927c75d56b7bd21dd72eaffb3fd08b9e83c9d1dbbd",
+        "source": "/tmp/hidden-census-main-overlay/lower_enums.go.txt"
+      },
+      "/workspace/adamic/internal/lower/exceptions.go": {
+        "sha256": "67bffe1d5b0b70b09a3ea044e8f8addaf6280c3f7048667b4043274445ebc255",
+        "source": "/tmp/hidden-census-main-overlay/lower_exceptions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/fresh.go": {
+        "sha256": "9820603ec015b7c41d41b0ede5354a7db3b885102db0bf7a427d4a3d81a0229e",
+        "source": "/tmp/hidden-census-main-overlay/lower_fresh.go.txt"
+      },
+      "/workspace/adamic/internal/lower/from.go": {
+        "sha256": "31b1ab95fb64c108e33ecc5ced6e1352c7d85afd69065a5fa973a72f61686cdc",
+        "source": "/tmp/hidden-census-main-overlay/lower_from.go.txt"
+      },
+      "/workspace/adamic/internal/lower/generic.go": {
+        "sha256": "6342c9c5374a8ac643bdb36ab43ff19493e256682be99845ec9dba25dbe09740",
+        "source": "/tmp/hidden-census-main-overlay/lower_generic.go.txt"
+      },
+      "/workspace/adamic/internal/lower/input.go": {
+        "sha256": "4a5bd78c0bc70eadb770930194b21c2518dc85210b17481b6861570f370970b6",
+        "source": "/tmp/hidden-census-main-overlay/lower_input.go.txt"
+      },
+      "/workspace/adamic/internal/lower/instantiate.go": {
+        "sha256": "d0b5cf69eeee6dde872eb81ce01520c2fe75f323d586814574468f68ac5aa312",
+        "source": "/tmp/hidden-census-main-overlay/lower_instantiate.go.txt"
+      },
+      "/workspace/adamic/internal/lower/invariance.go": {
+        "sha256": "200558b193a0e18defd7efdd1972363e949ec29d35e2399c9e953b13563889ec",
+        "source": "/tmp/hidden-census-main-overlay/lower_invariance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration.go": {
+        "sha256": "7012dba5249b2f698f23c920a337b83baefc538a8a25285d9354717a9008ab3b",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration_consume.go": {
+        "sha256": "58aa0a8e51006267a51b13904fbb7acc3d2e524bcb9f02a47dace853d7f0ae8c",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration_consume.go.txt"
+      },
+      "/workspace/adamic/internal/lower/iteration_origin.go": {
+        "sha256": "ffe62a5a751940a1151d7ef830294cbf086d18769ad12adbf329a23f58549bb5",
+        "source": "/tmp/hidden-census-main-overlay/lower_iteration_origin.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_array.go": {
+        "sha256": "02734589835957c8afaae978e9c1e3211513b66650f8539abe1251e25047d35b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_array.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_for_in.go": {
+        "sha256": "84fce867c062c2cf8b3cce189c2c4c7b2e9a3eadda1b0b7e09bc3fef2aa57a4b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_for_in.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_function_expressions.go": {
+        "sha256": "9392a3b3f91875c1d9e434b1ea6d090440431766dbb3695c8feeefc049d3a707",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_function_expressions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_globals.go": {
+        "sha256": "a23171f4618958041a70023ef6f111871bc4c059d2f4ff8d35b92957296f6466",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_globals.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_json_stringify.go": {
+        "sha256": "846dc20e2065a3f58989cbb2083c1e31472b35307c83c2e393e679a5cba5844a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_json_stringify.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_map_set.go": {
+        "sha256": "0d113abe53ebf86d6eb4d8e19512f3ce74492d0c3df0fd85d014fd65e0185e2b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_map_set.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_math_number.go": {
+        "sha256": "9a75649e0d1af6d5537f8f10e0a9e85395b26ef185a1d0b3a4d65f82708a1205",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_math_number.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_object.go": {
+        "sha256": "5a85a4c449d8988c55b04b1a8f10aba2c62f622eaf5717d9c4aca663550187f9",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_object.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_string.go": {
+        "sha256": "9254dc309b3869c1c37324bd4f4a32ba162c8aa91262a06765ff15c53f8b07be",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_string.go.txt"
+      },
+      "/workspace/adamic/internal/lower/load_time_reads.go": {
+        "sha256": "c87a2ae841a4b386dde76679dd2fd9164f9435f2e7b50383c2bbe5db12473c63",
+        "source": "/tmp/hidden-census-main-overlay/lower_load_time_reads.go.txt"
+      },
+      "/workspace/adamic/internal/lower/modules.go": {
+        "sha256": "96ff48b64c90ef6d3ecfc1293bd1c99326a2046ffa8745f141a1c9a80e3c1538",
+        "source": "/tmp/hidden-census-main-overlay/lower_modules.go.txt"
+      },
+      "/workspace/adamic/internal/lower/narrowed.go": {
+        "sha256": "8b17470ce08db929b6121f8c043f3531315cf3ab57b693e3683322e26c4a8caa",
+        "source": "/tmp/hidden-census-main-overlay/lower_narrowed.go.txt"
+      },
+      "/workspace/adamic/internal/lower/object.go": {
+        "sha256": "a51ad0afb13aacb7f7cd009c1711d32facb8255845fd28945185e5e506db07fe",
+        "source": "/tmp/hidden-census-main-overlay/lower_object.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional.go": {
+        "sha256": "8191edce715e1ad86ba0244fbf8ff730e16c8114a6cfc64c77768066b2ce6999",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_node_host.go": {
+        "sha256": "7c1fa7d403eee9147fffa3b9e8c1788d437f68f3f58cb285b71ef16d552661ce",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_node_host.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_widening.go": {
+        "sha256": "55ab757ed741ce24995c21aa2a6c985d36612b9ad3f0a39c47f69dea1377092d",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_widening.go.txt"
+      },
+      "/workspace/adamic/internal/lower/predicates.go": {
+        "sha256": "4ada25b188638d51e2978f46471854ac056440ef13b1378a7d1c164e0f453f32",
+        "source": "/tmp/hidden-census-main-overlay/lower_predicates.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prelude.go": {
+        "sha256": "7e653f010648af110e353012dd611cb953645d729757854ca86f473112219241",
+        "source": "/tmp/hidden-census-main-overlay/lower_prelude.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prototype.go": {
+        "sha256": "94461b7090c5b2411c48f99a5e0cef82c73323e5fd3c79fa8131eb13d31b3041",
+        "source": "/tmp/hidden-census-main-overlay/lower_prototype.go.txt"
+      },
+      "/workspace/adamic/internal/lower/prototype_own.go": {
+        "sha256": "10f132aad36fb819222659875affa5f478806b69ccf6bd2ae924fa9532d7dd7f",
+        "source": "/tmp/hidden-census-main-overlay/lower_prototype_own.go.txt"
+      },
+      "/workspace/adamic/internal/lower/proven_relations.go": {
+        "sha256": "13788b1fed224dd080fbb3e55e7d010d571f7415f5afe9255c8ac1e4d7db290e",
+        "source": "/tmp/hidden-census-main-overlay/lower_proven_relations.go.txt"
+      },
+      "/workspace/adamic/internal/lower/regexp.go": {
+        "sha256": "8934a3994b1a51a30ce474a0000da0b48424a0d8093f48fcb286da86e9c158d6",
+        "source": "/tmp/hidden-census-main-overlay/lower_regexp.go.txt"
+      },
+      "/workspace/adamic/internal/lower/set.go": {
+        "sha256": "9b61e3070d24b2eb622057c5929e48ce6628cedb65edc0059edf647e3c949d53",
+        "source": "/tmp/hidden-census-main-overlay/lower_set.go.txt"
+      },
+      "/workspace/adamic/internal/lower/switch.go": {
+        "sha256": "b1c008aa4967b20dcbdf345a031efc59180381a423f408bd5223e648599cefd7",
+        "source": "/tmp/hidden-census-main-overlay/lower_switch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/tsgo.go": {
+        "sha256": "2c1dba572a08f4a1c125ce6cd7e7071f75b65c577e879a27c248e1d861ed1435",
+        "source": "/tmp/hidden-census-main-overlay/lower_tsgo.go.txt"
+      },
+      "/workspace/adamic/internal/lower/typeof.go": {
+        "sha256": "4b8468f93ead2dfe724960ab6c34fb264d5bd485ad4cfa57bc103603a0c36b1c",
+        "source": "/tmp/hidden-census-main-overlay/lower_typeof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_intrinsic.go": {
+        "sha256": "312e7e0068008aca860dd221c855f00d2d536c0e0b7078cd7e47cc8ed53496be",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_intrinsic.go.txt"
+      },
+      "/workspace/adamic/internal/lower/predicates_proof.go": {
+        "sha256": "1903ea1dcc50e48578945ea9f0a990d1b3c5144f2577b1308bdbc09454ffd8df",
+        "source": "/tmp/hidden-census-main-overlay/lower_predicates_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespace_receiver_scope.go": {
+        "sha256": "5361e9aa36258b093f70e570c944afc7f7010e5c63709c5246f52d06b6f0a09a",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespace_receiver_scope.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_file_options.go": {
+        "sha256": "f5a187488599499ec8c5ad147adeaab70bcaf66d6232a6c7f35651e8176f37be",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_file_options.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces_returns.go": {
+        "sha256": "920b5dda4f575805d3b9887286869acf92bd6764f79948caca0c4df0d7e30a0e",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces_returns.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_flow.go": {
+        "sha256": "fb223a8473e55621491cedec8bb466caae9fcc23eba8a77943807450c96cdb21",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_flow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/generic_constraint_storage.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_generic_constraint_storage.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing.go": {
+        "sha256": "c88f18e8e382004ec95d1a5c938d046598d94926deada401356051cc10d2ae1c",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing.go.txt"
+      },
+      "/workspace/adamic/internal/lower/logical_assignment.go": {
+        "sha256": "b78df67fff485e3cd492fb8ff852c143299f9cdff7651ca04bea6552817e442c",
+        "source": "/tmp/hidden-census-main-overlay/lower_logical_assignment.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_structural.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_structural.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_regex_callback_shape.go": {
+        "sha256": "a9ad15cc745ba573fcbefbdbfb3f353716a8eef27fbb42ca6beda8ee7549243f",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_regex_callback_shape.go.txt"
+      },
+      "/workspace/adamic/internal/lower/clock_generic_returns_t_01.go": {
+        "sha256": "8903324f5896c5c6f281aa993c0f10184af4644a512c505f20e1a4a518130565",
+        "source": "/tmp/hidden-census-main-overlay/lower_clock_generic_returns_t_01.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_dispatch.go": {
+        "sha256": "5d1e3391516a717e1dd2fb1dd27bdc036e34aa3af3bd427b6d9f9d0f3716dbe9",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_dispatch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/switch_bindings.go": {
+        "sha256": "a4a6556ec1672d56833aad5624d4480a62fe1a87dfbd855becd2ad9020758446",
+        "source": "/tmp/hidden-census-main-overlay/lower_switch_bindings.go.txt"
+      },
+      "/workspace/adamic/internal/lower/evolving_local.go": {
+        "sha256": "70a10168983fa910e0b4c6343d11ca3bf7271532a6357d6d1895fdd03a36d5c2",
+        "source": "/tmp/hidden-census-main-overlay/lower_evolving_local.go.txt"
+      },
+      "/workspace/adamic/internal/lower/closed_frame_inputs.go": {
+        "sha256": "ea731df624a01d5dbe0302a6e1c6253bd28b2902abd9db4f470d627e7f5b97e6",
+        "source": "/tmp/hidden-census-main-overlay/lower_closed_frame_inputs.go.txt"
+      },
+      "/workspace/adamic/internal/lower/element_access_fields.go": {
+        "sha256": "8469d0999adc56e2e2fec59f0dd3152662f563ea838d0c01cfd5511aacc8c9b2",
+        "source": "/tmp/hidden-census-main-overlay/lower_element_access_fields.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_buffer.go": {
+        "sha256": "d10709e73efd633a45a222023799b990ff530bb259346fab33bc2511da0ce7f5",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_buffer.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_return_call.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_return_call.go.txt"
+      },
+      "/workspace/adamic/internal/lower/literal_callable_branch.go": {
+        "sha256": "ec3a88e1221e012021f2c28abaee58b0b69c2c78d7d2fd54f17c18071e0930bf",
+        "source": "/tmp/hidden-census-main-overlay/lower_literal_callable_branch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/assignment_value.go": {
+        "sha256": "a6b435d10c430238ba21ec8cf3ee57c893897d6b398a78d9ff8417cd72cd2cbf",
+        "source": "/tmp/hidden-census-main-overlay/lower_assignment_value.go.txt"
+      },
+      "/workspace/adamic/internal/lower/method_destructuring.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_method_destructuring.go.txt"
+      },
+      "/workspace/adamic/internal/lower/shape_flow.go": {
+        "sha256": "6191ea3c934a8754a907a88f423f506be47e4063654df956f867fe80b5d73a08",
+        "source": "/tmp/hidden-census-main-overlay/lower_shape_flow.go.txt"
+      },
+      "/workspace/adamic/internal/lower/labels.go": {
+        "sha256": "f7386fb72658d5c7957ceb29265f071455ab55f1c5afa4046b95199403be9570",
+        "source": "/tmp/hidden-census-main-overlay/lower_labels.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespace_callable.go": {
+        "sha256": "68d52c9c79cfac710a1abd9bc820f41e9e3fddc5d1fb175a7aea4d904568ddef",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespace_callable.go.txt"
+      },
+      "/workspace/adamic/internal/lower/arguments_length.go": {
+        "sha256": "ebcacc03dce91bf01dc2fbf0884f522dbaafbf27bec3413415dd20db06a7618e",
+        "source": "/tmp/hidden-census-main-overlay/lower_arguments_length.go.txt"
+      },
+      "/workspace/adamic/internal/lower/typed_arrays.go": {
+        "sha256": "9a1e5d2488866c923894e8521c631a2884dd103a3b623781e5f532268c660c02",
+        "source": "/tmp/hidden-census-main-overlay/lower_typed_arrays.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_small.go": {
+        "sha256": "70568dc0c6209637e3263baf55c861f5e44064eaa34d15d54e202a18f4693cba",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_small.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_coercion.go": {
+        "sha256": "1db00e89476fc1a7b9083c98f2ee34d565c5ee61aeff298f1b7814fc4eccfac4",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_coercion.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_relations.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_relations.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces_call_graph.go": {
+        "sha256": "664ceefb67b96500d0e6cea2f5bf902310cf8aeeeac162f97420be9b6f1728dc",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces_call_graph.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_objects.go": {
+        "sha256": "f84029aba231ce343f9bc3bab324bf7f1e64b5d469f1689bd7106e250dd2b13f",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_objects.go.txt"
+      },
+      "/workspace/adamic/internal/lower/element_access_tuples.go": {
+        "sha256": "ca2ef89727d36f14497074de6ddaf4bf248d6ffa0c3b5ab2984b1a1d2db6c9ea",
+        "source": "/tmp/hidden-census-main-overlay/lower_element_access_tuples.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_overload_proof.go": {
+        "sha256": "1186fdfe9c7bc84741c967250ddee0e006b06fc5b89415b5c2295cdc761a4221",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_overload_proof.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_regexp_replace.go": {
+        "sha256": "e4f7018dd03258d37ac7e062ef4c4954982490e7e7f603fd18c025482dda7776",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_regexp_replace.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_visitor_domain.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_visitor_domain.go.txt"
+      },
+      "/workspace/adamic/internal/lower/readiness.go": {
+        "sha256": "5c5adf6dbfc3e5f06ac7f6edfaa9b52f90fd5d431a6823c32006ad3f87c79234",
+        "source": "/tmp/hidden-census-main-overlay/lower_readiness.go.txt"
+      },
+      "/workspace/adamic/internal/lower/void.go": {
+        "sha256": "57c476f1c5a1f03609b03306a5ab2b62e44f0efeba32523298b76f4e884cda5f",
+        "source": "/tmp/hidden-census-main-overlay/lower_void.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_result_fields.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_result_fields.go.txt"
+      },
+      "/workspace/adamic/internal/lower/unknown.go": {
+        "sha256": "0c7c7f6941028438d958c6a7e3b0e2acd56613fcdc9ddcf8d4d20fd27c4ada2e",
+        "source": "/tmp/hidden-census-main-overlay/lower_unknown.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing_chain.go": {
+        "sha256": "848337f113ef877c2d3cd6729354cdf6b6e274587fc0049b403322241deaaddf",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing_chain.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_fs_file.go": {
+        "sha256": "54f016613684946867236ed5c56db61aed42c21253f5fca874f25a31235c4873",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_fs_file.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_untagged.go": {
+        "sha256": "27cebe154daa979cea2598f180e2971cd75378697e0c85fc58914547f12f4df8",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_untagged.go.txt"
+      },
+      "/workspace/adamic/internal/lower/comma.go": {
+        "sha256": "1b604d4022df653d95a5dc378f99e202968335dd5579a7aac377086b4eaa47dd",
+        "source": "/tmp/hidden-census-main-overlay/lower_comma.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_primitive_brands.go": {
+        "sha256": "227de3df261cd4f675203afc1a4556c3b472153f4e1c301fa8722c76d8538026",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_primitive_brands.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_values.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_values.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_lazy.go": {
+        "sha256": "035ef0aa057b7de9716cd0cb17ddc0e7acd0f2cac47f7a1dae82e821dd6819fa",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_lazy.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_join.go": {
+        "sha256": "be9ee8a09317dfdea1bf80e6d04fecbae66af62f25afeb9d8c26d316d8dc4ea5",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_join.go.txt"
+      },
+      "/workspace/adamic/internal/lower/optional_indexing_map.go": {
+        "sha256": "183f9d50a51e1d5db384e543294521ba8818cdc5ed85347112053668b796b1cd",
+        "source": "/tmp/hidden-census-main-overlay/lower_optional_indexing_map.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_contracts.go": {
+        "sha256": "9b38975c1e3275721e16cda4879e736d041b48de08635425a96f60a425177856",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_contracts.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_interfaces.go": {
+        "sha256": "8d11025021d52bdac444964404d5f2dec79d1df4da28ec27aa087e68c7ba499a",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_interfaces.go.txt"
+      },
+      "/workspace/adamic/internal/lower/interface_cast.go": {
+        "sha256": "f41a9526828dafa2eaffa5c2b090d5c1bc6285ccfe71c822886ba37ed8c8b919",
+        "source": "/tmp/hidden-census-main-overlay/lower_interface_cast.go.txt"
+      },
+      "/workspace/adamic/internal/lower/nested_functions.go": {
+        "sha256": "f03aad4c61fbcea34a960dd6916f92444505a433ee29021aca6ff3684dd1d6c2",
+        "source": "/tmp/hidden-census-main-overlay/lower_nested_functions.go.txt"
+      },
+      "/workspace/adamic/internal/lower/entries_records.go": {
+        "sha256": "fc8bac7be6c7384abbd3f4b2e2e4b7078d29e57900b096f4bfd9f3d188afbe77",
+        "source": "/workspace/adamic/review/compiler/hidden-boundaries-main/census-evidence/entries-records-memo.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_field_hatch.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_field_hatch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/new_class_value.go": {
+        "sha256": "f65d0aa3307e12236de8feeaf888b66ae636caeee8e31a9e244899441212bf18",
+        "source": "/tmp/hidden-census-main-overlay/lower_new_class_value.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_array_predicate.go": {
+        "sha256": "784f8ba49b63320b9d7eff2b65d8bfff3cc6fc22855f68596422315b99863d4a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_array_predicate.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_results.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_results.go.txt"
+      },
+      "/workspace/adamic/internal/lower/nested_references.go": {
+        "sha256": "2fcb325f3e76cd15b6ca5f1ee2a5f98f2e10020d1c8d0d82951c497d6d15afc8",
+        "source": "/tmp/hidden-census-main-overlay/lower_nested_references.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_method_values.go": {
+        "sha256": "3429531452880ca2b83422b2fd992de327b14b449dce767f14a084739ddc58cd",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_method_values.go.txt"
+      },
+      "/workspace/adamic/internal/lower/non_null.go": {
+        "sha256": "463a548fc17a50cfab9c0bb0fe4c79e8fab30c697095f4d57fb5705442f99209",
+        "source": "/tmp/hidden-census-main-overlay/lower_non_null.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_callable_members.go": {
+        "sha256": "0dddc251d1efd815a067add8d8b920bf64026a6e3cc2274fcc5ff2d5a8360511",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_callable_members.go.txt"
+      },
+      "/workspace/adamic/internal/lower/parameter_properties.go": {
+        "sha256": "e145a71e6d6b4b0868bcdbf4eb513497ef606b91969c29f82f0d41e5281366aa",
+        "source": "/tmp/hidden-census-main-overlay/lower_parameter_properties.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node.go": {
+        "sha256": "f0c6faa4f15eb0aec625c218108a7ac4f6a4ebf7a0617bd4304f570667d6309b",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_unions_mixed.go": {
+        "sha256": "bd955da4eb136e5af73113ad49d0691de3fcf72d85e7ec5f9acb13a49274d289",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_unions_mixed.go.txt"
+      },
+      "/workspace/adamic/internal/lower/empty_literal.go": {
+        "sha256": "ba3b87023d8f8faf3c0e88049c13c9843602e28af2f095492b32f3f1a82b9a5c",
+        "source": "/tmp/hidden-census-main-overlay/lower_empty_literal.go.txt"
+      },
+      "/workspace/adamic/internal/lower/entries_provenance.go": {
+        "sha256": "e8e7da75a1addd3dddc17043f6712d6079cca148f9e30319a64ba249c619092b",
+        "source": "/tmp/hidden-census-main-overlay/lower_entries_provenance.go.txt"
+      },
+      "/workspace/adamic/internal/lower/view_adapters.go": {
+        "sha256": "6c949f0f72094214e71e0b4cc0ed043f96d9289680034b013b205287b526c9b1",
+        "source": "/tmp/hidden-census-main-overlay/lower_view_adapters.go.txt"
+      },
+      "/workspace/adamic/internal/lower/string_substr.go": {
+        "sha256": "03c887a266f7bb6513ebf8c58c652b320bdf59cdd69510d669b95a30df831c58",
+        "source": "/tmp/hidden-census-main-overlay/lower_string_substr.go.txt"
+      },
+      "/workspace/adamic/internal/lower/never_branch.go": {
+        "sha256": "53af763ef74376b988a5141133cebf45b6b9965d3cbb46dfdf47b596831ff113",
+        "source": "/tmp/hidden-census-main-overlay/lower_never_branch.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_buffer.go": {
+        "sha256": "467fd9764c774a4dda49b07df8db690e98c01b82c19ee6f803ddfa74a21e9d7a",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_buffer.go.txt"
+      },
+      "/workspace/adamic/internal/lower/census_predicate_marker.go": {
+        "sha256": "69f0854c6fbf00183c49479f8f4bc33aed4259b92eeb4fb15a1dd233104f0fb4",
+        "source": "/tmp/hidden-census-main-overlay/lower_census_predicate_marker.go.txt"
+      },
+      "/workspace/adamic/internal/lower/library_node_host.go": {
+        "sha256": "237e33e031f18ae4a5c9d2f83dc26ffe0d4926eba21f500ceffc2b853a59587f",
+        "source": "/tmp/hidden-census-main-overlay/lower_library_node_host.go.txt"
+      },
+      "/workspace/adamic/internal/lower/module_namespace.go": {
+        "sha256": "99f9d1946b300b521988b7f0fb33209d2a1f555910377ee230cc8d9923b83b0b",
+        "source": "/tmp/hidden-census-main-overlay/lower_module_namespace.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_visitor_calls.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_visitor_calls.go.txt"
+      },
+      "/workspace/adamic/internal/lower/overload_callback.go": {
+        "sha256": "49550258bffefa219223a1fd6bf9da1fe35b4aad5e4f1a23c2916092c1e8ac9f",
+        "source": "/tmp/hidden-census-main-overlay/lower_overload_callback.go.txt"
+      },
+      "/workspace/adamic/internal/lower/namespaces.go": {
+        "sha256": "9b7685b586e438067864eb9a9048ba81d7e3880b6da20863cc8a605c8fdad140",
+        "source": "/tmp/hidden-census-main-overlay/lower_namespaces.go.txt"
+      },
+      "/workspace/adamic/internal/lower/case_label.go": {
+        "sha256": "bba1f32518e46666b8631526c430d5724c4cfd53025789c1998c9673e49e0d59",
+        "source": "/tmp/hidden-census-main-overlay/lower_case_label.go.txt"
+      },
+      "/workspace/adamic/internal/load/declarations.go": {
+        "sha256": "eb4c114f4ae563e1cbee57183f13aa8453b07dd275431711768bd83841279669",
+        "source": "/tmp/hidden-census-main-overlay/load_declarations.go.txt"
+      },
+      "/workspace/adamic/internal/load/regexp_library.go": {
+        "sha256": "87916994a006f4fa7758d942da223970fd90abf28820feebbcb8089dfb3cdf12",
+        "source": "/tmp/hidden-census-main-overlay/load_regexp_library.go.txt"
+      },
+      "/workspace/adamic/internal/load/source_fs.go": {
+        "sha256": "434286bc1d35c153987667c50f8313387422e5036e1dd13f6d34e4331eda1a20",
+        "source": "/tmp/hidden-census-main-overlay/load_source_fs.go.txt"
+      },
+      "/workspace/adamic/internal/load/tsgo.go": {
+        "sha256": "a677693f0aa78a7c3de4649d8708122b769c0862df04759b012f611ee65be41c",
+        "source": "/tmp/hidden-census-main-overlay/load_tsgo.go.txt"
+      },
+      "/workspace/adamic/internal/load/node_library.go": {
+        "sha256": "bfd46c413ba0d66753418b0d2c20eb4e0b94dda872e18234348a968fe091d209",
+        "source": "/tmp/hidden-census-main-overlay/load_node_library.go.txt"
+      },
+      "/workspace/adamic/internal/load/export_collision.go": {
+        "sha256": "b6ec4576a5744b8324565c4a402b65299aab3930e12375dd08b68fa9156b1a95",
+        "source": "/tmp/hidden-census-main-overlay/load_export_collision.go.txt"
+      }
+    },
+    "stack-memo": {
+      "/workspace/adamic/internal/lower/lower.go": {
+        "sha256": "3a62f6ac5384060d91c47a76569eaf1f25de17bfaa092017b01064f31d48e653",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_lower.go"
+      },
+      "/workspace/adamic/internal/lower/latent_state.go": {
+        "sha256": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_state.go"
+      },
+      "/workspace/adamic/internal/lower/statements.go": {
+        "sha256": "b39cf030c3dcb7565516c330e42598003da833acdc1b20e909f9401ae86ca5e4",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_statements.go"
+      },
+      "/workspace/adamic/internal/lower/latent_full.go": {
+        "sha256": "d3c955de8c1cc39e999602fda5e75e40baa9be45b1631ac73da775dab2c50ce5",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_full.go"
+      },
+      "/workspace/adamic/internal/lower/latent_units.go": {
+        "sha256": "d538a88b6a6c048efd44302c84da224810a6df7d63fc496bd12fa53d2d9afaba",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_units.go"
+      },
+      "/workspace/adamic/internal/lower/latent_replay.go": {
+        "sha256": "2571e793760594bd3fc592516fc9975a0b7a2f39ddc48aa9286dd7175f24f716",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_replay.go"
+      },
+      "/workspace/adamic/internal/lower/refusals.go": {
+        "sha256": "7413f39ec7d509be852f41f273f4b01928d3c5c80e1aeab71ba0ba0d8ee93295",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_refusals.go"
+      },
+      "/workspace/adamic/internal/load/load.go": {
+        "sha256": "fcd2e7ec98df2a9f3f3d31f0864e22be3630efdba8c426aa4be656df96fa90da",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_load.go"
+      },
+      "/workspace/adamic/internal/load/latent_hook.go": {
+        "sha256": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+        "source": "/tmp/hidden-census-stack-overlay/internal_load_latent_hook.go"
+      },
+      "/workspace/adamic/internal/lower/expression.go": {
+        "sha256": "39f274cda0130e8f320051ad2da4ae85a213d9ba73586cede7c8e96f1df728d0",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_expression.go"
+      },
+      "/workspace/adamic/internal/lower/functions.go": {
+        "sha256": "e98b3826dba59394634b2b244594fcbad29fe5ac7ce1f4cb1a0e96f26c0ee691",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_functions.go"
+      },
+      "/workspace/adamic/internal/lower/locals.go": {
+        "sha256": "caebd8fd256375745a4fff2a6b168b176f0bdc9531967fa6c203224c01fa935e",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_locals.go"
+      },
+      "/workspace/adamic/internal/lower/latent_hook.go": {
+        "sha256": "44a89f47e7baf084a5ca0bb479903cc07513eb2001800b875492c71a712f598b",
+        "source": "/tmp/hidden-census-stack-overlay/internal_lower_latent_hook.go"
+      },
+      "/workspace/adamic/stage3/census/latent/tool/main.go": {
+        "sha256": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_tool_main.go"
+      },
+      "/workspace/adamic/stage3/census/latent/replay/worker/main.go": {
+        "sha256": "0ee1a6ba507e66562c79a4f2147ef5bb91b7f79c230464f4bb3db19ccb77f594",
+        "source": "/tmp/hidden-census-stack-overlay/stage3_census_latent_replay_worker_main.go"
+      },
+      "/workspace/adamic/internal/lower/entries_records.go": {
+        "sha256": "fc8bac7be6c7384abbd3f4b2e2e4b7078d29e57900b096f4bfd9f3d188afbe77",
+        "source": "/workspace/adamic/review/compiler/hidden-boundaries-main/census-evidence/entries-records-memo.go.txt"
+      }
+    }
+  },
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "go": "go version go1.27.1 linux/amd64",
+  "memo": "Measurement-only memo of entriesProgramHasRecords per lowering; unmodified first result, immutable AST/checker/import roots. Same instrumentation on both compilers, exact equality to all 19 complete original ledgers required."
+}

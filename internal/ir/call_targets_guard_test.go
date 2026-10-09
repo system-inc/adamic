@@ -24,6 +24,7 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
+	"internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure":                   {"compiler", "passes the original closure as the callee of the specialized overload entry"},
 	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
 	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                {"compiler", "MayThrow and library failure propagation, routed in step 2"},

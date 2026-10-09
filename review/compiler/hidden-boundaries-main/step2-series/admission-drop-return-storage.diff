@@ -1,0 +1,11 @@
+--- internal/lower/overload_return_call.go
++++ internal/lower/overload_return_call.go
+@@ -33,7 +33,7 @@
+ 		}
+ 	}
+ 	produced := l.checker.GetReturnTypeOfSignature(signature)
+-	return l.censusRelated(produced, promised) && l.overloadReturnStorage(produced, promised)
++	return l.censusRelated(produced, promised)
+ }
+ 
+ // Returning an object preserves its slots and aliases. Covariance alone does

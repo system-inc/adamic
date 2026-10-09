@@ -1,0 +1,3 @@
+function wrong<T>(value: T): T;
+function wrong<T, Extra>(value: T): T | string { return 'wrong'; }
+const answer = wrong(42); console.log('ran');
