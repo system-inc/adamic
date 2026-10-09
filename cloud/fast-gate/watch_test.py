@@ -1188,6 +1188,18 @@ class WatchTests(unittest.TestCase):
         time.sleep(.3)
         self.assertEqual(w.read('messages').count('gate-mutant suite misread'), 2)
 
+    def test_a_stage_canary_whose_tools_were_promoted_meanwhile_is_stopped(self):
+        # Oct 9 12:51Z: 26226fda's stage canary ran 79 more minutes after its tools were promoted by hand, holding the one
+        # canary slot, so no stage or half-hourly canary started.
+        w = self.staged(1)
+        (w.state / 'tools-good').write_text('tools-one\n')
+        w.wait(lambda: 'stopped the stage canary of tools-one on box1: its tools are the good tools already' in w.read('output'))
+        self.assertIn('box1 ', w.read('stops'))
+        # Its end is no void to page: it was stopped on purpose.
+        w.put('initial', 'void')
+        w.wait(lambda: 'stage canary of tools-one stopped before a verdict, as asked' in w.read('output'))
+        self.assertNotIn('gave no verdict', w.read('messages'))
+
     def test_main_s_canary_runs_every_half_hour_with_the_good_tools_and_a_red_pages_once(self):
         # Gate the gate (@system_adamic, Oct 9 10:21Z): main's tip is the one sha whose answer we know, so drift shows there first.
         w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\n', mainCanary=1800)

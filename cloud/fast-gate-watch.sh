@@ -471,6 +471,23 @@ stopSkipped() {
       echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${why}"
   done
 }
+# A stage canary whose tools are already the good tools (promoted by hand, or by another canary) can promote nothing, and
+# one canary runs at a time: 26226fda's ran on for 79 minutes after its tools were promoted at 12:51Z on Oct 9, and no stage
+# canary or half-hourly canary started behind it.
+stopPromotedCanary() {
+  local file pid branch sha slot box class token rest
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r branch sha slot box class token rest < "${file}"
+    [ "${branch}" = canary/main ] && [[ ${token} == *:staged ]] || continue
+    [ "$(boxTools "${token%%:*}")" = "$(boxTools "$(cat "${state}/tools-good")")" ] || continue
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "its tools ${token:0:9} are the good tools already" &&
+      echo "$(date -u +%H:%M:%S) stopped the stage canary of ${token:0:9} on ${box}: its tools are the good tools already"
+  done
+}
 # Side work whose branch was pushed again stops: its verdict would only be superseded, and on Loom's pool it held one
 # of two server slots (Oct 9 04:08Z: gate-shards-json 6c0866e3 ran on after a7149770). Areas, landings and the star
 # keep running to a verdict; they have their own rules (stopStaleRed, the star's box).
@@ -1065,6 +1082,7 @@ while true; do
   stopStaleRed
   stopSkipped
   stopSuperseded
+  stopPromotedCanary
   reapStopped
   startRaces
   publishEarlyRed
@@ -1161,6 +1179,11 @@ while true; do
       # meant every box-side push restarted promotion and nothing promoted). A red holds them until the next box-side
       # push; a void says the tools, not the boxes, so it counts toward no storm and tries again in ten minutes.
       tested=${testedHead%%:*} verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1)
+      # Stopped on purpose (its tools promoted meanwhile, stopPromotedCanary): nothing to page and nothing to hold.
+      if [ "${stoppedOnPurpose}" = yes ] && [[ ${verdict} != "green: ${sha} "* ]]; then
+        echo "$(date -u +%H:%M:%S) stage canary of ${tested:0:9} stopped before a verdict, as asked"
+        continue
+      fi
       [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]] && cause=$(thinCanary "${gateLog}")
       if [ -n "${cause}" ]; then
         echo "$(date -u +%H:%M:%S) stage canary void with tools ${tested:0:9}: ${cause}; another in ten minutes"
