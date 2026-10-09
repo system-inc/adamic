@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -170,7 +170,7 @@
+ 		// The runner's location is not input to successful compilation or native execution.
+ 		// go run allocates a new executable path even for identical built bytes.
+ 		if name == executable {
+-			parts = append(parts, "runner", cacheKey(string(contents)))
++			parts = append(parts, path, cacheKey(string(contents)))
+ 		} else {
+ 			parts = append(parts, path, cacheKey(string(contents)))
+ 		}

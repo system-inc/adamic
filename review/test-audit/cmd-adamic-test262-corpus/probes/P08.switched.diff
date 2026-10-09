@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -439,6 +439,8 @@
+ }
+ 
+ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
++if os.Getenv("ADAMIC_MUTANT")=="P08" { return 0, nil }
++
+ 	written := len(data)
+ 	room := buffer.limit - buffer.buf.Len()
+ 	if written > room {

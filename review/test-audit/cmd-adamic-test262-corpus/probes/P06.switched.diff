@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -125,6 +125,8 @@
+ }
+ 
+ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {
++if os.Getenv("ADAMIC_MUTANT")=="P06" { return filterReport{}, nil }
++
+ 	files, err := listTests(e.test262, filter)
+ 	if err != nil {
+ 		return filterReport{}, err

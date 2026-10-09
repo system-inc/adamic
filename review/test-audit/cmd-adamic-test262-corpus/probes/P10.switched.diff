@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -112,6 +112,8 @@
+ }
+ 
+ func prepareCache() (*resultCache, string, string, error) {
++if os.Getenv("ADAMIC_MUTANT")=="P10" { return nil, "", "", nil }
++
+ 	directory, err := os.UserCacheDir()
+ 	if err != nil {
+ 		return nil, "", "", err

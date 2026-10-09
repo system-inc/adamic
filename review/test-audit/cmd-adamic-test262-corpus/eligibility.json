@@ -1,0 +1,70 @@
+{
+  "M01": {
+    "eligible_for_verdict": true,
+    "reason": "change constant"
+  },
+  "M02": {
+    "eligible_for_verdict": true,
+    "reason": "change option"
+  },
+  "M03": {
+    "eligible_for_verdict": true,
+    "reason": "drop statement"
+  },
+  "M04": {
+    "eligible_for_verdict": true,
+    "reason": "drop statement"
+  },
+  "M05": {
+    "eligible_for_verdict": true,
+    "reason": "flip condition"
+  },
+  "M06": {
+    "eligible_for_verdict": false,
+    "reason": "Supplemental: drops a predicate, which is not in the requested menu"
+  },
+  "M07": {
+    "eligible_for_verdict": true,
+    "reason": "change constant"
+  },
+  "M08": {
+    "eligible_for_verdict": true,
+    "reason": "change constant"
+  },
+  "M09": {
+    "eligible_for_verdict": true,
+    "reason": "change option"
+  },
+  "M10": {
+    "eligible_for_verdict": true,
+    "reason": "change option"
+  },
+  "M11": {
+    "eligible_for_verdict": true,
+    "reason": "change option"
+  },
+  "M12": {
+    "eligible_for_verdict": true,
+    "reason": "change bound"
+  },
+  "M13": {
+    "eligible_for_verdict": false,
+    "reason": "Supplemental: drops a predicate, which is not in the requested menu"
+  },
+  "M14": {
+    "eligible_for_verdict": true,
+    "reason": "drop statement"
+  },
+  "M15": {
+    "eligible_for_verdict": true,
+    "reason": "change constant"
+  },
+  "M16": {
+    "eligible_for_verdict": true,
+    "reason": "drop statement"
+  },
+  "M17": {
+    "eligible_for_verdict": true,
+    "reason": "change bound"
+  }
+}

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -230,6 +230,8 @@
+ }
+ 
+ func (e *engine) attempt(test classified) result {
++if os.Getenv("ADAMIC_MUTANT")=="P07" { return result{} }
++
+ 	profile := e.profile.begin(test.Path, e.worker)
+ 	defer profile.finish()
+ 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}

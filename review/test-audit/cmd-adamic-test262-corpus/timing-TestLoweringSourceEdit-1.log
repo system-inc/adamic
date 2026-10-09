@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:58:09.507911453Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:58:09.519280999Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit"}
+{"Time":"2026-10-09T09:58:09.519349328Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Output":"=== RUN   TestLoweringSourceEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:13.199923801Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Output":"--- PASS: TestLoweringSourceEdit (3.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:13.199987725Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Elapsed":3.68}
+{"Time":"2026-10-09T09:58:13.200010486Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:13.270805019Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t3.762s\n"}
+{"Time":"2026-10-09T09:58:13.270864386Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":3.763}

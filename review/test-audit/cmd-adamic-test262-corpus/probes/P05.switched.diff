@@ -1,0 +1,19 @@
+--- a/cmd/adamic-test262/frontmatter.go
++++ b/cmd/adamic-test262/frontmatter.go
+@@ -1,6 +1,7 @@
+ package main
+ 
+ import (
++"os"
+ 	"strings"
+ 	"unicode"
+ )
+@@ -19,6 +20,8 @@
+ // parseFrontmatter reads the first /*--- ... ---*/ block. A file without one has a zero value and
+ // Present false: the whole file is the test.
+ func parseFrontmatter(source string) frontmatter {
++if os.Getenv("ADAMIC_MUTANT")=="P05" { return frontmatter{} }
++
+ 	start := strings.Index(source, "/*---")
+ 	if start < 0 {
+ 		return frontmatter{}

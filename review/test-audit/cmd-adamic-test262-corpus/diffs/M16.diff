@@ -1,0 +1,17 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -658,13 +658,7 @@
+ 
+ func (e *engine) fallbackCompile(path string) execution {
+ 	if e.fallback != nil && e.inProcess {
+-		e.fallback.once.Do(func() {
+-			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")
+-			build.Dir = e.root
+-			if output, err := build.CombinedOutput(); err != nil {
+-				e.fallback.err = fmt.Errorf("building adamic: %w\n%s", err, output)
+-			}
+-		})
++		
+ 		if e.fallback.err != nil {
+ 			return execution{Exit: -1, Stderr: e.fallback.err.Error()}
+ 		}

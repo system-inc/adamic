@@ -1,0 +1,79 @@
+{
+  "M01": [
+    "TestClassifyCorpus",
+    "TestMiniRunner",
+    "TestOrderedProgress",
+    "TestParallelCachedMatchesSerial"
+  ],
+  "M02": [
+    "TestClassifyCorpus"
+  ],
+  "M03": [
+    "TestClassifyCorpus",
+    "TestFrontmatterShapes"
+  ],
+  "M04": [
+    "TestRewriteHarnessCalls"
+  ],
+  "M05": [
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLargeCompilerOutputIsComplete",
+    "TestLoweringSourceEdit",
+    "TestMiniRunner",
+    "TestOrderedProgress",
+    "TestParallelCachedMatchesSerial",
+    "TestUnavailableCacheStillRuns",
+    "TestVerdictCorpus",
+    "TestWorkerLazyFallback"
+  ],
+  "M06": [
+    "TestVerdictCorpus"
+  ],
+  "M07": [
+    "TestNormalizeReason"
+  ],
+  "M08": [
+    "TestNormalizeReason"
+  ],
+  "M09": [
+    "TestCacheKeyDimensions",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit"
+  ],
+  "M10": [
+    "TestCompilerCacheProgram"
+  ],
+  "M11": [
+    "TestRunnerLocationIdentity"
+  ],
+  "M12": [
+    "TestLoweringSourceEdit"
+  ],
+  "M13": [
+    "TestNodeHarnessIdentity"
+  ],
+  "M14": [
+    "TestOutputOverflowIsReported"
+  ],
+  "M15": [
+    "TestCompilerCacheProgram",
+    "TestCompilerStartupMeasurement",
+    "TestCompilerWorkerMatchesSubprocess",
+    "TestImportedInputsRunFresh",
+    "TestLargeCompilerOutputIsComplete",
+    "TestMiniRunner",
+    "TestNativeCacheGeneratedC",
+    "TestNodeCacheProgram",
+    "TestParallelCachedMatchesSerial",
+    "TestProgramCPUDeadline",
+    "TestUnavailableCacheStillRuns",
+    "TestWorkerLazyFallback"
+  ],
+  "M16": [
+    "TestWorkerLazyFallback"
+  ],
+  "M17": [
+    "TestLargeCompilerOutputIsComplete"
+  ]
+}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:15:01.540588506Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:15:01.58046862Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T10:15:01.580575868Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== RUN   TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:01.580622795Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== PAUSE TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:01.58062701Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T10:15:01.580630852Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T10:15:01.580633433Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== CONT  TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:04.69404013Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"    edit_test.go:88: lazy fallback lost compiler behavior: {Stdout: Stderr: Exit:0 Signal: TimedOut:false}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:15:04.694145974Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"--- FAIL: TestWorkerLazyFallback (3.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:04.694152364Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Elapsed":3.11}
+{"Time":"2026-10-09T10:15:04.694262631Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:04.797473134Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t3.253s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:04.797539858Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":3.257}

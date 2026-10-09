@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/reason.go
++++ b/cmd/adamic-test262/reason.go
+@@ -51,7 +51,7 @@
+ 	}
+ 	if index := strings.Index(line, "error TS"); index >= 0 {
+ 		message := line[index:]
+-		return quotedSpan.ReplaceAllString(message, "'…'")
++		return quotedSpan.ReplaceAllString(message, "''")
+ 	}
+ 	if line == "" {
+ 		return "compiler failed"

@@ -1,0 +1,41 @@
+{
+  "P01": [
+    "TestClassifyCorpus"
+  ],
+  "P02": [
+    "TestVerdictCorpus"
+  ],
+  "P03": [
+    "TestNormalizeReason"
+  ],
+  "P04": [
+    "TestRewriteHarnessCalls"
+  ],
+  "P05": [
+    "TestFrontmatterShapes"
+  ],
+  "P06": [
+    "TestLargeCompilerOutputIsComplete",
+    "TestMiniRunner",
+    "TestWorkerLazyFallback"
+  ],
+  "P07": [
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit"
+  ],
+  "P08": [
+    "TestOutputOverflowIsReported"
+  ],
+  "P09": [
+    "TestNodeHarnessIdentity"
+  ],
+  "P10": [
+    "TestRunnerLocationIdentity"
+  ],
+  "P11": [
+    "TestWorkerLazyFallback"
+  ],
+  "P12": [
+    "TestCompilerStartupMeasurement"
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -197,7 +197,7 @@
+ 	parts := []string{"test262-node-harness-v2"}
+ 	for _, entry := range entries {
+ 		name := entry.Name()
+-		if name == "compiler.go" || strings.HasSuffix(name, "_test.go") {
++		if strings.HasSuffix(name, "_test.go") {
+ 			continue
+ 		}
+ 		contents, err := fs.ReadFile(sources, name)

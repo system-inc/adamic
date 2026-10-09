@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/rewrite.go
++++ b/cmd/adamic-test262/rewrite.go
+@@ -109,7 +109,7 @@
+ 	for cursor := argumentStart; cursor < index; cursor++ {
+ 		builder.WriteByte(source[cursor])
+ 	}
+-	builder.WriteByte('"')
++	
+ 	builder.WriteString(name)
+ 	builder.WriteByte('"')
+ 	return next

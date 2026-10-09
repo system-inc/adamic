@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/classify.go
++++ b/cmd/adamic-test262/classify.go
+@@ -87,7 +87,7 @@
+ 		return ""
+ 	case "parse":
+ 		// test262 folded early errors into phase parse. Both are "the program is not a program".
+-		return "negative parse or early error"
++		return ""
+ 	case "early":
+ 		return "negative early error"
+ 	case "resolution":

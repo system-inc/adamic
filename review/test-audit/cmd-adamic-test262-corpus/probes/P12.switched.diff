@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -381,6 +381,8 @@
+ 
+ // Generated C is an artifact, not program output: give it room, and never compile a truncated one.
+ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
++if os.Getenv("ADAMIC_MUTANT")=="P12" { return execution{} }
++
+ 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+ 	defer cancel()
+ 	command := exec.CommandContext(ctx, name, args...)

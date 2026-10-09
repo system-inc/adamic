@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:14:53.981577574Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:14:53.991625502Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T10:14:53.99193337Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== RUN   TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992010268Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== PAUSE TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992013806Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T10:14:53.992017056Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T10:14:53.992019083Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== CONT  TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992021738Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"    corpus_test.go:267: overflow: written=0 error=\u003cnil\u003e buffer={buf:{buf:[] off:0 lastRead:0} limit:3 exceeded:false}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:14:53.992032402Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"--- FAIL: TestOutputOverflowIsReported (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992034481Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Elapsed":0}
+{"Time":"2026-10-09T10:14:53.992047821Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992249271Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:53.992269262Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.011}

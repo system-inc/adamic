@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M01",
+    "file": "cmd/adamic-test262/classify.go",
+    "line": 90,
+    "old": "return \"negative parse or early error\"",
+    "new": "return \"\"",
+    "kind": "change constant",
+    "pos": 2941
+  },
+  {
+    "id": "M02",
+    "file": "cmd/adamic-test262/classify.go",
+    "line": 156,
+    "old": "case \"Proxy\", \"Reflect\"",
+    "new": "case \"Reflect\"",
+    "kind": "change option",
+    "pos": 4558
+  },
+  {
+    "id": "M03",
+    "file": "cmd/adamic-test262/frontmatter.go",
+    "line": 135,
+    "old": "parsed.NegativeType = value",
+    "new": "",
+    "kind": "drop statement",
+    "pos": 3672
+  },
+  {
+    "id": "M04",
+    "file": "cmd/adamic-test262/rewrite.go",
+    "line": 112,
+    "old": "builder.WriteByte('\"')",
+    "new": "",
+    "kind": "drop statement",
+    "pos": 3303
+  },
+  {
+    "id": "M05",
+    "file": "cmd/adamic-test262/verdict.go",
+    "line": 58,
+    "old": "input.Native.Exit == 0 && input.Node.Stdout",
+    "new": "input.Native.Exit != 0 && input.Node.Stdout",
+    "kind": "flip condition",
+    "pos": 2151
+  },
+  {
+    "id": "M06",
+    "file": "cmd/adamic-test262/verdict.go",
+    "line": 58,
+    "old": " && input.Node.Stdout == input.Native.Stdout && input.Node.Stderr",
+    "new": " && input.Node.Stderr",
+    "kind": "drop condition",
+    "pos": 2173
+  },
+  {
+    "id": "M07",
+    "file": "cmd/adamic-test262/reason.go",
+    "line": 54,
+    "old": "\"'\u2026'\"",
+    "new": "\"''\"",
+    "kind": "change constant",
+    "pos": 2140
+  },
+  {
+    "id": "M08",
+    "file": "cmd/adamic-test262/reason.go",
+    "line": 89,
+    "old": "return \"crashed\", \"compiler panicked\"",
+    "new": "return \"refused\", \"compiler panicked\"",
+    "kind": "change constant",
+    "pos": 3284
+  },
+  {
+    "id": "M09",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 63,
+    "old": "cacheKey(\"test262-native-v1\", code, library, command, context)",
+    "new": "cacheKey(\"test262-native-v1\", code, library, command, \"\")",
+    "kind": "change option",
+    "pos": 1510
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 56,
+    "old": "cacheKey(\"test262-compiler-v1\", program, compiler, command, context)",
+    "new": "cacheKey(\"test262-compiler-v1\", program, compiler, command, \"\")",
+    "kind": "change option",
+    "pos": 1191
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 173,
+    "old": "parts = append(parts, \"runner\", cacheKey(string(contents)))",
+    "new": "parts = append(parts, path, cacheKey(string(contents)))",
+    "kind": "change option",
+    "pos": 5327
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 231,
+    "old": "parts = append(parts, name, string(contents))",
+    "new": "parts = append(parts, name, string(contents[:0]))",
+    "kind": "change bound",
+    "pos": 7287
+  },
+  {
+    "id": "M13",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 200,
+    "old": "name == \"compiler.go\" || strings.HasSuffix",
+    "new": "strings.HasSuffix",
+    "kind": "drop condition",
+    "pos": 6264
+  },
+  {
+    "id": "M14",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 445,
+    "old": "buffer.exceeded = true",
+    "new": "",
+    "kind": "drop statement",
+    "pos": 15013
+  },
+  {
+    "id": "M15",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 390,
+    "old": "stdout.limit = limit",
+    "new": "stdout.limit = 0",
+    "kind": "change constant",
+    "pos": 13649
+  },
+  {
+    "id": "M16",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 661,
+    "old": "e.fallback.once.Do(func() {\n\t\t\tbuild := exec.Command(\"go\", \"build\", \"-o\", e.adamic, \"./cmd/adamic\")\n\t\t\tbuild.Dir = e.root\n\t\t\tif output, err := build.CombinedOutput(); err != nil {\n\t\t\t\te.fallback.err = fmt.Errorf(\"building adamic: %w\\n%s\", err, output)\n\t\t\t}\n\t\t})",
+    "new": "",
+    "kind": "drop statement",
+    "pos": 21171
+  },
+  {
+    "id": "M17",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 390,
+    "old": "stdout.limit = limit",
+    "new": "stdout.limit = min(limit, outputLimit)",
+    "kind": "change bound",
+    "pos": 13649
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "setup": "warm environment worked, cloud/setup.sh skipped",
+  "npm_seconds": 0.7175376849991153,
+  "nproc": 5,
+  "baseline_binary_seconds": 56.101,
+  "baseline_command_seconds": 57.92519243300194,
+  "timing_binary_seconds": 121.68300000000002,
+  "matrix_binary_seconds": 801.7310000000001,
+  "matrix_command_seconds": 847.5097196030001,
+  "matrix_frontend_and_build_overhead_seconds": 45.77871960300001,
+  "probe_command_seconds": 50.93034880099731,
+  "clean_build_seconds": 4.362867169002129,
+  "standalone_vet_seconds": "not separately measured",
+  "finished_utc": "2026-10-09T10:17:18.966997+00:00"
+}

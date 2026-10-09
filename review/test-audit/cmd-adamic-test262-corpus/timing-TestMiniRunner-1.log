@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T09:56:44.590749644Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:56:44.601560966Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T09:56:44.601654917Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== RUN   TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:44.601696987Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== PAUSE TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:44.60170179Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T09:56:44.601705908Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T09:56:44.601708931Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== CONT  TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:48.419815314Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"pass 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0\n"}
+{"Time":"2026-10-09T09:56:48.419942633Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"skip 1/1 pass=0 fail=0 refused=0 crashed=0 skipped=1\n"}
+{"Time":"2026-10-09T09:56:48.467789046Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"refuse 1/1 pass=0 fail=0 refused=1 crashed=0 skipped=0\n"}
+{"Time":"2026-10-09T09:56:48.467868801Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"--- PASS: TestMiniRunner (3.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:48.467874402Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Elapsed":3.87}
+{"Time":"2026-10-09T09:56:48.46790104Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:48.510129886Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t3.919s\n"}
+{"Time":"2026-10-09T09:56:48.510197863Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":3.919}

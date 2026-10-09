@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:15:07.169292294Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:15:07.206017801Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement"}
+{"Time":"2026-10-09T10:15:07.206118Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"=== RUN   TestCompilerStartupMeasurement\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:10.099056669Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"    performance_test.go:53: in process C differs\n","OutputType":"error"}
+{"Time":"2026-10-09T10:15:10.100765996Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"--- FAIL: TestCompilerStartupMeasurement (2.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:10.100777643Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Elapsed":2.89}
+{"Time":"2026-10-09T10:15:10.100803092Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:10.110893504Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t2.941s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:10.110923987Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":2.942}

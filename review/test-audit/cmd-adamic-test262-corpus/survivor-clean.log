@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T10:15:19.102574385Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:15:19.112446764Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence"}
+{"Time":"2026-10-09T10:15:19.112557128Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence","Output":"=== RUN   TestAuditSurvivorEvidence\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:19.113660459Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence","Output":"    audit_survivor_test.go:3: unsupportedFeature(Proxy) = \"Proxy\", true\n"}
+{"Time":"2026-10-09T10:15:19.11368458Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence","Output":"    audit_survivor_test.go:3: classify feature-only Proxy skip=\"feature Proxy\"\n"}
+{"Time":"2026-10-09T10:15:19.113722327Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence","Output":"--- PASS: TestAuditSurvivorEvidence (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:19.113728363Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAuditSurvivorEvidence","Elapsed":0}
+{"Time":"2026-10-09T10:15:19.113747429Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:19.115349309Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.012s\n"}
+{"Time":"2026-10-09T10:15:19.115389205Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.013}

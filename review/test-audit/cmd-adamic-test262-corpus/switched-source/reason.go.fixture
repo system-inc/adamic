@@ -1,0 +1,158 @@
+package main
+
+import (
+	"regexp"
+	"strings"
+)
+
+// cmd/adamic-meter is not on main. The fuzzer (internal/fuzz/run.go, compilerRefusal) already splits
+// a compiler failure into "not yet", a 0.1 refusal, a checker diagnostic, or a crash. The meter
+// counts those across thousands of files, so the location is stripped and the fix after a refusal's
+// semicolon is dropped: two tests that refuse `var` are one reason, not two paths. Checker
+// messages keep their TS code, with quoted names collapsed, so `Cannot find name 'x'` and
+// `Cannot find name 'y'` are one reason.
+//
+//	adamic: prog.ts:1:1: stage 0 can't lower a rest parameter yet
+//	  -> not yet: a rest parameter
+//	adamic: prog.ts:1:1: Adamic 0.1 refuses var; use const or let
+//	  -> refuses var
+//	prog.ts:1:12: error TS7006: Parameter 'x' implicitly has an 'any' type.
+//	  -> error TS7006: Parameter '…' implicitly has an 'any' type.
+
+var locationPrefix = regexp.MustCompile(`^(?:adamic:\s+)?(?:(?:[A-Za-z]:)?[^:\n]+?:\d+:\d+:\s+)+`)
+var quotedSpan = regexp.MustCompile(`'[^']*'|"[^"]*"`)
+
+// normalizeReason collapses the first diagnostic line to a reason that groups across files.
+func normalizeReason(stderr string) string {
+	if auditSelector() == "M07" {
+		return normalizeReason_audit_M07(stderr)
+	}
+
+	line := firstLine(stderr)
+	line = strings.TrimSpace(line)
+	for {
+		stripped := locationPrefix.ReplaceAllString(line, "")
+		if stripped == line {
+			break
+		}
+		line = strings.TrimSpace(stripped)
+	}
+	line = strings.TrimPrefix(line, "adamic: ")
+	line = strings.TrimSpace(line)
+	if index := strings.Index(line, "can't lower "); index >= 0 && strings.Contains(line, "yet") {
+		what := strings.TrimSpace(line[index+len("can't lower "):])
+		what = strings.TrimSuffix(what, "yet")
+		what = strings.TrimSpace(what)
+		return "not yet: " + what
+	}
+	const refuses = "Adamic 0.1 refuses "
+	if index := strings.Index(line, refuses); index >= 0 {
+		what := strings.TrimSpace(line[index+len(refuses):])
+		if semi := strings.Index(what, ";"); semi >= 0 {
+			what = strings.TrimSpace(what[:semi])
+		}
+		return "refuses " + what
+	}
+	if index := strings.Index(line, "error TS"); index >= 0 {
+		message := line[index:]
+		return quotedSpan.ReplaceAllString(message, "'…'")
+	}
+	if line == "" {
+		return "compiler failed"
+	}
+	return line
+}
+
+func firstLine(text string) string {
+	if index := strings.IndexAny(text, "\r\n"); index >= 0 {
+		return text[:index]
+	}
+	return text
+}
+
+// compileClass is what `adamic c` came to. An empty kind means the C was produced. "refused" is a
+// checker diagnostic, a 0.1 refusal, or a not-yet, which the meter counts together under refused.
+// Anything else (a timeout, a panic, a message that isn't one of those) is a crash: the compiler
+// did not refuse the program, it failed.
+func compileClass(stderr string, exitCode int, timedOut bool) (kind string, reason string) {
+	if auditSelector() == "M08" {
+		return compileClass_audit_M08(stderr, exitCode, timedOut)
+	}
+
+	if timedOut {
+		return "crashed", "compiler timed out"
+	}
+	if exitCode == 0 {
+		return "", ""
+	}
+	text := stderr
+	switch {
+	case strings.Contains(text, "can't lower") && strings.Contains(text, "yet"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "Adamic 0.1 refuses"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "error TS"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "goroutine ") || strings.Contains(text, "panic:"):
+		return "crashed", "compiler panicked"
+	default:
+		return "crashed", normalizeReason(text)
+	}
+}
+
+func normalizeReason_audit_M07(stderr string) string {
+	line := firstLine(stderr)
+	line = strings.TrimSpace(line)
+	for {
+		stripped := locationPrefix.ReplaceAllString(line, "")
+		if stripped == line {
+			break
+		}
+		line = strings.TrimSpace(stripped)
+	}
+	line = strings.TrimPrefix(line, "adamic: ")
+	line = strings.TrimSpace(line)
+	if index := strings.Index(line, "can't lower "); index >= 0 && strings.Contains(line, "yet") {
+		what := strings.TrimSpace(line[index+len("can't lower "):])
+		what = strings.TrimSuffix(what, "yet")
+		what = strings.TrimSpace(what)
+		return "not yet: " + what
+	}
+	const refuses = "Adamic 0.1 refuses "
+	if index := strings.Index(line, refuses); index >= 0 {
+		what := strings.TrimSpace(line[index+len(refuses):])
+		if semi := strings.Index(what, ";"); semi >= 0 {
+			what = strings.TrimSpace(what[:semi])
+		}
+		return "refuses " + what
+	}
+	if index := strings.Index(line, "error TS"); index >= 0 {
+		message := line[index:]
+		return quotedSpan.ReplaceAllString(message, "''")
+	}
+	if line == "" {
+		return "compiler failed"
+	}
+	return line
+}
+func compileClass_audit_M08(stderr string, exitCode int, timedOut bool) (kind string, reason string) {
+	if timedOut {
+		return "crashed", "compiler timed out"
+	}
+	if exitCode == 0 {
+		return "", ""
+	}
+	text := stderr
+	switch {
+	case strings.Contains(text, "can't lower") && strings.Contains(text, "yet"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "Adamic 0.1 refuses"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "error TS"):
+		return "refused", normalizeReason(text)
+	case strings.Contains(text, "goroutine ") || strings.Contains(text, "panic:"):
+		return "refused", "compiler panicked"
+	default:
+		return "crashed", normalizeReason(text)
+	}
+}

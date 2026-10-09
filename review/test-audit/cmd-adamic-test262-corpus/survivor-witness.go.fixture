@@ -1,0 +1,3 @@
+package main
+import "testing"
+func TestAuditSurvivorEvidence(t *testing.T) { feature, rejected := unsupportedFeature("Proxy"); t.Logf("unsupportedFeature(Proxy) = %q, %v", feature, rejected); got:=classify("probe.js", "/*---\nfeatures: [Proxy]\n---*/\nconst x = 1;", false);t.Logf("classify feature-only Proxy skip=%q",got.Skip) }

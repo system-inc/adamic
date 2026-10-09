@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/reason.go
++++ b/cmd/adamic-test262/reason.go
+@@ -86,7 +86,7 @@
+ 	case strings.Contains(text, "error TS"):
+ 		return "refused", normalizeReason(text)
+ 	case strings.Contains(text, "goroutine ") || strings.Contains(text, "panic:"):
+-		return "crashed", "compiler panicked"
++		return "refused", "compiler panicked"
+ 	default:
+ 		return "crashed", normalizeReason(text)
+ 	}

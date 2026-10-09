@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/frontmatter.go
++++ b/cmd/adamic-test262/frontmatter.go
+@@ -132,7 +132,7 @@
+ 	case "negative.phase":
+ 		parsed.NegativePhase = value
+ 	case "negative.type":
+-		parsed.NegativeType = value
++		
+ 	case "features", "flags", "includes":
+ 		addField(parsed, key, value)
+ 	}

@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T10:15:42.685018436Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:15:42.708315516Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial"}
+{"Time":"2026-10-09T10:15:42.708397812Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"=== RUN   TestParallelCachedMatchesSerial\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:51.176504732Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"--- PASS: TestParallelCachedMatchesSerial (8.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:51.176607559Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Elapsed":8.47}
+{"Time":"2026-10-09T10:15:51.176647384Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:15:51.26385209Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t8.578s\n"}
+{"Time":"2026-10-09T10:15:51.26394386Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":8.579}

@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:57:31.486071936Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:57:31.495908171Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation"}
+{"Time":"2026-10-09T09:57:31.495994565Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Output":"=== RUN   TestEditCacheSeparation\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:33.718961424Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Output":"--- PASS: TestEditCacheSeparation (2.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:33.719820216Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Elapsed":2.22}
+{"Time":"2026-10-09T09:57:33.720038526Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:33.761783321Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t2.275s\n"}
+{"Time":"2026-10-09T09:57:33.761921161Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":2.276}

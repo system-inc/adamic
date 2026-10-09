@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -442,7 +442,7 @@
+ 	written := len(data)
+ 	room := buffer.limit - buffer.buf.Len()
+ 	if written > room {
+-		buffer.exceeded = true
++		
+ 	}
+ 	if room > 0 {
+ 		if len(data) > room {

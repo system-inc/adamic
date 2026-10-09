@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -190,6 +190,8 @@
+ func nodeHarnessIdentity() string { return nodeHarnessSourceIdentity(runnerSources) }
+ 
+ func nodeHarnessSourceIdentity(sources fs.FS) string {
++if os.Getenv("ADAMIC_MUTANT")=="P09" { return "" }
++
+ 	entries, err := fs.ReadDir(sources, ".")
+ 	if err != nil {
+ 		panic(err)

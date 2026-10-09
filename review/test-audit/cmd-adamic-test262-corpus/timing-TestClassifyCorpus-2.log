@@ -1,0 +1,60 @@
+{"Time":"2026-10-09T09:56:13.476180116Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:56:13.486390846Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T09:56:13.486466736Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== RUN   TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486497794Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== PAUSE TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486500314Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T09:56:13.486504571Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T09:56:13.486506532Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== CONT  TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486509704Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T09:56:13.486512335Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== RUN   TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486515378Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== PAUSE TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486517373Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T09:56:13.486522811Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T09:56:13.486524989Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== RUN   TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486527731Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== PAUSE TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486529487Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T09:56:13.486531385Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T09:56:13.486533038Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== RUN   TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486535189Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== PAUSE TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486537095Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T09:56:13.486539115Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T09:56:13.486540838Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== RUN   TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.48654305Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== PAUSE TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486572588Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T09:56:13.486575775Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T09:56:13.486580915Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== RUN   TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486584886Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== PAUSE TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486587601Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T09:56:13.486590864Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T09:56:13.48659349Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== RUN   TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486599415Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== PAUSE TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.48660242Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T09:56:13.486609105Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T09:56:13.486611736Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== CONT  TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486620842Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"--- PASS: TestClassifyCorpus/feature_proxy.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486624371Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486640775Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T09:56:13.486643021Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== CONT  TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486648304Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"--- PASS: TestClassifyCorpus/plain.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486650704Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486652637Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T09:56:13.486654613Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== CONT  TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.48665857Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"--- PASS: TestClassifyCorpus/negative_runtime.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486665197Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486668717Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T09:56:13.486670649Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== CONT  TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486677569Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"--- PASS: TestClassifyCorpus/negative_parse.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486679973Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486681782Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T09:56:13.486683734Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== CONT  TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486691271Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"--- PASS: TestClassifyCorpus/negative_early.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.48669428Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486696133Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T09:56:13.48669792Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== CONT  TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486703429Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"--- PASS: TestClassifyCorpus/harness_include.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486706808Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486709995Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"--- PASS: TestClassifyCorpus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.486712374Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Elapsed":0}
+{"Time":"2026-10-09T09:56:13.486715003Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:13.48692518Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.010s\n"}
+{"Time":"2026-10-09T09:56:13.486949791Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.011}

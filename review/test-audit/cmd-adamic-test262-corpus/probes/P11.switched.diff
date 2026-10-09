@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -657,6 +657,8 @@
+ }
+ 
+ func (e *engine) fallbackCompile(path string) execution {
++if os.Getenv("ADAMIC_MUTANT")=="P11" { return execution{} }
++
+ 	if e.fallback != nil && e.inProcess {
+ 		e.fallback.once.Do(func() {
+ 			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")

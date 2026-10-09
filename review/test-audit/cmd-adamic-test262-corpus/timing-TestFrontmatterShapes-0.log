@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:56:32.008438024Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:56:32.018139465Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T09:56:32.018268636Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== RUN   TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:32.018307223Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== PAUSE TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:32.018310346Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T09:56:32.018313524Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T09:56:32.01831834Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== CONT  TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:32.018345108Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"--- PASS: TestFrontmatterShapes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:32.018350438Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Elapsed":0}
+{"Time":"2026-10-09T09:56:32.018368299Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:32.018506789Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.010s\n"}
+{"Time":"2026-10-09T09:56:32.018532068Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.01}

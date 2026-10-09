@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/verdict.go
++++ b/cmd/adamic-test262/verdict.go
+@@ -55,7 +55,7 @@
+ 	if input.NegativePhase == "runtime" {
+ 		return decideNegative(input)
+ 	}
+-	if input.Node.Exit == 0 && input.Native.Exit == 0 && input.Node.Stdout == input.Native.Stdout && input.Node.Stderr == input.Native.Stderr {
++	if input.Node.Exit == 0 && input.Native.Exit == 0 && input.Node.Stderr == input.Native.Stderr {
+ 		return verdict{Kind: outcomePass}
+ 	}
+ 	return verdict{Kind: outcomeFail, Reason: disagreeReason(input)}

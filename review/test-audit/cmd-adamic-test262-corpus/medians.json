@@ -1,0 +1,18 @@
+{
+  "TestClassifyCorpus": 0.013,
+  "TestVerdictCorpus": 0.012,
+  "TestNormalizeReason": 0.01,
+  "TestRewriteHarnessCalls": 0.01,
+  "TestFrontmatterShapes": 0.011,
+  "TestMiniRunner": 4.217,
+  "TestLargeCompilerOutputIsComplete": 4.1370000000000005,
+  "TestOutputOverflowIsReported": 0.01,
+  "TestEditCacheSeparation": 2.409,
+  "TestNodeHarnessIdentity": 0.011,
+  "TestWorkerLazyFallback": 4.651,
+  "TestLoweringSourceEdit": 3.763,
+  "TestRunnerLocationHelper": 0.012,
+  "TestRunnerLocationIdentity": 5.1,
+  "TestCompilerStartupMeasurement": 5.156,
+  "TestParallelCachedMatchesSerial": 8.035
+}

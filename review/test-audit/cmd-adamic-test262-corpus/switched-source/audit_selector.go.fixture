@@ -1,0 +1,5 @@
+package main
+
+import "os"
+
+func auditSelector() string { return os.Getenv("ADAMIC_MUTANT") }

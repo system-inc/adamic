@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -228,7 +228,7 @@
+ 		if err != nil {
+ 			return "", err
+ 		}
+-		parts = append(parts, name, string(contents))
++		parts = append(parts, name, string(contents[:0]))
+ 	}
+ 	return cacheKey(parts...), nil
+ }

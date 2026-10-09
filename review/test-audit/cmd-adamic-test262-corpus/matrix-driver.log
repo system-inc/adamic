@@ -1,0 +1,9 @@
+/workspace/adamic/cmd/adamic-test262/reason.go:77:1: expected operand, found 'if'
+/workspace/adamic/cmd/adamic-test262/reason.go:79:3: expected operand, found 'return'
+/workspace/adamic/cmd/adamic-test262/reason.go:99:1: expected declaration, found nc
+/workspace/adamic/cmd/adamic-test262/reason.go:118:2: expected declaration, found 'if'
+Traceback (most recent call last):
+  File "/tmp/u013-matrix.py", line 20, in <module>
+    assert rc==0,'switch vet failed'
+           ^^^^^
+AssertionError: switch vet failed
