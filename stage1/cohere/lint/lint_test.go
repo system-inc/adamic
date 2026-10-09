@@ -772,6 +772,7 @@ func TestThroughput(t *testing.T) {
 // attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
 // of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
 // harness pass that walks the table by row reports on the copies and fails here.
+// Not parallel: the shared upstream capture and sanitized native corpus run before timing samples.
 func TestNodeTableIsLinkOnly(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -797,6 +798,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // TestShardsAgree requires the driver's output to be byte-identical however many processes share the
 // manifest (#tj6d455): one, two, and the machine's cores. Equal counts cannot see a reordered or repeated
 // case, so the whole output is compared, and the count mode too.
+// Not parallel: the shared upstream capture and native shard corpus run before timing samples.
 func TestShardsAgree(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -851,6 +853,7 @@ func TestShardsAgree(t *testing.T) {
 // mutated Node result, including JSX parsing, text spans and finding serialization.
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
+// Not parallel: registry and Go oracle setup are shared by the parallel mutant subtests.
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	descriptors := prepareRegistry(t, ".")

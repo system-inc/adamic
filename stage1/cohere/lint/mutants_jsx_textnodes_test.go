@@ -76,7 +76,6 @@ func jsxTextnodesRows(t *testing.T, oracle string) []string {
 
 func jsxTextnodesShard(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	started := time.Now()
 	oracle := goOracle(t)
 	rows := jsxTextnodesRows(t, oracle)
@@ -208,19 +207,67 @@ func TestMutantsReactJsxNoCommentTextnodesPlantedFailure(t *testing.T) {
 	}
 	t.Logf("planted case %d caught only by shard-%03d", planted, owner)
 }
-func TestMutantsReactJsxNoCommentTextnodes_000(t *testing.T) { jsxTextnodesShard(t, 0) }
-func TestMutantsReactJsxNoCommentTextnodes_001(t *testing.T) { jsxTextnodesShard(t, 1) }
-func TestMutantsReactJsxNoCommentTextnodes_002(t *testing.T) { jsxTextnodesShard(t, 2) }
-func TestMutantsReactJsxNoCommentTextnodes_003(t *testing.T) { jsxTextnodesShard(t, 3) }
-func TestMutantsReactJsxNoCommentTextnodes_004(t *testing.T) { jsxTextnodesShard(t, 4) }
-func TestMutantsReactJsxNoCommentTextnodes_005(t *testing.T) { jsxTextnodesShard(t, 5) }
-func TestMutantsReactJsxNoCommentTextnodes_006(t *testing.T) { jsxTextnodesShard(t, 6) }
-func TestMutantsReactJsxNoCommentTextnodes_007(t *testing.T) { jsxTextnodesShard(t, 7) }
-func TestMutantsReactJsxNoCommentTextnodes_008(t *testing.T) { jsxTextnodesShard(t, 8) }
-func TestMutantsReactJsxNoCommentTextnodes_009(t *testing.T) { jsxTextnodesShard(t, 9) }
-func TestMutantsReactJsxNoCommentTextnodes_010(t *testing.T) { jsxTextnodesShard(t, 10) }
-func TestMutantsReactJsxNoCommentTextnodes_011(t *testing.T) { jsxTextnodesShard(t, 11) }
-func TestMutantsReactJsxNoCommentTextnodes_012(t *testing.T) { jsxTextnodesShard(t, 12) }
-func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { jsxTextnodesShard(t, 13) }
-func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { jsxTextnodesShard(t, 14) }
-func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { jsxTextnodesShard(t, 15) }
+func TestMutantsReactJsxNoCommentTextnodes_000(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 0)
+}
+func TestMutantsReactJsxNoCommentTextnodes_001(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 1)
+}
+func TestMutantsReactJsxNoCommentTextnodes_002(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 2)
+}
+func TestMutantsReactJsxNoCommentTextnodes_003(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 3)
+}
+func TestMutantsReactJsxNoCommentTextnodes_004(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 4)
+}
+func TestMutantsReactJsxNoCommentTextnodes_005(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 5)
+}
+func TestMutantsReactJsxNoCommentTextnodes_006(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 6)
+}
+func TestMutantsReactJsxNoCommentTextnodes_007(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 7)
+}
+func TestMutantsReactJsxNoCommentTextnodes_008(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 8)
+}
+func TestMutantsReactJsxNoCommentTextnodes_009(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 9)
+}
+func TestMutantsReactJsxNoCommentTextnodes_010(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 10)
+}
+func TestMutantsReactJsxNoCommentTextnodes_011(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 11)
+}
+func TestMutantsReactJsxNoCommentTextnodes_012(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 12)
+}
+func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 13)
+}
+func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 14)
+}
+func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) {
+	t.Parallel()
+	jsxTextnodesShard(t, 15)
+}
