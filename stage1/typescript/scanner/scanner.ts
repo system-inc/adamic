@@ -1006,7 +1006,7 @@ export class Scanner {
                 this.advance(current);
             }
             this.value = this.text.slice(this.start, this.pos);
-            this.kind = first !== -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText';
+            this.kind = first === -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText';
         }
         return this.kind;
     }
