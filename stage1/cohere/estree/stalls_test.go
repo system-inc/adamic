@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -120,24 +121,50 @@ func TestBoundedPortParserPlantedDisagreement(t *testing.T) {
 	})
 }
 
-func TestPortStallControl(t *testing.T) {
-	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
-	binary, _ := build(t, main, true)
-	path := filepath.Join(t.TempDir(), "input.ts")
-	os.WriteFile(path, []byte("class C { ) }"), 0644)
-	for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}} {
-		ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
-		cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)
-		output, _ := os.CreateTemp(t.TempDir(), "control-log")
-		cmd.Stdout = output
-		cmd.Stderr = output
-		err := cmd.Run()
-		output.Close()
-		timedOut := ctx.Err() == context.DeadlineExceeded
-		cancel()
-		if !timedOut {
-			t.Fatalf("stall control must hit deadline, got %v", err)
-		}
-		t.Logf("%s guard-disabled control caught by 500ms deadline", argv[0])
+const testPortStallControlShards = 1
+
+func portStallControlResult(timedOut bool, err error) error {
+	if !timedOut {
+		return fmt.Errorf("stall control must hit deadline, got %v", err)
 	}
+	return nil
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs the single guard-disabled
+// mutant case. Both source Node and sanitized native stay together in its leaf.
+func TestPortStallControl(t *testing.T) {
+	finishSetup := miscStart(t)
+	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
+	binary, _ := miscBuild(t, main)
+	finishSetup()
+	miscRunShards(t, testPortStallControlShards, []string{"guard-disabled"}, func(t *testing.T, _ int) {
+		path := filepath.Join(t.TempDir(), "input.ts")
+		if err := os.WriteFile(path, []byte("class C { ) }"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}} {
+			ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+			cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)
+			output, err := os.CreateTemp(t.TempDir(), "control-log")
+			if err != nil {
+				cancel()
+				t.Fatal(err)
+			}
+			cmd.Stdout, cmd.Stderr = output, output
+			err = cmd.Run()
+			output.Close()
+			timedOut := ctx.Err() == context.DeadlineExceeded
+			cancel()
+			if err := portStallControlResult(timedOut, err); err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("%s guard-disabled control caught by 500ms deadline", argv[0])
+		}
+	})
+}
+
+func TestPortStallControlPlantedSurvivor(t *testing.T) {
+	miscPlantedProof(t, testPortStallControlShards, []string{"guard-disabled"}, func(planted bool) error {
+		return portStallControlResult(!planted, nil)
+	})
 }
