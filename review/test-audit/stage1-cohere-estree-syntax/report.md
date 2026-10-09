@@ -469,7 +469,7 @@ The harness rebuilds a native port inside each ordinary row. A file selector avo
 
 The standalone probe build was initially attempted before its diff had been generated; it failed to open the patch. The diff was then generated, applied and successfully compiled. No verdict rests on the failed command.
 
-The original family/setup first run includes cold products; setup cost was 82.858s initially, then 9.394s and 9.769s. Medians reflect the required three runs rather than hiding the cold result. Native validation builds and witness runs overlapped some timing runs, so these are measured workspace costs rather than uncontended machine benchmarks.
+The original family/setup first run includes cold products; setup cost was 82.858s initially, then 9.394s and 9.769s. Medians reflect the required three runs rather than hiding the cold result. Timing runs enabled NODE_V8_COVERAGE to collect source reach. Native validation builds and witness runs overlapped some timing runs, so these include profiling and workspace contention rather than uncontended machine costs.
 
 SyntaxRefusals checks a status count and generic parser refusal text, not the exact cause of every error. TypeMemberLibraryGap ignores the successful Go AST output. CookedSurrogateLibraryGap checks a specific substring and JSON value rather than whole AST agreement. Throughput enforces output correctness but no speed threshold.
 
