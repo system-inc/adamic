@@ -1,0 +1,4 @@
+FIRST FAILURE (tools, at 1.9 s):
+stage1/cohere/typeaware/volume_profile_Overlays_test.go:96 runs timeout, which cloud/fast-gate/tools.txt doesn't declare
+Declare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.
+(box load 30.6 on 64 cores at first failure)
