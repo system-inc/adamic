@@ -555,6 +555,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		slot := e.temporary()
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+		e.line("adamic_object_present(%s, %s.index);", object, cache)
 		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
 		}
@@ -585,7 +586,12 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	if !literal.SpreadMaybeUndefined {
 		return copy
 	}
-	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+	empty := emptyFields(literal)
+	shape := e.shape(empty)
+	if len(empty) > 0 && e.dynamicProperties() {
+		e.line("adamic_register_shape_types(&%s_metadata);", shape)
+	}
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, shape)
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
@@ -595,7 +601,15 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 		return
 	}
 	lines := []string{}
-	for index, field := range literal.Empty {
+	own := map[string]bool{}
+	for _, field := range literal.Fields {
+		own[field.Name] = true
+	}
+	for index, field := range emptyFields(literal) {
+		if own[field.Name] {
+			continue
+		}
+		lines = append(lines, fmt.Sprintf("\tadamic_object_absent(%s, %d);", object, index))
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
 		}
@@ -613,7 +627,18 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 // emptyFields is the layout of the object an undefined spread makes: the source type's fields the
 // literal doesn't give, then the literal's own, which are written by name after.
 func emptyFields(literal ir.ObjectLiteral) []ir.Field {
-	return append(slices.Clone(literal.Empty), literal.Fields...)
+	fields := append(slices.Clone(literal.Empty), literal.Fields...)
+	given := map[string]bool{}
+	for _, field := range fields {
+		given[field.Name] = true
+	}
+	for _, field := range literal.Missing {
+		if !given[field.Name] {
+			fields = append(fields, field)
+			given[field.Name] = true
+		}
+	}
+	return fields
 }
 
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
