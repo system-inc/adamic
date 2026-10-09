@@ -22,7 +22,7 @@ import sys
 
 corpora = [
     ("witnesses", ["review/admission-corpus/witnesses/*.a"], []),
-    ("fixtures", ["internal/oracle/testdata/*.a", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/*.a"], []),
+    ("fixtures", ["internal/oracle/testdata/*.a", "internal/load/testdata/0.1/compile/*.ts", "internal/load/testdata/0.1/compile/*/main.ts", "internal/flow/testdata/*.a", "internal/lower/testdata/*.a", "internal/lower/testdata/*/*.a"], []),
     ("gaps", ["stage1/*/gaps/*.ts", "stage1/*/*/gaps/*.ts", "stage1/*/*/gaps/*.a", "stage1/*/gaps/*.a"], []),
     ("review", ["review/*/*.a", "review/*/*/*.a"], ["review/test-audit/*", "review/admission-corpus/*"]),
     ("fuzz", ["internal/fuzz/corpus/*.a"], []),
