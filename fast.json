@@ -1,0 +1,17 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T133516-1900b920",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "7f746e5a8f9f2655fd9b988b353f2934a00f971e",
+  "branch": "cloud/land-stack-fx5-refusals-7f746e5a",
+  "base": "ef819b8e03c26ee3c5ac7bc1d8f067b77d553640",
+  "candidate": "7f746e5a8f9f2655fd9b988b353f2934a00f971e",
+  "gated": "1e065435bfc9f7fa98cd831a7f8a99c5c5932878",
+  "unplanned_packages_not_run": 3,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
