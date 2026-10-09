@@ -167,23 +167,24 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 
-const testPortMatchesGoCohereShards = 2168
+const testPortMatchesGoCohereShards = 8192
 
 // TestPortMatchesGoCohere checks every side, sanitizer and leak detector on every
 // shard. ADAMIC_TEST_SHARD=i/n (zero-based i) selects shard ordinals modulo n;
-// unset runs all shards. Gate selectors use direct shard-0000 through shard-2071.
-// Units 0..517 compare all sides; 518..2071 hold three benchmark rounds per range.
+// unset runs all shards. Gate selectors use direct shard-0000 through shard-8191.
+// The first 2048 hash buckets compare all sides; the remaining fixed units
+// hold three benchmark rounds for each bucket. File additions never move owners.
 // ADAMIC_JSON_BENCH=1 enables those benchmark comparisons. Validate the complete union before selecting any work.
 // Build subtests prepare shared inputs once; shard clocks start after preparation.
 // Measure isolated units with -parallel=1; normal runs schedule shards in parallel.
 func TestPortMatchesGoCohere(t *testing.T) {
 	t.Parallel()
 	parentStart := time.Now()
-	cases := sampledCorpusCases(t, 32)
-	shards := jsonPortShards(cases)
+	cases := corpusCases(t)
+	shards := jsonHashShards(cases, testPortMatchesGoCohereShards/4)
 	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
 	if got := enumeratedUnits; got != testPortMatchesGoCohereShards {
-		t.Fatalf("enumerated %d shards, declared %d; corpus sampling is incompatible with the gate census", got, testPortMatchesGoCohereShards)
+		t.Fatalf("enumerated %d shards, declared %d", got, testPortMatchesGoCohereShards)
 	}
 	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
@@ -241,6 +242,10 @@ func TestPortMatchesGoCohere(t *testing.T) {
 			t.Parallel()
 			start := time.Now()
 			items := cases[shard.start:shard.end]
+			if len(items) == 0 {
+				t.Log("empty hash bucket")
+				return
+			}
 			input, _ := protocol(items, make([]answer, len(items)))
 			path := filepath.Join(t.TempDir(), "cases.txt")
 			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
@@ -342,8 +347,8 @@ func TestPortMatchesGoCohere(t *testing.T) {
 			t.Logf("setup outside shards: %.3fs (including local builds)", (setupBeforeShards + time.Since(cleanupStart)).Seconds())
 		}()
 		allReferences := true
-		for _, reference := range references {
-			allReferences = allReferences && reference != ""
+		for ordinal, reference := range references {
+			allReferences = allReferences && (reference != "" || shards[ordinal].start == shards[ordinal].end)
 		}
 		if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && count == 1 && allReferences {
 			joined := strings.Join(references, "")
@@ -375,6 +380,10 @@ func TestPortMatchesGoCohere(t *testing.T) {
 					}
 					t.Parallel()
 					items := cases[shard.start:shard.end]
+					if len(items) == 0 {
+						t.Log("empty hash bucket")
+						return
+					}
 					input, _ := protocol(items, make([]answer, len(items)))
 					path := filepath.Join(t.TempDir(), "cases.txt")
 					if err := os.WriteFile(path, []byte(input), 0644); err != nil {

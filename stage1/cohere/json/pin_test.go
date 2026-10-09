@@ -213,7 +213,7 @@ func TestCorpusPinBeforeSampling(t *testing.T) {
 	}
 	t.Parallel()
 	cases := corpusCases(t)
-	shards := []nativeChunk{{start: 0, end: len(cases)}}
+	shards := jsonHashShards(cases, testCorpusPinBeforeSamplingShards)
 	if len(shards) != testCorpusPinBeforeSamplingShards {
 		t.Fatal("corpus-pin shard count changed")
 	}

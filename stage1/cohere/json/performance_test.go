@@ -9,7 +9,7 @@ import (
 )
 
 // The profiled -O2 -g binaries must answer the full corpus, not just the profile sample.
-const testProfileSnapshotsAgreeShards = 542
+const testProfileSnapshotsAgreeShards = 2048
 
 // Profile binaries are provided inputs. ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally.
 func TestProfileSnapshotsAgree(t *testing.T) {
@@ -19,7 +19,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 		t.Skip("set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries")
 	}
 	cases := corpusCases(t)
-	shards := jsonPortShards(cases)
+	shards := jsonHashShards(cases, testProfileSnapshotsAgreeShards)
 	if len(shards) != testProfileSnapshotsAgreeShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testProfileSnapshotsAgreeShards)
 	}
@@ -35,9 +35,13 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 		if ordinal%count != index {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%04d", ordinal), func(t *testing.T) {
 			t.Parallel()
 			items := cases[shard.start:shard.end]
+			if len(items) == 0 {
+				t.Log("empty hash bucket")
+				return
+			}
 			answers := jsonOracleAnswers(t, oracle, items)
 			input, expected := protocol(items, answers)
 			path := filepath.Join(t.TempDir(), "cases.txt")

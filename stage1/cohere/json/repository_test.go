@@ -92,6 +92,9 @@ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPi
 	if err != nil {
 		return corpusPin{}, 0, err
 	}
+	if len(state.paths) == 0 {
+		return corpusPin{}, 0, fmt.Errorf("repository JSON corpus is empty")
+	}
 	if len(state.dirty) > 0 {
 		return corpusPin{}, 0, fmt.Errorf("repository dirty JSON: %s", strings.Join(state.dirty, ", "))
 	}
@@ -285,4 +288,14 @@ func TestRepositoryRequiresGit(t *testing.T) {
 		t.Fatalf("export without Git silently fell back to walking: %v", err)
 	}
 	t.Logf("caught checkout without Git: %v", err)
+}
+
+func TestRepositoryCorpusRejectsEmptyTrackedSet(t *testing.T) {
+	t.Parallel()
+	f := newRepositoryFixture(t)
+	fixtureGit(t, f.root, "rm", "tracked.json", "nested/second.json")
+	fixtureGit(t, f.root, "commit", "-m", "remove repository JSON")
+	if _, _, err := validateCorpus(f.root, f.cases(t), f.pin); err == nil || !strings.Contains(err.Error(), "repository JSON corpus is empty") {
+		t.Fatalf("lost repository corpus survived: %v", err)
+	}
 }

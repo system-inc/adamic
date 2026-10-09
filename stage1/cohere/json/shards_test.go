@@ -1,12 +1,48 @@
 package json
 
 import (
+	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 	"testing"
 )
 
+// Repository JSON grows independently of the pinned upstream corpus. Keep the
+// bucket count fixed with headroom; names already encode repository-relative
+// paths or generated case index and filename mode. Never hash list positions.
+func jsonCaseShard(key string, count int) int {
+	sum := sha256.Sum256([]byte(key))
+	return int(binary.BigEndian.Uint64(sum[:8]) % uint64(count))
+}
+
+// Pack cases by hash bucket for existing range consumers. Packed offsets may
+// move as files are added; each case's owning bucket never does. Empty buckets
+// remain real units, so the static census does not depend on corpus size.
+func jsonHashShards(cases []textCase, count int) []nativeChunk {
+	sort.Slice(cases, func(i, j int) bool {
+		a, b := jsonCaseShard(cases[i].Name, count), jsonCaseShard(cases[j].Name, count)
+		if a != b {
+			return a < b
+		}
+		return cases[i].Name < cases[j].Name
+	})
+	shards := make([]nativeChunk, count)
+	offset := 0
+	for bucket := range shards {
+		start := offset
+		for offset < len(cases) && jsonCaseShard(cases[offset].Name, count) == bucket {
+			offset++
+		}
+		shards[bucket] = nativeChunk{start: start, end: offset}
+	}
+	return shards
+}
+
+// Literal-generated boundary controls are fixed by their test's source. Only
+// those controls use contiguous ranges; the growing repository uses hashes.
 // Bound both case count and text bytes; oversized corpus files stand alone.
 // These are deterministic bounds, never selected from run-time measurements.
 func jsonPortShards(cases []textCase) []nativeChunk {
@@ -38,7 +74,7 @@ func jsonPortUnion(cases []textCase, shards []nativeChunk) error {
 	seen := make(map[string]bool, len(cases))
 	count := 0
 	for ordinal, shard := range shards {
-		if shard.start < 0 || shard.end > len(cases) || shard.end <= shard.start {
+		if shard.start < 0 || shard.end > len(cases) || shard.end < shard.start {
 			return fmt.Errorf("shard-%04d invalid range [%d:%d]", ordinal, shard.start, shard.end)
 		}
 		for _, item := range cases[shard.start:shard.end] {
@@ -137,19 +173,25 @@ func TestJSONPortShardDisagreement(t *testing.T) {
 		cases[index] = textCase{Name: fmt.Sprintf("case-%d.json", index), Text: "{}"}
 		answers[index] = answer{Output: "{}"}
 	}
-	const planted = 17
-	shards := jsonPortShards(cases)
+	const plantedKey = "case-17.json"
+	shards := jsonHashShards(cases, 2048)
 	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
 	caught := 0
 	for ordinal, shard := range shards {
 		name := fmt.Sprintf("shard-%04d", ordinal)
+		if shard.start == shard.end {
+			continue
+		}
 		_, expected := protocol(cases[shard.start:shard.end], answers[shard.start:shard.end])
 		observed := append([]answer(nil), answers[shard.start:shard.end]...)
-		holds := planted >= shard.start && planted < shard.end
-		if holds {
-			observed[planted-shard.start].Output = "{X}"
+		holds := false
+		for i, item := range cases[shard.start:shard.end] {
+			if item.Name == plantedKey {
+				holds = true
+				observed[i].Output = "{X}"
+			}
 		}
 		_, got := protocol(cases[shard.start:shard.end], observed)
 		err := comparisonError(name, run{stdout: []byte(got)}, expected, cases[shard.start:shard.end])
@@ -158,7 +200,7 @@ func TestJSONPortShardDisagreement(t *testing.T) {
 		}
 		if err != nil {
 			caught++
-			if !strings.Contains(err.Error(), name) || !strings.Contains(err.Error(), cases[planted].Name) {
+			if !strings.Contains(err.Error(), name) || !strings.Contains(err.Error(), plantedKey) {
 				t.Fatalf("missing shard or case name: %v", err)
 			}
 			t.Logf("caught planted disagreement only in %s: %v", name, err)
@@ -193,4 +235,62 @@ func jsonPortAnswers(protocol string, count int) ([]answer, error) {
 		}
 	}
 	return answers, nil
+}
+
+func TestJSONHashShardsStayStable(t *testing.T) {
+	t.Parallel()
+	const count = 2048
+	original := []textCase{{"repo/a.json", "{}"}, {"repo/b.json", "[]"}, {"generated/17/probe.json", "null"}, {"generated/17/package.json", "null"}}
+	owners := func(cases []textCase) map[string]int {
+		before := append([]textCase(nil), cases...)
+		shards := jsonHashShards(cases, count)
+		if len(shards) != count {
+			t.Fatal("static bucket count moved")
+		}
+		expected := map[string]textCase{}
+		for _, item := range before {
+			expected[item.Name] = item
+		}
+		for _, item := range cases {
+			if expected[item.Name] != item {
+				t.Fatal("packing changed a case")
+			}
+		}
+		if err := jsonPortUnion(cases, shards); err != nil {
+			t.Fatal(err)
+		}
+		result := map[string]int{}
+		for bucket, shard := range shards {
+			for _, c := range cases[shard.start:shard.end] {
+				result[c.Name] = bucket
+			}
+		}
+		return result
+	}
+	baseline := owners(append([]textCase(nil), original...))
+	grown := []textCase{{"aaa/new.json", "true"}, original[3], original[1], original[0], original[2], {"zzz/new.json", "false"}}
+	assigned := owners(grown)
+	for key, bucket := range baseline {
+		if assigned[key] != bucket {
+			t.Fatalf("adding/reordering moved %s from shard-%04d to shard-%04d", key, bucket, assigned[key])
+		}
+	}
+	// A lost or repeated case must still fail even with empty hash buckets.
+	packed := append([]textCase(nil), original...)
+	shards := jsonHashShards(packed, count)
+	for i, shard := range shards {
+		if shard.start == shard.end {
+			continue
+		}
+		missing := append([]nativeChunk(nil), shards...)
+		missing[i].end = missing[i].start
+		if jsonPortUnion(packed, missing) == nil {
+			t.Fatal("lost case survived")
+		}
+		repeated := append(append([]nativeChunk(nil), shards...), shard)
+		if jsonPortUnion(packed, repeated) == nil {
+			t.Fatal("repeated case survived")
+		}
+		break
+	}
 }

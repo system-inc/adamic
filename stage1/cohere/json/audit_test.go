@@ -128,7 +128,7 @@ func corpusCases(t *testing.T) []textCase {
 
 // Prettier is a separate upstream report. Only the nine named disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
-const testUpstreamRepositoryCorpusParityShards = 542
+const testUpstreamRepositoryCorpusParityShards = 2048
 
 // ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally; the gate selects direct shard-NNN children.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
@@ -139,8 +139,8 @@ func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
-	cases := sampledCorpusCases(t, 8)
-	shards := jsonPortShards(cases)
+	cases := corpusCases(t)
+	shards := jsonHashShards(cases, testUpstreamRepositoryCorpusParityShards)
 	if len(shards) != testUpstreamRepositoryCorpusParityShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testUpstreamRepositoryCorpusParityShards)
 	}
@@ -182,9 +182,13 @@ func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 		if ordinal%count != index {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%04d", ordinal), func(t *testing.T) {
 			t.Parallel()
 			items := cases[shard.start:shard.end]
+			if len(items) == 0 {
+				t.Log("empty hash bucket")
+				return
+			}
 			goAnswers := jsonOracleAnswers(t, oracle, items)
 			directory := t.TempDir()
 			casesPath := filepath.Join(directory, "cases.json")
@@ -248,21 +252,21 @@ func TestJSONUpstreamShardDisagreement(t *testing.T) {
 	for i := range cases {
 		cases[i] = textCase{Name: fmt.Sprintf("case-%d.json", i), Text: "{}"}
 	}
-	shards := jsonPortShards(cases)
+	shards := jsonHashShards(cases, testUpstreamRepositoryCorpusParityShards)
 	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
 	caught := 0
 	for ordinal, shard := range shards {
-		name := fmt.Sprintf("shard-%03d", ordinal)
+		name := fmt.Sprintf("shard-%04d", ordinal)
 		for i := shard.start; i < shard.end; i++ {
 			got := ""
-			if i == 17 {
+			if cases[i].Name == "case-17.json" {
 				got = "planted disagreement"
 			}
 			if err := jsonUpstreamBlockCheck(name, cases[i].Name, got, ""); err != nil {
 				caught++
-				if name != "shard-001" || !strings.Contains(err.Error(), name) {
+				if ordinal != jsonCaseShard("case-17.json", testUpstreamRepositoryCorpusParityShards) || !strings.Contains(err.Error(), name) {
 					t.Fatalf("wrong owner: %v", err)
 				}
 				t.Logf("caught planted disagreement only in %s: %v", name, err)
