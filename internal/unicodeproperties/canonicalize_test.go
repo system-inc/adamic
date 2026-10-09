@@ -196,16 +196,32 @@ func TestCanonicalizeLegacyNode(t *testing.T) {
 	reportDisagreements(t, disagreements)
 }
 
-// Each leaf owns at most sixteen complete scans; Go's parallel subtests are
-// the gate's scheduling units. No Node pool or cross-shard result cache hides
-// work inside a long parent. Every scan still visits every Unicode code point.
-func TestCanonicalizeUnicodeNode(t *testing.T) {
+// Top-level ranges are the gate's leaves. Each owns a contiguous block of the
+// existing sixteen-scan shards and uses Go's four-way scheduling within that
+// block. Every scan still visits every Unicode code point against Node.
+func TestCanonicalizeUnicodeNodeRange0(t *testing.T) { runUnicodeCanonicalizeRange(t, 0) }
+func TestCanonicalizeUnicodeNodeRange1(t *testing.T) { runUnicodeCanonicalizeRange(t, 1) }
+func TestCanonicalizeUnicodeNodeRange2(t *testing.T) { runUnicodeCanonicalizeRange(t, 2) }
+func TestCanonicalizeUnicodeNodeRange3(t *testing.T) { runUnicodeCanonicalizeRange(t, 3) }
+func TestCanonicalizeUnicodeNodeRange4(t *testing.T) { runUnicodeCanonicalizeRange(t, 4) }
+func TestCanonicalizeUnicodeNodeRange5(t *testing.T) { runUnicodeCanonicalizeRange(t, 5) }
+func TestCanonicalizeUnicodeNodeRange6(t *testing.T) { runUnicodeCanonicalizeRange(t, 6) }
+func TestCanonicalizeUnicodeNodeRange7(t *testing.T) { runUnicodeCanonicalizeRange(t, 7) }
+func TestCanonicalizeUnicodeNodeRange8(t *testing.T) { runUnicodeCanonicalizeRange(t, 8) }
+func TestCanonicalizeUnicodeNodeRange9(t *testing.T) { runUnicodeCanonicalizeRange(t, 9) }
+
+func runUnicodeCanonicalizeRange(t *testing.T, index int) {
+	t.Helper()
+	group := unicodeNodeTopRanges[index]
+	if t.Name() != group.name {
+		t.Fatalf("top-level range %s dispatched as %s", t.Name(), group.name)
+	}
 	lines := unicodeCanonicalizeLines()
 	shards := unicodeCanonicalizeShards(lines)
-	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
+	if err := checkUnicodeTopRangeCoverage(lines, shards, unicodeNodeTopRanges); err != nil {
 		t.Fatal(err)
 	}
-	for _, shard := range shards {
+	for _, shard := range shards[group.start:group.end] {
 		t.Run(shard.name(), func(t *testing.T) {
 			t.Parallel()
 			examined, disagreements, err := runUnicodeBatch(shard.input)

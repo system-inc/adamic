@@ -211,13 +211,17 @@ const (
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
 
+	// Semantic slot tags reserve null and undefined independently of storage.
+	NullRepresentation
+	UndefinedRepresentation
+	// Record is a string-key table wrapped by the runtime record object.
+	Record
+
 	// Typed arrays hold numbers in one flat buffer of the element width.
 	Uint8Array
 	Int32Array
 	Float64Array
 	Uint16Array
-	// Record is a string-key table wrapped by the runtime record object.
-	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |

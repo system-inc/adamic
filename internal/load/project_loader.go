@@ -72,6 +72,9 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 	// auditProjectOptions receives these roots from Load, so each is checked under
 	// the same declarations and options as the production program.
 	options := config.CompilerOptions().Clone()
+	if options.NoCheck == core.TSTrue {
+		return nil, "", fmt.Errorf("load: noCheck would leave project sources unchecked")
+	}
 	// Undefined and callback variance must retain their meaning in Adamic's
 	// representations even when a project disables these soundness rules.
 	options.StrictNullChecks = core.TSTrue

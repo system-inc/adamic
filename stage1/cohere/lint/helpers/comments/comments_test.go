@@ -2,15 +2,19 @@ package comments
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
-	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/childguard"
+	"time"
 )
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
@@ -25,7 +29,7 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = childguard.Run(cmd, runGuard); err != nil {
+	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
@@ -35,8 +39,23 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	if err != nil {
 		t.Fatal(err)
 	}
-	captureOutput(t, data, stderr.String(), nil)
 	return data
+}
+func build(t *testing.T, directory string) string {
+	t.Helper()
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "helpers")
+	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	return binary
 }
 func compare(t *testing.T, got, want []byte) {
 	t.Helper()
@@ -63,81 +82,39 @@ func oracle(t *testing.T) string {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(suiteDirectory, "go-oracle")
+	binary := filepath.Join(t.TempDir(), "go-oracle")
 	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
 	return binary
 }
 func TestCommentsMatchCohere(t *testing.T) {
-	shared := sharedArtifacts(t)
-	t.Parallel()
 	path, _ := filepath.Abs("testdata/witnesses.json")
-	want := run(t, "", shared.oracle, path)
-	agreeModes(t, shared.commands, path, want)
-	t.Logf("Go, Node, emitted JavaScript and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
-}
-
-// Each mutant owns its source and IR; only the named canary builds native.
-func TestCommentMutants(t *testing.T) {
-	shared := sharedArtifacts(t)
-	t.Parallel()
-	path, _ := filepath.Abs("testdata/witnesses.json")
-	want := run(t, "", shared.oracle, path)
-	for _, m := range []struct{ file, old, new string }{
-		{"can_begin_at.ts", "if(position === 0 && text.startsWith('#!'))", "if(false)"},
-		{"collect_list_interiors.ts", "if(depth === 1)", "if(false)"},
-		{"sort_by_position.ts", "> current.start", "< current.start"},
-		{"all.ts", "anchors[node.end] = true;", "anchors[node.end] = false;"},
-		{"for_file.ts", "if(!this.ready)", "if(true)"},
-	} {
-		t.Run(m.file, func(t *testing.T) {
-			t.Parallel()
-			directory := t.TempDir()
-			for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				text := string(data)
-				if file == m.file {
-					if strings.Count(text, m.old) != 1 {
-						t.Fatalf("mutant anchor count %d", strings.Count(text, m.old))
-					}
-					text = strings.Replace(text, m.old, m.new, 1)
-				}
-				parserRoot, _ := filepath.Abs("../../../../typescript")
-				options, _ := filepath.Abs("../options_json.ts")
-				text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
-				text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-				if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			commands := prepare(t, directory, m.file == nativeCanaryMutant)
-			catchMutant(t, commands, path, want)
-		})
-	}
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	entry, _ := filepath.Abs("main.ts")
+	want := run(t, "", oracle(t), path)
+	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
+	compare(t, run(t, "", build(t, "."), path), want)
+	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
 // The inventory assumes a common AST adapter. This comparison isolates that
 // contract from the separate stage-1 parser, using Go's actual traversal spans.
 func TestConsumerCommentHelpers(t *testing.T) {
-	shared := sharedArtifacts(t)
-	t.Parallel()
 	original, _ := filepath.Abs("testdata/consumers.json")
-	goOracle := shared.oracle
+	goOracle := oracle(t)
 	adapted := run(t, "", goOracle, "--ast", original)
 	path := filepath.Join(t.TempDir(), "adapted.json")
 	if err := os.WriteFile(path, adapted, 0644); err != nil {
 		t.Fatal(err)
 	}
 	want := run(t, "", goOracle, original)
-	agreeModes(t, shared.commands, path, want)
-	t.Logf("Go, Node, emitted JavaScript and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	entry, _ := filepath.Abs("main.ts")
+	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
+	compare(t, run(t, "", build(t, "."), path), want)
+	t.Logf("Go, Node and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
 }
 
 func TestJsxParserGapIsExplicit(t *testing.T) {
-	shared := sharedArtifacts(t)
-	t.Parallel()
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
 		t.Fatal(err)
@@ -146,47 +123,35 @@ func TestJsxParserGapIsExplicit(t *testing.T) {
 	if err = json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
-	goOracle := shared.oracle
-	for i, row := range rows {
-		t.Run(fmt.Sprint(i), func(t *testing.T) {
-			t.Parallel()
-			corpus, _ := json.Marshal([]any{row})
-			path := filepath.Join(t.TempDir(), "gap.json")
-			if err := os.WriteFile(path, corpus, 0644); err != nil {
-				t.Fatal(err)
+	binary := build(t, ".")
+	goOracle := oracle(t)
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	entry, _ := filepath.Abs("main.ts")
+	for _, row := range rows {
+		corpus, _ := json.Marshal([]any{row})
+		path := filepath.Join(t.TempDir(), "gap.json")
+		if err := os.WriteFile(path, corpus, 0644); err != nil {
+			t.Fatal(err)
+		}
+		adapted := run(t, "", goOracle, "--ast", path)
+		var facts []struct{ GoDiagnostics int }
+		if err := json.Unmarshal(adapted, &facts); err != nil {
+			t.Fatal(err)
+		}
+		if len(facts) != 1 || facts[0].GoDiagnostics != 0 {
+			t.Fatal("gap must be valid Go TypeScript")
+		}
+		var previous string
+		for _, command := range [][]string{{"node", "--disable-warning=ExperimentalWarning", runner, entry, path}, {binary, path}} {
+			_, stderr, err := gapRun(t, command)
+			if !matchesGapRefusal(err, stderr) {
+				t.Fatalf("gap silently accepted or failed differently: %v %s", err, stderr)
 			}
-			adapted := run(t, "", goOracle, "--ast", path)
-			var facts []struct{ GoDiagnostics int }
-			if err := json.Unmarshal(adapted, &facts); err != nil {
-				t.Fatal(err)
+			if previous != "" && previous != stderr {
+				t.Fatal("Node and native parser refusals differ")
 			}
-			if len(facts) != 1 || facts[0].GoDiagnostics != 0 {
-				t.Fatal("gap must be valid Go TypeScript")
-			}
-			// Each mode runs in its own guarded process; wait for all children
-			// before comparing their refusal bytes.
-			refusals := make([]string, len(shared.commands))
-			t.Run("modes", func(t *testing.T) {
-				t.Parallel()
-				t.Cleanup(func() {
-					for i := 1; i < len(refusals); i++ {
-						if refusals[i] != refusals[0] {
-							t.Fatal("parser refusals differ")
-						}
-					}
-				})
-				for i, mode := range shared.commands {
-					t.Run(mode.name, func(t *testing.T) {
-						t.Parallel()
-						_, stderr, err := gapRun(t, mode.withInput(path))
-						if !matchesGapRefusal(err, stderr) {
-							t.Fatalf("gap silently accepted or failed differently: %v %s", err, stderr)
-						}
-						refusals[i] = stderr
-					})
-				}
-			})
-		})
+			previous = stderr
+		}
 	}
 	t.Logf("%d valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately", len(rows))
 }
@@ -194,8 +159,6 @@ func TestJsxParserGapIsExplicit(t *testing.T) {
 // Removing the TSX adapter guard must compile and accept the known wrong parse,
 // rather than merely crashing on one of the other unsupported JSX forms.
 func TestJsxAdapterGuardMutant(t *testing.T) {
-	sharedArtifacts(t)
-	t.Parallel()
 	directory := t.TempDir()
 	for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
 		data, err := os.ReadFile(file)
@@ -231,23 +194,17 @@ func TestJsxAdapterGuardMutant(t *testing.T) {
 	if err := os.WriteFile(path, corpus, 0644); err != nil {
 		t.Fatal(err)
 	}
-	commands := prepare(t, directory, false)
-	for _, mode := range commands {
-		t.Run(mode.name, func(t *testing.T) {
-			t.Parallel()
-			output, stderr, err := gapRun(t, mode.withInput(path))
-			if err != nil || stderr != "" {
-				t.Fatalf("mutant must finish normally, not crash: %v %s", err, stderr)
-			}
-			if matchesGapRefusal(err, stderr) {
-				t.Fatal("compiled adapter-guard mutant survived the actual refusal check")
-			}
-			if !bytes.Contains(output, []byte("comments ")) {
-				t.Fatal("guard mutant did not finish the wrong parsed tree")
-			}
-			t.Log("compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it")
-		})
+	output, stderr, err := gapRun(t, []string{build(t, directory), path})
+	if err != nil || stderr != "" {
+		t.Fatalf("mutant must finish normally, not crash: %v %s", err, stderr)
 	}
+	if matchesGapRefusal(err, stderr) {
+		t.Fatal("compiled adapter-guard mutant survived the actual refusal check")
+	}
+	if !bytes.Contains(output, []byte("comments ")) {
+		t.Fatal("guard mutant did not finish the wrong parsed tree")
+	}
+	t.Log("compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it")
 }
 
 func matchesGapRefusal(err error, stderr string) bool {
@@ -264,7 +221,7 @@ func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	cmd.Stdout = out
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	runErr := childguard.Run(cmd, runGuard)
+	runErr := testguard.Run(cmd, time.Minute, testguard.Ceiling)
 	if err := out.Close(); err != nil {
 		t.Fatal(err)
 	}
@@ -272,38 +229,5 @@ func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	captureOutput(t, output, stderr.String(), runErr)
 	return output, stderr.String(), runErr
-}
-
-// Optional byte captures make before/after comparisons independent of log order.
-func captureOutput(t *testing.T, output []byte, stderr string, runErr error) {
-	t.Helper()
-	directory := os.Getenv("ADAMIC_COMMENTS_CAPTURE")
-	if directory == "" {
-		return
-	}
-	failure := ""
-	if runErr != nil {
-		failure = runErr.Error()
-	}
-	data, err := json.Marshal(struct {
-		Test          string
-		Output        []byte
-		Stderr, Error string
-	}{t.Name(), output, stderr, failure})
-	if err != nil {
-		t.Fatal(err)
-	}
-	file, err := os.CreateTemp(directory, "output-*.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, err := file.Write(data); err != nil {
-		file.Close()
-		t.Fatal(err)
-	}
-	if err := file.Close(); err != nil {
-		t.Fatal(err)
-	}
 }

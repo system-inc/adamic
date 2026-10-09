@@ -90,6 +90,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	// V2 retains exact logical producer types for union member certification.
+	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
+
 	program *load.Program
 	checker *checker.Checker
 	result  *ir.Program

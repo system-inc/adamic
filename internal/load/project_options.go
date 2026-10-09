@@ -84,6 +84,15 @@ func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, 
 		return nil, fmt.Errorf("load: %s parsed to no project", absolute)
 	}
 	roots := append([]tspath.RootedFilePath{}, config.FileNames()...)
+	flatten := len(config.ProjectReferences()) != 0
+	types := config.CompilerOptions().Types
+	if flatten {
+		var referenceError error
+		roots, _, types, referenceError = projectSourceRoots(fs, config)
+		if referenceError != nil {
+			return nil, referenceError
+		}
+	}
 	included := map[tspath.RootedFilePath]bool{}
 	for _, root := range roots {
 		included[root] = true
@@ -94,10 +103,18 @@ func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, 
 			included[root] = true
 		}
 	}
+	roots = uniqueSourceRoots(fs, roots)
 	base := config.CompilerOptions().Clone()
+	if flatten {
+		base = sourceProgramOptions(base, roots)
+		base.Types = types
+		if len(types) != 0 {
+			base.SkipLibCheck = core.TSFalse
+		}
+	}
 	directory := tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(absolute))
 	run := func(options *core.CompilerOptions) ([]*ast.Diagnostic, error) {
-		parsed := tsoptions.NewParsedCommandLine(options, roots, config.ProjectReferences(), directory, fs.CaseSensitivity())
+		parsed := tsoptions.NewParsedCommandLine(options, roots, nil, directory, fs.CaseSensitivity())
 		parsed.ConfigFile = config.ConfigFile
 		host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
 		program := compiler.NewProgram(compiler.ProgramOptions{Config: parsed, Host: host, SingleThreaded: core.TSTrue})

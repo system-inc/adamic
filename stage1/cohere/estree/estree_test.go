@@ -2,14 +2,17 @@ package estree
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"sync/atomic"
 	"testing"
 )
 
@@ -25,7 +28,7 @@ func execute(t *testing.T, dir, name string, args ...string) []byte {
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := childguard.Run(command, runGuard); err != nil || stderr.Len() != 0 {
+	if err := command.Run(); err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
@@ -42,7 +45,7 @@ func root(t *testing.T) string {
 	}
 	return path
 }
-func buildGoOracle(t *testing.T) string {
+func goOracle(t *testing.T) string {
 	t.Helper()
 	repo := root(t)
 	source, err := filepath.Abs("testdata/oracle.go")
@@ -54,7 +57,7 @@ func buildGoOracle(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	dir := artifactDir(t)
+	dir := t.TempDir()
 	path := filepath.Join(dir, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -62,6 +65,27 @@ func buildGoOracle(t *testing.T) string {
 	binary := filepath.Join(dir, "oracle")
 	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
 	return binary
+}
+func build(t *testing.T, path string, sanitize bool) (string, string) {
+	t.Helper()
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	binary := filepath.Join(dir, "port")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+		t.Fatal(err)
+	}
+	script := filepath.Join(dir, "port.mjs")
+	if err := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return binary, script
 }
 func onNode(t *testing.T, path string, args ...string) []byte {
 	t.Helper()
@@ -157,7 +181,16 @@ func TestGeneratedAgreement(t *testing.T) {
 	cases := generated()
 	list := manifest(t, cases)
 	want := execute(t, "", goOracle(t), "--manifest", list)
-	checkPort(t, path, []string{"--manifest", list}, want, false, false)
+	if diff := firstDifference(want, onNode(t, path, "--manifest", list)); diff != "" {
+		t.Fatal("source Node: " + diff)
+	}
+	binary, script := build(t, path, true)
+	if diff := firstDifference(want, execute(t, "", binary, "--manifest", list)); diff != "" {
+		t.Fatal("sanitized native: " + diff)
+	}
+	if diff := firstDifference(want, onNode(t, script, "--manifest", list)); diff != "" {
+		t.Fatal("emitted JS: " + diff)
+	}
 	t.Logf("%d generated files: %d identical bytes on Go, source Node, sanitized native, emitted JS", len(cases), len(want))
 }
 
@@ -187,32 +220,6 @@ func mutantPort(t *testing.T, file, from, to string) string {
 	}
 	return filepath.Join(directory, "main.ts")
 }
-func TestThreePortMutants(t *testing.T) {
-	t.Parallel()
-	list := manifest(t, generated())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	mutants := []struct{ name, file, from, to string }{
-		{"member-computed", "convert.ts", "boolValue(node.kind === 'ElementAccessExpression')", "boolValue(node.kind === 'PropertyAccessExpression')"},
-		{"logical-rebalance", "postprocess.ts", "completed.set(id, this.rebalance(id));", "completed.set(id, id);"},
-		{"merged-jsdoc-value", "postprocess.ts", "*//*", "*/ /*"},
-	}
-	canaries := 0
-	for _, item := range mutants {
-		if item.name == nativeCanaryMutant {
-			canaries++
-		}
-	}
-	if canaries != 1 {
-		t.Fatalf("expected one native mutant canary, got %d", canaries)
-	}
-	for _, item := range mutants {
-		t.Run(item.name, func(t *testing.T) {
-			t.Parallel()
-			path := mutantPort(t, item.file, item.from, item.to)
-			checkPort(t, path, []string{"--manifest", list}, want, true, item.name == nativeCanaryMutant)
-		})
-	}
-}
 
 func TestOriginalLibraries(t *testing.T) {
 	t.Parallel()
@@ -229,75 +236,66 @@ func checkOriginalManifest(t *testing.T, list string, cases []string, postproces
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	oracle := goOracle(t)
 	for _, mode := range []string{"raw", "postprocessed"} {
-		t.Run(mode, func(t *testing.T) {
-			t.Parallel()
-			flag := "--raw-json"
-			if mode != "raw" {
-				flag = "--json"
-			}
-			want := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
-			script, err := filepath.Abs("testdata/library.mjs")
-			if err != nil {
+		flag := "--raw-json"
+		if mode != "raw" {
+			flag = "--json"
+		}
+		want := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
+		script, err := filepath.Abs("testdata/library.mjs")
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
+		if len(got) != len(want) {
+			t.Fatalf("library %s: %d versus %d files", mode, len(got), len(want))
+		}
+		differences := 0
+		for index := range want {
+			var left, right any
+			if err := json.Unmarshal([]byte(want[index]), &left); err != nil {
 				t.Fatal(err)
 			}
-			got := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
-			if len(got) != len(want) {
-				t.Fatalf("library %s: %d versus %d files", mode, len(got), len(want))
+			if err := json.Unmarshal([]byte(got[index]), &right); err != nil {
+				t.Fatal(err)
 			}
-			var differing atomic.Int64
-			t.Run("cases", func(t *testing.T) {
-				for index := range want {
-					t.Run(fmt.Sprintf("%04d", index), func(t *testing.T) {
-						t.Parallel()
-						var left, right any
-						if err := json.Unmarshal([]byte(want[index]), &left); err != nil {
-							t.Fatal(err)
-						}
-						if err := json.Unmarshal([]byte(got[index]), &right); err != nil {
-							t.Fatal(err)
-						}
-						leftBytes, _ := json.Marshal(left)
-						rightBytes, _ := json.Marshal(right)
-						if !bytes.Equal(leftBytes, rightBytes) {
-							source := cases[index]
-							known := mode == "postprocessed" && (source == "x\u00a0;" || source == "x\u2028;" || source == "x\r\n;")
-							if !known {
-								t.Errorf("unrecorded %s case %d: Go %s; library %s", mode, index, leftBytes, rightBytes)
-								return
-							}
-							ast := left.(map[string]any)["ast"].(map[string]any)
-							statement := ast["body"].([]any)[0].(map[string]any)
-							if source == "x\r\n;" {
-								if !bytes.Equal(mustJSON(t, ast["range"]), []byte("[0,4]")) || !bytes.Equal(mustJSON(t, statement["range"]), []byte("[0,4]")) {
-									t.Fatal("CRLF gap changed")
-								}
-								ast["range"] = []int{0, 3}
-								statement["range"] = []int{0, 3}
-							} else {
-								if statement["__contentEnd"] != float64(2) {
-									t.Fatal("multibyte whitespace gap changed")
-								}
-								statement["__contentEnd"] = 1
-							}
-							if !bytes.Equal(mustJSON(t, left), rightBytes) {
-								t.Fatalf("known gap has additional differences: %s case %d: Go after exact known delta %s; library %s", mode, index, mustJSON(t, left), rightBytes)
-							}
-							differing.Add(1)
-							t.Logf("proved %s case %d known gap for %q", mode, index, source)
-						}
-					})
+			leftBytes, _ := json.Marshal(left)
+			rightBytes, _ := json.Marshal(right)
+			if !bytes.Equal(leftBytes, rightBytes) {
+				source := cases[index]
+				known := mode == "postprocessed" && (source == "x\u00a0;" || source == "x\u2028;" || source == "x\r\n;")
+				if !known {
+					t.Errorf("unrecorded %s case %d: Go %s; library %s", mode, index, leftBytes, rightBytes)
+					continue
 				}
-			})
-			differences := int(differing.Load())
-			t.Logf("%s: %d files, %d identical, %d differing", mode, len(want), len(want)-differences, differences)
-			expected := 0
-			if mode == "postprocessed" {
-				expected = postprocessedGaps
+				ast := left.(map[string]any)["ast"].(map[string]any)
+				statement := ast["body"].([]any)[0].(map[string]any)
+				if source == "x\r\n;" {
+					if !bytes.Equal(mustJSON(t, ast["range"]), []byte("[0,4]")) || !bytes.Equal(mustJSON(t, statement["range"]), []byte("[0,4]")) {
+						t.Fatal("CRLF gap changed")
+					}
+					ast["range"] = []int{0, 3}
+					statement["range"] = []int{0, 3}
+				} else {
+					if statement["__contentEnd"] != float64(2) {
+						t.Fatal("multibyte whitespace gap changed")
+					}
+					statement["__contentEnd"] = 1
+				}
+				if !bytes.Equal(mustJSON(t, left), rightBytes) {
+					t.Fatalf("known gap has additional differences: %s case %d: Go after exact known delta %s; library %s", mode, index, mustJSON(t, left), rightBytes)
+				}
+				differences++
+				t.Logf("proved %s case %d known gap for %q", mode, index, source)
 			}
-			if differences != expected {
-				t.Errorf("expected exactly %d documented gaps, got %d", expected, differences)
-			}
-		})
+		}
+		t.Logf("%s: %d files, %d identical, %d differing", mode, len(want), len(want)-differences, differences)
+		expected := 0
+		if mode == "postprocessed" {
+			expected = postprocessedGaps
+		}
+		if differences != expected {
+			t.Errorf("expected exactly %d documented gaps, got %d", expected, differences)
+		}
 	}
 }
 

@@ -319,10 +319,15 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	bool dynamic_shape;
 	const int *dynamic_types;
 	adamic_value slots[];
 } adamic_object;
+
+static inline size_t adamic_object_size(size_t count) {
+	return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
 
 // Per-slot insertion ranks follow the values in the same allocation. Zero means absent.
 static inline size_t *adamic_object_orders(const adamic_object *object) {

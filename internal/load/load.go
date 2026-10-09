@@ -104,6 +104,10 @@ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
 }
 
 func load(paths []string, overlay map[string]string) (*Program, error) {
+	return loadInput(paths, overlay)
+}
+
+func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 	if len(paths) == 0 {
 		return nil, errors.New("load: no files given")
 	}
@@ -119,12 +123,17 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
+	seenRoots := map[tspath.PathKey]bool{}
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
 		if err != nil {
 			return nil, err
 		}
-		roots = append(roots, root)
+		key := fs.CaseSensitivity().PathKey(root.AsPath())
+		if !seenRoots[key] {
+			roots = append(roots, root)
+			seenRoots[key] = true
+		}
 	}
 	userRoots := roots
 
@@ -140,6 +149,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	if project == "" {
 		checkRoots = append(checkRoots, setPreludePath)
 	}
+	projectOwners := map[string]bool{}
 	var projectConfig *tsoptions.ParsedCommandLine
 	if project != "" {
 		// Composite projects must retain their complete root list. Checking only
@@ -157,9 +167,24 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath)
 		}
 	}
+	if projectConfig != nil && len(projectConfig.ProjectReferences()) != 0 {
+		projectRoots, owners, types, referenceError := projectSourceRoots(fs, projectConfig)
+		if referenceError != nil {
+			return nil, referenceError
+		}
+		projectOwners = owners
+		checkRoots = append(append(projectRoots, userRoots...), preludePath)
+		options = sourceProgramOptions(options, checkRoots)
+		options.Types = types
+		if len(types) != 0 {
+			options.SkipLibCheck = core.TSFalse
+		}
+	}
+	checkRoots = uniqueSourceRoots(fs, checkRoots)
+
 	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	if projectConfig != nil {
-		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(project)), fileSystem.CaseSensitivity())
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory.ResolveDirectory(filepath.Dir(project)), fileSystem.CaseSensitivity())
 		config.ConfigFile = projectConfig.ConfigFile
 	}
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
@@ -225,13 +250,13 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			if _, isAdamic := fs.adamicFile(file.FileName()); isAdamic {
 				return nil, fmt.Errorf("load: mixed .a and project .ts checking is not implemented: %s", loaded.FileName(file))
 			}
-			if owner := nearestProject(file.FileName().AsString()); owner != project {
+			if owner := nearestProject(file.FileName().AsString()); owner != project && !projectOwners[owner] {
 				return nil, fmt.Errorf("load: separate checker ownership is not implemented for %s (project %s)", loaded.FileName(file), owner)
 			}
 		}
 		report := &ProjectOptionReport{}
 		if !alreadyStricter(options) {
-			report, err = auditProjectOptions(context.Background(), project, fs, userRoots)
+			report, err = auditProjectOptions(context.Background(), project, fs, checkRoots)
 			if err != nil {
 				return nil, err
 			}
@@ -293,7 +318,9 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
-		loaded.files = append(loaded.files, sourceFile)
+		if projectConfig == nil || !sourceFile.IsDeclarationFile {
+			loaded.files = append(loaded.files, sourceFile)
+		}
 	}
 	return loaded, nil
 }

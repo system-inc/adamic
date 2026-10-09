@@ -1,6 +1,7 @@
 package printer
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io/fs"
@@ -13,12 +14,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// This local adapter prepares each product once per invocation until
-// internal/buildcache is available on the base. No package cache is written.
+// Inputs describe non-Go read-only shared products; Go builds stay separate.
 type printerBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -27,13 +28,30 @@ type printerBuildInputs struct {
 
 func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
-	dir := t.TempDir()
-	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("build %s cold wall %.3fs (toolchain %s, %d files, flags %q)", inputs.Name, time.Since(start).Seconds(), inputs.Toolchain, len(inputs.Files), inputs.Flags)
-	return dir
+	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	for _, file := range inputs.Files {
+		relative, err := filepath.Rel(root, file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			// Generated inputs live in a read-only product outside the repository.
+			// Its bytes, rather than the machine-specific cache path, identify it.
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
+		} else {
+			key.Files = append(key.Files, filepath.ToSlash(relative))
+		}
+	}
+	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return buildcache.Product(t, key, build)
 }
 
 func printerInputFiles(t *testing.T, roots ...string) []string {
@@ -80,47 +98,49 @@ func printerOracle(t *testing.T) string {
 	side, _ := filepath.Abs("testdata/cohere_side_test.go")
 	generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
 	cohere := filepath.Join(root, "cohere")
-	return printerBuild(t, printerBuildInputs{
-		Name:  "Go GraphQL printer oracle",
-		Files: append([]string{side, generator}, printerInputFiles(t, cohere, root+"/go.mod", root+"/go.work")...),
-		Flags: []string{"go test -c", "overlay: adamic_printer_test.go, adamic_generator_test.go"}, Toolchain: runtime.Version(),
-	}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-			cohere + "/internal/format/graphql/adamic_printer_test.go":   side,
-			cohere + "/internal/format/graphql/adamic_generator_test.go": generator,
-		}})
-		if err != nil {
-			return err
-		}
-		path := dir + "/overlay.json"
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/graphql")
-		command.Dir = cohere
-		output, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, output)
-		}
-		return nil
-	}) + "/oracle"
+	dir := t.TempDir()
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		cohere + "/internal/format/graphql/adamic_printer_test.go":   side,
+		cohere + "/internal/format/graphql/adamic_generator_test.go": generator,
+	}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := dir + "/overlay.json"
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	start := time.Now()
+	// No hand-listed build inputs: overlay Go builds remain private.
+	command := bounded(t, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/graphql")
+	command.Dir = cohere
+	if output, err := combinedOutput(command); err != nil {
+		t.Fatalf("Go GraphQL printer oracle: %v\n%s", err, output)
+	}
+	t.Logf("build Go GraphQL printer oracle cold wall %.3fs (overlay, uncached)", time.Since(start).Seconds())
+	return dir + "/oracle"
 }
 
 type printerProducts struct{ source, backend, sanitized, release string }
 
 func preparePrinterProducts(t *testing.T, path string) printerProducts {
 	t.Helper()
-	var source string
 	loweredProduct := printerBuild(t, printerBuildInputs{
 		Name: "lowered GraphQL printer", Files: printerInputFiles(t, repository, filepath.Dir(filepath.Dir(filepath.Dir(path)))), Toolchain: runtime.Version(),
 	}, func(dir string) error {
 		program := lowered(t, path)
-		source = native.C(program)
+		source := native.C(program)
 		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
 			return err
 		}
 		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 	})
+	data, err := os.ReadFile(loweredProduct + "/port.c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := string(data)
+
 	clang := execute(t, nil, "clang", "--version")
 	if clang.exitCode != 0 {
 		t.Fatalf("clang version: %s", clang.stderr)

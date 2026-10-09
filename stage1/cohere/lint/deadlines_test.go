@@ -23,6 +23,7 @@ func guardExecutable(t *testing.T) string {
 
 // The shard adapter delegates its backend to this process so all backends use
 // the same CPU guard and independently diagnosed wall backstop as execute.
+// Not parallel: ADAMIC_LINT_GUARD_BACKEND is unset in the process-wide environment.
 func TestCompilerGuardBackend(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_GUARD_BACKEND") != "1" {
 		return
@@ -48,6 +49,7 @@ func TestCompilerGuardBackend(t *testing.T) {
 }
 
 func TestChildCPUHangGuard(t *testing.T) {
+	t.Parallel()
 	loop := filepath.Join(t.TempDir(), "planted-endless-loop.js")
 	if err := os.WriteFile(loop, []byte("for (;;) {}"), 0644); err != nil {
 		t.Fatal(err)
@@ -62,6 +64,7 @@ func TestChildCPUHangGuard(t *testing.T) {
 }
 
 func TestChildWallBackstop(t *testing.T) {
+	t.Parallel()
 	command := exec.Command("node", "-e", "setTimeout(()=>{},100000)")
 	started := time.Now()
 	err := testguard.Run(command, time.Minute, 200*time.Millisecond)
@@ -73,20 +76,17 @@ func TestChildWallBackstop(t *testing.T) {
 
 // A silent child may wait longer than its entire CPU budget and still finish.
 // The full compiler comparison additionally exercises real shards under burners.
-// The budget sits well above the child's own CPU (two 200 ms spins plus Node's
-// startup, which a loaded gate box can push past a second), and the wait well
-// above the budget, so only a guard that counts wall time instead of CPU fails.
 func TestChildCPUWaitGuard(t *testing.T) {
-	const budget = 3 * time.Second
-	command := exec.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},3500);`)
+	t.Parallel()
+	command := exec.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);`)
 	started := time.Now()
-	if err := testguard.Run(command, budget, testguard.Ceiling); err != nil {
+	if err := testguard.Run(command, time.Second, testguard.Ceiling); err != nil {
 		t.Fatal(err)
 	}
 	wall := time.Since(started)
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
-	if wall <= budget || cpu >= budget {
-		t.Fatalf("silent child: wall %s CPU %s, budget %s", wall, cpu, budget)
+	if wall <= time.Second || cpu >= time.Second {
+		t.Fatalf("silent child: wall %s CPU %s", wall, cpu)
 	}
-	t.Logf("silent healthy child survived: wall %s CPU %s, budget %s", wall, cpu, budget)
+	t.Logf("silent healthy child survived: wall %s CPU %s, budget 1s", wall, cpu)
 }

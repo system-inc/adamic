@@ -290,6 +290,7 @@ func TestRecordReadMutants(t *testing.T) {
 
 // Opt in to observations: timing has no pass threshold on a shared worker. Each of five fresh
 // process pairs executes identical operations and consumes the result; best per operation is logged.
+// Not parallel: measures native and Node process timings, requiring exclusive execution.
 func TestRecordBenchmark(t *testing.T) {
 	if os.Getenv("ADAMIC_RECORD_BENCH") != "1" {
 		t.Skip("set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons")

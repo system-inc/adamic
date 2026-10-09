@@ -1,51 +1,42 @@
 package tsprinter
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 func expressionCorpus(t *testing.T, processPlan ...bool) (string, string, string) {
 	t.Helper()
-	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
 	files := printerCorpusFiles(t)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
-	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-		t.Fatal(err)
-	}
+	private := t.TempDir()
 	side, _ := filepath.Abs("testdata/expressions_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": side}})
-	path := directory + "/overlay.json"
+	path := private + "/overlay.json"
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracle := expressionBuild(t, printerBuildInputs{Name: "Go expression oracle", Files: append([]string{side}, expressionInputFiles(t, root+"/cohere", root+"/go.mod", root+"/go.work")...), Flags: []string{"-overlay=" + path}, Toolchain: runtime.Version()}, func(dir string) error {
-		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/javascript")
-		command.Dir = root + "/cohere"
-		data, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, data)
-		}
-		return nil
-	})
-	command := bounded(t, oracle+"/oracle", "-test.v", "-test.run=^TestAdamicExpressionCorpus$", "-test.count=1", "-test.timeout=0")
+	start := time.Now()
+	// Go builds stay private until the GoBuild API covers this test overlay.
+	command := bounded(t, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+private+"/oracle", "-overlay="+path, "./internal/format/javascript")
 	command.Dir = root + "/cohere"
-	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json")
 	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go expression corpus %v\n%s", err, output)
-	} else {
-		t.Log(string(output))
+		t.Fatalf("Go expression oracle: %v\n%s", err, output)
 	}
+	t.Logf("build Go expression oracle cold wall %.3fs (overlay, uncached)", time.Since(start).Seconds())
+	directory := tsPrinterOracleOutputs(t, root, files, gaps, "expressions", private+"/oracle")
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
 		t.Fatal(err)
@@ -89,15 +80,20 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	if clang.exitCode != 0 {
 		t.Fatalf("clang version: %s", clang.stderr)
 	}
-	var source string
 	loweredProduct := expressionBuild(t, printerBuildInputs{Name: "lowered expression program", Files: expressionInputFiles(t, repository), Toolchain: "Adamic " + runtime.Version()}, func(dir string) error {
 		program := lowered(t, port)
-		source = native.C(program)
+		source := native.C(program)
 		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
 			return err
 		}
 		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 	})
+	data, err := os.ReadFile(loweredProduct + "/port.c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := string(data)
+
 	sanitized := expressionBuild(t, printerBuildInputs{Name: "sanitized expression binary", Files: append([]string{loweredProduct + "/port.c"}, expressionInputFiles(t, filepath.Join(repository, "internal/native"))...), Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: string(clang.stdout)}, func(dir string) error {
 		return native.Build(source, dir+"/port", native.Options{Sanitize: true})
 	}) + "/port"
@@ -194,8 +190,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	}
 }
 
-// No package cache: each product is built once per invocation, then shared.
-// Inputs sit beside the build callback for migration to internal/buildcache.
+// Inputs describe non-Go read-only shared products; Go builds stay separate.
 type printerBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -204,11 +199,28 @@ type printerBuildInputs struct {
 
 func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
-	dir := t.TempDir()
-	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("build %s cold wall %.3fs (toolchain %s, %d files, flags %q)", inputs.Name, time.Since(start).Seconds(), inputs.Toolchain, len(inputs.Files), inputs.Flags)
-	return dir
+	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	for _, file := range inputs.Files {
+		relative, err := filepath.Rel(root, file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			// Generated inputs live in a read-only product outside the repository.
+			// Its bytes, rather than the machine-specific cache path, identify it.
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
+		} else {
+			key.Files = append(key.Files, filepath.ToSlash(relative))
+		}
+	}
+	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return buildcache.Product(t, key, build)
 }

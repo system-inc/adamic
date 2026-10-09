@@ -31,22 +31,11 @@ func TestDeepGrammar(t *testing.T) {
 	list := manifest(t, deepGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	checkPort(t, main, []string{"--manifest", list}, want, false, false)
-	t.Logf("three 4096-operand cases, %d identical bytes in all builds", len(want))
-}
-func TestDeepMutants(t *testing.T) {
-	t.Parallel()
-	list := manifest(t, []string{"type T=(A); a+b+c; const t=tag`a${b}c`; a&&(b&&c);"})
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	for _, item := range []struct{ name, file, from, to string }{
-		{"binary-operator", "binaryConvert.ts", "node.set('operator', stringValue(operator));", "node.set('operator', stringValue('-'));"},
-		{"postorder-alias", "postprocess.ts", "node.set(key, childValue(completed.get(value.node) ?? value.node));", "node.set(key, childValue(value.node));"},
-		{"dump-property-order", "protocol.ts", "for(let index = node.properties.length - 1; index >= 0; index--)", "for(let index = 0; index < node.properties.length; index++)"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			t.Parallel()
-			main := mutantPort(t, item.file, item.from, item.to)
-			checkPort(t, main, []string{"--manifest", list}, want, true, false)
-		})
+	binary, script := build(t, main, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+		if diff := firstDifference(want, got); diff != "" {
+			t.Fatal(name + ": " + diff)
+		}
 	}
+	t.Logf("three 4096-operand cases, %d identical bytes in all builds", len(want))
 }

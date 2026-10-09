@@ -20,12 +20,58 @@ var interfaceOmitted = regexp.MustCompile(`maybeCarrier\([0-9]\)\.pick\(\)|maybe
 // makes checks and lowers. The interface's left-out optional argument stays out until it's asked for.
 func TestUndefinedNumbersShapes(t *testing.T) {
 	t.Parallel()
+	programs := map[uint64]string{}
+	for seed := uint64(1); seed <= 40; seed++ {
+		programs[seed] = GenerateWithout(seed, []string{"moves", "parallel"}).Source()
+	}
+
+	// The literal ranges are also the gate's independently selectable work units.
+	for _, seeds := range []struct {
+		name        string
+		first, last uint64
+	}{
+		{"vocabulary", 0, 0},
+		{"seeds-001-005", 1, 5},
+		{"seeds-006-010", 6, 10},
+		{"seeds-011-015", 11, 15},
+		{"seeds-016-020", 16, 20},
+		{"seeds-021-025", 21, 25},
+		{"seeds-026-030", 26, 30},
+		{"seeds-031-035", 31, 35},
+		{"seeds-036-040", 36, 40},
+	} {
+		t.Run(seeds.name, func(t *testing.T) {
+			t.Parallel()
+			if seeds.name == "vocabulary" {
+				checkUndefinedNumbersVocabulary(t, programs)
+				return
+			}
+			directory := t.TempDir()
+			for seed := seeds.first; seed <= seeds.last; seed++ {
+				source := programs[seed]
+				path := filepath.Join(directory, "program.a")
+				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				program, err := load.Load([]string{path})
+				if err != nil {
+					t.Errorf("seed %d: the checker refused it: %v", seed, err)
+					continue
+				}
+				if _, err := lower.Lower(context.Background(), program); err != nil {
+					t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
+				}
+			}
+		})
+	}
+}
+
+// Keep the aggregate vocabulary check separate from the gate's literal seed table.
+func checkUndefinedNumbersVocabulary(t *testing.T, programs map[uint64]string) {
 	shapes := map[string]bool{}
 	sources := map[string]bool{}
-	directory := t.TempDir()
 	for seed := uint64(1); seed <= 40; seed++ {
-		// Moves and parallel programs are refused by design some of the time; every program here must lower.
-		source := GenerateWithout(seed, []string{"moves", "parallel"}).Source()
+		source := programs[seed]
 		for _, line := range strings.Split(source, "\n") {
 			if !strings.HasPrefix(line, "console.log(`maybeValue") {
 				continue
@@ -39,18 +85,6 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 			if interfaceOmitted.MatchString(line) {
 				t.Errorf("seed %d left an argument out through an interface without the opt-in: %s", seed, line)
 			}
-		}
-		path := filepath.Join(directory, "program.a")
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			t.Errorf("seed %d: the checker refused it: %v", seed, err)
-			continue
-		}
-		if _, err := lower.Lower(context.Background(), program); err != nil {
-			t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
 		}
 	}
 	for _, shape := range (&generator{random: rand.New(rand.NewPCG(1, 2))}).maybeShapes() {

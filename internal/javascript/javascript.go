@@ -485,7 +485,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
+			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
@@ -493,7 +493,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			if statement.Uninitialized {
 				value = "undefined"
 			}
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), value, !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), value, !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, viewFieldRepresentation(statement.Value))
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -896,7 +896,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(e.program.CheckedFields) != 0 {
 			types := []string{}
 			for _, field := range expression.Fields {
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
 			}
 			parentTypes := ""
 			if spreadValue != "" {

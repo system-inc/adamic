@@ -26,7 +26,7 @@ struct adamic_region_block {
 #define ALIGN 16
 
 static size_t object_size(size_t count) {
-	size_t size = sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+	size_t size = adamic_object_size(count);
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
@@ -64,6 +64,7 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->tuple = false;
 	object->dynamic_shape = false;
 	object->dynamic_types = NULL;
 	for (size_t index = 0; index < shape->count; index++) { adamic_object_orders(object)[index] = index + 1; }

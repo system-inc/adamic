@@ -126,17 +126,20 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if l.nullSentinelType(proven) {
 				return ir.String, true
 			}
-			// Nullable match results still use NULL until their kind migrates.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// Other mixed nullable members use the boxed representation.
+			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
-						return 0, false
-					}
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+					continue
 				}
+				of, known := l.representation(member)
+				if !known {
+					return 0, false
+				}
+				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
+			}
+			if boxed {
+				return ir.Union, true
 			}
 		}
 		typed, other := false, false

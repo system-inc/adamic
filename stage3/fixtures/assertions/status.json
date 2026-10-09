@@ -138,7 +138,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/09_interface_kind.a:15:9: Adamic 0.1 refuses checked view read of field properties with unsupported array contract; prove or implement the array contract before reading this field"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/09_interface_kind.a:15:9: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"}
   },
   {
     "file": "10_union_kind.a",

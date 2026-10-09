@@ -59,6 +59,7 @@ func requireFailure(t *testing.T, directory, pin, root, pattern string, fragment
 // Every converted package exercises the same selection and named fault contract.
 // Only the initial fixture is committed; every planted fault stays in scratch.
 func TestConvertedPackageContracts(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, root, extension string }{
 		{"scanner", "stage1", ".ts"}, {"scanner/profile-runtime", "internal/native/runtime", ".c"}, {"typeaware", "src/compiler", ".ts"},
 		{"markdowninline", ".", ".md"}, {"yaml", ".github/workflows", ".yml"},
@@ -70,6 +71,7 @@ func TestConvertedPackageContracts(t *testing.T) {
 		{"selector", "internal/format/css", ".css"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			directory, pin, tracked := fixture(t, test.root, test.extension)
 			pattern := "*" + test.extension
 			roots, patterns := []string{test.root}, []string{pattern}
@@ -108,6 +110,7 @@ func TestConvertedPackageContracts(t *testing.T) {
 }
 
 func TestMissingAndEmptyRoots(t *testing.T) {
+	t.Parallel()
 	directory, pin, _ := fixture(t, "inputs", ".ts")
 	requireFailure(t, directory, "", "missing", "*.ts", "missing named root", "missing")
 	writeFile(t, filepath.Join(directory, "empty", "other.txt"), "other\n")
@@ -116,6 +119,7 @@ func TestMissingAndEmptyRoots(t *testing.T) {
 }
 
 func TestSparseCheckoutCannotShrinkCorpus(t *testing.T) {
+	t.Parallel()
 	directory, _, tracked := fixture(t, "tests/format/css", ".css")
 	// A second file remains available, so omitting the missing-file guard would
 	// silently shrink a nonempty corpus rather than hit the empty-root guard.
@@ -139,6 +143,7 @@ func TestSparseCheckoutCannotShrinkCorpus(t *testing.T) {
 	requireFailure(t, directory, pin, "tests/format/css", "*.css", "sparse-checkout", filepath.ToSlash(tracked))
 }
 
+// Not parallel: t.Setenv changes the process-wide PATH environment variable.
 func TestDeterministicRootsPatternsAndMissingGit(t *testing.T) {
 	directory, _, _ := fixture(t, "inputs", ".ts")
 	writeFile(t, filepath.Join(directory, "inputs", "z.TS"), "z\n")
@@ -155,6 +160,7 @@ func TestDeterministicRootsPatternsAndMissingGit(t *testing.T) {
 }
 
 func TestProvisionedPrettierFixtures(t *testing.T) {
+	t.Parallel()
 	checkout := os.Getenv("ADAMIC_CSS_FIXTURES")
 	if checkout == "" {
 		t.Skip("set ADAMIC_CSS_FIXTURES to the pinned Prettier fixture checkout (#xq2ecw6)")

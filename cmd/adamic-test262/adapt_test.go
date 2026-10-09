@@ -6,6 +6,7 @@ import (
 )
 
 func TestAdaptVarToLet(t *testing.T) {
+	t.Parallel()
 	cases := []struct {
 		name  string
 		src   string
@@ -103,6 +104,7 @@ func TestAdaptVarToLet(t *testing.T) {
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			got := adaptSource(test.src)
 			if got.Source != test.want {
 				t.Fatalf("source\n got %q\nwant %q", got.Source, test.want)
@@ -115,6 +117,7 @@ func TestAdaptVarToLet(t *testing.T) {
 }
 
 func TestAdaptCallbackParam(t *testing.T) {
+	t.Parallel()
 	src := "function callbackfn(val, idx, obj) {\n  return val;\n}\nvar arr = [1, 2, 3];\narr.forEach(callbackfn);\n"
 	got := adaptSource(src)
 	if !strings.Contains(got.Source, "function callbackfn(val: number, idx: number, obj: number[])") {
@@ -147,6 +150,7 @@ func TestAdaptCallbackParam(t *testing.T) {
 }
 
 func TestAdaptStrictEq(t *testing.T) {
+	t.Parallel()
 	got := adaptSource("var value = 1;\nif (value == 1) {}\nif (typeof value == \"number\") {}\nif (value != 2) {}\n")
 	if !strings.Contains(got.Source, "value === 1") || !strings.Contains(got.Source, "typeof value === \"number\"") || !strings.Contains(got.Source, "value !== 2") {
 		t.Fatalf("missing strict ops:\n%s", got.Source)
@@ -166,6 +170,7 @@ func TestAdaptStrictEq(t *testing.T) {
 }
 
 func TestAdaptThrowError(t *testing.T) {
+	t.Parallel()
 	got := adaptSource("if (false) { throw new Test262Error(\"nope\"); }\n")
 	if !strings.Contains(got.Source, "throw new Error(\"nope\")") {
 		t.Fatalf("throw not rewritten:\n%s", got.Source)
@@ -180,6 +185,7 @@ func TestAdaptThrowError(t *testing.T) {
 }
 
 func TestAdaptLeavesCheckoutText(t *testing.T) {
+	t.Parallel()
 	// The rewrite is a pure function of the source. The runner never writes it back; this locks
 	// that adaptSource is the whole mechanism and a confused file is returned untouched.
 	src := "class Box { value: number; }\n"
@@ -190,6 +196,7 @@ func TestAdaptLeavesCheckoutText(t *testing.T) {
 }
 
 func TestClassifyAdapt(t *testing.T) {
+	t.Parallel()
 	source := "/*---\ndescription: x\n---*/\nvar value = 1;\nassert.sameValue(value == 1, true);\n"
 	got := classify("t.js", source, true)
 	if got.Skip != "" {
@@ -208,6 +215,7 @@ func TestClassifyAdapt(t *testing.T) {
 }
 
 func TestCrashPath(t *testing.T) {
+	t.Parallel()
 	got := withCrashPath("built-ins/Array/prototype/sort/x.js", "clang: no newline at end of file")
 	want := "built-ins/Array/prototype/sort/x.js: clang: no newline at end of file"
 	if got != want {

@@ -5,20 +5,23 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
 )
 
 // Ask Go itself which tests ran. A regex-only check would miss Go's slash splitting rules.
 func TestAnchoredSelectors(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	files := map[string]string{
 		"go.mod": "module selectorprobe\n\ngo 1.27.0\n",
 		"probe_test.go": `package selectorprobe
 import "testing"
 func TestParent(t *testing.T) {
+	t.Parallel()
  for _,name:=range []string{"internal/oracle/testdata/a.a", "internal/oracle/testdata/aXa", "internal/oracle/testdata/b+.a", "internal/load/testdata/0.1/compile/main.a", "internal/load/testdata/0X1/compile/extra.a"} {
-  t.Run(name,func(t *testing.T){})
+  t.Run(name,func(t *testing.T){t.Parallel()})
  }
 }
 func TestParentExtra(t *testing.T) {}
@@ -40,7 +43,7 @@ func TestOther(t *testing.T) {}
 		}
 		cmd := exec.Command("go", "test", "-count=1", "-json", "-run", pattern, ".")
 		cmd.Dir = directory
-		cmd.Env = append(os.Environ(), "GOWORK=off")
+		cmd.Env = append(os.Environ(), "GOWORK=off", "GOCACHE="+filepath.Join(directory, "go-cache"))
 		cmd.Stdout = f
 		cmd.Stderr = f
 		err = cmd.Run()
@@ -60,6 +63,7 @@ func TestOther(t *testing.T) {}
 			leaves = append(leaves, r.Test)
 		}
 	}
+	sort.Strings(leaves)
 	want := []string{"TestParent/internal/load/testdata/0.1/compile/main.a", "TestParent/internal/oracle/testdata/a.a", "TestParent/internal/oracle/testdata/b+.a"}
 	if !reflect.DeepEqual(leaves, want) {
 		t.Fatalf("Go executed %v, want exactly %v", leaves, want)
@@ -67,6 +71,7 @@ func TestOther(t *testing.T) {}
 }
 
 func TestCoverageRejectsOverlapAndUnplannedTests(t *testing.T) {
+	t.Parallel()
 	p := plan{Count: 2, Units: []unit{{Package: "p", Test: "TestParent/one", Shard: 0}, {Package: "p", Test: "TestParent/two", Shard: 1}, {Package: "p", Test: "TestWhole", Shard: 0}}}
 	produced := map[string]bool{}
 	seen := map[string]int{}
@@ -99,6 +104,7 @@ func TestCoverageRejectsOverlapAndUnplannedTests(t *testing.T) {
 }
 
 func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "test.jsonl")
 	log := `{"Action":"output","Package":"p","Test":"TestSkip","Output":"    probe_test.go:7: needs external corpus\n"}
 {"Action":"skip","Package":"p","Test":"TestSkip","Elapsed":0.1}

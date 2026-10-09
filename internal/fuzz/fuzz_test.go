@@ -28,10 +28,10 @@ func TestOneSeedOneProgram(t *testing.T) {
 // Every program the generator makes must be Adamic that stage 0 lowers, except a parallel refusal,
 // which must be refused with a message that names the path. One the checker refuses for any other
 // reason is the generator's fault, and one stage 0 can't lower tests nothing.
-func TestGeneratedProgramsCheckAndLower(t *testing.T) {
-	t.Parallel()
+func checkGeneratedPrograms(t *testing.T, first, last uint64) {
+	t.Helper()
 	directory := t.TempDir()
-	for seed := uint64(1); seed <= 60; seed++ {
+	for seed := first; seed <= last; seed++ {
 		path := filepath.Join(directory, "program.a")
 		program := Generate(seed)
 		source := program.Source()
@@ -318,4 +318,64 @@ func TestOwnershipShapes(t *testing.T) {
 	if strings.Contains(without, "OwnFamilyBox") || strings.Contains(without, "OwnMarked") || strings.Contains(without, "ownGlobal") {
 		t.Fatal("leaving ownership out still wrote a scene")
 	}
+}
+
+func TestGeneratedProgramsCheckAndLower001(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 1, 5)
+}
+
+func TestGeneratedProgramsCheckAndLower006(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 6, 10)
+}
+
+func TestGeneratedProgramsCheckAndLower011(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 11, 15)
+}
+
+func TestGeneratedProgramsCheckAndLower016(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 16, 20)
+}
+
+func TestGeneratedProgramsCheckAndLower021(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 21, 25)
+}
+
+func TestGeneratedProgramsCheckAndLower026(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 26, 30)
+}
+
+func TestGeneratedProgramsCheckAndLower031(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 31, 35)
+}
+
+func TestGeneratedProgramsCheckAndLower036(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 36, 40)
+}
+
+func TestGeneratedProgramsCheckAndLower041(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 41, 45)
+}
+
+func TestGeneratedProgramsCheckAndLower046(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 46, 50)
+}
+
+func TestGeneratedProgramsCheckAndLower051(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 51, 55)
+}
+
+func TestGeneratedProgramsCheckAndLower056(t *testing.T) {
+	t.Parallel()
+	checkGeneratedPrograms(t, 56, 60)
 }

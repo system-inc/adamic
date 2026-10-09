@@ -32,13 +32,17 @@ func beginFreshUnit(t *testing.T) {
 func TestFreshCorpusUnitsCoverEveryProgram(t *testing.T) {
 	t.Parallel()
 	expected := freshPrograms(t)
-	if len(freshCorpusPaths) != len(expected) || len(freshCorpusTests) != 1 || len(freshCorpusTests[0]) != len(expected) {
+	if len(freshCorpusTests) != 1 || len(freshCorpusTests[0]) != len(freshCorpusPaths) {
 		t.Fatalf("corpus count: %d paths, %d expected, %d families", len(freshCorpusPaths), len(expected), len(freshCorpusTests))
+	}
+	live := map[string]bool{}
+	for _, path := range expected {
+		live[filepath.ToSlash(path)] = true
 	}
 	seen := map[string]bool{}
 	for index, path := range freshCorpusPaths {
-		if path != filepath.ToSlash(expected[index]) || seen[path] {
-			t.Fatalf("corpus coverage at %d: %q, want unique %q", index, path, expected[index])
+		if !live[path] || seen[path] {
+			t.Fatalf("corpus coverage at %d: %q is missing or duplicated", index, path)
 		}
 		seen[path] = true
 		var label strings.Builder
@@ -57,4 +61,26 @@ func TestFreshCorpusUnitsCoverEveryProgram(t *testing.T) {
 		}
 	}
 	t.Logf("%d programs, %d selectable write-proof units", len(expected), len(freshCorpusTests[0]))
+}
+
+// A long remainder is the signal to regenerate the selectable corpus units.
+// Until then it keeps new programs covered without requiring regeneration.
+func TestFreshCorpusRemainder(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	generated := map[string]bool{}
+	for _, path := range freshCorpusPaths {
+		generated[path] = true
+	}
+	count := 0
+	for _, path := range freshPrograms(t) {
+		if generated[filepath.ToSlash(path)] {
+			continue
+		}
+		count++
+		t.Run(filepath.ToSlash(path), func(t *testing.T) {
+			checkFreshProgram(t, path)
+		})
+	}
+	t.Logf("remainder ran %d programs", count)
 }
