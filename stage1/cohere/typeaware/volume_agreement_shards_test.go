@@ -303,8 +303,16 @@ func volumeAgreementFetch(t *testing.T, name string) string {
 }
 func volumeAgreementManifest(h *volumeGuardHarness) string {
 	var paths []string
-	for i, source := range typeSymbolCases() {
-		paths = append(paths, h.write(fmt.Sprintf("control-%03d.ts", i), source))
+	cases := typeSymbolCases()
+	for i, source := range cases {
+		name := fmt.Sprintf("control-%03d.ts", i)
+		if i == len(cases)-2 {
+			name = "native-globals.d.ts"
+		}
+		if i == len(cases)-1 {
+			name = "native-console.ts"
+		}
+		paths = append(paths, h.write(name, source))
 	}
 	return h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 }
