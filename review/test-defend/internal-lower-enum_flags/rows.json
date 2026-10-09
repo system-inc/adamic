@@ -1,0 +1,46 @@
+[
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNumericEnumLiteralPromises",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/enums.go:153",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/enums.go:153",
+        "change": "return early for a member initialized from a different enum",
+        "rows_failed": [
+          "TestFlagEnumAliasBoundaries"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enum/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; enum_flags_test.go:143: JavaScript backend stdout = \"1\\n1/A\\n\", source Node = \"1\\n1/Alias\\n\"",
+    "passed_rows_file": "D1-passed-rows.json",
+    "bounded": false,
+    "uniqueness_scope": "executed default-package rows; skipped opt-in behavior is unknown"
+  },
+  {
+    "test": "TestNumericEnumLiteralPromises",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestFlagEnumAliasBoundaries",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/enums.go:366",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/enums.go:366",
+        "change": "off-by-one object-union bound",
+        "rows_failed": [
+          "TestNumericEnumLiteralPromises"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enum/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; enums_open_test.go:108: want literal-promise refusal, got <nil>",
+    "passed_rows_file": "D2-passed-rows.json",
+    "bounded": false,
+    "uniqueness_scope": "executed default-package rows; skipped opt-in behavior is unknown"
+  }
+]

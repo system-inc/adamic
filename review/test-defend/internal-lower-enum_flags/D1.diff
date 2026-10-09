@@ -1,0 +1,16 @@
+diff --git a/internal/lower/enums.go b/internal/lower/enums.go
+index d1cf5872..7bb559fc 100644
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -151,6 +151,11 @@ func (l *lowering) enumObject(node *ast.Node) *ast.Node {
+ }
+ 
+ func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {
++	if initializer := member.AsEnumMember().Initializer; initializer != nil {
++		if origin := l.enumMember(initializer); origin != nil && origin.Parent != member.Parent {
++			return ir.NumberConstant{Value: 0}, nil
++		}
++	}
+ 	constant := l.checker.GetConstantValue(member)
+ 	if constant != nil && reflect.TypeOf(constant).Kind() == reflect.Float64 {
+ 		value := reflect.ValueOf(constant).Float()

@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/enums.go:153",
+    "change": "return early for a member initialized from a different enum",
+    "before": "func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {",
+    "after": "func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {\n\tif initializer := member.AsEnumMember().Initializer; initializer != nil {\n\t\tif origin := l.enumMember(initializer); origin != nil && origin.Parent != member.Parent {\n\t\t\treturn ir.NumberConstant{Value: 0}, nil\n\t\t}\n\t}"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/enums.go:366",
+    "change": "off-by-one object-union bound",
+    "before": "if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0",
+    "after": "if objectMembers > 2 && declared.Flags()&checker.TypeFlagsUnion != 0"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/enums.go b/internal/lower/enums.go
+index d1cf5872..58eaf86b 100644
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -363,7 +363,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
+ 					}
+ 				}
+ 			}
+-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
++			if objectMembers > 2 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+ 				for _, member := range declared.Types() {
+ 					for _, field := range l.checker.GetPropertiesOfType(member) {
+ 						tag := l.checker.GetTypeOfSymbol(field)

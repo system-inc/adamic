@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -32,7 +32,7 @@
+ 	}
+ 	if l.numericEnum(l.enumIdentity(to)) {
+ 		if !l.openNumericEnumType(to) {
+-			return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)
++			return true
+ 		}
+ 		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
+ 	}
