@@ -15,6 +15,12 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if l.optionalStringViewType(target) {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewScalar, Of: ir.String, Name: l.checker.TypeToString(target), Undefined: true, Allowed: l.viewContractLiterals(target)})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
 	family := l.unsupportedViewFamily(target)
 	if l.callableViewContract(target) {
 		family = "callable"

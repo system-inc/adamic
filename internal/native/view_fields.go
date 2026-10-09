@@ -9,6 +9,12 @@ import (
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
 func (e *emitter) viewField(property ir.Property) string {
+	if property.Optional && !property.Absent && (property.Of == ir.Number || property.Of == ir.String) && !property.Method {
+		return e.optionalReceiverViewField(property)
+	}
+	if property.Of == ir.String && (property.Absent || e.viewStringUndefined(property)) && !property.Optional && !property.Method {
+		return e.optionalStringViewField(property)
+	}
 	object := e.value(property.Object)
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}

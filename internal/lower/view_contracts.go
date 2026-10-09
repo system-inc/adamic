@@ -68,7 +68,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 
 	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
-			child, err := build(l.checker.GetTypeOfSymbol(property))
+			child, err := build(l.checker.GetNonMissingTypeOfSymbol(property))
 			if err != nil {
 				return 0, err
 			}

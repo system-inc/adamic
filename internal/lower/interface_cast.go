@@ -66,7 +66,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field)) {
+				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && ((field.Flags&ast.SymbolFlagsOptional != 0 && !l.optionalViewAlias(part)) || (access.QuestionDotToken != nil && !l.optionalReceiverViewAlias(part)) || accessorSymbol(field)) {
 					refused = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 				}
 			}
@@ -279,6 +279,9 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewLiterals(member)
 			if len(values) == 0 {
 				return nil
@@ -388,7 +391,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 				field := l.checker.GetSymbolAtLocation(part.Name())
 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || (field.Flags&ast.SymbolFlagsOptional != 0 && !l.optionalViewAlias(part)) || (access.QuestionDotToken != nil && !l.optionalReceiverViewAlias(part)) || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}

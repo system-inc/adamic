@@ -16,6 +16,10 @@ var predicateKindFixtures = []struct{ name, stdout string }{
 	{"alias", "name\nother\n"},
 	{"optional", "absent\npresent\nother\n"},
 	{"fields", "undefined\n"},
+	{"optional_read", "absent:missing\npresent:value\nother\n"},
+	{"optional_alias", "missing:false:missing\nundefined:true:missing\nvalue:true:payload\n"},
+	{"optional_wrong", "undefined:missing\n"},
+	{"optional_receiver", "0\n80\nvalue\n"},
 }
 
 func predicateKindInput(t *testing.T, name string, checked bool) string {
@@ -69,6 +73,9 @@ func TestPredicateKindProofOracle(t *testing.T) {
 					if probe.name == "fields" {
 						want = run{stderr: []byte("adamic: panic: field read failed: node.escapedText is not initialized; expected string, found missing\n"), exitCode: 70}
 					}
+					if probe.name == "optional_wrong" {
+						want = run{stderr: []byte("adamic: panic: field read failed: node.text is not a string; expected string, found nullish\n"), exitCode: 70}
+					}
 					sanitized, binary := nativelyUncached(t, program)
 					for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 						if difference := disagreement(want, got); difference != "" {
@@ -87,7 +94,7 @@ func TestPredicateKindProofOracle(t *testing.T) {
 							t.Fatal(report)
 						}
 					}
-					if !checked && probe.name != "fields" {
+					if !checked && probe.name != "fields" && probe.name != "optional_wrong" {
 						changes := 0
 						for i := range program.Functions {
 							if program.Functions[i].Name == "isIdentifier" {
@@ -154,21 +161,6 @@ func predicateKindCountRows(t *testing.T) []string {
 	return rows
 }
 
-func TestPredicateKindOptionalReadPending(t *testing.T) {
-	witness := predicateKindInput(t, "optional_read", false)
-	node := onNode(t, witness)
-	if difference := disagreement(run{stdout: []byte("absent:missing\npresent:value\nother\n")}, node); difference != "" {
-		t.Fatal(difference)
-	}
-	for _, checked := range []bool{false, true} {
-		_, err := lowered(t, predicateKindInput(t, "optional_read", checked))
-		if err == nil || !strings.Contains(err.Error(), "a checked field alias requiring an optional, accessor, or representation conversion") {
-			t.Fatalf("want pending optional field read, got %v", err)
-		}
-	}
-	t.Skip("pending: optional field alias lowering on the selected train; only source Node runs")
-}
-
 func TestPredicateKindCountsAreRecorded(t *testing.T) {
 	rows := predicateKindCountRows(t)
 	recorded, err := os.ReadFile(countsPath)
@@ -179,5 +171,35 @@ func TestPredicateKindCountsAreRecorded(t *testing.T) {
 		if !strings.Contains(string(recorded), row+"\n") {
 			t.Fatalf("unrecorded kind proof row: %s", row)
 		}
+	}
+}
+
+// A payload-based presence mutant collapses present-undefined into missing.
+func TestPredicateOptionalAliasPresenceMutant(t *testing.T) {
+	path := predicateKindInput(t, "optional_alias", false)
+	node := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	for i := range program.Functions {
+		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(n any) any {
+			if call, ok := n.(ir.HasProperty); ok && call.Name == "text" {
+				changed++
+				return ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: ir.Property{Object: ir.Narrow{Value: call.Object, To: ir.Object}, Name: "text", Of: ir.String, Absent: true}}}
+			}
+			return n
+		})
+	}
+	if changed != 1 {
+		t.Fatalf("changed %d presence queries", changed)
+	}
+	got, _ := nativelyUncached(t, program)
+	for _, result := range []run{got, onJavaScriptBackend(t, program)} {
+		if disagreement(node, result) == "" {
+			t.Fatal("payload-based presence mutant escaped Node")
+		}
+		t.Logf("presence mutant caught: stdout=%q stderr=%q exit=%d", result.stdout, result.stderr, result.exitCode)
 	}
 }

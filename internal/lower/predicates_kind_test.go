@@ -45,3 +45,15 @@ func TestPredicateKindOptionalTargetRetainsFields(t *testing.T) {
 		t.Fatal("optional target field was erased rather than retained in the checked view")
 	}
 }
+
+func TestPredicateOptionalAliasesKeepUnsupportedCases(t *testing.T) {
+	for _, source := range []string{
+		`interface N {readonly kind:number}; interface T extends N {readonly kind:1;readonly text?:number}; function isT(x:N):x is T{return x.kind===1};function read(x:T){return x.text}`,
+		`interface N {readonly kind:number}; interface T extends N {readonly kind:1;readonly text?:string}; function isT(x:N):x is T{return x.kind===1};function read(x:T|undefined){return x?.text}`,
+	} {
+		_, err := lowerSource(t, source)
+		if err == nil || !strings.Contains(err.Error(), "a checked field alias requiring an optional, accessor, or representation conversion") {
+			t.Fatalf("unsupported alias admitted: %v", err)
+		}
+	}
+}

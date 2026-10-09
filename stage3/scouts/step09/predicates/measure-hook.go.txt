@@ -115,6 +115,7 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 		}
 		file.AsNode().ForEachChild(visit)
 	}
+	if os.Getenv("HATCH_BODY_ONLY") == "1" { return rows }
 	callsMeasured := 0
 	for _, file := range files {
 		var visit ast.Visitor
