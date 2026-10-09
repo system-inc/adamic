@@ -1,0 +1,66 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/lower.go",
+    "line": 85,
+    "old": "\tcounters(lowering.result)",
+    "new": "",
+    "kind": "drop statement"
+  },
+  {
+    "id": "M2",
+    "file": "internal/javascript/javascript.go",
+    "line": 413,
+    "old": "\t\te.line(\"debugger;\")",
+    "new": "",
+    "kind": "drop statement"
+  },
+  {
+    "id": "M3",
+    "file": "internal/javascript/javascript.go",
+    "line": 948,
+    "old": "case ir.ObjectCall:\n\t\tif expression.Checked {",
+    "new": "case ir.ObjectCall:\n\t\tif false {",
+    "kind": "flip condition to false"
+  },
+  {
+    "id": "M4",
+    "file": "internal/javascript/javascript.go",
+    "line": 955,
+    "old": "return \"Boolean(\" + e.values(expression.Arguments) + \")\"",
+    "new": "return \"!Boolean(\" + e.values(expression.Arguments) + \")\"",
+    "kind": "change emitted operator constant"
+  },
+  {
+    "id": "M5",
+    "file": "internal/lower/namespaces.go",
+    "line": 245,
+    "old": "func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {",
+    "new": "func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {\n\tif len(modules) > 0 { return nil }",
+    "kind": "return early"
+  },
+  {
+    "id": "M6",
+    "file": "internal/javascript/javascript.go",
+    "line": 752,
+    "old": "if expression.Checked {\n\t\t\treturn fmt.Sprintf(\"(%s ? %s : adamicUnready(%s))\"",
+    "new": "if false {\n\t\t\treturn fmt.Sprintf(\"(%s ? %s : adamicUnready(%s))\"",
+    "kind": "flip condition to false"
+  },
+  {
+    "id": "M7",
+    "file": "internal/lower/diagnostics.go",
+    "line": 40,
+    "old": "return \"an \" + name",
+    "new": "return \"a \" + name",
+    "kind": "change article constant"
+  },
+  {
+    "id": "M8",
+    "file": "internal/lower/lower.go",
+    "line": 84,
+    "old": "\tborrow(lowering.result)",
+    "new": "",
+    "kind": "drop statement"
+  }
+]

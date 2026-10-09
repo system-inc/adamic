@@ -1,0 +1,150 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..8894cce3 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -22,6 +22,9 @@ import (
+ // JavaScript is a program as one JavaScript module, importing panic and the functions that read and
+ // write files from 'adamic'.
+ func JavaScript(program *ir.Program) string {
++	if auditMutant("P3") {
++		return ""
++	}
+ 	return JavaScriptWith(program, Options{})
+ }
+ 
+@@ -410,7 +413,9 @@ func (e *emitter) statement(at *ir.Statement) {
+ 	}
+ 	switch statement := (*at).(type) {
+ 	case ir.Debugger:
+-		e.line("debugger;")
++		if !auditMutant("M2") {
++			e.line("debugger;")
++		}
+ 	case ir.WriteLine:
+ 		stream := "log"
+ 		if statement.Stream == ir.Stderr {
+@@ -749,7 +754,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
+ 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
+ 		}
+-		if expression.Checked {
++		if expression.Checked && !auditMutant("M6") {
+ 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+ 		}
+ 		return e.variable(expression.Local)
+@@ -946,12 +951,15 @@ func (e *emitter) value(expression ir.Expression) string {
+ 	case ir.NodeBufferCall:
+ 		return e.nodeBufferCall(expression)
+ 	case ir.ObjectCall:
+-		if expression.Checked {
++		if expression.Checked && !auditMutant("M3") {
+ 			return e.checkedObjectEnumeration(expression)
+ 		}
+ 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+ 	case ir.NumberCall:
+ 		if expression.Function == "toBoolean" {
++			if auditMutant("M4") {
++				return "!Boolean(" + e.values(expression.Arguments) + ")"
++			}
+ 			return "Boolean(" + e.values(expression.Arguments) + ")"
+ 		}
+ 		if expression.Function == "prototypeHasOwnProperty" {
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..3f7de20a 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -37,6 +37,9 @@ func (l *lowering) notYet(node *ast.Node, what string) error {
+ func describe(node *ast.Node) string {
+ 	name := strings.TrimPrefix(node.Kind.String(), "Kind")
+ 	if strings.ContainsAny(name[:1], "AEIOU") {
++		if auditMutant("M7") {
++			return "a " + name
++		}
+ 		return "an " + name
+ 	}
+ 	return "a " + name
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..3e2d125b 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant("P1") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+@@ -81,8 +84,12 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+ 		return nil, err
+ 	}
+ 	readiness(lowering.result)
+-	borrow(lowering.result)
+-	counters(lowering.result)
++	if !auditMutant("M8") {
++		borrow(lowering.result)
++	}
++	if !auditMutant("M1") {
++		counters(lowering.result)
++	}
+ 	return lowering.result, nil
+ }
+ 
+diff --git a/internal/lower/namespaces.go b/internal/lower/namespaces.go
+index b34c6b8d..c805cdea 100644
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -243,6 +243,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
+ // Follow statically known callees before executing a module statement. An unresolved
+ // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
++	if auditMutant("M5") {
++		return nil
++	}
+ 	initialized := map[*ast.Node]bool{}
+ 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+ 	checkCall := func(target *ast.Node) error {
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..465f7ed2 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditMutant("P2") {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/oracle/conditions_test.go b/internal/oracle/conditions_test.go
+index 6378faf0..45fcd77f 100644
+--- a/internal/oracle/conditions_test.go
++++ b/internal/oracle/conditions_test.go
+@@ -101,6 +101,9 @@ func TestConditionNaNMutant(t *testing.T) {
+ 
+ // Check the independent historical row list as well as the executable reduction manifest.
+ func conditionLedgerDifference(source, stdout []byte) error {
++	if auditMutant("W2") {
++		return nil
++	}
+ 	root := filepath.Join(repository, "docs/verification/conditions")
+ 	original, err := os.ReadFile(filepath.Join(root, "ledger-sites.json"))
+ 	if err != nil {
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..4af4dc17 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,6 +714,9 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if auditMutant("W1") {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"

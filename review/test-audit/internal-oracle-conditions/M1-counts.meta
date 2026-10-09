@@ -1,0 +1,1 @@
+{"command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCountsAreRecorded$", "exit": 0, "wall": 54.0700641200001, "rows": ["^TestCountsAreRecorded$"]}

@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -952,7 +952,7 @@
+ 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+ 	case ir.NumberCall:
+ 		if expression.Function == "toBoolean" {
+-			return "Boolean(" + e.values(expression.Arguments) + ")"
++			return "!Boolean(" + e.values(expression.Arguments) + ")"
+ 		}
+ 		if expression.Function == "prototypeHasOwnProperty" {
+ 			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"

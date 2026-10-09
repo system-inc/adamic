@@ -1,0 +1,582 @@
+[
+  {
+    "test": "TestTypeScriptConditionsAgreeWithNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/conditions_test.go:25",
+    "seconds": 2.008,
+    "oracle": "Node source execution, exact stdout/stderr/exit against native and JavaScript; ledger coverage uses repository-authored manifests.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: conditions_test.go:55: stdout differs",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => conditions_test.go:55: stdout differs",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail",
+      "P3": "fail"
+    }
+  },
+  {
+    "test": "TestConditionNaNMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/conditions_test.go:67",
+    "seconds": 0.299,
+    "oracle": "Node source execution; witness requires both deliberately changed products to exit 0 and differ only in stdout.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: conditions_test.go:96: mutant was not caught only by stdout: oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x30, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x30, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestConditionNaNMutant|TestConditionLedgerNullMutant)$ => conditions_test.go:96: mutant was not caught only by stdout: oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x30, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x30, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x74, 0x72, 0x75, 0x65, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0x3a, 0x32, 0xa}, stderr:[]uint8{}, exitCode:0}"
+  },
+  {
+    "test": "TestConditionLedgerMissingSiteMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/conditions_test.go:174",
+    "seconds": 0.093,
+    "oracle": "Repository-authored historical ledger and coverage manifests; witness requires missing-site diagnostic substring.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: conditions_test.go:202: missing-site mutant escaped intended coverage check: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=W2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestConditionLedgerMissingSiteMutant$ => conditions_test.go:202: missing-site mutant escaped intended coverage check: <nil>"
+  },
+  {
+    "test": "TestConditionLedgerNullMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/conditions_test.go:207",
+    "seconds": 0.889,
+    "oracle": "Node source execution; witness requires both deliberately changed products to exit 0 and differ only in stdout.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: conditions_test.go:237: null-as-truthy mutant escaped stdout comparison: oracle.run{stdout:[]uint8{0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x30, 0x3a, 0x20, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x31, 0x3a, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x32, 0x3a, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x63, 0x6f,",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestConditionNaNMutant|TestConditionLedgerNullMutant)$ => conditions_test.go:237: null-as-truthy mutant escaped stdout comparison: oracle.run{stdout:[]uint8{0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x30, 0x3a, 0x20, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x31, 0x3a, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x74, 0x73, 0x3a, 0x36, 0x34, 0x32, 0x3a, 0x31, 0x33, 0x20, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x20, 0x32, 0x3a, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa, 0x73, 0x72, 0x63, 0x2f, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x2f, 0x63, 0x6f,"
+  },
+  {
+    "test": "TestLoopCountersAgreeWithNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/counters_test.go:22",
+    "seconds": 13.688,
+    "oracle": "Node source execution for stdout; hand-calculated integer eligibility checked in emitted C.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M1: counters_test.go:232: c333: kept in an integer false, want true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => counters_test.go:232: c333: kept in an integer false, want true",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail"
+    }
+  },
+  {
+    "test": "TestCountsAreRecorded",
+    "package": "internal/oracle",
+    "file": "internal/oracle/counts_test.go:138",
+    "seconds": 17.728,
+    "oracle": "Repository snapshot counts.md, measured by the counted native runtime; self-authored allocation/reference counts.",
+    "oracle_kind": "self",
+    "kills": [
+      "M8"
+    ],
+    "unique_kills": [
+      "M8"
+    ],
+    "last_proven_fail": "M8: counts_test.go:221: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M8 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M8 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCountsAreRecorded$ => counts_test.go:221: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail"
+    }
+  },
+  {
+    "test": "TestDebuggerNativeEmitsNothing",
+    "package": "internal/oracle",
+    "file": "internal/oracle/debugger_test.go:25",
+    "seconds": 0.098,
+    "oracle": "Self-authored generated-C equivalence and absence-of-traps checks, plus exactly one emitted JavaScript debugger statement.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: debugger_test.go:64: JavaScript kept 0 debugger statements, want 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => debugger_test.go:64: JavaScript kept 0 debugger statements, want 1",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "pass",
+      "P3": "fail"
+    }
+  },
+  {
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "package": "internal/oracle",
+    "file": "internal/oracle/element_access_boundaries_test.go:30",
+    "seconds": 0.358,
+    "oracle": "Node executes each source and must print witness; repository-authored exact NotYet/Refused labels.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M7"
+    ],
+    "unique_kills": [
+      "M7"
+    ],
+    "last_proven_fail": "M7: element_access_boundaries_test.go:56: expected explicit NotYet representation/read boundary, got /workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower a ElementAccessExpression yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M7 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M7 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => element_access_boundaries_test.go:56: expected explicit NotYet representation/read boundary, got /workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower a ElementAccessExpression yet",
+    "entry_probe_results": {
+      "P1": "fail"
+    }
+  },
+  {
+    "test": "TestEntriesAcceptance",
+    "package": "internal/oracle",
+    "file": "internal/oracle/entries_acceptance_test.go:29",
+    "seconds": 0.009,
+    "oracle": "Missing pinned acceptance corpus; intended Node comparison plus self-authored reflection and checked-failure contracts.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "clean discovery and all runs: SKIP, missing stage3/fixtures/entries/expectations.json"
+  },
+  {
+    "test": "TestEntriesProvenance",
+    "package": "internal/oracle",
+    "file": "internal/oracle/entries_provenance_test.go:20",
+    "seconds": 1.099,
+    "oracle": "Node exact output for successful programs; repository-authored exact exit 70 and panic messages for rejected enumeration, plus IR provenance checks.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: entries_provenance_test.go:51: exit codes differ: want oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x6c, 0x61, 0x74, 0x65, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEntriesRuntimeReadiness"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.374,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => entries_provenance_test.go:51: exit codes differ: want oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x6c, 0x61, 0x74, 0x65, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x62, 0x65, 0x66, 0x6f, 0x72, 0x65, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0xa, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail",
+      "P3": "fail"
+    },
+    "subsumption_basis_mutants": 1
+  },
+  {
+    "test": "TestEntriesRuntimeReadiness",
+    "package": "internal/oracle",
+    "file": "internal/oracle/entries_provenance_test.go:112",
+    "seconds": 0.374,
+    "oracle": "Repository-authored exact checked-readiness panic and exit 70; unchecked variant must match Node.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: entries_provenance_test.go:129: exit codes differ: want oracle.run{stdout:[]uint8(nil), stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x7a, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEntriesProvenance"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 1.099,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => entries_provenance_test.go:129: exit codes differ: want oracle.run{stdout:[]uint8(nil), stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x20, 0x65, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x6b, 0x65, 0x79, 0x20, 0x27, 0x7a, 0x27, 0x3a, 0x20, 0x61, 0x63, 0x74, 0x75, 0x61, 0x6c, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x2c, 0x20, 0x64, 0x65, 0x63, 0x6c, 0x61, 0x72, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0xa}, exitCode:70}, got oracle.run{stdout:[]uint8{0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}",
+    "entry_probe_results": {
+      "P2": "fail",
+      "P3": "fail"
+    },
+    "subsumption_basis_mutants": 1
+  },
+  {
+    "test": "TestEnumInitializationNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enum_initialization_reach_test.go:21",
+    "seconds": 0.866,
+    "oracle": "Node exact differential output for successful programs; Node TypeError substring for pending reads and exact repository-authored lowering refusal.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M5"
+    ],
+    "unique_kills": [
+      "M5"
+    ],
+    "last_proven_fail": "M5: enum_initialization_reach_test.go:63: lost reaching-call refusal: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M5 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M5 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => enum_initialization_reach_test.go:63: lost reaching-call refusal: <nil>",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail",
+      "P3": "fail"
+    }
+  },
+  {
+    "test": "TestEnumInitializationUnknownPinned",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enum_initialization_reach_test.go:69",
+    "seconds": 0.495,
+    "oracle": "Node must print before and report TypeError; native/JavaScript must match repository-authored exact ReferenceError panic and exit 70.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M6"
+    ],
+    "unique_kills": [
+      "M6"
+    ],
+    "last_proven_fail": "M6: enum_initialization_reach_test.go:90: stderr differs: {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 90 101 114 111 39 41 10] exitCode:70}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestConditionNaNMutant",
+      "TestConditionLedgerMissingSiteMutant",
+      "TestConditionLedgerNullMutant",
+      "TestLoopCountersAgreeWithNode",
+      "TestCountsAreRecorded",
+      "TestDebuggerNativeEmitsNothing",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesAcceptance",
+      "TestEntriesProvenance",
+      "TestEntriesRuntimeReadiness",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned"
+    ],
+    "evidence": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u059/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestTypeScriptConditionsAgreeWithNode|TestConditionNaNMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestLoopCountersAgreeWithNode|TestDebuggerNativeEmitsNothing|TestElementAccessCompilerAreaBoundaries|TestEntriesAcceptance|TestEntriesProvenance|TestEntriesRuntimeReadiness|TestEnumInitializationNode|TestEnumInitializationUnknownPinned)$ => enum_initialization_reach_test.go:90: stderr differs: {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 90 101 114 111 39 41 10] exitCode:70}",
+    "entry_probe_results": {
+      "P1": "fail",
+      "P2": "fail",
+      "P3": "fail"
+    }
+  }
+]

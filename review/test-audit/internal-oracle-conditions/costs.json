@@ -1,0 +1,478 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "setup": "warm env.sh works; npm ci reported 380ms",
+  "whole_baseline_binary_seconds": 90.093,
+  "slice_baseline_binary_seconds": 44.789,
+  "slice_coverage_binary_seconds": 50.85,
+  "counts_coverage_binary_seconds": 45.199,
+  "production_binary_seconds_sum": 767.726,
+  "standalone_vet_seconds_sum": 2.4506026420003764,
+  "build_limit": "native rebuild times were not separately instrumented; binary durations include lowering, native builds and execution",
+  "invocations": [
+    {
+      "run": "M1",
+      "wall_seconds": 45.96038594999936,
+      "binary_seconds": 43.776,
+      "exit": 1
+    },
+    {
+      "run": "M1-counts",
+      "wall_seconds": 54.0700641200001,
+      "binary_seconds": 52.22,
+      "exit": 0
+    },
+    {
+      "run": "M1-vet",
+      "wall_seconds": 0.6230786070000249,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M2",
+      "wall_seconds": 49.09723730699989,
+      "binary_seconds": 47.164,
+      "exit": 1
+    },
+    {
+      "run": "M2-counts",
+      "wall_seconds": 49.18654012499974,
+      "binary_seconds": 47.24,
+      "exit": 0
+    },
+    {
+      "run": "M2-vet",
+      "wall_seconds": 0.0916064010007176,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M3",
+      "wall_seconds": 49.90338350999991,
+      "binary_seconds": 47.689,
+      "exit": 1
+    },
+    {
+      "run": "M3-counts",
+      "wall_seconds": 50.93497168700014,
+      "binary_seconds": 48.899,
+      "exit": 0
+    },
+    {
+      "run": "M3-vet",
+      "wall_seconds": 0.08381763699981093,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M4",
+      "wall_seconds": 50.18973019800069,
+      "binary_seconds": 48.19,
+      "exit": 1
+    },
+    {
+      "run": "M4-counts",
+      "wall_seconds": 51.349414530000104,
+      "binary_seconds": 49.225,
+      "exit": 0
+    },
+    {
+      "run": "M4-vet",
+      "wall_seconds": 0.08650545899945428,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M5",
+      "wall_seconds": 50.28574917300011,
+      "binary_seconds": 48.264,
+      "exit": 1
+    },
+    {
+      "run": "M5-counts",
+      "wall_seconds": 51.00368101700042,
+      "binary_seconds": 49.066,
+      "exit": 0
+    },
+    {
+      "run": "M5-vet",
+      "wall_seconds": 0.4689601259997289,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M6",
+      "wall_seconds": 50.98276322400034,
+      "binary_seconds": 49.132,
+      "exit": 1
+    },
+    {
+      "run": "M6-counts",
+      "wall_seconds": 51.18147309899996,
+      "binary_seconds": 49.151,
+      "exit": 0
+    },
+    {
+      "run": "M6-vet",
+      "wall_seconds": 0.08036226800049917,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M7",
+      "wall_seconds": 49.71693865599991,
+      "binary_seconds": 47.866,
+      "exit": 1
+    },
+    {
+      "run": "M7-counts",
+      "wall_seconds": 49.58908076999978,
+      "binary_seconds": 47.695,
+      "exit": 0
+    },
+    {
+      "run": "M7-vet",
+      "wall_seconds": 0.5006023289997756,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "M8",
+      "wall_seconds": 49.31024391799929,
+      "binary_seconds": 47.219,
+      "exit": 0
+    },
+    {
+      "run": "M8-counts",
+      "wall_seconds": 46.954627806000644,
+      "binary_seconds": 44.93,
+      "exit": 1
+    },
+    {
+      "run": "M8-vet",
+      "wall_seconds": 0.5156698150003649,
+      "binary_seconds": null,
+      "exit": 0
+    },
+    {
+      "run": "P1-TestDebuggerNativeEmitsNothing",
+      "wall_seconds": 3.017678985999737,
+      "binary_seconds": 0.134,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestElementAccessCompilerAreaBoundaries",
+      "wall_seconds": 4.1666785220004385,
+      "binary_seconds": 0.992,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestEntriesProvenance",
+      "wall_seconds": 3.3111010120001083,
+      "binary_seconds": 0.477,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestEntriesRuntimeReadiness",
+      "wall_seconds": 3.61193464400003,
+      "binary_seconds": 0.936,
+      "exit": 0
+    },
+    {
+      "run": "P1-TestEnumInitializationNode",
+      "wall_seconds": 3.836430859999382,
+      "binary_seconds": 0.439,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestEnumInitializationUnknownPinned",
+      "wall_seconds": 3.6027304310000545,
+      "binary_seconds": 0.612,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestLoopCountersAgreeWithNode",
+      "wall_seconds": 3.335977542999899,
+      "binary_seconds": 0.226,
+      "exit": 1
+    },
+    {
+      "run": "P1-TestTypeScriptConditionsAgreeWithNode",
+      "wall_seconds": 2.484909128000254,
+      "binary_seconds": 0.372,
+      "exit": 1
+    },
+    {
+      "run": "P2",
+      "wall_seconds": 6.528759905999323,
+      "binary_seconds": 3.443,
+      "exit": 1
+    },
+    {
+      "run": "P2-TestCountsAreRecorded",
+      "wall_seconds": 30.220115070999782,
+      "binary_seconds": 28.12,
+      "exit": 1
+    },
+    {
+      "run": "P3",
+      "wall_seconds": 44.94455042399932,
+      "binary_seconds": 43.128,
+      "exit": 1
+    },
+    {
+      "run": "W1",
+      "wall_seconds": 2.7342775840006652,
+      "binary_seconds": 0.928,
+      "exit": 1
+    },
+    {
+      "run": "W2",
+      "wall_seconds": 2.0869058999996923,
+      "binary_seconds": 0.172,
+      "exit": 1
+    },
+    {
+      "run": "clean-switch",
+      "wall_seconds": 55.15415897300045,
+      "binary_seconds": 43.527,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerMissingSiteMutant-1",
+      "wall_seconds": 2.2243471010006033,
+      "binary_seconds": 0.207,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerMissingSiteMutant-2",
+      "wall_seconds": 2.10748977700041,
+      "binary_seconds": 0.09,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerMissingSiteMutant-3",
+      "wall_seconds": 2.0615342359997157,
+      "binary_seconds": 0.093,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerNullMutant-1",
+      "wall_seconds": 3.3158883969999806,
+      "binary_seconds": 1.055,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerNullMutant-2",
+      "wall_seconds": 2.8138686120000784,
+      "binary_seconds": 0.835,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionLedgerNullMutant-3",
+      "wall_seconds": 3.692564713000138,
+      "binary_seconds": 0.889,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionNaNMutant-1",
+      "wall_seconds": 2.4078577840000435,
+      "binary_seconds": 0.436,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionNaNMutant-2",
+      "wall_seconds": 2.473764995000238,
+      "binary_seconds": 0.299,
+      "exit": 0
+    },
+    {
+      "run": "time-TestConditionNaNMutant-3",
+      "wall_seconds": 2.400230093000573,
+      "binary_seconds": 0.272,
+      "exit": 0
+    },
+    {
+      "run": "time-TestCountsAreRecorded-1",
+      "wall_seconds": 67.78497742899981,
+      "binary_seconds": 65.7,
+      "exit": 0
+    },
+    {
+      "run": "time-TestCountsAreRecorded-2",
+      "wall_seconds": 19.67221989599966,
+      "binary_seconds": 17.728,
+      "exit": 0
+    },
+    {
+      "run": "time-TestCountsAreRecorded-3",
+      "wall_seconds": 18.32615627299947,
+      "binary_seconds": 16.374,
+      "exit": 0
+    },
+    {
+      "run": "time-TestDebuggerNativeEmitsNothing-1",
+      "wall_seconds": 2.1486765990002823,
+      "binary_seconds": 0.1,
+      "exit": 0
+    },
+    {
+      "run": "time-TestDebuggerNativeEmitsNothing-2",
+      "wall_seconds": 2.1607056640004885,
+      "binary_seconds": 0.098,
+      "exit": 0
+    },
+    {
+      "run": "time-TestDebuggerNativeEmitsNothing-3",
+      "wall_seconds": 2.0982100410001294,
+      "binary_seconds": 0.089,
+      "exit": 0
+    },
+    {
+      "run": "time-TestElementAccessCompilerAreaBoundaries-1",
+      "wall_seconds": 2.519538107000699,
+      "binary_seconds": 0.513,
+      "exit": 0
+    },
+    {
+      "run": "time-TestElementAccessCompilerAreaBoundaries-2",
+      "wall_seconds": 2.3457867759998408,
+      "binary_seconds": 0.358,
+      "exit": 0
+    },
+    {
+      "run": "time-TestElementAccessCompilerAreaBoundaries-3",
+      "wall_seconds": 2.3954429769992203,
+      "binary_seconds": 0.299,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesAcceptance-1",
+      "wall_seconds": 1.8777645350000967,
+      "binary_seconds": 0.008,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesAcceptance-2",
+      "wall_seconds": 2.016749452000113,
+      "binary_seconds": 0.009,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesAcceptance-3",
+      "wall_seconds": 1.9235672280001381,
+      "binary_seconds": 0.011,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesProvenance-1",
+      "wall_seconds": 3.472351503999562,
+      "binary_seconds": 1.562,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesProvenance-2",
+      "wall_seconds": 3.0782114240000737,
+      "binary_seconds": 1.066,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesProvenance-3",
+      "wall_seconds": 3.01166208199993,
+      "binary_seconds": 1.099,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesRuntimeReadiness-1",
+      "wall_seconds": 2.4473058800003855,
+      "binary_seconds": 0.514,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesRuntimeReadiness-2",
+      "wall_seconds": 2.2437451820005663,
+      "binary_seconds": 0.374,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEntriesRuntimeReadiness-3",
+      "wall_seconds": 2.122406315000262,
+      "binary_seconds": 0.373,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationNode-1",
+      "wall_seconds": 3.3388629289993332,
+      "binary_seconds": 1.49,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationNode-2",
+      "wall_seconds": 2.787406035999993,
+      "binary_seconds": 0.866,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationNode-3",
+      "wall_seconds": 2.610479085999941,
+      "binary_seconds": 0.751,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationUnknownPinned-1",
+      "wall_seconds": 2.3160778619994744,
+      "binary_seconds": 0.508,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationUnknownPinned-2",
+      "wall_seconds": 2.3597761540004285,
+      "binary_seconds": 0.451,
+      "exit": 0
+    },
+    {
+      "run": "time-TestEnumInitializationUnknownPinned-3",
+      "wall_seconds": 2.501577828000336,
+      "binary_seconds": 0.495,
+      "exit": 0
+    },
+    {
+      "run": "time-TestLoopCountersAgreeWithNode-1",
+      "wall_seconds": 54.1381286779997,
+      "binary_seconds": 49.719,
+      "exit": 0
+    },
+    {
+      "run": "time-TestLoopCountersAgreeWithNode-2",
+      "wall_seconds": 15.873447635000048,
+      "binary_seconds": 13.688,
+      "exit": 0
+    },
+    {
+      "run": "time-TestLoopCountersAgreeWithNode-3",
+      "wall_seconds": 15.38120319599966,
+      "binary_seconds": 13.228,
+      "exit": 0
+    },
+    {
+      "run": "time-TestTypeScriptConditionsAgreeWithNode-1",
+      "wall_seconds": 5.541919188000065,
+      "binary_seconds": 2.65,
+      "exit": 0
+    },
+    {
+      "run": "time-TestTypeScriptConditionsAgreeWithNode-2",
+      "wall_seconds": 4.051541924999583,
+      "binary_seconds": 1.765,
+      "exit": 0
+    },
+    {
+      "run": "time-TestTypeScriptConditionsAgreeWithNode-3",
+      "wall_seconds": 4.064626730999407,
+      "binary_seconds": 2.008,
+      "exit": 0
+    }
+  ],
+  "audit_baseline_start_utc": "2026-10-09T10:57:24Z",
+  "audit_evidence_finished_utc": "2026-10-09T11:23:54.793971+00:00"
+}

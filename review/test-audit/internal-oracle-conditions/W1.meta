@@ -1,0 +1,1 @@
+{"command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestConditionNaNMutant|TestConditionLedgerNullMutant)$", "exit": 1, "wall": 2.7342775840006652, "rows": ["^(TestConditionNaNMutant|TestConditionLedgerNullMutant)$"]}

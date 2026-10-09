@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -749,7 +749,7 @@
+ 			message := fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[expression.Local].Name, expression.Readiness)
+ 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
+ 		}
+-		if expression.Checked {
++		if false {
+ 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+ 		}
+ 		return e.variable(expression.Local)

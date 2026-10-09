@@ -1,0 +1,1 @@
+{"command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestElementAccessCompilerAreaBoundaries$", "exit": 1, "wall": 4.1666785220004385, "rows": ["^TestElementAccessCompilerAreaBoundaries$"]}

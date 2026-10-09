@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -410,7 +410,7 @@
+ 	}
+ 	switch statement := (*at).(type) {
+ 	case ir.Debugger:
+-		e.line("debugger;")
++
+ 	case ir.WriteLine:
+ 		stream := "log"
+ 		if statement.Stream == ir.Stderr {

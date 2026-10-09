@@ -1,0 +1,37 @@
+[
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "change": "at Lower entry, return nil,nil under selector P1",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "P2",
+    "file": "internal/native/emit.go",
+    "line": 22,
+    "change": "at C entry, return empty string under selector P2",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "P3",
+    "file": "internal/javascript/javascript.go",
+    "line": 24,
+    "change": "at JavaScript entry, return empty string under selector P3",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "W1",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "change": "at disagreement entry, return empty difference under selector W1",
+    "kind": "permitted witness-check weakening"
+  },
+  {
+    "id": "W2",
+    "file": "internal/oracle/conditions_test.go",
+    "line": 103,
+    "change": "at conditionLedgerDifference entry, return nil under selector W2",
+    "kind": "permitted witness-check weakening"
+  }
+]

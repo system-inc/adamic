@@ -1,0 +1,11 @@
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -37,7 +37,7 @@
+ func describe(node *ast.Node) string {
+ 	name := strings.TrimPrefix(node.Kind.String(), "Kind")
+ 	if strings.ContainsAny(name[:1], "AEIOU") {
+-		return "an " + name
++		return "a " + name
+ 	}
+ 	return "a " + name
+ }

@@ -1,0 +1,17 @@
+Declared in commentary before the first scratch mutation:
+CODE UNDER TEST: Adamic lowering passes, native C generation and runtime, JavaScript generation.
+ORACLE: Node executing original source for differential semantics; self-authored repository contracts for lowering labels, checked runtime failures, emitted code and recorded counts. Witnesses guard disagreement and conditionLedgerDifference.
+
+Entry assignments:
+Conditions: lower.Lower, native.C, javascript.JavaScript.
+Loop counters: lower.Lower and native.C. JavaScript is called only while constructing a cache key; its empty answer is not a vacuity judgment for this row.
+Counts: lower.Lower and native.C, native.Build and the counted runtime. No empty-answer probe was added to Build, because it is a preparation/build operation rather than an answer-producing compiler entry.
+Debugger: lower.Lower, native.C and javascript.JavaScript; native.C is the primary no-emission check.
+Element boundaries: lower.Lower; Node supplies executable source witnesses and the test pins Adamic stop labels.
+Entries acceptance: missing corpus, no executed entry.
+Entries provenance: lower.Lower, native.C and javascript.JavaScript.
+Entries runtime readiness: native.C and javascript.JavaScript on constructed IR. Lower's empty answer does not apply because this row does not call Lower.
+Enum rows: lower.Lower, native.C and javascript.JavaScript.
+Condition witnesses: weaken disagreement (NaN and null), weaken conditionLedgerDifference (missing site). Production kills and empty compiler probes do not decide them.
+
+Mutation menu was saved before observing mutant failures in menu.json. The reached production-function inventory from the clean slice is reached-functions.txt; it is evidence of nonzero coverage rather than a static inference. Native runtime entry inventory is not exhaustive.
