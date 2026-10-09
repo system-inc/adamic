@@ -1,0 +1,80 @@
+[
+  {
+    "file": "01_capture_free_split.a",
+    "node": {
+      "stdout": "[\"a\",\"b\"]\n[\"a\",\"b\"]\n[\"a\",\"b\"]\n[\"\"]\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a:4:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "37faa7c3d7519889d9d1dc580bb0cccb50633647296d95a3f6924192c058e650",
+    "mutant": {
+      "change": [
+        "split(/\\r\\n?|\\n/)",
+        "split(/\\r\\n?|(\\n)?/)"
+      ],
+      "observation": {
+        "stdout": "[\"a\",null,\"b\"]\n[\"a\",\"\\n\",\"b\"]\n[\"a\",null,\"b\"]\n[]\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "caught_by": "independent Node stdout golden"
+    }
+  },
+  {
+    "file": "02_generic_field_write.a",
+    "node": {
+      "stdout": "true\nstring\ntrue\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a:6:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "8362493cfeb4d99f82a7d62c599510e23316bdee5a595ae0bce910a1500d6240",
+    "mutant": {
+      "change": [
+        ".typeExpression = typeExpression;",
+        ".typeExpression = undefined;"
+      ],
+      "observation": {
+        "stdout": "true\nundefined\ntrue\ntrue\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "caught_by": "independent Node stdout golden"
+    }
+  },
+  {
+    "file": "03_tracing_undefined_data.a",
+    "node": {
+      "stdout": "{\"id\":1}accepted\nTypeError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a:8:10: Adamic 0.1 refuses a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "header": "// a-check: refused a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "f6302ebc927e32e4f2e71baf69eebfe57995b82625a47dc5d0b16049a34707ef",
+    "mutant": {
+      "change": [
+        "JSON.stringify(descriptor))",
+        "JSON.stringify(descriptor) ?? \"\")"
+      ],
+      "observation": {
+        "stdout": "{\"id\":1}accepted\naccepted\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "caught_by": "independent Node stdout golden"
+    }
+  }
+]
