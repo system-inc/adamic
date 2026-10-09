@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -18,7 +19,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/testguard"
 )
 
 const testCompleteSuggestionSerializationShards = 6
@@ -262,11 +262,25 @@ func TestCompleteSuggestionSerialization_005(t *testing.T) {
 func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
 	completeSuggestionSetup(t)
 	t.Parallel()
-	command := exec.Command(os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_[0-9]{3}$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_[0-9]{3}$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 	var output bytes.Buffer
 	command.Stdout, command.Stderr = &output, &output
-	err := testguard.Run(command, testguard.Budget, 90*time.Second)
+	err := command.Run()
+	if command.Process != nil {
+		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
 	failures := []string{}
 	for _, line := range strings.Split(output.String(), "\n") {
 		if strings.HasPrefix(line, "--- FAIL:") {
