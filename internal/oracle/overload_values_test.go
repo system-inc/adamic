@@ -22,10 +22,14 @@ func init() {
 	}
 }
 
-func TestOverloadValues(t *testing.T) {
+func checkOverloadValues(t *testing.T, selectedName, selectedVariant string) {
+	t.Helper()
 	for _, name := range []string{"returned", "narrow", "order", "module"} {
 		for _, variant := range []string{"valid", "liar"} {
-			t.Run(name+"/"+variant, func(t *testing.T) {
+			func() {
+				if name != selectedName || variant != selectedVariant {
+					return
+				}
 				path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_values", name+"-"+variant+".ts"))
 				if err != nil {
 					t.Fatal(err)
@@ -69,12 +73,53 @@ func TestOverloadValues(t *testing.T) {
 				if !errors.As(err, &refused) || !strings.Contains(refused.What, "result.value") {
 					t.Fatalf(".a needs result proof: %v", err)
 				}
-			})
+			}()
 		}
 	}
 }
 
+func TestOverloadValuesReturnedValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "returned", "valid")
+}
+
+func TestOverloadValuesReturnedLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "returned", "liar")
+}
+
+func TestOverloadValuesNarrowValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "narrow", "valid")
+}
+
+func TestOverloadValuesNarrowLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "narrow", "liar")
+}
+
+func TestOverloadValuesOrderValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "order", "valid")
+}
+
+func TestOverloadValuesOrderLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "order", "liar")
+}
+
+func TestOverloadValuesModuleValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "module", "valid")
+}
+
+func TestOverloadValuesModuleLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadValues(t, "module", "liar")
+}
+
 func TestOverloadValueProof(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_values/proven.a"))
 	if err != nil {
 		t.Fatal(err)

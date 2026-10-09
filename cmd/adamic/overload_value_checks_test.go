@@ -10,6 +10,7 @@ import (
 )
 
 func TestExplainOverloadValueChecks(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)

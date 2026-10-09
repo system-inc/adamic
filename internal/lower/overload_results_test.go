@@ -12,10 +12,13 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestOverloadResultsFixtures(t *testing.T) {
-	t.Parallel()
+func checkOverloadResultsFixtures(t *testing.T, selected string) {
+	t.Helper()
 	for _, name := range []string{"transform", "evaluate", "binding", "parameter", "scalar"} {
-		t.Run(name, func(t *testing.T) {
+		func() {
+			if name != selected {
+				return
+			}
 			source, err := os.ReadFile("../oracle/testdata/overload_results_" + name + ".a")
 			if err != nil {
 				t.Fatal(err)
@@ -33,14 +36,42 @@ func TestOverloadResultsFixtures(t *testing.T) {
 			if instances == 0 {
 				t.Fatal("resolved overload did not get a specialized result entry")
 			}
-		})
+		}()
 	}
 }
 
-func TestOverloadResultsLiarStops(t *testing.T) {
+func TestOverloadResultsFixturesTransform(t *testing.T) {
 	t.Parallel()
+	checkOverloadResultsFixtures(t, "transform")
+}
+
+func TestOverloadResultsFixturesEvaluate(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsFixtures(t, "evaluate")
+}
+
+func TestOverloadResultsFixturesBinding(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsFixtures(t, "binding")
+}
+
+func TestOverloadResultsFixturesParameter(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsFixtures(t, "parameter")
+}
+
+func TestOverloadResultsFixturesScalar(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsFixtures(t, "scalar")
+}
+
+func checkOverloadResultsLiarStops(t *testing.T, selected string) {
+	t.Helper()
 	for _, name := range []string{"liar", "evaluate-liar", "parameter-liar"} {
-		t.Run(name, func(t *testing.T) {
+		func() {
+			if name != selected {
+				return
+			}
 			path, err := filepath.Abs("testdata/overload-results/" + name + ".a")
 			if err != nil {
 				t.Fatal(err)
@@ -88,12 +119,27 @@ func TestOverloadResultsLiarStops(t *testing.T) {
 					t.Fatalf("%s: %v, stdout %q stderr %q", command.Path, err, stdout.String(), stderr.String())
 				}
 			}
-		})
+		}()
 	}
 }
 
-func TestOverloadResultsRefuses(t *testing.T) {
+func TestOverloadResultsLiarStopsLiar(t *testing.T) {
 	t.Parallel()
+	checkOverloadResultsLiarStops(t, "liar")
+}
+
+func TestOverloadResultsLiarStopsEvaluateLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsLiarStops(t, "evaluate-liar")
+}
+
+func TestOverloadResultsLiarStopsParameterLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsLiarStops(t, "parameter-liar")
+}
+
+func checkOverloadResultsRefuses(t *testing.T, selected string) {
+	t.Helper()
 	for _, probe := range []struct{ name, source, diagnostic string }{
 		{"optional result property", `interface R {value:string|undefined;}interface OptionalR{value?:string|undefined;}function take(input:string):R;function take(input:string):OptionalR{return {};}console.log(String(take('x').value));`, "cannot be served"},
 		{"shared writable result", `interface R<T> {value:T;} const shared:R<string|number>={value:1}; function take(input:string):R<string>;function take(input:string):R<string|number>{return shared;} console.log(take('x').value);`, "cannot be served"},
@@ -101,11 +147,39 @@ func TestOverloadResultsRefuses(t *testing.T) {
 		{"unserved generic domain", `interface N {readonly kind:string;}interface B extends N{readonly kind:'binding';}function visit<T extends N>(value:T):T;function visit(value:B):B{return value;} const n:N={kind:'other'};console.log(visit(n).kind);`, "parameter 1 cannot be served"},
 		{"shared readonly result", `interface R<T> {readonly value:T;} const shared:R<string|number>={value:1}; function take(input:string):R<string>;function take(input:string):R<string|number>{return shared;} console.log(take('x').value);`, "cannot be served"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
+		func() {
+			if probe.name != selected {
+				return
+			}
 			_, err := lowerSource(t, probe.source)
 			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
 				t.Fatalf("wanted %s, got %v", probe.diagnostic, err)
 			}
-		})
+		}()
 	}
+}
+
+func TestOverloadResultsRefusesOptionalResultProperty(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsRefuses(t, "optional result property")
+}
+
+func TestOverloadResultsRefusesSharedWritableResult(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsRefuses(t, "shared writable result")
+}
+
+func TestOverloadResultsRefusesEscapingCheckedOverload(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsRefuses(t, "escaping checked overload")
+}
+
+func TestOverloadResultsRefusesUnservedGenericDomain(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsRefuses(t, "unserved generic domain")
+}
+
+func TestOverloadResultsRefusesSharedReadonlyResult(t *testing.T) {
+	t.Parallel()
+	checkOverloadResultsRefuses(t, "shared readonly result")
 }

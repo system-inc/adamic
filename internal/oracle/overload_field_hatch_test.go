@@ -16,14 +16,18 @@ func init() {
 		}{"internal/oracle/testdata/overload_field_hatch/" + name + ".ts", true, false})
 	}
 }
-func TestOverloadFieldHatch(t *testing.T) {
+func checkOverloadFieldHatch(t *testing.T, selectedName, selectedVariant string) {
+	t.Helper()
 	for _, field := range []string{"kind", "value"} {
 		variants := []string{"valid", "liar"}
 		if field == "value" {
 			variants = append(variants, "undefined")
 		}
 		for _, variant := range variants {
-			t.Run(field+"/"+variant, func(t *testing.T) {
+			func() {
+				if field != selectedName || variant != selectedVariant {
+					return
+				}
 				path, pathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_field_hatch", field+"-"+variant+".ts"))
 				if pathError != nil {
 					t.Fatal(pathError)
@@ -72,7 +76,32 @@ func TestOverloadFieldHatch(t *testing.T) {
 				if refused != nil || !errors.As(err, &refusal) || !strings.Contains(refusal.What, "result."+field) {
 					t.Fatalf("Adamic must retain field proof refusal: %v", err)
 				}
-			})
+			}()
 		}
 	}
+}
+
+func TestOverloadFieldHatchKindValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadFieldHatch(t, "kind", "valid")
+}
+
+func TestOverloadFieldHatchKindLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadFieldHatch(t, "kind", "liar")
+}
+
+func TestOverloadFieldHatchValueValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadFieldHatch(t, "value", "valid")
+}
+
+func TestOverloadFieldHatchValueLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadFieldHatch(t, "value", "liar")
+}
+
+func TestOverloadFieldHatchValueUndefined(t *testing.T) {
+	t.Parallel()
+	checkOverloadFieldHatch(t, "value", "undefined")
 }

@@ -21,6 +21,7 @@ func init() {
 // The shared lowering boundary refuses before either backend receives IR.
 // The general negative-fixture runner accepts only NotYet, so pin Refused here.
 func TestOverloadStructuralFieldRefusal(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/overload-structural/fields-mixed.a"))
 	if err != nil {
 		t.Fatal(err)

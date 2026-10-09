@@ -7,6 +7,7 @@ import (
 )
 
 func TestOverloadCallbackServed(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/overload_callback_served.a")
 	if err != nil {
 		t.Fatal(err)
@@ -16,7 +17,8 @@ func TestOverloadCallbackServed(t *testing.T) {
 	}
 }
 
-func TestOverloadCallbackUnserved(t *testing.T) {
+func checkOverloadCallbackUnserved(t *testing.T, selected string) {
+	t.Helper()
 	base := `interface Node {readonly kind:string;readonly text:string;}
 interface BindingElement extends Node {readonly kind:'binding';}
 interface OmittedExpression extends Node {readonly kind:'omitted';}
@@ -32,16 +34,45 @@ function visit(node:ArrayBindingElement):ArrayBindingElement{return {kind:'omitt
 		`function run(visitor:(node:BindingElement)=>{}):{} {return visitor({kind:'binding',text:'x'});}console.log(typeof run(visit));`,
 	} {
 		name := []string{"input", "result", "generic", "alias", "representation"}[index]
-		t.Run(name, func(t *testing.T) {
+		if name != selected {
+			continue
+		}
+		func() {
 			_, err := lowerSource(t, base+source)
 			if err == nil || !strings.Contains(err.Error(), "indirect value of an overload") {
 				t.Fatalf("expected an unserved callback refusal, got %v", err)
 			}
-		})
+		}()
 	}
 }
 
+func TestOverloadCallbackUnservedInput(t *testing.T) {
+	t.Parallel()
+	checkOverloadCallbackUnserved(t, "input")
+}
+
+func TestOverloadCallbackUnservedResult(t *testing.T) {
+	t.Parallel()
+	checkOverloadCallbackUnserved(t, "result")
+}
+
+func TestOverloadCallbackUnservedGeneric(t *testing.T) {
+	t.Parallel()
+	checkOverloadCallbackUnserved(t, "generic")
+}
+
+func TestOverloadCallbackUnservedAlias(t *testing.T) {
+	t.Parallel()
+	checkOverloadCallbackUnserved(t, "alias")
+}
+
+func TestOverloadCallbackUnservedRepresentation(t *testing.T) {
+	t.Parallel()
+	checkOverloadCallbackUnserved(t, "representation")
+}
+
 func TestOverloadCallbackFieldStorage(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `interface Node {readonly kind:string;readonly metric:number|undefined;}
 interface Binding extends Node {readonly kind:'binding';}
 interface NumericBinding extends Binding {readonly metric:number;}

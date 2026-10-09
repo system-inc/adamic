@@ -1,0 +1,11 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -326,7 +326,7 @@
+ 		implementationCall = ir.CallClosure{Closure: ir.Read{Local: carrier, Of: ir.Closure}, Direct: closure.Direct, Arguments: checked.Arguments, Returns: checked.Returns, FunctionType: closure.FunctionType}
+ 	}
+ 	body = append(body, ir.Declare{Local: result, Value: implementationCall})
+-	if !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {
++	if false && !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {
+ 		var setup []ir.Statement
+ 		var test ir.Expression
+ 		var err error

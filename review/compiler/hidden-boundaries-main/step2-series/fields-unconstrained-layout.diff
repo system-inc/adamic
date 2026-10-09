@@ -1,0 +1,11 @@
+--- internal/lower/generic_constraint_storage.go
++++ internal/lower/generic_constraint_storage.go
+@@ -13,7 +13,7 @@
+ func (l *lowering) constraintStorage(parameter *checker.Type) (ir.Type, bool) {
+ 	constraint := l.checker.GetBaseConstraintOfType(parameter)
+ 	if constraint == nil || constraint == parameter || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
+-		return 0, false
++		return ir.Number, true
+ 	}
+ 	held, known := l.representation(constraint)
+ 	if !known {

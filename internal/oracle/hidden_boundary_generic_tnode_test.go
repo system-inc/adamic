@@ -9,6 +9,7 @@ import (
 )
 
 func TestHiddenTNodeValueExactNotYet(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a"))
 	if err != nil {
 		t.Fatal(err)

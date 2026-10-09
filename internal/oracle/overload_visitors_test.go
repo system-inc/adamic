@@ -24,14 +24,18 @@ func init() {
 	}
 }
 
-func TestOverloadVisitors(t *testing.T) {
+func checkOverloadVisitors(t *testing.T, selectedName, selectedVariant string) {
+	t.Helper()
 	for _, name := range []string{"original", "helper", "overloaded-helper", "default"} {
 		variants := []string{"valid", "liar"}
 		if name == "default" {
 			variants = []string{"liar"}
 		}
 		for _, variant := range variants {
-			t.Run(name+"/"+variant, func(t *testing.T) {
+			func() {
+				if name != selectedName || variant != selectedVariant {
+					return
+				}
 				suffix := ""
 				if variant == "liar" {
 					suffix = "-liar"
@@ -99,12 +103,48 @@ func TestOverloadVisitors(t *testing.T) {
 						t.Fatalf(".a unproven invocation must refuse: %v", err)
 					}
 				}
-			})
+			}()
 		}
 	}
 }
 
+func TestOverloadVisitorsOriginalValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "original", "valid")
+}
+
+func TestOverloadVisitorsOriginalLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "original", "liar")
+}
+
+func TestOverloadVisitorsHelperValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "helper", "valid")
+}
+
+func TestOverloadVisitorsHelperLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "helper", "liar")
+}
+
+func TestOverloadVisitorsOverloadedHelperValid(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "overloaded-helper", "valid")
+}
+
+func TestOverloadVisitorsOverloadedHelperLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "overloaded-helper", "liar")
+}
+
+func TestOverloadVisitorsDefaultLiar(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitors(t, "default", "liar")
+}
+
 func TestOverloadVisitorInstantiations(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_visitors/instantiations.ts"))
 	if err != nil {
 		t.Fatal(err)

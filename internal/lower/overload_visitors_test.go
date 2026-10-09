@@ -11,7 +11,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestOverloadVisitorPaths(t *testing.T) {
+func checkOverloadVisitorPaths(t *testing.T, selected string) {
+	t.Helper()
 	base := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 function visit<T extends Base>(nodes:readonly T[],visitor:(node:T)=>void):void;
@@ -25,16 +26,45 @@ visit(nodes,node=>console.log(node.text));`
 		{"returned callback", `function escape(){return visitor;} escape()({kind:0});`, "visitor argument path"},
 		{"intervening element effect", `function touch(node:Base):void{} for(const node of nodes){if(node!==undefined){touch(node);visitor(node);}}`, "visitor argument path is unproven"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
+		func() {
+			if probe.name != selected {
+				return
+			}
 			_, err := lowerSource(t, strings.Replace(base, "BODY", probe.body, 1))
 			if err == nil || !strings.Contains(err.Error(), probe.path) {
 				t.Fatalf("wanted %s: %v", probe.path, err)
 			}
-		})
+		}()
 	}
 }
 
+func TestOverloadVisitorPathsUnguardedPresence(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitorPaths(t, "unguarded presence")
+}
+
+func TestOverloadVisitorPathsFabricatedNode(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitorPaths(t, "fabricated node")
+}
+
+func TestOverloadVisitorPathsStoredCallback(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitorPaths(t, "stored callback")
+}
+
+func TestOverloadVisitorPathsReturnedCallback(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitorPaths(t, "returned callback")
+}
+
+func TestOverloadVisitorPathsInterveningElementEffect(t *testing.T) {
+	t.Parallel()
+	checkOverloadVisitorPaths(t, "intervening element effect")
+}
+
 func TestOverloadVisitorResultIndependent(t *testing.T) {
+	t.Parallel()
 	source := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 function visit<T extends Base,U extends Base>(nodes:readonly T[],visitor:(node:T)=>void):readonly U[];
@@ -59,6 +89,7 @@ console.log(visit<Named,Named>(nodes,node=>console.log(node.text))[0]?.text??'mi
 }
 
 func TestOverloadVisitorResultStorage(t *testing.T) {
+	t.Parallel()
 	source := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 interface Wide {readonly value:string|number;}
