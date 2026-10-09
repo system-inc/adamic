@@ -41,7 +41,6 @@ func goWidth(t *testing.T, cases string) []byte {
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestWidthsMatchGo(t *testing.T) {
-	t.Parallel()
 	var input strings.Builder
 	count := 0
 	add := func(text string) {
