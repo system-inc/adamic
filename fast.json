@@ -1,0 +1,26 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T221753-99c59fc0",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "4204e7ed090de8e75e6cd2457ea65dad4f2b832b",
+  "branch": "codex/main-json-encoder",
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "unplanned_packages_not_run": 4,
+  "loom_tools": "068776c1ebc118fdcac26e9708fbba81d0e9f779bb208454856287b87c22ee0a",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 0.0,
+  "steps_seconds": {
+    "tests": 0.0
+  }
+}
