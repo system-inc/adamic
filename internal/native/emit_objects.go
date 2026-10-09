@@ -423,18 +423,37 @@ func (e *emitter) cache() string {
 	return name
 }
 
-// Programs without reflection keep their original layouts and allocation code.
-func (e *emitter) dynamicProperties() bool {
-	found := false
+// Metadata queries share one walk. Lowering is complete before an emitter is made,
+// and emission does not change the expressions or field contracts these facts use.
+// A new emitter recomputes them even when a caller edits and re-emits the same IR.
+type objectMetadataNeeds struct {
+	dynamic    bool
+	fieldTypes bool
+}
+
+func (e *emitter) prepareObjectMetadata() {
+	if e.objectMetadata != nil {
+		return
+	}
+	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0}
 	walkExpressions(e.program, func(expression ir.Expression) {
-		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
-			found = true
-		}
-		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
-			found = true
+		switch expression := expression.(type) {
+		case ir.ObjectCall:
+			needs.dynamic = needs.dynamic || expression.Checked
+		case ir.DynamicProperty:
+			needs.dynamic = true
+		case ir.Property:
+			needs.fieldTypes = needs.fieldTypes || expression.View != ""
 		}
 	})
-	return found
+	needs.fieldTypes = needs.fieldTypes || needs.dynamic
+	e.objectMetadata = needs
+}
+
+// Programs without reflection keep their original layouts and allocation code.
+func (e *emitter) dynamicProperties() bool {
+	e.prepareObjectMetadata()
+	return e.objectMetadata.dynamic
 }
 
 func (e *emitter) methodEntryType() string {
@@ -445,16 +464,8 @@ func (e *emitter) methodEntryType() string {
 }
 
 func (e *emitter) fieldTypesNeeded() bool {
-	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
-		return true
-	}
-	needed := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		if property, ok := expression.(ir.Property); ok && property.View != "" {
-			needed = true
-		}
-	})
-	return needed
+	e.prepareObjectMetadata()
+	return e.objectMetadata.fieldTypes
 }
 
 // Hand-built IR can carry field contracts without the lowerer's summary maps.
