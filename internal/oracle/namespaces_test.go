@@ -201,12 +201,14 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 }
 
 func TestNamespaceStateMutants(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, path string }{
 		{"lose assignment", "namespaces_parser_state.a"},
 		{"lose hoisting", "namespaces_parser_state.a"},
 		{"skip ready check", "namespaces_unready.a"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", test.path))
 			if pathErr != nil {
 				t.Fatal(pathErr)

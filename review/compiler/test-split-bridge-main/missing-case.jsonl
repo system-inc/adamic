@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:49:50.457408842Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:49:50.464431137Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece"}
+{"Time":"2026-10-09T04:49:50.464522271Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"=== RUN   TestBridgeUnitsCoverEveryPiece\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:50.464561459Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"    coverage_test.go:18: bridge coverage count: 35 cases, 36 bindings, want 36\n","OutputType":"error"}
+{"Time":"2026-10-09T04:49:50.464569571Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"--- FAIL: TestBridgeUnitsCoverEveryPiece (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:50.464572015Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Elapsed":0}
+{"Time":"2026-10-09T04:49:50.464581579Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:50.464794713Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:50.46483985Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.007}

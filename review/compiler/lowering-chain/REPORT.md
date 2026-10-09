@@ -120,3 +120,11 @@ Only internal/native/tsgo.go diff applied cleanly. Current typeaware child still
 ok  	github.com/system-inc/adamic/internal/oracle	65.989s
 
 Top-level pass seconds: {"TestTypeAwareNativeBuildChild": 7.03, "TestSharedProductPublication": 0, "TestSixBuildCallbackUsesProductDirectory": 0.01, "TestTypeAwareTopShardPlantedFailure": 0.02, "TestTSGoBuildSeesTheProgramsFeatures": 0.11}. All named controls pass; count-changes and results JSON retain every row and observation.
+
+## Member 12: compiler/miscompile-fxspptb-2b 6de2edb53d6caf66ddae371591fb521d06684084
+
+Checked-view conflict retains member 7 exact any refusals and incoming parallelism. Update the older lowerer neighbor to step 18 conservative receiver-free-proof refusal at main.a:12:15, keeping its Node output Haven took Rex. Weak union liveness uses the existing panic; drop-liveness mutant caught. Counts regenerate without numerical changes to earlier rows.
+
+ok  	github.com/system-inc/adamic/internal/oracle	64.649s
+
+Top-level pass seconds: {"TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat": 0, "TestAMethodReadAsAValueIsRefused": 0, "TestAViewThatCantWriteIsNotRefused": 0, "TestWeakDifferentialEach": 0.29, "TestWeakDifferentialFind": 0.31, "TestWeakDifferentialHeldUnion": 0.7, "TestWeakDifferentialMatchingMethods": 0.75, "TestWeakDifferentialSingleNarrowed": 0.57, "TestWeakDifferentialUnionNarrowed": 0.59, "TestWeakDifferentialViewMethod": 0.24, "TestWeakDifferentialViewMethodParameter": 0.29, "TestWeakDifferentialSome": 0.2, "TestWeakDifferentialSort": 0.23, "TestWeakDifferentialReduce": 0.2, "TestWeakDifferentialMap": 0.18, "TestWeakDifferentialBooleanFilter": 0.63, "TestCheckedViewUntaggedOwnClassData": 0, "TestCheckedViewUntaggedArrayAnyRefusal": 0, "TestPredicateMiscompileRefusals": 2.97, "TestWeakReadsUndefinedOnceFreed": 0, "TestNativeAgreesWithNode": 0.24}. All named controls pass; count-changes and results JSON retain every row and observation.

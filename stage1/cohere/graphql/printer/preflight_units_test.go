@@ -75,7 +75,7 @@ func printerPreflightInputs(t *testing.T) (script, library, embedded string) {
 	return
 }
 
-func printerUpstreamShards(t *testing.T) {
+func printerUpstreamUnit(t *testing.T, unit int) {
 	t.Helper()
 	script, library, embedded := printerPreflightInputs(t)
 	oracle := printerOracle(t)
@@ -94,16 +94,18 @@ func printerUpstreamShards(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
+	if unit < 0 {
+		return
+	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
 		t.Fatal(err)
 	}
 	for number, shard := range shards {
-		if !selected[number] {
+		if number != unit || !selected[number] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
+		{
 			start := time.Now()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
@@ -119,11 +121,12 @@ func printerUpstreamShards(t *testing.T) {
 					t.Errorf("%s: %v", side.name, err)
 				}
 			}
-		})
+		}
 	}
 }
 
 func TestPrinterPreflightPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	script, library, _ := printerPreflightInputs(t)
 	oracle := printerOracle(t)
 	var shards []printerShard

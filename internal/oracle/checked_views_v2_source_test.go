@@ -34,6 +34,7 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 	for _, family := range []string{"binding-name", "option-element", "structural"} {
 		for _, variant := range []string{"good", "wrong", "nested", "absent"} {
 			t.Run(family+"/"+variant, func(t *testing.T) {
+				t.Parallel()
 				if variant == "absent" {
 					path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + family + "-source-" + variant + ".a")
 					loaded, err := load.Load([]string{path})
@@ -79,6 +80,7 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good-number", "good-string", "wrong", "nested"} {
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -126,6 +128,7 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 	for _, flow := range []string{"helper", "generic", "callback", "stored"} {
 		for _, variant := range []string{"good", "wrong"} {
 			t.Run(flow+"/"+variant, func(t *testing.T) {
+				t.Parallel()
 				program, path := interfaceFixture(t, "untagged/fixtures/flow-"+flow+"-"+variant)
 				want := run{stdout: []byte("true\n")}
 				if difference := disagreement(want, onNode(t, path)); difference != "" {
@@ -151,6 +154,7 @@ func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong"} {
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures/class-data-"+variant+".a"))
 			if err != nil {
 				t.Fatal(err)
@@ -171,6 +175,7 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "absent", "wrong", "nested"} {
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/recursive-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -196,6 +201,7 @@ func TestCheckedViewUntaggedArrayAnyRefusal(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/untagged/fixtures/array-union-"+variant+".a"))
 			if err != nil {
 				t.Fatal(err)

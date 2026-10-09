@@ -264,8 +264,8 @@ const testPrinterAsGoCohereShards = 4
 
 // The four fixed option modes own every case in their mode. ADAMIC_TEST_SHARD=i/n
 // selects shard indices modulo n equal to i; unset runs all. The gate can instead
-// select TestPrinterAsGoCohere/shard-NNN directly. Builds are shared setup inputs.
-func TestPrinterAsGoCohere(t *testing.T) {
+// select TestPrinterAsGoCohere_NNN directly. Products are prepared before case timing.
+func printerAsGoUnit(t *testing.T, unit int) {
 	oracle := printerOracle(t)
 	path := printerDirectory(t, "", "", "")
 	products := preparePrinterProducts(t, path)
@@ -284,16 +284,18 @@ func TestPrinterAsGoCohere(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
+	if unit < 0 {
+		return
+	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
 		t.Fatal(err)
 	}
 	for number, shard := range shards {
-		if !selected[number] {
+		if number != unit || !selected[number] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
+		{
 			start := time.Now()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
@@ -321,11 +323,12 @@ func TestPrinterAsGoCohere(t *testing.T) {
 			default:
 				t.Fatalf("no leak check for %s", runtime.GOOS)
 			}
-		})
+		}
 	}
 }
 
 func TestPrinterShardUnionRejectsMissingAndRepeated(t *testing.T) {
+	t.Parallel()
 	whole := []printerCase{{id: "defaults/case-000000", input: ">query{a}", want: "ok"}, {id: "tabs/case-000000", input: ">query{b}", want: "ok"}}
 	shards := []printerShard{{cases: whole[:1]}, {cases: whole[1:]}}
 	if err := printerShardUnion(whole, shards); err != nil {
@@ -339,6 +342,7 @@ func TestPrinterShardUnionRejectsMissingAndRepeated(t *testing.T) {
 }
 
 func TestPrinterShardSelection(t *testing.T) {
+	t.Parallel()
 	for _, boxes := range []int{1, 2, 7, 100} {
 		seen := make([]int, testPrinterAsGoCohereShards)
 		for box := 0; box < boxes; box++ {
@@ -375,6 +379,7 @@ func TestPrinterShardSelection(t *testing.T) {
 }
 
 func TestPrinterShardPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	oracle := printerOracle(t)
 	path, _ := filepath.Abs("main.ts")
 	var shards []printerShard

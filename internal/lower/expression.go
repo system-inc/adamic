@@ -219,6 +219,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.weakArrayCallback(node); err != nil {
+		return nil, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -294,6 +297,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+		// A union of branded targets stays represented as Weak after narrowing.
+		// Absence, not that representation, decides whether its read needs liveness.
+		present = !l.includesUndefined(read)
 		for _, member := range read.Types() {
 			if target := l.weakTarget(member); target != nil {
 				if to, isKnown = l.representation(target); !isKnown {
@@ -381,6 +387,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+					return false
+				}
 				continue
 			}
 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {

@@ -32,6 +32,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"tracingEnabled", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			path := filepath.Join("../../stage3/namespaces/shapes", test.name+".a")
 			source, err := os.ReadFile(path)
 			if err != nil {

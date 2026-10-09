@@ -107,7 +107,7 @@ func jsonTopReport(t *testing.T, i int, value string) {
 // Not parallel: owns process-wide oracle cleanup and report aggregation after m.Run.
 func TestMain(m *testing.M) {
 	portMatchesSelectSetup()
-	code := m.Run()
+	code := upstreamParityTestRuns(m)
 	if jsonTopState.oracleDir != "" && !jsonTopState.oracleCached {
 		os.RemoveAll(jsonTopState.oracleDir)
 	}

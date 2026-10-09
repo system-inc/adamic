@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -637,7 +638,23 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, shelter+neighbor.source)
 			var refused *Refused
-			if errors.As(err, &refused) {
+			if neighbor.name == "a field holding a function" {
+				// Step 18 requires a receiver-free proof for a detached structural field.
+				// This conservative boundary does not prove the arrow's stored provenance.
+				want := "main.a:12:15: Adamic 0.1 refuses a receiver-dependent callable read without its object (unbound-method); call it in an arrow that keeps its object"
+				if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), want) {
+					t.Fatalf("want pinned receiver proof refusal, got %v", err)
+				}
+				runner, err := filepath.Abs("../../oracle/node.mjs")
+				if err != nil {
+					t.Fatal(err)
+				}
+				path := strings.TrimSuffix(refused.Where, ":12:15")
+				output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path).CombinedOutput()
+				if err != nil || string(output) != "Haven took Rex\n" {
+					t.Fatalf("Node control: %v %q", err, output)
+				}
+			} else if errors.As(err, &refused) {
 				t.Errorf("refused a method that keeps its object: %v", err)
 			}
 		})

@@ -1,0 +1,762 @@
+[
+  {
+    "test": "TestBridgeABI",
+    "mode": "sample",
+    "invocation_seconds": 2.66,
+    "test_seconds": 0.5,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeABI$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeABI-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeInputLength",
+    "mode": "sample",
+    "invocation_seconds": 2.208,
+    "test_seconds": 0.37,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeInputLength$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeInputLength-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeUnlinkedBuild",
+    "mode": "sample",
+    "invocation_seconds": 4.5,
+    "test_seconds": 2.61,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnlinkedBuild$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeUnlinkedBuild-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeUnlinkedC",
+    "mode": "sample",
+    "invocation_seconds": 2.325,
+    "test_seconds": 0.38,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnlinkedC$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeUnlinkedC-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeUnlinkedJavaScript",
+    "mode": "sample",
+    "invocation_seconds": 2.466,
+    "test_seconds": 0.4,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnlinkedJavaScript$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeUnlinkedJavaScript-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeOutputLength",
+    "mode": "sample",
+    "invocation_seconds": 7.735,
+    "test_seconds": 5.86,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOutputLength$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOutputLength-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeStaleHandle",
+    "mode": "sample",
+    "invocation_seconds": 7.407,
+    "test_seconds": 5.65,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeStaleHandle$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeStaleHandle-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeLinkage",
+    "mode": "sample",
+    "invocation_seconds": 12.391,
+    "test_seconds": 10.52,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeLinkage$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeLinkage-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeOutputFree",
+    "mode": "sample",
+    "invocation_seconds": 7.644,
+    "test_seconds": 5.74,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOutputFree$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOutputFree-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeRegion",
+    "mode": "sample",
+    "invocation_seconds": 10.057,
+    "test_seconds": 8,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeRegion$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeRegion-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeRegionOwnership",
+    "mode": "sample",
+    "invocation_seconds": 20.679,
+    "test_seconds": 18.86,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeRegionOwnership$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeRegionOwnership-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeOracleSample",
+    "mode": "sample",
+    "invocation_seconds": 8.684,
+    "test_seconds": 6.65,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOracleSample$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOracleSample-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound1Sample",
+    "mode": "sample",
+    "invocation_seconds": 6.453,
+    "test_seconds": 4.33,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound1Sample$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound1Sample-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound2Sample",
+    "mode": "sample",
+    "invocation_seconds": 2.539,
+    "test_seconds": 0.56,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound2Sample$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound2Sample-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound3Sample",
+    "mode": "sample",
+    "invocation_seconds": 2.534,
+    "test_seconds": 0.53,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound3Sample$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound3Sample-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeWrongPositionSample",
+    "mode": "sample",
+    "invocation_seconds": 13.488,
+    "test_seconds": 11.49,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeWrongPositionSample$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeWrongPositionSample-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeOracleChecker",
+    "mode": "corpus",
+    "invocation_seconds": 3.021,
+    "test_seconds": 1.11,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOracleChecker$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOracleChecker-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound1Checker",
+    "mode": "corpus",
+    "invocation_seconds": 3.3,
+    "test_seconds": 1.37,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound1Checker$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound1Checker-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound2Checker",
+    "mode": "corpus",
+    "invocation_seconds": 3.323,
+    "test_seconds": 1.42,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound2Checker$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound2Checker-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound3Checker",
+    "mode": "corpus",
+    "invocation_seconds": 3.36,
+    "test_seconds": 1.42,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound3Checker$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound3Checker-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeWrongPositionChecker",
+    "mode": "corpus",
+    "invocation_seconds": 3.131,
+    "test_seconds": 1.02,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeWrongPositionChecker$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeWrongPositionChecker-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeOracleParser",
+    "mode": "corpus",
+    "invocation_seconds": 3.065,
+    "test_seconds": 1.06,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOracleParser$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOracleParser-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound1Parser",
+    "mode": "corpus",
+    "invocation_seconds": 3.145,
+    "test_seconds": 1.29,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound1Parser$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound1Parser-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound2Parser",
+    "mode": "corpus",
+    "invocation_seconds": 3.245,
+    "test_seconds": 1.32,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound2Parser$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound2Parser-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound3Parser",
+    "mode": "corpus",
+    "invocation_seconds": 3.21,
+    "test_seconds": 1.33,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound3Parser$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound3Parser-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeWrongPositionParser",
+    "mode": "corpus",
+    "invocation_seconds": 2.865,
+    "test_seconds": 1,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeWrongPositionParser$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeWrongPositionParser-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeOracleTypes",
+    "mode": "corpus",
+    "invocation_seconds": 2.772,
+    "test_seconds": 1,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOracleTypes$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOracleTypes-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound1Types",
+    "mode": "corpus",
+    "invocation_seconds": 3.091,
+    "test_seconds": 1.27,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound1Types$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound1Types-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound2Types",
+    "mode": "corpus",
+    "invocation_seconds": 2.973,
+    "test_seconds": 1.22,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound2Types$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound2Types-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound3Types",
+    "mode": "corpus",
+    "invocation_seconds": 3.101,
+    "test_seconds": 1.26,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound3Types$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound3Types-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeWrongPositionTypes",
+    "mode": "corpus",
+    "invocation_seconds": 2.936,
+    "test_seconds": 1.01,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeWrongPositionTypes$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeWrongPositionTypes-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeOracleUtilities",
+    "mode": "corpus",
+    "invocation_seconds": 2.829,
+    "test_seconds": 1.01,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeOracleUtilities$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeOracleUtilities-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound1Utilities",
+    "mode": "corpus",
+    "invocation_seconds": 3.089,
+    "test_seconds": 1.3,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound1Utilities$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound1Utilities-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound2Utilities",
+    "mode": "corpus",
+    "invocation_seconds": 3.038,
+    "test_seconds": 1.24,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound2Utilities$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound2Utilities-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeTimingRound3Utilities",
+    "mode": "corpus",
+    "invocation_seconds": 3.228,
+    "test_seconds": 1.33,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeTimingRound3Utilities$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeTimingRound3Utilities-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeWrongPositionUtilities",
+    "mode": "corpus",
+    "invocation_seconds": 2.897,
+    "test_seconds": 0.99,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeWrongPositionUtilities$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeWrongPositionUtilities-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "mode": "sample",
+    "invocation_seconds": 1.957,
+    "test_seconds": 0.01,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeUnitsCoverEveryPiece-sample.jsonl"
+  },
+  {
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "mode": "corpus",
+    "invocation_seconds": 1.872,
+    "test_seconds": 0.01,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeUnitsCoverEveryPiece$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeUnitsCoverEveryPiece-corpus.jsonl"
+  },
+  {
+    "test": "TestBridgeProductCacheIsVerified",
+    "mode": "sample",
+    "invocation_seconds": 2.001,
+    "test_seconds": 0,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestBridgeProductCacheIsVerified$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestBridgeProductCacheIsVerified-sample.jsonl"
+  },
+  {
+    "test": "TestTSGoRequiresLink",
+    "mode": "sample",
+    "invocation_seconds": 2.008,
+    "test_seconds": 0.03,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestTSGoRequiresLink$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "log": "/workspace/bridge-main-leaves/TestTSGoRequiresLink-sample.jsonl"
+  }
+]

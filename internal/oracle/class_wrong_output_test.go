@@ -16,6 +16,7 @@ func TestClassWrongOutput103(t *testing.T) {
 		{"init_super", "caught TypeError\n", "Base.describe -> Derived.name -> Derived.label"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/classfeat_"+probe.name+".a"))
 			if err != nil {
 				t.Fatal(err)
@@ -40,6 +41,7 @@ func TestClassWrongOutput107(t *testing.T) {
 		{"iterators_hidden_return", "0\nclosing:return\nclosing:return\n0\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/"+probe.name+".a"))
 			if err != nil {
 				t.Fatal(err)
@@ -90,6 +92,7 @@ func TestClassWrongOutput106(t *testing.T) {
 		{"classfeat_static_private_method", "first function\nhidden s1\n", "#hidden"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/"+probe.name+".a"))
 			if err != nil {
 				t.Fatal(err)

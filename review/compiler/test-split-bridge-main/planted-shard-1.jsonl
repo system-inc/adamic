@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T04:50:56.333468086Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:50:56.342116178Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample"}
+{"Time":"2026-10-09T04:50:56.342193752Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"=== RUN   TestBridgeOracleSample\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:56.342379767Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:58: piece belongs to another corpus mode or shard\n"}
+{"Time":"2026-10-09T04:50:56.342393707Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"--- SKIP: TestBridgeOracleSample (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:56.342396662Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Elapsed":0}
+{"Time":"2026-10-09T04:50:56.342406967Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample"}
+{"Time":"2026-10-09T04:50:56.34240918Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"=== RUN   TestBridgeTimingRound1Sample\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:56.342411544Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"    units_test.go:58: piece belongs to another corpus mode or shard\n"}
+{"Time":"2026-10-09T04:50:56.342414548Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"--- SKIP: TestBridgeTimingRound1Sample (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:56.342416651Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Elapsed":0}
+{"Time":"2026-10-09T04:50:56.342419646Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:56.342582055Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.009s\n"}
+{"Time":"2026-10-09T04:50:56.342602075Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.009}
