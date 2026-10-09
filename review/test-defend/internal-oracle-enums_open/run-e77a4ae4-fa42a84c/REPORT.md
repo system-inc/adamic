@@ -27,3 +27,5 @@ Owner findings and brief feedback:
 - An initial coverage-comparison write failed in the read-only sandbox; it was rerun with authorized write access. Automatic approval review later timed out while saving the report; a smaller authorized write succeeded. Neither affected test results.
 
 Warm env.sh worked; setup skipped. nproc=5. npm ci in stage3/api reported 744ms. Work took about 22 minutes including approval delay. No test was deleted, rewritten or weakened; no main push or PR occurred. Other-package tests, complete runtime C coverage, whole-package uniqueness and a behavioral witness for D2 remain uncovered. Logs are compressed losslessly. All seven mutants were retained within the near-minute matrix cap.
+
+Publication: the remote branch already contained earlier defense evidence. This run was moved into run-e77a4ae4-fa42a84c before merging, preserving earlier evidence and history. Logged commands retain their original execution paths; all associated logs now reside in this run directory. Publication and permission-review delays took total work to about 24 minutes.

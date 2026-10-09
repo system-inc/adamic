@@ -2,7 +2,7 @@
 # Run from repository root. Each diff contains only one production change.
 import json, pathlib, subprocess, tempfile
 root = pathlib.Path.cwd()
-evidence = root / "review/test-defend/internal-oracle-enums_open"
+evidence = pathlib.Path(__file__).resolve().parent
 for item in json.loads((evidence / "plan.json").read_text()):
     scratch = pathlib.Path(tempfile.mkdtemp(prefix="defend-enum-"))
     source = item["file_line"].rsplit(":", 1)[0]
