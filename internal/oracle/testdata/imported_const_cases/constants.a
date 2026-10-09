@@ -1,0 +1,6 @@
+console.log('constants initialized');
+export const NUMBER = 17;
+export const NEGATIVE = -2;
+export const WORD = 'al\u0070ha';
+export const OTHER = `beta`;
+export const WIDE: number = 17;

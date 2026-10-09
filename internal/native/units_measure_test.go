@@ -54,7 +54,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			var library string
 			var err error
 			if program == "cohere-typeaware" {
-				library, err = splitTSGoRuntime(options)
+				library, err = splitTSGoRuntime(source, options)
 			} else {
 				library, err = RuntimeLibrary("", options)
 			}
@@ -65,7 +65,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if err := os.WriteFile(filename, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			args := Flags(options)
+			args := sourceFlags(source, options)
 			if trace {
 				args = append(args, "-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"), "-ftime-trace-granularity=500")
 			}
@@ -147,7 +147,7 @@ func TestMeasureClangUnits(t *testing.T) {
 		}{{"sanitized", Options{Sanitize: true}}, {"release", Options{}}, {"counted", Options{Count: true}}} {
 			var err error
 			if program == "cohere-typeaware" {
-				_, err = splitTSGoRuntime(mode.options)
+				_, err = splitTSGoRuntime(source, mode.options)
 			} else {
 				_, err = RuntimeLibrary("", mode.options)
 			}

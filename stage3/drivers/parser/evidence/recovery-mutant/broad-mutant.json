@@ -1,0 +1,10 @@
+{
+  "mutation": "parseErrorAtCurrentToken returns undefined, dropping diagnostics and error flags",
+  "old_reference_caught": true,
+  "old_reference_bytes": 36429231,
+  "mutant_bytes": 35854929,
+  "mutant_sha256": "72458134e50bea5bc55616210c022f50d061e60e54c91f0d1547859315479691",
+  "parse_diagnostic_rows_after": 0,
+  "first_difference": "diagnosticMessages.generated.json, ExpressionStatement 1 39 flags 262144 -> 0",
+  "reason": "old reference already covers TS-mode parsing of malformed JSON as code; original coverage field incorrectly counted JSDoc diagnostics"
+}

@@ -40,7 +40,10 @@ shutil.copyfile(here / 'kinds.a', root / 'kinds.a')
 source = (here / 'main.a').read_text()
 needle = 'function dump(node: Node): void {\n'
 assert source.count(needle) == 1
-source = source.replace(needle, 'let planted = false;\n' + needle + '    if(!planted && node.kind === SyntaxKind.Identifier) { node.end += 1; planted = true; }\n')
+source = source.replace(needle, 'let planted = false;\n' + needle)
+point = "        const current = pending.pop() ?? panic('missing pending node');\n"
+assert source.count(point) == 1
+source = source.replace(point, point + '        if(!planted && current.kind === SyntaxKind.Identifier) { current.end += 1; planted = true; }\n')
 (root / 'parser-proof-mutant.a').write_text(source)
 PY
 node --disable-warning=ExperimentalWarning "$here/node.mjs" "$tree/parser-proof-main.a" "$inputs" "$out/manifest" > "$out/node.dump" 2> "$out/node.stderr"

@@ -1,0 +1,44 @@
+{
+  "jobs": 5,
+  "cache": "/workspace/scratch/parser-front23-bounded-build-modes/cache",
+  "generated_c": null,
+  "attempts": [
+    {
+      "mode": "unsplit",
+      "exit": 2,
+      "timeout": true,
+      "attempt_wall_seconds": 60.0323226749897,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: compiler timed out before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split",
+      "exit": 2,
+      "timeout": true,
+      "attempt_wall_seconds": 60.03254551300779,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: compiler timed out before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split-repeat",
+      "exit": 2,
+      "timeout": true,
+      "attempt_wall_seconds": 60.032352351001464,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: compiler timed out before C emission",
+      "cache_files_after": 0
+    }
+  ],
+  "emit_exit": 2,
+  "emit_timeout": true,
+  "timeout_seconds": 60.0,
+  "split_repeat_is_warm": false
+}

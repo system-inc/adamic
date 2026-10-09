@@ -1,0 +1,38 @@
+// TypeScript hostErrors.ts's narrowing shape, alongside the array predicate.
+function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+function isArray(value: unknown): value is readonly unknown[] {
+	return Array.isArray(value);
+}
+function describe(value: unknown): string {
+	if (isArray(value)) return `array:${value.length}`;
+	return `${typeof value}:${errorCode(value) ?? 'none'}`;
+}
+console.log(describe({code: 'ENOENT'}));
+console.log(describe({code: 'EEXIST'}));
+console.log(describe({code: 17}));
+console.log(describe({code: undefined}));
+console.log(describe({length: 7}));
+console.log(describe('code'));
+console.log(describe(17));
+console.log(describe(false));
+console.log(describe(null));
+console.log(describe(undefined));
+console.log(describe([1, 2]));
+console.log(String(errorCode([1, 2])));
+let calls = 0;
+function receive(value: unknown): unknown { calls += 1; return value; }
+console.log(errorCode(receive({code: 'ONCE'})) ?? 'none');
+console.log(`${Array.isArray(receive([3]))}:${calls}`);
+const error: unknown = {code: 'LOCAL'};
+console.log(errorCode(error) ?? 'none');
+if (typeof error === 'object' && error !== null && 'code' in error) {
+	if (typeof error.code === 'string') console.log(error.code);
+}
+function truthy(value: unknown): boolean { return !!value; }
+console.log(`${truthy(null)}:${truthy(undefined)}:${truthy(0)}:${truthy('')}:${truthy({})}`);
+function fallback(value: unknown): unknown { return value ?? 'fallback'; }
+console.log(`${typeof fallback(null)}:${typeof fallback(undefined)}:${typeof fallback(1)}`);
+function branchTruthy(value: unknown): boolean { if (value) return true; return false; }
+console.log(`${branchTruthy(null)}:${branchTruthy(undefined)}:${branchTruthy({})}`);

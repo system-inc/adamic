@@ -1,0 +1,27 @@
+F
+======================================================================
+FAIL: test_missing_mutant (progress_test.ProgressTests.test_missing_mutant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/stage3-meter-progress/stage3/meter/progress_test.py", line 61, in test_missing_mutant
+    self.assertFalse(result['milestones']['scanner_native'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.014s
+
+FAILED (failures=1)
+{
+  "milestones": {
+    "scanner_native": true,
+    "parser_native": false,
+    "no_emit_match": false,
+    "real_programs_match": false
+  },
+  "reasons": {
+    "scanner_native": "equal hashes alone (run stage3/meter/runs/synthetic)",
+    "parser_native": "no complete native-output comparison and mutant evidence in this run",
+    "no_emit_match": "no complete native-output comparison and mutant evidence in this run",
+    "real_programs_match": "no complete native-output comparison and mutant evidence in this run"
+  }
+}

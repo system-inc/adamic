@@ -1,0 +1,17 @@
+{
+  "raw_removed": 129,
+  "raw_added": 2,
+  "net_adapted": 127,
+  "relocations": [
+    {
+      "before": "src/compiler/checker.ts:22454:90",
+      "after": "src/compiler/checker.ts:22454:106",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read"
+    },
+    {
+      "before": "src/compiler/checker.ts:36133:94",
+      "after": "src/compiler/checker.ts:36133:110",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read"
+    }
+  ]
+}

@@ -38,7 +38,7 @@ export class Printer {
     }
     namespace(n: Node): number {
         const d = this.docs;
-        return !n.truth('namespace') ? d.text('') : d.text((n.data().booleans.get('namespace') === true ? '' : n.string('namespace').trim()) + '|');
+        return !n.truth('namespace') ? d.text('') : d.text((n.data().booleans.get('namespace') ? '' : n.string('namespace').trim()) + '|');
     }
     print(path: Path): number {
         const n = path.node(); const p = path.up(1); const d = this.docs; const value = n.string('value');

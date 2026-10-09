@@ -1,0 +1,7 @@
+function make([start]: readonly [number]): () => number {
+ let count = start;
+ function next(): number { count += start; return count; }
+ return next;
+}
+const next = make([3]);
+console.log(`${next()} ${next()}`);
