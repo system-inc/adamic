@@ -19,3 +19,5 @@ Unclear or costly: the historical oracle descriptions no longer describe the str
 No row remains undefended, so the requested assertion-name finding for undefended rows does not apply. An owner finding still remains: the numeric row's name and failure message mention literal promises, but it only checks the error's Refused type, including the open-tag case. It does not assert the relevant refusal reason or diagnostic label. This did not prevent a unique kill.
 
 Restored whole-package control passed in 37.475 test-binary seconds. Git diff confirms no production or test changes remain. Both replay diffs passed git apply --check again after restoration.
+
+Push encountered an existing remote branch containing other defense sessions. This session was relocated to session-6eef5ae5-alias-literal before a normal merge, preserving the prior evidence unchanged. No force push was used.
