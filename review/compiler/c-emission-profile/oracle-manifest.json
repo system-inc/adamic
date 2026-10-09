@@ -1,0 +1,1922 @@
+[
+  {
+    "Name": "oracle-0000",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_lifetime.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0001",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_holders.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0002",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0003",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_loops.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0004",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_policy.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0005",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_methods.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0006",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_characters.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0007",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0008",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_views_surrogates.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0009",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0010",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_map.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0011",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_catch.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0012",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_field.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0013",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_capture.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0014",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_array.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0015",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_union.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0016",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_boolean.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0017",
+    "Path": "/workspace/adamic/internal/oracle/testdata/non_null_null.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0018",
+    "Path": "/workspace/adamic/internal/oracle/testdata/typeof_null.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0019",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_callbacks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0020",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_virtual_fresh.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0021",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_unknown.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0022",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_bound_method.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0023",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_recursive.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0024",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_try_loop.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0025",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_accessor.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0026",
+    "Path": "/workspace/adamic/internal/oracle/testdata/route_targets_sort_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0027",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_named_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0028",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_named_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0029",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0030",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0031",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_keep.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0032",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_keep.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0033",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_objects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0034",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_objects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0035",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0036",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0037",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0038",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0039",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_arrays.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0040",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_arrays.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0041",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_named_more.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0042",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_named_more.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0043",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_named_objects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0044",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_named_objects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0045",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_named_closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0046",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_named_closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0047",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_fnexpr.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0048",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_foreach_fnexpr.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0049",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_foreach_named_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0050",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_guards.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0051",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_callbacks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0052",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_exclusions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0053",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_spread.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0054",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_scope.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0055",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_depths.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0056",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0057",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_return.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0058",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_method.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0059",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_finally.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0060",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_parents.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0061",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_coverage_bounded.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0062",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_override.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0063",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_unknown.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0064",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_argument.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0065",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_walk.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0066",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_listener.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0067",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_write.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0068",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_reassigned.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0069",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_capture.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0070",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_chain_store.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0071",
+    "Path": "/workspace/adamic/internal/oracle/testdata/call_targets_element.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0072",
+    "Path": "/workspace/adamic/internal/oracle/testdata/call_targets_region.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0073",
+    "Path": "/workspace/adamic/internal/oracle/testdata/call_targets_reuse.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0074",
+    "Path": "/workspace/adamic/internal/oracle/testdata/call_targets_closure.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0075",
+    "Path": "/workspace/adamic/internal/oracle/testdata/call_targets_sort.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0076",
+    "Path": "/workspace/adamic/internal/oracle/testdata/input_spread_local.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0077",
+    "Path": "/workspace/adamic/internal/oracle/testdata/input_spread_ordinary.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0078",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0079",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_is.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0080",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_has_own.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0081",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_assign.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0082",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_freeze.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0083",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_freeze_write.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0084",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0085",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_assign_fields.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0086",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_freeze_alias.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0087",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_freeze_assign.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0088",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_same.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0089",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_object_own.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0090",
+    "Path": "/workspace/adamic/dedication/dedication.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0091",
+    "Path": "/workspace/adamic/cmd/adamic/testdata/wasi/request.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0092",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_oct6_deep.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0093",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_oct6_parameters.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0094",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_oct6_release.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0095",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_oct6_subclass_holder.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0096",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_join.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0097",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_iterators.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0098",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_metadata.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0099",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_with.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0100",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_flat_map.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0101",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_flat.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0102",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_spliced.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0103",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_copy_within.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0104",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_search.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0105",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_copy.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0106",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_array_find_last.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0107",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_scalars.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0108",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0109",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_options.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0110",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_escapes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0111",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0112",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_undefined.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0113",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_indent.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0114",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0115",
+    "Path": "/workspace/adamic/internal/oracle/testdata/json_stringify_replacer.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0116",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_function_expressions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0117",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_fnexpr_recurse.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0118",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_fnexpr_store.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0119",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_fnexpr_loops.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0120",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_for_in.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0121",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_for_in_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0122",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_for_in_live.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0123",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_globals.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0124",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_globals_typeof.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0125",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/01_hello.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0126",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0127",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/03_shapes.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0128",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0129",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/05_wordcount.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0130",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/06_stack.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0131",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/07_modules/main.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0132",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/08_results.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0133",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/09_tree.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0134",
+    "Path": "/workspace/adamic/internal/load/testdata/0.1/compile/10_unicode.ts",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0135",
+    "Path": "/workspace/adamic/internal/oracle/testdata/strings.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0136",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_caches.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0137",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_padding.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0138",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_join.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0139",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_repeat.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0140",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_cached_reads.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0141",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_boundaries.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0142",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_build_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0143",
+    "Path": "/workspace/adamic/internal/oracle/testdata/numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0144",
+    "Path": "/workspace/adamic/internal/oracle/testdata/bitwise_sweep.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0145",
+    "Path": "/workspace/adamic/internal/oracle/testdata/loops.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0146",
+    "Path": "/workspace/adamic/internal/oracle/testdata/booleans.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0147",
+    "Path": "/workspace/adamic/internal/oracle/testdata/shadowing.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0148",
+    "Path": "/workspace/adamic/internal/oracle/testdata/functions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0149",
+    "Path": "/workspace/adamic/internal/oracle/testdata/effects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0150",
+    "Path": "/workspace/adamic/internal/oracle/testdata/dead_zone.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0151",
+    "Path": "/workspace/adamic/internal/oracle/testdata/objects.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0152",
+    "Path": "/workspace/adamic/internal/oracle/testdata/modules/main.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0153",
+    "Path": "/workspace/adamic/internal/oracle/testdata/panic.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0154",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maps_and_text.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0155",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lone_surrogates.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0156",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sorting.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0157",
+    "Path": "/workspace/adamic/internal/oracle/testdata/classes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0158",
+    "Path": "/workspace/adamic/internal/oracle/testdata/closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0159",
+    "Path": "/workspace/adamic/internal/oracle/testdata/local_console.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0160",
+    "Path": "/workspace/adamic/internal/oracle/testdata/indexing.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0161",
+    "Path": "/workspace/adamic/internal/oracle/testdata/writes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0162",
+    "Path": "/workspace/adamic/internal/oracle/testdata/writes_past_end.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0163",
+    "Path": "/workspace/adamic/internal/oracle/testdata/casts.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0164",
+    "Path": "/workspace/adamic/internal/oracle/testdata/cast_fails.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0165",
+    "Path": "/workspace/adamic/internal/oracle/testdata/updates.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0166",
+    "Path": "/workspace/adamic/internal/oracle/testdata/read_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0167",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_index.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0168",
+    "Path": "/workspace/adamic/internal/oracle/testdata/visits.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0169",
+    "Path": "/workspace/adamic/internal/oracle/testdata/searches.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0170",
+    "Path": "/workspace/adamic/internal/oracle/testdata/spreads.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0171",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maybe_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0172",
+    "Path": "/workspace/adamic/internal/oracle/testdata/defaults.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0173",
+    "Path": "/workspace/adamic/internal/oracle/testdata/search_halves.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0174",
+    "Path": "/workspace/adamic/internal/oracle/testdata/runtime_last_index_of.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0175",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lint_runtime_release_chain.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0176",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lint_runtime_release_shared.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0177",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lint_runtime_search_boundaries.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0178",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lint_runtime_search_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0179",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lint_runtime_equal_headers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0180",
+    "Path": "/workspace/adamic/internal/oracle/testdata/strings_more.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0181",
+    "Path": "/workspace/adamic/internal/oracle/testdata/number_parsing.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0182",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_math_number_math.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0183",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_math_number_convert.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0184",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_math_number_prototype.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0185",
+    "Path": "/workspace/adamic/internal/oracle/testdata/navigation.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0186",
+    "Path": "/workspace/adamic/internal/oracle/testdata/number_formats.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0187",
+    "Path": "/workspace/adamic/internal/oracle/testdata/precision_range.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0188",
+    "Path": "/workspace/adamic/internal/oracle/testdata/radixes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0189",
+    "Path": "/workspace/adamic/internal/oracle/testdata/radix_range.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0190",
+    "Path": "/workspace/adamic/internal/oracle/testdata/optional_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0191",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_iteration.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0192",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sorts.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0193",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sort_releases.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0194",
+    "Path": "/workspace/adamic/internal/oracle/testdata/timsort.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0195",
+    "Path": "/workspace/adamic/internal/oracle/testdata/unused_parameters.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0196",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_shrinks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0197",
+    "Path": "/workspace/adamic/internal/oracle/testdata/find_shrinks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0198",
+    "Path": "/workspace/adamic/internal/oracle/testdata/find_index_shrinks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0199",
+    "Path": "/workspace/adamic/internal/oracle/testdata/self_assignments.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0200",
+    "Path": "/workspace/adamic/internal/oracle/testdata/method_closures.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0201",
+    "Path": "/workspace/adamic/internal/oracle/testdata/splice_empty.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0202",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_reads.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0203",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_writes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0204",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_methods.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0205",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_fields.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0206",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0207",
+    "Path": "/workspace/adamic/internal/oracle/testdata/narrowed_compared.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0208",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sort_top_level.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0209",
+    "Path": "/workspace/adamic/internal/oracle/testdata/splices.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0210",
+    "Path": "/workspace/adamic/internal/oracle/testdata/fills.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0211",
+    "Path": "/workspace/adamic/internal/oracle/testdata/fill_length.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0212",
+    "Path": "/workspace/adamic/internal/oracle/testdata/array_from.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0213",
+    "Path": "/workspace/adamic/internal/oracle/testdata/array_from_length.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0214",
+    "Path": "/workspace/adamic/internal/oracle/testdata/array_from_undefined.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0215",
+    "Path": "/workspace/adamic/internal/oracle/testdata/weak_parent.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0216",
+    "Path": "/workspace/adamic/internal/oracle/testdata/doubly_linked.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0217",
+    "Path": "/workspace/adamic/internal/oracle/testdata/fresh_parser.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0218",
+    "Path": "/workspace/adamic/internal/oracle/testdata/fresh_writes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0219",
+    "Path": "/workspace/adamic/internal/oracle/testdata/fresh_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0220",
+    "Path": "/workspace/adamic/internal/oracle/testdata/weak_narrowed.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0221",
+    "Path": "/workspace/adamic/internal/oracle/testdata/exceptions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0222",
+    "Path": "/workspace/adamic/internal/oracle/testdata/exceptions_uncaught.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0223",
+    "Path": "/workspace/adamic/internal/oracle/testdata/exceptions_empty.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0224",
+    "Path": "/workspace/adamic/internal/oracle/testdata/closures_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0225",
+    "Path": "/workspace/adamic/internal/oracle/testdata/closures_throw_uncaught.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0226",
+    "Path": "/workspace/adamic/internal/oracle/testdata/finally_leaves.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0227",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_foreach_global.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0228",
+    "Path": "/workspace/adamic/internal/oracle/testdata/param_assigned_in_try.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0229",
+    "Path": "/workspace/adamic/internal/oracle/testdata/named_function_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0230",
+    "Path": "/workspace/adamic/internal/oracle/testdata/panic_in_try.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0231",
+    "Path": "/workspace/adamic/internal/oracle/testdata/invariance_readonly.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0232",
+    "Path": "/workspace/adamic/internal/oracle/testdata/tuples_kept.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0233",
+    "Path": "/workspace/adamic/internal/oracle/testdata/undefined_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0234",
+    "Path": "/workspace/adamic/internal/oracle/testdata/undefined_strings.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0235",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maybe_booleans.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0236",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maybe_boolean_panic.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0237",
+    "Path": "/workspace/adamic/internal/oracle/testdata/unions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0238",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maybe_number_slots.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0239",
+    "Path": "/workspace/adamic/internal/oracle/testdata/case_mapping.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0240",
+    "Path": "/workspace/adamic/internal/oracle/testdata/undefined_elements.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0241",
+    "Path": "/workspace/adamic/internal/oracle/testdata/map_zero_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0242",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_limits.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0243",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_too_long.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0244",
+    "Path": "/workspace/adamic/internal/oracle/testdata/pad_too_long.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0245",
+    "Path": "/workspace/adamic/internal/oracle/testdata/stack_overflow.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0246",
+    "Path": "/workspace/adamic/internal/oracle/testdata/adversarial_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0247",
+    "Path": "/workspace/adamic/internal/oracle/testdata/adversarial_exits.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0248",
+    "Path": "/workspace/adamic/internal/oracle/testdata/adversarial_iteration.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0249",
+    "Path": "/workspace/adamic/internal/oracle/testdata/number_edges.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0250",
+    "Path": "/workspace/adamic/internal/oracle/testdata/long_chain.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0251",
+    "Path": "/workspace/adamic/internal/oracle/testdata/write_after_shrink.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0252",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0253",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_form.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0254",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_positions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0255",
+    "Path": "/workspace/adamic/internal/oracle/testdata/long_literals.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0256",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_layouts.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0257",
+    "Path": "/workspace/adamic/internal/oracle/testdata/field_access_paths.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0258",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_field_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0259",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_slot_kinds.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0260",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_runtime_fields.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0261",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_narrowed_receiver.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0262",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_base_writes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0263",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_collection_fields.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0264",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_write_read_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0265",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_static_collision.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0266",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_optional_references.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0267",
+    "Path": "/workspace/adamic/internal/oracle/testdata/nbody_spread_fields.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0268",
+    "Path": "/workspace/adamic/internal/oracle/testdata/field_write_paths.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0269",
+    "Path": "/workspace/adamic/internal/oracle/testdata/inherited_static_field_read.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0270",
+    "Path": "/workspace/adamic/internal/oracle/testdata/ascii_scan.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0271",
+    "Path": "/workspace/adamic/internal/oracle/testdata/size_class_churn.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0272",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_reassigned.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0273",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_defined_lent.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0274",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_defined_lent_field.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0275",
+    "Path": "/workspace/adamic/internal/oracle/testdata/writes_in_try.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0276",
+    "Path": "/workspace/adamic/internal/oracle/testdata/class_as_interface.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0277",
+    "Path": "/workspace/adamic/internal/oracle/testdata/optional_class_method.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0278",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_undefined.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0279",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_map_overwrite.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0280",
+    "Path": "/workspace/adamic/internal/oracle/testdata/spread_snapshot.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0281",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0282",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_arrays.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0283",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_forward.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0284",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_global_sibling.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0285",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_weak_during_spread.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0286",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_weak_after_reuse.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0287",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0288",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regions_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0289",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regions_constructor_capture.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0290",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_element.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0291",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_loop.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0292",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_loop_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0293",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_global_call.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0294",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_element_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0295",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_element_virtual_store.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0296",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_element_virtual_move.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0297",
+    "Path": "/workspace/adamic/internal/oracle/testdata/borrow_element_super_move.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0298",
+    "Path": "/workspace/adamic/internal/oracle/testdata/move_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0299",
+    "Path": "/workspace/adamic/internal/oracle/testdata/throw_keeps_old_value.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0300",
+    "Path": "/workspace/adamic/internal/oracle/testdata/throw_keeps_old_value_variants.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0301",
+    "Path": "/workspace/adamic/internal/oracle/testdata/throw_in_writes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0302",
+    "Path": "/workspace/adamic/internal/oracle/testdata/throw_global_move.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0303",
+    "Path": "/workspace/adamic/internal/oracle/testdata/spread_undefined.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0304",
+    "Path": "/workspace/adamic/internal/oracle/testdata/lent_reads.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0305",
+    "Path": "/workspace/adamic/internal/oracle/testdata/large_output.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0306",
+    "Path": "/workspace/adamic/internal/oracle/testdata/output_then_panic.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0307",
+    "Path": "/workspace/adamic/internal/oracle/testdata/interleaved.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0308",
+    "Path": "/workspace/adamic/internal/oracle/testdata/trig_reduction.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0309",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sets.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0310",
+    "Path": "/workspace/adamic/internal/oracle/testdata/set_maybe_numbers.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0311",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0312",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0313",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_iterators.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0314",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_construct.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0315",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_group_by.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0316",
+    "Path": "/workspace/adamic/internal/oracle/testdata/maybe_collections.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0317",
+    "Path": "/workspace/adamic/internal/oracle/testdata/stack_tail_call.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0318",
+    "Path": "/workspace/adamic/internal/oracle/testdata/stack_forever.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0319",
+    "Path": "/workspace/adamic/internal/oracle/testdata/optional_strings.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0320",
+    "Path": "/workspace/adamic/internal/oracle/testdata/concat_too_long.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0321",
+    "Path": "/workspace/adamic/internal/oracle/testdata/replace_all_large.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0322",
+    "Path": "/workspace/adamic/internal/oracle/testdata/write_stdout_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0323",
+    "Path": "/workspace/adamic/internal/oracle/testdata/write_stderr_order.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0324",
+    "Path": "/workspace/adamic/internal/oracle/testdata/prompt_then_read.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0325",
+    "Path": "/workspace/adamic/internal/oracle/testdata/collections.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0326",
+    "Path": "/workspace/adamic/internal/oracle/testdata/gaps.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0327",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_long_marks.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0328",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_quick.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0329",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_repeat.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0330",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_stream.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0331",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_long.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0332",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_cache.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0333",
+    "Path": "/workspace/adamic/internal/oracle/testdata/normalize_coverage_limit.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0334",
+    "Path": "/workspace/adamic/internal/oracle/testdata/power_of_two_string.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0335",
+    "Path": "/workspace/adamic/internal/oracle/testdata/declared_later.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0336",
+    "Path": "/workspace/adamic/internal/oracle/testdata/return_panic.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0337",
+    "Path": "/workspace/adamic/internal/oracle/testdata/return_panic_fires.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0338",
+    "Path": "/workspace/adamic/internal/oracle/testdata/from_codes.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0339",
+    "Path": "/workspace/adamic/internal/oracle/testdata/from_code_point_fails.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0340",
+    "Path": "/workspace/adamic/internal/oracle/testdata/bitwise.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0341",
+    "Path": "/workspace/adamic/internal/oracle/testdata/tuple_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0342",
+    "Path": "/workspace/adamic/internal/oracle/testdata/generic_functions.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0343",
+    "Path": "/workspace/adamic/internal/oracle/testdata/generic_method_return.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0344",
+    "Path": "/workspace/adamic/internal/oracle/testdata/generic_values.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0345",
+    "Path": "/workspace/adamic/internal/oracle/testdata/undefined_references.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0346",
+    "Path": "/workspace/adamic/internal/oracle/testdata/spread_calls.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0347",
+    "Path": "/workspace/adamic/internal/oracle/testdata/utf8_view.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0348",
+    "Path": "/workspace/adamic/internal/oracle/testdata/utf8_view_fails.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0349",
+    "Path": "/workspace/adamic/internal/oracle/testdata/search_from.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0350",
+    "Path": "/workspace/adamic/internal/oracle/testdata/shared_slices.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0351",
+    "Path": "/workspace/adamic/internal/oracle/testdata/string_append.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0352",
+    "Path": "/workspace/adamic/internal/oracle/testdata/shared_slice_append.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0353",
+    "Path": "/workspace/adamic/internal/oracle/testdata/search_from_sweep.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0354",
+    "Path": "/workspace/adamic/internal/oracle/testdata/integer_format.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0355",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_throw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0356",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_narrowed.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0357",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_lent_global.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0358",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_spread_method.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0359",
+    "Path": "/workspace/adamic/internal/oracle/testdata/reuse_spread_method_alias.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0360",
+    "Path": "/workspace/adamic/internal/oracle/testdata/try_assignments.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0361",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_string_conversion.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0362",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_string_prototype.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0363",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_string_indices.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0364",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_string_raw.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0365",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_string_existing.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0366",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_visit.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0367",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_setops.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0368",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_zeros.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0369",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_groupby_keys.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0370",
+    "Path": "/workspace/adamic/internal/oracle/testdata/library_map_set_next.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0371",
+    "Path": "/workspace/adamic/internal/oracle/testdata/has_own.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0372",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0373",
+    "Path": "/workspace/adamic/internal/oracle/testdata/sweeps/regexp_methods.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0374",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_matchall_nonglobal.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0375",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0376",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_null_narrowed.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0377",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_replace.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0378",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_split.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0379",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_exec.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0380",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_match.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0381",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_search.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0382",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_unicode.a",
+    "Lowers": true
+  },
+  {
+    "Name": "oracle-0383",
+    "Path": "/workspace/adamic/internal/oracle/testdata/regexp_split_pair_pattern.a",
+    "Lowers": true
+  }
+]
