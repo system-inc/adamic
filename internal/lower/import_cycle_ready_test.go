@@ -1,15 +1,20 @@
 package lower
 
 import (
+	"bytes"
+	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -45,12 +50,12 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 					t.Fatal(err)
 				}
 			}
+			entry := filepath.Join(directory, probe.entry)
 			// Observe a computed answer before the cycle can panic, rather than
 			// letting a failing cycle pass the oracle on silence.
 			if err := os.WriteFile(filepath.Join(directory, "probe.a"), []byte("console.log(`${1 + 2}`);"), 0o644); err != nil {
 				t.Fatal(err)
 			}
-			entry := filepath.Join(directory, probe.entry)
 			original, err := os.ReadFile(entry)
 			if err != nil {
 				t.Fatal(err)
@@ -58,13 +63,18 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 			if err := os.WriteFile(entry, append([]byte("import './probe.a';\n"), original...), 0o644); err != nil {
 				t.Fatal(err)
 			}
-			exit := 0
-			if probe.fails {
-				exit = 70
-			}
-			program := agreeEntry(t, entry, nil, exit, nil, nil)
 			probe.output = "3\n" + probe.output
-			// Behavior cannot see whether a redundant readiness check was eliminated.
+			if probe.fails {
+				probe.output = "3\n"
+			}
+			loaded, err := load.Load([]string{entry})
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := Lower(context.Background(), loaded)
+			if err != nil {
+				t.Fatal(err)
+			}
 			if probe.name == "initialized value" && strings.Contains(native.C(program), "ReferenceError: Cannot access 'value'") {
 				t.Error("proven imported read retained a TDZ check")
 			}
@@ -75,23 +85,44 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
+			generated := filepath.Join(directory, "generated.mjs")
+			if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+				t.Fatal(err)
+			}
 			run := func(command *exec.Cmd) {
 				t.Helper()
-				output, err := command.CombinedOutput()
+				var stderr bytes.Buffer
+				command.Stderr = &stderr
+				output, err := command.Output()
+				if (command.Path == binary || !probe.fails) && stderr.Len() != 0 {
+					t.Errorf("%s: unexpected stderr %s", command.Path, stderr.Bytes())
+				}
 				if string(output) != probe.output {
 					t.Errorf("%s: got %q, want %q (error %v)", command.Path, output, probe.output, err)
 				}
 				if probe.fails {
 					exit, ok := err.(*exec.ExitError)
-					if !ok || exit.ExitCode() != 70 {
-						t.Errorf("expected exit 70, got %v", err)
+					if !ok || exit.ExitCode() != 1 {
+						t.Errorf("expected exit 1, got %v", err)
 					}
 				} else if err != nil {
 					t.Error(err)
 				}
 			}
-
-			command := exec.Command(binary)
+			// Node reads the original .a modules with native ESM evaluation; its runtime
+			// has the same stdout and exit 1 contract as Adamic for uncaught errors.
+			// Step 21 excludes engine-specific stderr rendering from that contract.
+			runner := filepath.Join("..", "..", "oracle", "node.mjs")
+			for _, path := range []string{entry, generated} {
+				ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+				arguments := []string{"--disable-warning=ExperimentalWarning", runner}
+				command := exec.CommandContext(ctx, "node", append(arguments, path)...)
+				run(command)
+				cancel()
+			}
+			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+			defer cancel()
+			command := exec.CommandContext(ctx, binary)
 			if probe.fails {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}
