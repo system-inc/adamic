@@ -13,3 +13,9 @@ Commands wrote complete logs under this review directory. The first timeout 240 
 Initial leaves: TestTypedArrayFromArray 0.37s, TestTypedArrayFromEmptyArray 0.43s, Uint8Array 0.38s, Int32Array 0.57s, Float64Array 0.54s. Existing refusal tests: gaps 1.50s, representation refusals 0.31s. All under 60s, including each leaf's own source loading and Node processes.
 
 Exact diffs fetched from test-audit/internal-lower-taste_representation at 4c6f0bff. timeout 240 python3 run-mutants.py.txt ran each patch with timeout 120 go test ./internal/lower -run '^<witness>$' -count=1 -timeout 90s -v. M01 exited 1 with empty-array native dispatch assertion (0.14s); M02 exited 1 with array native dispatch assertion (0.15s). Production restored in finally after each. The additional constructor-kind.patch replaces the array constructor kind with Float64Array: TestTypedArraysLower exited 1, Uint8Array and Int32Array stdout differed, Float64Array passed. All diffs are .patch and runner evidence is .py.txt, never compilable Go.
+
+After merging main a3fbb927, focused checks passed again (package 0.687s): new leaves 0.33s and 0.30s; converted kind leaves 0.32s, 0.17s and 0.17s. Lane output: lane checks 7.1 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages. No diagnostics.
+
+The extra requested command was timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v. Its first run failed on the unrelated existing TestClassStaticInitializerCallIsEmitted:Call.Function (23.88s). Main's corrected compiler-owner allowlist entry was merged from cf79ecec, without editing that table locally. The old failure log is preserved separately; the final run uses main's table. Typed-array tests read no Call.Function, CallClosure.Closure or ArraySort.Comparator.
+
+Final TestCallTargetReaders passed: leaf 1.28s, package 1.295s. Implementation commit f68f974b; merges contain only landed origin/main changes.

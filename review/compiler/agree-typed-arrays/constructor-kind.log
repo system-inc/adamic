@@ -1,0 +1,15 @@
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+    typed_arrays_test.go:15: JavaScript backend stdout = "3\n300\n-1\nNaN\n300\n-1\n300\n-999\n", source Node = "3\n44\n255\n0\n44\n255\n44\n-999\n"
+=== RUN   TestTypedArraysLower/Int32Array
+    typed_arrays_test.go:15: JavaScript backend stdout = "3\n300\n-1\nNaN\n300\n-1\n300\n-999\n", source Node = "3\n300\n-1\n0\n300\n-1\n300\n-999\n"
+=== RUN   TestTypedArraysLower/Float64Array
+--- FAIL: TestTypedArraysLower (0.53s)
+    --- FAIL: TestTypedArraysLower/Uint8Array (0.18s)
+    --- FAIL: TestTypedArraysLower/Int32Array (0.18s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.541s
+FAIL

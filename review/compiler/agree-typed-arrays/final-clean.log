@@ -1,0 +1,28 @@
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== RUN   TestTypedArrayGaps
+=== PAUSE TestTypedArrayGaps
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+=== CONT  TestTypedArrayFromArray
+=== CONT  TestTypedArrayGaps
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.27s)
+--- PASS: TestTypedArrayFromEmptyArray (0.30s)
+=== RUN   TestTypedArraysLower/Int32Array
+--- PASS: TestTypedArrayFromArray (0.33s)
+=== RUN   TestTypedArraysLower/Float64Array
+--- PASS: TestTypedArrayGaps (0.58s)
+--- PASS: TestTypedArraysLower (0.66s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.32s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.17s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.687s

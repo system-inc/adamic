@@ -1,0 +1,8 @@
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== CONT  TestTypedArrayFromArray
+    typed_arrays_test.go:77: array source lost native array constructor dispatch
+--- FAIL: TestTypedArrayFromArray (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.163s
+FAIL

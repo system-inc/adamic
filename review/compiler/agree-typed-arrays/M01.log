@@ -1,0 +1,8 @@
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestTypedArrayFromEmptyArray
+    typed_arrays_test.go:91: empty array source lost native array constructor dispatch
+--- FAIL: TestTypedArrayFromEmptyArray (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.146s
+FAIL
