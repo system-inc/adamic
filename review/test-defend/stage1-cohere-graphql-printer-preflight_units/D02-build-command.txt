@@ -1,0 +1,2 @@
+source /workspace/adamic-tools/env.sh
+ADAMIC_GRAPHQL_PRETTIER=/tmp/def-graphql/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/def-graphql/cache/D02 timeout 120 go test -json -count=1 -timeout 90s -parallel 2 ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'

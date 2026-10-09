@@ -1,0 +1,65 @@
+[
+  {
+    "test": "TestPrinterWhitespaceGap family",
+    "package": "stage1/cohere/graphql/printer",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestPrinterFileDriver",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "stage1/cohere/graphql/parser.ts:226",
+        "change": "Change unexpected-token diagnostic constant; target EOF refusal absent from valid file-driver input",
+        "rows_failed": [
+          "TestPrinterAsGoCohere family",
+          "TestPrinterWhitespaceGap family"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "stage1/cohere/graphql/lexer.ts:74",
+        "change": "Off-by-one error-location starting line; target empty and whitespace-only refusal coordinates",
+        "rows_failed": [
+          "TestPrinterAsGoCohere family",
+          "TestPrinterWhitespaceGap family"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "stage1/cohere/graphql/lexer.ts:75",
+        "change": "Repeat error-location scanning eight times with counters reset; answer-preserving work-growth attempt for the 30-second unit assertion",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/def-graphql/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/def-graphql/cache/<id> timeout 120 go test -json -count=1 -timeout 90s -parallel 2 ./stage1/cohere/graphql/printer/ -run '^(TestPrinter(Whitespace.*|AsGoCohere.*|FileDriver|Shard.*|ConstructorGap))$'; D01: gaps_test.go:133: native: Expected <EOF>. (1:2), Go cohere Unexpected <EOF>. (1:2). D02: gaps_test.go:133: native: Unexpected <EOF>. (0:2), Go cohere (1:2). Exact commands and cooked-run repairs accompany the logs.",
+    "bounded": true,
+    "members": [
+      "TestPrinterWhitespaceGap_000",
+      "TestPrinterWhitespaceGap_001",
+      "TestPrinterWhitespaceGap_002",
+      "TestPrinterWhitespaceGap_003",
+      "TestPrinterWhitespaceGap_004"
+    ],
+    "matrix_rows": [
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_001",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_Union",
+      "TestPrinterConstructorGap",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterShardSelection",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterWhitespaceGap_000",
+      "TestPrinterWhitespaceGap_001",
+      "TestPrinterWhitespaceGap_002",
+      "TestPrinterWhitespaceGap_003",
+      "TestPrinterWhitespaceGap_004",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ]
+  }
+]

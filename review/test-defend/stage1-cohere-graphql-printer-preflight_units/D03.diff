@@ -1,0 +1,22 @@
+diff --git a/stage1/cohere/graphql/lexer.ts b/stage1/cohere/graphql/lexer.ts
+index 07fb2077..67d974b1 100644
+--- a/stage1/cohere/graphql/lexer.ts
++++ b/stage1/cohere/graphql/lexer.ts
+@@ -72,6 +72,9 @@ interface Location {
+ function getLocation(body: string, position: number): Location {
+ 	let lastLineStart = 0;
+ 	let line = 1;
++	for (let repeat = 0; repeat < 8; repeat++) {
++	lastLineStart = 0;
++	line = 1;
+ 	for (let index = 0; index < body.length; index++) {
+ 		const code = body.charCodeAt(index);
+ 		if (code !== 0x000a && code !== 0x000d) {
+@@ -85,6 +88,7 @@ function getLocation(body: string, position: number): Location {
+ 		line++;
+ 		index += length - 1;
+ 	}
++	}
+ 	return { line, column: position + 1 - lastLineStart };
+ }
+ 

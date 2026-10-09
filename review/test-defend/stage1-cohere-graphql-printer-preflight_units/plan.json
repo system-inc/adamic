@@ -1,0 +1,28 @@
+[
+  {
+    "mutant": "D01",
+    "file": "stage1/cohere/graphql/parser.ts",
+    "before": "`Unexpected ${getTokenDesc(token)}.`",
+    "after": "`Expected ${getTokenDesc(token)}.`",
+    "change": "Change unexpected-token diagnostic constant; target EOF refusal absent from valid file-driver input",
+    "line": 226
+  },
+  {
+    "mutant": "D02",
+    "file": "stage1/cohere/graphql/lexer.ts",
+    "before": "let line = 1;",
+    "after": "let line = 0;",
+    "change": "Off-by-one error-location starting line; target empty and whitespace-only refusal coordinates",
+    "line": 74
+  },
+  {
+    "mutant": "D03",
+    "file": "stage1/cohere/graphql/lexer.ts",
+    "before": "for (let index = 0; index < body.length; index++) {\n\t\tconst code = body.charCodeAt(index);",
+    "after": "for (let repeat = 0; repeat < 8; repeat++) {\n\tlastLineStart = 0;\n\tline = 1;\n\tfor (let index = 0; index < body.length; index++) {\n\t\tconst code = body.charCodeAt(index);",
+    "change": "Repeat error-location scanning eight times with counters reset; answer-preserving work-growth attempt for the 30-second unit assertion",
+    "extra_before": "\treturn { line, column: position + 1 - lastLineStart };",
+    "extra_after": "\t}\n\treturn { line, column: position + 1 - lastLineStart };",
+    "line": 75
+  }
+]

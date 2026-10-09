@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/graphql/lexer.ts b/stage1/cohere/graphql/lexer.ts
+index 07fb2077..3a3b7b52 100644
+--- a/stage1/cohere/graphql/lexer.ts
++++ b/stage1/cohere/graphql/lexer.ts
+@@ -71,7 +71,7 @@ interface Location {
+ // SourceLocation. Lines are split by /\r\n|[\n\r]/g, as graphql-js splits them.
+ function getLocation(body: string, position: number): Location {
+ 	let lastLineStart = 0;
+-	let line = 1;
++	let line = 0;
+ 	for (let index = 0; index < body.length; index++) {
+ 		const code = body.charCodeAt(index);
+ 		if (code !== 0x000a && code !== 0x000d) {

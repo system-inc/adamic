@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/graphql/parser.ts b/stage1/cohere/graphql/parser.ts
+index d7f0f460..1ad70cfc 100644
+--- a/stage1/cohere/graphql/parser.ts
++++ b/stage1/cohere/graphql/parser.ts
+@@ -223,7 +223,7 @@ class Parser {
+ 	// encountered: its message, which the caller throws (GAPS.md, gap 2).
+ 	unexpected(atToken: Token | undefined): string {
+ 		const token = atToken ?? this.lexer.token;
+-		return syntaxError(this.lexer.body, token.start, `Unexpected ${getTokenDesc(token)}.`);
++		return syntaxError(this.lexer.body, token.start, `Expected ${getTokenDesc(token)}.`);
+ 	}
+ 
+ 	// parseName converts a name lex token into a name parse node.

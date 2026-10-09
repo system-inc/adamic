@@ -1,0 +1,89 @@
+[
+  {
+    "mutant": "D01",
+    "rows_failed": [
+      "TestPrinterAsGoCohere family",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "top_level_results": {
+      "TestPrinterConstructorGap": "pass",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterWhitespaceGap_000": "fail",
+      "TestPrinterWhitespaceGap_003": "fail",
+      "TestPrinterWhitespaceGap_002": "fail",
+      "TestPrinterWhitespaceGap_001": "fail",
+      "TestPrinterShardPlantedDisagreement": "pass",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterAsGoCohere_Union": "pass",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestPrinterShardSelection": "pass",
+      "TestPrinterWhitespaceGap_Setup": "pass",
+      "TestPrinterShardUnionRejectsMissingAndRepeated": "pass",
+      "TestPrinterWhitespaceShardGrowth": "pass",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterWhitespacePlantedDisagreement": "pass",
+      "TestPrinterWhitespaceGap_004": "fail"
+    },
+    "unknown_rows": [],
+    "first_native_failure": "gaps_test.go:133: native: shard-000 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000004: line 1: \"error\\tSyntax Error: Expected <EOF>. (1:2)\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\"",
+    "cooked_initial_run": false
+  },
+  {
+    "mutant": "D02",
+    "rows_failed": [
+      "TestPrinterAsGoCohere family",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "top_level_results": {
+      "TestPrinterConstructorGap": "pass",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterWhitespaceGap_001": "fail",
+      "TestPrinterWhitespaceGap_003": "fail",
+      "TestPrinterWhitespaceGap_004": "fail",
+      "TestPrinterWhitespaceGap_002": "fail",
+      "TestPrinterShardPlantedDisagreement": "pass",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterWhitespaceGap_Setup": "pass",
+      "TestPrinterWhitespaceGap_000": "fail",
+      "TestPrinterShardSelection": "pass",
+      "TestPrinterAsGoCohere_Union": "pass",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestPrinterWhitespaceShardGrowth": "pass",
+      "TestPrinterWhitespacePlantedDisagreement": "pass",
+      "TestPrinterShardUnionRejectsMissingAndRepeated": "pass",
+      "TestPrinterAsGoCohere_000": "fail"
+    },
+    "unknown_rows": [],
+    "first_native_failure": "gaps_test.go:133: native: shard-001 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000001: line 1: \"error\\tSyntax Error: Unexpected <EOF>. (0:2)\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\"",
+    "cooked_initial_run": true
+  },
+  {
+    "mutant": "D03",
+    "rows_failed": [],
+    "top_level_results": {
+      "TestPrinterConstructorGap": "pass",
+      "TestPrinterWhitespaceGap_003": "pass",
+      "TestPrinterWhitespaceGap_004": "pass",
+      "TestPrinterWhitespaceGap_002": "pass",
+      "TestPrinterWhitespaceGap_001": "pass",
+      "TestPrinterWhitespaceGap_Setup": "pass",
+      "TestPrinterShardSelection": "pass",
+      "TestPrinterShardUnionRejectsMissingAndRepeated": "pass",
+      "TestPrinterWhitespaceGap_000": "pass",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterShardPlantedDisagreement": "pass",
+      "TestPrinterWhitespacePlantedDisagreement": "pass",
+      "TestPrinterAsGoCohere_000": "pass",
+      "TestPrinterAsGoCohere_003": "pass",
+      "TestPrinterAsGoCohere_002": "pass",
+      "TestPrinterAsGoCohere_Union": "pass",
+      "TestPrinterWhitespaceShardGrowth": "pass",
+      "TestPrinterAsGoCohere_001": "pass"
+    },
+    "unknown_rows": [],
+    "first_native_failure": null,
+    "cooked_initial_run": true
+  }
+]

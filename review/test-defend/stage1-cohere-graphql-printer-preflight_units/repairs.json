@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D02",
+    "unknown_rows_rerun": [
+      "TestPrinterAsGoCohere_000"
+    ],
+    "selector": "^(TestPrinterWhitespaceGap_[0-9]+|TestPrinterAsGoCohere_000)$",
+    "exit": 1,
+    "wall_seconds": 43.78574133800066
+  },
+  {
+    "mutant": "D03",
+    "unknown_rows_rerun": [
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_001",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_Union",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "selector": "^(TestPrinterWhitespaceGap_[0-9]+|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterAsGoCohere_Union|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$",
+    "exit": 0,
+    "wall_seconds": 80.5571109770026
+  }
+]
