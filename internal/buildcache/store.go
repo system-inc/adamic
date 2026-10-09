@@ -102,11 +102,39 @@ func (e poisonedError) Unwrap() error { return e.err }
 
 func poisoned(err error) error { return poisonedError{err} }
 
+// Refs are split by trust (Loom, Oct 9: a key covers a product's inputs, not the caller's build function, so a candidate
+// could define a different build under main's key). refs/build is written only by main's own gate, which runs uncached
+// and publishes what it built, with ADAMIC_BUILD_STORE_TRUST=main; everything else writes refs/build-candidate. A
+// trusted reader reads refs/build alone; a candidate reads refs/build, then refs/build-candidate, so a candidate can
+// only ever mislead candidates.
+func trusted() bool { return os.Getenv("ADAMIC_BUILD_STORE_TRUST") == "main" }
+
+func readNamespaces() []string {
+	if trusted() {
+		return []string{"build"}
+	}
+	return []string{"build", "build-candidate"}
+}
+
+func writeNamespace() string {
+	if trusted() {
+		return "build"
+	}
+	return "build-candidate"
+}
+
 // fetch places the stored product for key into directory. It returns errNotStored when the store has none or can't
 // be reached (the caller builds), and a poisonedError when what it holds doesn't check.
 func fetch(key, directory string) error {
 	store := storeAddress()
-	reference, err := download(store + "/refs/build/" + key)
+	var reference []byte
+	var namespace string
+	err := errNotStored
+	for _, namespace = range readNamespaces() {
+		if reference, err = download(store + "/refs/" + namespace + "/" + key); !errors.Is(err, errNotStored) {
+			break
+		}
+	}
 	if err != nil {
 		if errors.Is(err, errNotStored) {
 			return errNotStored
@@ -117,7 +145,7 @@ func fetch(key, directory string) error {
 	sum := strings.TrimSpace(string(reference))
 	content, err := blob(store, sum)
 	if err != nil {
-		return named(err, fmt.Sprintf("refs/build/%s names manifest %s", key, sum))
+		return named(err, fmt.Sprintf("refs/%s/%s names manifest %s", namespace, key, sum))
 	}
 	var product manifest
 	if err = json.Unmarshal(content, &product); err != nil {
@@ -249,7 +277,7 @@ func publish(key, name, directory string) error {
 	if err = upload(writer+"/blobs/"+manifestHash, token, encoded); err != nil {
 		return err
 	}
-	if err = upload(writer+"/refs/build/"+key, token, []byte(manifestHash)); err != nil {
+	if err = upload(writer+"/refs/"+writeNamespace()+"/"+key, token, []byte(manifestHash)); err != nil {
 		if strings.Contains(err.Error(), "409") {
 			return fmt.Errorf("the store already holds a different product for key %s (%s): the key isn't honest or the build isn't reproducible: %v", key[:12], name, err)
 		}

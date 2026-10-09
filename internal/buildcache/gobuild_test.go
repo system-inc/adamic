@@ -30,6 +30,10 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
 	}
 	binary := GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
+	// Built path-independent: no Go build ID, which differs between two checkout paths.
+	if id, err := exec.Command("go", "tool", "buildid", binary).Output(); err != nil || strings.TrimSpace(string(id)) != "" {
+		t.Fatalf("the product's build ID is %q, %v", id, err)
+	}
 	output, err := exec.Command(binary).Output()
 	if err != nil || strings.TrimSpace(string(output)) != "hello from a header" {
 		t.Fatalf("the product printed %q, %v", output, err)
@@ -69,4 +73,18 @@ func TestGoBuildKeysArgumentsAndEnvironment(t *testing.T) {
 	if _, err := GoInputs("hello", "./internal/buildcache/testdata/hello", []string{"-overlay", filepath.Join(t.TempDir(), "o.json")}, nil); err == nil {
 		t.Fatal("an -overlay build was keyed")
 	}
+}
+
+// GoBuild builds the same bytes from any checkout path, so a product another machine published audits clean.
+func TestGoBuildIsReproducibleAcrossCheckoutPaths(t *testing.T) {
+	arguments := reproducible([]string{"-buildmode=c-archive"})
+	if !slices.Equal(arguments, []string{"-trimpath", "-ldflags=-buildid=", "-buildmode=c-archive"}) {
+		t.Fatalf("arguments %v", arguments)
+	}
+	defer func() {
+		if recover() == nil {
+			t.Fatal("a caller's own -ldflags was accepted")
+		}
+	}()
+	reproducible([]string{"-ldflags=-s"})
 }

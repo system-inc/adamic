@@ -66,6 +66,17 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		if err = build(directory); err != nil {
 			return "", "", err
 		}
+		// Main's own gate runs uncached and is the one writer of trusted refs: what it built from main's sources is
+		// published for everyone to read (store.go).
+		if trusted() {
+			if root, err := repositoryRoot(); err == nil {
+				if key, err := Key(root, inputs); err == nil {
+					if err = publish(key, inputs.Name, directory); err != nil {
+						note("publish %s %s failed: %v", inputs.Name, key[:12], err)
+					}
+				}
+			}
+		}
 		return directory, record(inputs.Name, "uncached", "off", started), nil
 	}
 	root, err := repositoryRoot()

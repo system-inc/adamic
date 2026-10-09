@@ -61,7 +61,7 @@ func (s *fakeStore) write(writer http.ResponseWriter, request *http.Request) {
 		}
 		s.objects[name] = content
 		writer.WriteHeader(http.StatusCreated)
-	case strings.HasPrefix(name, "/refs/build/"):
+	case strings.HasPrefix(name, "/refs/"):
 		held, ok := s.objects[name]
 		if _, blob := s.objects["/blobs/"+string(content)]; !blob || (ok && string(held) != string(content)) {
 			http.Error(writer, "conflict", http.StatusConflict)
@@ -232,7 +232,8 @@ func TestABuildPublishesBlobsThenItsRefAndAnotherMachineFetchesIt(t *testing.T) 
 	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	Product(t, thisPackage, build)
-	if len(store.writes) != 4 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build/"+thisKey(t) {
+	// A candidate's build writes the candidate ref, never main's.
+	if len(store.writes) != 4 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build-candidate/"+thisKey(t) {
 		t.Fatalf("writes: %q", store.writes)
 	}
 	// Another machine, an empty local cache: fetched, never built, exec bit kept.
@@ -252,6 +253,7 @@ func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
 	os.WriteFile(token, []byte("gate-box-token"), 0o600)
 	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
 	store.put(t, thisKey(t), map[string]string{"product": "another machine's"})
+	store.objects["/refs/build-candidate/"+thisKey(t)] = store.objects["/refs/build/"+thisKey(t)]
 	// Reads can't reach the store, so this machine builds its own, then tries to publish it under the same key.
 	t.Setenv("ADAMIC_BUILD_STORE", "http://127.0.0.1:1")
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
@@ -284,5 +286,57 @@ func TestAnAuditedFetchThatDiffersFromARebuildIsPoisoning(t *testing.T) {
 	var wrong poisonedError
 	if !errors.As(err, &wrong) || !strings.Contains(err.Error(), "differs from a rebuild") {
 		t.Fatalf("got %v, want poisoning", err)
+	}
+}
+
+// Refs are split by trust: main's gate reads only main's refs and publishes there from its uncached build; a candidate
+// reads main's, then candidates'.
+func TestRefsAreSplitByTrust(t *testing.T) {
+	store, _ := shared(t)
+	token := filepath.Join(t.TempDir(), "publish-token")
+	os.WriteFile(token, []byte("gate-box-token"), 0o600)
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
+	store.put(t, thisKey(t), map[string]string{"product": "a candidate's"})
+	store.objects["/refs/build-candidate/"+thisKey(t)] = store.objects["/refs/build/"+thisKey(t)]
+	delete(store.objects, "/refs/build/"+thisKey(t))
+	build := func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("main's"), 0o644)
+	}
+	// A candidate reads the candidate ref.
+	directory := Product(t, thisPackage, func(string) error { t.Fatal("a candidate built what a candidate ref holds"); return nil })
+	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "a candidate's" {
+		t.Fatalf("a candidate read %q", content)
+	}
+	// A trusted reader never does: with only a candidate's ref stored, it builds.
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "main")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	var built bool
+	Product(t, thisPackage, func(directory string) error { built = true; return build(directory) })
+	if !built {
+		t.Fatal("a trusted reader took a candidate's product")
+	}
+	// Main's gate, uncached, builds and publishes to main's ref.
+	t.Setenv("ADAMIC_BUILD_CACHE", "off")
+	directory = Product(t, thisPackage, build)
+	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "main's" {
+		t.Fatalf("main's gate read %q", content)
+	}
+	if last := store.writes[len(store.writes)-1]; last != "/refs/build/"+thisKey(t) {
+		t.Fatalf("main's gate wrote %v", store.writes)
+	}
+	// With the cache on, a trusted reader reads main's ref and ignores candidates'.
+	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	directory = Product(t, thisPackage, func(string) error { t.Fatal("rebuilt what main's ref holds"); return nil })
+	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "main's" {
+		t.Fatalf("a trusted reader read %q", content)
+	}
+	// Uncached and untrusted, nothing is written.
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "")
+	t.Setenv("ADAMIC_BUILD_CACHE", "off")
+	writes := len(store.writes)
+	Product(t, thisPackage, build)
+	if len(store.writes) != writes {
+		t.Fatalf("an uncached candidate wrote %v", store.writes[writes:])
 	}
 }

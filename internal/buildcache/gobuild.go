@@ -21,6 +21,7 @@ import (
 // repository, which no key here can name, so it is refused: such a build stays the caller's own.
 func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
 	t.Helper()
+	arguments = reproducible(arguments)
 	inputs, err := GoInputs(output, pkg, arguments, environment)
 	if err != nil {
 		t.Fatalf("build %s: %v", pkg, err)
@@ -36,6 +37,19 @@ func GoBuild(t testing.TB, output, pkg string, arguments []string, environment .
 		return nil
 	})
 	return filepath.Join(directory, output)
+}
+
+// reproducible adds what makes a build's bytes independent of where the checkout sits: without them a cgo product
+// differs between two checkout paths in Go's build ID alone (measured Oct 9), so a product fetched by another machine
+// would fail the audit. Pure Go is already path-independent; -trimpath and an empty build ID make cgo so too.
+func reproducible(arguments []string) []string {
+	kept := []string{"-trimpath", "-ldflags=-buildid="}
+	for _, argument := range arguments {
+		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") {
+			panic("buildcache.GoBuild sets -trimpath and -ldflags itself, for a product that's the same from any checkout path")
+		}
+	}
+	return append(kept, arguments...)
 }
 
 // The go env values a build reads beyond its sources, resolved by go itself so a default counts like a setting.
