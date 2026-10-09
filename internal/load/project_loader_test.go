@@ -89,7 +89,7 @@ func TestProjectLoaderOwnershipAndNoCheck(t *testing.T) {
 		{"mixed", `{"compilerOptions":{` + fixtureOptions + `},"files":["main.ts"]}`, "export const value: number = 1;", "export const proof: number = 1;", "mixed project"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			files := map[string]string{"tsconfig.json": tc.config, "main.ts": tc.source}
+			files := map[string]string{"tsconfig.json": strings.TrimSuffix(tc.config, "}") + `,"references":[{"path":"./dependency"}]}`, "main.ts": tc.source, "dependency/value.ts": "export const value = 1;", "dependency/tsconfig.json": referenceConfig(`["value.ts"]`, `[]`, "")}
 			if tc.other != "" {
 				files["proof.a"] = tc.other
 			}
@@ -108,9 +108,11 @@ func TestProjectLoaderOwnershipAndNoCheck(t *testing.T) {
 func TestProjectLoaderHostConsoleAndCompositeEntries(t *testing.T) {
 	t.Parallel()
 	dir := projectFixture(t, map[string]string{
-		"main.ts":       "console.log(7);\nexport const value: number = 1;\n",
-		"other.ts":      "export const other: number = 2;\n",
-		"tsconfig.json": `{"compilerOptions":{"strict":true,"composite":true,"target":"es2024","module":"esnext","moduleResolution":"bundler","types":[],"noUncheckedIndexedAccess":true,"exactOptionalPropertyTypes":true},"files":["main.ts","other.ts"]}`,
+		"main.ts":                  "console.log(7);\nexport const value: number = 1;\n",
+		"other.ts":                 "export const other: number = 2;\n",
+		"dependency/value.ts":      "export const dependency = 1;",
+		"dependency/tsconfig.json": `{"compilerOptions":{"strict":true,"composite":true,"target":"es2024","module":"esnext","moduleResolution":"bundler","types":[],"noUncheckedIndexedAccess":true,"exactOptionalPropertyTypes":true},"files":["value.ts"]}`,
+		"tsconfig.json":            `{"compilerOptions":{"strict":true,"composite":true,"target":"es2024","module":"esnext","moduleResolution":"bundler","types":[],"noUncheckedIndexedAccess":true,"exactOptionalPropertyTypes":true},"files":["main.ts","other.ts"],"references":[{"path":"./dependency"}]}`,
 	})
 	p, err := Load([]string{filepath.Join(dir, "main.ts")})
 	if err != nil {

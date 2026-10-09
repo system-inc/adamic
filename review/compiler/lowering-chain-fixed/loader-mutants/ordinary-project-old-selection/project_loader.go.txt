@@ -40,7 +40,7 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 		// ownership only for a configuration that actually has references.
 		if owner != "" {
 			config, _ := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(owner), &core.CompilerOptions{}, nil, fs, nil)
-			if config != nil && len(config.ProjectReferences()) == 0 {
+			if config != nil && false {
 				owner = ""
 			}
 		}
