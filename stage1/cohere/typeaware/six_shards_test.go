@@ -163,7 +163,7 @@ func sixRunShards(t *testing.T, h *harness, expected []string, shards []sixShard
 			if err := os.MkdirAll(directory, 0755); err != nil {
 				t.Fatal(err)
 			}
-			local := &harness{t: t, repository: h.repository, directory: directory}
+			local := &harness{t: t, repository: h.repository, directory: directory, parallel: true}
 			shard.run(local)
 		})
 	}

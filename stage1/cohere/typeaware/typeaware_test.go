@@ -2,6 +2,8 @@ package typeaware
 
 import (
 	"bytes"
+	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	goast "go/ast"
@@ -18,6 +20,9 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
@@ -31,6 +36,7 @@ type harness struct {
 	t                     *testing.T
 	repository, directory string
 	next                  int
+	parallel              bool
 	sixBuilds             bool
 	setupStarted          time.Time
 	sixFiles              []string
@@ -57,10 +63,17 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	defer report.Close()
 	command.Stdout = out
 	command.Stderr = report
+	if h.parallel {
+		environment := command.Env
+		if environment == nil {
+			environment = os.Environ()
+		}
+		command.Env = append(environment, "GOMAXPROCS=1")
+	}
 	started := time.Now()
 	runError := command.Run()
 	elapsed := time.Since(started)
-
+	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, err := os.ReadFile(out.Name())
 	if err != nil {
 		h.t.Fatal(err)
@@ -106,8 +119,23 @@ func (h *harness) overlay(name, path, from, to string) string {
 }
 func (h *harness) archive(name, overlay string, sanitize bool) string {
 	h.t.Helper()
+	if overlay == "" {
+		path, err := sharedProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+			archive := filepath.Join(directory, "checker.a")
+			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+			command.Dir = h.repository
+			if sanitize {
+				command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			}
+			return archive, buildProduct(h.t, name, command, directory)
+		})
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		return path
+	}
 	path := filepath.Join(h.directory, name+".a")
-	args := []string{"build", "-buildmode=c-archive", "-o", path}
+	args := []string{"build", "-p=1", "-buildmode=c-archive", "-o", path}
 	if overlay != "" {
 		args = append(args, "-overlay", overlay)
 	}
@@ -116,23 +144,68 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
 	if sanitize {
 		cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 	}
-	if h.sixBuilds {
-		return h.sixBuildProduct(name, cmd)
-	}
 	h.must(name, cmd)
 	return path
 }
-func (h *harness) build(stage0, name, entry, archive string, sanitize bool) string {
+
+// build uses the same load, lowering and TSGo emission pipeline as stage zero.
+// Only the completed C string is shared, because emission mutates its IR.
+func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
 	path := filepath.Join(h.directory, name)
-	args := []string{"build", entry, "-o", path, "--tsgo", archive}
-	if sanitize {
-		args = append(args, "--sanitize")
+	source, err := sharedProduct("C "+entry, func(_ string) (string, error) {
+		started := time.Now()
+		loaded, err := load.Load([]string{entry})
+		h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
+		if err != nil {
+			return "", err
+		}
+		loaded.EnableTSGo()
+		started = time.Now()
+		program, err := lower.Lower(context.Background(), loaded)
+		h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
+		if err != nil {
+			return "", err
+		}
+		started = time.Now()
+		source, err := native.TSGoC(program)
+		h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
+		return source, err
+	})
+	if err != nil {
+		h.t.Fatal(err)
 	}
-	if h.sixBuilds {
-		return h.sixBuildProduct(name, exec.Command(stage0, args...))
+	compile := func(output string) error {
+		started := time.Now()
+		err := native.BuildTSGo(source, output, archive, native.Options{Sanitize: sanitize})
+		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		return err
 	}
-	h.must(name, exec.Command(stage0, args...))
+	// Only unchanged repository programs can be reused by another test. A mutant
+	// runs once and stays in its child directory, avoiding a retained binary copy.
+	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !strings.HasPrefix(archive, productDirectory+string(os.PathSeparator)) {
+		if err := compile(path); err != nil {
+			h.t.Fatal(err)
+		}
+		return path
+	}
+	key := fmt.Sprintf("binary %x %s sanitize=%t", sha256.Sum256([]byte(source)), archive, sanitize)
+	binary, err := sharedProduct(key, func(directory string) (string, error) {
+		binary := filepath.Join(directory, "native")
+		return binary, compile(binary)
+	})
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	// Callers may remove their binaries. Give them copies, preserving the product.
+	data, err := os.ReadFile(binary)
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	if err := os.WriteFile(path, data, 0755); err != nil {
+		h.t.Fatal(err)
+	}
+
 	return path
 }
 func firstDifference(a, b []byte) int {
@@ -184,8 +257,8 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
-	stage0 := filepath.Join(directory, "adamic")
-	stage0 = h.sixBuildProduct("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	sanitized := h.archive("checker-asan", "", true)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")

@@ -26,6 +26,7 @@ static bool array_index(const char *name, uint32_t *value) {
 }
 
 adamic_array *adamic_plain_object_keys(const adamic_object *object) {
+	if (adamic_record_is(object)) return adamic_record_keys(object);
 	const adamic_shape *shape = object->shape;
 	adamic_array *keys = adamic_array_new(shape->count, true);
 	// Insertion-sort just the integer keys, then append ordinary strings in shape order. Runtime

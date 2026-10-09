@@ -335,14 +335,16 @@ func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {
 
 func (h *harness) sixBuildOnce(product sixProduct) string {
 	h.t.Helper()
-	dir := filepath.Join(h.directory, "products", strings.TrimPrefix(product.Inputs.Name, "typeaware six "))
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	inputs, err := json.Marshal(product.Inputs)
+	if err != nil {
 		h.t.Fatal(err)
 	}
-	started := time.Now()
-	err := product.Build(dir)
-	elapsed := time.Since(started)
-	h.t.Logf("six-build unit=%s function=sixCommandBuild elapsed_s=%.6f", strings.TrimPrefix(product.Inputs.Name, "typeaware six "), elapsed.Seconds())
+	dir, err := sharedProduct("six "+string(inputs), func(directory string) (string, error) {
+		started := time.Now()
+		err := product.Build(directory)
+		h.t.Logf("six-build unit=%s function=sixCommandBuild elapsed_s=%.6f", strings.TrimPrefix(product.Inputs.Name, "typeaware six "), time.Since(started).Seconds())
+		return directory, err
+	})
 	if err != nil {
 		h.t.Fatalf("%s build: %v", product.Inputs.Name, err)
 	}

@@ -1,0 +1,23 @@
+interface Item { readonly label: string; }
+class Reader {
+	read(items: Item[]): number { return items.length; }
+}
+class Counter extends Reader {
+	override read(items: Item[]): number { return items.length + 1; }
+}
+function throughVirtual(reader: Reader): void {
+	const items: Item[] = [{ label: `virtual${1}` }];
+	const first = items[0] ?? { label: `fallback${items.length}` };
+	reader.read(items);
+	console.log(first.label);
+}
+function throughClosure(): void {
+	const items: Item[] = [{ label: `closure${2}` }];
+	const first = items[0] ?? { label: `fallback${items.length}` };
+	const count = (values: Item[]): number => values.length;
+	count(items);
+	console.log(first.label);
+}
+throughVirtual(new Reader());
+throughVirtual(new Counter());
+throughClosure();

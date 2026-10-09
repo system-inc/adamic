@@ -30,8 +30,8 @@ func TestInspectRequestRefusals(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
-	stage0 := filepath.Join(directory, "adamic")
-	stage0 = h.sixBuildProduct("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts")
 	binary := h.build(stage0, "request", entry, normal, false)
