@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..7d1ecbca 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -424,7 +424,7 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
+ 			if err := l.initializerReads(member.AsPropertyDeclaration().Initializer, available); err != nil {
+ 				return nil, err
+ 			}
+-			value, err = l.expression(member.AsPropertyDeclaration().Initializer)
++
+ 			if err != nil {
+ 				return nil, err
+ 			}
