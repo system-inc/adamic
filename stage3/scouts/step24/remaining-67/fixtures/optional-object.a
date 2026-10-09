@@ -1,0 +1,4 @@
+// a-check: type error TS2375
+interface Slot { value?: number; }
+function make(): Slot { return { value: undefined }; }
+console.log(`${'value' in make()} ${make().value}`);

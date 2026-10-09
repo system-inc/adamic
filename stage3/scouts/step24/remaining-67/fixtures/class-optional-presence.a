@@ -1,0 +1,4 @@
+// a-check: type error TS2420
+interface Slot { value?: number; }
+class Present implements Slot { value: number | undefined = undefined; }
+console.log(`${'value' in new Present()} ${new Present().value}`);

@@ -1,0 +1,171 @@
+{
+  "mainDeclarations": 373,
+  "extendedDeclarations": 387,
+  "additionalAtStep20": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 172,
+      "column": 5,
+      "name": "emitSignatures",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "emitSignatures"
+      ],
+      "before": "Map<Path, EmitSignature>"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 176,
+      "column": 5,
+      "name": "outSignature",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "outSignature"
+      ],
+      "before": "EmitSignature"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 182,
+      "column": 5,
+      "name": "hasErrors",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "hasErrors"
+      ],
+      "before": "boolean"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8004,
+      "column": 13,
+      "name": "modifiers",
+      "owner_path": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "SignatureToSignatureDeclarationOptions",
+        "modifiers"
+      ],
+      "before": "readonly Modifier[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8006,
+      "column": 13,
+      "name": "questionToken",
+      "owner_path": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "SignatureToSignatureDeclarationOptions",
+        "questionToken"
+      ],
+      "before": "QuestionToken"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21338,
+      "column": 215,
+      "name": "errors",
+      "owner_path": [
+        "createTypeChecker",
+        "checkTypeAssignableTo",
+        "errorOutputObject",
+        "errors"
+      ],
+      "before": "Diagnostic[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43496,
+      "column": 93,
+      "name": "value",
+      "owner_path": [
+        "createTypeChecker",
+        "getPromisedTypeOfPromise",
+        "thisTypeForErrorOut",
+        "value"
+      ],
+      "before": "Type"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 235,
+      "column": 5,
+      "name": "nonRecursive",
+      "owner_path": [
+        "DirectoryWatchesOfFailedLookup",
+        "nonRecursive"
+      ],
+      "before": "boolean"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1720,
+      "column": 5,
+      "name": "prefix",
+      "owner_path": [
+        "AutoGenerateInfo",
+        "prefix"
+      ],
+      "before": "string | GeneratedNamePart"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1721,
+      "column": 5,
+      "name": "suffix",
+      "owner_path": [
+        "AutoGenerateInfo",
+        "suffix"
+      ],
+      "before": "string"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5807,
+      "column": 5,
+      "name": "aliasesToMakeVisible",
+      "owner_path": [
+        "SymbolVisibilityResult",
+        "aliasesToMakeVisible"
+      ],
+      "before": "LateVisibilityPaintedStatement[]"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5814,
+      "column": 5,
+      "name": "errorModuleName",
+      "owner_path": [
+        "SymbolAccessibilityResult",
+        "errorModuleName"
+      ],
+      "before": "string"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5828,
+      "column": 5,
+      "name": "parameters",
+      "owner_path": [
+        "AllDecorators",
+        "parameters"
+      ],
+      "before": "readonly (readonly Decorator[] | undefined)[]"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10055,
+      "column": 5,
+      "name": "moduleResolverHost",
+      "owner_path": [
+        "SymbolTracker",
+        "moduleResolverHost"
+      ],
+      "before": "ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }"
+    }
+  ],
+  "removedAtStep20": [],
+  "finalSourceAnnotationsChanged": 10,
+  "note": "Numeric-step-20 declaration totals precede later adaptations. Final source comparison, not their subtraction, measures the unit source delta."
+}

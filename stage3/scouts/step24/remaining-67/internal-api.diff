@@ -1,0 +1,56 @@
+--- main/typescript.internal.d.ts
++++ after/typescript.internal.d.ts
+@@ -12250,7 +12250,7 @@
+     /** @internal */
+     interface SymbolVisibilityResult {
+         accessibility: SymbolAccessibility;
+-        aliasesToMakeVisible?: LateVisibilityPaintedStatement[];
++        aliasesToMakeVisible?: LateVisibilityPaintedStatement[] | undefined;
+         errorSymbolName?: string;
+         errorNode?: Node | undefined;
+         /** @internal */
+@@ -15824,9 +15824,11 @@
+         reportCyclicStructureError?(): void;
+         reportLikelyUnsafeImportRequiredError?(specifier: string, symbolName: string | undefined): void;
+         reportTruncationError?(): void;
+-        moduleResolverHost?: ModuleSpecifierResolutionHost & {
+-            getCommonSourceDirectory(): string;
+-        };
++        moduleResolverHost?:
++            | (ModuleSpecifierResolutionHost & {
++                getCommonSourceDirectory(): string;
++            })
++            | undefined;
+         reportNonlocalAugmentation?(containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol): void;
+         reportNonSerializableProperty?(propertyName: string): void;
+         reportInferenceFallback?(node: Node): void;
+@@ -25101,17 +25103,17 @@
+         /**
+          * Hash of d.ts emitted for the file, use to track when emit of d.ts changes
+          */
+-        emitSignatures?: Map<Path, EmitSignature>;
++        emitSignatures?: Map<Path, EmitSignature> | undefined;
+         /**
+          * Hash of d.ts emit with --out
+          */
+-        outSignature?: EmitSignature;
++        outSignature?: EmitSignature | undefined;
+         /**
+          * Name of the file whose dts was the latest to change
+          */
+         latestChangedDtsFile: string | undefined;
+         /** Recorded if program had errors */
+-        hasErrors?: boolean;
++        hasErrors?: boolean | undefined;
+     }
+     /** @internal */
+     enum BuilderFileEmit {
+@@ -25600,7 +25602,7 @@
+         /** ref count keeping this watch alive */
+         refCount: number;
+         /** is the directory watched being non recursive */
+-        nonRecursive?: boolean;
++        nonRecursive?: boolean | undefined;
+     }
+     /** @internal */
+     interface DirPathToWatcherOfPackageDirWatcher {

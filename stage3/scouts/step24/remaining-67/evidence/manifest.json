@@ -1,0 +1,326 @@
+[
+  {
+    "file": "setup.log.gz",
+    "source": "/tmp/remaining-67-setup.log",
+    "uncompressedBytes": 1089,
+    "uncompressedSha256": "5bf344ab97130356834be4d43de46b65ba7dc9ce769a946335d36cc1951fceb7"
+  },
+  {
+    "file": "clean-main-apply.log.gz",
+    "source": "/tmp/remaining67-main-clean-apply.log",
+    "uncompressedBytes": 786175,
+    "uncompressedSha256": "029aae594e2c0cb46cbc179d729714b36ac3d4e0dd89f9dfcd8a3d3e9f41869f"
+  },
+  {
+    "file": "extended-apply.log.gz",
+    "source": "/workspace/cache/remaining67-final-lane/apply.log",
+    "uncompressedBytes": 783852,
+    "uncompressedSha256": "5c526402cfdcc3774f857951791d68aa6c181c9a54a8fecf06d3c8d8ee3fbab0"
+  },
+  {
+    "file": "parser-before.log.gz",
+    "source": "/tmp/remaining67-before-parser.log",
+    "uncompressedBytes": 44424,
+    "uncompressedSha256": "cbe35f73fb75a4242e78a84bceead02a71e91dfc3f47355987668209ae84a0a8"
+  },
+  {
+    "file": "parser-after.log.gz",
+    "source": "/tmp/remaining67-after-parser.log",
+    "uncompressedBytes": 36422,
+    "uncompressedSha256": "46ef34e225e5b1128fe85f3e4de122bf1236b2d4198e76e8025232ff2384924c"
+  },
+  {
+    "file": "fixtures.log.gz",
+    "source": "/tmp/remaining67-fixtures-final.log",
+    "uncompressedBytes": 39,
+    "uncompressedSha256": "da3dcb323f673611ac098e06f3540c66b08a6f7711efb1a42792b01752a555e3"
+  },
+  {
+    "file": "audit.log.gz",
+    "source": "/tmp/remaining67-audit.log",
+    "uncompressedBytes": 96,
+    "uncompressedSha256": "1f2c03776e1e37cc31bf19fc90bd98799905a81be48ff88d5917c5717b18c1e6"
+  },
+  {
+    "file": "builder-mutant.log.gz",
+    "source": "/tmp/remaining67-extension-mutant.log",
+    "uncompressedBytes": 54,
+    "uncompressedSha256": "78a0efd078e4ead47b0c0dfc383441f770d7bab5e523dc5d563b982b41c3a1f9"
+  },
+  {
+    "file": "nullable-mutant.log.gz",
+    "source": "/tmp/remaining67-nullable-mutant.log",
+    "uncompressedBytes": 96,
+    "uncompressedSha256": "75f023d6702258607cc4f06f76926ad0870300a68107f7ecf2df7a435c9e6a1b"
+  },
+  {
+    "file": "selector.log.gz",
+    "source": "/tmp/remaining67-selector.log",
+    "uncompressedBytes": 58,
+    "uncompressedSha256": "602faf83fa18720785b208cae3fb564c1307e852959956ef482194cb3583c4aa"
+  },
+  {
+    "file": "emitted-identity.log.gz",
+    "source": "/tmp/remaining67-emitted-identity.log",
+    "uncompressedBytes": 1167,
+    "uncompressedSha256": "7eb37c02e6da89968b875aad6c26c2e9d6a9d503c5875447271e595938a429e0"
+  },
+  {
+    "file": "idempotence.log.gz",
+    "source": "/tmp/remaining67-idempotence.log",
+    "uncompressedBytes": 48,
+    "uncompressedSha256": "027d9863ded6ad89609a5f49e64ee56a41a8673f102e6f0a4eaa93bec5e4e8f1"
+  },
+  {
+    "file": "first-lane-tests.log.gz",
+    "source": "/workspace/cache/remaining67-final-lane/oracle/tests.log",
+    "uncompressedBytes": 60599,
+    "uncompressedSha256": "23aa4dab0f48dc3067d3092655c68e48bbbae6b00db2370b19cab88ac19bb9c7"
+  },
+  {
+    "file": "first-lane-oracle.json.gz",
+    "source": "/workspace/cache/remaining67-final-lane/oracle/report.json",
+    "uncompressedBytes": 859,
+    "uncompressedSha256": "e6c96a8f8407a1ce8cfd08502fc051e7beec0e1743788877785fc8b2842c0a59"
+  },
+  {
+    "file": "first-lane-verdict.json.gz",
+    "source": "/workspace/cache/remaining67-final-lane/report.json",
+    "uncompressedBytes": 2475,
+    "uncompressedSha256": "20ae8de0689c0c96d107645264209cbb42b5a5c4061fcb81ef698b5b8343651e"
+  },
+  {
+    "file": "first-lane-execution.json.gz",
+    "source": "/workspace/cache/remaining67-final-lane/execution.json",
+    "uncompressedBytes": 208,
+    "uncompressedSha256": "5d30a3f668e90938bebe0e31aebd6841892073d3e33a5a4f506a81a9283daa56"
+  },
+  {
+    "file": "clean-main-build.log.gz",
+    "source": "/tmp/remaining67-main-clean-build.log",
+    "uncompressedBytes": 2665,
+    "uncompressedSha256": "de2dd016a9b12a7e1bc9db2a991db8b840de76a313d850c172d01d0dac2b2f8e"
+  },
+  {
+    "file": "gate-negative-control.log.gz",
+    "source": "/tmp/remaining67-gate-negative-control.log",
+    "uncompressedBytes": 348,
+    "uncompressedSha256": "7aa9549f647a4eed53fcb1a1413cb188923e1ba0cd68966a283e213e15a06371"
+  },
+  {
+    "file": "interrupted-clean-main-tests.log.gz",
+    "source": "/workspace/cache/remaining67-main-clean-oracle/tests.log",
+    "uncompressedBytes": 1424,
+    "uncompressedSha256": "c206dd9eeaff0d4cf9cf5c5bc657354137bd28b36ba6df966eefdeeff373e4aa"
+  },
+  {
+    "file": "clean-main-oracle-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/oracle/report.json",
+    "uncompressedBytes": 845,
+    "uncompressedSha256": "678e6e1ba18faaccbb10dcaa4ecf8e4c5874d909513c6d6506ab81e6bccd1aaa"
+  },
+  {
+    "file": "clean-main-oracle-tests.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/oracle/tests.log",
+    "uncompressedBytes": 59351,
+    "uncompressedSha256": "c7ee62989193cdb448424a309c8cfcd8f859c22cdb2ce4a7c6ce3ab6fe786b39"
+  },
+  {
+    "file": "clean-main-oracle-baseline.diff.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/oracle/baseline.diff",
+    "uncompressedBytes": 50593,
+    "uncompressedSha256": "3da14ced9f2c7eea0ae8b4dabbe6067a91510b0ab0d950ddb83903a9eb50fa28"
+  },
+  {
+    "file": "clean-main-oracle-build.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/oracle/build.log",
+    "uncompressedBytes": 2216,
+    "uncompressedSha256": "a294ea1e3d2443052afd52e2cb110d4cab2d42677862b060e20f3698a7e7ce8e"
+  },
+  {
+    "file": "clean-main-oracle-install.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/oracle/install.log",
+    "uncompressedBytes": 822,
+    "uncompressedSha256": "a7559adff83103c8eb61f1d959aee27962f2048ad1b4fe6aac124cfdf4457266"
+  },
+  {
+    "file": "clean-main-execution.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/execution.json",
+    "uncompressedBytes": 389,
+    "uncompressedSha256": "39d429afc9f7765629ba744c2d12faf6437a3371f19e97af1ca0d75abc35cb64"
+  },
+  {
+    "file": "clean-main-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/report.json",
+    "uncompressedBytes": 1064,
+    "uncompressedSha256": "242f5aa87d8e743aa93caf081539aba44182199468898c3bb473cbcf9c014033"
+  },
+  {
+    "file": "clean-main-verdict.txt.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/verdict.txt",
+    "uncompressedBytes": 25,
+    "uncompressedSha256": "37dbf86c5b35055ea3ba92b68eec81c34b3b3e02f31cc7ded989c688623a9454"
+  },
+  {
+    "file": "clean-main-patch-set.md.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/patch-set.md",
+    "uncompressedBytes": 1309,
+    "uncompressedSha256": "51772ce7a5d8f0df49142011bc4931ce9a79953e1fafa2ddc7b1a2eaa99180a3"
+  },
+  {
+    "file": "clean-main-exits.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-main/exits.json",
+    "uncompressedBytes": 25,
+    "uncompressedSha256": "e7bfe5b1bb981055efe58667d009f699082cb0f58fdff966599676eb7f125788"
+  },
+  {
+    "file": "cached-extended-failure-oracle-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/oracle/report.json",
+    "uncompressedBytes": 858,
+    "uncompressedSha256": "a10bbd9823322aa3eebfb7497beaf68381237afe566d26a0fec73507c4268489"
+  },
+  {
+    "file": "cached-extended-failure-oracle-tests.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/oracle/tests.log",
+    "uncompressedBytes": 59665,
+    "uncompressedSha256": "9e4d91644c564a5acabafb04f63cfa674867cfa6563b3c864352e31e808655de"
+  },
+  {
+    "file": "cached-extended-failure-oracle-baseline.diff.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/oracle/baseline.diff",
+    "uncompressedBytes": 50593,
+    "uncompressedSha256": "3da14ced9f2c7eea0ae8b4dabbe6067a91510b0ab0d950ddb83903a9eb50fa28"
+  },
+  {
+    "file": "cached-extended-failure-oracle-build.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/oracle/build.log",
+    "uncompressedBytes": 2246,
+    "uncompressedSha256": "84144869207fe67ffeab9917aca342a87a97323f3a45dcf187b8e1d99522fb28"
+  },
+  {
+    "file": "cached-extended-failure-oracle-install.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/oracle/install.log",
+    "uncompressedBytes": 822,
+    "uncompressedSha256": "066fdb8a88978b30dec205ee12b6fe41edf760cc86335fc4c8f293346e6c8856"
+  },
+  {
+    "file": "cached-extended-failure-execution.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/execution.json",
+    "uncompressedBytes": 400,
+    "uncompressedSha256": "cb6bada398dc6f93543df9be779f7863b7bb59ab4c2335e1938efdb28e4fe41a"
+  },
+  {
+    "file": "cached-extended-failure-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/report.json",
+    "uncompressedBytes": 2134,
+    "uncompressedSha256": "090bde8884ef6a732564b94b882e7242b0a2e62eff731a21589e9cc7a50e9210"
+  },
+  {
+    "file": "cached-extended-failure-verdict.txt.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/verdict.txt",
+    "uncompressedBytes": 154,
+    "uncompressedSha256": "d81daaa252dade9bd7390d1a3a6ba9ea01c8eda0d245e5a8a3e4caef71e5889b"
+  },
+  {
+    "file": "cached-extended-failure-patch-set.md.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/patch-set.md",
+    "uncompressedBytes": 1309,
+    "uncompressedSha256": "68015363fd7e5c24d3fc0e5d2e59108d8a4cc9355bd16d3aa919bde27979b230"
+  },
+  {
+    "file": "cached-extended-failure-exits.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended/exits.json",
+    "uncompressedBytes": 25,
+    "uncompressedSha256": "affadb6ae994249ce23459e6121d150925dc5fdb0614a04e98b56fb47c58784e"
+  },
+  {
+    "file": "performance-cache-before.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/performance-cache-before.json",
+    "uncompressedBytes": 1911047,
+    "uncompressedSha256": "6d183116d367546f184d1e71c2c0f5aa6d10160f71b253ce1b4e78962cfcda02"
+  },
+  {
+    "file": "gate-comparison.log.gz",
+    "source": "/tmp/remaining67-gate-comparison.log",
+    "uncompressedBytes": 1284,
+    "uncompressedSha256": "53812667bd43d8284b0d6b38b282c052bdc619f60dc18320ab5d4fe6e782d2a8"
+  },
+  {
+    "file": "isolated-runner.log.gz",
+    "source": "/tmp/remaining67-isolated-gates.log",
+    "uncompressedBytes": 51,
+    "uncompressedSha256": "9c10abcf3b1ce5b619c07ec7fd4a94248170002dbd1d082d942e1a84f8097290"
+  },
+  {
+    "file": "fresh-runner.log.gz",
+    "source": "/tmp/remaining67-fresh-gates.log",
+    "uncompressedBytes": 36,
+    "uncompressedSha256": "2bebefba52147b51c6d0cb20a61fbc209dbf646acf36fc177f7b11a4bb4b340d"
+  },
+  {
+    "file": "fresh-extended-oracle-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/oracle/report.json",
+    "uncompressedBytes": 859,
+    "uncompressedSha256": "1741ccd3ae943893487084775b293374a3ad75d26541bd25d2e26b129aa13ca7"
+  },
+  {
+    "file": "fresh-extended-oracle-tests.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/oracle/tests.log",
+    "uncompressedBytes": 59367,
+    "uncompressedSha256": "fc8c6ae839a8974d89410295f02f9c2b67bc0d8220dec97a251983eff9b61dbd"
+  },
+  {
+    "file": "fresh-extended-oracle-baseline.diff.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/oracle/baseline.diff",
+    "uncompressedBytes": 50593,
+    "uncompressedSha256": "3da14ced9f2c7eea0ae8b4dabbe6067a91510b0ab0d950ddb83903a9eb50fa28"
+  },
+  {
+    "file": "fresh-extended-oracle-build.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/oracle/build.log",
+    "uncompressedBytes": 2246,
+    "uncompressedSha256": "89468ff1c4df07c0a3362bb08d40dd34a427c82af9807ca3dd9fb5e480be4c43"
+  },
+  {
+    "file": "fresh-extended-oracle-install.log.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/oracle/install.log",
+    "uncompressedBytes": 823,
+    "uncompressedSha256": "1d335d1ba9dc1c04d41de609a8b53ec62ba69d3cb94c871f101d529d507d8a6a"
+  },
+  {
+    "file": "fresh-extended-execution.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/execution.json",
+    "uncompressedBytes": 514,
+    "uncompressedSha256": "3aacde9defd672f4f4268a21267c7f6a47e64e216b40117c615bc4b5a63b6515"
+  },
+  {
+    "file": "fresh-extended-report.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/report.json",
+    "uncompressedBytes": 1201,
+    "uncompressedSha256": "c5a474df31b87c751f1b5baf98db56eda61e0ac97b53109430bca7753d34aea4"
+  },
+  {
+    "file": "fresh-extended-verdict.txt.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/verdict.txt",
+    "uncompressedBytes": 25,
+    "uncompressedSha256": "37dbf86c5b35055ea3ba92b68eec81c34b3b3e02f31cc7ded989c688623a9454"
+  },
+  {
+    "file": "fresh-extended-patch-set.md.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/patch-set.md",
+    "uncompressedBytes": 1309,
+    "uncompressedSha256": "68015363fd7e5c24d3fc0e5d2e59108d8a4cc9355bd16d3aa919bde27979b230"
+  },
+  {
+    "file": "fresh-extended-exits.json.gz",
+    "source": "/workspace/cache/remaining67-isolated-extended-fresh/exits.json",
+    "uncompressedBytes": 25,
+    "uncompressedSha256": "e7bfe5b1bb981055efe58667d009f699082cb0f58fdff966599676eb7f125788"
+  },
+  {
+    "file": "source.patch.gz",
+    "source": "exact CRLF-preserving adapted-source comparison formerly source.patch",
+    "uncompressedBytes": 4257,
+    "uncompressedSha256": "39b37d4a6d73dbee52b871aee9491cf3376e844953dfb7a4f8c83b7e6de7540f"
+  }
+]

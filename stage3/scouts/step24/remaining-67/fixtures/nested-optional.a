@@ -1,0 +1,4 @@
+// a-check: type error TS2322
+interface Slot { value?: number; }
+function values(): Slot[] { const result = [{ value: undefined }]; return result; }
+for (const slot of values()) console.log(`${'value' in slot} ${slot.value}`);

@@ -1,0 +1,50 @@
+{
+  "oracle": {
+    "status": "fail",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "node": "v24.19.0",
+    "runners": "all",
+    "tests": null,
+    "workers": 8
+  },
+  "phaseExits": {
+    "install": 0,
+    "build": 0,
+    "tests": 1
+  },
+  "baselineDiffIdentical": true,
+  "baselineDiffSha256": "3da14ced9f2c7eea0ae8b4dabbe6067a91510b0ab0d950ddb83903a9eb50fa28",
+  "lane": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "verdict": "PASS stage3 landing lane"
+  },
+  "controlMethod": "independent archived-main full apply and full oracle; unchanged lane checker replays those measured results",
+  "extensionMethod": "independently measured full apply; isolated unchanged full oracle; unchanged lane checker replay"
+}

@@ -1,0 +1,5 @@
+// a-check: type error TS2412
+function reset(slot: { value?: number }, values: number[]): void { slot.value = values[0]; }
+const slot: { value?: number } = {};
+reset(slot, []);
+console.log(`${'value' in slot} ${slot.value}`);

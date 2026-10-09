@@ -1,0 +1,3 @@
+// a-check: type error TS2379
+function use(slot: { value?: number }): void { console.log(`${'value' in slot} ${slot.value}`); }
+use({ value: undefined });

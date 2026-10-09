@@ -1,0 +1,7 @@
+{
+  "caught": "exact nullable owner ledger",
+  "message": "('nullable owner ledger mismatch', {('src/compiler/types.ts', 'moduleResolverHost'), ('src/compiler/checker.ts', 'value'), ('src/compiler/resolutionCache.ts', 'nonRecursive'), ('src/compiler/checker.ts', 'errors'), ('src/compiler/types.ts', 'aliasesToMakeVisible')}, {('src/compiler/checker.ts', 'questionToken'), ('src/compiler/types.ts', 'aliasesToMakeVisible'), ('src/compiler/types.ts', 'moduleResolverHost'), ('src/compiler/checker.ts', 'value'), ('src/compiler/resolutionCache.ts', 'nonRecursive'), ('src/compiler/checker.ts', 'modifiers'), ('src/compiler/checker.ts', 'errors')})",
+  "declarationsChanged": 5,
+  "mutation": "SignatureToSignatureDeclarationOptions.questionToken?: number, on isolated real source",
+  "missingExpectedOwner": "questionToken"
+}
