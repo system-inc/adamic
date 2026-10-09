@@ -1,0 +1,22 @@
+{
+  "base": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "head": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "remote_fixes_tip": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "generator_revision": "0fd9b945e15525b1dc25a840a40324bdbf0c31d0",
+  "command": [
+    "/workspace/admission-speed-tool",
+    "--base",
+    "2b1be38362046455e0e5454d8b0e674a8630e95d",
+    "--head",
+    "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+    "--manifest",
+    "review/compiler/admission-delta/runs/repaired-fixes.manifest.json",
+    "--manifest-generator-revision",
+    "0fd9b945e15525b1dc25a840a40324bdbf0c31d0",
+    "--workers",
+    "4",
+    "--budget",
+    "60",
+    "--json"
+  ]
+}
