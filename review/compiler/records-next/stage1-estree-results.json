@@ -1,0 +1,32 @@
+[
+  {
+    "tests": [
+      "TestPostfixValueGap",
+      "TestInterfaceDefaultGap",
+      "TestTypeMemberLibraryGap"
+    ],
+    "exit": 0
+  },
+  {
+    "tests": [
+      "TestMethodReplacementGap",
+      "TestInterfaceTypeMethodGap",
+      "TestCookedSurrogateLibraryGap"
+    ],
+    "exit": 0
+  },
+  {
+    "tests": [
+      "TestRawInputGap",
+      "TestRecoveryLibraryGaps"
+    ],
+    "exit": 0
+  },
+  {
+    "tests": [
+      "TestParserRecoveryGap",
+      "TestPinnedNumericGaps"
+    ],
+    "exit": 0
+  }
+]

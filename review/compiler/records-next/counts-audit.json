@@ -1,0 +1,472 @@
+{
+  "base": "c81ba261",
+  "columns": [
+    "allocations",
+    "frees",
+    "retains",
+    "releases",
+    "peak",
+    "regions"
+  ],
+  "removed": [],
+  "added": [
+    {
+      "fixture": "internal/oracle/testdata/records_type_only_scanner.a",
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_partial_undefined.a",
+      "counts": [
+        15,
+        15,
+        13,
+        23,
+        8,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_type_only_composition.a",
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_options.a",
+      "counts": [
+        8,
+        8,
+        1,
+        6,
+        4,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_operations.a",
+      "counts": [
+        64,
+        64,
+        136,
+        98,
+        21,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_guarded_snapshot.a",
+      "counts": [
+        10,
+        10,
+        15,
+        27,
+        6,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/detached_own_objects.a",
+      "counts": [
+        6,
+        6,
+        4,
+        8,
+        5,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_union.a",
+      "counts": [
+        14,
+        14,
+        30,
+        37,
+        5,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_for_in.a",
+      "counts": [
+        6,
+        6,
+        28,
+        24,
+        3,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/detached_own_records.a",
+      "counts": [
+        2,
+        2,
+        3,
+        4,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_partial_views.a",
+      "counts": [
+        20,
+        20,
+        54,
+        44,
+        6,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/detached_own_parser.a",
+      "counts": [
+        4,
+        4,
+        0,
+        4,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/detached_own_unready.a",
+      "counts": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_narrowed_reference.a",
+      "counts": [
+        4,
+        4,
+        9,
+        11,
+        3,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_narrowed_number.a",
+      "counts": [
+        2,
+        0,
+        4,
+        4,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_type_only_value.a",
+      "counts": [
+        5,
+        5,
+        7,
+        12,
+        4,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_ownership.a",
+      "counts": [
+        37,
+        37,
+        62,
+        60,
+        18,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_compare_properties_left.a",
+      "counts": [
+        4,
+        0,
+        4,
+        3,
+        4,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_optional.a",
+      "counts": [
+        12,
+        12,
+        11,
+        15,
+        6,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_compare_properties_right.a",
+      "counts": [
+        4,
+        0,
+        6,
+        3,
+        4,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_partial_parser.a",
+      "counts": [
+        5,
+        5,
+        0,
+        5,
+        5,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_operations.a",
+      "counts": [
+        19,
+        19,
+        42,
+        48,
+        7,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_census.a",
+      "counts": [
+        16,
+        16,
+        38,
+        45,
+        9,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_alias_unready.a",
+      "counts": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_read.a",
+      "counts": [
+        2,
+        0,
+        1,
+        1,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_intrinsics.a",
+      "counts": [
+        14,
+        14,
+        13,
+        28,
+        7,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_compare_missing_scalar.a",
+      "counts": [
+        63,
+        63,
+        75,
+        87,
+        9,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_discarded.a",
+      "counts": [
+        4,
+        4,
+        4,
+        10,
+        4,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_set.a",
+      "counts": [
+        2,
+        0,
+        2,
+        1,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_named_invalidated.a",
+      "counts": [
+        3,
+        1,
+        11,
+        7,
+        3,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_scalars.a",
+      "counts": [
+        23,
+        23,
+        28,
+        31,
+        8,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_prototype_in.a",
+      "counts": [
+        2,
+        0,
+        1,
+        1,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_environment_boundary.a",
+      "counts": [
+        2,
+        0,
+        1,
+        2,
+        2,
+        0
+      ],
+      "attribution": "Records lane oracle fixture from b58629a2"
+    }
+  ],
+  "moved": [
+    {
+      "fixture": "internal/oracle/testdata/method_coverage_object_descriptors.a",
+      "before": [
+        47,
+        47,
+        88,
+        127,
+        7,
+        0
+      ],
+      "after": [
+        46,
+        46,
+        61,
+        98,
+        6,
+        0
+      ],
+      "attribution": "Detached hasOwn readiness marker replaces an allocated own-helper closure; reference traffic and peak decrease."
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_method_values.a",
+      "before": [
+        137,
+        137,
+        154,
+        295,
+        42,
+        0
+      ],
+      "after": [
+        136,
+        136,
+        152,
+        291,
+        41,
+        0
+      ],
+      "attribution": "Detached hasOwn readiness marker replaces an allocated own-helper closure; reference traffic and peak decrease."
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_string_raw.a",
+      "before": [
+        45,
+        45,
+        57,
+        91,
+        11,
+        0
+      ],
+      "after": [
+        45,
+        45,
+        53,
+        87,
+        11,
+        0
+      ],
+      "attribution": "Intrinsic raw dictionary uses record storage; four redundant retain/release pairs removed. Matches the records lane attribution."
+    }
+  ]
+}

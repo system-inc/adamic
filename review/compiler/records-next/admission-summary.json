@@ -1,0 +1,192 @@
+{
+  "base": "c81ba26193ce58fe7eb8c15d3ea1e46a58052fef",
+  "head": "a2a63f164ec9eafa11bee2c00303ea9da0fbc49a",
+  "verdict": "fail",
+  "admitted": 31,
+  "complete": true,
+  "omitted": 0,
+  "classes": {
+    "newly-accepted": 31,
+    "accepted-by-both": 975,
+    "refused-by-both": 138,
+    "compiler-timeout": 1
+  },
+  "failures": [
+    {
+      "path": "internal/oracle/testdata/records_compare_properties_left.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.151222011,
+        "exit": 0,
+        "stdout": "before comparer\nfunction toString() { [native code] }\n1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.044742967,
+        "exit": 70,
+        "stdout": "before comparer\n",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      },
+      "native": {
+        "wall_seconds": 0.003473518,
+        "exit": 70,
+        "stdout": "before comparer\n",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_compare_properties_right.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.129957353,
+        "exit": 0,
+        "stdout": "before comparer\n1\nfunction Object() { [native code] }\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.05064882,
+        "exit": 70,
+        "stdout": "before comparer\n",
+        "stderr": "adamic: panic: record member 'constructor' is missing; records hold own keys only\n"
+      },
+      "native": {
+        "wall_seconds": 0.002975327,
+        "exit": 70,
+        "stdout": "before comparer\n",
+        "stderr": "adamic: panic: record member 'constructor' is missing; records hold own keys only\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_environment_boundary.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.139581962,
+        "exit": 0,
+        "stdout": "before environment read\n[Function: toString]\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.057285868,
+        "exit": 70,
+        "stdout": "before environment read\n",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      },
+      "native": {
+        "wall_seconds": 0.002029532,
+        "exit": 70,
+        "stdout": "before environment read\n",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_named_invalidated.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.151128704,
+        "exit": 0,
+        "stdout": "changed1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.103999122,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: dictionary member does not have its declared type\n"
+      },
+      "native": {
+        "wall_seconds": 0.001140518,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: dictionary member does not have its declared type\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_narrowed_number.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.097305879,
+        "exit": 0,
+        "stdout": "NaN\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.070667032,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+      },
+      "native": {
+        "wall_seconds": 0.002357068,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_prototype_in.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.138989176,
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.033910326,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: record member 'constructor' is missing; records hold own keys only\n"
+      },
+      "native": {
+        "wall_seconds": 0.002608269,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: record member 'constructor' is missing; records hold own keys only\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_prototype_read.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.189568786,
+        "exit": 0,
+        "stdout": "function toString() { [native code] }\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.038171656,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      },
+      "native": {
+        "wall_seconds": 0.000822317,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n"
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/records_prototype_set.a",
+      "class": "newly-accepted",
+      "node": {
+        "wall_seconds": 0.125460107,
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "javascript": {
+        "wall_seconds": 0.057370217,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property\n"
+      },
+      "native": {
+        "wall_seconds": 0.000985869,
+        "exit": 70,
+        "stdout": "",
+        "stderr": "adamic: panic: NotYet: record assignment to __proto__ requires the Object.prototype setter; use an own data property\n"
+      }
+    }
+  ]
+}

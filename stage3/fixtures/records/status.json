@@ -11,7 +11,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/records/01_has_property.a:8:42: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use"}
   },
   {
     "file": "02_get_property.a",
