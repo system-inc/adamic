@@ -16,7 +16,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			if kind.IsReference() {
 				kind = ir.Union
 			}
-			e.line("%s->element_kind = %d;", value, kind)
+			// Keep the store in the runtime translation unit. Thousands of inline
+			// stores inflate clang's sanitizer instrumentation of table initializers.
+			e.line("adamic_array_view_storage(%s, %d);", value, kind)
 		}
 		return value
 	}
