@@ -290,11 +290,6 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if target.NestedParent > 0 {
 			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
 			if identity > 0 {
-				if target.GraphClosure {
-					// A canonical closure is cached by address in its frame's functions list, and a
-					// graph region's adoption moves what it adopts, so the two can't meet yet.
-					panic("native: a canonical closure that joins a graph region was not refused in lowering")
-				}
 				cells := make([]string, 0, len(environment))
 				for _, local := range environment {
 					cells = append(cells, e.cellReference(local))
@@ -302,6 +297,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				constructor := "adamic_closure_canonical"
 				if e.program.PackedCountNeeded(expression.Function) {
 					constructor = "adamic_counted_closure_canonical"
+				}
+				if target.GraphClosure {
+					constructor += "_graph"
 				}
 				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
 			}

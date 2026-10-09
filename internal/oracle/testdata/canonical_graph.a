@@ -1,0 +1,7 @@
+function make(): () => boolean {
+ let saved: (() => boolean) | undefined = undefined;
+ function f(): boolean { return saved === f; }
+ saved = f;
+ return f;
+}
+console.log(String(make()()));

@@ -1243,3 +1243,6 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/oracle/testdata/fresh_refused/spread_outside.a | 10 | 10 | 6 | 15 | 8 | 0 | 1 | 2 |
 | internal/oracle/testdata/fresh_refused/throw_keeps_old.a | 7 | 7 | 8 | 14 | 5 | 0 | 1 | 1 |
 | internal/oracle/testdata/fresh_refused/wraps_argument.a | 8 | 8 | 2 | 8 | 5 | 0 | 1 | 3 |
+| internal/oracle/testdata/canonical_graph.a | 2 | 2 | 5 | 7 | 2 | 0 | 1 | 1 |
+| internal/oracle/testdata/canonical_graph_counted.a | 40 | 40 | 100 | 140 | 2 | 0 | 20 | 20 |
+| internal/oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a | 15 | 14 | 6 | 18 | 8 | 1 | 3 | 3 |
