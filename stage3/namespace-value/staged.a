@@ -1,0 +1,18 @@
+function observe(state: typeof State): void {
+    console.log(Object.keys(state).join(","));
+    console.log(String("later" in state));
+    console.log(String(Object.hasOwn(state, "later")));
+    console.log(typeof state.later);
+    console.log(String(state.later));
+    console.log(typeof state.read);
+}
+namespace State {
+    observe(State);
+    export let first = 1;
+    observe(State);
+    export let later = 2;
+    observe(State);
+    export function read(): number { return later; }
+    observe(State);
+}
+console.log(String(State.read()));

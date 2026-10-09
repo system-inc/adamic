@@ -301,6 +301,12 @@ func (l *lowering) finishAccessors() error {
 				}
 			case ir.Property:
 				if names[expression.Name] {
+					if expression.CallableAccessor {
+						// Validate every known getter's ABI while keeping its runtime
+						// selection attached to the call-site receiver.
+						_ = dispatch(expression.Name, ir.Closure, false, 0)
+						return value
+					}
 					if expression.Optional {
 						failure = &NotYet{Where: l.result.Source, What: "an optional accessor read"}
 						return value

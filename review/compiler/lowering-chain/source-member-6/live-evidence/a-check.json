@@ -1,0 +1,282 @@
+{
+  "gate_pin": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": [
+    "stage3/namespace-value/cycle.a",
+    "stage3/namespace-value/descriptor.a",
+    "stage3/namespace-value/effects.a",
+    "stage3/namespace-value/erased-block.a",
+    "stage3/namespace-value/identity.a",
+    "stage3/namespace-value/imports/consumer.a",
+    "stage3/namespace-value/imports/main.a",
+    "stage3/namespace-value/imports/state.a",
+    "stage3/namespace-value/merged.a",
+    "stage3/namespace-value/nullable.a",
+    "stage3/namespace-value/order.a",
+    "stage3/namespace-value/passed.a",
+    "stage3/namespace-value/prototype-presence.a",
+    "stage3/namespace-value/qualified-live.a",
+    "stage3/namespace-value/readonly-const.a",
+    "stage3/namespace-value/readonly-function.a",
+    "stage3/namespace-value/returned.a",
+    "stage3/namespace-value/spread.a",
+    "stage3/namespace-value/staged.a",
+    "stage3/namespace-value/stored.a",
+    "stage3/namespace-value/structural-view.a",
+    "stage3/namespace-value/tracing-qualified.a",
+    "stage3/namespace-value/wider-const.a",
+    "stage3/namespace-value/wider-reference.a"
+  ],
+  "result": {
+    "a_check": {
+      "stage3/namespace-value/cycle.a": {
+        "outcome": "refused",
+        "expected": "refused adamic/cycle-capable",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/cycle.a:2:32: Adamic 0.1 refuses typeof State.self, a readonly field, which its constructor writes, of type typeof State, which can reach back to the typeof State holding it: a cycle reference counting can't free, and a write in the top level may clos"
+      },
+      "stage3/namespace-value/descriptor.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/descriptor.a:3:1: stage 0 can't lower descriptor reflection on an escaped namespace object (Object.getOwnPropertyDescriptor) yet"
+      },
+      "stage3/namespace-value/effects.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/erased-block.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/identity.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/imports/consumer.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/imports/main.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/imports/state.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/merged.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/nullable.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/nullable.a:1:30: stage 0 can't lower a nullable namespace export; its staged absence and null require distinct tags yet"
+      },
+      "stage3/namespace-value/order.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/passed.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/prototype-presence.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/qualified-live.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/readonly-const.a": {
+        "outcome": "type error",
+        "expected": "type error TS2540",
+        "first": "stage3/namespace-value/readonly-const.a:4:6: error TS2540: Cannot assign to 'value' because it is a read-only property."
+      },
+      "stage3/namespace-value/readonly-function.a": {
+        "outcome": "refused",
+        "expected": "refused namespace function member",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/readonly-function.a:4:1: Adamic 0.1 refuses replacing a fixed namespace function member; keep the exported function identity; use a mutable function-valued variable for replacement"
+      },
+      "stage3/namespace-value/returned.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/spread.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/spread.a:3:16: stage 0 can't lower an object spread with escaped namespace storage; construct the selected fields explicitly yet"
+      },
+      "stage3/namespace-value/staged.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/stored.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/structural-view.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/tracing-qualified.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/wider-const.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/wider-reference.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    }
+  },
+  "observations": {
+    "stage3/namespace-value/cycle.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/cycle.a:2:32: Adamic 0.1 refuses typeof State.self, a readonly field, which its constructor writes, of type typeof State, which can reach back to the typeof State holding it: a cycle reference counting can't free, and a write in the top level may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare it self: Weak<typeof State> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)\n"
+    },
+    "stage3/namespace-value/descriptor.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/descriptor.a:3:1: stage 0 can't lower descriptor reflection on an escaped namespace object (Object.getOwnPropertyDescriptor) yet\n"
+    },
+    "stage3/namespace-value/effects.a": {
+      "exit": 0,
+      "stdout_bytes": 8848,
+      "stderr": ""
+    },
+    "stage3/namespace-value/erased-block.a": {
+      "exit": 0,
+      "stdout_bytes": 3764,
+      "stderr": ""
+    },
+    "stage3/namespace-value/identity.a": {
+      "exit": 0,
+      "stdout_bytes": 4394,
+      "stderr": ""
+    },
+    "stage3/namespace-value/imports/consumer.a": {
+      "exit": 0,
+      "stdout_bytes": 4613,
+      "stderr": ""
+    },
+    "stage3/namespace-value/imports/main.a": {
+      "exit": 0,
+      "stdout_bytes": 7609,
+      "stderr": ""
+    },
+    "stage3/namespace-value/imports/state.a": {
+      "exit": 0,
+      "stdout_bytes": 2781,
+      "stderr": ""
+    },
+    "stage3/namespace-value/merged.a": {
+      "exit": 0,
+      "stdout_bytes": 10794,
+      "stderr": ""
+    },
+    "stage3/namespace-value/nullable.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/nullable.a:1:30: stage 0 can't lower a nullable namespace export; its staged absence and null require distinct tags yet\n"
+    },
+    "stage3/namespace-value/order.a": {
+      "exit": 0,
+      "stdout_bytes": 3692,
+      "stderr": ""
+    },
+    "stage3/namespace-value/passed.a": {
+      "exit": 0,
+      "stdout_bytes": 5653,
+      "stderr": ""
+    },
+    "stage3/namespace-value/prototype-presence.a": {
+      "exit": 0,
+      "stdout_bytes": 3342,
+      "stderr": ""
+    },
+    "stage3/namespace-value/qualified-live.a": {
+      "exit": 0,
+      "stdout_bytes": 9928,
+      "stderr": ""
+    },
+    "stage3/namespace-value/readonly-const.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "stage3/namespace-value/readonly-const.a:4:6: error TS2540: Cannot assign to 'value' because it is a read-only property.\n"
+    },
+    "stage3/namespace-value/readonly-function.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/readonly-function.a:4:1: Adamic 0.1 refuses replacing a fixed namespace function member; keep the exported function identity; use a mutable function-valued variable for replacement\n"
+    },
+    "stage3/namespace-value/returned.a": {
+      "exit": 0,
+      "stdout_bytes": 7245,
+      "stderr": ""
+    },
+    "stage3/namespace-value/spread.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/spread.a:3:16: stage 0 can't lower an object spread with escaped namespace storage; construct the selected fields explicitly yet\n"
+    },
+    "stage3/namespace-value/staged.a": {
+      "exit": 0,
+      "stdout_bytes": 8107,
+      "stderr": ""
+    },
+    "stage3/namespace-value/stored.a": {
+      "exit": 0,
+      "stdout_bytes": 6927,
+      "stderr": ""
+    },
+    "stage3/namespace-value/structural-view.a": {
+      "exit": 0,
+      "stdout_bytes": 6411,
+      "stderr": ""
+    },
+    "stage3/namespace-value/tracing-qualified.a": {
+      "exit": 0,
+      "stdout_bytes": 8701,
+      "stderr": ""
+    },
+    "stage3/namespace-value/wider-const.a": {
+      "exit": 0,
+      "stdout_bytes": 4198,
+      "stderr": ""
+    },
+    "stage3/namespace-value/wider-reference.a": {
+      "exit": 0,
+      "stdout_bytes": 6843,
+      "stderr": ""
+    }
+  },
+  "steps": {
+    "a-check": 3.9
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null
+}

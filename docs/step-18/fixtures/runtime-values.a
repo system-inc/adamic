@@ -1,0 +1,35 @@
+// Guards and result ABIs extending checker.ts:8066 and builder.ts:528 reductions.
+function numeric(callback: ((n: number) => number) | undefined): void {
+	console.log(`${callback?.(4) ?? -1}`);
+}
+function booleanResult(callback: (() => boolean) | undefined): void {
+	console.log(`${callback?.() ?? true}`);
+}
+function nullable(callback: (() => number) | null): void {
+	console.log(`${callback?.() ?? -2}`);
+}
+function maybeNumber(callback: (() => number | undefined) | undefined): void {
+	console.log(`${callback?.() ?? -3}`);
+}
+interface Box { readonly text: string }
+function objectResult(callback: (() => Box) | undefined): void {
+	const result = callback?.();
+	console.log(result?.text ?? 'absent');
+}
+function closureResult(callback: (() => (() => number)) | undefined): void {
+	const result = callback?.();
+	console.log(`${result?.() ?? -4}`);
+}
+numeric(undefined);
+numeric((n: number): number => n + 1);
+booleanResult(undefined);
+booleanResult((): boolean => false);
+nullable(null);
+nullable((): number => 7);
+maybeNumber(undefined);
+maybeNumber((): number | undefined => undefined);
+maybeNumber((): number | undefined => 9);
+objectResult(undefined);
+objectResult((): Box => ({ text: `box${1}` }));
+closureResult(undefined);
+closureResult((): (() => number) => (): number => 11);

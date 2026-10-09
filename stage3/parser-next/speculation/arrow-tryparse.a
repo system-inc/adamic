@@ -1,0 +1,7 @@
+// parser.ts:5229, arrow tryParse callback. Unknown adaptation uses a checked boundary.
+interface Parsed {readonly kind:number;readonly text:string;}
+let position=0;
+function tryParse(callback:()=>unknown):unknown {const save=position;const result=callback();if(!result){position=save;}return result;}
+const value=tryParse(()=>{position++;return {kind:1,text:'parsed'};}) as Parsed|undefined;
+console.log(value===undefined?'absent':value.text);
+console.log(String(position));

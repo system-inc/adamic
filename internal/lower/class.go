@@ -200,6 +200,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	l.substitution, l.instance = substitution, lowered
 	l.classType, l.classNode, l.typeMapper = classType, declaration.Name(), mapper
 	defer func() { l.classType, l.classNode, l.typeMapper = outerClassType, outerClassNode, outerMapper }()
+	if err := l.genericBodyWitness(declaration); err != nil {
+		return nil, err
+	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {
@@ -262,9 +265,9 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
-	case ir.MaybeNumber:
+	case ir.MaybeNumber, ir.MaybeBoolean:
 		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
-		return ir.MaybeOf{Of: ir.MaybeNumber}
+		return ir.MaybeOf{Of: of}
 	}
 	return ir.Undefined{}
 }
@@ -408,6 +411,35 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.uninitializedInitializer(valueNode) {
+		if err := l.absentOptionalWrite(target); err != nil {
+			return nil, err
+		}
+		member := l.checker.GetSymbolAtLocation(target)
+		if member == nil {
+			return nil, l.notYet(target, "resetting an unknown placeholder field")
+		}
+		for _, declaration := range member.Declarations {
+			if declaration.Kind == ast.KindGetAccessor || declaration.Kind == ast.KindSetAccessor {
+				return nil, l.notYet(target, "resetting a placeholder through an accessor")
+			}
+		}
+		if target.Name().Kind == ast.KindPrivateIdentifier {
+			return nil, l.notYet(target, "resetting a private placeholder field")
+		}
+		object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if object.Type() != ir.Object {
+			return nil, l.notYet(target, "resetting a placeholder field without object storage")
+		}
+		of, err := l.typeOfSymbol(target, member)
+		if err != nil || censusFieldSlotless(of) {
+			return nil, l.notYet(target, "resetting a placeholder field without supported storage")
+		}
+		return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: l.placeholderInitialValue(valueNode, of), Uninitialized: true, Unset: true, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -424,7 +456,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if object.Type() != ir.Object {
+	_, _, nodeArray := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
+	if object.Type() != ir.Object && !(object.Type() == ir.Array && nodeArray) {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
 	value, err := l.expression(valueNode)

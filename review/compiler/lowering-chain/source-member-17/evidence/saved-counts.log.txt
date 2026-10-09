@@ -1,0 +1,78 @@
+--- FAIL: TestCountsAreRecorded (4.34s)
+    --- FAIL: TestCountsAreRecorded/fixtures (4.35s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_bom.a (0.83s)
+panic: Unhandled case in Node.Text: *ast.BinaryExpression [recovered, repanicked]
+
+goroutine 651 [running]:
+testing.tRunner.func1.2({0x1cb1eb0, 0xa663dff0500})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cb1eb0?, 0xa663dff0500?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x130bf00?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).elementAccess(0xa663f530400, 0xa6646d28790)
+	/workspace/adamic/internal/lower/object.go:1710 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0xa663f530400, 0xa664be91990?)
+	/workspace/adamic/internal/lower/expression.go:677 +0xdfe
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0xa663f530400, 0xa6646d28790)
+	/workspace/adamic/internal/lower/expression.go:460 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0xa663f530400, 0xa6646d28790)
+	/workspace/adamic/internal/lower/expression.go:204 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).coalesce(0xa663f530400, 0xa6646e63a28)
+	/workspace/adamic/internal/lower/expression.go:1158 +0x51
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0xa663f530400, 0xa664be92358?)
+	/workspace/adamic/internal/lower/expression.go:639 +0x1a0d
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0xa663f530400, 0xa6646e63a28)
+	/workspace/adamic/internal/lower/expression.go:460 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0xa663f530400, 0xa6646e63a28)
+	/workspace/adamic/internal/lower/expression.go:204 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).setIndex(0xa663f530400, 0xa6646d28738, 0xa6646e63a28)
+	/workspace/adamic/internal/lower/object.go:1812 +0x365
+github.com/system-inc/adamic/internal/lower.(*lowering).assignment(0xa663f530400, 0xa6646e63a90)
+	/workspace/adamic/internal/lower/assignments.go:35 +0x315
+github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement(0xa663f530400, 0x489bef?)
+	/workspace/adamic/internal/lower/statements.go:187 +0x7bd
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xa663f530400, 0xa6646e37140)
+	/workspace/adamic/internal/lower/statements.go:71 +0x167
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0xa663f530400, {0xa6646e1af50, 0x3, 0x1d684b8?})
+	/workspace/adamic/internal/lower/statements.go:19 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xa663f530400, 0xa6646e1fc80)
+	/workspace/adamic/internal/lower/statements.go:75 +0x76
+github.com/system-inc/adamic/internal/lower.(*lowering).forStatement(0xa663f530400, 0xa6646d6f260)
+	/workspace/adamic/internal/lower/control.go:66 +0x34d
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xa663f530400, 0xa6646d6f260)
+	/workspace/adamic/internal/lower/statements.go:83 +0x193
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0xa663f530400, {0xa6646d6f2d0, 0x3, 0x1d68498?})
+	/workspace/adamic/internal/lower/statements.go:19 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xa663f530400, 0xa6646e1fce0)
+	/workspace/adamic/internal/lower/statements.go:75 +0x76
+github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement(0xa663f530400, 0x489bef?)
+	/workspace/adamic/internal/lower/control.go:15 +0x6f
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0xa663f530400, 0xa6646aad4a0)
+	/workspace/adamic/internal/lower/statements.go:81 +0x175
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0xa663f530400, {0xa6646d43ae0, 0x5, 0x8001e5?})
+	/workspace/adamic/internal/lower/statements.go:19 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0xa663f530400, 0x0, 0xa6646d28b00, 0xffffffffffffffff, {0x1e58c60, 0x0, 0xa664be937a0?}, {0x1e58c60, 0x0, 0x0})
+	/workspace/adamic/internal/lower/functions.go:286 +0x188c
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0xa663f530400, 0x0, 0xa6646d28b00, 0xffffffffffffffff)
+	/workspace/adamic/internal/lower/functions.go:55 +0x17e
+github.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0xa663f530400, 0xa6646d28b00)
+	/workspace/adamic/internal/lower/functions.go:12 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0xa663f530400, {0xa664a69f3c8?, 0x1?, 0xa6646f84388?})
+	/workspace/adamic/internal/lower/modules.go:172 +0xa0e
+github.com/system-inc/adamic/internal/lower.Lower({0x1d6b0f8?, 0x1e58c60?}, 0xa6646e60c90)
+	/workspace/adamic/internal/lower/lower.go:56 +0x545
+github.com/system-inc/adamic/internal/oracle.lowered(0xa663ca43208, {0xa663c575080, 0x3c})
+	/workspace/adamic/internal/oracle/oracle_test.go:574 +0x18b
+github.com/system-inc/adamic/internal/oracle.counted(0xa663ca43208, {0xa663c6e3470, 0x2a}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:71 +0x132
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0xa663ca43208)
+	/workspace/adamic/internal/oracle/counts_test.go:146 +0x73
+testing.tRunner(0xa663ca43208, 0xa663c9f5380)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	4.371s
+FAIL

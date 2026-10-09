@@ -69,7 +69,20 @@ func TestNonNullLiteralUnionInitializers(t *testing.T) {
 			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			assertMigratedNonNullCheck(t, path, literal+"!", "", true)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := onNode(t, path)
+			native, binary := nativelyUncached(t, program)
+			for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
 		})
 	}
 }

@@ -1,15 +1,15 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -84,7 +84,7 @@
- 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
- 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+@@ -103,7 +103,7 @@
+ 			if l.placeholderOrigin(property.Name()) != "" {
+ 				value = fit(value, placeholderStorage(value.Type()))
  			}
 -			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 +			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.MaybeBoolean || declared == ir.Weak {
  				// Store the value as the member's slot holds it, rather than the initializer's type.
  				value = fit(value, declared)
  			}
-@@ -150,27 +150,6 @@
+@@ -213,27 +213,6 @@
  	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
  	if contextual == nil {
  		return 0
@@ -27,7 +27,7 @@
 -			if field == nil {
 -				continue
 -			}
--			declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+-			declared, _ := l.typeOfSymbol(literal, field)
 -			if shared != 0 && shared != declared {
 -				return 0
 -			}

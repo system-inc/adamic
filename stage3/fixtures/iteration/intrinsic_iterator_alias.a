@@ -1,0 +1,6 @@
+// a-check: refused adamic/intrinsic-iterator
+// The checker preserves Symbol.iterator's identity through a mutable typed alias.
+let key: typeof Symbol.iterator = Symbol.iterator;
+const values: number[] = [1, 2];
+values[key] = () => [8].values();
+for (const value of values) { console.log(String(value)); }

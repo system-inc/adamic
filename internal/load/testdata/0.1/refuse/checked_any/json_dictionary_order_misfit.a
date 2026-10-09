@@ -1,0 +1,5 @@
+interface NumericConfig { [key: string]: number; }
+function convert(raw: any): NumericConfig { return raw; }
+const raw: any = { "2": "wrong", "1": "wrong", tail: 14 };
+convert(raw);
+console.log("passed");

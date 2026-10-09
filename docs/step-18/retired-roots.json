@@ -1,0 +1,1856 @@
+{
+  "base": "8cb5e7c189fc431ab3cab7e0be2c0530e722a598",
+  "entry": "src/compiler",
+  "measurement": "checker-rejected, no usable IR",
+  "files": 79,
+  "checker_metadata_identical": true,
+  "base_census_sha256": "22f4cbc0d18bf66a89d47bc62150f030963a39ff7686d851d0dbcd984318ef0d",
+  "after_census_sha256": "78d243cb4f2faac3ee3a7e0fa800f939fbcd270eea9dd48ce1b7b48ca3047904",
+  "optional_callable_sha256": "918087167331b387c07e66ac209d902cad7295fa007fdeb5f369d7aa6c8f18f9",
+  "meaning": "Disappeared is an exact local diagnostic root, not acceptance of its enclosing program. Same-position barriers are replacements and are not credited as supported. Other failures can remain in the same statement or unit.",
+  "rows": [
+    {
+      "reason": "a call through ?. (an optional call)",
+      "base_roots": 136,
+      "after_roots": 103,
+      "disappeared": 33,
+      "new_same_reason": [],
+      "disappeared_roots": [
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "checker.ts:6769:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "checker.ts:6910:21",
+            "reason": "a call through ?. (an optional call)",
+            "text": "checker.ts:6910:21: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "checker.ts:6769:9",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "checker.ts:6910:21",
+              "reason": "an optional method call requiring a saved receiver",
+              "text": "checker.ts:6910:21: stage 0 can't lower an optional method call requiring a saved receiver yet"
+            }
+          ],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "checker.ts:8009:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "checker.ts:8066:13",
+            "reason": "a call through ?. (an optional call)",
+            "text": "checker.ts:8066:13: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "checker.ts:8158:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "checker.ts:8314:17",
+            "reason": "a call through ?. (an optional call)",
+            "text": "checker.ts:8314:17: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "checker.ts:8158:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "checker.ts:8315:17",
+            "reason": "a call through ?. (an optional call)",
+            "text": "checker.ts:8315:17: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:636:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:647:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:647:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:636:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:652:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:652:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "emitter.ts:636:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "emitter.ts:652:40",
+              "reason": "reading commonSourceDirectory",
+              "text": "emitter.ts:652:40: stage 0 can't lower reading commonSourceDirectory yet"
+            }
+          ]
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:1540:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:1541:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:1541:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:1540:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:1551:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:1551:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:2852:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:2861:17",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:2861:17: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:2899:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:2913:17",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:2913:17: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:3516:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:3518:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:3518:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:3516:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:3531:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:3531:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:4449:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:4464:13",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:4464:13: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "emitter.ts:4449:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "emitter.ts:4507:13",
+            "reason": "a call through ?. (an optional call)",
+            "text": "emitter.ts:4507:13: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "executeCommandLine.ts:244:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "executeCommandLine.ts:265:27",
+            "reason": "a call through ?. (an optional call)",
+            "text": "executeCommandLine.ts:265:27: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "executeCommandLine.ts:531:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "executeCommandLine.ts:534:27",
+            "reason": "a call through ?. (an optional call)",
+            "text": "executeCommandLine.ts:534:27: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "expressionToTypeNode.ts:207:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "expressionToTypeNode.ts:214:13",
+            "reason": "a call through ?. (an optional call)",
+            "text": "expressionToTypeNode.ts:214:13: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "expressionToTypeNode.ts:207:9",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "expressionToTypeNode.ts:214:13",
+              "reason": "reading onExitNewScope",
+              "text": "expressionToTypeNode.ts:214:13: stage 0 can't lower reading onExitNewScope yet"
+            }
+          ],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2581:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2582:64",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2582:64: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2656:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2663:64",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2663:64: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2868:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2870:52",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2870:52: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2971:13",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2974:71",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2974:71: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2877:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2898:112",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2898:112: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleNameResolver.ts:2877:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleNameResolver.ts:2924:155",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleNameResolver.ts:2924:155: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleSpecifiers.ts:335:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleSpecifiers.ts:347:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleSpecifiers.ts:347:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleSpecifiers.ts:774:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleSpecifiers.ts:784:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleSpecifiers.ts:784:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleSpecifiers.ts:809:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleSpecifiers.ts:810:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleSpecifiers.ts:810:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "moduleSpecifiers.ts:809:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "moduleSpecifiers.ts:811:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "moduleSpecifiers.ts:811:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "program.ts:1228:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "program.ts:1241:21",
+            "reason": "a call through ?. (an optional call)",
+            "text": "program.ts:1241:21: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "resolutionCache.ts:505:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "resolutionCache.ts:506:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "resolutionCache.ts:506:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "resolutionCache.ts:1079:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "resolutionCache.ts:1094:9",
+            "reason": "a call through ?. (an optional call)",
+            "text": "resolutionCache.ts:1094:9: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "resolutionCache.ts:1079:5",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "resolutionCache.ts:1094:121",
+              "reason": "reading result",
+              "text": "resolutionCache.ts:1094:121: stage 0 can't lower reading result yet"
+            }
+          ]
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "resolutionCache.ts:1669:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "resolutionCache.ts:1679:33",
+            "reason": "a call through ?. (an optional call)",
+            "text": "resolutionCache.ts:1679:33: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "tsbuildPublic.ts:1074:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "tsbuildPublic.ts:1144:23",
+            "reason": "a call through ?. (an optional call)",
+            "text": "tsbuildPublic.ts:1144:23: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "tsbuildPublic.ts:1074:5",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "tsbuildPublic.ts:1144:23",
+              "reason": "reading program",
+              "text": "tsbuildPublic.ts:1144:23: stage 0 can't lower reading program yet"
+            }
+          ],
+          "barriers_at_same_line": []
+        },
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "tsbuildPublic.ts:2291:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "tsbuildPublic.ts:2292:5",
+            "reason": "a call through ?. (an optional call)",
+            "text": "tsbuildPublic.ts:2292:5: stage 0 can't lower a call through ?. (an optional call) yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": [
+            {
+              "measurement": "measured on a checker-rejected program",
+              "unit": "tsbuildPublic.ts:2291:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "tsbuildPublic.ts:2292:81",
+              "reason": "a call spreading elements that cannot be packed",
+              "text": "tsbuildPublic.ts:2292:81: stage 0 can't lower a call spreading elements that cannot be packed yet"
+            }
+          ]
+        }
+      ],
+      "after_findings": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:635:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:670:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builder.ts:670:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:700:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:710:5",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builder.ts:710:5: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:1741:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:1852:30",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builder.ts:1852:30: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:1741:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:1854:37",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builder.ts:1854:37: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:1876:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:1882:31",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builder.ts:1882:31: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:1909:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "core.ts:1523:12",
+          "reason": "a call through ?. (an optional call)",
+          "text": "core.ts:1523:12: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builderState.ts:431:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builderState.ts:440:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "builderState.ts:440:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:3600:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:3607:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:3607:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:3857:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:3858:22",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:3858:22: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:3953:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:3954:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:3954:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:4104:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:4116:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:4116:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:4130:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:4131:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:4131:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:4351:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:4376:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:4376:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:5026:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:5050:36",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:5050:36: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:5583:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:5617:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:5617:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:5583:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:5618:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:5618:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7088:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7090:25",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7090:25: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7187:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7294:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7294:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7187:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7297:21",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7297:21: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7187:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7327:21",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7327:21: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7187:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7208:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7208:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:7187:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:7239:25",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:7239:25: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:8137:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:8142:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:8142:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:8137:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:8146:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:8146:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:9900:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:9904:40",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:9904:40: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:11096:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:11108:24",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:11108:24: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:11096:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:11112:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:11112:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:11170:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:11172:40",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:11172:40: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:11270:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:11271:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:11271:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:13111:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:13114:15",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:13114:15: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:17107:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:17108:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:17108:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:19997:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:20012:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:20012:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:24433:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:24510:60",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:24510:60: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:26066:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:26091:54",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:26091:54: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:28054:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:28055:24",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:28055:24: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:34491:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:34522:52",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:34522:52: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:37738:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:37740:27",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:37740:27: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:44347:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:44371:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:44371:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:49278:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:49283:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "checker.ts:49283:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "commandLineParser.ts:1932:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "commandLineParser.ts:1939:25",
+          "reason": "a call through ?. (an optional call)",
+          "text": "commandLineParser.ts:1939:25: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "emitter.ts:808:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "emitter.ts:818:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "emitter.ts:818:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "emitter.ts:5487:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "emitter.ts:5499:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "emitter.ts:5499:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "emitter.ts:5487:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "emitter.ts:5507:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "emitter.ts:5507:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "emitter.ts:5540:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "emitter.ts:5547:24",
+          "reason": "a call through ?. (an optional call)",
+          "text": "emitter.ts:5547:24: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "emitter.ts:5959:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "emitter.ts:5972:31",
+          "reason": "a call through ?. (an optional call)",
+          "text": "emitter.ts:5972:31: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "executeCommandLine.ts:1075:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "executeCommandLine.ts:1076:26",
+          "reason": "a call through ?. (an optional call)",
+          "text": "executeCommandLine.ts:1076:26: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "executeCommandLine.ts:1086:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "executeCommandLine.ts:1087:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "executeCommandLine.ts:1087:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "expressionToTypeNode.ts:1124:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "expressionToTypeNode.ts:1125:16",
+          "reason": "a call through ?. (an optional call)",
+          "text": "expressionToTypeNode.ts:1125:16: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "factory/nodeChildren.ts:14:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "factory/nodeChildren.ts:23:12",
+          "reason": "a call through ?. (an optional call)",
+          "text": "factory/nodeChildren.ts:23:12: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "factory/nodeChildren.ts:44:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "factory/nodeChildren.ts:51:5",
+          "reason": "a call through ?. (an optional call)",
+          "text": "factory/nodeChildren.ts:51:5: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "moduleNameResolver.ts:1054:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "moduleNameResolver.ts:1055:16",
+          "reason": "a call through ?. (an optional call)",
+          "text": "moduleNameResolver.ts:1055:16: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "moduleNameResolver.ts:2199:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "moduleNameResolver.ts:2213:5",
+          "reason": "a call through ?. (an optional call)",
+          "text": "moduleNameResolver.ts:2213:5: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "moduleNameResolver.ts:2445:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "moduleNameResolver.ts:2449:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "moduleNameResolver.ts:2449:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "parser.ts:5381:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "parser.ts:5383:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "parser.ts:5383:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "performance.ts:179:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "performance.ts:189:54",
+          "reason": "a call through ?. (an optional call)",
+          "text": "performance.ts:189:54: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:520:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:562:23",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:562:23: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:2006:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:2012:14",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:2012:14: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:2160:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:2167:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:2167:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:2806:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:2807:16",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:2807:16: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:2869:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:2877:22",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:2877:22: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3244:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3245:22",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3245:22: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3421:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3423:47",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3423:47: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3708:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3709:70",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3709:70: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3734:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3735:16",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3735:16: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3771:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3775:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3775:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3826:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3827:26",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3827:26: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3835:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3836:26",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3836:26: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3835:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3851:35",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3851:35: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3911:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3916:33",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:3916:33: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3999:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:4049:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:4049:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:4994:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:5001:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "program.ts:5001:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:300:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:301:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:301:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:216:35",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:216:35: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:220:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:220:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:223:17",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:223:17: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:228:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:228:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:322:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:323:27",
+          "reason": "a call through ?. (an optional call)",
+          "text": "programDiagnostics.ts:323:27: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:771:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:773:18",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:773:18: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:784:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:791:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:791:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1041:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1048:26",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1048:26: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1184:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1226:29",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1226:29: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1241:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1245:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1245:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1241:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1246:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1246:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1569:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1584:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1584:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1607:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1610:16",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1610:16: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1622:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1623:41",
+          "reason": "a call through ?. (an optional call)",
+          "text": "resolutionCache.ts:1623:41: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "scanner.ts:2999:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "scanner.ts:3009:22",
+          "reason": "a call through ?. (an optional call)",
+          "text": "scanner.ts:3009:22: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "sys.ts:631:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "sys.ts:684:27",
+          "reason": "a call through ?. (an optional call)",
+          "text": "sys.ts:684:27: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/classFields.ts:2970:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/classFields.ts:2972:46",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/classFields.ts:2972:46: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/declarations.ts:428:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/declarations.ts:429:36",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/declarations.ts:429:36: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/declarations.ts:747:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/declarations.ts:752:36",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/declarations.ts:752:36: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/es2018.ts:946:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/es2018.ts:947:13",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/es2018.ts:947:13: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/jsx.ts:131:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/jsx.ts:135:26",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/jsx.ts:135:26: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/module/module.ts:2460:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/module/module.ts:2486:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/module/module.ts:2486:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "transformers/module/system.ts:1986:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "transformers/module/system.ts:1998:38",
+          "reason": "a call through ?. (an optional call)",
+          "text": "transformers/module/system.ts:1998:38: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:2148:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:2149:12",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilities.ts:2149:12: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:8275:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:8276:12",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilities.ts:8276:12: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:9412:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:9413:36",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilities.ts:9413:36: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:9412:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:9415:31",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilities.ts:9415:31: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:10324:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:10327:9",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilities.ts:10327:9: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilitiesPublic.ts:1294:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilitiesPublic.ts:1296:11",
+          "reason": "a call through ?. (an optional call)",
+          "text": "utilitiesPublic.ts:1296:11: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "watchPublic.ts:983:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "watchPublic.ts:985:22",
+          "reason": "a call through ?. (an optional call)",
+          "text": "watchPublic.ts:985:22: stage 0 can't lower a call through ?. (an optional call) yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "watchPublic.ts:1034:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "watchPublic.ts:1036:24",
+          "reason": "a call through ?. (an optional call)",
+          "text": "watchPublic.ts:1036:24: stage 0 can't lower a call through ?. (an optional call) yet"
+        }
+      ],
+      "conservative_retirement_credit": 27,
+      "advanced_to_other_barriers": 5,
+      "receiver_reclassifications": 1
+    },
+    {
+      "reason": "an optional chain longer than one step",
+      "base_roots": 11,
+      "after_roots": 11,
+      "disappeared": 0,
+      "new_same_reason": [],
+      "disappeared_roots": [],
+      "after_findings": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:4730:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:4745:17",
+          "reason": "an optional chain longer than one step",
+          "text": "checker.ts:4745:17: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:36410:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:36469:31",
+          "reason": "an optional chain longer than one step",
+          "text": "checker.ts:36469:31: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:53795:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:53798:27",
+          "reason": "an optional chain longer than one step",
+          "text": "checker.ts:53798:27: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "moduleNameResolver.ts:2489:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "moduleNameResolver.ts:2519:13",
+          "reason": "an optional chain longer than one step",
+          "text": "moduleNameResolver.ts:2519:13: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "moduleNameResolver.ts:3091:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "moduleNameResolver.ts:3103:26",
+          "reason": "an optional chain longer than one step",
+          "text": "moduleNameResolver.ts:3103:26: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:1359:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:1365:35",
+          "reason": "an optional chain longer than one step",
+          "text": "program.ts:1365:35: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:3790:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:3791:16",
+          "reason": "an optional chain longer than one step",
+          "text": "program.ts:3791:16: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:4855:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:4862:13",
+          "reason": "an optional chain longer than one step",
+          "text": "program.ts:4862:13: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "program.ts:4855:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "program.ts:4869:13",
+          "reason": "an optional chain longer than one step",
+          "text": "program.ts:4869:13: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:9412:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:9417:9",
+          "reason": "an optional chain longer than one step",
+          "text": "utilities.ts:9417:9: stage 0 can't lower an optional chain longer than one step yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:10093:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:10095:28",
+          "reason": "an optional chain longer than one step",
+          "text": "utilities.ts:10095:28: stage 0 can't lower an optional chain longer than one step yet"
+        }
+      ]
+    },
+    {
+      "reason": "?. to a number, which would be number | undefined",
+      "base_roots": 3,
+      "after_roots": 3,
+      "disappeared": 0,
+      "new_same_reason": [],
+      "disappeared_roots": [],
+      "after_findings": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:10395:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:10416:29",
+          "reason": "?. to a number, which would be number | undefined",
+          "text": "checker.ts:10416:29: stage 0 can't lower ?. to a number, which would be number | undefined yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:10395:13",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:10445:29",
+          "reason": "?. to a number, which would be number | undefined",
+          "text": "checker.ts:10445:29: stage 0 can't lower ?. to a number, which would be number | undefined yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:8099:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:8102:13",
+          "reason": "?. to a number, which would be number | undefined",
+          "text": "utilities.ts:8102:13: stage 0 can't lower ?. to a number, which would be number | undefined yet"
+        }
+      ]
+    },
+    {
+      "reason": "optional chaining to .size on a value",
+      "base_roots": 20,
+      "after_roots": 20,
+      "disappeared": 0,
+      "new_same_reason": [],
+      "disappeared_roots": [],
+      "after_findings": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:700:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:705:10",
+          "reason": "optional chaining to .size on a value",
+          "text": "builder.ts:705:10: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:751:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:756:10",
+          "reason": "optional chaining to .size on a value",
+          "text": "builder.ts:756:10: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:774:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:778:10",
+          "reason": "optional chaining to .size on a value",
+          "text": "builder.ts:778:10: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "builder.ts:1741:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "builder.ts:1796:34",
+          "reason": "optional chaining to .size on a value",
+          "text": "builder.ts:1796:34: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:2820:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:2821:14",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:2821:14: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:2820:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:2822:14",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:2822:14: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:12159:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:12166:17",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:12166:17: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:12159:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:12172:13",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:12172:13: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:37696:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:37712:22",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:37712:22: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:37717:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:37725:21",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:37725:21: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:37717:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:37728:21",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:37728:21: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:37810:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:37872:17",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:37872:17: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:41082:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:41094:27",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:41094:27: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:45057:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:45184:23",
+          "reason": "optional chaining to .size on a value",
+          "text": "checker.ts:45184:23: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:233:38",
+          "reason": "optional chaining to .size on a value",
+          "text": "programDiagnostics.ts:233:38: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "programDiagnostics.ts:206:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "programDiagnostics.ts:236:31",
+          "reason": "optional chaining to .size on a value",
+          "text": "programDiagnostics.ts:236:31: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:837:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:838:66",
+          "reason": "optional chaining to .size on a value",
+          "text": "resolutionCache.ts:838:66: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1152:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1153:24",
+          "reason": "optional chaining to .size on a value",
+          "text": "resolutionCache.ts:1153:24: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "resolutionCache.ts:1173:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "resolutionCache.ts:1174:24",
+          "reason": "optional chaining to .size on a value",
+          "text": "resolutionCache.ts:1174:24: stage 0 can't lower optional chaining to .size on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "utilities.ts:9537:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "utilities.ts:9538:18",
+          "reason": "optional chaining to .size on a value",
+          "text": "utilities.ts:9538:18: stage 0 can't lower optional chaining to .size on a value yet"
+        }
+      ]
+    },
+    {
+      "reason": "?.[] on a value",
+      "base_roots": 6,
+      "after_roots": 6,
+      "disappeared": 0,
+      "new_same_reason": [],
+      "disappeared_roots": [],
+      "after_findings": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:9098:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:9101:112",
+          "reason": "?.[] on a value",
+          "text": "checker.ts:9101:112: stage 0 can't lower ?.[] on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:22874:9",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:22931:59",
+          "reason": "?.[] on a value",
+          "text": "checker.ts:22931:59: stage 0 can't lower ?.[] on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:33478:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:33479:27",
+          "reason": "?.[] on a value",
+          "text": "checker.ts:33479:27: stage 0 can't lower ?.[] on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:33483:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:33484:27",
+          "reason": "?.[] on a value",
+          "text": "checker.ts:33484:27: stage 0 can't lower ?.[] on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "checker.ts:33489:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "checker.ts:33490:27",
+          "reason": "?.[] on a value",
+          "text": "checker.ts:33490:27: stage 0 can't lower ?.[] on a value yet"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "unit": "factory/emitNode.ts:147:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "factory/emitNode.ts:148:12",
+          "reason": "?.[] on a value",
+          "text": "factory/emitNode.ts:148:12: stage 0 can't lower ?.[] on a value yet"
+        }
+      ]
+    }
+  ],
+  "new_guard_roots": {
+    "an optional method call requiring a saved receiver": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "checker.ts:6769:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "checker.ts:6910:21",
+        "reason": "an optional method call requiring a saved receiver",
+        "text": "checker.ts:6910:21: stage 0 can't lower an optional method call requiring a saved receiver yet"
+      }
+    ]
+  }
+}

@@ -30,8 +30,9 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay   map[tspath.RootedFilePath]string
-	nodeTypes bool
+	overlay        map[tspath.RootedFilePath]string
+	nodeTypes      bool
+	projectConsole bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -69,6 +70,9 @@ func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
 		if s.nodeTypes {
 			return nodePrelude(), true
+		}
+		if s.projectConsole {
+			return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "", 1), true
 		}
 		return prelude, true
 	}

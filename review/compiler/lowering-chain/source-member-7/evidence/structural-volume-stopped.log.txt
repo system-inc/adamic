@@ -1,0 +1,28 @@
+=== RUN   TestVolumeAgreementAndMutants
+    volume_test.go:118: controls: 26054 identical finding bytes; findings 73
+    volume_test.go:126: controls-asan: 26054 identical finding bytes; findings 73
+=== RUN   TestVolumeAgreementAndMutants/assignable-types
+    volume_test.go:162: assignable-types mutant: byte oracle catches byte 81; findings 67
+=== RUN   TestVolumeAgreementAndMutants/widened-shape
+    volume_test.go:162: widened-shape mutant: byte oracle catches byte 562; findings 74
+=== RUN   TestVolumeAgreementAndMutants/enum-types
+    volume_test.go:162: enum-types mutant: byte oracle catches byte 6039; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-symbol
+    volume_test.go:162: type-symbol mutant: byte oracle catches byte 21217; findings 73
+=== RUN   TestVolumeAgreementAndMutants/scope-locals
+    volume_test.go:162: scope-locals mutant: byte oracle catches byte 8652; findings 71
+=== RUN   TestVolumeAgreementAndMutants/call-returns
+    volume_test.go:162: call-returns mutant: byte oracle catches byte 13238; findings 77
+=== RUN   TestVolumeAgreementAndMutants/property-shape
+    volume_test.go:162: property-shape mutant: byte oracle catches byte 7557; findings 72
+=== RUN   TestVolumeAgreementAndMutants/contextual-shape
+    volume_test.go:162: contextual-shape mutant: byte oracle catches byte 8118; findings 72
+=== RUN   TestVolumeAgreementAndMutants/symbol-origin
+    volume_test.go:162: symbol-origin mutant: byte oracle catches byte 26042; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-origin
+signal: terminated
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	522.927s
+FAIL
+
+wall_seconds=525.062
+exit=1

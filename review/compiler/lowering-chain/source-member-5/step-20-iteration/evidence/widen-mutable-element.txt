@@ -1,0 +1,11 @@
+=== RUN   TestStep20ArrayViewVariance
+=== PAUSE TestStep20ArrayViewVariance
+=== CONT  TestStep20ArrayViewVariance
+    step20_variance_test.go:25: want nested mutable slot refusal through a readonly array view, got <nil>
+--- FAIL: TestStep20ArrayViewVariance (1.95s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.043s
+FAIL

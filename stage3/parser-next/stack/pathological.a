@@ -1,0 +1,16 @@
+// Recursive parser reduction: parse nested parentheses and retain the result after unwind.
+let position=0;
+const input='('.repeat(1000000)+'x'+')'.repeat(1000000);
+function parseNested():number {
+    if(input[position]==='(') {
+        position++;
+        const result=parseNested();
+        if(input[position]!==')') return -1;
+        position++;
+        return result+1;
+    }
+    if(input[position]!=='x') return -1;
+    position++;
+    return 0;
+}
+console.log(`${parseNested()}|${position}`);

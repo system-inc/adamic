@@ -118,6 +118,7 @@ struct adamic_closure {
  bool receiver;
 #endif
 	size_t count;
+	size_t source_length;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_environment *canonical_owner;
 	adamic_closure *canonical_previous;
@@ -207,8 +208,10 @@ extern char adamic_literal_mark;
 // ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
 #define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
-// ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
-#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+// ADAMIC_STRING_BYTES holds an unsigned byte array too long for a C string literal.
+// Character pointers may read any object representation; the cast preserves the bytes
+// for the runtime, whose numeric byte readers use unsigned char.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, (const char *)(array), 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 //
@@ -251,6 +254,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	bool frozen;
 	bool tuple;
+	// NULL for a complete shape; SIZE_MAX means reserved but not own.
+	size_t *write_order;
 	adamic_value slots[];
 } adamic_object;
 
@@ -270,6 +275,12 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
 	return adamic_object_initialized(object) + object->shape->count;
 }
+
+// Construction storage is reserved at allocation, independently of property presence.
+bool adamic_object_present(const adamic_object *object, size_t index);
+void adamic_object_publish(adamic_object *object, size_t index);
+size_t *adamic_object_ordered(const adamic_object *object);
+adamic_object *adamic_object_construct(const adamic_shape *shape);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
@@ -367,7 +378,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 	if (cache->shape != object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
-	if (cache->index == object->shape->count) {
+	if (cache->index == object->shape->count || !adamic_object_present(object, cache->index)) {
 		return NULL;
 	}
 	return &((adamic_object *)object)->slots[cache->index];
@@ -409,10 +420,17 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	// Scalar element representation, or zero when no dynamic view was established.
+	uint8_t element_type;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	// An interior fixed layout, owned by this allocation, never a wrapper.
+	adamic_object *metadata;
 } adamic_array;
+adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras);
+adamic_array *adamic_node_array_keys(const adamic_array *array);
+
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
 // subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
@@ -894,11 +912,22 @@ void adamic_weak_dropped(adamic_weak *handle);
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
 
-// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
-// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
-// Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+// adamic_thrown owns a tagged union payload (NULL is undefined). The separate pending flag
+// distinguishes a thrown undefined from no exception. Every throwing call tests the flag.
+// A catch takes ownership; adamic_uncaught flushes stdout and exits 1 without conversion.
+extern adamic_heap *adamic_thrown;
+extern bool adamic_exception_pending;
+extern const adamic_class adamic_error_class;
+extern const adamic_class adamic_host_error_class;
+extern const adamic_class adamic_host_type_error_class;
+extern const adamic_class adamic_host_range_error_class;
+extern const adamic_class adamic_range_error_class;
+extern const adamic_class adamic_type_error_class;
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
+// NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
+const char *adamic_error_field_name(const adamic_object *object, const char *name);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
@@ -1038,23 +1067,27 @@ _Noreturn void adamic_stack_overflow(void);
 // Even a function using only Wasm locals must advance the linear stack. Otherwise
 // its engine call stack can trap before this check sees any movement. The volatile
 // endpoints preserve a 64-byte frame, including in optimized recursive functions.
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		volatile unsigned char adamic_stack_frame[64]; \
 		adamic_stack_frame[0] = 0; \
 		adamic_stack_frame[63] = 0; \
 		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #else
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #endif
+
+// Names are compile-time string literals; the guard allocates nothing.
+#define ADAMIC_CHECK_STACK() ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded")
+#define ADAMIC_CHECK_STACK_NAMED(name) ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded in " name)
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.

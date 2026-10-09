@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T05:58:23.980821701Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T05:58:23.988903615Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter"}
+{"Time":"2026-10-09T05:58:23.989005819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Output":"=== RUN   TestCallbackWideningUnrepresentedParameter\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:23.989041663Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Output":"=== PAUSE TestCallbackWideningUnrepresentedParameter\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:23.989044918Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter"}
+{"Time":"2026-10-09T05:58:23.989053441Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter"}
+{"Time":"2026-10-09T05:58:23.989056125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Output":"=== CONT  TestCallbackWideningUnrepresentedParameter\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:24.161457545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Output":"    callback_widening_test.go:190: expected unrepresented parameter refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T05:58:24.161532858Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Output":"--- FAIL: TestCallbackWideningUnrepresentedParameter (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:24.161536824Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningUnrepresentedParameter","Elapsed":0.17}
+{"Time":"2026-10-09T05:58:24.161565578Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:24.161576775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:58:24.161583204Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T05:58:24.161587Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:58:24.163747461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.182s\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:24.163765087Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.183}

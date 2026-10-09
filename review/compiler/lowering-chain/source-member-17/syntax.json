@@ -1,0 +1,242 @@
+{
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "parser": "6.0.3",
+  "counts": {
+    "try/finally": 8,
+    "try/catch": 26,
+    "throw new Error": 9,
+    "throw identifier": 3
+  },
+  "rows": [
+    {
+      "shape": "try/finally",
+      "file": "checker.ts",
+      "line": 1912
+    },
+    {
+      "shape": "try/finally",
+      "file": "checker.ts",
+      "line": 1937
+    },
+    {
+      "shape": "try/finally",
+      "file": "checker.ts",
+      "line": 33282
+    },
+    {
+      "shape": "try/finally",
+      "file": "checker.ts",
+      "line": 49690
+    },
+    {
+      "shape": "try/catch",
+      "file": "commandLineParser.ts",
+      "line": 2297
+    },
+    {
+      "shape": "throw new Error",
+      "file": "core.ts",
+      "line": 1583
+    },
+    {
+      "shape": "throw new Error",
+      "file": "core.ts",
+      "line": 1887
+    },
+    {
+      "shape": "throw identifier",
+      "file": "debug.ts",
+      "line": 203
+    },
+    {
+      "shape": "throw new Error",
+      "file": "debug.ts",
+      "line": 1093
+    },
+    {
+      "shape": "throw new Error",
+      "file": "moduleNameResolver.ts",
+      "line": 1681
+    },
+    {
+      "shape": "try/catch",
+      "file": "moduleSpecifiers.ts",
+      "line": 134
+    },
+    {
+      "shape": "try/catch",
+      "file": "performanceCore.ts",
+      "line": 32
+    },
+    {
+      "shape": "try/catch",
+      "file": "program.ts",
+      "line": 398
+    },
+    {
+      "shape": "try/catch",
+      "file": "program.ts",
+      "line": 421
+    },
+    {
+      "shape": "throw new Error",
+      "file": "program.ts",
+      "line": 1526
+    },
+    {
+      "shape": "try/catch",
+      "file": "program.ts",
+      "line": 2844
+    },
+    {
+      "shape": "throw identifier",
+      "file": "program.ts",
+      "line": 2854
+    },
+    {
+      "shape": "try/catch",
+      "file": "sourcemap.ts",
+      "line": 423
+    },
+    {
+      "shape": "try/finally",
+      "file": "symbolWalker.ts",
+      "line": 50
+    },
+    {
+      "shape": "try/finally",
+      "file": "symbolWalker.ts",
+      "line": 60
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1261
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1475
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1549
+    },
+    {
+      "shape": "throw identifier",
+      "file": "sys.ts",
+      "line": 1555
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1596
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1617
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1631
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1701
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1789
+    },
+    {
+      "shape": "try/finally",
+      "file": "sys.ts",
+      "line": 1827
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1839
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1918
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1931
+    },
+    {
+      "shape": "try/catch",
+      "file": "sys.ts",
+      "line": 1940
+    },
+    {
+      "shape": "try/catch",
+      "file": "tracing.ts",
+      "line": 62
+    },
+    {
+      "shape": "throw new Error",
+      "file": "tracing.ts",
+      "line": 66
+    },
+    {
+      "shape": "try/catch",
+      "file": "tracing.ts",
+      "line": 237
+    },
+    {
+      "shape": "try/finally",
+      "file": "utilities.ts",
+      "line": 787
+    },
+    {
+      "shape": "try/catch",
+      "file": "utilities.ts",
+      "line": 6739
+    },
+    {
+      "shape": "try/catch",
+      "file": "utilities.ts",
+      "line": 7810
+    },
+    {
+      "shape": "throw new Error",
+      "file": "utilitiesPublic.ts",
+      "line": 448
+    },
+    {
+      "shape": "throw new Error",
+      "file": "utilitiesPublic.ts",
+      "line": 451
+    },
+    {
+      "shape": "throw new Error",
+      "file": "utilitiesPublic.ts",
+      "line": 471
+    },
+    {
+      "shape": "try/catch",
+      "file": "utilitiesPublic.ts",
+      "line": 738
+    },
+    {
+      "shape": "try/catch",
+      "file": "utilitiesPublic.ts",
+      "line": 747
+    },
+    {
+      "shape": "try/catch",
+      "file": "watchUtilities.ts",
+      "line": 199
+    }
+  ]
+}

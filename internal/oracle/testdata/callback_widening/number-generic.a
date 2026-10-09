@@ -1,0 +1,2 @@
+function apply<T,U,R>(items:readonly T[], callback:(x:T|U)=>R):R[] {const result:R[]=[];for(const item of items)result.push(callback(item));return result;}
+console.log(apply<number,string,string>([1,2,3],(x:number | string):string => `${x}`).join(","));

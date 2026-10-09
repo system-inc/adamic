@@ -1,0 +1,14 @@
+=== RUN   TestPlaceholderExplainChecksOutputC
+=== PAUSE TestPlaceholderExplainChecksOutputC
+=== RUN   TestPlaceholderExplainChecksOutputJavaScript
+=== PAUSE TestPlaceholderExplainChecksOutputJavaScript
+=== RUN   TestPlaceholderExplainChecksOutputBuild
+=== PAUSE TestPlaceholderExplainChecksOutputBuild
+=== CONT  TestPlaceholderExplainChecksOutputC
+=== CONT  TestPlaceholderExplainChecksOutputBuild
+=== CONT  TestPlaceholderExplainChecksOutputJavaScript
+--- PASS: TestPlaceholderExplainChecksOutputC (0.08s)
+--- PASS: TestPlaceholderExplainChecksOutputJavaScript (0.08s)
+--- PASS: TestPlaceholderExplainChecksOutputBuild (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	0.236s

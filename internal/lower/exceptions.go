@@ -9,8 +9,8 @@ import (
 )
 
 // Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
-// caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// caught value thrown again, and try with catch, finally or both. Payloads use the owned
+// tagged union representation; catch bindings stay unknown until a real runtime test.
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,52 +22,24 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
-	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	// Error is structurally typed: { name, message, stack } can satisfy it without
-	// being an Error on Node. Follow only immutable bindings to a real allocation.
-	seen := map[*ast.Symbol]bool{}
-	var madeError func(*ast.Node) bool
-	madeError = func(value *ast.Node) bool {
-		if value == nil {
-			return false
-		}
-		value = ast.SkipParentheses(value)
-		if value.Kind == ast.KindNewExpression {
-			return l.isLibraryGlobal(value.AsNewExpression().Expression, "Error")
-		}
-		if !ast.IsIdentifier(value) {
-			return false
-		}
-		symbol := l.symbol(value)
-		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
-			return false
-		}
-		seen[symbol] = true
-		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
-			return false
-		}
-		return madeError(declaration.AsVariableDeclaration().Initializer)
-	}
-	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
-	if !isNewError && !isCaught && !isStoredError {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
-		}
-		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
-	}
 	value, err := l.expression(thrown)
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Throw{Value: value}}, nil
+	// Nullable references use NULL in their typed slot. Convert that sentinel to the
+	// explicit null tag before entering unknown storage, evaluating the operand once.
+	if _, literal := value.(ir.Null); !literal && value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(thrown)) {
+		b := l.libraryArrayBuilder([]ir.Expression{value})
+		held := b.read(b.parameters[0])
+		value = b.finish("throw_nullable", ir.Conditional{Condition: ir.IsUndefined{Value: held}, WhenTrue: fit(ir.Null{}, ir.Union), WhenNot: fit(held, ir.Union), Of: ir.Union})
+	}
+	return []ir.Statement{ir.Throw{Value: fit(value, ir.Union)}}, nil
 }
 
 // newError lowers new Error(message), and new Error().
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
+	message := ir.Expression(ir.Undefined{Of: ir.String})
 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
 		if len(created.Arguments.Nodes) > 1 {
 			return nil, l.notYet(node, "new Error with options")
@@ -76,11 +48,13 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
 			return nil, err
 		}
+		message = fit(message, ir.String)
 		if message.Type() != ir.String {
 			return nil, l.notYet(node, "new Error with a message that isn't a string")
 		}
 	}
-	return ir.MakeError{Message: message}, nil
+	constructor := ast.SkipParentheses(created.Expression).Text()
+	return ir.MakeError{Message: message, Constructor: constructor}, nil
 }
 
 // tryStatement lowers try, with catch, finally or both.
@@ -123,21 +97,32 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{lowered}, nil
 }
 
-// caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
+// caughtInstanceOfError recognizes the intrinsic Error constructor. Class -1 is
+// its nominal runtime identity, shared by native Error objects and host errors.
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
-	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
+	identity := 0
+	for index, name := range []string{"Error", "RangeError", "TypeError"} {
+		if l.isLibraryGlobal(binary.Right, name) {
+			identity = -index - 1
+		}
+	}
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || identity == 0 {
 		return nil, false
 	}
-	l.local(left)
-	return ir.BooleanConstant{Value: true}, true
+	value, err := l.expression(binary.Left)
+	if err != nil {
+		l.unlowerable = err
+		return nil, false
+	}
+	return ir.InstanceOf{Value: value, Class: identity}, true
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	l.libraryExceptions()
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
@@ -146,6 +131,13 @@ func (l *lowering) exceptions() error {
 	for _, lowered := range l.instances {
 		for _, method := range lowered.methodList() {
 			dispatched[method.Function] = true
+		}
+	}
+	for _, class := range l.result.Classes {
+		for _, accessor := range class.Accessors {
+			if accessor.Getter >= 0 {
+				dispatched[accessor.Getter] = true
+			}
 		}
 	}
 	// Whether any function value can throw, and so every call through one, grows with what can, so
@@ -186,8 +178,12 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.NodeBufferCall:
+			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
+		case ir.Defined:
+			found = node.Throws()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -196,7 +192,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
 				found = true
@@ -221,7 +217,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		switch node := node.(type) {
 		case ir.Call:
 			for _, target := range l.result.CallTargets(node) {
-				if !visited[target] {
+				if !visited[target] && !l.result.Functions[target].CheckedLibrary {
 					visited[target] = true
 					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
 					if failing != "" {
@@ -229,7 +225,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 					}
 				}
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
+		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
 		case ir.ArraySort:
 			if node.Callback != nil {
@@ -241,10 +237,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
-			}
-		case ir.NodeBufferCall:
-			if node.Function == "hash_update" || node.Function == "hash_digest" {
-				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
