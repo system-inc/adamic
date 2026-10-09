@@ -1,0 +1,23 @@
+[
+  {
+    "file": "fixtures/01_parseJSDocAllType.a",
+    "source_function": "parseJSDocAllType",
+    "source_line": 3836,
+    "before": "factory.createJSDocAllType()",
+    "after": "factory.createJSDocUnknownType()"
+  },
+  {
+    "file": "fixtures/02_parseJSDocNonNullableType.a",
+    "source_function": "parseJSDocNonNullableType",
+    "source_line": 3842,
+    "before": "/*postfix*/ false",
+    "after": "/*postfix*/ true"
+  },
+  {
+    "file": "fixtures/03_parseJSDocUnknownOrNullableType.a",
+    "source_function": "parseJSDocUnknownOrNullableType",
+    "source_line": 3848,
+    "before": "token() === SyntaxKind.CloseBraceToken ||",
+    "after": "false ||"
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "file": "fixtures/01_parseJSDocAllType.a",
+    "node": {
+      "exit": 0,
+      "stdout": "*} JSDocAllType 1 2  false\n",
+      "stderr": ""
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "output": {
+        "exit": 0,
+        "stdout": "*} JSDocAllType 1 2  false\n",
+        "stderr": ""
+      }
+    },
+    "checked": {
+      "sanitize": {
+        "exit": 0,
+        "stdout": "*} JSDocAllType 1 2  false\n",
+        "stderr": ""
+      },
+      "count": {
+        "exit": 0,
+        "stdout": "*} JSDocAllType 1 2  false\n",
+        "stderr": "adamic: counts: allocations 11 frees 11 retains 9 releases 16 peak 11 regions 0\n"
+      }
+    },
+    "mutant": {
+      "change": [
+        "factory.createJSDocAllType()",
+        "factory.createJSDocUnknownType()"
+      ],
+      "node": {
+        "exit": 0,
+        "stdout": "*} JSDocUnknownType 1 2  false\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "*} JSDocUnknownType 1 2  false\n",
+        "stderr": ""
+      },
+      "caught": "original Node stdout comparison, source and native mutants both differ"
+    }
+  },
+  {
+    "file": "fixtures/02_parseJSDocNonNullableType.a",
+    "node": {
+      "exit": 0,
+      "stdout": "!number} JSDocNonNullableType 1 8 number false\n",
+      "stderr": ""
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "output": {
+        "exit": 0,
+        "stdout": "!number} JSDocNonNullableType 1 8 number false\n",
+        "stderr": ""
+      }
+    },
+    "checked": {
+      "sanitize": {
+        "exit": 0,
+        "stdout": "!number} JSDocNonNullableType 1 8 number false\n",
+        "stderr": ""
+      },
+      "count": {
+        "exit": 0,
+        "stdout": "!number} JSDocNonNullableType 1 8 number false\n",
+        "stderr": "adamic: counts: allocations 13 frees 13 retains 13 releases 20 peak 12 regions 0\n"
+      }
+    },
+    "mutant": {
+      "change": [
+        "/*postfix*/ false",
+        "/*postfix*/ true"
+      ],
+      "node": {
+        "exit": 0,
+        "stdout": "!number} JSDocNonNullableType 1 8 number true\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "!number} JSDocNonNullableType 1 8 number true\n",
+        "stderr": ""
+      },
+      "caught": "original Node stdout comparison, source and native mutants both differ"
+    }
+  },
+  {
+    "file": "fixtures/03_parseJSDocUnknownOrNullableType.a",
+    "node": {
+      "exit": 0,
+      "stdout": "?} JSDocUnknownType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+      "stderr": ""
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "output": {
+        "exit": 0,
+        "stdout": "?} JSDocUnknownType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+        "stderr": ""
+      }
+    },
+    "checked": {
+      "sanitize": {
+        "exit": 0,
+        "stdout": "?} JSDocUnknownType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+        "stderr": ""
+      },
+      "count": {
+        "exit": 0,
+        "stdout": "?} JSDocUnknownType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+        "stderr": "adamic: counts: allocations 64 frees 64 retains 61 releases 101 peak 12 regions 0\n"
+      }
+    },
+    "mutant": {
+      "change": [
+        "token() === SyntaxKind.CloseBraceToken ||",
+        "false ||"
+      ],
+      "node": {
+        "exit": 0,
+        "stdout": "?} JSDocNullableType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "?} JSDocNullableType 1 2  false\n?, JSDocUnknownType 1 2  false\n?) JSDocUnknownType 1 2  false\n?> JSDocUnknownType 1 2  false\n?= JSDocUnknownType 1 2  false\n?| JSDocUnknownType 1 2  false\n?number} JSDocNullableType 1 8 number false\n",
+        "stderr": ""
+      },
+      "caught": "original Node stdout comparison, source and native mutants both differ"
+    }
+  }
+]

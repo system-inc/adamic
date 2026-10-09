@@ -1,0 +1,81 @@
+{
+  "pass": true,
+  "probes": [
+    {
+      "entry": "createSourceFile",
+      "kind": "TS",
+      "attached": 1,
+      "jsdoc_diagnostics": []
+    },
+    {
+      "entry": "createSourceFile",
+      "kind": "JS",
+      "attached": 1,
+      "jsdoc_diagnostics": [
+        1110
+      ]
+    },
+    {
+      "entry": "parseIsolatedJSDocComment",
+      "kind": 321,
+      "diagnostics": [
+        1110
+      ]
+    },
+    {
+      "entry": "parseJSDocTypeExpressionForTests",
+      "kind": 310,
+      "diagnostics": [
+        1110
+      ]
+    },
+    {
+      "entry": "createSourceFile",
+      "kind": "JSON",
+      "mode": "ParseAll",
+      "attached": 0,
+      "jsdoc_diagnostics": []
+    },
+    {
+      "entry": "createSourceFile",
+      "kind": "JSON",
+      "mode": "ParseNone",
+      "attached": 0,
+      "jsdoc_diagnostics": []
+    },
+    {
+      "entry": "createSourceFile",
+      "kind": "JSON",
+      "mode": "ParseForTypeErrors",
+      "attached": 0,
+      "jsdoc_diagnostics": []
+    },
+    {
+      "entry": "createSourceFile",
+      "kind": "JSON",
+      "mode": "ParseForTypeInfo",
+      "attached": 0,
+      "jsdoc_diagnostics": []
+    },
+    {
+      "entry": "updateSourceFile",
+      "mode": "ParseNone retained",
+      "attached": 0,
+      "jsdoc_diagnostics": [],
+      "mode_value": 1
+    },
+    {
+      "entry": "getJSDocTags",
+      "lazy": "tag cache only",
+      "cache_before": false,
+      "cache_after": true,
+      "tags": 1
+    },
+    {
+      "entry": "getJSDocTags",
+      "mode": "ParseNone",
+      "tags": 0,
+      "attached_after": 0
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:3848
+// A bounded token cursor and node projection replace the shared scanner/factory.
+// The selected tsc parser function below is unchanged; other grammar is excluded.
+interface TypeNode { kind: string; pos: number; end: number; typeText: string; postfix: boolean; }
+type JSDocAllType = TypeNode;
+type JSDocOptionalType = TypeNode;
+type JSDocUnknownType = TypeNode;
+type JSDocNullableType = TypeNode;
+const SyntaxKind = { CommaToken: 1, CloseBraceToken: 2, CloseParenToken: 3, GreaterThanToken: 4, EqualsToken: 5, BarToken: 6, NumberKeyword: 7 };
+let input = "";
+let cursor = 0;
+function getNodePos(): number { return cursor + 1; }
+function nextToken(): void { cursor++; }
+function token(): number {
+    const text = input.slice(cursor);
+    if (text === "}") return SyntaxKind.CloseBraceToken;
+    if (text === ",") return SyntaxKind.CommaToken;
+    if (text === ")") return SyntaxKind.CloseParenToken;
+    if (text === ">") return SyntaxKind.GreaterThanToken;
+    if (text === "=") return SyntaxKind.EqualsToken;
+    if (text === "|") return SyntaxKind.BarToken;
+    return SyntaxKind.NumberKeyword;
+}
+function makeNode(kind: string, typeText: string, postfix: boolean): TypeNode {
+    return { kind, pos: -1, end: -1, typeText, postfix };
+}
+function finishNode(node: TypeNode, pos: number): TypeNode {
+    node.pos = pos;
+    node.end = getNodePos();
+    return node;
+}
+function parseType(): TypeNode {
+    const start = getNodePos();
+    const text = input.slice(cursor, input.length - 1);
+    cursor = input.length - 1;
+    return finishNode(makeNode("NumberKeyword", text, false), start);
+}
+function parseNonArrayType(): TypeNode { return parseType(); }
+const factory = {
+    createJSDocAllType: (): TypeNode => makeNode("JSDocAllType", "", false),
+    createJSDocNonNullableType: (type: TypeNode, postfix: boolean): TypeNode => makeNode("JSDocNonNullableType", type.typeText, postfix),
+    createJSDocUnknownType: (): TypeNode => makeNode("JSDocUnknownType", "", false),
+    createJSDocNullableType: (type: TypeNode, postfix: boolean): TypeNode => makeNode("JSDocNullableType", type.typeText, postfix),
+};
+
+function parseJSDocUnknownOrNullableType(): JSDocUnknownType | JSDocNullableType {
+        const pos = getNodePos();
+        // skip the ?
+        nextToken();
+
+        // Need to lookahead to decide if this is a nullable or unknown type.
+
+        // Here are cases where we'll pick the unknown type:
+        //
+        //      Foo(?,
+        //      { a: ? }
+        //      Foo(?)
+        //      Foo<?>
+        //      Foo(?=
+        //      (?|
+        if (
+            token() === SyntaxKind.CommaToken ||
+            token() === SyntaxKind.CloseBraceToken ||
+            token() === SyntaxKind.CloseParenToken ||
+            token() === SyntaxKind.GreaterThanToken ||
+            token() === SyntaxKind.EqualsToken ||
+            token() === SyntaxKind.BarToken
+        ) {
+            return finishNode(factory.createJSDocUnknownType(), pos);
+        }
+        else {
+            return finishNode(factory.createJSDocNullableType(parseType(), /*postfix*/ false), pos);
+        }
+    }
+
+for (const value of ["?}", "?,", "?)", "?>", "?=", "?|", "?number}"]) {
+    input = value;
+    cursor = 0;
+    const node = parseJSDocUnknownOrNullableType();
+    console.log(`${value} ${node.kind} ${node.pos} ${node.end} ${node.typeText} ${node.postfix}`);
+}
