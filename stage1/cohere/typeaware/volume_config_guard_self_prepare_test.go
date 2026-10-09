@@ -122,7 +122,7 @@ func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive strin
 	return filepath.Join(directory, "native")
 }
 
-type volumeGuardProducts struct{ repository, binary, mutant, oracle, asan string }
+type volumeGuardProducts struct{ repository, stage0, binary, mutant, oracle, asan string }
 
 // Each harness carries its shard's deadline, after shared preparation completes.
 type volumeGuardHarness struct {
@@ -186,6 +186,9 @@ func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
 func runVolumeConfigGuardShard(t *testing.T, shard int) {
 	t.Helper()
 	products := volumeGuardProductsFor(t)
+	if shard == 0 {
+		products = volumeGuardMutantProductsFor(t, products)
+	}
 	repository, binary, mutant, oracle, asan := products.repository, products.binary, products.mutant, products.oracle, products.asan
 	buckets, _ := volumeGuardBuckets()
 
@@ -286,12 +289,7 @@ func buildVolumeConfigGuardProducts(t *testing.T, ctx context.Context) volumeGua
 		return nil
 	})
 	stage0 = filepath.Join(stage0Directory, "adamic")
-	archive := volumeGuardArchive(h, "checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	binary := volumeGuardNative(h, stage0, "volume", entry, archive, false)
-	overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
-	mutantArchive := volumeGuardArchive(h, "strict-this-checker", overlay, false)
-	mutant := volumeGuardNative(h, stage0, "strict-this-native", entry, mutantArchive, false)
 	oracleDirectory := buildcache.Product(t, volumeGuardInputs(ctx, "oracle", false), func(directory string) error {
 		builder := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: directory}, ctx: ctx}
 		virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
@@ -308,7 +306,34 @@ func buildVolumeConfigGuardProducts(t *testing.T, ctx context.Context) volumeGua
 	sanitized := volumeGuardArchive(h, "checker-asan", "", true)
 	asan := volumeGuardNative(h, stage0, "volume-asan", entry, sanitized, true)
 	t.Logf("TestVolumeConfigGuardAndMutant (setup): %.3fs", time.Since(started).Seconds())
-	return volumeGuardProducts{repository, binary, mutant, oracle, asan}
+	return volumeGuardProducts{repository: repository, stage0: stage0, oracle: oracle, asan: asan}
+}
+
+// Only the strict-this shard needs the unsanitized runner and its mutant.
+var volumeGuardMutantShared struct {
+	once     sync.Once
+	products volumeGuardProducts
+}
+
+func volumeGuardMutantProductsFor(t *testing.T, products volumeGuardProducts) volumeGuardProducts {
+	t.Helper()
+	volumeGuardMutantShared.once.Do(func() {
+		repository, stage0 := products.repository, products.stage0
+		h := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: t.TempDir()}, ctx: context.Background()}
+		archive := volumeGuardArchive(h, "checker", "", false)
+		entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
+		binary := volumeGuardNative(h, stage0, "volume", entry, archive, false)
+		overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
+		mutantArchive := volumeGuardArchive(h, "strict-this-checker", overlay, false)
+		mutant := volumeGuardNative(h, stage0, "strict-this-native", entry, mutantArchive, false)
+
+		products.binary, products.mutant = binary, mutant
+		volumeGuardMutantShared.products = products
+	})
+	if volumeGuardMutantShared.products.mutant == "" {
+		t.Fatal("shared mutant preparation failed")
+	}
+	return volumeGuardMutantShared.products
 }
 
 // The planted disagreement exercises the same exact byte comparison as every oracle check.
