@@ -368,6 +368,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 }
 
 // Hold the complete composed implementation against the external Go tree.
+// Not parallel: compositionSetup publishes shared build products and native runtime cache entries.
 func TestCompositionMatchesGo(t *testing.T) {
 	compositionSetup(t)
 }
@@ -421,6 +422,7 @@ func TestCSSThroughput(t *testing.T) {
 }
 
 // Only a corrupt Range catches these probes; source properties remain correct.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 	raw, err := filepath.Abs("testdata/range_guard.ts")
 	if err != nil {
