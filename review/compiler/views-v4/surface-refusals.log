@@ -1,0 +1,37 @@
+=== RUN   TestV4EscapeAdapterDynamicApplyRefusal
+=== PAUSE TestV4EscapeAdapterDynamicApplyRefusal
+=== RUN   TestV4EscapeAdapterPrimitiveCallRefusal
+=== PAUSE TestV4EscapeAdapterPrimitiveCallRefusal
+=== RUN   TestV4EscapeAdapterPrimitiveApplyRefusal
+=== PAUSE TestV4EscapeAdapterPrimitiveApplyRefusal
+=== RUN   TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== PAUSE TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== CONT  TestV4EscapeAdapterDynamicApplyRefusal
+=== CONT  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== CONT  TestV4EscapeAdapterPrimitiveApplyRefusal
+=== CONT  TestV4EscapeAdapterPrimitiveCallRefusal
+=== NAME  TestV4EscapeAdapterDynamicApplyRefusal
+    checked_views_v4_surface_refusals_test.go:35: gate cache node miss
+=== NAME  TestV4EscapeAdapterPrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:39: gate cache node miss
+=== NAME  TestV4EscapeAdapterPrimitiveApplyRefusal
+    checked_views_v4_surface_refusals_test.go:43: gate cache node miss
+=== NAME  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:47: gate cache node miss
+=== NAME  TestV4EscapeAdapterPrimitiveApplyRefusal
+    checked_views_v4_surface_refusals_test.go:43: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterPrimitiveApplyRefusal1772792583/001/unsupported-surface.ts:4:145: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterPrimitiveApplyRefusal (0.34s)
+=== NAME  TestV4EscapeAdapterDynamicApplyRefusal
+    checked_views_v4_surface_refusals_test.go:35: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterDynamicApplyRefusal924152719/001/unsupported-surface.ts:4:155: Adamic 0.1 refuses apply with a dynamic argument list; spell the arguments in a dense literal or use call until dynamic apply argument lists are checked
+=== NAME  TestV4EscapeAdapterPrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:39: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterPrimitiveCallRefusal84368374/001/unsupported-surface.ts:4:144: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterPrimitiveCallRefusal (0.36s)
+--- PASS: TestV4EscapeAdapterDynamicApplyRefusal (0.36s)
+=== NAME  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:47: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterNullablePrimitiveCallRefusal1116438148/001/unsupported-surface.ts:4:144: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterNullablePrimitiveCallRefusal (0.37s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.384s

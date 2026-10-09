@@ -45,8 +45,8 @@ func (l *lowering) closureSurfaceCall(node *ast.Node) (ir.Expression, bool, erro
 		return nil, true, err
 	}
 	if receiver.Type() != ir.Object {
-		if _, undefined := receiver.(ir.Undefined); !undefined && !l.includesNull(l.checker.GetTypeAtLocation(nodes[0])) {
-			return refuse("call or apply with a thisArg without an object representation")
+		if _, undefined := receiver.(ir.Undefined); !undefined {
+			return nil, true, &Refused{Where: l.program.Where(nodes[0]), What: "call or apply with a primitive or unrepresented thisArg", Fix: "use an object or undefined receiver until checked primitive receivers are supported"}
 		}
 		receiver = fit(receiver, ir.Object)
 	}
@@ -60,7 +60,7 @@ func (l *lowering) closureSurfaceCall(node *ast.Node) (ir.Expression, bool, erro
 			array = ast.SkipParentheses(array.AsAsExpression().Expression)
 		}
 		if array.Kind != ast.KindArrayLiteralExpression {
-			return refuse("apply without a dense argument literal; spell the arguments with call")
+			return nil, true, &Refused{Where: l.program.Where(nodes[1]), What: "apply with a dynamic argument list", Fix: "spell the arguments in a dense literal or use call until dynamic apply argument lists are checked"}
 		}
 		arguments = array.AsArrayLiteralExpression().Elements.Nodes
 	}
