@@ -22,7 +22,10 @@ const maximumGenericDepth = 32
 // result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
 // be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
-	resolved := l.checker.GetResolvedSignature(call)
+	return l.instantiateFunctionSignature(call, declaration, l.checker.GetResolvedSignature(call))
+}
+
+func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {
 	target := l.checker.GetSignatureFromDeclaration(declaration)
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
@@ -51,7 +54,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	// An explicit type argument can make tsc view a mutable argument through a wider type without
 	// giving the argument that contextual type. Judge the instantiated parameter directly: the
 	// ordinary refusal walk cannot see this view at the argument node.
-	if call.AsCallExpression().TypeArguments != nil && len(call.AsCallExpression().TypeArguments.Nodes) > 0 {
+	if call.Kind == ast.KindCallExpression && call.AsCallExpression().TypeArguments != nil && len(call.AsCallExpression().TypeArguments.Nodes) > 0 {
 		for index, argument := range call.AsCallExpression().Arguments.Nodes {
 			if index >= len(given) || argument.Kind == ast.KindObjectLiteralExpression || argument.Kind == ast.KindArrayLiteralExpression {
 				continue
