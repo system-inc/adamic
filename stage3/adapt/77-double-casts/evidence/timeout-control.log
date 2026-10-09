@@ -1,0 +1,31 @@
+
+> typescript@6.0.3 test
+> hereby runtests-parallel --light=false --workers=1 --lint=false --no-colors --tests=declarationEmitPrivatePromiseLikeInterface
+
+Using /tmp/adapt77-recovered/adapted-tree/Herebyfile.mjs to run runtests-parallel
+Starting lib
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting generate-types-map
+Finished generate-types-map in 9ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 117ms
+Finished generate-diagnostics in 143ms
+Starting bundle-tests
+Starting build-tests
+Starting build-services
+Finished build-tests in 432ms
+Finished build-services in 431ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 15ms
+Finished bundle-tests in 985ms
+Starting do-runtests-parallel
+Running tests with config: {"test":["declarationEmitPrivatePromiseLikeInterface"],"light":false,"noColor":true,"timeout":40000,"keepFailed":false}
+> /workspace/adamic-tools/bin/node /tmp/adapt77-recovered/adapted-tree/node_modules/mocha/bin/_mocha -R /tmp/adapt77-recovered/adapted-tree/scripts/failed-tests.cjs -O "reporter=min" -g "declarationEmitPrivatePromiseLikeInterface" --no-colors -t 40000 ./built/local/run.js
+[2J[1;3H
+  6 passing (7s)
+
+Finished do-runtests-parallel in 10.4s
+Completed runtests-parallel in 11.5s

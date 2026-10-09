@@ -1,0 +1,12 @@
+{
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "scout": "8a7ab17e",
+  "scripts": {
+    "adapt.cjs": "2c3b0201dd5bda5c628a501e161badc9ff2c32f08409c0adfc2eead83312cdf0",
+    "proof.cjs": "4283e98d644544c3c74eb85115c81971d18aae456930cafbca07581e65e3baef",
+    "sites.json": "6225cffa95c8b4d0d5d0606e5a952658da43e3efc84af8e3b773fb02f4182a37"
+  },
+  "measurement": "working tree before unit commit",
+  "interruption": "Environment restart killed first adapted lane coordinator. Its raw log is archived but not accepted as a verdict. The eight-worker recovered lane then hit a hook timeout. The four-worker control matched behavior but the lane rejected its worker count. A full eight-worker rerun on the unchanged successful apply tree is accepted."
+}

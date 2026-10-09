@@ -30,13 +30,4 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 71-writable-views | 20 | 88 | 88 |
 | 75-optional-widening | 1 | 17 | 6 |
 | 76-truthful-casts | 1 | 1 | 1 |
-| 77-double-casts | 3 | 4 | 4 |
 | **Total** | 79 | 5247 | 5213 |
-
-65-temporary-node-builtins is temporary: it retires when Adamic accepts require
-with a literal specifier and Node builtin types. Its two-file edit erases on Node;
-core already has the required local process view on current main.
-
-76-truthful-casts is permanent. It gives the private assertion cache its proven
-six-key type; the truthful sameMap union proposal is not applied because it
-exposes builder's DiagnosticMessageChain.next contract errors.
