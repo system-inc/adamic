@@ -82,6 +82,96 @@ thinCanary() {
   [ "${passed:-0}" -ge "${canaryMinPass}" ] || echo "ran ${passed:-0} tests, under the canary's ${canaryMinPass}"
 }
 
+# The gate-mutant suite (#fyvmsy8, cloud/gate-mutants.tsv): planted candidates whose verdict a correct gate already knows.
+# Each canary gates every mutant with its own tools, as gate-mutant/<name>, never queued and never notified to an owner;
+# staged tools promote only when every mutant read as declared. A mutant run is a canary's for slots and stops.
+mutantSuite=${ADAMIC_FAST_GATE_MUTANTS:-${here}/cloud/gate-mutants.tsv}
+isCanary() {
+  [ "$1" = canary/main ] || [[ $1 == gate-mutant/* ]]
+}
+mutants() {
+  awk -F'\t' '$1 !~ /^#/ && NF >= 2 {print $1, $2}' "${mutantSuite}"
+}
+# A finished mutant's log against its declared verdict: "ok", "void <cause>" (gate it again) or "wrong <what it read>".
+judgeMutant() {
+  local log=$1 name=$2 sha=$3 step pattern cause verdict
+  step=$(awk -F'\t' -v n="${name}" '$1 == n {print $3; exit}' "${mutantSuite}")
+  pattern=$(awk -F'\t' -v n="${name}" '$1 == n {print $4; exit}' "${mutantSuite}")
+  cause=$(voidCause "${log}")
+  [ -n "${cause}" ] && { echo "void ${cause}"; return; }
+  verdict=$(grep -E '^(green|red): ' "${log}" | tail -1)
+  if [[ ${verdict} != "red: ${sha} "* ]] || ! echo "${verdict}" | grep -qE "first failure at ${step}([ ,(]|$)"; then
+    echo "wrong ${verdict:0:200} (expected red at ${step})"
+    return
+  fi
+  if [ -n "${pattern}" ] && ! sed -n '/^FIRST FAILURE (/,/^\(green\|red\|void\): /p' "${log}" | grep -qE "${pattern}"; then
+    echo "wrong red at ${step} whose first failure doesn't match ${pattern}"
+    return
+  fi
+  echo ok
+}
+# Gates every mutant of the suite run named by key (a directory under mutant-results) that has no verdict and isn't running,
+# one slot each, as a canary may take them. tools is staged or main, as dispatch takes it. Three voids are a verdict.
+dispatchMutants() {
+  local key=$1 tools=$2 name sha box slot log results=${state}/mutant-results/$1
+  [ -f "${mutantSuite}" ] || return 0
+  mkdir -p "${results}"
+  while read -r name sha; do
+    [ -s "${results}/${name}" ] && [[ $(cat "${results}/${name}") != void* ]] && continue
+    [ -f "${results}/${name}.voids" ] && [ "$(grep -c . "${results}/${name}.voids")" -ge 3 ] && { echo "wrong void three times: $(tail -1 "${results}/${name}.voids")" > "${results}/${name}"; continue; }
+    grep -qxF "${key} ${name}" "${state}"/mutant-running/* 2> /dev/null && continue
+    free=$(freeSlots) draining=$(drainingBoxes)
+    read -r box slot <<< "$(usableSlots "gate-mutant/${name}" | awk '$2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
+    [ -n "${box}" ] || { yieldRaceForCanary; return 0; }
+    log=$(mktemp "${state}/logs/mutant-${name}-$(date -u +%s).XXXXXX")
+    dispatch "gate-mutant/${name}" "${sha}" "${slot}" "${box}" S "${log}" "${tools}"
+    echo "${key} ${name}" > "${state}/mutant-running/${dispatchedPid}"
+    echo "$(date -u +%H:%M:%S) gating gate-mutant/${name} ${sha} for ${key} (${slot} on ${box}, log ${log})"
+  done < <(mutants)
+}
+# A suite run is named by the canary token it gates with, made a path.
+suiteKey() {
+  echo "$1" | tr ':/' '__'
+}
+# Staged tools whose canary of main was green promote once every mutant read as declared with them; one that didn't holds
+# them as a red canary does, until a box-side push, and pages developer tools.
+promoteStaged() {
+  local testedHead sha box tested verdict
+  [ -s "${state}/stage-green" ] || return 0
+  read -r testedHead sha box < "${state}/stage-green"
+  tested=${testedHead%%:*}
+  verdict=$(suiteVerdict "$(suiteKey "${testedHead}")")
+  [ "${verdict}" = pending ] && return 0
+  rm -f "${state}/stage-green"
+  if [ "${verdict}" = ok ]; then
+    if [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
+      echo "${tested}" > "${state}/tools-good"
+      placeGoodTree
+      echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after canary/main ${sha} green with them on ${box} and every gate-mutant read as declared$([ "${tested}" = "${toolsHead}" ] || echo "; ${toolsHead:0:9} stages beyond them")"
+    fi
+    return 0
+  fi
+  [ "${testedHead}" = "${canaryToken}:staged" ] && echo "${testedHead}" > "${state}/stage-held"
+  echo "$(date -u +%H:%M:%S) held tools ${tested:0:9}: canary/main ${sha} green with them, but the gate-mutant suite read ${verdict}"
+  notifyStorm "staged box tools ${tested:0:9} held: main's canary was green with them, but the gate-mutant suite read ${verdict}. A gate that turns a mutant green or reds it wrongly can't judge candidates; every candidate keeps tools $(cut -c1-9 "${state}/tools-good"). Results: ${state}/mutant-results/$(suiteKey "${testedHead}")" system_adamic_developer_tools
+}
+# A suite run's state: "pending", "ok", or "wrong" and each mutant that didn't read as declared.
+suiteVerdict() {
+  local results=${state}/mutant-results/$1 name sha said wrong="" pending=no
+  [ -f "${mutantSuite}" ] || { echo "wrong: no suite at ${mutantSuite}"; return; }
+  while read -r name sha; do
+    said=$(cat "${results}/${name}" 2> /dev/null)
+    case ${said} in
+      ok) ;;
+      "" | void\ *) pending=yes ;;
+      *) wrong="${wrong}; ${name}: ${said#wrong }" ;;
+    esac
+  done < <(mutants)
+  if [ -n "${wrong}" ]; then echo "wrong: ${wrong#; }"
+  elif [ "${pending}" = yes ]; then echo pending
+  else echo ok; fi
+}
+
 # Notifications are best effort, once per transition; uppercase runs are normalized because
 # ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
 notifyStorm() {
@@ -149,6 +239,7 @@ dispatch() {
     ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi
   local pid=$!
+  dispatchedPid=${pid}
   echo "${started}" > "${state}/running-started/${pid}"
   echo "${branch} ${sha} ${slot} ${box} ${class} ${token} ${log}" > "${state}/running/${pid}"
   if slotReserved "${branch}" "${box}" "${slot}"; then
@@ -338,7 +429,7 @@ stopSkipped() {
     [ -f "${state}/stopped-running/${pid}" ] && continue
     kill -0 "${pid}" 2> /dev/null || continue
     read -r branch sha slot box rest < "${file}"
-    [ "${branch}" = canary/main ] && continue
+    isCanary "${branch}" && continue
     why=""
     grep -qxF "${branch} ${sha}" "${state}/skip" 2> /dev/null && why="on the skip list"
     if [ -z "${why}" ]; then
@@ -609,7 +700,7 @@ preemptForStar() {
     read -r runningBranch runningSha runningSlot runningBox rest < "${file}"
     runningBox=${runningBox:-threadripper}
     grep -qxF "${runningBox}" "${state}/star-boxes" || continue
-    [ "${runningBranch}" = canary/main ] && continue
+    isCanary "${runningBranch}" && continue
     isFront "${runningBranch}" && continue
     if stopGate "${pid}" "${runningBranch}" "${runningSha}" "${runningBox}" "preempted: the star takes ${runningBox} alone; queued again"; then
       touch "${state}/preempted/${pid}"
@@ -783,7 +874,7 @@ usableSlots() {
     # The star holds whatever box it runs on, reserved there or not. A canary of main still takes a free slot beside a
     # front run that doesn't hold the box whole: at 12:13Z on Oct 9 front runs sat on all four boxes, three of them
     # leaving slots free, and the stage canary the star waited on had nowhere to start.
-    isFront "${runningBranch}" && [ "${branch}" != canary/main ] && held="${held}${runningBox:-threadripper} "
+    isFront "${runningBranch}" && ! isCanary "${branch}" && held="${held}${runningBox:-threadripper} "
   done < "${state}/running.tmp"
   while read -r box slot; do
     # The pool is offered to side tips by pickNext alone.
@@ -793,7 +884,7 @@ usableSlots() {
     # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there. The
     # deploy canary is exempt: nothing dispatches until it has a verdict, so a canary kept off the only
     # free box (the draining one) froze everything, the reserved tip included (Oct 8 17:30Z, 67 queued).
-    if [ "${branch}" != canary/main ] && echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
+    if ! isCanary "${branch}" && echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
       blocked=yes
     fi
     [ "${blocked}" = no ] || continue
@@ -874,7 +965,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost" "${state}/mutant-running" "${state}/mutant-results"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -966,6 +1057,19 @@ while true; do
     class=${original:-${class}}
     rm "${file}"
     gateLog=${gateLog:-${state}/logs/${sha:0:12}.log}
+    # A mutant run's verdict goes to its suite run only: never the queue, an owner, a storm or the gated list.
+    if [[ ${branch} == gate-mutant/* ]]; then
+      mutantKey="" mutantName=""
+      read -r mutantKey mutantName < "${state}/mutant-running/$(basename "${file}")" 2> /dev/null
+      rm -f "${state}/mutant-running/$(basename "${file}")"
+      [ -n "${mutantKey:-}" ] || continue
+      said=$(judgeMutant "${gateLog}" "${mutantName}" "${sha}")
+      [ "${stoppedOnPurpose}" = yes ] && [ "${said}" != ok ] && said="void stopped before a verdict"
+      [[ ${said} == void* ]] && echo "${said#void }" >> "${state}/mutant-results/${mutantKey}/${mutantName}.voids"
+      echo "${said}" > "${state}/mutant-results/${mutantKey}/${mutantName}"
+      echo "$(date -u +%H:%M:%S) gate-mutant/${mutantName} for ${mutantKey}: ${said}"
+      continue
+    fi
     # A gate stopped for the star never ran whole, whatever it had so far: it goes back to the queue, no void.
     if [ "${preempted}" = yes ]; then
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
@@ -1034,11 +1138,9 @@ while true; do
           notifyStorm "staged box tools ${tested:0:9}: main's canary ${sha:0:12} on ${box} gave no verdict with them (${cause}). Candidates keep tools $(cut -c1-9 "${state}/tools-good"); another canary in ten minutes. Log: ${gateLog}" system_adamic_developer_tools
         fi
       elif [[ ${verdict} == "green: ${sha} "* ]]; then
-        if [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
-          echo "${tested}" > "${state}/tools-good"
-          placeGoodTree
-          echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after canary/main ${sha} green with them on ${box}$([ "${tested}" = "${toolsHead}" ] || echo "; ${toolsHead:0:9} stages beyond them")"
-        fi
+        # Promotion also waits for the gate-mutant suite with these tools (promoteStaged).
+        echo "${testedHead} ${sha} ${box}" > "${state}/stage-green"
+        echo "$(date -u +%H:%M:%S) stage canary green: canary/main ${sha} on ${box} with tools ${tested:0:9}; promotion waits on the gate-mutant suite"
       elif [ "${testedHead}" = "${canaryToken}:staged" ]; then
         echo "${testedHead}" > "${state}/stage-held"
         echo "$(date -u +%H:%M:%S) held tools ${tested:0:9}: canary/main ${sha} ${verdict%% *} with them on ${box}; candidates keep $(cut -c1-9 "${state}/tools-good")"
@@ -1102,6 +1204,7 @@ while true; do
       (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
+  promoteStaged
   # Shared with the dispatcher: checking free slots and recording a PID is one transaction.
   # If a merge is claiming a slot, leave scheduling to the next poll.
   clearStaleSlotLock
@@ -1166,9 +1269,34 @@ while true; do
       log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
       dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" main
       echo "${now}" > "${state}/main-canary-started"
+      echo "$(suiteKey "$(cat "${state}/tools-good"):main:${now}")" > "${state}/main-mutants"
       echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with the good tools, the half-hourly canary (${canarySlot} on ${box}, log ${log})"
     elif [ -z "${box}" ]; then
       yieldRaceForCanary
+    fi
+  fi
+  # The gate-mutant suite beside each canary, with that canary's tools: the stage canary's until its tools are held or
+  # promoted, the half-hourly one's until every mutant has a verdict. A half-hourly suite that misreads pages like main's
+  # canary does, once per failure, since the gate judging every candidate is the suspect.
+  if [ ! -f "${state}/storm" ]; then
+    if staging && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ]; then
+      dispatchMutants "$(suiteKey "${canaryToken}:staged")" staged
+    fi
+    if [ -s "${state}/main-mutants" ]; then
+      mainSuite=$(cat "${state}/main-mutants")
+      dispatchMutants "${mainSuite}" main
+      mainSuiteVerdict=$(suiteVerdict "${mainSuite}")
+      if [ "${mainSuiteVerdict}" = ok ]; then
+        echo "$(date -u +%H:%M:%S) gate-mutant suite ${mainSuite}: every mutant read as declared"
+        rm -f "${state}/main-mutants" "${state}/main-mutants-paged"
+      elif [ "${mainSuiteVerdict}" != pending ]; then
+        echo "$(date -u +%H:%M:%S) gate-mutant suite ${mainSuite} misread: ${mainSuiteVerdict}"
+        rm -f "${state}/main-mutants"
+        if [ "$(cat "${state}/main-mutants-paged" 2>/dev/null)" != "${mainSuiteVerdict}" ]; then
+          echo "${mainSuiteVerdict}" > "${state}/main-mutants-paged"
+          notifyStorm "the gate-mutant suite misread with the good tools, so the gate judging every candidate is suspect: ${mainSuiteVerdict}. Results: ${state}/mutant-results/${mainSuite}"
+        fi
+      fi
     fi
   fi
   pruneQueue

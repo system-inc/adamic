@@ -1,0 +1,12 @@
+# The gate-mutant suite (#fyvmsy8, @system_adamic's ruling Oct 9 06:21Z, built by @system_adamic_tests on #f3p1c0z): planted
+# candidates whose verdict a correct gate already knows. Every stage canary and every half-hourly main canary gates each one
+# with the canary's own tools (cloud/fast-gate-watch.sh), and staged box tools promote only when every mutant reads as
+# declared here. Each is a single commit on main ce1c5a2f, pinned by sha so a moved branch never changes the suite; never
+# merge one. A mutant that stops merging cleanly onto main reads red at merge, which is no expected verdict: rebase it.
+#
+# name<TAB>sha<TAB>step<TAB>pattern: the red must be at that step, and the pattern (an extended regex, may be empty) must
+# match the first failure's block of the gate's log. An empty file is no suite; a missing one holds every promotion.
+plain-wrong-answer	58c3960d5f90899a24e55ab840076b29bc1ca320	tests	internal/buildcache TestEveryInputChangesTheKey
+binary-dies-partway	a840ec0723dee3a596055f76146a36a44cc60b10	tests	internal/corpusfiles
+deferred-red-reaches-census	0096078f544f90bb5d48febbc5099a906699e734	census
+wasi-family-must-run	15e7f9faa8733da808570aa6b63777161d1402c0	tests	internal/native TestWASIUnit[0-9]+

@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None, mainCanary=100000):
+    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None, mainCanary=100000, mutants=''):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -22,6 +22,9 @@ class Watcher:
         cloud.mkdir(parents=True)
         for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh', 'stop-gate.sh'):
             shutil.copy(ROOT / 'cloud' / name, cloud / name)
+        # The gate-mutant suite (cloud/gate-mutants.tsv): none unless a test declares some; a missing file holds promotion.
+        if mutants is not None:
+            (cloud / 'gate-mutants.tsv').write_text('# name, sha, step, pattern\n' + mutants)
         self.state = self.root / 'state'
         self.state.mkdir()
         if staleLock:
@@ -89,6 +92,13 @@ esac
         self.script(cloud / 'fast-gate.sh', '''sha=$1; branch=$3
 printf '%s %s %s %s\\n' "$branch" "$sha" "$5" "$ADAMIC_FAST_GATE_BOX" >> "$TEST_ROOT/starts"
 [ "${6:-}" = --whole-box ] && printf '%s\\n' "$branch" >> "$TEST_ROOT/whole"
+if [[ $branch == gate-mutant/* ]]; then
+  # A mutant answers from its own file, a gate log with SHA for its sha; hold until a test writes it.
+  answer=$TEST_ROOT/mutant-${branch#gate-mutant/}
+  while [ "$(cat "$answer" 2>/dev/null || echo hold)" = hold ]; do /bin/sleep 0.01; done
+  sed "s/SHA/$sha/g" "$answer"
+  exit 0
+fi
 if [ "$branch" = canary/main ]; then
   control=canary
   if [ ! -f "$TEST_ROOT/initial-started" ]; then
@@ -1041,6 +1051,107 @@ class WatchTests(unittest.TestCase):
         self.assertIn('tools-two stages beyond them', w.read('output'))
         # tools-two gets its own canary at once.
         w.wait(lambda: w.read('starts').count('canary/main ') == 2)
+
+    # Two planted mutants (#fyvmsy8): one a correct gate reds at tests naming the test, one it reds at census.
+    suite = 'plain\t' + 'd' * 40 + '\ttests\tinternal/buildcache TestEveryInputChangesTheKey\ncensus\t' + 'e' * 40 + '\tcensus\t\n'
+    redAtTests = ('FIRST FAILURE (tests, at 3.0 s):\nFAIL github.com/system-inc/adamic/internal/buildcache TestEveryInputChangesTheKey\n'
+                  'red: SHA fast gate, first failure at tests after 3.0 s (tests=3.0s), 1 fail, 4 pass\n')
+    redAtCensus = 'FIRST FAILURE (census, at 2.0 s):\nundeclared skip site\nred: SHA fast gate, first failure at census after 2.0 s, 0 fail, 9 pass\n'
+    green = 'green: SHA fast gate in 5.0 s, 3 packages, 900 pass, 0 skip, smoke 1 fixtures\n'
+
+    def mutantsStaged(self, mutants=suite):
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\nbox1 S\n', mutants=mutants)
+        self.addCleanup(w.close)
+        w.wait(lambda: 'canary/main ' in w.read('starts'))
+        return w
+
+    def test_staged_tools_promote_only_once_every_gate_mutant_reads_as_declared(self):
+        w = self.mutantsStaged()
+        # Each mutant is gated beside the stage canary, with the staged tools, as its own run.
+        w.wait(lambda: 'gate-mutant/plain ' + 'd' * 40 in w.read('starts') and 'gate-mutant/census ' + 'e' * 40 in w.read('starts'))
+        self.assertNotIn('gate-mutant/', w.read('good-starts'))
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promotion waits on the gate-mutant suite' in w.read('output'))
+        w.put('mutant-plain', self.redAtTests)
+        w.wait(lambda: 'gate-mutant/plain for ' in w.read('output'))
+        time.sleep(.2)
+        # A canary green and one mutant read promotes nothing: the mutant that promotes on the canary alone fails here.
+        self.assertNotIn('promoted tools', w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+        w.put('mutant-census', self.redAtCensus)
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertIn('and every gate-mutant read as declared', w.read('output'))
+        # A mutant is never a candidate: no owner hears of it, nothing marks it gated, and each ran once.
+        self.assertEqual(w.read('messages'), '')
+        self.assertNotIn('d' * 40, (w.state / 'gated').read_text())
+        self.assertEqual(w.read('starts').count('gate-mutant/plain '), 1)
+
+    def test_a_mutant_that_reads_green_or_reds_at_the_wrong_step_holds_the_staged_tools(self):
+        w = self.mutantsStaged()
+        w.put('mutant-plain', self.green)
+        w.put('mutant-census', self.redAtTests)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        self.assertIn('plain: green: ' + 'd' * 40, w.read('output'))
+        self.assertIn('census: red: ' + 'e' * 40 + ' fast gate, first failure at tests', w.read('output'))
+        self.assertIn('(expected red at census)', w.read('output'))
+        w.wait(lambda: 'gate-mutant suite read' in w.read('messages'))
+        self.assertIn('system_adamic_developer_tools|', w.read('messages'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+        # Held like a red canary: no second canary or mutant run for the same tools, ten minutes on or not.
+        w.put('clock', '1700')
+        time.sleep(.3)
+        self.assertEqual(w.read('starts').count('canary/main '), 1)
+        self.assertEqual(w.read('starts').count('gate-mutant/plain '), 1)
+
+    def test_a_red_that_misses_the_first_failure_pattern_is_a_misread(self):
+        w = self.mutantsStaged()
+        w.put('mutant-plain', self.redAtTests.replace('TestEveryInputChangesTheKey', 'TestSomethingElse'))
+        w.put('mutant-census', self.redAtCensus)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        self.assertIn("whose first failure doesn't match internal/buildcache TestEveryInputChangesTheKey", w.read('output'))
+
+    def test_a_void_mutant_is_gated_again_and_three_voids_hold_the_tools(self):
+        w = self.mutantsStaged()
+        w.put('mutant-plain', 'void: SHA fast gate, box box0 lacks a declared tool: tsc\n')
+        w.put('mutant-census', self.redAtCensus)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        self.assertEqual(w.read('starts').count('gate-mutant/plain '), 3)
+        self.assertIn('plain: void three times: fast gate, box box0 lacks a declared tool: tsc', w.read('output'))
+        self.assertFalse((w.state / 'storm').exists())
+
+    def test_a_missing_suite_holds_promotion(self):
+        w = self.mutantsStaged(mutants=None)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        self.assertIn('no suite at', w.read('output'))
+
+    def test_main_s_half_hourly_canary_gates_the_suite_with_the_good_tools_and_a_misread_pages_once(self):
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\nbox1 S\n', mainCanary=1800, mutants=self.suite)
+        self.addCleanup(w.close)
+        w.put('mutant-plain', self.redAtTests)
+        w.put('mutant-census', self.redAtCensus)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'staging tools tools-two' in w.read('output'))
+        # tools-two is staged now, so the half-hourly suite runs the good tools (tools-one), on the good tree.
+        before = w.read('good-starts').count('gate-mutant/plain ')
+        w.put('mutant-census', self.green)
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'misread: wrong: census' in w.read('output'))
+        self.assertEqual(w.read('good-starts').count('gate-mutant/plain '), before + 1)
+        w.wait(lambda: w.read('messages').count('gate-mutant suite misread') == 2)
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+            self.assertIn(recipient + '|', w.read('messages'))
+        # The same misread half an hour on pages nobody again.
+        w.put('clock', '4600')
+        w.wait(lambda: w.read('output').count('misread: wrong: census') == 2)
+        time.sleep(.3)
+        self.assertEqual(w.read('messages').count('gate-mutant suite misread'), 2)
 
     def test_main_s_canary_runs_every_half_hour_with_the_good_tools_and_a_red_pages_once(self):
         # Gate the gate (@system_adamic, Oct 9 10:21Z): main's tip is the one sha whose answer we know, so drift shows there first.
