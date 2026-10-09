@@ -3,10 +3,14 @@ package native
 import (
 	"context"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -31,45 +35,132 @@ func TestRuntimeStaticsParallel(t *testing.T) {
 	}
 }
 
-// Not parallel: mutant builds and four-worker rendezvous tests deliberately
-// use the same CPU budget as the positive fixtures.
-func TestRuntimeStaticsProtectionMutants(t *testing.T) {
+var runtimeStaticsMutants = []struct{ name, file, old, changed, fixture string }{
+	{"regex_budget", "regexp.c", "static _Atomic uint64_t regex_step_limit;", "static uint64_t regex_step_limit;", "regex"},
+	{"checker_profiling", "tsgo.c", "static _Atomic", "static", "profiling"},
+	{"packed_field_cache", "object.c", "__atomic_store_n(&cache->packed, packed, __ATOMIC_RELAXED);", "cache->packed = packed;", "field_cache"},
+	{"weak_table_lock", "weak.c", "pthread_mutex_lock(&table_lock);", "(void)&table_lock;", "heap_weak"},
+	{"allocator_lists", "heap.c", "static _Thread_local chunk *giving", "static chunk *giving", "heap_weak"},
+	{"count_allocation", "count.c", "atomic_fetch_add_explicit(&adamic_counted.allocations, 1, memory_order_relaxed);", "(*(size_t *)&adamic_counted.allocations)++;", "heap_weak"},
+	{"output_buffer", "adamic.c", "pthread_mutex_lock(&output_lock);", "(void)&output_lock;", "output"},
+	{"shape_types_registry", "union.c", "pthread_mutex_lock(&shape_types_lock);", "(void)&shape_types_lock;", "shape_types"},
+	{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
+	{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
+	{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
+	{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race"},
+}
+
+// Each explicit unit owns one runtime snapshot and runs independently under the gate limit.
+func runtimeStaticsProtectionMutant(t *testing.T, index int) {
 	if goruntime.GOOS != "linux" {
 		t.Skip("runtime static race proofs require Linux ThreadSanitizer")
 	}
 	if _, err := os.Stat(filepath.Join(*runtimeStaticsDirectory, "parallel.c")); os.IsNotExist(err) {
 		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
-	mutants := []struct{ name, file, old, changed, fixture string }{
-		{"regex_budget", "regexp.c", "static _Atomic uint64_t regex_step_limit;", "static uint64_t regex_step_limit;", "regex"},
-		{"checker_profiling", "tsgo.c", "static _Atomic", "static", "profiling"},
-		{"packed_field_cache", "object.c", "__atomic_store_n(&cache->packed, packed, __ATOMIC_RELAXED);", "cache->packed = packed;", "field_cache"},
-		{"weak_table_lock", "weak.c", "pthread_mutex_lock(&table_lock);", "(void)&table_lock;", "heap_weak"},
-		{"allocator_lists", "heap.c", "static _Thread_local chunk *giving", "static chunk *giving", "heap_weak"},
-		{"count_allocation", "count.c", "atomic_fetch_add_explicit(&adamic_counted.allocations, 1, memory_order_relaxed);", "(*(size_t *)&adamic_counted.allocations)++;", "heap_weak"},
-		{"output_buffer", "adamic.c", "pthread_mutex_lock(&output_lock);", "(void)&output_lock;", "output"},
-		{"shape_types_registry", "union.c", "pthread_mutex_lock(&shape_types_lock);", "(void)&shape_types_lock;", "shape_types"},
-		{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
-		{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
-		{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
-		{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race"},
+	mutant := runtimeStaticsMutants[index]
+	if strings.HasPrefix(mutant.name, "normalization_") {
+		source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, mutant.file))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(string(source), mutant.old) {
+			t.Skip("this runtime has const Unicode tables without the area branch's thread-local lookup caches")
+		}
 	}
-	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			if strings.HasPrefix(mutant.name, "normalization_") {
-				source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, mutant.file))
-				if err != nil {
-					t.Fatal(err)
-				}
-				if !strings.Contains(string(source), mutant.old) {
-					t.Skip("this runtime has const Unicode tables without the area branch's thread-local lookup caches")
-				}
-			}
-			library, root := staticsRaceLibrary(t, mutant.file, mutant.old, mutant.changed)
-			binary := staticsRaceFixture(t, root, library, mutant.fixture)
-			staticsRaceRun(t, binary, true)
-		})
+	library, root := staticsRaceLibrary(t, mutant.file, mutant.old, mutant.changed)
+	binary := staticsRaceFixture(t, root, library, mutant.fixture)
+	staticsRaceRun(t, binary, true)
+}
+
+func TestRuntimeStaticsProtectionMutantsRegexBudget(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 0)
+}
+func TestRuntimeStaticsProtectionMutantsCheckerProfiling(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 1)
+}
+func TestRuntimeStaticsProtectionMutantsPackedFieldCache(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 2)
+}
+func TestRuntimeStaticsProtectionMutantsWeakTableLock(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 3)
+}
+func TestRuntimeStaticsProtectionMutantsAllocatorLists(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 4)
+}
+func TestRuntimeStaticsProtectionMutantsCountAllocation(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 5)
+}
+func TestRuntimeStaticsProtectionMutantsOutputBuffer(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 6)
+}
+func TestRuntimeStaticsProtectionMutantsShapeTypesRegistry(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 7)
+}
+func TestRuntimeStaticsProtectionMutantsNormalizationClasses(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 8)
+}
+func TestRuntimeStaticsProtectionMutantsNormalizationMappings(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 9)
+}
+func TestRuntimeStaticsProtectionMutantsNormalizationPairs(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 10)
+}
+func TestRuntimeStaticsProtectionMutantsSharedStringIndex(t *testing.T) {
+	runtimeStaticsProtectionMutant(t, 11)
+}
+
+func TestRuntimeStaticsProtectionMutantsUnion(t *testing.T) {
+	units := []string{"regex_budget", "checker_profiling", "packed_field_cache", "weak_table_lock", "allocator_lists", "count_allocation", "output_buffer", "shape_types_registry", "normalization_classes", "normalization_mappings", "normalization_pairs", "shared_string_index"}
+	if len(units) != len(runtimeStaticsMutants) {
+		t.Fatal("mutant inventory changed without updating top-level units")
 	}
+	seen := map[string]bool{}
+	for i, name := range units {
+		if seen[name] || runtimeStaticsMutants[i].name != name {
+			t.Fatalf("duplicate or misplaced mutant unit %s", name)
+		}
+		seen[name] = true
+	}
+	file, err := parser.ParseFile(token.NewFileSet(), "runtime_statics_parallel_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	covered := map[int]bool{}
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestRuntimeStaticsProtectionMutants") || function.Name.Name == "TestRuntimeStaticsProtectionMutantsUnion" {
+			continue
+		}
+		if function.Body == nil || len(function.Body.List) != 1 {
+			t.Fatalf("unexpected unit body %s", function.Name.Name)
+		}
+		expression, ok := function.Body.List[0].(*ast.ExprStmt)
+		if !ok {
+			t.Fatal("unit must call mutant helper")
+		}
+		call, ok := expression.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 2 {
+			t.Fatal("unit must supply one mutant index")
+		}
+		helper, ok := call.Fun.(*ast.Ident)
+		if !ok || helper.Name != "runtimeStaticsProtectionMutant" {
+			t.Fatal("unexpected unit helper")
+		}
+		literal, ok := call.Args[1].(*ast.BasicLit)
+		if !ok {
+			t.Fatal("unit index must be explicit")
+		}
+		index, err := strconv.Atoi(literal.Value)
+		if err != nil || index < 0 || index >= len(units) || covered[index] {
+			t.Fatalf("invalid or duplicate unit index %s", literal.Value)
+		}
+		covered[index] = true
+	}
+	if len(covered) != len(units) {
+		t.Fatal("top-level mutant units do not cover the full inventory")
+	}
+
 }
 
 // Not parallel: these processes intentionally terminate while four pool callbacks print.
