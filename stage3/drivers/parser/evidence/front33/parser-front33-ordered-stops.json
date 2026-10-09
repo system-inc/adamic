@@ -1,0 +1,218 @@
+{
+  "warning": "Discovery only. Real build stops at row 1. Rows 2-10 behind disclosed throwing placeholders; no native acceptance. Namespace-init stops also reproduce in a standalone original-style Map initializer.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "found_behind_stubs": false,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts",
+        "line": 113,
+        "column": 19,
+        "name": "fail",
+        "edits": [
+          {
+            "start": 5235,
+            "end": 5533,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-error-capture-stack.a"
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 409,
+        "replacement": "parserProofMissingemptyMap()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-enum-map.a"
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 333,
+      "column": 29,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts",
+        "line": 333,
+        "column": 29,
+        "name": "enumMemberCache",
+        "start": 17566,
+        "end": 17665,
+        "replacement": "enumMemberCache: Map<Record<string, string | number>, ts.SortedReadonlyArray<[number, string]>> = parserProofMissingenumMemberCache()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-enum-map.a"
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/performanceCore.ts:37:37: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/performanceCore.ts",
+        "line": 37,
+        "column": 37,
+        "name": "tryGetPerformance",
+        "edits": [
+          {
+            "start": 987,
+            "end": 2025,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-call-before-enum.a"
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts:15:18: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 15,
+      "column": 18,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts",
+        "line": 15,
+        "column": 18,
+        "name": "timeorigin",
+        "start": 597,
+        "end": 621,
+        "replacement": "timeorigin: number = parserProofMissingtimeorigin()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-call-before-enum.a"
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts:16:15: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 16,
+      "column": 15,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts",
+        "line": 16,
+        "column": 15,
+        "name": "marks",
+        "start": 657,
+        "end": 690,
+        "replacement": "marks: Map<string, number> = parserProofMissingmarks()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-enum-map.a"
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts:17:16: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 17,
+      "column": 16,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts",
+        "line": 17,
+        "column": 16,
+        "name": "counts",
+        "start": 720,
+        "end": 754,
+        "replacement": "counts: Map<string, number> = parserProofMissingcounts()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-enum-map.a"
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts:18:19: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 18,
+      "column": 19,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery2-slice/src/compiler/performance.ts",
+        "line": 18,
+        "column": 19,
+        "name": "durations",
+        "start": 785,
+        "end": 822,
+        "replacement": "durations: Map<string, number> = parserProofMissingdurations()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal_program": "native-enum-map.a"
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/core.ts:11:52: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+      "found_behind_stubs": true,
+      "placeholder": "Typed let declaration and unconditional arithmetic guard throwing before it; no calls. Discovery only.",
+      "stub_exit": 0,
+      "minimal_program": "native-map-before-namespace.a"
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery2-slice/src/compiler/debug.ts:333:109: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 333,
+      "column": 109,
+      "message": "stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+      "found_behind_stubs": true,
+      "placeholder": "Typed let declaration and unconditional arithmetic guard throwing before it; no calls. Discovery only.",
+      "stub_exit": 0,
+      "original_column": 29,
+      "minimal_program": "native-map-before-namespace.a"
+    }
+  ],
+  "stopped_because": "Further namespace-initializer placeholders produce TS2454, then an inferred void result TS2339. These are discovery artifacts, excluded from the ordered source stops. First attempt also created duplicate helper implementations, excluded. Raw failures preserved separately.",
+  "requested_limit": 15
+}

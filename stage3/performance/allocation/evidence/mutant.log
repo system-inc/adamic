@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/performance/allocation/parse.py", line 175, in <module>
+    main()
+  File "/workspace/adamic/stage3/performance/allocation/parse.py", line 168, in main
+    verify_fixture(result, read_json(args.folder / 'observations.json'))
+  File "/workspace/adamic/stage3/performance/allocation/parse.py", line 142, in verify_fixture
+    raise AssertionError(f'fixture {phase}/{category}: expected {wanted} live, got {actual}')
+AssertionError: fixture parse/Node: expected 6 live, got 0
