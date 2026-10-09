@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/scanner.ts
++++ b/stage1/typescript/scanner/scanner.ts
+@@ -854,7 +854,7 @@
+             if(escaped) {
+                 escaped = false;
+             }
+-            else if(code === 47 && !characterClass) {
++            else if(code === 47 && characterClass) {
+                 break;
+             }
+             else if(code === 91) {

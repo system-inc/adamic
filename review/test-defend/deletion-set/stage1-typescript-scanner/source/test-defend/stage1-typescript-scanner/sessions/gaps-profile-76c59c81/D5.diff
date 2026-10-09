@@ -1,0 +1,11 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -103,7 +103,7 @@
+ 	if options.Sanitize {
+ 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+ 	}
+-	return append(flags, "-O2")
++	return append(flags, "-O2", "-funsafe-math-optimizations")
+ }
+ 
+ // Build compiles C source and the runtime into a native binary at output.

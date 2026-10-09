@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/characters.ts
++++ b/stage1/typescript/scanner/characters.ts
+@@ -247,7 +247,7 @@
+         if(code < lower) {
+             high = middle - 1;
+         }
+-        else if(code > upper) {
++        else if(code >= upper) {
+             low = middle + 1;
+         }
+         else {

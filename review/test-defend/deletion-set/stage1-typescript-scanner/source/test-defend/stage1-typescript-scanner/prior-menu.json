@@ -1,0 +1,79 @@
+[
+  [
+    "M1",
+    "stage1/typescript/scanner/scanner.ts",
+    "this.pos += code > 0xffff ? 2 : 1;",
+    "this.pos += code > 0xffff ? 1 : 1;",
+    "constant"
+  ],
+  [
+    "M2",
+    "stage1/typescript/scanner/main.ts",
+    "        count++;",
+    "        count += 2;",
+    "constant"
+  ],
+  [
+    "M3",
+    "stage1/typescript/scanner/characters.ts",
+    "else if(code > upper)",
+    "else if(code >= upper)",
+    "bound"
+  ],
+  [
+    "M4",
+    "internal/lower/diagnostics.go",
+    "What: what",
+    "What: \"unsupported\"",
+    "option"
+  ],
+  [
+    "P2",
+    "internal/lower/lower.go",
+    "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif program != nil { return nil, nil }",
+    "probe"
+  ],
+  [
+    "P3",
+    "stage1/typescript/scanner/scanner_products_test.go",
+    "func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {",
+    "func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {\n\tif t != nil { return \"\" }",
+    "construction-probe"
+  ],
+  [
+    "S1",
+    "stage1/typescript/scanner/scanner_products_test.go",
+    "\tprepared.once.Do(func() { prepared.directory = buildcache.Product(t, inputs, recipe) })",
+    "\t// audit: dropped the product construction statement",
+    "construction"
+  ],
+  [
+    "S2",
+    "stage1/typescript/scanner/profile_test.go",
+    "\"-g\", \"-o\"",
+    "\"-audit-invalid-profile-option\", \"-o\"",
+    "construction"
+  ],
+  [
+    "W1",
+    "stage1/typescript/scanner/scanner_agreement_shards_test.go",
+    "if bytes.Equal(got, want) {",
+    "if true {",
+    "weakened-check"
+  ],
+  [
+    "P1",
+    "stage1/typescript/scanner/main.ts",
+    "function run entry",
+    "if(path.length >= 0) { return 0; }",
+    "probe"
+  ],
+  [
+    "P4",
+    "stage1/typescript/scanner/scanner_products_test.go",
+    "scannerSelect entry",
+    "if lines != nil { return nil }",
+    "construction-probe"
+  ]
+]

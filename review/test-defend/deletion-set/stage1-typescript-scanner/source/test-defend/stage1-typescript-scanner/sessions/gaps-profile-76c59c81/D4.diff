@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -149,7 +149,7 @@
+ 		each->free = ((free_slot *)slot)->next;
+ 	} else {
+ 		slot = each->fresh;
+-		each->fresh += size;
++		each->fresh += size - 1;
+ 		UNPOISON(slot, size);
+ 	}
+ 	each->live++;

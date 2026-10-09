@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/scanner.ts
++++ b/stage1/typescript/scanner/scanner.ts
+@@ -833,7 +833,7 @@
+     }
+     rescanTemplate(): void {
+         this.pos = this.start;
+-        this.template(true);
++        this.template(false);
+     }
+ 
+     // Boundary scan with diagnostics disabled, as ReScanSlashToken(false). Unterminated errors remain.

@@ -1,0 +1,103 @@
+{
+  "package": "stage1/typescript/scanner",
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "skipped": [
+    "TestProfileSnapshotsAgree",
+    "TestScannerAgreesWithTypescriptGo family"
+  ],
+  "mutants": [
+    {
+      "mutant": "M3",
+      "file_line": "stage1/typescript/scanner/characters.ts:250",
+      "branch": "test-audit/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree",
+        "TestScannerAgreesWithTypescriptGo family"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "M1",
+      "file_line": "stage1/typescript/scanner/scanner.ts:74",
+      "branch": "test-audit/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree",
+        "TestScannerAgreesWithTypescriptGo family"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D02",
+      "file_line": "stage1/typescript/scanner/scanner.ts:857",
+      "branch": "test-defend/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree",
+        "TestScannerAgreesWithTypescriptGo family"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D01",
+      "file_line": "stage1/typescript/scanner/scanner.ts:1009",
+      "branch": "test-defend/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree",
+        "TestScannerAgreesWithTypescriptGo family"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D03",
+      "file_line": "stage1/typescript/scanner/scanner.ts:836",
+      "branch": "test-defend/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree",
+        "TestScannerAgreesWithTypescriptGo family"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D3",
+      "file_line": "internal/native/runtime/heap.c:149",
+      "branch": "test-defend/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree"
+      ],
+      "still_caught_by": [
+        "TestPerformance"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "D4",
+      "file_line": "internal/native/runtime/heap.c:152",
+      "branch": "test-defend/stage1-typescript-scanner",
+      "candidates_failed": [
+        "TestProfileSnapshotsAgree"
+      ],
+      "still_caught_by": [
+        "TestPerformance"
+      ],
+      "stale": false
+    }
+  ],
+  "keep": [
+    {
+      "test": "TestProfileSnapshotsAgree",
+      "because": "M3 (test-audit/stage1-typescript-scanner), M1 (test-audit/stage1-typescript-scanner), D02 (test-defend/stage1-typescript-scanner), D01 (test-defend/stage1-typescript-scanner), D03 (test-defend/stage1-typescript-scanner) loses its last catcher when both candidates are skipped. Preserve at least one candidate; prior evidence says both catch these mutants."
+    },
+    {
+      "test": "TestScannerAgreesWithTypescriptGo family",
+      "because": "M3 (test-audit/stage1-typescript-scanner), M1 (test-audit/stage1-typescript-scanner), D02 (test-defend/stage1-typescript-scanner), D01 (test-defend/stage1-typescript-scanner), D03 (test-defend/stage1-typescript-scanner) loses its last catcher when both candidates are skipped. Preserve at least one candidate; prior evidence says both catch these mutants."
+    }
+  ],
+  "deletable": [],
+  "witness_failures": {},
+  "panicking_tests": {},
+  "replay_wall_seconds": 195.656
+}

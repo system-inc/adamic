@@ -1,0 +1,10 @@
+--- a/stage1/typescript/scanner/main.ts
++++ b/stage1/typescript/scanner/main.ts
+@@ -14,6 +14,7 @@
+     return result;
+ }
+ function run(path: string, mode: string, countOnly: boolean): number {
++    if(path.length >= 0) { return 0; }
+     const read = readTextFile(path);
+     if(read.kind === 'Error') {
+         panic(read.message);

@@ -1,0 +1,123 @@
+[
+  {
+    "mutant": "M3",
+    "file_line": "stage1/typescript/scanner/characters.ts:250",
+    "branch": "test-audit/stage1-typescript-scanner",
+    "diff": "source/test-audit/stage1-typescript-scanner/diffs/M3.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M1",
+    "file_line": "stage1/typescript/scanner/scanner.ts:74",
+    "branch": "test-audit/stage1-typescript-scanner",
+    "diff": "source/test-audit/stage1-typescript-scanner/diffs/M1.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D02",
+    "file_line": "stage1/typescript/scanner/scanner.ts:857",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D02.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D01",
+    "file_line": "stage1/typescript/scanner/scanner.ts:1009",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D01.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D03",
+    "file_line": "stage1/typescript/scanner/scanner.ts:836",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D03.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/heap.c:149",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/sessions/gaps-profile-76c59c81/D3.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "other_rows_failed": [
+      "TestPerformance"
+    ],
+    "recorded_tests_failed": [
+      "TestPerformance",
+      "TestProfileSnapshotsAgree"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/native/runtime/heap.c:152",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/sessions/gaps-profile-76c59c81/D4.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "other_rows_failed": [
+      "TestPerformance"
+    ],
+    "recorded_tests_failed": [
+      "TestPerformance",
+      "TestProfileSnapshotsAgree"
+    ],
+    "stale": false,
+    "apply_check": ""
+  }
+]

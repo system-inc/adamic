@@ -1,0 +1,503 @@
+[
+  {
+    "mutant": "D01",
+    "file_line": "stage1/typescript/scanner/scanner.ts:1009",
+    "change": "flip JSX whitespace token classification",
+    "old": "first === -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText'",
+    "new": "first !== -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText'",
+    "variant_commit": "5106f96b31bf502ccfeeeb728c4ab08eb109abcc",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/scanner-defend-tmp/cache/D01 ADAMIC_SCANNER_PROFILE_DIR=/workspace/scanner-defend-tmp/artifacts/D01 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/workspace/scanner-defend-tmp/artifacts/D01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D01.log 2>&1",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/scanner-defend-tmp/cache/D01",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/workspace/scanner-defend-tmp/artifacts/D01",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/workspace/scanner-defend-tmp/artifacts/D01",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/u111-typescript",
+      "ADAMIC_SCANNER_BENCH": "1"
+    },
+    "exit": 1,
+    "wall_seconds": 61.30217273699964,
+    "tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_009"
+    ],
+    "tests_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProfileArtifacts",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerShardCoverage"
+    ],
+    "rows_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "rows_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_Scanner family",
+      "TestProfileArtifacts",
+      "TestScannerShardCoverage"
+    ],
+    "failures": [
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_003",
+        "line": "scanner_products_test.go:340: native: line 42643: port \"JsxTextAllWhiteSpaces 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\", Go \"JsxText 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_003",
+        "line": "scanner_products_test.go:340: Node: line 42643: port \"JsxTextAllWhiteSpaces 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\", Go \"JsxText 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_009",
+        "line": "scanner_products_test.go:352: native: line 90218: port \"JsxText 0 4 0\\t\\\\u000a  \\\\u0009\", Go \"JsxTextAllWhiteSpaces 0 4 0\\t\\\\u000a  \\\\u0009\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_009",
+        "line": "scanner_products_test.go:352: Node: line 90218: port \"JsxText 0 4 0\\t\\\\u000a  \\\\u0009\", Go \"JsxTextAllWhiteSpaces 0 4 0\\t\\\\u000a  \\\\u0009\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_005",
+        "line": "scanner_products_test.go:344: native: line 44016: port \"JsxTextAllWhiteSpaces 0 13 0\\t hello\\\\u000aworld \", Go \"JsxText 0 13 0\\t hello\\\\u000aworld \""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_005",
+        "line": "scanner_products_test.go:344: Node: line 44016: port \"JsxTextAllWhiteSpaces 0 13 0\\t hello\\\\u000aworld \", Go \"JsxText 0 13 0\\t hello\\\\u000aworld \""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_006",
+        "line": "scanner_products_test.go:346: native: line 125605: port \"JsxTextAllWhiteSpaces 0 5 0\\tx>y}z\", Go \"JsxText 0 5 0\\tx>y}z\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_006",
+        "line": "scanner_products_test.go:346: Node: line 125605: port \"JsxTextAllWhiteSpaces 0 5 0\\tx>y}z\", Go \"JsxText 0 5 0\\tx>y}z\""
+      },
+      {
+        "test": "TestProfileSnapshotsAgree",
+        "line": "profile_test.go:110: /workspace/scanner-defend-tmp/artifacts/D01 release: line 970193: port \"JsxTextAllWhiteSpaces 0 13 0\\t hello\\\\u000aworld \", Go \"JsxText 0 13 0\\t hello\\\\u000aworld \""
+      }
+    ],
+    "build_evidence": [
+      {
+        "Time": "2026-10-09T14:24:53.006145421Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProfileArtifacts",
+        "Elapsed": 9.53
+      },
+      {
+        "Time": "2026-10-09T14:25:15.9327728Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerPunctuator",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:25:16.427072539Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRelease",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:25:16.427550927Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerNative",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:25:16.427667479Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerOracle",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:25:18.05972694Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRegexRescan",
+        "Elapsed": 6.2
+      },
+      {
+        "Time": "2026-10-09T14:25:22.768148843Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerSourceIdentifier",
+        "Elapsed": 6.84
+      },
+      {
+        "Time": "2026-10-09T14:25:23.27690955Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerDecimalSeparator",
+        "Elapsed": 7.61
+      }
+    ]
+  },
+  {
+    "mutant": "D02",
+    "file_line": "stage1/typescript/scanner/scanner.ts:857",
+    "change": "flip regex terminator character-class condition",
+    "old": "else if(code === 47 && !characterClass)",
+    "new": "else if(code === 47 && characterClass)",
+    "variant_commit": "420902e1eb33ece191191e2c5deaf88fbb866a71",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/scanner-defend-tmp/cache/D02 ADAMIC_SCANNER_PROFILE_DIR=/workspace/scanner-defend-tmp/artifacts/D02 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/workspace/scanner-defend-tmp/artifacts/D02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D02.log 2>&1",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/scanner-defend-tmp/cache/D02",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/workspace/scanner-defend-tmp/artifacts/D02",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/workspace/scanner-defend-tmp/artifacts/D02",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/u111-typescript",
+      "ADAMIC_SCANNER_BENCH": "1"
+    },
+    "exit": 1,
+    "wall_seconds": 58.28150024199567,
+    "tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014"
+    ],
+    "tests_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProfileArtifacts",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerShardCoverage"
+    ],
+    "rows_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "rows_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_Scanner family",
+      "TestProfileArtifacts",
+      "TestScannerShardCoverage"
+    ],
+    "failures": [
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_011",
+        "line": "scanner_products_test.go:356: native: line 49426: port \"error 1161 0 6\", Go \"RegularExpressionLiteral 0 6 0\\t/=abc/\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_013",
+        "line": "scanner_products_test.go:360: native: line 56488: port \"error 1161 0 5\", Go \"RegularExpressionLiteral 0 5 0\\t/x/\\\\u00e9\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_011",
+        "line": "scanner_products_test.go:356: Node: line 49426: port \"error 1161 0 6\", Go \"RegularExpressionLiteral 0 6 0\\t/=abc/\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_013",
+        "line": "scanner_products_test.go:360: Node: line 56488: port \"error 1161 0 5\", Go \"RegularExpressionLiteral 0 5 0\\t/x/\\\\u00e9\""
+      },
+      {
+        "test": "TestProfileSnapshotsAgree",
+        "line": "profile_test.go:110: /workspace/scanner-defend-tmp/artifacts/D02 release: line 970006: port \"error 1161 0 6\", Go \"RegularExpressionLiteral 0 6 0\\t/abc/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_001",
+        "line": "scanner_products_test.go:336: native: line 30003: port \"error 1161 0 5\", Go \"RegularExpressionLiteral 0 5 0\\t/a/vu\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_002",
+        "line": "scanner_products_test.go:338: native: line 62216: port \"RegularExpressionLiteral 0 3 0\\t/[/\", Go \"RegularExpressionLiteral 0 6 0\\t/[/]/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_001",
+        "line": "scanner_products_test.go:336: Node: line 30003: port \"error 1161 0 5\", Go \"RegularExpressionLiteral 0 5 0\\t/a/vu\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_002",
+        "line": "scanner_products_test.go:338: Node: line 62216: port \"RegularExpressionLiteral 0 3 0\\t/[/\", Go \"RegularExpressionLiteral 0 6 0\\t/[/]/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_014",
+        "line": "scanner_products_test.go:362: native: line 125757: port \"error 1161 1 4\", Go \"RegularExpressionLiteral 1 5 0\\t/b/c\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_014",
+        "line": "scanner_products_test.go:362: Node: line 125757: port \"error 1161 1 4\", Go \"RegularExpressionLiteral 1 5 0\\t/b/c\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_007",
+        "line": "scanner_products_test.go:348: native: line 64004: port \"error 1161 0 8\", Go \"RegularExpressionLiteral 0 8 0\\t/a\\\\u2028b/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_007",
+        "line": "scanner_products_test.go:348: Node: line 64004: port \"error 1161 0 8\", Go \"RegularExpressionLiteral 0 8 0\\t/a\\\\u2028b/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_008",
+        "line": "scanner_products_test.go:350: native: line 22378: port \"error 1161 0 6\", Go \"RegularExpressionLiteral 0 6 0\\t/abc/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_008",
+        "line": "scanner_products_test.go:350: Node: line 22378: port \"error 1161 0 6\", Go \"RegularExpressionLiteral 0 6 0\\t/abc/g\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_005",
+        "line": "scanner_products_test.go:344: native: line 43992: port \"error 1161 0 7\", Go \"RegularExpressionLiteral 0 7 0\\t/a\\\\u005c/b/i\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_005",
+        "line": "scanner_products_test.go:344: Node: line 43992: port \"error 1161 0 7\", Go \"RegularExpressionLiteral 0 7 0\\t/a\\\\u005c/b/i\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_006",
+        "line": "scanner_products_test.go:346: native: line 125597: port \"error 1161 0 11\", Go \"RegularExpressionLiteral 0 11 0\\t/\\\\u005cu{d800}/u\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_006",
+        "line": "scanner_products_test.go:346: Node: line 125597: port \"error 1161 0 11\", Go \"RegularExpressionLiteral 0 11 0\\t/\\\\u005cu{d800}/u\""
+      }
+    ],
+    "build_evidence": [
+      {
+        "Time": "2026-10-09T14:25:54.105282053Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProfileArtifacts",
+        "Elapsed": 9.66
+      },
+      {
+        "Time": "2026-10-09T14:26:08.074226788Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerPunctuator",
+        "Elapsed": 5.45
+      },
+      {
+        "Time": "2026-10-09T14:26:08.074716793Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRelease",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:26:08.183363666Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerNative",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-09T14:26:08.183396114Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerOracle",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:26:08.436743156Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerSourceIdentifier",
+        "Elapsed": 5.66
+      },
+      {
+        "Time": "2026-10-09T14:26:26.002411074Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerDecimalSeparator",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-09T14:26:31.522425066Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRegexRescan",
+        "Elapsed": 6.59
+      }
+    ]
+  },
+  {
+    "mutant": "D03",
+    "file_line": "stage1/typescript/scanner/scanner.ts:836",
+    "change": "change template rescan diagnostic option true to false",
+    "old": "this.template(true);",
+    "new": "this.template(false);",
+    "variant_commit": "6dd6013e6a44598cc118be373e7ea8fb284d1f59",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/scanner-defend-tmp/cache/D03 ADAMIC_SCANNER_PROFILE_DIR=/workspace/scanner-defend-tmp/artifacts/D03 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/workspace/scanner-defend-tmp/artifacts/D03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D03.log 2>&1",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/scanner-defend-tmp/cache/D03",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/workspace/scanner-defend-tmp/artifacts/D03",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/workspace/scanner-defend-tmp/artifacts/D03",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/u111-typescript",
+      "ADAMIC_SCANNER_BENCH": "1"
+    },
+    "exit": 1,
+    "wall_seconds": 56.605798491000314,
+    "tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_013"
+    ],
+    "tests_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProfileArtifacts",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerShardCoverage"
+    ],
+    "rows_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "rows_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_Scanner family",
+      "TestProfileArtifacts",
+      "TestScannerShardCoverage"
+    ],
+    "failures": [
+      {
+        "test": "TestProfileSnapshotsAgree",
+        "line": "profile_test.go:110: /workspace/scanner-defend-tmp/artifacts/D03 release: line 969996: port \"TemplateTail 5 13 3072\\t\\\\u005cuZZZZ\", Go \"error 1125 8 0\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_002",
+        "line": "scanner_products_test.go:338: native: line 62212: port \"TemplateTail 5 9 2048\\t\\\\u005c1\", Go \"error 1487 6 2\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_002",
+        "line": "scanner_products_test.go:338: Node: line 62212: port \"TemplateTail 5 9 2048\\t\\\\u005c1\", Go \"error 1487 6 2\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_013",
+        "line": "scanner_products_test.go:360: native: line 56475: port \"TemplateTail 5 13 3072\\t\\\\u005cuZZZZ\", Go \"error 1125 8 0\""
+      },
+      {
+        "test": "TestScannerAgreesWithTypescriptGo_013",
+        "line": "scanner_products_test.go:360: Node: line 56475: port \"TemplateTail 5 13 3072\\t\\\\u005cuZZZZ\", Go \"error 1125 8 0\""
+      }
+    ],
+    "build_evidence": [
+      {
+        "Time": "2026-10-09T14:26:52.567525337Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProfileArtifacts",
+        "Elapsed": 9.53
+      },
+      {
+        "Time": "2026-10-09T14:27:06.241346808Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerSourceIdentifier",
+        "Elapsed": 5.42
+      },
+      {
+        "Time": "2026-10-09T14:27:06.241832066Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRelease",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:27:06.242270835Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerNative",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:27:06.24228779Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerOracle",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T14:27:18.584926023Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerPunctuator",
+        "Elapsed": 5.06
+      },
+      {
+        "Time": "2026-10-09T14:27:25.100438088Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerRegexRescan",
+        "Elapsed": 6.52
+      },
+      {
+        "Time": "2026-10-09T14:27:25.184204574Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestProduct_ScannerDecimalSeparator",
+        "Elapsed": 6.39
+      }
+    ]
+  }
+]

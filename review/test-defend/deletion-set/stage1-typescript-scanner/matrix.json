@@ -1,0 +1,299 @@
+[
+  {
+    "mutant": "M3",
+    "file_line": "stage1/typescript/scanner/characters.ts:250",
+    "branch": "test-audit/stage1-typescript-scanner",
+    "diff": "source/test-audit/stage1-typescript-scanner/diffs/M3.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "01-M3-0.log",
+        "wall_seconds": 24.248399383002834,
+        "exit": 0,
+        "rows_failed": []
+      }
+    ],
+    "scratch_commit": "e7d343f54902dc9cc5164c35523136e8e7a99ecd",
+    "complete": true
+  },
+  {
+    "mutant": "M1",
+    "file_line": "stage1/typescript/scanner/scanner.ts:74",
+    "branch": "test-audit/stage1-typescript-scanner",
+    "diff": "source/test-audit/stage1-typescript-scanner/diffs/M1.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "02-M1-0.log",
+        "wall_seconds": 24.573606370999187,
+        "exit": 0,
+        "rows_failed": []
+      }
+    ],
+    "scratch_commit": "97dac0843dc43658fd4988ddd6ad8b6ae698b1e7",
+    "complete": true
+  },
+  {
+    "mutant": "D02",
+    "file_line": "stage1/typescript/scanner/scanner.ts:857",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D02.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "03-D02-0.log",
+        "wall_seconds": 22.956607652005914,
+        "exit": 0,
+        "rows_failed": []
+      }
+    ],
+    "scratch_commit": "f38dc5bd98b0d268bc103497f5655f09d4821050",
+    "complete": true
+  },
+  {
+    "mutant": "D01",
+    "file_line": "stage1/typescript/scanner/scanner.ts:1009",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D01.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "04-D01-0.log",
+        "wall_seconds": 22.95053517299675,
+        "exit": 0,
+        "rows_failed": []
+      }
+    ],
+    "scratch_commit": "30ac1cfe1c96d46e59a09905bc6a25f047d86fbb",
+    "complete": true
+  },
+  {
+    "mutant": "D03",
+    "file_line": "stage1/typescript/scanner/scanner.ts:836",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/D03.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "other_rows_failed": [],
+    "recorded_tests_failed": [
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "05-D03-0.log",
+        "wall_seconds": 23.07018112699734,
+        "exit": 0,
+        "rows_failed": []
+      }
+    ],
+    "scratch_commit": "e4fa16c8bbbdda0be523d39ce2badc0c4b58dc51",
+    "complete": true
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/heap.c:149",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/sessions/gaps-profile-76c59c81/D3.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "other_rows_failed": [
+      "TestPerformance"
+    ],
+    "recorded_tests_failed": [
+      "TestPerformance",
+      "TestProfileSnapshotsAgree"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestPerformance"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "06-D3-0.log",
+        "wall_seconds": 37.3844290709967,
+        "exit": 1,
+        "rows_failed": [
+          "TestPerformance"
+        ]
+      }
+    ],
+    "scratch_commit": "b6361b4b7d1876cec88c1d3e2106d2bcf4ca2e23",
+    "complete": true
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/native/runtime/heap.c:152",
+    "branch": "test-defend/stage1-typescript-scanner",
+    "diff": "source/test-defend/stage1-typescript-scanner/sessions/gaps-profile-76c59c81/D4.diff",
+    "candidates_failed": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "other_rows_failed": [
+      "TestPerformance"
+    ],
+    "recorded_tests_failed": [
+      "TestPerformance",
+      "TestProfileSnapshotsAgree"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestPerformance"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/typescript/scanner/",
+          "-skip",
+          "^(TestProfileSnapshotsAgree|TestScannerAgreesWithTypescriptGo)($|_|/)"
+        ],
+        "log": "07-D4-0.log",
+        "wall_seconds": 40.47192457300116,
+        "exit": 1,
+        "rows_failed": [
+          "TestPerformance"
+        ]
+      }
+    ],
+    "scratch_commit": "d0bcf7668782c9c49c0e391f676dfc9123d83ce9",
+    "complete": true
+  }
+]

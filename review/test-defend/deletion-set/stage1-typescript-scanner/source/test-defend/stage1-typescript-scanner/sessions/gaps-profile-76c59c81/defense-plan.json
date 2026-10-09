@@ -1,0 +1,52 @@
+[
+  {
+    "id": "D1",
+    "row": "TestGapStandsWhereGapsMdSays",
+    "file": "internal/lower/object.go",
+    "old": "\"push with other than one value\"",
+    "new": "\"push with two values\"",
+    "reason": "exclusive multi-argument push refusal diagnostic",
+    "menu": "change constant",
+    "line": 1266
+  },
+  {
+    "id": "D2",
+    "row": "TestBigintGapStandsWhereGapsMdSays",
+    "file": "internal/lower/expression.go",
+    "old": "\"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))",
+    "new": "\"a representation of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))",
+    "reason": "exclusive unsupported bigint representation diagnostic",
+    "menu": "change constant",
+    "line": 40
+  },
+  {
+    "id": "D3",
+    "row": "TestProfileSnapshotsAgree",
+    "file": "internal/native/runtime/heap.c",
+    "old": "each->free = ((free_slot *)slot)->next;",
+    "new": "",
+    "reason": "release slab free-list reuse, bypassed by sanitizer allocator",
+    "menu": "drop statement",
+    "line": 149
+  },
+  {
+    "id": "D4",
+    "row": "TestProfileSnapshotsAgree",
+    "file": "internal/native/runtime/heap.c",
+    "old": "each->fresh += size;",
+    "new": "each->fresh += size - 1;",
+    "reason": "release slab fresh-slot bound, bypassed by sanitizer allocator",
+    "menu": "off by one",
+    "line": 152
+  },
+  {
+    "id": "D5",
+    "row": "TestProfileSnapshotsAgree",
+    "file": "internal/native/native.go",
+    "old": "return append(flags, \"-O2\")",
+    "new": "return append(flags, \"-O2\", \"-funsafe-math-optimizations\")",
+    "reason": "release-only compiler floating-point option; sanitized branch returns before it",
+    "menu": "change option",
+    "line": 106
+  }
+]

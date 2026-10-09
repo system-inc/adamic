@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1263,7 +1263,7 @@
+ 	}
+ 	if name == "push" {
+ 		if len(arguments) != 1 {
+-			return nil, true, l.notYet(node, "push with other than one value")
++			return nil, true, l.notYet(node, "push with two values")
+ 		}
+ 		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+ 	}

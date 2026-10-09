@@ -1,0 +1,11 @@
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -30,7 +30,7 @@
+ }
+ 
+ func (l *lowering) notYet(node *ast.Node, what string) error {
+-	return &NotYet{Where: l.program.Where(node), What: what}
++	return &NotYet{Where: l.program.Where(node), What: "unsupported"}
+ }
+ 
+ // describe names a node's kind for a person: "a VariableStatement", "an ImportDeclaration".
