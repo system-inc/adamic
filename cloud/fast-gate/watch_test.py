@@ -999,6 +999,28 @@ class WatchTests(unittest.TestCase):
         # The box side refuses too, so a caller that skips the script can't widen the match.
         self.assertIn('is not 40 hex digits', w.read('stop-command'))
 
+    def test_stop_gate_stops_a_gate_merged_onto_main_by_its_tip(self):
+        # A merged gate's run.py carries the merge's sha; its out directory carries the tip's. Until Oct 9 17:20Z stops
+        # matched --sha only, so every stop of a merged candidate matched nothing.
+        w = self.start(0)
+        tip, merge = 'c' * 40, 'd' * 40
+        subprocess.run(['bash', str(w.repo / 'cloud' / 'stop-gate.sh'), 'workshop', tip, 'by hand'],
+                       env=dict(os.environ, PATH=str(w.bin) + ':' + os.environ['PATH'], TEST_ROOT=str(w.root)), check=True)
+        home = w.root / 'box-home'
+        out = home / 'fast-gate' / 'out' / (tip[:12] + '-20261009T170000Z')
+        out.mkdir(parents=True)
+        runner = home / 'fast-gate' / 'tools' / 'cloud' / 'fast-gate' / 'run.py'
+        runner.parent.mkdir(parents=True)
+        runner.write_text('import time\ntime.sleep(60)\n')
+        gate = subprocess.Popen(['python3', str(runner), '--tree', 'tree', '--sha', merge, '--out', str(out)])
+        self.addCleanup(gate.kill)
+        time.sleep(.3)
+        stop = subprocess.run(['bash', '-s', '--', tip, 'by hand'], stdin=open(w.root / 'stop-command'),
+                              env=dict(os.environ, HOME=str(home)), capture_output=True, text=True)
+        self.assertEqual(stop.returncode, 0, stop.stderr)
+        self.assertEqual(gate.wait(5), -15)
+        self.assertEqual((home / 'fast-gate' / 'out' / (out.name + '.stop-reason')).read_text().strip(), 'by hand')
+
     def test_an_ahead_tip_outranks_every_step_without_the_star_s_box(self):
         w = Watcher(0)
         self.addCleanup(w.close)
