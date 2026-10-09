@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -74,7 +74,7 @@
+ // Callers should use exec.Command, rather than an independent context deadline.
+ func Run(cmd *exec.Cmd, options Options) error {
+ 	if options.FirstOutput == 0 {
+-		options.FirstOutput = DefaultFirstOutput
++		options.FirstOutput = time.Nanosecond
+ 	}
+ 	if options.Stall == 0 {
+ 		options.Stall = DefaultStall

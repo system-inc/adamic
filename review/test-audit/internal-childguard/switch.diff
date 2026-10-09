@@ -1,0 +1,188 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -36,12 +36,16 @@
+ func (e *Error) Error() string {
+ 	if e.Reason == "stalled" {
+ 		window := "no output"
+-		if e.FirstOutput {
++		if (os.Getenv("ADAMIC_MUTANT") != "M01" && (e.FirstOutput)) || (os.Getenv("ADAMIC_MUTANT") == "M01" && (!e.FirstOutput)) {
+ 			window = "no first output"
+ 		}
+ 		return fmt.Sprintf("stalled: %s for %s after %s, load %s (%s)", window, e.Window, e.Elapsed, e.Load, e.Command)
+ 	}
+-	return fmt.Sprintf("ceiling: %s", e.Elapsed)
++	if os.Getenv("ADAMIC_MUTANT") == "M02" {
++		return fmt.Sprintf("limit: %s", e.Elapsed)
++	} else {
++		return fmt.Sprintf("ceiling: %s", e.Elapsed)
++	}
+ }
+ 
+ type activity struct {
+@@ -58,29 +62,56 @@
+ func (w *watched) Write(p []byte) (int, error) {
+ 	if len(p) > 0 {
+ 		w.activity.Lock()
+-		w.activity.last = time.Now()
+-		w.activity.seen = true
++		if os.Getenv("ADAMIC_MUTANT") == "M03" {
++			w.activity.last = time.Time{}
++		} else {
++			w.activity.last = time.Now()
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M04" {
++			w.activity.seen = false
++		} else {
++			w.activity.seen = true
++		}
+ 		w.activity.Unlock()
+ 		select {
+ 		case w.activity.progress <- struct{}{}:
+ 		default:
+ 		}
+ 	}
+-	return w.dst.Write(p)
++	if os.Getenv("ADAMIC_MUTANT") == "M05" {
++		return len(p), nil
++	} else {
++		return w.dst.Write(p)
++	}
+ }
+ 
+ // Run starts an unstarted command in its own process group and waits for it.
+ // Output is forwarded to the command's original writers (nil means discard).
+ // Callers should use exec.Command, rather than an independent context deadline.
+ func Run(cmd *exec.Cmd, options Options) error {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return nil
++	}
+ 	if options.FirstOutput == 0 {
+-		options.FirstOutput = DefaultFirstOutput
++		if os.Getenv("ADAMIC_MUTANT") == "M06" {
++			options.FirstOutput = time.Nanosecond
++		} else {
++			options.FirstOutput = DefaultFirstOutput
++		}
+ 	}
+ 	if options.Stall == 0 {
+-		options.Stall = DefaultStall
++		if os.Getenv("ADAMIC_MUTANT") == "M07" {
++			options.Stall = time.Nanosecond
++		} else {
++			options.Stall = DefaultStall
++		}
+ 	}
+ 	if options.Ceiling == 0 {
+-		options.Ceiling = DefaultCeiling
++		if os.Getenv("ADAMIC_MUTANT") == "M08" {
++			options.Ceiling = time.Nanosecond
++		} else {
++			options.Ceiling = DefaultCeiling
++		}
+ 	}
+ 	if options.FirstOutput < 0 || options.Stall < 0 || options.Ceiling < 0 {
+ 		return fmt.Errorf("childguard: durations must be positive")
+@@ -88,10 +119,17 @@
+ 	if cmd.SysProcAttr == nil {
+ 		cmd.SysProcAttr = &syscall.SysProcAttr{}
+ 	}
+-	cmd.SysProcAttr.Setpgid = true
++	if os.Getenv("ADAMIC_MUTANT") == "M09" {
++		cmd.SysProcAttr.Setpgid = false
++	} else {
++		cmd.SysProcAttr.Setpgid = true
++	}
+ 	cmd.SysProcAttr.Pgid = 0
+ 	originalOut, originalErr := cmd.Stdout, cmd.Stderr
+-	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()
++	if os.Getenv("ADAMIC_MUTANT") == "M10" {
++	} else {
++		defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()
++	}
+ 	start := time.Now()
+ 	a := &activity{last: start, progress: make(chan struct{}, 1)}
+ 	wrap := func(dst io.Writer) io.Writer {
+@@ -100,12 +138,20 @@
+ 		}
+ 		return &watched{dst: dst, activity: a}
+ 	}
+-	cmd.Stdout = wrap(originalOut)
++	if os.Getenv("ADAMIC_MUTANT") == "M11" {
++		cmd.Stdout = wrap(originalErr)
++	} else {
++		cmd.Stdout = wrap(originalOut)
++	}
+ 	// Preserve exec's serialization when both streams share a writer.
+ 	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalErr {
+ 		cmd.Stderr = cmd.Stdout
+ 	} else {
+-		cmd.Stderr = wrap(originalErr)
++		if os.Getenv("ADAMIC_MUTANT") == "M12" {
++			cmd.Stderr = wrap(originalOut)
++		} else {
++			cmd.Stderr = wrap(originalErr)
++		}
+ 	}
+ 	if err := cmd.Start(); err != nil {
+ 		return err
+@@ -117,7 +163,11 @@
+ 	for {
+ 		select {
+ 		case err := <-done:
+-			return err
++			if os.Getenv("ADAMIC_MUTANT") == "M13" {
++				return fmt.Errorf("%v", err)
++			} else {
++				return err
++			}
+ 		case <-a.progress:
+ 			timer.Reset(0)
+ 		case <-timer.C:
+@@ -130,27 +180,43 @@
+ 			a.Lock()
+ 			idle := now.Sub(a.last)
+ 			firstOutput := !a.seen
++			if os.Getenv("ADAMIC_MUTANT") == "M14" {
++				firstOutput = a.seen
++			}
+ 			window := options.Stall
+ 			if firstOutput {
+-				window = options.FirstOutput
++				if os.Getenv("ADAMIC_MUTANT") == "M15" {
++					window = options.Stall
++				} else {
++					window = options.FirstOutput
++				}
+ 			}
+ 			a.Unlock()
+ 			elapsed := now.Sub(start)
+ 			reason := ""
+-			if elapsed >= options.Ceiling {
++			if (os.Getenv("ADAMIC_MUTANT") != "M16" && (elapsed >= options.Ceiling)) || (os.Getenv("ADAMIC_MUTANT") == "M16" && (elapsed < options.Ceiling)) {
+ 				reason = "ceiling"
+ 			} else if idle >= window {
+ 				reason = "stalled"
+ 			}
+ 			if reason != "" {
+-				if err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL); err != nil {
++				if err := syscall.Kill(func() int {
++					if os.Getenv("ADAMIC_MUTANT") == "M17" {
++						return cmd.Process.Pid
++					}
++					return -cmd.Process.Pid
++				}(), syscall.SIGKILL); err != nil {
+ 					return <-done
+ 				}
+ 				<-done
+ 				load := "unavailable"
+ 				if data, err := os.ReadFile("/proc/loadavg"); err == nil {
+ 					if fields := strings.Fields(string(data)); len(fields) > 0 {
+-						load = fields[0]
++						if os.Getenv("ADAMIC_MUTANT") == "M18" {
++							load = "unavailable"
++						} else {
++							load = fields[0]
++						}
+ 					}
+ 				}
+ 				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: cmd.Path, Elapsed: elapsed, Load: load}

@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -41,7 +41,7 @@
+ 		}
+ 		return fmt.Sprintf("stalled: %s for %s after %s, load %s (%s)", window, e.Window, e.Elapsed, e.Load, e.Command)
+ 	}
+-	return fmt.Sprintf("ceiling: %s", e.Elapsed)
++	return fmt.Sprintf("limit: %s", e.Elapsed)
+ }
+ 
+ type activity struct {

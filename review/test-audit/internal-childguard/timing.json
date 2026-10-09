@@ -1,0 +1,128 @@
+[
+  {
+    "test": "TestChild",
+    "run": 1,
+    "wall": 0.28889935099999775,
+    "exit": 0
+  },
+  {
+    "test": "TestChild",
+    "run": 2,
+    "wall": 0.2519246470000098,
+    "exit": 0
+  },
+  {
+    "test": "TestChild",
+    "run": 3,
+    "wall": 0.23405426099998294,
+    "exit": 0
+  },
+  {
+    "test": "TestProgress",
+    "run": 1,
+    "wall": 8.268239287,
+    "exit": 0
+  },
+  {
+    "test": "TestProgress",
+    "run": 2,
+    "wall": 8.220354964000023,
+    "exit": 0
+  },
+  {
+    "test": "TestProgress",
+    "run": 3,
+    "wall": 8.245128399999999,
+    "exit": 0
+  },
+  {
+    "test": "TestStalled",
+    "run": 1,
+    "wall": 0.43133812100001023,
+    "exit": 0
+  },
+  {
+    "test": "TestStalled",
+    "run": 2,
+    "wall": 0.43613264999999046,
+    "exit": 0
+  },
+  {
+    "test": "TestStalled",
+    "run": 3,
+    "wall": 0.43590646699999525,
+    "exit": 0
+  },
+  {
+    "test": "TestCeiling",
+    "run": 1,
+    "wall": 0.6127137820000144,
+    "exit": 0
+  },
+  {
+    "test": "TestCeiling",
+    "run": 2,
+    "wall": 0.6397934559999499,
+    "exit": 0
+  },
+  {
+    "test": "TestCeiling",
+    "run": 3,
+    "wall": 0.6583805079999934,
+    "exit": 0
+  },
+  {
+    "test": "TestExitIsNotGuardError",
+    "run": 1,
+    "wall": 0.20463831500001106,
+    "exit": 0
+  },
+  {
+    "test": "TestExitIsNotGuardError",
+    "run": 2,
+    "wall": 0.24257625300003838,
+    "exit": 0
+  },
+  {
+    "test": "TestExitIsNotGuardError",
+    "run": 3,
+    "wall": 0.21977615800000194,
+    "exit": 0
+  },
+  {
+    "test": "TestKillsProcessGroup",
+    "run": 1,
+    "wall": 0.42886765100001867,
+    "exit": 0
+  },
+  {
+    "test": "TestKillsProcessGroup",
+    "run": 2,
+    "wall": 0.44472817900003747,
+    "exit": 0
+  },
+  {
+    "test": "TestKillsProcessGroup",
+    "run": 3,
+    "wall": 0.4362200429999916,
+    "exit": 0
+  },
+  {
+    "test": "TestNoFirstOutput",
+    "run": 1,
+    "wall": 0.5101187879999998,
+    "exit": 0
+  },
+  {
+    "test": "TestNoFirstOutput",
+    "run": 2,
+    "wall": 0.5195073900000011,
+    "exit": 0
+  },
+  {
+    "test": "TestNoFirstOutput",
+    "run": 3,
+    "wall": 0.5255290220000006,
+    "exit": 0
+  }
+]

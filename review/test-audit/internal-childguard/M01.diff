@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -36,7 +36,7 @@
+ func (e *Error) Error() string {
+ 	if e.Reason == "stalled" {
+ 		window := "no output"
+-		if e.FirstOutput {
++		if !e.FirstOutput {
+ 			window = "no first output"
+ 		}
+ 		return fmt.Sprintf("stalled: %s for %s after %s, load %s (%s)", window, e.Window, e.Elapsed, e.Load, e.Command)

@@ -1,0 +1,248 @@
+[
+  {
+    "id": "M01",
+    "line": 39,
+    "old": "if e.FirstOutput {",
+    "new": "if !e.FirstOutput {",
+    "kind": "flip condition",
+    "supplemental": false,
+    "failed_rows": [
+      "TestStalled",
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M02",
+    "line": 44,
+    "old": "return fmt.Sprintf(\"ceiling: %s\", e.Elapsed)",
+    "new": "return fmt.Sprintf(\"limit: %s\", e.Elapsed)",
+    "kind": "change constant",
+    "supplemental": false,
+    "failed_rows": [
+      "TestCeiling"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M03",
+    "line": 61,
+    "old": "w.activity.last = time.Now()",
+    "new": "w.activity.last = time.Time{}",
+    "kind": "change constant",
+    "supplemental": false,
+    "failed_rows": [
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M04",
+    "line": 62,
+    "old": "w.activity.seen = true",
+    "new": "w.activity.seen = false",
+    "kind": "change constant",
+    "supplemental": false,
+    "failed_rows": [
+      "TestStalled",
+      "TestKillsProcessGroup"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M05",
+    "line": 69,
+    "old": "return w.dst.Write(p)",
+    "new": "return len(p), nil",
+    "kind": "return early",
+    "supplemental": false,
+    "failed_rows": [
+      "TestProgress",
+      "TestStalled"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M06",
+    "line": 77,
+    "old": "options.FirstOutput = DefaultFirstOutput",
+    "new": "options.FirstOutput = time.Nanosecond",
+    "kind": "change option",
+    "supplemental": false,
+    "failed_rows": [
+      "TestCeiling",
+      "TestExitIsNotGuardError"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M07",
+    "line": 80,
+    "old": "options.Stall = DefaultStall",
+    "new": "options.Stall = time.Nanosecond",
+    "kind": "change option",
+    "supplemental": false,
+    "failed_rows": [],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M08",
+    "line": 83,
+    "old": "options.Ceiling = DefaultCeiling",
+    "new": "options.Ceiling = time.Nanosecond",
+    "kind": "change option",
+    "supplemental": false,
+    "failed_rows": [
+      "TestExitIsNotGuardError"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M09",
+    "line": 91,
+    "old": "cmd.SysProcAttr.Setpgid = true",
+    "new": "cmd.SysProcAttr.Setpgid = false",
+    "kind": "change option",
+    "supplemental": false,
+    "failed_rows": [
+      "TestStalled",
+      "TestCeiling",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": [
+      "TestStalled",
+      "TestCeiling",
+      "TestNoFirstOutput"
+    ]
+  },
+  {
+    "id": "M10",
+    "line": 94,
+    "old": "defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()",
+    "new": "",
+    "kind": "drop statement",
+    "supplemental": false,
+    "failed_rows": [],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M11",
+    "line": 103,
+    "old": "cmd.Stdout = wrap(originalOut)",
+    "new": "cmd.Stdout = wrap(originalErr)",
+    "kind": "swap argument",
+    "supplemental": false,
+    "failed_rows": [
+      "TestProgress"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M12",
+    "line": 108,
+    "old": "cmd.Stderr = wrap(originalErr)",
+    "new": "cmd.Stderr = wrap(originalOut)",
+    "kind": "swap argument",
+    "supplemental": false,
+    "failed_rows": [
+      "TestStalled"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M13",
+    "line": 120,
+    "old": "return err",
+    "new": "return fmt.Errorf(\"%v\", err)",
+    "kind": "change return option",
+    "supplemental": true,
+    "failed_rows": [
+      "TestProgress",
+      "TestExitIsNotGuardError"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M14",
+    "line": 132,
+    "old": "firstOutput := !a.seen",
+    "new": "firstOutput := a.seen",
+    "kind": "flip condition",
+    "supplemental": false,
+    "failed_rows": [
+      "TestStalled",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M15",
+    "line": 135,
+    "old": "window = options.FirstOutput",
+    "new": "window = options.Stall",
+    "kind": "change option",
+    "supplemental": false,
+    "failed_rows": [
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M16",
+    "line": 140,
+    "old": "if elapsed >= options.Ceiling {",
+    "new": "if elapsed < options.Ceiling {",
+    "kind": "flip condition",
+    "supplemental": false,
+    "failed_rows": [
+      "TestProgress",
+      "TestStalled",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M17",
+    "line": 146,
+    "old": "syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)",
+    "new": "syscall.Kill(cmd.Process.Pid, syscall.SIGKILL)",
+    "kind": "change PID multiplier constant from -1 to +1",
+    "supplemental": false,
+    "failed_rows": [
+      "TestKillsProcessGroup"
+    ],
+    "timed_out_rows": []
+  },
+  {
+    "id": "M18",
+    "line": 153,
+    "old": "load = fields[0]",
+    "new": "load = \"unavailable\"",
+    "kind": "change constant",
+    "supplemental": false,
+    "failed_rows": [],
+    "timed_out_rows": []
+  },
+  {
+    "id": "P01",
+    "line": 75,
+    "old": "func Run(cmd *exec.Cmd, options Options) error {",
+    "new": "func Run(cmd *exec.Cmd, options Options) error {\n if true { return nil }",
+    "kind": "empty-answer probe",
+    "supplemental": false,
+    "failed_rows": [
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "timed_out_rows": []
+  }
+]

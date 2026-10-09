@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -77,7 +77,7 @@
+ 		options.FirstOutput = DefaultFirstOutput
+ 	}
+ 	if options.Stall == 0 {
+-		options.Stall = DefaultStall
++		options.Stall = time.Nanosecond
+ 	}
+ 	if options.Ceiling == 0 {
+ 		options.Ceiling = DefaultCeiling

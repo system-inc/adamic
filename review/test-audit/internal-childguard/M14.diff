@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -129,7 +129,7 @@
+ 			now := time.Now()
+ 			a.Lock()
+ 			idle := now.Sub(a.last)
+-			firstOutput := !a.seen
++			firstOutput := a.seen
+ 			window := options.Stall
+ 			if firstOutput {
+ 				window = options.FirstOutput

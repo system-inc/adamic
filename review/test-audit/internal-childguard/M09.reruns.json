@@ -1,0 +1,30 @@
+[
+  {
+    "test": "TestChild",
+    "exit": 0
+  },
+  {
+    "test": "TestProgress",
+    "exit": 0
+  },
+  {
+    "test": "TestStalled",
+    "exit": 1
+  },
+  {
+    "test": "TestCeiling",
+    "exit": 1
+  },
+  {
+    "test": "TestExitIsNotGuardError",
+    "exit": 0
+  },
+  {
+    "test": "TestKillsProcessGroup",
+    "exit": 1
+  },
+  {
+    "test": "TestNoFirstOutput",
+    "exit": 1
+  }
+]

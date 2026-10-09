@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -137,7 +137,7 @@
+ 			a.Unlock()
+ 			elapsed := now.Sub(start)
+ 			reason := ""
+-			if elapsed >= options.Ceiling {
++			if elapsed < options.Ceiling {
+ 				reason = "ceiling"
+ 			} else if idle >= window {
+ 				reason = "stalled"

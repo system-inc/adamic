@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -150,7 +150,7 @@
+ 				load := "unavailable"
+ 				if data, err := os.ReadFile("/proc/loadavg"); err == nil {
+ 					if fields := strings.Fields(string(data)); len(fields) > 0 {
+-						load = fields[0]
++						load = "unavailable"
+ 					}
+ 				}
+ 				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: cmd.Path, Elapsed: elapsed, Load: load}

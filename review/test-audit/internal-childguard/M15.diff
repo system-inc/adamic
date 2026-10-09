@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -132,7 +132,7 @@
+ 			firstOutput := !a.seen
+ 			window := options.Stall
+ 			if firstOutput {
+-				window = options.FirstOutput
++				window = options.Stall
+ 			}
+ 			a.Unlock()
+ 			elapsed := now.Sub(start)

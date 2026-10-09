@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -59,7 +59,7 @@
+ 	if len(p) > 0 {
+ 		w.activity.Lock()
+ 		w.activity.last = time.Now()
+-		w.activity.seen = true
++		w.activity.seen = false
+ 		w.activity.Unlock()
+ 		select {
+ 		case w.activity.progress <- struct{}{}:

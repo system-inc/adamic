@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -143,7 +143,7 @@
+ 				reason = "stalled"
+ 			}
+ 			if reason != "" {
+-				if err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL); err != nil {
++				if err := syscall.Kill(cmd.Process.Pid, syscall.SIGKILL); err != nil {
+ 					return <-done
+ 				}
+ 				<-done

@@ -1,0 +1,173 @@
+{
+  "M01": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "fail"
+  },
+  "M02": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "fail",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M03": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "fail",
+    "TestCeiling": "fail",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M04": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "pass"
+  },
+  "M05": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M06": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "fail",
+    "TestExitIsNotGuardError": "fail",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M07": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M08": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "fail",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M09": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "timeout",
+    "TestCeiling": "timeout",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "timeout"
+  },
+  "M10": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M11": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M12": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M13": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "fail",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "M14": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "fail"
+  },
+  "M15": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "fail"
+  },
+  "M16": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "fail",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "fail"
+  },
+  "M17": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "pass"
+  },
+  "M18": {
+    "TestChild": "pass",
+    "TestProgress": "pass",
+    "TestStalled": "pass",
+    "TestCeiling": "pass",
+    "TestExitIsNotGuardError": "pass",
+    "TestKillsProcessGroup": "pass",
+    "TestNoFirstOutput": "pass"
+  },
+  "P01": {
+    "TestChild": "pass",
+    "TestProgress": "fail",
+    "TestStalled": "fail",
+    "TestCeiling": "fail",
+    "TestExitIsNotGuardError": "fail",
+    "TestKillsProcessGroup": "fail",
+    "TestNoFirstOutput": "fail"
+  }
+}

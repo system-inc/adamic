@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -105,7 +105,7 @@
+ 	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalErr {
+ 		cmd.Stderr = cmd.Stdout
+ 	} else {
+-		cmd.Stderr = wrap(originalErr)
++		cmd.Stderr = wrap(originalOut)
+ 	}
+ 	if err := cmd.Start(); err != nil {
+ 		return err

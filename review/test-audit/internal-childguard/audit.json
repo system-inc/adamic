@@ -1,0 +1,281 @@
+[
+  {
+    "test": "TestChild",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:14",
+    "seconds": 0.002,
+    "oracle": "Subprocess entry, activated only by CHILDGUARD_TEST; no independent oracle.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "go test -list . ./internal/childguard/; TestChild",
+    "supplemental_kills": [],
+    "vacuous_subcases": [],
+    "parents": [
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestNoFirstOutput"
+    ]
+  },
+  {
+    "test": "TestProgress",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:49",
+    "seconds": 8.008,
+    "oracle": "Self-written success and count of five progress newline occurrences; extra unrelated output is not rejected.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M05",
+      "M11",
+      "M16"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11 childguard_test.go:57: output lost: \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M11.log 2>&1; childguard_test.go:57: output lost: \"\"",
+    "supplemental_kills": [
+      "M13"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestStalled",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:62",
+    "seconds": 0.206,
+    "oracle": "Self-written stalled error fields and text, 200 ms to 1200 ms timing bound, and exact stderr once newline.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M03",
+      "M04",
+      "M05",
+      "M09",
+      "M12",
+      "M14",
+      "M16"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12 childguard_test.go:76: stderr lost: \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M12.log 2>&1; childguard_test.go:76: stderr lost: \"\"",
+    "supplemental_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestCeiling",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:81",
+    "seconds": 0.404,
+    "oracle": "Self-written ceiling error reason and prefix, with upper timing bound only; no lower bound.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M03",
+      "M06",
+      "M09"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02 childguard_test.go:86: want ceiling, got limit: 400.269866ms",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M02.log 2>&1; childguard_test.go:86: want ceiling, got limit: 400.269866ms",
+    "supplemental_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestExitIsNotGuardError",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:92",
+    "seconds": 0.005,
+    "oracle": "Self-written concrete exec.ExitError and exit status 7, excluding guard errors; exit code alone does not establish cause.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M08 childguard_test.go:98: wrong exit error: ceiling: 263.27\u00b5s",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M08.log 2>&1; childguard_test.go:98: wrong exit error: ceiling: 263.27\u00b5s",
+    "supplemental_kills": [
+      "M13"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestKillsProcessGroup",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:104",
+    "seconds": 0.207,
+    "oracle": "Self-written stalled guard result and 2 s pipe-closure deadline. Descendant survival is inferred from inherited pipes, not independently checked by PID.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M09",
+      "M14",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [
+      "M17"
+    ],
+    "last_proven_fail": "M17 childguard_test.go:115: descendant kept output pipes open after group kill",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M17.log 2>&1; childguard_test.go:115: descendant kept output pipes open after group kill",
+    "supplemental_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestNoFirstOutput",
+    "package": "internal/childguard",
+    "file": "internal/childguard/childguard_test.go:120",
+    "seconds": 0.305,
+    "oracle": "Self-written first-output flag, 300 ms window, diagnostic text, and 300 ms to 1300 ms timing bound.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M09",
+      "M14",
+      "M15",
+      "M16"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15 childguard_test.go:125: want first-output stall, got stalled: no first output for 100ms after 301.434443ms, load 0.02 (/tmp/adamic-gate/go-build855092530/b001/childguard.test)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestChild",
+      "TestProgress",
+      "TestStalled",
+      "TestCeiling",
+      "TestExitIsNotGuardError",
+      "TestKillsProcessGroup",
+      "TestNoFirstOutput"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/childguard/ -run . > M15.log 2>&1; childguard_test.go:125: want first-output stall, got stalled: no first output for 100ms after 301.434443ms, load 0.02 (/tmp/adamic-gate/go-build855092530/b001/childguard.test)",
+    "supplemental_kills": [],
+    "vacuous_subcases": []
+  }
+]
