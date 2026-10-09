@@ -1,0 +1,14 @@
+FIRST FAILURE (tests, at 190.5 s):
+github.com/system-inc/adamic/internal/fresh TestEveryWriteIsRecordedAndKnown
+=== RUN   TestEveryWriteIsRecordedAndKnown
+=== PAUSE TestEveryWriteIsRecordedAndKnown
+=== CONT  TestEveryWriteIsRecordedAndKnown
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_length.a: ir.ArrayHoles is a node the cycle finder doesn't know
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_length.a: ir.ArrayHoles is a node the cycle finder doesn't know
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_length.a: ir.ArrayHoles is a node the cycle finder doesn't know
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_range.a: ir.ArrayHoles is a node the cycle finder doesn't know
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_range.a: ir.ArrayRangeErrorIs is a node the cycle finder doesn't know
+    fresh_test.go:60: ../oracle/testdata/library_array_holes_scanner_probe.a: ir.ArrayHoles is a node the cycle finder doesn't know
+    fresh_test.go:67: 1762 writes in 804 programs, 1613 proven not to close a cycle
+--- FAIL: TestEveryWriteIsRecordedAndKnown (98.32s)
+
