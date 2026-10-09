@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -128,7 +128,7 @@
+ 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
+ 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
+ 				// a Dog can be seen as one taking any Animal, and handed a Cat.
+-				return &widening{source: takes, target: given, parameter: true}
++				return &widening{source: takes, target: given, parameter: false}
+ 			}
+ 			if found := l.widened(given, takes, visited); found != nil {
+ 				return found

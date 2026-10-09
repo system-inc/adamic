@@ -1,0 +1,268 @@
+[
+  {
+    "test": "TestArgumentsLengthRefusals",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArgumentsLengthRefusals$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArgumentsLengthRefusals.cover"
+    ],
+    "exit": 0,
+    "seconds": 53.22623155900146
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArgumentsLengthRefusalFixtures$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArgumentsLengthRefusalFixtures.cover"
+    ],
+    "exit": 0,
+    "seconds": 4.782357058998969
+  },
+  {
+    "test": "TestArrayPredicatePreservesDeclaredElementContract",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArrayPredicatePreservesDeclaredElementContract$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArrayPredicatePreservesDeclaredElementContract.cover"
+    ],
+    "exit": 0,
+    "seconds": 5.394821451998723
+  },
+  {
+    "test": "TestArrayPredicateCannotInventAnElementContract",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArrayPredicateCannotInventAnElementContract$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArrayPredicateCannotInventAnElementContract.cover"
+    ],
+    "exit": 0,
+    "seconds": 5.599277749000976
+  },
+  {
+    "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArrayPredicateDoesNotMisclassifyNativeTuples$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArrayPredicateDoesNotMisclassifyNativeTuples.cover"
+    ],
+    "exit": 0,
+    "seconds": 5.078033140000116
+  },
+  {
+    "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestUnknownArrayPredicateRefusesUnrepresentedObservations$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestUnknownArrayPredicateRefusesUnrepresentedObservations.cover"
+    ],
+    "exit": 0,
+    "seconds": 3.372985993999464
+  },
+  {
+    "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArrayPredicateCoexistsWithUnknownReflection$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArrayPredicateCoexistsWithUnknownReflection.cover"
+    ],
+    "exit": 0,
+    "seconds": 5.347672411999156
+  },
+  {
+    "test": "TestCensusMarkerResultIsAssignable",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCensusMarkerResultIsAssignable$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestCensusMarkerResultIsAssignable.cover"
+    ],
+    "exit": 0,
+    "seconds": 5.098810801999207
+  },
+  {
+    "test": "TestOptionalFunctionValueRelation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestOptionalFunctionValueRelation$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestOptionalFunctionValueRelation.cover"
+    ],
+    "exit": 0,
+    "seconds": 3.346023927000715
+  },
+  {
+    "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestOverloadedShorthandFunctionValueStaysNotYet$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestOverloadedShorthandFunctionValueStaysNotYet.cover"
+    ],
+    "exit": 0,
+    "seconds": 2.9732801870013645
+  },
+  {
+    "test": "TestCensusOverloadBinderGuards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCensusOverloadBinderGuards$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestCensusOverloadBinderGuards.cover"
+    ],
+    "exit": 0,
+    "seconds": 2.853757680999479
+  },
+  {
+    "test": "TestArgumentsLengthReadNeighbors",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestArgumentsLengthReadNeighbors$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestArgumentsLengthReadNeighbors.cover"
+    ],
+    "exit": 0,
+    "seconds": 4.369495797000127
+  },
+  {
+    "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCensusMarkerZeroCallIsNotAssumedSafe$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestCensusMarkerZeroCallIsNotAssumedSafe.cover"
+    ],
+    "exit": 0,
+    "seconds": 3.4472104820015375
+  },
+  {
+    "test": "TestCensusOverloadRelation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestCensusOverloadRelation$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=review/test-defend/internal-lower-arguments_length/TestCensusOverloadRelation.cover"
+    ],
+    "exit": 0,
+    "seconds": 3.4671474219994707
+  }
+]

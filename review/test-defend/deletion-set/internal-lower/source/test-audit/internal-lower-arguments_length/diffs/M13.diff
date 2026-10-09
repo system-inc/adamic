@@ -1,0 +1,11 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -117,7 +117,7 @@
+ 			}
+ 			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+ 			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+-			if !l.checker.IsTypeAssignableTo(source, target) {
++			if l.checker.IsTypeAssignableTo(source, target) {
+ 				return &widening{source: source, target: target}
+ 			}
+ 			return l.widened(source, target, visited)

@@ -1,0 +1,11 @@
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -87,7 +87,7 @@
+ 		if value.Kind() != reflect.Float64 {
+ 			return nil, 0, false
+ 		}
+-		return ir.NumberConstant{Value: value.Float()}, ir.Number, true
++		return ir.NumberConstant{Value: value.Float() + 1}, ir.Number, true
+ 	case flags&checker.TypeFlagsBooleanLiteral != 0:
+ 		return ir.BooleanConstant{Value: l.checker.TypeToString(literal) == "true"}, ir.Boolean, true
+ 	}

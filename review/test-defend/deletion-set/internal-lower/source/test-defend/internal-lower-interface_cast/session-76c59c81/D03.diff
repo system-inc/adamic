@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..1fa669da 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1311,7 +1311,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+ 	if property, isProperty := closure.(ir.Property); isProperty {
+ 		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+ 		// fields (ir.Property's Method).
+-		property.Method = true
++		property.Method = l.checker.GetSymbolAtLocation(node.AsCallExpression().Expression).Flags&ast.SymbolFlagsMethod != 0
+ 		closure = property
+ 	}
+ 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)

@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -131,7 +131,7 @@
+ // Use the same nominal, invariant and strictly contravariant relation as class overrides.
+ func (l *lowering) censusRelated(from, to *checker.Type) bool {
+ 	from, to = l.concrete(from), l.concrete(to)
+-	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
++	return true
+ }
+ 
+ func (l *lowering) censusOverloads(implementation *ast.Node) error {

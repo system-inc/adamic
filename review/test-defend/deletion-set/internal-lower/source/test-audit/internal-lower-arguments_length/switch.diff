@@ -1,0 +1,200 @@
+diff --git a/internal/lower/arguments_length.go b/internal/lower/arguments_length.go
+index d8864f48..b9a94e78 100644
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -20,13 +20,13 @@ func (l *lowering) isArgumentsLength(node *ast.Node) bool {
+ 		return false
+ 	}
+ 	access := node.AsPropertyAccessExpression()
+-	return access.Name().Text() == "length" && access.QuestionDotToken == nil && l.builtinArguments(access.Expression)
++	return access.Name().Text() == auditString("M03", "length", "size") && access.QuestionDotToken == nil && l.builtinArguments(access.Expression)
+ }
+ 
+ func (l *lowering) argumentsRefusal(node *ast.Node) error {
+ 	for owner := node.Parent; owner != nil; owner = owner.Parent {
+ 		if ast.IsFunctionLike(owner) {
+-			if owner.Kind == ast.KindArrowFunction {
++			if auditBool("M02", owner.Kind == ast.KindArrowFunction) {
+ 				return &Refused{Where: l.program.Where(node), What: "arguments inside an arrow function", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
+ 			}
+ 			break
+@@ -41,7 +41,7 @@ func (l *lowering) argumentsRefusal(node *ast.Node) error {
+ 		for length.Parent != nil && length.Parent.Kind == ast.KindParenthesizedExpression {
+ 			length = length.Parent
+ 		}
+-		if !ast.IsAssignmentTarget(length) {
++		if auditBool("M01", !ast.IsAssignmentTarget(length)) {
+ 			return nil
+ 		}
+ 		return &Refused{Where: l.program.Where(node), What: "writing arguments.length", Fix: "keep the count read-only; write an explicit local number instead"}
+@@ -53,7 +53,7 @@ func (l *lowering) readArgumentsCount() ir.Expression {
+ 	if l.function == nil {
+ 		panic("lower: arguments.length outside a function")
+ 	}
+-	l.function.ReadsArguments = true
++	l.function.ReadsArguments = auditBool("M04", true)
+ 	if l.function.ArgumentsCount == 0 {
+ 		local := len(l.result.Locals)
+ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex})
+diff --git a/internal/lower/cast.go b/internal/lower/cast.go
+index f1e1ea79..f46914ff 100644
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -57,6 +57,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+ 		return nil, err
+ 	}
+ 	cast.CheckedFields = true
++	if auditMutant("M11") {
++		return value, nil
++	}
+ 	return cast, nil
+ }
+ 
+@@ -87,7 +90,7 @@ func (l *lowering) literalConstant(literal *checker.Type) (ir.Expression, ir.Typ
+ 		if value.Kind() != reflect.Float64 {
+ 			return nil, 0, false
+ 		}
+-		return ir.NumberConstant{Value: value.Float()}, ir.Number, true
++		return ir.NumberConstant{Value: auditNumber("M10", value.Float())}, ir.Number, true
+ 	case flags&checker.TypeFlagsBooleanLiteral != 0:
+ 		return ir.BooleanConstant{Value: l.checker.TypeToString(literal) == "true"}, ir.Boolean, true
+ 	}
+diff --git a/internal/lower/cast_proof.go b/internal/lower/cast_proof.go
+index 3b82dbe8..7eccf742 100644
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -184,7 +184,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+ 
+ 		return castProof{}, refused
+ 	}
+-	if !l.castUnionWrites(source) {
++	if auditBool("M09", !l.castUnionWrites(source)) {
+ 		return castProof{}, refused
+ 	}
+ 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
+@@ -251,7 +251,7 @@ func (l *lowering) castUnionWrites(source *checker.Type) bool {
+ // base is a nongeneric Animal is uncheckable; Box<number> and Box<string> have the same tag there.
+ func (l *lowering) classCastArguments(source, target *checker.Type) bool {
+ 	declaration := l.classNodeFor(target)
+-	if declaration == nil || len(declaration.TypeParameters()) == 0 {
++	if auditBool("M12", declaration == nil || len(declaration.TypeParameters()) == 0) {
+ 		return true
+ 	}
+ 	view := l.classView(l.checker.GetTypeAtLocation(declaration.Name()), l.classNodeFor(source))
+diff --git a/internal/lower/census_small.go b/internal/lower/census_small.go
+index fbc43f25..182ea26b 100644
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -131,6 +131,9 @@ func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
+ // Use the same nominal, invariant and strictly contravariant relation as class overrides.
+ func (l *lowering) censusRelated(from, to *checker.Type) bool {
+ 	from, to = l.concrete(from), l.concrete(to)
++	if auditMutant("M15") {
++		return true
++	}
+ 	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
+ }
+ 
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..1d02aa4b 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1227,7 +1227,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
+ 	}
+ 	if symbol != nil {
+ 		for _, declaration := range symbol.Declarations {
+-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
++			if declaration.Kind == ast.KindFunctionDeclaration && auditBool("M16", declaration.Body() == nil) && l.censusImplementation(declaration) != nil {
+ 				return nil, l.notYet(node, "an overloaded function as a value")
+ 			}
+ 		}
+@@ -1299,7 +1299,7 @@ func (l *lowering) optionalCall(call *ast.Node) error {
+ // callClosure lowers a call through a function value.
+ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+ 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+-	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
++	if len(signatures) == 1 && auditBool("M17", l.censusNeverRestSignature(signatures[0])) {
+ 		// never[] admits a zero-argument call in TypeScript. The erased slot does
+ 		// not retain a source signature to prove its required arguments or ABI.
+ 		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 877ae171..09cd35cf 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -117,7 +117,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
+ 			}
+ 			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+ 			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+-			if !l.checker.IsTypeAssignableTo(source, target) {
++			if auditBool("M13", !l.checker.IsTypeAssignableTo(source, target)) {
+ 				return &widening{source: source, target: target}
+ 			}
+ 			return l.widened(source, target, visited)
+@@ -125,7 +125,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
+ 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+ 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+ 			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
+-			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
++			if auditBool("M14", !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes)) {
+ 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
+ 				// a Dog can be seen as one taking any Animal, and handed a Cat.
+ 				return &widening{source: takes, target: given, parameter: true}
+diff --git a/internal/lower/library_array_predicate.go b/internal/lower/library_array_predicate.go
+index ea285dcc..e4760c3e 100644
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -23,7 +23,7 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
+ 		return nil, false, nil
+ 	}
+ 	argument := node.AsCallExpression().Arguments.Nodes[0]
+-	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
++	if auditBool("M06", !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0)) {
+ 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
+ 	}
+ 	value, err := l.expression(argument)
+@@ -48,7 +48,7 @@ func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *chec
+ 		}
+ 		if member.Flags()&checker.TypeFlagsUnknown != 0 {
+ 			if array {
+-				members = append(members, predicateReadonlyArray(l.checker, member, true))
++				members = append(members, predicateReadonlyArray(l.checker, member, auditBool("M07", true)))
+ 			} else {
+ 				members = append(members, member)
+ 			}
+@@ -78,7 +78,7 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
+ 		return true
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnknown != 0 {
+-		return true
++		return auditBool("M05", true)
+ 	}
+ 	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
+ 		return false
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..005862ec 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant("P01") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..e3776395 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -263,6 +263,9 @@ func (p *predicateFlowProof) check(node *ast.Node) bool {
+ 		return true
+ 	}
+ 	if p.l.isArrayPredicateCall(node) {
++		if auditMutant("M08") {
++			return false
++		}
+ 		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)
+ 	}
+ 	if node.Kind != ast.KindBinaryExpression {

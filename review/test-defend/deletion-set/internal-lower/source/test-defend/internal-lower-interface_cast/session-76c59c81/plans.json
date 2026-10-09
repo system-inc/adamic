@@ -1,0 +1,16 @@
+[
+  [
+    "D01",
+    "internal/lower/iteration_origin.go",
+    "if isCallee(where) { // Calls carry",
+    "if isCallee(where) && false { // Calls carry",
+    "Disable callee exemption while keeping destructured-field refusal"
+  ],
+  [
+    "D02",
+    "internal/lower/class_inheritance.go",
+    "if mismatch == nil {\n\t\treturn nil\n\t}\n\ttarget = mismatch",
+    "if mismatch == nil || node.Kind == ast.KindNewExpression {\n\t\treturn nil\n\t}\n\ttarget = mismatch",
+    "Skip nominal rejection for constructor-expression contextual assignments"
+  ]
+]

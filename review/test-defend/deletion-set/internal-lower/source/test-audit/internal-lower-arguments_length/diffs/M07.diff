@@ -1,0 +1,11 @@
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -48,7 +48,7 @@
+ 		}
+ 		if member.Flags()&checker.TypeFlagsUnknown != 0 {
+ 			if array {
+-				members = append(members, predicateReadonlyArray(l.checker, member, true))
++				members = append(members, predicateReadonlyArray(l.checker, member, false))
+ 			} else {
+ 				members = append(members, member)
+ 			}

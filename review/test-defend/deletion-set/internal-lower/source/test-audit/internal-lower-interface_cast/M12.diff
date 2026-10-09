@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration_consume.go
++++ b/internal/lower/iteration_consume.go
+@@ -164,7 +164,7 @@
+ 			}
+ 		} else {
+ 			valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
+-			if !l.includesUndefined(valueType) {
++			if l.includesUndefined(valueType) {
+ 				return nil, &Refused{Where: l.program.Where(binding), What: "an iterator binding whose type omits undefined on exhaustion", Fix: "give the binding a default, [value = fallback], or make the yielded type include undefined; TypeScript does not account for early iterator exhaustion"}
+ 			}
+ 			fallback = fit(ir.Undefined{}, plan.element)

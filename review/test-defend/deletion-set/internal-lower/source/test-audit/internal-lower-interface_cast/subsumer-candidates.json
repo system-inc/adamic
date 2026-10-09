@@ -1,0 +1,19 @@
+{
+  "chosen": {
+    "TestDefaultTaggedInterfaceNeedsNoFlag": "TestDefaultTaggedInterfaceAdmission",
+    "TestIteratorGapsAreExplicit": "TestIteratorViewsCannotEraseReceivers",
+    "TestIteratorViewsCannotHideReturn": "TestIteratorViewsCannotEraseReceivers",
+    "TestIteratorViewsCannotEraseReceivers": "TestIteratorViewsCannotHideReturn",
+    "TestLiteralMethodCapturesCannotMakeCycles": "TestInheritanceRefusesUnsoundOverrides",
+    "TestLiteralMethodViewsDoNotLoseThis": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "TestRepresentedMethodReplacementIsNotYet": "TestIteratorDescriptorReasons",
+    "TestDestructuredMethodsCannotLoadOwnSlots": "TestLiteralMethodViewsDoNotLoseThis",
+    "TestGenericIteratorViewsPreserveNativeArguments": "TestUncheckableCastsStayRefused",
+    "TestIteratorSymbolKeysAreNotStringKeys": "TestClassWrongOutputKeysRepair"
+  },
+  "additional_rows_to_time": [
+    "TestInheritanceRefusesUnsoundOverrides",
+    "TestUncheckableCastsStayRefused",
+    "TestClassWrongOutputKeysRepair"
+  ]
+}

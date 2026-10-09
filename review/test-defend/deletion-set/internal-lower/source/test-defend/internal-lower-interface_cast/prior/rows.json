@@ -1,0 +1,17 @@
+[
+  "TestDefaultTaggedInterfaceAdmission",
+  "TestDefaultTaggedInterfaceNeedsNoFlag",
+  "TestIteratorGapsAreExplicit",
+  "TestIteratorViewsCannotHideReturn",
+  "TestIteratorViewsCannotEraseReceivers",
+  "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+  "TestGeneratorsAreRefusedEvenWithoutYield",
+  "TestLiteralMethodCapturesCannotMakeCycles",
+  "TestLiteralMethodViewsDoNotLoseThis",
+  "TestIteratorDescriptorReasons",
+  "TestRepresentedMethodReplacementIsNotYet",
+  "TestDestructuredMethodsCannotLoadOwnSlots",
+  "TestGenericIteratorViewsPreserveNativeArguments",
+  "TestIteratorMapperIndexHasNumberRepresentation",
+  "TestIteratorSymbolKeysAreNotStringKeys"
+]

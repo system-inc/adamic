@@ -1,0 +1,272 @@
+[
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "run": 1,
+    "wall": 2.6971698750000996,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "run": 2,
+    "wall": 2.5211633389999406,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "run": 3,
+    "wall": 2.5959337869999217,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "run": 1,
+    "wall": 2.283311392999849,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "run": 2,
+    "wall": 2.5283547940000517,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "run": 3,
+    "wall": 2.508547434999855,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "run": 1,
+    "wall": 2.4859104160000243,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "run": 2,
+    "wall": 2.9959718540001177,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "run": 3,
+    "wall": 3.0800370590000057,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "run": 1,
+    "wall": 2.3672420830000647,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "run": 2,
+    "wall": 2.6758499879999817,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "run": 3,
+    "wall": 2.561811422000119,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "run": 1,
+    "wall": 2.4609005350000643,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "run": 2,
+    "wall": 2.751643101999889,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "run": 3,
+    "wall": 2.3130131969999184,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "run": 1,
+    "wall": 2.569372053000052,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "run": 2,
+    "wall": 2.410290808000127,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "run": 3,
+    "wall": 2.3461339109999244,
+    "exit": 0
+  },
+  {
+    "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+    "run": 1,
+    "wall": 2.6280380999999124,
+    "exit": 0
+  },
+  {
+    "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+    "run": 2,
+    "wall": 2.8497058280001966,
+    "exit": 0
+  },
+  {
+    "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+    "run": 3,
+    "wall": 2.4250097080000614,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 1,
+    "wall": 2.4781433239998023,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 2,
+    "wall": 2.6543384309998146,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 3,
+    "wall": 2.327247608000107,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "run": 1,
+    "wall": 2.4739664090000133,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "run": 2,
+    "wall": 2.767678023999906,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "run": 3,
+    "wall": 2.382178081999882,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "run": 1,
+    "wall": 2.8739974110001185,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "run": 2,
+    "wall": 3.033872045999942,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "run": 3,
+    "wall": 2.838319373000104,
+    "exit": 0
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "run": 1,
+    "wall": 2.2368457499999295,
+    "exit": 0
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "run": 2,
+    "wall": 2.210739088000082,
+    "exit": 0
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "run": 3,
+    "wall": 2.6906660679999277,
+    "exit": 0
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "run": 1,
+    "wall": 2.3797189590000016,
+    "exit": 0
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "run": 2,
+    "wall": 2.3460284769998907,
+    "exit": 0
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "run": 3,
+    "wall": 2.493053768000209,
+    "exit": 0
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "run": 1,
+    "wall": 2.7016500470001574,
+    "exit": 0
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "run": 2,
+    "wall": 2.2220208890000777,
+    "exit": 0
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "run": 3,
+    "wall": 2.299348185999861,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorMapperIndexHasNumberRepresentation",
+    "run": 1,
+    "wall": 2.1589038109998455,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorMapperIndexHasNumberRepresentation",
+    "run": 2,
+    "wall": 2.2333370830001513,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorMapperIndexHasNumberRepresentation",
+    "run": 3,
+    "wall": 2.379432149000195,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "run": 1,
+    "wall": 2.6237648180001543,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "run": 2,
+    "wall": 2.3609404930000437,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "run": 3,
+    "wall": 2.293099405000021,
+    "exit": 0
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDestructuredMethodsCannotLoadOwnSlots"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D03 internal/lower/expression.go:1314",
+    "attempts": [
+      {
+        "file_line": "internal/lower/iteration_origin.go:80",
+        "change": "Disable callee exemption while keeping destructured-field refusal",
+        "rows_failed": [
+          "TestLiteralMethodSignatureViewsDoNotLoseThis",
+          "TestLiteralMethodViewsDoNotLoseThis"
+        ],
+        "mutant": "D01"
+      },
+      {
+        "file_line": "internal/lower/expression.go:1314",
+        "change": "Change receiver dispatch option to require a method-signature symbol",
+        "rows_failed": [
+          "TestLiteralMethodViewsDoNotLoseThis"
+        ],
+        "mutant": "D03"
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-interface-cast/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D03.log 2>&1; iteration_test.go:97: JavaScript backend stdout = \"\", source Node = \"1\\n\""
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestUncheckableCastsStayRefused"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D04 internal/lower/class.go:791",
+    "attempts": [
+      {
+        "file_line": "internal/lower/class_inheritance.go:572",
+        "change": "Skip nominal rejection for constructor-expression contextual assignments",
+        "rows_failed": [
+          "TestGenericIteratorViewsPreserveNativeArguments",
+          "TestInheritanceRefusesFalseNominalViews"
+        ],
+        "mutant": "D02"
+      },
+      {
+        "file_line": "internal/lower/class.go:791",
+        "change": "Loosen generic-argument identity for union targets",
+        "rows_failed": [
+          "TestGenericIteratorViewsPreserveNativeArguments"
+        ],
+        "mutant": "D04"
+      },
+      {
+        "file_line": "internal/lower/class_inheritance.go:547",
+        "change": "Return early for iterable constructor assignments before nominal-view verification",
+        "rows_failed": [
+          "TestGenericIteratorViewsPreserveNativeArguments"
+        ],
+        "mutant": "D05"
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-interface-cast/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D04.log 2>&1; iteration_test.go:182: got /tmp/adamic-gate/TestGenericIteratorViewsPreserveNativeArguments4278880975/001/main.a:2:79: stage 0 can't lower a generic iterable view without proven native type arguments yet, want the earlier nominal generic-view refusal"
+  }
+]

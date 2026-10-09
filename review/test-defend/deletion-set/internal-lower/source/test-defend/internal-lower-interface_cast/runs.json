@@ -1,0 +1,254 @@
+[
+  {
+    "id": "D01-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.8971867739965091,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D02-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.7500123560021166,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D03-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.9432379560021218,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D04-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.8029571559964097,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D05-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.7592806790053146,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D06-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.7769368909939658,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D07-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.7447094029994332,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "switch-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.781454099000257,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 82.41651406799792,
+    "exit": 1,
+    "selector": "D01",
+    "build_cache": "/workspace/defend-lower-cache/D01"
+  },
+  {
+    "id": "D02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 70.73535792299663,
+    "exit": 1,
+    "selector": "D02",
+    "build_cache": "/workspace/defend-lower-cache/D02"
+  },
+  {
+    "id": "D03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 65.90699685500294,
+    "exit": 1,
+    "selector": "D03",
+    "build_cache": "/workspace/defend-lower-cache/D03"
+  },
+  {
+    "id": "D04",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 73.3820180640032,
+    "exit": 1,
+    "selector": "D04",
+    "build_cache": "/workspace/defend-lower-cache/D04"
+  },
+  {
+    "id": "D05",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 67.11002874300175,
+    "exit": 1,
+    "selector": "D05",
+    "build_cache": "/workspace/defend-lower-cache/D05"
+  },
+  {
+    "id": "D06",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 65.62831848300266,
+    "exit": 1,
+    "selector": "D06",
+    "build_cache": "/workspace/defend-lower-cache/D06"
+  },
+  {
+    "id": "D07",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 73.67094019700016,
+    "exit": 0,
+    "selector": "D07",
+    "build_cache": "/workspace/defend-lower-cache/D07"
+  }
+]

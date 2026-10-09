@@ -1,0 +1,395 @@
+[
+  {
+    "mutant": "M03",
+    "file_line": "internal/lower/arguments_length.go:23",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M03.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestArgumentsLengthReadKeepsReaderFact",
+      "TestArgumentsLengthReadNeighbors",
+      "TestMixedTupleSpreadIsNotYet"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 43.265100680000614,
+        "log": "01-M03-0.log",
+        "rows_failed": [
+          "TestArgumentsLengthReadKeepsReaderFact",
+          "TestArgumentsLengthReadNeighbors",
+          "TestMixedTupleSpreadIsNotYet"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "M01",
+    "file_line": "internal/lower/arguments_length.go:44",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M01.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestArgumentsLengthReadKeepsReaderFact",
+      "TestArgumentsLengthReadNeighbors",
+      "TestMixedTupleSpreadIsNotYet"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 42.95044854399748,
+        "log": "02-M01-0.log",
+        "rows_failed": [
+          "TestArgumentsLengthReadKeepsReaderFact",
+          "TestArgumentsLengthReadNeighbors",
+          "TestMixedTupleSpreadIsNotYet"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "M02",
+    "file_line": "internal/lower/arguments_length.go:29",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M02.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestArgumentsLengthReadKeepsReaderFact",
+      "TestArgumentsLengthReadNeighbors",
+      "TestMixedTupleSpreadIsNotYet"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 44.62659627300309,
+        "log": "03-M02-0.log",
+        "rows_failed": [
+          "TestArgumentsLengthReadKeepsReaderFact",
+          "TestArgumentsLengthReadNeighbors",
+          "TestMixedTupleSpreadIsNotYet"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "M07",
+    "file_line": "internal/lower/library_array_predicate.go:51",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M07.diff",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 46.338776183001755,
+        "log": "04-M07-0.log",
+        "rows_failed": [
+          "TestArrayPredicateCoexistsWithUnknownReflection",
+          "TestArrayPredicatePreservesDeclaredElementContract"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "M01",
+    "file_line": "internal/lower/interface_cast.go:69",
+    "branch": "test-audit/internal-lower-interface_cast",
+    "diff": "source/test-audit/internal-lower-interface_cast/M01.diff",
+    "candidates_failed": [
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "other_rows_failed": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestPredicateBodyProof",
+      "TestPredicateOverloadRuntime",
+      "TestViewObjectContractsAreAvailableToEraser"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestPredicateBodyProof",
+      "TestPredicateOverloadRuntime",
+      "TestViewObjectContractsAreAvailableToEraser"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 44.61470725300023,
+        "log": "05-M01-0.log",
+        "rows_failed": [
+          "TestDefaultTaggedInterfaceAdmission",
+          "TestPredicateBodyProof",
+          "TestPredicateOverloadRuntime",
+          "TestViewObjectContractsAreAvailableToEraser"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "D02",
+    "file_line": "internal/lower/arguments_length.go:47",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D02.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 0,
+        "wall_seconds": 44.78671354099788,
+        "log": "06-D02-0.log",
+        "rows_failed": [],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "D07",
+    "file_line": "internal/lower/library_array_predicate.go:51",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D07.diff",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 1,
+        "wall_seconds": 37.16240911099885,
+        "log": "07-D07-0.log",
+        "rows_failed": [
+          "TestArrayPredicateCoexistsWithUnknownReflection",
+          "TestArrayPredicatePreservesDeclaredElementContract"
+        ],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "D04",
+    "file_line": "internal/lower/arguments_length.go:49",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D04.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 0,
+        "wall_seconds": 43.35197445799713,
+        "log": "08-D04-0.log",
+        "rows_failed": [],
+        "panic": false
+      }
+    ],
+    "complete": true
+  },
+  {
+    "mutant": "D03",
+    "file_line": "internal/lower/arguments_length.go:30",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D03.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/lower/",
+          "-skip",
+          "^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)"
+        ],
+        "exit": 0,
+        "wall_seconds": 44.39062155099964,
+        "log": "09-D03-0.log",
+        "rows_failed": [],
+        "panic": false
+      }
+    ],
+    "complete": true
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -327,7 +327,7 @@
+ 	}
+ 	element := l.checker.GetElementTypeOfArrayType(arrayType)
+ 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
+-		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
++		return ir.Union, nil
+ 	}
+ 	valueType, isKnown := l.kept(element)
+ 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -23,7 +23,7 @@
+ 		return nil, false, nil
+ 	}
+ 	argument := node.AsCallExpression().Arguments.Nodes[0]
+-	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
++	if l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) || l.exactObject(argument, 0) {
+ 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
+ 	}
+ 	value, err := l.expression(argument)

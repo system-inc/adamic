@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..ffde0fa1 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -788,7 +788,7 @@ func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+ 		return false
+ 	}
+ 	for index := range from {
+-		if !identicalTypes(l.checker, from[index], to[index]) {
++		if !identicalTypes(l.checker, from[index], to[index]) && to[index].Flags()&checker.TypeFlagsUnion == 0 {
+ 			return false
+ 		}
+ 	}

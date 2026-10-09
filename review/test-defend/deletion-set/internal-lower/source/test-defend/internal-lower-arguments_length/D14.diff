@@ -1,0 +1,11 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -196,7 +196,7 @@
+ 				if len(servedTypes) <= len(declaredTypes) {
+ 					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
+ 				}
+-				return &Refused{Where: l.program.Where(where), What: label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
++				return &Refused{Where: l.program.Where(where), What: label + " " + name + " cannot satisfy overload parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
+ 			}
+ 		}
+ 	}

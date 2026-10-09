@@ -1,0 +1,64 @@
+[
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestDefaultTaggedInterfaceAdmission",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "F01",
+        "file_line": "internal/lower/interface_cast.go:69",
+        "change": "flip condition: (field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field)) -> (field.Flags&ast.SymbolFlagsOptional == 0 || access.QuestionDotToken != nil || accessorSymbol(field))",
+        "rows_failed": [
+          "TestViewObjectContractsAreAvailableToEraser",
+          "TestDefaultTaggedInterfaceNeedsNoFlag",
+          "TestPredicateOverloadRuntime",
+          "TestPredicateBodyProof",
+          "TestDefaultTaggedInterfaceAdmission"
+        ]
+      },
+      {
+        "mutant": "F02",
+        "file_line": "internal/lower/interface_cast.go:30",
+        "change": "off-by-one implicit bound: Allowed: []ir.Expression{allowed} -> Allowed: []ir.Expression{allowed}[:0]",
+        "rows_failed": [
+          "TestDefaultTaggedInterfaceNeedsNoFlag",
+          "TestDefaultTaggedInterfaceAdmission"
+        ]
+      },
+      {
+        "mutant": "F03",
+        "file_line": "internal/lower/interface_cast.go:30",
+        "change": "change constant: Field: field, FieldType: -> Field: \"pos\", FieldType:",
+        "rows_failed": [
+          "TestDefaultTaggedInterfaceNeedsNoFlag",
+          "TestDefaultTaggedInterfaceAdmission"
+        ]
+      }
+    ],
+    "evidence": "F01: interface_cast_test.go:55: Lower refused acceptance row: /workspace/defend-lower-round2-tmp/TestDefaultTaggedInterfaceNeedsNoFlag609985631/001/main.a:4:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet; F02: interface_cast_test.go:55: JavaScript backend stdout = \"\", source Node = \"ok\\n\"; F03: interface_cast_test.go:55: JavaScript backend stdout = \"\", source Node = \"ok\\n\"",
+    "command": "ADAMIC_MUTANT=<id> ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-round2-cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1"
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestIteratorViewsCannotEraseReceivers",
+    "defense": "defended",
+    "unique_mutant": "G03 internal/lower/object.go:237",
+    "attempts": [
+      {
+        "mutant": "G03",
+        "file_line": "internal/lower/object.go:237",
+        "change": "drop statement: return nil, l.notYet(node, \"a spread whose element representation differs from its destination\") -> (deleted)",
+        "rows_failed": [
+          "TestIteratorGapsAreExplicit"
+        ]
+      }
+    ],
+    "evidence": "G03: iteration_test.go:30: got <nil>, want an explicit iterator NotYet",
+    "command": "ADAMIC_MUTANT=<id> ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-round2-cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1"
+  }
+]

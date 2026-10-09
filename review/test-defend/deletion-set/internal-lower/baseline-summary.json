@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-lower/cache/baseline go test -json -count=1 -timeout 30m ./internal/lower/ -skip '^(TestArgumentsLengthRefusalFixtures|TestArgumentsLengthRefusals|TestArrayPredicateCannotInventAnElementContract|TestDefaultTaggedInterfaceNeedsNoFlag)($|_|/)'",
+  "binary_seconds": 36.763,
+  "failed": [],
+  "main": "d29d80ceb5d5d42d9b0ffb7b528a57a2272c76f4",
+  "disk_free_initial": {
+    "tmp": "3.0 GB",
+    "workspace": "6.3 GB"
+  },
+  "removed_previous_scratch": "/tmp/defend-views-flows",
+  "submodule_pins": {
+    "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+    "cohere/TypeScript": "d92d9bfee114c80be2c375d72edae966176e3a4f"
+  }
+}

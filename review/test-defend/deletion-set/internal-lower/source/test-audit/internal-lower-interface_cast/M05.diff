@@ -1,0 +1,11 @@
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -147,7 +147,7 @@
+ 		case ast.KindMethodDeclaration:
+ 			generator = node.AsMethodDeclaration().AsteriskToken != nil
+ 		}
+-		if generator {
++		if generator && false {
+ 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+ 			return true
+ 		}

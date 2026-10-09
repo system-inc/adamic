@@ -1,0 +1,11 @@
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -75,7 +75,7 @@
+ 				return false
+ 			}
+ 		}
+-		return true
++		return false
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnknown != 0 {
+ 		return true

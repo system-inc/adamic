@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration_consume.go
++++ b/internal/lower/iteration_consume.go
+@@ -44,7 +44,7 @@
+ 			}
+ 		}
+ 		arguments = append(arguments, callback)
+-	} else if element != plan.element {
++	} else if false && element != plan.element {
+ 		return nil, l.notYet(where, "a collected iterator value with a different element representation")
+ 	}
+ 	function := len(l.result.Functions)

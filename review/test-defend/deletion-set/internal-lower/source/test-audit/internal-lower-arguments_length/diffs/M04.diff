@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -53,7 +53,7 @@
+ 	if l.function == nil {
+ 		panic("lower: arguments.length outside a function")
+ 	}
+-	l.function.ReadsArguments = true
++	l.function.ReadsArguments = false
+ 	if l.function.ArgumentsCount == 0 {
+ 		local := len(l.result.Locals)
+ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex})

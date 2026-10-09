@@ -1,0 +1,133 @@
+[
+  {
+    "mutant": "M03",
+    "file_line": "internal/lower/arguments_length.go:20",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M03.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M01",
+    "file_line": "internal/lower/arguments_length.go:41",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M01.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M02",
+    "file_line": "internal/lower/arguments_length.go:26",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M02.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [
+      "TestArgumentsLengthReadNeighbors"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M07",
+    "file_line": "internal/lower/library_array_predicate.go:48",
+    "branch": "test-audit/internal-lower-arguments_length",
+    "diff": "source/test-audit/internal-lower-arguments_length/diffs/M07.diff",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M01",
+    "file_line": "internal/lower/interface_cast.go:66",
+    "branch": "test-audit/internal-lower-interface_cast",
+    "diff": "source/test-audit/internal-lower-interface_cast/M01.diff",
+    "candidates_failed": [
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "other_rows_failed": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestPredicateBodyProof",
+      "TestPredicateOverloadRuntime",
+      "TestViewObjectContractsAreAvailableToEraser"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D02",
+    "file_line": "internal/lower/arguments_length.go:44",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D02.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D07",
+    "file_line": "internal/lower/library_array_predicate.go:48",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D07.diff",
+    "candidates_failed": [
+      "TestArrayPredicateCannotInventAnElementContract"
+    ],
+    "other_rows_failed": [
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D04",
+    "file_line": "internal/lower/arguments_length.go:46",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D04.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D03",
+    "file_line": "internal/lower/arguments_length.go:27",
+    "branch": "test-defend/internal-lower-arguments_length",
+    "diff": "source/test-defend/internal-lower-arguments_length/D03.diff",
+    "candidates_failed": [
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals"
+    ],
+    "other_rows_failed": [],
+    "stale": false,
+    "apply_check": ""
+  }
+]

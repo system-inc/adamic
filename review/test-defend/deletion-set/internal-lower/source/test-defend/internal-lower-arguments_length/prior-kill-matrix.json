@@ -1,0 +1,118 @@
+{
+  "M01": [
+    "TestArgumentsLengthReadNeighbors",
+    "TestArgumentsLengthRefusalFixtures",
+    "TestArgumentsLengthRefusals"
+  ],
+  "M02": [
+    "TestArgumentsLengthReadNeighbors",
+    "TestArgumentsLengthRefusalFixtures",
+    "TestArgumentsLengthRefusals"
+  ],
+  "M03": [
+    "TestArgumentsLengthReadNeighbors",
+    "TestArgumentsLengthRefusalFixtures",
+    "TestArgumentsLengthRefusals"
+  ],
+  "M04": [],
+  "M05": [
+    "TestArrayPredicateCoexistsWithUnknownReflection",
+    "TestArrayPredicatePreservesDeclaredElementContract"
+  ],
+  "M06": [
+    "TestArrayPredicateCoexistsWithUnknownReflection",
+    "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "TestArrayPredicatePreservesDeclaredElementContract"
+  ],
+  "M07": [
+    "TestArrayPredicateCannotInventAnElementContract",
+    "TestArrayPredicateCoexistsWithUnknownReflection",
+    "TestArrayPredicatePreservesDeclaredElementContract"
+  ],
+  "M08": [
+    "TestArrayPredicateCoexistsWithUnknownReflection",
+    "TestArrayPredicatePreservesDeclaredElementContract"
+  ],
+  "M09": [
+    "TestCheckedCastProofAndElision",
+    "TestUncheckableCastsStayRefused"
+  ],
+  "M10": [
+    "TestPredicateOverloadRuntime"
+  ],
+  "M11": [
+    "TestCheckedCastProofAndElision"
+  ],
+  "M12": [
+    "TestUncheckableCastsStayRefused"
+  ],
+  "M13": [
+    "TestCensusMarkerResultIsAssignable",
+    "TestCensusMarkerZeroCallIsNotAssumedSafe"
+  ],
+  "M14": [
+    "TestAMethodReadAsAValueIsRefused",
+    "TestAMutableLocationSeenWiderIsRefused",
+    "TestAViewThatCantWriteIsNotRefused",
+    "TestArgumentsLengthReadNeighbors",
+    "TestCensusOverloadRelation",
+    "TestConstructorCacheOneArgumentRemainsNotYet",
+    "TestEnumSlotViews",
+    "TestFunctionValueUnionViewsStayNotYet",
+    "TestInheritanceAllowsSoundOverrides",
+    "TestInheritanceNativeSignatureLimits",
+    "TestInheritanceNativeSignatureNeighbors",
+    "TestIteratorMapperIndexHasNumberRepresentation",
+    "TestLibraryMapSetGapsStayRefused",
+    "TestLibraryMethodValueBoundaries",
+    "TestLibraryMethodValues",
+    "TestObjectUnprovenShapesStayNotYet",
+    "TestOptionalFunctionValueRelation",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback",
+    "TestPredicateOverloadRuntime",
+    "TestProvenRelationsRefuse",
+    "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "TestWhatZeroOneRefusesIsRefusedWithAFix"
+  ],
+  "M15": [
+    "TestCensusOverloadBinderGuards",
+    "TestCensusOverloadRelation",
+    "TestCensusOverloadReturnProof"
+  ],
+  "M16": [
+    "TestArgumentsLengthReadNeighbors",
+    "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "TestEnumInitializationReach",
+    "TestParameterPropertyCallbackReceiver",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadRuntime"
+  ],
+  "M17": [
+    "TestArgumentsLengthReadNeighbors",
+    "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "TestCensusOverloadReturnProof",
+    "TestCensusPredicateMarkerCallStaysNotYet",
+    "TestClosedFrameInputRejectsMutation",
+    "TestEnumInitializationReach",
+    "TestLibraryMethodValues",
+    "TestLiteralMethodViewsDoNotLoseThis",
+    "TestNamespaceAmbientHostInitialization",
+    "TestNestedCallbackCycleIsRefused",
+    "TestNestedCapturedParametersAreOwned",
+    "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "TestNestedEnvironmentHasOneAllocationSite",
+    "TestNestedFunctionCycleIsRefused",
+    "TestNestedRestIsSupported",
+    "TestOptionalIndexingMapShapeRefused",
+    "TestParameterPropertiesSoundness",
+    "TestParameterPropertyCallbackReceiver",
+    "TestParserFactoryBindingHoisting",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback",
+    "TestPredicateOverloadRuntime",
+    "TestReadinessElisionRequiresDominatingAssignment",
+    "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "TestWhatZeroOneRefusesIsRefusedWithAFix"
+  ]
+}

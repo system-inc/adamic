@@ -1,0 +1,13 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -305,9 +305,7 @@
+ 		}
+ 		return node.ForEachChild(visit)
+ 	}
+-	for _, module := range modules {
+-		module.AsNode().ForEachChild(visit)
+-	}
++	
+ 	if hazard != nil {
+ 		return nil, hazard
+ 	}
