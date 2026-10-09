@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// Prepare products once before the parallel comparison leaf.
+// Not parallel: initializes shared emittedMismatchProducts before the comparison shard resumes.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
@@ -24,6 +24,7 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 }
 
 func TestDotARename(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -73,6 +74,7 @@ func serializationPort(t *testing.T) string {
 }
 
 func TestCompleteSuggestionSerialization(t *testing.T) {
+	t.Parallel()
 	directory := serializationPort(t)
 	source := filepath.Join(t.TempDir(), "suggestions.ts")
 	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
@@ -110,6 +112,7 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
+	t.Parallel()
 	directory := serializationPort(t)
 	for _, change := range []struct{ name, from, to string }{
 		{"rule.a", "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"},
@@ -140,6 +143,7 @@ func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 }
 
 func TestWitnessScriptKind(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
 	if err := os.Rename(witness, strings.TrimSuffix(witness, ".ts.txt")+".tsx.txt"); err != nil {
