@@ -76,6 +76,7 @@ func printerPreflightInputs(t *testing.T) (script, library, embedded string) {
 }
 
 func printerUpstreamUnit(t *testing.T, unit int) {
+	setupStart := time.Now()
 	t.Helper()
 	script, library, embedded := printerPreflightInputs(t)
 	oracle := printerOracle(t)
@@ -95,6 +96,7 @@ func printerUpstreamUnit(t *testing.T, unit int) {
 	}
 	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
+		t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 		return
 	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
@@ -106,7 +108,9 @@ func printerUpstreamUnit(t *testing.T, unit int) {
 			continue
 		}
 		{
+			t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 			start := time.Now()
+			defer func() { t.Logf("own work wall %.3fs", time.Since(start).Seconds()) }()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
 					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())

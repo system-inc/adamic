@@ -2,7 +2,6 @@ package printer
 
 import (
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
@@ -19,7 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Inputs describe non-Go read-only shared products; Go builds stay separate.
+// Inputs describe non-Go read-only shared products; the Go oracle keys its own (printerOracle).
 type printerBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -87,38 +86,6 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 	}
 	sort.Strings(files)
 	return files
-}
-
-func printerOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, _ := filepath.Abs("testdata/cohere_side_test.go")
-	generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
-	cohere := filepath.Join(root, "cohere")
-	dir := t.TempDir()
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-		cohere + "/internal/format/graphql/adamic_printer_test.go":   side,
-		cohere + "/internal/format/graphql/adamic_generator_test.go": generator,
-	}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := dir + "/overlay.json"
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	start := time.Now()
-	// No hand-listed build inputs: overlay Go builds remain private.
-	command := bounded(t, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/graphql")
-	command.Dir = cohere
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go GraphQL printer oracle: %v\n%s", err, output)
-	}
-	t.Logf("build Go GraphQL printer oracle cold wall %.3fs (overlay, uncached)", time.Since(start).Seconds())
-	return dir + "/oracle"
 }
 
 func printerLoweredProduct(t *testing.T, path string) string {
