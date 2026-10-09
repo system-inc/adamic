@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T18:21:20.00011471Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T18:21:20.081107452Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00"}
+{"Time":"2026-10-09T18:21:20.081293468Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00","Output":"=== RUN   TestRecordMutantsUnit00\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.081348148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00","Output":"=== PAUSE TestRecordMutantsUnit00\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.081350725Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00"}
+{"Time":"2026-10-09T18:21:20.081353293Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00"}
+{"Time":"2026-10-09T18:21:20.081355128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00","Output":"=== CONT  TestRecordMutantsUnit00\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.081357644Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order"}
+{"Time":"2026-10-09T18:21:20.081362889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order","Output":"=== RUN   TestRecordMutantsUnit00/indices-in-insertion-order\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:45.495664308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order","Output":"    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0\n"}
+{"Time":"2026-10-09T18:21:45.760128796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order","Output":"    record_test.go:244: caught by Node\n"}
+{"Time":"2026-10-09T18:21:45.763717577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order","Output":"--- PASS: TestRecordMutantsUnit00/indices-in-insertion-order (25.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:45.763747086Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00/indices-in-insertion-order","Elapsed":25.68}
+{"Time":"2026-10-09T18:21:45.76375868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00","Output":"--- PASS: TestRecordMutantsUnit00 (25.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:45.763761534Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit00","Elapsed":25.68}
+{"Time":"2026-10-09T18:21:45.763764039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:45.794315341Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":25.794}

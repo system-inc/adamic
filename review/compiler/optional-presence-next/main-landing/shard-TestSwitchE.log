@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T18:21:50.954444489Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:50.971227318Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971322961Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough","Output":"=== RUN   TestSwitchEmptyElseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971359791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough","Output":"=== PAUSE TestSwitchEmptyElseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971363264Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971367116Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971369896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough","Output":"=== RUN   TestSwitchEmptyCaseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971373431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough","Output":"=== PAUSE TestSwitchEmptyCaseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971376074Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971378964Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971381548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough","Output":"=== RUN   TestSwitchEmptyBlockFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971385093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough","Output":"=== PAUSE TestSwitchEmptyBlockFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971387721Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971390715Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971393235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough","Output":"=== CONT  TestSwitchEmptyElseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.971777387Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough"}
+{"Time":"2026-10-09T18:21:50.971789732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough","Output":"=== CONT  TestSwitchEmptyBlockFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:50.978017934Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough"}
+{"Time":"2026-10-09T18:21:50.978039873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough","Output":"=== CONT  TestSwitchEmptyCaseFallsThrough\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:51.678319976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough","Output":"--- PASS: TestSwitchEmptyElseFallsThrough (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:51.691109445Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyElseFallsThrough","Elapsed":0.71}
+{"Time":"2026-10-09T18:21:51.691163303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough","Output":"--- PASS: TestSwitchEmptyCaseFallsThrough (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:51.704494448Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyCaseFallsThrough","Elapsed":0.71}
+{"Time":"2026-10-09T18:21:51.704520904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough","Output":"--- PASS: TestSwitchEmptyBlockFallsThrough (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:51.704528289Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSwitchEmptyBlockFallsThrough","Elapsed":0.73}
+{"Time":"2026-10-09T18:21:51.70453116Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:51.714587518Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.76}

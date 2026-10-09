@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:21.40511223Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:21.441325901Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T18:21:21.44138841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== RUN   TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.44141844Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== PAUSE TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.441422653Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T18:21:21.441439853Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T18:21:21.441442832Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== CONT  TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.551098385Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"--- PASS: TestParserFactoryCompletionEarlyReturn (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.551141363Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Elapsed":0.11}
+{"Time":"2026-10-09T18:21:21.551155961Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.551824172Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.147}

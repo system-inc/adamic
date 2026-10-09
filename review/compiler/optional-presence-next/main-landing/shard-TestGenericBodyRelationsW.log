@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T18:19:54.355630474Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:54.397108534Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness"}
+{"Time":"2026-10-09T18:19:54.397270708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Output":"=== RUN   TestGenericBodyRelationsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:54.39731471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Output":"=== PAUSE TestGenericBodyRelationsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:54.397319324Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness"}
+{"Time":"2026-10-09T18:19:54.397322961Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness"}
+{"Time":"2026-10-09T18:19:54.397325529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Output":"=== CONT  TestGenericBodyRelationsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:54.501381226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Output":"    generic_body_relations_test.go:96: internal compiler error: generic body initializer witness at /workspace/scratch/eep-temp/TestGenericBodyRelationsWitness1685677320/001/witness.a:1:78: resolved source 2 is not assignable to slot 1\n"}
+{"Time":"2026-10-09T18:19:54.501515803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Output":"--- PASS: TestGenericBodyRelationsWitness (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:54.501547818Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericBodyRelationsWitness","Elapsed":0.1}
+{"Time":"2026-10-09T18:19:54.501566186Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:54.509640108Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.154}

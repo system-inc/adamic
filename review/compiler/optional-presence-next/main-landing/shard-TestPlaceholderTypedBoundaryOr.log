@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:24.240701434Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:24.28267562Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField"}
+{"Time":"2026-10-09T18:21:24.282753802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField","Output":"=== RUN   TestPlaceholderTypedBoundaryOrdinaryField\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.282868806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField","Output":"=== PAUSE TestPlaceholderTypedBoundaryOrdinaryField\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.28287418Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField"}
+{"Time":"2026-10-09T18:21:24.282933605Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField"}
+{"Time":"2026-10-09T18:21:24.282937352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField","Output":"=== CONT  TestPlaceholderTypedBoundaryOrdinaryField\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.444346543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField","Output":"--- PASS: TestPlaceholderTypedBoundaryOrdinaryField (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.444404107Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryOrdinaryField","Elapsed":0.16}
+{"Time":"2026-10-09T18:21:24.444419344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.446972656Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.206}

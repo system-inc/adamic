@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:03.039581177Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:03.088382032Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness"}
+{"Time":"2026-10-09T18:19:03.088452526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness","Output":"=== RUN   TestClassFeaturesStaticSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:03.088497731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness","Output":"=== PAUSE TestClassFeaturesStaticSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:03.08850104Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness"}
+{"Time":"2026-10-09T18:19:03.088504866Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness"}
+{"Time":"2026-10-09T18:19:03.088507879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness","Output":"=== CONT  TestClassFeaturesStaticSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:04.966984688Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness","Output":"--- PASS: TestClassFeaturesStaticSoundness (1.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:04.967058166Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticSoundness","Elapsed":1.87}
+{"Time":"2026-10-09T18:19:04.967087679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:04.981271368Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.942}

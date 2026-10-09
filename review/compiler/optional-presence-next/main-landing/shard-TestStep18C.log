@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:43.981192328Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:44.049182727Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract"}
+{"Time":"2026-10-09T18:21:44.049279665Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract","Output":"=== RUN   TestStep18CallableReceiverContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.049319775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract","Output":"=== PAUSE TestStep18CallableReceiverContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.04932334Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract"}
+{"Time":"2026-10-09T18:21:44.049329169Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract"}
+{"Time":"2026-10-09T18:21:44.049331787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract","Output":"=== CONT  TestStep18CallableReceiverContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.151638536Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract","Output":"--- PASS: TestStep18CallableReceiverContract (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.151742364Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18CallableReceiverContract","Elapsed":0.1}
+{"Time":"2026-10-09T18:21:44.152229788Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.157351557Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.176}

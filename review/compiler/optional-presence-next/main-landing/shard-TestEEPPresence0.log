@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:15.282641261Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:15.347659602Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0"}
+{"Time":"2026-10-09T18:19:15.347732366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0","Output":"=== RUN   TestEEPPresence0\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:15.347782298Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0","Output":"=== PAUSE TestEEPPresence0\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:15.347786844Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0"}
+{"Time":"2026-10-09T18:19:15.347790133Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0"}
+{"Time":"2026-10-09T18:19:15.347792579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0","Output":"=== CONT  TestEEPPresence0\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:15.499179088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0","Output":"--- PASS: TestEEPPresence0 (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:15.499327641Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEEPPresence0","Elapsed":0.15}
+{"Time":"2026-10-09T18:19:15.499345727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:15.533905992Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.251}

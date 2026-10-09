@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:26.049464447Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:26.085993992Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet"}
+{"Time":"2026-10-09T18:21:26.086236046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet","Output":"=== RUN   TestPlaceholderWeakSlotStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:26.086407232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet","Output":"=== PAUSE TestPlaceholderWeakSlotStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:26.086412434Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet"}
+{"Time":"2026-10-09T18:21:26.086416607Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet"}
+{"Time":"2026-10-09T18:21:26.086419692Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet","Output":"=== CONT  TestPlaceholderWeakSlotStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:26.247199799Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet","Output":"--- PASS: TestPlaceholderWeakSlotStaysNotYet (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:26.247283294Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderWeakSlotStaysNotYet","Elapsed":0.16}
+{"Time":"2026-10-09T18:21:26.247303194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:26.255399195Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.206}

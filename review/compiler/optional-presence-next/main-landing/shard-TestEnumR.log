@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:23.355884722Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:23.400301939Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T18:19:23.400369975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== RUN   TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:23.400400286Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== PAUSE TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:23.400403823Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T18:19:23.40040817Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T18:19:23.400410879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== CONT  TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:24.584004525Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"--- PASS: TestEnumReverseMappingUsesSingleSlot (1.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:24.58406273Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Elapsed":1.18}
+{"Time":"2026-10-09T18:19:24.584082475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:24.59380581Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.238}

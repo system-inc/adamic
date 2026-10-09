@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:59.083623487Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:59.159103499Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T18:19:59.159186061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== RUN   TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:59.159239048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== PAUSE TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:59.15924186Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T18:19:59.159244454Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations"}
+{"Time":"2026-10-09T18:19:59.159246266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"=== CONT  TestInheritanceGenericMonomorphizations\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:00.00356047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Output":"--- PASS: TestInheritanceGenericMonomorphizations (0.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:00.003607302Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericMonomorphizations","Elapsed":0.85}
+{"Time":"2026-10-09T18:20:00.003628447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:00.033948128Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.95}

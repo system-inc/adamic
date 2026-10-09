@@ -1,0 +1,12 @@
+{
+  "tests": 345,
+  "shards": 238,
+  "passed": 342,
+  "skipped": [
+    "TestGenericBodyRelationsCensus",
+    "TestOptionalWideningCensus",
+    "TestOriginalCycleLedger"
+  ],
+  "max_shard_seconds": 26.256,
+  "max_leaf_seconds": 24.24
+}

@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T18:19:05.26681026Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:05.298435386Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver"}
+{"Time":"2026-10-09T18:19:05.298523595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver","Output":"=== RUN   TestClassWrongOutputIteratorReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298552418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver","Output":"=== PAUSE TestClassWrongOutputIteratorReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298556142Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver"}
+{"Time":"2026-10-09T18:19:05.29856042Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T18:19:05.298563242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== RUN   TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.29857615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== PAUSE TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298578926Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T18:19:05.298581901Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T18:19:05.298584659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== RUN   TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298588013Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== PAUSE TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298590629Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T18:19:05.298593698Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver"}
+{"Time":"2026-10-09T18:19:05.298596172Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver","Output":"=== CONT  TestClassWrongOutputIteratorReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.298599341Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T18:19:05.298601899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== CONT  TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:05.29860486Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T18:19:05.298607571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== CONT  TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:06.252948472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"--- PASS: TestClassWrongOutputPrivateRepair (0.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:06.295708792Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Elapsed":0.96}
+{"Time":"2026-10-09T18:19:06.295770107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"--- PASS: TestClassWrongOutputKeysRepair (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:07.868377316Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Elapsed":1}
+{"Time":"2026-10-09T18:19:07.86844597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver","Output":"--- PASS: TestClassWrongOutputIteratorReceiver (2.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:07.868455505Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputIteratorReceiver","Elapsed":2.57}
+{"Time":"2026-10-09T18:19:07.868459137Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:07.875128258Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.608}

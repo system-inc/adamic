@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:18:54.855541147Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:18:54.950068432Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead"}
+{"Time":"2026-10-09T18:18:54.950179899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead","Output":"=== RUN   TestCensusSmallFiniteKeyRead\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:54.950247138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead","Output":"=== PAUSE TestCensusSmallFiniteKeyRead\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:54.950250963Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead"}
+{"Time":"2026-10-09T18:18:54.950254627Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead"}
+{"Time":"2026-10-09T18:18:54.950257314Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead","Output":"=== CONT  TestCensusSmallFiniteKeyRead\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:56.037282148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead","Output":"--- PASS: TestCensusSmallFiniteKeyRead (1.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:56.037322607Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusSmallFiniteKeyRead","Elapsed":1.09}
+{"Time":"2026-10-09T18:18:56.037351628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:56.042728927Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.187}
