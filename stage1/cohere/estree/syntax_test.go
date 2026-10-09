@@ -1,10 +1,12 @@
 package estree
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func syntaxGrammar() []string {
@@ -32,37 +34,72 @@ func TestSyntaxGrammar(t *testing.T) {
 	}
 	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
-func TestSyntaxMutants(t *testing.T) {
-	t.Run("mapped-constraint", func(t *testing.T) {
-		list := manifest(t, syntaxGrammar())
-		want := execute(t, "", goOracle(t), "--manifest", list)
-		main := mutantPort(t, "convert.ts", "this.set(result, 'constraint', this.converted(this.child(parameter, 1)));", "this.set(result, 'constraint', absent());")
-		binary, _ := build(t, main, true)
-		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-			if diff := firstDifference(want, got); diff == "" {
-				t.Fatal(name + " mutant survived")
-			} else {
-				t.Log(name + ": " + diff)
-			}
+
+const testSyntaxMutantsShards = 3
+
+func syntaxMutantGroups() ([][]int, int) {
+	groups := make([][]int, 3)
+	id := 0
+	for i, count := range []int{len(syntaxGrammar()), 1, 1} {
+		for range count {
+			groups[i] = append(groups[i], id)
+			id++
 		}
-	})
-	for _, item := range []struct{ name, file, from, to, source string }{
-		{"erasure-precedence", "sourceBinary.ts", "if(nextRank > lastRank ||", "if(false && nextRank > lastRank ||", "1+1 as number *2;"},
-		{"reference-pragma", "pipeline.ts", "if(reference !== '')", "if(false)", "/// <reference path='missingquote.ts />\nx;"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			list := manifest(t, []string{item.source})
-			statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
-			if !strings.Contains(statuses, `"status":"error"`) {
-				t.Fatal(statuses)
-			}
-			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if !strings.Contains(string(got), "0 Program ") {
-					t.Fatal(name + " control did not accept")
+	}
+	return groups, id
+}
+
+// ADAMIC_TEST_SHARD=i/n runs the shards whose index modulo n is i; unset runs all.
+func TestSyntaxMutants(t *testing.T) {
+	estreeAccounting(t)
+	started := time.Now()
+	groups, cases := syntaxMutantGroups()
+	selected := estreeShardPlan(t, testSyntaxMutantsShards, cases, groups)
+	oracle := estreeTimedOracle(t)
+	type mutant struct {
+		name, file, from, to string
+		sources              []string
+		main, binary         string
+	}
+	mutants := []mutant{
+		{name: "mapped-constraint", file: "convert.ts", from: "this.set(result, 'constraint', this.converted(this.child(parameter, 1)));", to: "this.set(result, 'constraint', absent());", sources: syntaxGrammar()},
+		{name: "erasure-precedence", file: "sourceBinary.ts", from: "if(nextRank > lastRank ||", to: "if(false && nextRank > lastRank ||", sources: []string{"1+1 as number *2;"}},
+		{name: "reference-pragma", file: "pipeline.ts", from: "if(reference !== '')", to: "if(false)", sources: []string{"/// <reference path='missingquote.ts />\nx;"}},
+	}
+	for i := range mutants {
+		if !selected[i] {
+			continue
+		}
+		m := &mutants[i]
+		m.main = mutantPort(t, m.file, m.from, m.to)
+		m.binary, _ = estreeTimedBuild(t, m.main, true)
+	}
+	t.Logf("setup including builds: %.3fs; union: %d cases", time.Since(started).Seconds(), cases)
+	for i, m := range mutants {
+		if !selected[i] {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			list := manifest(t, m.sources)
+			if i == 0 {
+				want := execute(t, "", oracle, "--manifest", list)
+				for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+					if err := estreeMutantVerdict(want, got); err != nil {
+						t.Fatalf("%s %s: %v", m.name, name, err)
+					}
 				}
-				t.Log(name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+			} else {
+				statuses := string(execute(t, "", oracle, "--audit", list, t.TempDir()))
+				if !strings.Contains(statuses, `"status":"error"`) {
+					t.Fatal(statuses)
+				}
+				for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+					if !strings.Contains(string(got), "0 Program ") {
+						t.Fatal(name + " control did not accept")
+					}
+					t.Log(m.name + " " + name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+				}
 			}
 		})
 	}
