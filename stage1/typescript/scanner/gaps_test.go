@@ -11,6 +11,7 @@ import (
 )
 
 func TestGapStandsWhereGapsMdSays(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/1_push.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -35,6 +36,7 @@ func TestGapStandsWhereGapsMdSays(t *testing.T) {
 }
 
 func TestBigintGapStandsWhereGapsMdSays(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/2_bigint.ts")
 	if err != nil {
 		t.Fatal(err)

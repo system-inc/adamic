@@ -72,6 +72,7 @@ func tokenizerEventLiveEnumeration(t *testing.T) (string, [][]uint16, []string, 
 }
 
 func TestTokenizerEventsUnion(t *testing.T) {
+	t.Parallel()
 	_, inputs, names, _ := tokenizerEventLiveEnumeration(t)
 	shards := tokenizerEventShards(tokenizerEventKeys(names))
 	if len(shards) != testTokenizerEventsShards {

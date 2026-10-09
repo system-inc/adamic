@@ -2,9 +2,11 @@ package markdownblocks
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/gatesample"
@@ -12,10 +14,12 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -59,7 +63,8 @@ func structureLayoutEnumeration(t *testing.T) *structureLayoutState {
 }
 
 func TestMarkdownStructureLayoutUnion(t *testing.T) {
-	parallelMarkdown(t)
+	t.Parallel()
+	configureMarkdownMemory(t)
 	deadline := structureLayoutDeadline(t, t.Name())
 	defer deadline.Stop()
 	state := structureLayoutEnumeration(t)
@@ -120,7 +125,7 @@ func structureLayoutShared(t *testing.T) *structureLayoutState {
 }
 
 func runStructureLayoutShard(t *testing.T, index int) {
-	parallelMarkdown(t)
+	configureMarkdownMemory(t)
 	deadline := structureLayoutDeadline(t, t.Name())
 	defer deadline.Stop()
 	state := structureLayoutShared(t)
@@ -131,22 +136,22 @@ func runStructureLayoutShard(t *testing.T, index int) {
 	structureLayoutMutants(t, fixture)
 	t.Logf("union shard: %d cases", len(state.shards[index]))
 }
-func TestMarkdownStructureLayout_000(t *testing.T) { runStructureLayoutShard(t, 0) }
-func TestMarkdownStructureLayout_001(t *testing.T) { runStructureLayoutShard(t, 1) }
-func TestMarkdownStructureLayout_002(t *testing.T) { runStructureLayoutShard(t, 2) }
-func TestMarkdownStructureLayout_003(t *testing.T) { runStructureLayoutShard(t, 3) }
-func TestMarkdownStructureLayout_004(t *testing.T) { runStructureLayoutShard(t, 4) }
-func TestMarkdownStructureLayout_005(t *testing.T) { runStructureLayoutShard(t, 5) }
-func TestMarkdownStructureLayout_006(t *testing.T) { runStructureLayoutShard(t, 6) }
-func TestMarkdownStructureLayout_007(t *testing.T) { runStructureLayoutShard(t, 7) }
-func TestMarkdownStructureLayout_008(t *testing.T) { runStructureLayoutShard(t, 8) }
-func TestMarkdownStructureLayout_009(t *testing.T) { runStructureLayoutShard(t, 9) }
-func TestMarkdownStructureLayout_010(t *testing.T) { runStructureLayoutShard(t, 10) }
-func TestMarkdownStructureLayout_011(t *testing.T) { runStructureLayoutShard(t, 11) }
-func TestMarkdownStructureLayout_012(t *testing.T) { runStructureLayoutShard(t, 12) }
-func TestMarkdownStructureLayout_013(t *testing.T) { runStructureLayoutShard(t, 13) }
-func TestMarkdownStructureLayout_014(t *testing.T) { runStructureLayoutShard(t, 14) }
-func TestMarkdownStructureLayout_015(t *testing.T) { runStructureLayoutShard(t, 15) }
+func TestMarkdownStructureLayout_000(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 0) }
+func TestMarkdownStructureLayout_001(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 1) }
+func TestMarkdownStructureLayout_002(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 2) }
+func TestMarkdownStructureLayout_003(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 3) }
+func TestMarkdownStructureLayout_004(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 4) }
+func TestMarkdownStructureLayout_005(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 5) }
+func TestMarkdownStructureLayout_006(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 6) }
+func TestMarkdownStructureLayout_007(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 7) }
+func TestMarkdownStructureLayout_008(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 8) }
+func TestMarkdownStructureLayout_009(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 9) }
+func TestMarkdownStructureLayout_010(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 10) }
+func TestMarkdownStructureLayout_011(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 11) }
+func TestMarkdownStructureLayout_012(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 12) }
+func TestMarkdownStructureLayout_013(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 13) }
+func TestMarkdownStructureLayout_014(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 14) }
+func TestMarkdownStructureLayout_015(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 15) }
 
 func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProducts {
 	p := structureLayoutProducts{root: root}
@@ -234,7 +239,8 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
 		overlayPath := filepath.Join(dir, item.command+".json")
 		write(t, overlayPath, overlay)
 		binary := filepath.Join(dir, item.command)
-		command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
+		command, cancel := structureLayoutCommand("go", "build", "-overlay="+overlayPath, "-o", binary, main)
+		defer cancel()
 		command.Dir = cohere
 		if output, err := combinedOutput(command); err != nil {
 			t.Fatalf("Go bridge: %v\n%s", err, output)
@@ -544,4 +550,21 @@ func structureLayoutDeadline(t *testing.T, name string) *time.Timer {
 		fmt.Fprintf(os.Stderr, "%s cooked: over budget at 75s\n", name)
 		os.Exit(124)
 	})
+}
+
+// The Go driver starts compilers. Give the entire child process group the same
+// deadline so a canceled driver cannot leave compilation running behind it.
+func structureLayoutCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	return command, cancel
 }
