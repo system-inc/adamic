@@ -1,0 +1,48 @@
+--- main/internal/oracle/testdata/user_iterators_rest_tdz.a
++++ slice/internal/oracle/testdata/user_iterators_rest_tdz.a
+@@ -49,8 +49,13 @@
+ 	adamic_object * adamic_local_3_this = (adamic_object *)arguments[0].reference;
+ 	adamic_retain(adamic_local_3_this);
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'rest' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'rest' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_local_3_this);
++		return (adamic_value){.number = 0};
++	}
+ 	}
+ 	adamic_array * adamic_temporary_4 = adamic_global_1_rest;
+ 	double adamic_temporary_5 = (double)adamic_temporary_4->length;
+@@ -83,6 +88,13 @@
+ 	adamic_object * adamic_local_4_iterable = adamic_temporary_14;
+ 	adamic_closure * adamic_temporary_15 = adamic_retain(((adamic_closure *)(&adamic_local_4_iterable->slots[0])->reference));
+ 	adamic_value adamic_temporary_16 = adamic_temporary_15->code(adamic_temporary_15, (adamic_value[]){{.reference = adamic_local_4_iterable}});
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_15);
++		adamic_release(adamic_local_4_iterable);
++		adamic_release(adamic_global_0_source);
++		adamic_global_0_source = NULL;
++		adamic_uncaught();
++	}
+ 	adamic_object * adamic_temporary_17 = (adamic_object *)adamic_temporary_16.reference;
+ 	adamic_object * adamic_local_5_iterator = adamic_temporary_17;
+ 	adamic_release(adamic_temporary_15);
+@@ -100,6 +112,15 @@
+ 			{
+ 				adamic_local_6_iterator_close_needed = false;
+ 				adamic_value adamic_temporary_22 = adamic_local_7_iterator_next->code(adamic_local_7_iterator_next, (adamic_value[]){{.reference = adamic_local_5_iterator}});
++				if (adamic_exception_pending) {
++					adamic_release(adamic_local_9_rest_values);
++					adamic_release(adamic_local_7_iterator_next);
++					adamic_release(adamic_local_5_iterator);
++					adamic_release(adamic_local_4_iterable);
++					adamic_release(adamic_global_0_source);
++					adamic_global_0_source = NULL;
++					adamic_uncaught();
++				}
+ 				adamic_object * adamic_temporary_23 = (adamic_object *)adamic_temporary_22.reference;
+ 				adamic_object * adamic_local_10_iterator_result = adamic_temporary_23;
+ 				bool adamic_temporary_25 = adamic_object_data_field(adamic_local_10_iterator_result, "done", &adamic_cache_24)->boolean;

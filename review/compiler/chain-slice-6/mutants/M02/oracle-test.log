@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:793: exit codes differ
+        node:   exit 0, stdout "1\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:806: leaks:
+        exit 70
+        adamic: panic: compiler bug: a field the checker proved is there is missing
+--- FAIL: TestNativeAgreesWithNode (0.08s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a (1.10s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.200s
+FAIL

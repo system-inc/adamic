@@ -1,0 +1,48 @@
+--- main/internal/oracle/testdata/step21_soundness_terminal.a
++++ slice/internal/oracle/testdata/step21_soundness_terminal.a
+@@ -23,8 +23,14 @@
+ 	adamic_string * adamic_temporary_1 = adamic_string_from_number((0x1p+00));
+ 	adamic_string * adamic_temporary_2 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_0, adamic_temporary_1});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_2);
++		adamic_release(adamic_temporary_1);
++		return;
++	}
+ 	}
+ 	adamic_heap * adamic_temporary_3 = adamic_global_0_value;
+ 	adamic_global_0_value = adamic_retain(((adamic_heap *)(adamic_temporary_2)));
+@@ -59,6 +65,9 @@
+ 		if (adamic_temporary_10) {
+ 			{
+ 				adamic_function_0_change();
++				if (adamic_exception_pending) {
++					goto adamic_landing_8;
++				}
+ 				adamic_heap * adamic_temporary_11 = adamic_retain(adamic_global_0_value);
+ 				double adamic_temporary_12 = adamic_function_1_narrowed_union_member(adamic_temporary_11);
+ 				adamic_string * adamic_temporary_13 = adamic_string_from_number((adamic_temporary_12 + (0x1p+00)));
+@@ -74,6 +83,18 @@
+ 		adamic_write_line(adamic_stdout, &adamic_string_4);
+ 	}
+ 	goto adamic_done_8;
++	adamic_landing_8:;
++	{
++		adamic_heap *adamic_temporary_15 = adamic_thrown;
++		adamic_thrown = NULL;
++		adamic_exception_pending = false;
++		adamic_release(adamic_temporary_15);
++		adamic_write_line(adamic_stdout, &adamic_string_3);
++	}
++	{
++		adamic_write_line(adamic_stdout, &adamic_string_4);
++	}
++	goto adamic_done_8;
+ 	adamic_done_8:;
+ 	adamic_write_line(adamic_stdout, &adamic_string_5);
+ 	adamic_release(adamic_global_0_value);

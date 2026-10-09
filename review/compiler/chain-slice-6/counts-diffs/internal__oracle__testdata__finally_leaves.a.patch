@@ -1,0 +1,2067 @@
+--- main/internal/oracle/testdata/finally_leaves.a
++++ slice/internal/oracle/testdata/finally_leaves.a
+@@ -12,41 +12,43 @@
+ static adamic_string adamic_string_4 = ADAMIC_STRING("lost ");
+ static adamic_string adamic_string_5 = ADAMIC_STRING("swallowed ");
+ static adamic_string adamic_string_6 = ADAMIC_STRING("first ");
+-static adamic_string adamic_string_7 = ADAMIC_STRING("something");
+-static adamic_string adamic_string_8 = ADAMIC_STRING("second ");
+-static adamic_string adamic_string_9 = ADAMIC_STRING("the finally won ");
+-static adamic_string adamic_string_10 = ADAMIC_STRING("odd one out ");
+-static adamic_string adamic_string_11 = ADAMIC_STRING("kept ");
+-static adamic_string adamic_string_12 = ADAMIC_STRING("replaced ");
+-static adamic_string adamic_string_13 = ADAMIC_STRING("x");
+-static adamic_string adamic_string_14 = ADAMIC_STRING("try ");
+-static adamic_string adamic_string_15 = ADAMIC_STRING("inner ");
+-static adamic_string adamic_string_16 = ADAMIC_STRING("inner finally");
+-static adamic_string adamic_string_17 = ADAMIC_STRING("inner finally returned ");
+-static adamic_string adamic_string_18 = ADAMIC_STRING("outer finally ");
+-static adamic_string adamic_string_19 = ADAMIC_STRING("inner finally ");
+-static adamic_string adamic_string_20 = ADAMIC_STRING("at ");
+-static adamic_string adamic_string_21 = ADAMIC_STRING("broken at ");
+-static adamic_string adamic_string_22 = ADAMIC_STRING(", ");
+-static adamic_string adamic_string_23 = ADAMIC_STRING(",");
+-static adamic_string adamic_string_24 = ADAMIC_STRING("never returned ");
+-static adamic_string adamic_string_25 = ADAMIC_STRING("after the loop ");
+-static adamic_string adamic_string_26 = ADAMIC_STRING("returned at ");
+-static adamic_string adamic_string_27 = ADAMIC_STRING("thrown at ");
+-static adamic_string adamic_string_28 = ADAMIC_STRING("passed ");
+-static adamic_string adamic_string_29 = ADAMIC_STRING("the outer try sees ");
+-static adamic_string adamic_string_30 = ADAMIC_STRING("grown ");
+-static adamic_string adamic_string_31 = ADAMIC_STRING("held ");
+-static adamic_string adamic_string_32 = ADAMIC_STRING("caught ");
+-static adamic_string adamic_string_33 = ADAMIC_STRING("abc");
+-static adamic_string adamic_string_34 = ADAMIC_STRING(" ");
+-static adamic_string adamic_string_35 = ADAMIC_STRING("round ");
+-static adamic_string adamic_string_36 = ADAMIC_STRING("inner round ");
+-static adamic_string adamic_string_37 = ADAMIC_STRING("stopped after ");
+-static adamic_string adamic_string_38 = ADAMIC_STRING(" rounds");
+-static adamic_string adamic_string_39 = ADAMIC_STRING("cell ");
+-static adamic_string adamic_string_40 = ADAMIC_STRING("switched at ");
+-static adamic_string adamic_string_41 = ADAMIC_STRING("mapped ");
++static adamic_string adamic_string_7 = ADAMIC_STRING("object");
++static adamic_string adamic_string_8 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
++static adamic_string adamic_string_9 = ADAMIC_STRING("something");
++static adamic_string adamic_string_10 = ADAMIC_STRING("second ");
++static adamic_string adamic_string_11 = ADAMIC_STRING("the finally won ");
++static adamic_string adamic_string_12 = ADAMIC_STRING("odd one out ");
++static adamic_string adamic_string_13 = ADAMIC_STRING("kept ");
++static adamic_string adamic_string_14 = ADAMIC_STRING("replaced ");
++static adamic_string adamic_string_15 = ADAMIC_STRING("x");
++static adamic_string adamic_string_16 = ADAMIC_STRING("try ");
++static adamic_string adamic_string_17 = ADAMIC_STRING("inner ");
++static adamic_string adamic_string_18 = ADAMIC_STRING("inner finally");
++static adamic_string adamic_string_19 = ADAMIC_STRING("inner finally returned ");
++static adamic_string adamic_string_20 = ADAMIC_STRING("outer finally ");
++static adamic_string adamic_string_21 = ADAMIC_STRING("inner finally ");
++static adamic_string adamic_string_22 = ADAMIC_STRING("at ");
++static adamic_string adamic_string_23 = ADAMIC_STRING("broken at ");
++static adamic_string adamic_string_24 = ADAMIC_STRING(", ");
++static adamic_string adamic_string_25 = ADAMIC_STRING(",");
++static adamic_string adamic_string_26 = ADAMIC_STRING("never returned ");
++static adamic_string adamic_string_27 = ADAMIC_STRING("after the loop ");
++static adamic_string adamic_string_28 = ADAMIC_STRING("returned at ");
++static adamic_string adamic_string_29 = ADAMIC_STRING("thrown at ");
++static adamic_string adamic_string_30 = ADAMIC_STRING("passed ");
++static adamic_string adamic_string_31 = ADAMIC_STRING("the outer try sees ");
++static adamic_string adamic_string_32 = ADAMIC_STRING("grown ");
++static adamic_string adamic_string_33 = ADAMIC_STRING("held ");
++static adamic_string adamic_string_34 = ADAMIC_STRING("caught ");
++static adamic_string adamic_string_35 = ADAMIC_STRING("abc");
++static adamic_string adamic_string_36 = ADAMIC_STRING(" ");
++static adamic_string adamic_string_37 = ADAMIC_STRING("round ");
++static adamic_string adamic_string_38 = ADAMIC_STRING("inner round ");
++static adamic_string adamic_string_39 = ADAMIC_STRING("stopped after ");
++static adamic_string adamic_string_40 = ADAMIC_STRING(" rounds");
++static adamic_string adamic_string_41 = ADAMIC_STRING("cell ");
++static adamic_string adamic_string_42 = ADAMIC_STRING("switched at ");
++static adamic_string adamic_string_43 = ADAMIC_STRING("mapped ");
+ 
+ static double adamic_global_0_rounds = 0.0;
+ static bool adamic_ready_0 = false;
+@@ -69,12 +71,15 @@
+ static adamic_string * adamic_function_12_thrownAfterAll(double adamic_local_12_index);
+ static adamic_array * adamic_function_13_grown(adamic_array * adamic_local_13_list);
+ static adamic_string * adamic_function_14_handedThenOverridden(void);
+-static adamic_code_function adamic_function_15_closure;
++static adamic_object * adamic_function_15_narrowed_union_member(adamic_heap * adamic_local_15_argument);
++static adamic_object * adamic_function_16_narrowed_union_member(adamic_heap * adamic_local_22_argument);
++static adamic_object * adamic_function_17_narrowed_union_member(adamic_heap * adamic_local_27_argument);
++static adamic_code_function adamic_function_18_closure;
+ 
+ static const char *const adamic_shape_0_names[] = {"name", "size"};
+ static const bool adamic_shape_0_references[] = {true, false};
+ static const adamic_shape adamic_shape_0 = {2, adamic_shape_0_names, adamic_shape_0_references, NULL};
+-static adamic_slot_cache adamic_cache_206;
++static adamic_slot_cache adamic_cache_218;
+ 
+ static adamic_string * adamic_function_0_word(adamic_string * adamic_local_2_stem, double adamic_local_3_index) {
+ 	ADAMIC_CHECK_STACK();
+@@ -119,8 +124,9 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		adamic_string * adamic_temporary_14 = adamic_function_0_word(&adamic_string_4, adamic_local_5_index);
+-		adamic_object * adamic_temporary_15 = adamic_error_new(adamic_temporary_14);
+-		adamic_thrown = adamic_retain(adamic_temporary_15);
++		adamic_object * adamic_temporary_15 = adamic_error_new_kind(adamic_temporary_14, "Error");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_15)));
++		adamic_exception_pending = true;
+ 		adamic_release(adamic_temporary_15);
+ 		adamic_release(adamic_temporary_14);
+ 		goto adamic_rethrow_13;
+@@ -133,8 +139,9 @@
+ 	goto adamic_done_13;
+ 	adamic_rethrow_13:;
+ 	{
+-		adamic_object *adamic_temporary_18 = adamic_thrown;
++		adamic_heap *adamic_temporary_18 = adamic_thrown;
+ 		adamic_thrown = NULL;
++		adamic_exception_pending = false;
+ 		{
+ 			adamic_string * adamic_temporary_19 = adamic_function_0_word(&adamic_string_5, adamic_local_5_index);
+ 			adamic_string * adamic_temporary_20 = adamic_temporary_19;
+@@ -142,6 +149,7 @@
+ 			return adamic_temporary_20;
+ 		}
+ 		adamic_thrown = adamic_temporary_18;
++		adamic_exception_pending = true;
+ 		adamic_temporary_18 = NULL;
+ 		adamic_release(adamic_temporary_18);
+ 		return &adamic_string_empty;
+@@ -154,60 +162,69 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		adamic_string * adamic_temporary_22 = adamic_function_0_word(&adamic_string_6, adamic_local_6_index);
+-		adamic_object * adamic_temporary_23 = adamic_error_new(adamic_temporary_22);
+-		adamic_thrown = adamic_retain(adamic_temporary_23);
++		adamic_object * adamic_temporary_23 = adamic_error_new_kind(adamic_temporary_22, "Error");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_23)));
++		adamic_exception_pending = true;
+ 		adamic_release(adamic_temporary_23);
+ 		adamic_release(adamic_temporary_22);
+ 		goto adamic_landing_21;
+ 	}
+ 	{
+-		adamic_string * adamic_temporary_24 = adamic_function_0_word(&adamic_string_9, adamic_local_6_index);
++		adamic_string * adamic_temporary_24 = adamic_function_0_word(&adamic_string_11, adamic_local_6_index);
+ 		adamic_string * adamic_temporary_25 = adamic_temporary_24;
+ 		return adamic_temporary_25;
+ 	}
+ 	goto adamic_done_21;
+ 	adamic_landing_21:;
+ 	{
+-		adamic_object *adamic_temporary_26 = adamic_thrown;
++		adamic_heap *adamic_temporary_26 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_14_error = adamic_temporary_26;
+-		adamic_string * adamic_temporary_28;
+-		if (true) {
+-			adamic_string * adamic_temporary_27 = ((adamic_string *)(&adamic_local_14_error->slots[1])->reference);
+-			adamic_temporary_28 = adamic_retain(adamic_temporary_27);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_14_error = ((adamic_heap *)adamic_temporary_26);
++		bool adamic_temporary_27 = adamic_instanceof(adamic_local_14_error, &adamic_error_class);
++		adamic_string * adamic_temporary_30;
++		if (adamic_temporary_27) {
++			adamic_object * adamic_temporary_28 = adamic_function_15_narrowed_union_member(adamic_local_14_error);
++			adamic_string * adamic_temporary_29 = adamic_retain(((adamic_string *)(&adamic_temporary_28->slots[1])->reference));
++			adamic_temporary_30 = adamic_retain(adamic_temporary_29);
++			adamic_release(adamic_temporary_29);
++			adamic_release(adamic_temporary_28);
+ 		} else {
+-			adamic_temporary_28 = adamic_retain(&adamic_string_7);
+-		}
+-		adamic_write_line(adamic_stdout, adamic_temporary_28);
+-		adamic_release(adamic_temporary_28);
+-		adamic_string * adamic_temporary_29 = adamic_function_0_word(&adamic_string_8, adamic_local_6_index);
+-		adamic_object * adamic_temporary_30 = adamic_error_new(adamic_temporary_29);
+-		adamic_thrown = adamic_retain(adamic_temporary_30);
++			adamic_temporary_30 = adamic_retain(&adamic_string_9);
++		}
++		adamic_write_line(adamic_stdout, adamic_temporary_30);
+ 		adamic_release(adamic_temporary_30);
+-		adamic_release(adamic_temporary_29);
++		adamic_string * adamic_temporary_31 = adamic_function_0_word(&adamic_string_10, adamic_local_6_index);
++		adamic_object * adamic_temporary_32 = adamic_error_new_kind(adamic_temporary_31, "Error");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_32)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_32);
++		adamic_release(adamic_temporary_31);
+ 		adamic_release(adamic_local_14_error);
+ 		goto adamic_rethrow_21;
+ 		adamic_release(adamic_local_14_error);
+ 	}
+ 	{
+-		adamic_string * adamic_temporary_31 = adamic_function_0_word(&adamic_string_9, adamic_local_6_index);
+-		adamic_string * adamic_temporary_32 = adamic_temporary_31;
+-		return adamic_temporary_32;
++		adamic_string * adamic_temporary_33 = adamic_function_0_word(&adamic_string_11, adamic_local_6_index);
++		adamic_string * adamic_temporary_34 = adamic_temporary_33;
++		return adamic_temporary_34;
+ 	}
+ 	goto adamic_done_21;
+ 	adamic_rethrow_21:;
+ 	{
+-		adamic_object *adamic_temporary_33 = adamic_thrown;
++		adamic_heap *adamic_temporary_35 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		{
+-			adamic_string * adamic_temporary_34 = adamic_function_0_word(&adamic_string_9, adamic_local_6_index);
+-			adamic_string * adamic_temporary_35 = adamic_temporary_34;
+-			adamic_release(adamic_temporary_33);
+-			return adamic_temporary_35;
+-		}
+-		adamic_thrown = adamic_temporary_33;
+-		adamic_temporary_33 = NULL;
+-		adamic_release(adamic_temporary_33);
++		adamic_exception_pending = false;
++		{
++			adamic_string * adamic_temporary_36 = adamic_function_0_word(&adamic_string_11, adamic_local_6_index);
++			adamic_string * adamic_temporary_37 = adamic_temporary_36;
++			adamic_release(adamic_temporary_35);
++			return adamic_temporary_37;
++		}
++		adamic_thrown = adamic_temporary_35;
++		adamic_exception_pending = true;
++		adamic_temporary_35 = NULL;
++		adamic_release(adamic_temporary_35);
+ 		return &adamic_string_empty;
+ 	}
+ 	adamic_done_21:;
+@@ -219,165 +236,168 @@
+ 	{
+ 		if (fmod(adamic_local_7_index, (0x1p+01)) == (0x0p+00)) {
+ 			{
+-				adamic_string * adamic_temporary_37 = adamic_function_0_word(&adamic_string_10, adamic_local_7_index);
+-				adamic_object * adamic_temporary_38 = adamic_error_new(adamic_temporary_37);
+-				adamic_thrown = adamic_retain(adamic_temporary_38);
+-				adamic_release(adamic_temporary_38);
+-				adamic_release(adamic_temporary_37);
+-				goto adamic_rethrow_36;
+-			}
+-		}
+-		adamic_string * adamic_temporary_39 = adamic_function_0_word(&adamic_string_11, adamic_local_7_index);
+-		adamic_string * adamic_temporary_40 = adamic_temporary_39;
++				adamic_string * adamic_temporary_39 = adamic_function_0_word(&adamic_string_12, adamic_local_7_index);
++				adamic_object * adamic_temporary_40 = adamic_error_new_kind(adamic_temporary_39, "Error");
++				adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_40)));
++				adamic_exception_pending = true;
++				adamic_release(adamic_temporary_40);
++				adamic_release(adamic_temporary_39);
++				goto adamic_rethrow_38;
++			}
++		}
++		adamic_string * adamic_temporary_41 = adamic_function_0_word(&adamic_string_13, adamic_local_7_index);
++		adamic_string * adamic_temporary_42 = adamic_temporary_41;
+ 		{
+ 			if (adamic_local_7_index > (0x1p+02)) {
+ 				{
+-					adamic_string * adamic_temporary_41 = adamic_function_0_word(&adamic_string_12, adamic_local_7_index);
+-					adamic_string * adamic_temporary_42 = adamic_temporary_41;
+-					adamic_release(adamic_temporary_40);
+-					return adamic_temporary_42;
+-				}
+-			}
+-		}
+-		return adamic_temporary_40;
++					adamic_string * adamic_temporary_43 = adamic_function_0_word(&adamic_string_14, adamic_local_7_index);
++					adamic_string * adamic_temporary_44 = adamic_temporary_43;
++					adamic_release(adamic_temporary_42);
++					return adamic_temporary_44;
++				}
++			}
++		}
++		return adamic_temporary_42;
+ 	}
+ 	{
+ 		if (adamic_local_7_index > (0x1p+02)) {
+ 			{
+-				adamic_string * adamic_temporary_43 = adamic_function_0_word(&adamic_string_12, adamic_local_7_index);
+-				adamic_string * adamic_temporary_44 = adamic_temporary_43;
+-				return adamic_temporary_44;
+-			}
+-		}
+-	}
+-	goto adamic_done_36;
+-	adamic_rethrow_36:;
+-	{
+-		adamic_object *adamic_temporary_45 = adamic_thrown;
++				adamic_string * adamic_temporary_45 = adamic_function_0_word(&adamic_string_14, adamic_local_7_index);
++				adamic_string * adamic_temporary_46 = adamic_temporary_45;
++				return adamic_temporary_46;
++			}
++		}
++	}
++	goto adamic_done_38;
++	adamic_rethrow_38:;
++	{
++		adamic_heap *adamic_temporary_47 = adamic_thrown;
+ 		adamic_thrown = NULL;
++		adamic_exception_pending = false;
+ 		{
+ 			if (adamic_local_7_index > (0x1p+02)) {
+ 				{
+-					adamic_string * adamic_temporary_46 = adamic_function_0_word(&adamic_string_12, adamic_local_7_index);
+-					adamic_string * adamic_temporary_47 = adamic_temporary_46;
+-					adamic_release(adamic_temporary_45);
+-					return adamic_temporary_47;
+-				}
+-			}
+-		}
+-		adamic_thrown = adamic_temporary_45;
+-		adamic_temporary_45 = NULL;
+-		adamic_release(adamic_temporary_45);
++					adamic_string * adamic_temporary_48 = adamic_function_0_word(&adamic_string_14, adamic_local_7_index);
++					adamic_string * adamic_temporary_49 = adamic_temporary_48;
++					adamic_release(adamic_temporary_47);
++					return adamic_temporary_49;
++				}
++			}
++		}
++		adamic_thrown = adamic_temporary_47;
++		adamic_exception_pending = true;
++		adamic_temporary_47 = NULL;
++		adamic_release(adamic_temporary_47);
+ 		return &adamic_string_empty;
+ 	}
+-	adamic_done_36:;
++	adamic_done_38:;
+ 	adamic_unreachable();
+ }
+ 
+ static double adamic_function_5_counted(adamic_string * adamic_local_8_label) {
+ 	ADAMIC_CHECK_STACK();
+ 	{
+-		double adamic_temporary_49 = adamic_string_length(adamic_local_8_label);
+-		{
+-			if (adamic_string_starts_with(adamic_local_8_label, &adamic_string_13)) {
+-				{
+-					double adamic_temporary_50 = (-(0x1p+00));
+-					return adamic_temporary_50;
+-				}
+-			}
+-		}
+-		return adamic_temporary_49;
+-	}
+-	{
+-		if (adamic_string_starts_with(adamic_local_8_label, &adamic_string_13)) {
+-			{
+-				double adamic_temporary_51 = (-(0x1p+00));
+-				return adamic_temporary_51;
+-			}
+-		}
+-	}
+-	goto adamic_done_48;
+-	adamic_done_48:;
++		double adamic_temporary_51 = adamic_string_length(adamic_local_8_label);
++		{
++			if (adamic_string_starts_with(adamic_local_8_label, &adamic_string_15)) {
++				{
++					double adamic_temporary_52 = (-(0x1p+00));
++					return adamic_temporary_52;
++				}
++			}
++		}
++		return adamic_temporary_51;
++	}
++	{
++		if (adamic_string_starts_with(adamic_local_8_label, &adamic_string_15)) {
++			{
++				double adamic_temporary_53 = (-(0x1p+00));
++				return adamic_temporary_53;
++			}
++		}
++	}
++	goto adamic_done_50;
++	adamic_done_50:;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_6_paired(double adamic_local_9_index) {
+ 	ADAMIC_CHECK_STACK();
+ 	{
+-		adamic_string * adamic_temporary_53 = adamic_function_0_word(&adamic_string_14, adamic_local_9_index);
+-		adamic_object * adamic_temporary_54 = adamic_object_new(&adamic_shape_0);
+-		adamic_temporary_54->slots[0].reference = adamic_temporary_53;
+-		adamic_temporary_54->slots[1].number = adamic_local_9_index;
+-		adamic_object * adamic_temporary_55 = adamic_temporary_54;
++		adamic_string * adamic_temporary_55 = adamic_function_0_word(&adamic_string_16, adamic_local_9_index);
++		adamic_object * adamic_temporary_56 = adamic_object_new(&adamic_shape_0);
++		adamic_temporary_56->slots[0].reference = adamic_temporary_55;
++		adamic_temporary_56->slots[1].number = adamic_local_9_index;
++		adamic_object * adamic_temporary_57 = adamic_temporary_56;
+ 		{
+ 			if (adamic_local_9_index > (0x1p+00)) {
+ 				{
+-					adamic_string * adamic_temporary_56 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
+-					adamic_object * adamic_temporary_57 = adamic_object_new(&adamic_shape_0);
+-					adamic_temporary_57->slots[0].reference = adamic_temporary_56;
+-					adamic_temporary_57->slots[1].number = (-adamic_local_9_index);
+-					adamic_object * adamic_temporary_58 = adamic_temporary_57;
+-					adamic_release(adamic_temporary_55);
+-					return adamic_temporary_58;
+-				}
+-			}
+-		}
+-		return adamic_temporary_55;
++					adamic_string * adamic_temporary_58 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
++					adamic_object * adamic_temporary_59 = adamic_object_new(&adamic_shape_0);
++					adamic_temporary_59->slots[0].reference = adamic_temporary_58;
++					adamic_temporary_59->slots[1].number = (-adamic_local_9_index);
++					adamic_object * adamic_temporary_60 = adamic_temporary_59;
++					adamic_release(adamic_temporary_57);
++					return adamic_temporary_60;
++				}
++			}
++		}
++		return adamic_temporary_57;
+ 	}
+ 	{
+ 		if (adamic_local_9_index > (0x1p+00)) {
+ 			{
+-				adamic_string * adamic_temporary_59 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
+-				adamic_object * adamic_temporary_60 = adamic_object_new(&adamic_shape_0);
+-				adamic_temporary_60->slots[0].reference = adamic_temporary_59;
+-				adamic_temporary_60->slots[1].number = (-adamic_local_9_index);
+-				adamic_object * adamic_temporary_61 = adamic_temporary_60;
+-				return adamic_temporary_61;
+-			}
+-		}
+-	}
+-	goto adamic_done_52;
+-	adamic_done_52:;
++				adamic_string * adamic_temporary_61 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
++				adamic_object * adamic_temporary_62 = adamic_object_new(&adamic_shape_0);
++				adamic_temporary_62->slots[0].reference = adamic_temporary_61;
++				adamic_temporary_62->slots[1].number = (-adamic_local_9_index);
++				adamic_object * adamic_temporary_63 = adamic_temporary_62;
++				return adamic_temporary_63;
++			}
++		}
++	}
++	goto adamic_done_54;
++	adamic_done_54:;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_6_paired_in(adamic_region *region, double adamic_local_9_index) {
+ 	ADAMIC_CHECK_STACK();
+ 	{
+-		adamic_string * adamic_temporary_63 = adamic_function_0_word(&adamic_string_14, adamic_local_9_index);
+-		adamic_object *adamic_temporary_64 = adamic_object_new_in(region, &adamic_shape_0);
+-		adamic_temporary_64->slots[0].reference = adamic_temporary_63;
+-		adamic_temporary_64->slots[1].number = adamic_local_9_index;
+-		adamic_object * adamic_temporary_65 = adamic_temporary_64;
++		adamic_string * adamic_temporary_65 = adamic_function_0_word(&adamic_string_16, adamic_local_9_index);
++		adamic_object *adamic_temporary_66 = adamic_object_new_in(region, &adamic_shape_0);
++		adamic_temporary_66->slots[0].reference = adamic_temporary_65;
++		adamic_temporary_66->slots[1].number = adamic_local_9_index;
++		adamic_object * adamic_temporary_67 = adamic_temporary_66;
+ 		{
+ 			if (adamic_local_9_index > (0x1p+00)) {
+ 				{
+-					adamic_string * adamic_temporary_66 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
+-					adamic_object *adamic_temporary_67 = adamic_object_new_in(region, &adamic_shape_0);
+-					adamic_temporary_67->slots[0].reference = adamic_temporary_66;
+-					adamic_temporary_67->slots[1].number = (-adamic_local_9_index);
+-					adamic_object * adamic_temporary_68 = adamic_temporary_67;
+-					adamic_release(adamic_temporary_65);
+-					return adamic_temporary_68;
+-				}
+-			}
+-		}
+-		return adamic_temporary_65;
++					adamic_string * adamic_temporary_68 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
++					adamic_object *adamic_temporary_69 = adamic_object_new_in(region, &adamic_shape_0);
++					adamic_temporary_69->slots[0].reference = adamic_temporary_68;
++					adamic_temporary_69->slots[1].number = (-adamic_local_9_index);
++					adamic_object * adamic_temporary_70 = adamic_temporary_69;
++					adamic_release(adamic_temporary_67);
++					return adamic_temporary_70;
++				}
++			}
++		}
++		return adamic_temporary_67;
+ 	}
+ 	{
+ 		if (adamic_local_9_index > (0x1p+00)) {
+ 			{
+-				adamic_string * adamic_temporary_69 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
+-				adamic_object *adamic_temporary_70 = adamic_object_new_in(region, &adamic_shape_0);
+-				adamic_temporary_70->slots[0].reference = adamic_temporary_69;
+-				adamic_temporary_70->slots[1].number = (-adamic_local_9_index);
+-				adamic_object * adamic_temporary_71 = adamic_temporary_70;
+-				return adamic_temporary_71;
+-			}
+-		}
+-	}
+-	goto adamic_done_62;
+-	adamic_done_62:;
++				adamic_string * adamic_temporary_71 = adamic_function_0_word(&adamic_string_1, adamic_local_9_index);
++				adamic_object *adamic_temporary_72 = adamic_object_new_in(region, &adamic_shape_0);
++				adamic_temporary_72->slots[0].reference = adamic_temporary_71;
++				adamic_temporary_72->slots[1].number = (-adamic_local_9_index);
++				adamic_object * adamic_temporary_73 = adamic_temporary_72;
++				return adamic_temporary_73;
++			}
++		}
++	}
++	goto adamic_done_64;
++	adamic_done_64:;
+ 	adamic_unreachable();
+ }
+ 
+@@ -385,69 +405,74 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		{
+-			adamic_string * adamic_temporary_74 = adamic_function_0_word(&adamic_string_15, adamic_local_10_index);
+-			adamic_object * adamic_temporary_75 = adamic_error_new(adamic_temporary_74);
+-			adamic_thrown = adamic_retain(adamic_temporary_75);
+-			adamic_release(adamic_temporary_75);
+-			adamic_release(adamic_temporary_74);
+-			goto adamic_rethrow_73;
+-		}
+-		{
+-			adamic_write_line(adamic_stdout, &adamic_string_16);
+ 			adamic_string * adamic_temporary_76 = adamic_function_0_word(&adamic_string_17, adamic_local_10_index);
+-			adamic_string * adamic_temporary_77 = adamic_temporary_76;
+-			{
+-				adamic_string * adamic_temporary_78 = adamic_function_0_word(&adamic_string_18, adamic_local_10_index);
+-				adamic_write_line(adamic_stdout, adamic_temporary_78);
+-				adamic_release(adamic_temporary_78);
+-			}
+-			return adamic_temporary_77;
+-		}
+-		goto adamic_done_73;
+-		adamic_rethrow_73:;
+-		{
+-			adamic_object *adamic_temporary_79 = adamic_thrown;
++			adamic_object * adamic_temporary_77 = adamic_error_new_kind(adamic_temporary_76, "Error");
++			adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_77)));
++			adamic_exception_pending = true;
++			adamic_release(adamic_temporary_77);
++			adamic_release(adamic_temporary_76);
++			goto adamic_rethrow_75;
++		}
++		{
++			adamic_write_line(adamic_stdout, &adamic_string_18);
++			adamic_string * adamic_temporary_78 = adamic_function_0_word(&adamic_string_19, adamic_local_10_index);
++			adamic_string * adamic_temporary_79 = adamic_temporary_78;
++			{
++				adamic_string * adamic_temporary_80 = adamic_function_0_word(&adamic_string_20, adamic_local_10_index);
++				adamic_write_line(adamic_stdout, adamic_temporary_80);
++				adamic_release(adamic_temporary_80);
++			}
++			return adamic_temporary_79;
++		}
++		goto adamic_done_75;
++		adamic_rethrow_75:;
++		{
++			adamic_heap *adamic_temporary_81 = adamic_thrown;
+ 			adamic_thrown = NULL;
+-			{
+-				adamic_write_line(adamic_stdout, &adamic_string_16);
+-				adamic_string * adamic_temporary_80 = adamic_function_0_word(&adamic_string_17, adamic_local_10_index);
+-				adamic_string * adamic_temporary_81 = adamic_temporary_80;
+-				{
+-					adamic_string * adamic_temporary_82 = adamic_function_0_word(&adamic_string_18, adamic_local_10_index);
+-					adamic_write_line(adamic_stdout, adamic_temporary_82);
+-					adamic_release(adamic_temporary_82);
+-				}
+-				adamic_release(adamic_temporary_79);
+-				return adamic_temporary_81;
+-			}
+-			adamic_thrown = adamic_temporary_79;
+-			adamic_temporary_79 = NULL;
+-			adamic_release(adamic_temporary_79);
+-			goto adamic_rethrow_72;
+-		}
+-		adamic_done_73:;
+-	}
+-	{
+-		adamic_string * adamic_temporary_83 = adamic_function_0_word(&adamic_string_18, adamic_local_10_index);
+-		adamic_write_line(adamic_stdout, adamic_temporary_83);
+-		adamic_release(adamic_temporary_83);
+-	}
+-	goto adamic_done_72;
+-	adamic_rethrow_72:;
+-	{
+-		adamic_object *adamic_temporary_84 = adamic_thrown;
++			adamic_exception_pending = false;
++			{
++				adamic_write_line(adamic_stdout, &adamic_string_18);
++				adamic_string * adamic_temporary_82 = adamic_function_0_word(&adamic_string_19, adamic_local_10_index);
++				adamic_string * adamic_temporary_83 = adamic_temporary_82;
++				{
++					adamic_string * adamic_temporary_84 = adamic_function_0_word(&adamic_string_20, adamic_local_10_index);
++					adamic_write_line(adamic_stdout, adamic_temporary_84);
++					adamic_release(adamic_temporary_84);
++				}
++				adamic_release(adamic_temporary_81);
++				return adamic_temporary_83;
++			}
++			adamic_thrown = adamic_temporary_81;
++			adamic_exception_pending = true;
++			adamic_temporary_81 = NULL;
++			adamic_release(adamic_temporary_81);
++			goto adamic_rethrow_74;
++		}
++		adamic_done_75:;
++	}
++	{
++		adamic_string * adamic_temporary_85 = adamic_function_0_word(&adamic_string_20, adamic_local_10_index);
++		adamic_write_line(adamic_stdout, adamic_temporary_85);
++		adamic_release(adamic_temporary_85);
++	}
++	goto adamic_done_74;
++	adamic_rethrow_74:;
++	{
++		adamic_heap *adamic_temporary_86 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		{
+-			adamic_string * adamic_temporary_85 = adamic_function_0_word(&adamic_string_18, adamic_local_10_index);
+-			adamic_write_line(adamic_stdout, adamic_temporary_85);
+-			adamic_release(adamic_temporary_85);
+-		}
+-		adamic_thrown = adamic_temporary_84;
+-		adamic_temporary_84 = NULL;
+-		adamic_release(adamic_temporary_84);
++		adamic_exception_pending = false;
++		{
++			adamic_string * adamic_temporary_87 = adamic_function_0_word(&adamic_string_20, adamic_local_10_index);
++			adamic_write_line(adamic_stdout, adamic_temporary_87);
++			adamic_release(adamic_temporary_87);
++		}
++		adamic_thrown = adamic_temporary_86;
++		adamic_exception_pending = true;
++		adamic_temporary_86 = NULL;
++		adamic_release(adamic_temporary_86);
+ 		return &adamic_string_empty;
+ 	}
+-	adamic_done_72:;
++	adamic_done_74:;
+ 	adamic_unreachable();
+ }
+ 
+@@ -455,123 +480,57 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		{
+-			adamic_string * adamic_temporary_88 = adamic_function_0_word(&adamic_string_14, adamic_local_11_index);
+-			adamic_string * adamic_temporary_89 = adamic_temporary_88;
+-			{
+-				adamic_string * adamic_temporary_90 = adamic_function_0_word(&adamic_string_19, adamic_local_11_index);
+-				adamic_string * adamic_temporary_91 = adamic_temporary_90;
+-				{
+-					adamic_string * adamic_temporary_92 = adamic_function_0_word(&adamic_string_18, adamic_local_11_index);
+-					adamic_string * adamic_temporary_93 = adamic_temporary_92;
++			adamic_string * adamic_temporary_90 = adamic_function_0_word(&adamic_string_16, adamic_local_11_index);
++			adamic_string * adamic_temporary_91 = adamic_temporary_90;
++			{
++				adamic_string * adamic_temporary_92 = adamic_function_0_word(&adamic_string_21, adamic_local_11_index);
++				adamic_string * adamic_temporary_93 = adamic_temporary_92;
++				{
++					adamic_string * adamic_temporary_94 = adamic_function_0_word(&adamic_string_20, adamic_local_11_index);
++					adamic_string * adamic_temporary_95 = adamic_temporary_94;
++					adamic_release(adamic_temporary_93);
+ 					adamic_release(adamic_temporary_91);
+-					adamic_release(adamic_temporary_89);
+-					return adamic_temporary_93;
+-				}
+-				adamic_release(adamic_temporary_89);
+-				return adamic_temporary_91;
+-			}
+-			{
+-				adamic_string * adamic_temporary_94 = adamic_function_0_word(&adamic_string_18, adamic_local_11_index);
+-				adamic_string * adamic_temporary_95 = adamic_temporary_94;
+-				adamic_release(adamic_temporary_89);
+-				return adamic_temporary_95;
+-			}
+-			return adamic_temporary_89;
+-		}
+-		{
+-			adamic_string * adamic_temporary_96 = adamic_function_0_word(&adamic_string_19, adamic_local_11_index);
+-			adamic_string * adamic_temporary_97 = adamic_temporary_96;
+-			{
+-				adamic_string * adamic_temporary_98 = adamic_function_0_word(&adamic_string_18, adamic_local_11_index);
+-				adamic_string * adamic_temporary_99 = adamic_temporary_98;
+-				adamic_release(adamic_temporary_97);
+-				return adamic_temporary_99;
+-			}
+-			return adamic_temporary_97;
+-		}
+-		goto adamic_done_87;
+-		adamic_done_87:;
+-	}
+-	{
+-		adamic_string * adamic_temporary_100 = adamic_function_0_word(&adamic_string_18, adamic_local_11_index);
+-		adamic_string * adamic_temporary_101 = adamic_temporary_100;
+-		return adamic_temporary_101;
+-	}
+-	goto adamic_done_86;
+-	adamic_done_86:;
++					return adamic_temporary_95;
++				}
++				adamic_release(adamic_temporary_91);
++				return adamic_temporary_93;
++			}
++			{
++				adamic_string * adamic_temporary_96 = adamic_function_0_word(&adamic_string_20, adamic_local_11_index);
++				adamic_string * adamic_temporary_97 = adamic_temporary_96;
++				adamic_release(adamic_temporary_91);
++				return adamic_temporary_97;
++			}
++			return adamic_temporary_91;
++		}
++		{
++			adamic_string * adamic_temporary_98 = adamic_function_0_word(&adamic_string_21, adamic_local_11_index);
++			adamic_string * adamic_temporary_99 = adamic_temporary_98;
++			{
++				adamic_string * adamic_temporary_100 = adamic_function_0_word(&adamic_string_20, adamic_local_11_index);
++				adamic_string * adamic_temporary_101 = adamic_temporary_100;
++				adamic_release(adamic_temporary_99);
++				return adamic_temporary_101;
++			}
++			return adamic_temporary_99;
++		}
++		goto adamic_done_89;
++		adamic_done_89:;
++	}
++	{
++		adamic_string * adamic_temporary_102 = adamic_function_0_word(&adamic_string_20, adamic_local_11_index);
++		adamic_string * adamic_temporary_103 = adamic_temporary_102;
++		return adamic_temporary_103;
++	}
++	goto adamic_done_88;
++	adamic_done_88:;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_string * adamic_function_9_broken(void) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_array * adamic_temporary_102 = adamic_array_new(0, true);
+-	adamic_array * adamic_local_15_seen = adamic_temporary_102;
+-	{
+-		int64_t adamic_local_16_index = (int64_t)(0x0p+00);
+-		for (;;) {
+-			if (!(((double)adamic_local_16_index) < (0x1.4p+02))) {
+-				break;
+-			}
+-			{
+-				{
+-					{
+-						adamic_string * adamic_temporary_106 = adamic_function_0_word(&adamic_string_20, ((double)adamic_local_16_index));
+-						adamic_array_push(adamic_local_15_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_106)});
+-						double adamic_temporary_107 = (double)adamic_local_15_seen->length;
+-						(void)adamic_temporary_107;
+-						adamic_release(adamic_temporary_106);
+-						if (((double)adamic_local_16_index) == (0x1p+01)) {
+-							{
+-								adamic_string * adamic_temporary_108 = adamic_function_0_word(&adamic_string_21, ((double)adamic_local_16_index));
+-								adamic_object * adamic_temporary_109 = adamic_error_new(adamic_temporary_108);
+-								adamic_thrown = adamic_retain(adamic_temporary_109);
+-								adamic_release(adamic_temporary_109);
+-								adamic_release(adamic_temporary_108);
+-								goto adamic_rethrow_105;
+-							}
+-						}
+-					}
+-					{
+-						if (((double)adamic_local_16_index) == (0x1p+01)) {
+-							{
+-								break;
+-							}
+-						}
+-					}
+-					goto adamic_done_105;
+-					adamic_rethrow_105:;
+-					{
+-						adamic_object *adamic_temporary_110 = adamic_thrown;
+-						adamic_thrown = NULL;
+-						{
+-							if (((double)adamic_local_16_index) == (0x1p+01)) {
+-								{
+-									adamic_release(adamic_temporary_110);
+-									break;
+-								}
+-							}
+-						}
+-						adamic_thrown = adamic_temporary_110;
+-						adamic_temporary_110 = NULL;
+-						adamic_release(adamic_temporary_110);
+-						adamic_release(adamic_local_15_seen);
+-						return &adamic_string_empty;
+-					}
+-					adamic_done_105:;
+-				}
+-			}
+-			adamic_local_16_index += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_string * adamic_temporary_111 = adamic_array_join(adamic_local_15_seen, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_112 = adamic_temporary_111;
+-	adamic_release(adamic_local_15_seen);
+-	return adamic_temporary_112;
+-	adamic_unreachable();
+-}
+-
+-static adamic_string * adamic_function_10_brokenReturn(void) {
+-	ADAMIC_CHECK_STACK();
++	adamic_array * adamic_temporary_104 = adamic_array_new(0, true);
++	adamic_array * adamic_local_16_seen = adamic_temporary_104;
+ 	{
+ 		int64_t adamic_local_17_index = (int64_t)(0x0p+00);
+ 		for (;;) {
+@@ -581,128 +540,200 @@
+ 			{
+ 				{
+ 					{
+-						adamic_string * adamic_temporary_116 = adamic_function_0_word(&adamic_string_24, ((double)adamic_local_17_index));
+-						adamic_string * adamic_temporary_117 = adamic_temporary_116;
++						adamic_string * adamic_temporary_108 = adamic_function_0_word(&adamic_string_22, ((double)adamic_local_17_index));
++						adamic_array_push(adamic_local_16_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_108)});
++						double adamic_temporary_109 = (double)adamic_local_16_seen->length;
++						(void)adamic_temporary_109;
++						adamic_release(adamic_temporary_108);
++						if (((double)adamic_local_17_index) == (0x1p+01)) {
++							{
++								adamic_string * adamic_temporary_110 = adamic_function_0_word(&adamic_string_23, ((double)adamic_local_17_index));
++								adamic_object * adamic_temporary_111 = adamic_error_new_kind(adamic_temporary_110, "Error");
++								adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_111)));
++								adamic_exception_pending = true;
++								adamic_release(adamic_temporary_111);
++								adamic_release(adamic_temporary_110);
++								goto adamic_rethrow_107;
++							}
++						}
++					}
++					{
++						if (((double)adamic_local_17_index) == (0x1p+01)) {
++							{
++								break;
++							}
++						}
++					}
++					goto adamic_done_107;
++					adamic_rethrow_107:;
++					{
++						adamic_heap *adamic_temporary_112 = adamic_thrown;
++						adamic_thrown = NULL;
++						adamic_exception_pending = false;
+ 						{
+-							adamic_release(adamic_temporary_117);
++							if (((double)adamic_local_17_index) == (0x1p+01)) {
++								{
++									adamic_release(adamic_temporary_112);
++									break;
++								}
++							}
++						}
++						adamic_thrown = adamic_temporary_112;
++						adamic_exception_pending = true;
++						adamic_temporary_112 = NULL;
++						adamic_release(adamic_temporary_112);
++						adamic_release(adamic_local_16_seen);
++						return &adamic_string_empty;
++					}
++					adamic_done_107:;
++				}
++			}
++			adamic_local_17_index += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_string * adamic_temporary_113 = adamic_array_join(adamic_local_16_seen, &adamic_string_24, adamic_join_strings);
++	adamic_string * adamic_temporary_114 = adamic_temporary_113;
++	adamic_release(adamic_local_16_seen);
++	return adamic_temporary_114;
++	adamic_unreachable();
++}
++
++static adamic_string * adamic_function_10_brokenReturn(void) {
++	ADAMIC_CHECK_STACK();
++	{
++		int64_t adamic_local_18_index = (int64_t)(0x0p+00);
++		for (;;) {
++			if (!(((double)adamic_local_18_index) < (0x1.4p+02))) {
++				break;
++			}
++			{
++				{
++					{
++						adamic_string * adamic_temporary_118 = adamic_function_0_word(&adamic_string_26, ((double)adamic_local_18_index));
++						adamic_string * adamic_temporary_119 = adamic_temporary_118;
++						{
++							adamic_release(adamic_temporary_119);
+ 							break;
+ 						}
+-						return adamic_temporary_117;
++						return adamic_temporary_119;
+ 					}
+ 					{
+ 						break;
+ 					}
+-					goto adamic_done_115;
+-					adamic_done_115:;
+-				}
+-			}
+-			adamic_local_17_index += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_string * adamic_temporary_118 = adamic_function_0_word(&adamic_string_25, (0x0p+00));
+-	adamic_string * adamic_temporary_119 = adamic_temporary_118;
+-	return adamic_temporary_119;
++					goto adamic_done_117;
++					adamic_done_117:;
++				}
++			}
++			adamic_local_18_index += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_string * adamic_temporary_120 = adamic_function_0_word(&adamic_string_27, (0x0p+00));
++	adamic_string * adamic_temporary_121 = adamic_temporary_120;
++	return adamic_temporary_121;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_string * adamic_function_11_continued(void) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_array * adamic_temporary_120 = adamic_array_new(0, true);
+-	adamic_array * adamic_local_18_seen = adamic_temporary_120;
+-	{
+-		int64_t adamic_local_19_index = (int64_t)(0x0p+00);
++	adamic_array * adamic_temporary_122 = adamic_array_new(0, true);
++	adamic_array * adamic_local_19_seen = adamic_temporary_122;
++	{
++		int64_t adamic_local_20_index = (int64_t)(0x0p+00);
+ 		for (;;) {
+-			if (!(((double)adamic_local_19_index) < (0x1p+02))) {
++			if (!(((double)adamic_local_20_index) < (0x1p+02))) {
+ 				break;
+ 			}
+ 			{
+ 				{
+ 					{
+-						if (((double)adamic_local_19_index) == (0x1p+00)) {
++						if (((double)adamic_local_20_index) == (0x1p+00)) {
+ 							{
+-								adamic_string * adamic_temporary_124 = adamic_function_0_word(&adamic_string_26, ((double)adamic_local_19_index));
+-								adamic_string * adamic_temporary_125 = adamic_temporary_124;
++								adamic_string * adamic_temporary_126 = adamic_function_0_word(&adamic_string_28, ((double)adamic_local_20_index));
++								adamic_string * adamic_temporary_127 = adamic_temporary_126;
+ 								{
+-									adamic_string * adamic_temporary_126 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_19_index));
+-									adamic_array_push(adamic_local_18_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_126)});
+-									double adamic_temporary_127 = (double)adamic_local_18_seen->length;
+-									(void)adamic_temporary_127;
+-									adamic_release(adamic_temporary_126);
+-									adamic_release(adamic_temporary_125);
+-									goto adamic_continue_121;
++									adamic_string * adamic_temporary_128 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_20_index));
++									adamic_array_push(adamic_local_19_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_128)});
++									double adamic_temporary_129 = (double)adamic_local_19_seen->length;
++									(void)adamic_temporary_129;
++									adamic_release(adamic_temporary_128);
++									adamic_release(adamic_temporary_127);
++									goto adamic_continue_123;
+ 								}
+-								adamic_release(adamic_local_18_seen);
+-								return adamic_temporary_125;
+-							}
+-						}
+-						if (((double)adamic_local_19_index) == (0x1p+01)) {
++								adamic_release(adamic_local_19_seen);
++								return adamic_temporary_127;
++							}
++						}
++						if (((double)adamic_local_20_index) == (0x1p+01)) {
+ 							{
+-								adamic_string * adamic_temporary_128 = adamic_function_0_word(&adamic_string_27, ((double)adamic_local_19_index));
+-								adamic_object * adamic_temporary_129 = adamic_error_new(adamic_temporary_128);
+-								adamic_thrown = adamic_retain(adamic_temporary_129);
+-								adamic_release(adamic_temporary_129);
+-								adamic_release(adamic_temporary_128);
+-								goto adamic_rethrow_123;
+-							}
+-						}
+-						if (((double)adamic_local_19_index) == (0x1.8p+01)) {
++								adamic_string * adamic_temporary_130 = adamic_function_0_word(&adamic_string_29, ((double)adamic_local_20_index));
++								adamic_object * adamic_temporary_131 = adamic_error_new_kind(adamic_temporary_130, "Error");
++								adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_131)));
++								adamic_exception_pending = true;
++								adamic_release(adamic_temporary_131);
++								adamic_release(adamic_temporary_130);
++								goto adamic_rethrow_125;
++							}
++						}
++						if (((double)adamic_local_20_index) == (0x1.8p+01)) {
+ 							{
+ 								{
+-									adamic_string * adamic_temporary_130 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_19_index));
+-									adamic_array_push(adamic_local_18_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_130)});
+-									double adamic_temporary_131 = (double)adamic_local_18_seen->length;
+-									(void)adamic_temporary_131;
+-									adamic_release(adamic_temporary_130);
+-									goto adamic_continue_121;
++									adamic_string * adamic_temporary_132 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_20_index));
++									adamic_array_push(adamic_local_19_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_132)});
++									double adamic_temporary_133 = (double)adamic_local_19_seen->length;
++									(void)adamic_temporary_133;
++									adamic_release(adamic_temporary_132);
++									goto adamic_continue_123;
+ 								}
+ 								break;
+ 							}
+ 						}
+-						adamic_string * adamic_temporary_132 = adamic_function_0_word(&adamic_string_28, ((double)adamic_local_19_index));
+-						adamic_array_push(adamic_local_18_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_132)});
+-						double adamic_temporary_133 = (double)adamic_local_18_seen->length;
+-						(void)adamic_temporary_133;
+-						adamic_release(adamic_temporary_132);
+-					}
+-					{
+-						adamic_string * adamic_temporary_134 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_19_index));
+-						adamic_array_push(adamic_local_18_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_134)});
+-						double adamic_temporary_135 = (double)adamic_local_18_seen->length;
++						adamic_string * adamic_temporary_134 = adamic_function_0_word(&adamic_string_30, ((double)adamic_local_20_index));
++						adamic_array_push(adamic_local_19_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_134)});
++						double adamic_temporary_135 = (double)adamic_local_19_seen->length;
+ 						(void)adamic_temporary_135;
+ 						adamic_release(adamic_temporary_134);
+-						goto adamic_continue_121;
+-					}
+-					goto adamic_done_123;
+-					adamic_rethrow_123:;
+-					{
+-						adamic_object *adamic_temporary_136 = adamic_thrown;
++					}
++					{
++						adamic_string * adamic_temporary_136 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_20_index));
++						adamic_array_push(adamic_local_19_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_136)});
++						double adamic_temporary_137 = (double)adamic_local_19_seen->length;
++						(void)adamic_temporary_137;
++						adamic_release(adamic_temporary_136);
++						goto adamic_continue_123;
++					}
++					goto adamic_done_125;
++					adamic_rethrow_125:;
++					{
++						adamic_heap *adamic_temporary_138 = adamic_thrown;
+ 						adamic_thrown = NULL;
++						adamic_exception_pending = false;
+ 						{
+-							adamic_string * adamic_temporary_137 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_19_index));
+-							adamic_array_push(adamic_local_18_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_137)});
+-							double adamic_temporary_138 = (double)adamic_local_18_seen->length;
+-							(void)adamic_temporary_138;
+-							adamic_release(adamic_temporary_137);
+-							adamic_release(adamic_temporary_136);
+-							goto adamic_continue_121;
+-						}
+-						adamic_thrown = adamic_temporary_136;
+-						adamic_temporary_136 = NULL;
+-						adamic_release(adamic_temporary_136);
+-						adamic_release(adamic_local_18_seen);
++							adamic_string * adamic_temporary_139 = adamic_function_0_word(&adamic_string_1, ((double)adamic_local_20_index));
++							adamic_array_push(adamic_local_19_seen, (adamic_value){.reference = adamic_retain(adamic_temporary_139)});
++							double adamic_temporary_140 = (double)adamic_local_19_seen->length;
++							(void)adamic_temporary_140;
++							adamic_release(adamic_temporary_139);
++							adamic_release(adamic_temporary_138);
++							goto adamic_continue_123;
++						}
++						adamic_thrown = adamic_temporary_138;
++						adamic_exception_pending = true;
++						adamic_temporary_138 = NULL;
++						adamic_release(adamic_temporary_138);
++						adamic_release(adamic_local_19_seen);
+ 						return &adamic_string_empty;
+ 					}
+-					adamic_done_123:;
+-				}
+-			}
+-			adamic_continue_121:;
+-			adamic_local_19_index += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_string * adamic_temporary_139 = adamic_array_join(adamic_local_18_seen, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_140 = adamic_temporary_139;
+-	adamic_release(adamic_local_18_seen);
+-	return adamic_temporary_140;
++					adamic_done_125:;
++				}
++			}
++			adamic_continue_123:;
++			adamic_local_20_index += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_string * adamic_temporary_141 = adamic_array_join(adamic_local_19_seen, &adamic_string_24, adamic_join_strings);
++	adamic_string * adamic_temporary_142 = adamic_temporary_141;
++	adamic_release(adamic_local_19_seen);
++	return adamic_temporary_142;
+ 	adamic_unreachable();
+ }
+ 
+@@ -710,309 +741,356 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		{
+-			adamic_string * adamic_temporary_143 = adamic_function_0_word(&adamic_string_15, adamic_local_12_index);
+-			adamic_string * adamic_temporary_144 = adamic_temporary_143;
+-			{
+-				adamic_string * adamic_temporary_145 = adamic_function_0_word(&adamic_string_29, adamic_local_12_index);
+-				adamic_object * adamic_temporary_146 = adamic_error_new(adamic_temporary_145);
+-				adamic_thrown = adamic_retain(adamic_temporary_146);
++			adamic_string * adamic_temporary_145 = adamic_function_0_word(&adamic_string_17, adamic_local_12_index);
++			adamic_string * adamic_temporary_146 = adamic_temporary_145;
++			{
++				adamic_string * adamic_temporary_147 = adamic_function_0_word(&adamic_string_31, adamic_local_12_index);
++				adamic_object * adamic_temporary_148 = adamic_error_new_kind(adamic_temporary_147, "Error");
++				adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_148)));
++				adamic_exception_pending = true;
++				adamic_release(adamic_temporary_148);
++				adamic_release(adamic_temporary_147);
+ 				adamic_release(adamic_temporary_146);
+-				adamic_release(adamic_temporary_145);
+-				adamic_release(adamic_temporary_144);
+-				goto adamic_landing_141;
+-			}
+-			return adamic_temporary_144;
+-		}
+-		{
+-			adamic_string * adamic_temporary_147 = adamic_function_0_word(&adamic_string_29, adamic_local_12_index);
+-			adamic_object * adamic_temporary_148 = adamic_error_new(adamic_temporary_147);
+-			adamic_thrown = adamic_retain(adamic_temporary_148);
+-			adamic_release(adamic_temporary_148);
+-			adamic_release(adamic_temporary_147);
+-			goto adamic_landing_141;
+-		}
+-		goto adamic_done_142;
+-		adamic_done_142:;
+-	}
+-	goto adamic_done_141;
+-	adamic_landing_141:;
+-	{
+-		adamic_object *adamic_temporary_149 = adamic_thrown;
++				goto adamic_landing_143;
++			}
++			return adamic_temporary_146;
++		}
++		{
++			adamic_string * adamic_temporary_149 = adamic_function_0_word(&adamic_string_31, adamic_local_12_index);
++			adamic_object * adamic_temporary_150 = adamic_error_new_kind(adamic_temporary_149, "Error");
++			adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_150)));
++			adamic_exception_pending = true;
++			adamic_release(adamic_temporary_150);
++			adamic_release(adamic_temporary_149);
++			goto adamic_landing_143;
++		}
++		goto adamic_done_144;
++		adamic_done_144:;
++	}
++	goto adamic_done_143;
++	adamic_landing_143:;
++	{
++		adamic_heap *adamic_temporary_151 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_20_error = adamic_temporary_149;
+-		adamic_string * adamic_temporary_151;
+-		if (true) {
+-			adamic_string * adamic_temporary_150 = ((adamic_string *)(&adamic_local_20_error->slots[1])->reference);
+-			adamic_temporary_151 = adamic_retain(adamic_temporary_150);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_21_error = ((adamic_heap *)adamic_temporary_151);
++		bool adamic_temporary_152 = adamic_instanceof(adamic_local_21_error, &adamic_error_class);
++		adamic_string * adamic_temporary_155;
++		if (adamic_temporary_152) {
++			adamic_object * adamic_temporary_153 = adamic_function_16_narrowed_union_member(adamic_local_21_error);
++			adamic_string * adamic_temporary_154 = adamic_retain(((adamic_string *)(&adamic_temporary_153->slots[1])->reference));
++			adamic_temporary_155 = adamic_retain(adamic_temporary_154);
++			adamic_release(adamic_temporary_154);
++			adamic_release(adamic_temporary_153);
+ 		} else {
+-			adamic_temporary_151 = adamic_retain(&adamic_string_7);
+-		}
+-		adamic_string * adamic_temporary_152 = adamic_temporary_151;
+-		adamic_release(adamic_local_20_error);
+-		return adamic_temporary_152;
+-		adamic_release(adamic_local_20_error);
+-	}
+-	goto adamic_done_141;
+-	adamic_done_141:;
++			adamic_temporary_155 = adamic_retain(&adamic_string_9);
++		}
++		adamic_string * adamic_temporary_156 = adamic_temporary_155;
++		adamic_release(adamic_local_21_error);
++		return adamic_temporary_156;
++		adamic_release(adamic_local_21_error);
++	}
++	goto adamic_done_143;
++	adamic_done_143:;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_array * adamic_function_13_grown(adamic_array * adamic_local_13_list) {
+ 	ADAMIC_CHECK_STACK();
+-	bool adamic_temporary_153 = (adamic_local_13_list->heap.references == 1 && !adamic_weak_held(adamic_local_13_list));
+-	adamic_array * adamic_temporary_154 = (adamic_temporary_153 ? adamic_retain(adamic_local_13_list) : adamic_array_new(0, true));
+-	if (!adamic_temporary_153) {
+-		adamic_array_append(adamic_temporary_154, adamic_local_13_list);
+-	}
+-	adamic_string * adamic_temporary_155 = adamic_function_0_word(&adamic_string_30, (0x1.8p+01));
+-	adamic_array_push(adamic_temporary_154, (adamic_value){.reference = adamic_retain(adamic_temporary_155)});
+-	adamic_array * adamic_temporary_156 = adamic_temporary_154;
+-	adamic_release(adamic_temporary_155);
++	bool adamic_temporary_157 = (adamic_local_13_list->heap.references == 1 && !adamic_weak_held(adamic_local_13_list));
++	adamic_array * adamic_temporary_158 = (adamic_temporary_157 ? adamic_retain(adamic_local_13_list) : adamic_array_new(0, true));
++	if (!adamic_temporary_157) {
++		adamic_array_append(adamic_temporary_158, adamic_local_13_list);
++	}
++	adamic_string * adamic_temporary_159 = adamic_function_0_word(&adamic_string_32, (0x1.8p+01));
++	adamic_array_push(adamic_temporary_158, (adamic_value){.reference = adamic_retain(adamic_temporary_159)});
++	adamic_array * adamic_temporary_160 = adamic_temporary_158;
++	adamic_release(adamic_temporary_159);
+ 	adamic_release(adamic_local_13_list);
+-	return adamic_temporary_156;
++	return adamic_temporary_160;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_string * adamic_function_14_handedThenOverridden(void) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_string * adamic_temporary_157 = adamic_function_0_word(&adamic_string_31, (0x1p+00));
+-	adamic_string * adamic_temporary_158 = adamic_function_0_word(&adamic_string_31, (0x1p+01));
+-	adamic_array * adamic_temporary_159 = adamic_array_new(2, true);
+-	adamic_array_push(adamic_temporary_159, (adamic_value){.reference = adamic_retain(adamic_temporary_157)});
+-	adamic_array_push(adamic_temporary_159, (adamic_value){.reference = adamic_retain(adamic_temporary_158)});
+-	adamic_array * adamic_local_21_held = adamic_temporary_159;
+-	adamic_release(adamic_temporary_158);
+-	adamic_release(adamic_temporary_157);
+-	{
+-		int64_t adamic_local_22_round = (int64_t)(0x0p+00);
++	adamic_string * adamic_temporary_161 = adamic_function_0_word(&adamic_string_33, (0x1p+00));
++	adamic_string * adamic_temporary_162 = adamic_function_0_word(&adamic_string_33, (0x1p+01));
++	adamic_array * adamic_temporary_163 = adamic_array_new(2, true);
++	adamic_array_push(adamic_temporary_163, (adamic_value){.reference = adamic_retain(adamic_temporary_161)});
++	adamic_array_push(adamic_temporary_163, (adamic_value){.reference = adamic_retain(adamic_temporary_162)});
++	adamic_array * adamic_local_23_held = adamic_temporary_163;
++	adamic_release(adamic_temporary_162);
++	adamic_release(adamic_temporary_161);
++	{
++		int64_t adamic_local_24_round = (int64_t)(0x0p+00);
+ 		for (;;) {
+-			if (!(((double)adamic_local_22_round) < (0x1p+01))) {
++			if (!(((double)adamic_local_24_round) < (0x1p+01))) {
+ 				break;
+ 			}
+ 			{
+ 				{
+ 					{
+-						if (((double)adamic_local_22_round) == (0x0p+00)) {
++						if (((double)adamic_local_24_round) == (0x0p+00)) {
+ 							{
+-								adamic_array * adamic_temporary_163 = adamic_function_13_grown(adamic_retain(adamic_local_21_held));
+-								adamic_string * adamic_temporary_164 = adamic_array_join(adamic_temporary_163, &adamic_string_22, adamic_join_strings);
+-								adamic_string * adamic_temporary_165 = adamic_temporary_164;
+-								adamic_release(adamic_temporary_163);
++								adamic_array * adamic_temporary_167 = adamic_function_13_grown(adamic_retain(adamic_local_23_held));
++								adamic_string * adamic_temporary_168 = adamic_array_join(adamic_temporary_167, &adamic_string_24, adamic_join_strings);
++								adamic_string * adamic_temporary_169 = adamic_temporary_168;
++								adamic_release(adamic_temporary_167);
+ 								{
+-									adamic_release(adamic_temporary_165);
+-									goto adamic_continue_160;
++									adamic_release(adamic_temporary_169);
++									goto adamic_continue_164;
+ 								}
+-								adamic_release(adamic_local_21_held);
+-								return adamic_temporary_165;
+-							}
+-						}
+-						adamic_array * adamic_temporary_166 = adamic_local_21_held;
+-						adamic_local_21_held = NULL;
+-						adamic_array * adamic_temporary_167 = adamic_function_13_grown(adamic_temporary_166);
+-						adamic_array * adamic_temporary_168 = adamic_local_21_held;
+-						adamic_local_21_held = adamic_temporary_167;
+-						adamic_release(adamic_temporary_168);
+-					}
+-					{
+-						goto adamic_continue_160;
+-					}
+-					goto adamic_done_162;
+-					adamic_done_162:;
+-				}
+-			}
+-			adamic_continue_160:;
+-			adamic_local_22_round += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_string * adamic_temporary_169 = adamic_array_join(adamic_local_21_held, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_170 = adamic_temporary_169;
+-	adamic_release(adamic_local_21_held);
+-	return adamic_temporary_170;
+-	adamic_unreachable();
+-}
+-
+-static adamic_value adamic_function_15_closure(adamic_closure *self, adamic_value *arguments) {
++								adamic_release(adamic_local_23_held);
++								return adamic_temporary_169;
++							}
++						}
++						adamic_array * adamic_temporary_170 = adamic_local_23_held;
++						adamic_local_23_held = NULL;
++						adamic_array * adamic_temporary_171 = adamic_function_13_grown(adamic_temporary_170);
++						adamic_array * adamic_temporary_172 = adamic_local_23_held;
++						adamic_local_23_held = adamic_temporary_171;
++						adamic_release(adamic_temporary_172);
++					}
++					{
++						goto adamic_continue_164;
++					}
++					goto adamic_done_166;
++					adamic_done_166:;
++				}
++			}
++			adamic_continue_164:;
++			adamic_local_24_round += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_string * adamic_temporary_173 = adamic_array_join(adamic_local_23_held, &adamic_string_24, adamic_join_strings);
++	adamic_string * adamic_temporary_174 = adamic_temporary_173;
++	adamic_release(adamic_local_23_held);
++	return adamic_temporary_174;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_15_narrowed_union_member(adamic_heap * adamic_local_15_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_175 = adamic_instanceof(adamic_local_15_argument, &adamic_error_class);
++	if (!adamic_temporary_175) {
++		adamic_panic((&adamic_string_8)->bytes, (&adamic_string_8)->length);
++	}
++	adamic_object * adamic_temporary_176 = adamic_retain(((adamic_object *)adamic_local_15_argument));
++	return adamic_temporary_176;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_16_narrowed_union_member(adamic_heap * adamic_local_22_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_177 = adamic_instanceof(adamic_local_22_argument, &adamic_error_class);
++	if (!adamic_temporary_177) {
++		adamic_panic((&adamic_string_8)->bytes, (&adamic_string_8)->length);
++	}
++	adamic_object * adamic_temporary_178 = adamic_retain(((adamic_object *)adamic_local_22_argument));
++	return adamic_temporary_178;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_17_narrowed_union_member(adamic_heap * adamic_local_27_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_179 = adamic_instanceof(adamic_local_27_argument, &adamic_error_class);
++	if (!adamic_temporary_179) {
++		adamic_panic((&adamic_string_8)->bytes, (&adamic_string_8)->length);
++	}
++	adamic_object * adamic_temporary_180 = adamic_retain(((adamic_object *)adamic_local_27_argument));
++	return adamic_temporary_180;
++	adamic_unreachable();
++}
++
++static adamic_value adamic_function_18_closure(adamic_closure *self, adamic_value *arguments) {
+ 	ADAMIC_CHECK_STACK();
+ 	(void)self;
+ 	(void)arguments;
+-	double adamic_local_27_value = arguments[0].number;
+-	{
+-		if (adamic_local_27_value == (0x1p+01)) {
+-			{
+-				adamic_string * adamic_temporary_172 = adamic_function_0_word(&adamic_string_41, adamic_local_27_value);
+-				adamic_object * adamic_temporary_173 = adamic_error_new(adamic_temporary_172);
+-				adamic_thrown = adamic_retain(adamic_temporary_173);
+-				adamic_release(adamic_temporary_173);
+-				adamic_release(adamic_temporary_172);
+-				goto adamic_rethrow_171;
+-			}
+-		}
+-		adamic_string * adamic_temporary_174 = adamic_function_0_word(&adamic_string_11, adamic_local_27_value);
+-		adamic_string * adamic_temporary_175 = adamic_temporary_174;
+-		{
+-			if (adamic_local_27_value >= (0x1p+01)) {
+-				{
+-					adamic_string * adamic_temporary_176 = adamic_function_0_word(&adamic_string_12, adamic_local_27_value);
+-					adamic_string * adamic_temporary_177 = adamic_temporary_176;
+-					adamic_release(adamic_temporary_175);
+-					return (adamic_value){.reference = adamic_temporary_177};
+-				}
+-			}
+-		}
+-		return (adamic_value){.reference = adamic_temporary_175};
+-	}
+-	{
+-		if (adamic_local_27_value >= (0x1p+01)) {
+-			{
+-				adamic_string * adamic_temporary_178 = adamic_function_0_word(&adamic_string_12, adamic_local_27_value);
+-				adamic_string * adamic_temporary_179 = adamic_temporary_178;
+-				return (adamic_value){.reference = adamic_temporary_179};
+-			}
+-		}
+-	}
+-	goto adamic_done_171;
+-	adamic_rethrow_171:;
+-	{
+-		adamic_object *adamic_temporary_180 = adamic_thrown;
++	double adamic_local_30_value = arguments[0].number;
++	{
++		if (adamic_local_30_value == (0x1p+01)) {
++			{
++				adamic_string * adamic_temporary_182 = adamic_function_0_word(&adamic_string_43, adamic_local_30_value);
++				adamic_object * adamic_temporary_183 = adamic_error_new_kind(adamic_temporary_182, "Error");
++				adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_183)));
++				adamic_exception_pending = true;
++				adamic_release(adamic_temporary_183);
++				adamic_release(adamic_temporary_182);
++				goto adamic_rethrow_181;
++			}
++		}
++		adamic_string * adamic_temporary_184 = adamic_function_0_word(&adamic_string_13, adamic_local_30_value);
++		adamic_string * adamic_temporary_185 = adamic_temporary_184;
++		{
++			if (adamic_local_30_value >= (0x1p+01)) {
++				{
++					adamic_string * adamic_temporary_186 = adamic_function_0_word(&adamic_string_14, adamic_local_30_value);
++					adamic_string * adamic_temporary_187 = adamic_temporary_186;
++					adamic_release(adamic_temporary_185);
++					return (adamic_value){.reference = adamic_temporary_187};
++				}
++			}
++		}
++		return (adamic_value){.reference = adamic_temporary_185};
++	}
++	{
++		if (adamic_local_30_value >= (0x1p+01)) {
++			{
++				adamic_string * adamic_temporary_188 = adamic_function_0_word(&adamic_string_14, adamic_local_30_value);
++				adamic_string * adamic_temporary_189 = adamic_temporary_188;
++				return (adamic_value){.reference = adamic_temporary_189};
++			}
++		}
++	}
++	goto adamic_done_181;
++	adamic_rethrow_181:;
++	{
++		adamic_heap *adamic_temporary_190 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		{
+-			if (adamic_local_27_value >= (0x1p+01)) {
+-				{
+-					adamic_string * adamic_temporary_181 = adamic_function_0_word(&adamic_string_12, adamic_local_27_value);
+-					adamic_string * adamic_temporary_182 = adamic_temporary_181;
+-					adamic_release(adamic_temporary_180);
+-					return (adamic_value){.reference = adamic_temporary_182};
+-				}
+-			}
+-		}
+-		adamic_thrown = adamic_temporary_180;
+-		adamic_temporary_180 = NULL;
+-		adamic_release(adamic_temporary_180);
++		adamic_exception_pending = false;
++		{
++			if (adamic_local_30_value >= (0x1p+01)) {
++				{
++					adamic_string * adamic_temporary_191 = adamic_function_0_word(&adamic_string_14, adamic_local_30_value);
++					adamic_string * adamic_temporary_192 = adamic_temporary_191;
++					adamic_release(adamic_temporary_190);
++					return (adamic_value){.reference = adamic_temporary_192};
++				}
++			}
++		}
++		adamic_thrown = adamic_temporary_190;
++		adamic_exception_pending = true;
++		adamic_temporary_190 = NULL;
++		adamic_release(adamic_temporary_190);
+ 		return (adamic_value){.number = 0};
+ 	}
+-	adamic_done_171:;
++	adamic_done_181:;
+ 	adamic_unreachable();
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_string * adamic_temporary_183 = adamic_function_1_overridden((0x1p+00));
+-	adamic_write_line(adamic_stdout, adamic_temporary_183);
+-	adamic_release(adamic_temporary_183);
+-	adamic_string * adamic_temporary_184 = adamic_function_2_swallowed((0x1p+01));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_184);
++	adamic_string * adamic_temporary_193 = adamic_function_1_overridden((0x1p+00));
++	adamic_write_line(adamic_stdout, adamic_temporary_193);
++	adamic_release(adamic_temporary_193);
++	adamic_string * adamic_temporary_194 = adamic_function_2_swallowed((0x1p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_194);
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_184);
+-	adamic_release(adamic_temporary_184);
+-	adamic_string * adamic_temporary_185 = adamic_function_3_rethrownThenSwallowed((0x1.8p+01));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_185);
++	adamic_write_line(adamic_stdout, adamic_temporary_194);
++	adamic_release(adamic_temporary_194);
++	adamic_string * adamic_temporary_195 = adamic_function_3_rethrownThenSwallowed((0x1.8p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_195);
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_185);
+-	adamic_release(adamic_temporary_185);
+-	{
+-		int64_t adamic_local_23_index = (int64_t)(0x1.8p+01);
++	adamic_write_line(adamic_stdout, adamic_temporary_195);
++	adamic_release(adamic_temporary_195);
++	{
++		int64_t adamic_local_25_index = (int64_t)(0x1.8p+01);
+ 		for (;;) {
+-			if (!(((double)adamic_local_23_index) < (0x1p+03))) {
++			if (!(((double)adamic_local_25_index) < (0x1p+03))) {
+ 				break;
+ 			}
+ 			{
+ 				{
+ 					{
+-						adamic_string * adamic_temporary_189 = adamic_function_4_sometimes(((double)adamic_local_23_index));
+-						if (adamic_thrown != NULL) {
+-							adamic_release(adamic_temporary_189);
+-							goto adamic_landing_188;
+-						}
+-						adamic_write_line(adamic_stdout, adamic_temporary_189);
+-						adamic_release(adamic_temporary_189);
+-					}
+-					goto adamic_done_188;
+-					adamic_landing_188:;
+-					{
+-						adamic_object *adamic_temporary_190 = adamic_thrown;
++						adamic_string * adamic_temporary_199 = adamic_function_4_sometimes(((double)adamic_local_25_index));
++						if (adamic_exception_pending) {
++							adamic_release(adamic_temporary_199);
++							goto adamic_landing_198;
++						}
++						adamic_write_line(adamic_stdout, adamic_temporary_199);
++						adamic_release(adamic_temporary_199);
++					}
++					goto adamic_done_198;
++					adamic_landing_198:;
++					{
++						adamic_heap *adamic_temporary_200 = adamic_thrown;
+ 						adamic_thrown = NULL;
+-						adamic_object * adamic_local_24_error = adamic_temporary_190;
+-						adamic_string * adamic_temporary_192;
+-						if (true) {
+-							adamic_string * adamic_temporary_191 = adamic_retain(((adamic_string *)(&adamic_local_24_error->slots[1])->reference));
+-							adamic_temporary_192 = adamic_retain(adamic_temporary_191);
+-							adamic_release(adamic_temporary_191);
++						adamic_exception_pending = false;
++						adamic_heap * adamic_local_26_error = ((adamic_heap *)adamic_temporary_200);
++						bool adamic_temporary_201 = adamic_instanceof(adamic_local_26_error, &adamic_error_class);
++						adamic_string * adamic_temporary_204;
++						if (adamic_temporary_201) {
++							adamic_object * adamic_temporary_202 = adamic_function_17_narrowed_union_member(adamic_local_26_error);
++							adamic_string * adamic_temporary_203 = adamic_retain(((adamic_string *)(&adamic_temporary_202->slots[1])->reference));
++							adamic_temporary_204 = adamic_retain(adamic_temporary_203);
++							adamic_release(adamic_temporary_203);
++							adamic_release(adamic_temporary_202);
+ 						} else {
+-							adamic_temporary_192 = adamic_retain(&adamic_string_7);
+-						}
+-						adamic_string * adamic_temporary_193 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_32, adamic_temporary_192});
+-						adamic_write_line(adamic_stdout, adamic_temporary_193);
+-						adamic_release(adamic_temporary_193);
+-						adamic_release(adamic_temporary_192);
+-						adamic_release(adamic_local_24_error);
+-					}
+-					goto adamic_done_188;
+-					adamic_done_188:;
+-				}
+-			}
+-			adamic_local_23_index += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_string * adamic_temporary_194 = adamic_function_0_word(&adamic_string_33, (0x1p+00));
+-	double adamic_temporary_195 = adamic_function_5_counted(adamic_temporary_194);
+-	adamic_string * adamic_temporary_196 = adamic_string_from_number(adamic_temporary_195);
+-	adamic_string * adamic_temporary_197 = adamic_function_0_word(&adamic_string_13, (0x1p+01));
+-	double adamic_temporary_198 = adamic_function_5_counted(adamic_temporary_197);
+-	adamic_string * adamic_temporary_199 = adamic_string_from_number(adamic_temporary_198);
+-	adamic_string * adamic_temporary_200 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_196, &adamic_string_34, adamic_temporary_199});
+-	adamic_write_line(adamic_stdout, adamic_temporary_200);
+-	adamic_release(adamic_temporary_200);
+-	adamic_release(adamic_temporary_199);
+-	adamic_release(adamic_temporary_197);
+-	adamic_release(adamic_temporary_196);
+-	adamic_release(adamic_temporary_194);
+-	adamic_object * adamic_temporary_201 = adamic_function_6_paired((0x1p+00));
+-	adamic_string * adamic_temporary_202 = adamic_retain(((adamic_string *)(&adamic_temporary_201->slots[0])->reference));
+-	adamic_object * adamic_temporary_203 = adamic_function_6_paired((0x1p+01));
+-	adamic_string * adamic_temporary_204 = adamic_retain(((adamic_string *)(&adamic_temporary_203->slots[0])->reference));
+-	adamic_object * adamic_temporary_205 = adamic_function_6_paired((0x1p+01));
+-	double adamic_temporary_207 = adamic_object_data_field(adamic_temporary_205, "size", &adamic_cache_206)->number;
++							adamic_temporary_204 = adamic_retain(&adamic_string_9);
++						}
++						adamic_string * adamic_temporary_205 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_34, adamic_temporary_204});
++						adamic_write_line(adamic_stdout, adamic_temporary_205);
++						adamic_release(adamic_temporary_205);
++						adamic_release(adamic_temporary_204);
++						adamic_release(adamic_local_26_error);
++					}
++					goto adamic_done_198;
++					adamic_done_198:;
++				}
++			}
++			adamic_local_25_index += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_string * adamic_temporary_206 = adamic_function_0_word(&adamic_string_35, (0x1p+00));
++	double adamic_temporary_207 = adamic_function_5_counted(adamic_temporary_206);
+ 	adamic_string * adamic_temporary_208 = adamic_string_from_number(adamic_temporary_207);
+-	adamic_string * adamic_temporary_209 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_202, &adamic_string_34, adamic_temporary_204, &adamic_string_34, adamic_temporary_208});
+-	adamic_write_line(adamic_stdout, adamic_temporary_209);
++	adamic_string * adamic_temporary_209 = adamic_function_0_word(&adamic_string_15, (0x1p+01));
++	double adamic_temporary_210 = adamic_function_5_counted(adamic_temporary_209);
++	adamic_string * adamic_temporary_211 = adamic_string_from_number(adamic_temporary_210);
++	adamic_string * adamic_temporary_212 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_208, &adamic_string_36, adamic_temporary_211});
++	adamic_write_line(adamic_stdout, adamic_temporary_212);
++	adamic_release(adamic_temporary_212);
++	adamic_release(adamic_temporary_211);
+ 	adamic_release(adamic_temporary_209);
+ 	adamic_release(adamic_temporary_208);
+-	adamic_release(adamic_temporary_205);
+-	adamic_release(adamic_temporary_204);
+-	adamic_release(adamic_temporary_203);
+-	adamic_release(adamic_temporary_202);
+-	adamic_release(adamic_temporary_201);
+-	adamic_string * adamic_temporary_210 = adamic_function_7_nested((0x1p+02));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_210);
++	adamic_release(adamic_temporary_206);
++	adamic_object * adamic_temporary_213 = adamic_function_6_paired((0x1p+00));
++	adamic_string * adamic_temporary_214 = adamic_retain(((adamic_string *)(&adamic_temporary_213->slots[0])->reference));
++	adamic_object * adamic_temporary_215 = adamic_function_6_paired((0x1p+01));
++	adamic_string * adamic_temporary_216 = adamic_retain(((adamic_string *)(&adamic_temporary_215->slots[0])->reference));
++	adamic_object * adamic_temporary_217 = adamic_function_6_paired((0x1p+01));
++	double adamic_temporary_219 = adamic_object_data_field(adamic_temporary_217, "size", &adamic_cache_218)->number;
++	adamic_string * adamic_temporary_220 = adamic_string_from_number(adamic_temporary_219);
++	adamic_string * adamic_temporary_221 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_214, &adamic_string_36, adamic_temporary_216, &adamic_string_36, adamic_temporary_220});
++	adamic_write_line(adamic_stdout, adamic_temporary_221);
++	adamic_release(adamic_temporary_221);
++	adamic_release(adamic_temporary_220);
++	adamic_release(adamic_temporary_217);
++	adamic_release(adamic_temporary_216);
++	adamic_release(adamic_temporary_215);
++	adamic_release(adamic_temporary_214);
++	adamic_release(adamic_temporary_213);
++	adamic_string * adamic_temporary_222 = adamic_function_7_nested((0x1p+02));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_222);
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_210);
+-	adamic_release(adamic_temporary_210);
+-	adamic_string * adamic_temporary_211 = adamic_function_8_twice((0x1.4p+02));
+-	adamic_write_line(adamic_stdout, adamic_temporary_211);
+-	adamic_release(adamic_temporary_211);
+-	adamic_string * adamic_temporary_212 = adamic_function_9_broken();
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_212);
++	adamic_write_line(adamic_stdout, adamic_temporary_222);
++	adamic_release(adamic_temporary_222);
++	adamic_string * adamic_temporary_223 = adamic_function_8_twice((0x1.4p+02));
++	adamic_write_line(adamic_stdout, adamic_temporary_223);
++	adamic_release(adamic_temporary_223);
++	adamic_string * adamic_temporary_224 = adamic_function_9_broken();
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_224);
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_212);
+-	adamic_release(adamic_temporary_212);
+-	adamic_string * adamic_temporary_213 = adamic_function_10_brokenReturn();
+-	adamic_write_line(adamic_stdout, adamic_temporary_213);
+-	adamic_release(adamic_temporary_213);
+-	adamic_string * adamic_temporary_214 = adamic_function_11_continued();
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_214);
++	adamic_write_line(adamic_stdout, adamic_temporary_224);
++	adamic_release(adamic_temporary_224);
++	adamic_string * adamic_temporary_225 = adamic_function_10_brokenReturn();
++	adamic_write_line(adamic_stdout, adamic_temporary_225);
++	adamic_release(adamic_temporary_225);
++	adamic_string * adamic_temporary_226 = adamic_function_11_continued();
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_226);
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_214);
+-	adamic_release(adamic_temporary_214);
++	adamic_write_line(adamic_stdout, adamic_temporary_226);
++	adamic_release(adamic_temporary_226);
+ 	adamic_global_0_rounds = (0x0p+00);
+ 	adamic_ready_0 = true;
+ 	for (;;) {
+@@ -1021,218 +1099,226 @@
+ 		}
+ 		{
+ 			{
+-				double adamic_temporary_217 = adamic_global_0_rounds;
+-				adamic_global_0_rounds = (adamic_temporary_217 + (0x1p+00));
+-				{
+-					double adamic_temporary_219 = adamic_global_0_rounds;
+-					if (adamic_temporary_219 == (0x1.8p+01)) {
++				double adamic_temporary_229 = adamic_global_0_rounds;
++				adamic_global_0_rounds = (adamic_temporary_229 + (0x1p+00));
++				{
++					double adamic_temporary_231 = adamic_global_0_rounds;
++					if (adamic_temporary_231 == (0x1.8p+01)) {
+ 						{
+-							double adamic_temporary_220 = adamic_global_0_rounds;
+-							adamic_string * adamic_temporary_221 = adamic_function_0_word(&adamic_string_35, adamic_temporary_220);
+-							adamic_object * adamic_temporary_222 = adamic_error_new(adamic_temporary_221);
+-							adamic_thrown = adamic_retain(adamic_temporary_222);
+-							adamic_release(adamic_temporary_222);
+-							adamic_release(adamic_temporary_221);
+-							goto adamic_rethrow_218;
+-						}
+-					}
+-				}
+-				{
+-					{
+-						int64_t adamic_local_25_inner = (int64_t)(0x0p+00);
++							double adamic_temporary_232 = adamic_global_0_rounds;
++							adamic_string * adamic_temporary_233 = adamic_function_0_word(&adamic_string_37, adamic_temporary_232);
++							adamic_object * adamic_temporary_234 = adamic_error_new_kind(adamic_temporary_233, "Error");
++							adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_234)));
++							adamic_exception_pending = true;
++							adamic_release(adamic_temporary_234);
++							adamic_release(adamic_temporary_233);
++							goto adamic_rethrow_230;
++						}
++					}
++				}
++				{
++					{
++						int64_t adamic_local_28_inner = (int64_t)(0x0p+00);
+ 						for (;;) {
+-							if (!(((double)adamic_local_25_inner) < (0x1.8p+01))) {
++							if (!(((double)adamic_local_28_inner) < (0x1.8p+01))) {
+ 								break;
+ 							}
+ 							{
+ 								{
+-									if (((double)adamic_local_25_inner) == (0x1p+00)) {
++									if (((double)adamic_local_28_inner) == (0x1p+00)) {
+ 										{
+ 											break;
+ 										}
+ 									}
+-									double adamic_temporary_225 = adamic_global_0_rounds;
+-									adamic_string * adamic_temporary_226 = adamic_function_0_word(&adamic_string_36, adamic_temporary_225);
+-									adamic_write_line(adamic_stdout, adamic_temporary_226);
+-									adamic_release(adamic_temporary_226);
++									double adamic_temporary_237 = adamic_global_0_rounds;
++									adamic_string * adamic_temporary_238 = adamic_function_0_word(&adamic_string_38, adamic_temporary_237);
++									adamic_write_line(adamic_stdout, adamic_temporary_238);
++									adamic_release(adamic_temporary_238);
+ 								}
+ 							}
+-							adamic_local_25_inner += (int64_t)((0x1p+00));
+-						}
+-					}
+-					double adamic_temporary_227 = adamic_global_0_rounds;
+-					if (adamic_temporary_227 == (0x1.8p+01)) {
++							adamic_local_28_inner += (int64_t)((0x1p+00));
++						}
++					}
++					double adamic_temporary_239 = adamic_global_0_rounds;
++					if (adamic_temporary_239 == (0x1.8p+01)) {
+ 						{
+ 							break;
+ 						}
+ 					}
+ 				}
+-				goto adamic_done_218;
+-				adamic_rethrow_218:;
+-				{
+-					adamic_object *adamic_temporary_228 = adamic_thrown;
++				goto adamic_done_230;
++				adamic_rethrow_230:;
++				{
++					adamic_heap *adamic_temporary_240 = adamic_thrown;
+ 					adamic_thrown = NULL;
++					adamic_exception_pending = false;
+ 					{
+ 						{
+-							int64_t adamic_local_25_inner = (int64_t)(0x0p+00);
++							int64_t adamic_local_28_inner = (int64_t)(0x0p+00);
+ 							for (;;) {
+-								if (!(((double)adamic_local_25_inner) < (0x1.8p+01))) {
++								if (!(((double)adamic_local_28_inner) < (0x1.8p+01))) {
+ 									break;
+ 								}
+ 								{
+ 									{
+-										if (((double)adamic_local_25_inner) == (0x1p+00)) {
++										if (((double)adamic_local_28_inner) == (0x1p+00)) {
+ 											{
+ 												break;
+ 											}
+ 										}
+-										double adamic_temporary_231 = adamic_global_0_rounds;
+-										adamic_string * adamic_temporary_232 = adamic_function_0_word(&adamic_string_36, adamic_temporary_231);
+-										adamic_write_line(adamic_stdout, adamic_temporary_232);
+-										adamic_release(adamic_temporary_232);
++										double adamic_temporary_243 = adamic_global_0_rounds;
++										adamic_string * adamic_temporary_244 = adamic_function_0_word(&adamic_string_38, adamic_temporary_243);
++										adamic_write_line(adamic_stdout, adamic_temporary_244);
++										adamic_release(adamic_temporary_244);
+ 									}
+ 								}
+-								adamic_local_25_inner += (int64_t)((0x1p+00));
+-							}
+-						}
+-						double adamic_temporary_233 = adamic_global_0_rounds;
+-						if (adamic_temporary_233 == (0x1.8p+01)) {
++								adamic_local_28_inner += (int64_t)((0x1p+00));
++							}
++						}
++						double adamic_temporary_245 = adamic_global_0_rounds;
++						if (adamic_temporary_245 == (0x1.8p+01)) {
+ 							{
+-								adamic_release(adamic_temporary_228);
++								adamic_release(adamic_temporary_240);
+ 								break;
+ 							}
+ 						}
+ 					}
+-					adamic_thrown = adamic_temporary_228;
+-					adamic_temporary_228 = NULL;
++					adamic_thrown = adamic_temporary_240;
++					adamic_exception_pending = true;
++					adamic_temporary_240 = NULL;
++					adamic_release(adamic_temporary_240);
+ 					adamic_uncaught();
+ 				}
+-				adamic_done_218:;
+-			}
+-		}
+-	}
+-	double adamic_temporary_234 = adamic_global_0_rounds;
+-	adamic_string * adamic_temporary_235 = adamic_string_from_number(adamic_temporary_234);
+-	adamic_string * adamic_temporary_236 = adamic_string_concat(3, (adamic_string *const[]){&adamic_string_37, adamic_temporary_235, &adamic_string_38});
+-	adamic_write_line(adamic_stdout, adamic_temporary_236);
+-	adamic_release(adamic_temporary_236);
+-	adamic_release(adamic_temporary_235);
+-	{
+-		int64_t adamic_local_26_cell = (int64_t)(0x0p+00);
++				adamic_done_230:;
++			}
++		}
++	}
++	double adamic_temporary_246 = adamic_global_0_rounds;
++	adamic_string * adamic_temporary_247 = adamic_string_from_number(adamic_temporary_246);
++	adamic_string * adamic_temporary_248 = adamic_string_concat(3, (adamic_string *const[]){&adamic_string_39, adamic_temporary_247, &adamic_string_40});
++	adamic_write_line(adamic_stdout, adamic_temporary_248);
++	adamic_release(adamic_temporary_248);
++	adamic_release(adamic_temporary_247);
++	{
++		int64_t adamic_local_29_cell = (int64_t)(0x0p+00);
+ 		for (;;) {
+-			if (!(((double)adamic_local_26_cell) < (0x1p+02))) {
++			if (!(((double)adamic_local_29_cell) < (0x1p+02))) {
+ 				break;
+ 			}
+ 			{
+ 				{
+ 					{
+-						if (((double)adamic_local_26_cell) == (0x1p+00)) {
++						if (((double)adamic_local_29_cell) == (0x1p+00)) {
+ 							{
+-								adamic_string * adamic_temporary_240 = adamic_function_0_word(&adamic_string_39, ((double)adamic_local_26_cell));
+-								adamic_object * adamic_temporary_241 = adamic_error_new(adamic_temporary_240);
+-								adamic_thrown = adamic_retain(adamic_temporary_241);
+-								adamic_release(adamic_temporary_241);
+-								adamic_release(adamic_temporary_240);
+-								goto adamic_rethrow_239;
+-							}
+-						}
+-						adamic_string * adamic_temporary_242 = adamic_function_0_word(&adamic_string_39, ((double)adamic_local_26_cell));
+-						adamic_write_line(adamic_stdout, adamic_temporary_242);
+-						adamic_release(adamic_temporary_242);
++								adamic_string * adamic_temporary_252 = adamic_function_0_word(&adamic_string_41, ((double)adamic_local_29_cell));
++								adamic_object * adamic_temporary_253 = adamic_error_new_kind(adamic_temporary_252, "Error");
++								adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_253)));
++								adamic_exception_pending = true;
++								adamic_release(adamic_temporary_253);
++								adamic_release(adamic_temporary_252);
++								goto adamic_rethrow_251;
++							}
++						}
++						adamic_string * adamic_temporary_254 = adamic_function_0_word(&adamic_string_41, ((double)adamic_local_29_cell));
++						adamic_write_line(adamic_stdout, adamic_temporary_254);
++						adamic_release(adamic_temporary_254);
+ 					}
+ 					{
+ 						{
+-							double adamic_temporary_243 = ((double)adamic_local_26_cell);
++							double adamic_temporary_255 = ((double)adamic_local_29_cell);
+ 							do {
+-								if (adamic_temporary_243 == (0x0p+00)) {
++								if (adamic_temporary_255 == (0x0p+00)) {
+ 									break;
+ 								} else {
+-									adamic_string * adamic_temporary_245 = adamic_function_0_word(&adamic_string_40, ((double)adamic_local_26_cell));
+-									adamic_write_line(adamic_stdout, adamic_temporary_245);
+-									adamic_release(adamic_temporary_245);
++									adamic_string * adamic_temporary_257 = adamic_function_0_word(&adamic_string_42, ((double)adamic_local_29_cell));
++									adamic_write_line(adamic_stdout, adamic_temporary_257);
++									adamic_release(adamic_temporary_257);
+ 								}
+ 							} while (0);
+ 						}
+-						if (((double)adamic_local_26_cell) == (0x1p+00)) {
++						if (((double)adamic_local_29_cell) == (0x1p+00)) {
+ 							{
+ 								break;
+ 							}
+ 						}
+ 					}
+-					goto adamic_done_239;
+-					adamic_rethrow_239:;
+-					{
+-						adamic_object *adamic_temporary_246 = adamic_thrown;
++					goto adamic_done_251;
++					adamic_rethrow_251:;
++					{
++						adamic_heap *adamic_temporary_258 = adamic_thrown;
+ 						adamic_thrown = NULL;
++						adamic_exception_pending = false;
+ 						{
+ 							{
+-								double adamic_temporary_247 = ((double)adamic_local_26_cell);
++								double adamic_temporary_259 = ((double)adamic_local_29_cell);
+ 								do {
+-									if (adamic_temporary_247 == (0x0p+00)) {
++									if (adamic_temporary_259 == (0x0p+00)) {
+ 										break;
+ 									} else {
+-										adamic_string * adamic_temporary_249 = adamic_function_0_word(&adamic_string_40, ((double)adamic_local_26_cell));
+-										adamic_write_line(adamic_stdout, adamic_temporary_249);
+-										adamic_release(adamic_temporary_249);
++										adamic_string * adamic_temporary_261 = adamic_function_0_word(&adamic_string_42, ((double)adamic_local_29_cell));
++										adamic_write_line(adamic_stdout, adamic_temporary_261);
++										adamic_release(adamic_temporary_261);
+ 									}
+ 								} while (0);
+ 							}
+-							if (((double)adamic_local_26_cell) == (0x1p+00)) {
++							if (((double)adamic_local_29_cell) == (0x1p+00)) {
+ 								{
+-									adamic_release(adamic_temporary_246);
++									adamic_release(adamic_temporary_258);
+ 									break;
+ 								}
+ 							}
+ 						}
+-						adamic_thrown = adamic_temporary_246;
+-						adamic_temporary_246 = NULL;
++						adamic_thrown = adamic_temporary_258;
++						adamic_exception_pending = true;
++						adamic_temporary_258 = NULL;
++						adamic_release(adamic_temporary_258);
+ 						adamic_uncaught();
+ 					}
+-					adamic_done_239:;
+-				}
+-			}
+-			adamic_local_26_cell += (int64_t)((0x1p+00));
+-		}
+-	}
+-	adamic_array * adamic_temporary_251 = adamic_array_new(3, false);
+-	adamic_array_push(adamic_temporary_251, (adamic_value){.number = (0x1p+00)});
+-	adamic_array_push(adamic_temporary_251, (adamic_value){.number = (0x1p+01)});
+-	adamic_array_push(adamic_temporary_251, (adamic_value){.number = (0x1.8p+01)});
+-	adamic_array *adamic_temporary_250 = adamic_temporary_251;
+-	adamic_closure * adamic_temporary_252 = adamic_closure_new(adamic_function_15_closure, 0);
+-	adamic_array * adamic_temporary_253 = adamic_array_new(adamic_temporary_250->length, true);
+-	size_t adamic_temporary_254 = adamic_temporary_250->length;
+-	for (size_t adamic_temporary_255 = 0; adamic_temporary_255 < adamic_temporary_254; adamic_temporary_255++) {
+-		if (adamic_temporary_255 >= adamic_temporary_250->length) {
++					adamic_done_251:;
++				}
++			}
++			adamic_local_29_cell += (int64_t)((0x1p+00));
++		}
++	}
++	adamic_array * adamic_temporary_263 = adamic_array_new(3, false);
++	adamic_array_push(adamic_temporary_263, (adamic_value){.number = (0x1p+00)});
++	adamic_array_push(adamic_temporary_263, (adamic_value){.number = (0x1p+01)});
++	adamic_array_push(adamic_temporary_263, (adamic_value){.number = (0x1.8p+01)});
++	adamic_array *adamic_temporary_262 = adamic_temporary_263;
++	adamic_closure * adamic_temporary_264 = adamic_closure_new(adamic_function_18_closure, 0);
++	adamic_array * adamic_temporary_265 = adamic_array_new(adamic_temporary_262->length, true);
++	size_t adamic_temporary_266 = adamic_temporary_262->length;
++	for (size_t adamic_temporary_267 = 0; adamic_temporary_267 < adamic_temporary_266; adamic_temporary_267++) {
++		if (adamic_temporary_267 >= adamic_temporary_262->length) {
+ 			static const char message[] = "map: the array shrank while it was being mapped";
+ 			adamic_panic(message, sizeof message - 1);
+ 		}
+-		adamic_value adamic_temporary_256 = adamic_temporary_252->code(adamic_temporary_252, (adamic_value[]){adamic_temporary_250->elements[adamic_temporary_255], {.number = (double)adamic_temporary_255}, {.reference = adamic_temporary_250}});
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_253);
+-			adamic_release(adamic_temporary_252);
+-			adamic_release(adamic_temporary_251);
++		adamic_value adamic_temporary_268 = adamic_temporary_264->code(adamic_temporary_264, (adamic_value[]){adamic_temporary_262->elements[adamic_temporary_267], {.number = (double)adamic_temporary_267}, {.reference = adamic_temporary_262}});
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_265);
++			adamic_release(adamic_temporary_264);
++			adamic_release(adamic_temporary_263);
+ 			adamic_uncaught();
+ 		}
+-		adamic_array_push(adamic_temporary_253, adamic_temporary_256);
+-	}
+-	adamic_array * adamic_temporary_257 = adamic_global_1_picked;
+-	adamic_global_1_picked = adamic_temporary_253;
+-	adamic_release(adamic_temporary_257);
++		adamic_array_push(adamic_temporary_265, adamic_temporary_268);
++	}
++	adamic_array * adamic_temporary_269 = adamic_global_1_picked;
++	adamic_global_1_picked = adamic_temporary_265;
++	adamic_release(adamic_temporary_269);
+ 	adamic_ready_1 = true;
+-	adamic_release(adamic_temporary_252);
+-	adamic_release(adamic_temporary_251);
+-	adamic_array * adamic_temporary_258 = adamic_retain(adamic_global_1_picked);
+-	adamic_string * adamic_temporary_259 = adamic_array_join(adamic_temporary_258, &adamic_string_22, adamic_join_strings);
+-	adamic_write_line(adamic_stdout, adamic_temporary_259);
+-	adamic_release(adamic_temporary_259);
+-	adamic_release(adamic_temporary_258);
+-	adamic_string * adamic_temporary_260 = adamic_function_12_thrownAfterAll((0x1.8p+02));
+-	adamic_write_line(adamic_stdout, adamic_temporary_260);
+-	adamic_release(adamic_temporary_260);
+-	adamic_string * adamic_temporary_261 = adamic_function_14_handedThenOverridden();
+-	adamic_write_line(adamic_stdout, adamic_temporary_261);
+-	adamic_release(adamic_temporary_261);
++	adamic_release(adamic_temporary_264);
++	adamic_release(adamic_temporary_263);
++	adamic_array * adamic_temporary_270 = adamic_retain(adamic_global_1_picked);
++	adamic_string * adamic_temporary_271 = adamic_array_join(adamic_temporary_270, &adamic_string_24, adamic_join_strings);
++	adamic_write_line(adamic_stdout, adamic_temporary_271);
++	adamic_release(adamic_temporary_271);
++	adamic_release(adamic_temporary_270);
++	adamic_string * adamic_temporary_272 = adamic_function_12_thrownAfterAll((0x1.8p+02));
++	adamic_write_line(adamic_stdout, adamic_temporary_272);
++	adamic_release(adamic_temporary_272);
++	adamic_string * adamic_temporary_273 = adamic_function_14_handedThenOverridden();
++	adamic_write_line(adamic_stdout, adamic_temporary_273);
++	adamic_release(adamic_temporary_273);
+ 	adamic_release(adamic_global_1_picked);
+ 	adamic_global_1_picked = NULL;
+ 	return 0;

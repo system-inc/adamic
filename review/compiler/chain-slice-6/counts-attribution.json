@@ -1,0 +1,1615 @@
+{
+  "changed_rows": 126,
+  "removed_rows": [],
+  "rows": [
+    {
+      "path": "internal/oracle/testdata/string_views_throw.a",
+      "before": "| internal/oracle/testdata/string_views_throw.a | 55 | 55 | 62 | 76 | 14 | 0 |",
+      "after": "| internal/oracle/testdata/string_views_throw.a | 55 | 55 | 65 | 79 | 14 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__string_views_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/route_targets_try_loop.a",
+      "before": "| internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 41 | 85 | 9 | 2 |",
+      "after": "| internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 44 | 88 | 9 | 2 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__route_targets_try_loop.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_keys.a",
+      "before": "| internal/oracle/testdata/map_foreach_keys.a | 391 | 391 | 363 | 674 | 25 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_keys.a | 391 | 391 | 364 | 675 | 25 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_keys.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_keys.a",
+      "before": "| internal/oracle/testdata/set_foreach_keys.a | 285 | 285 | 242 | 477 | 16 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_keys.a | 285 | 285 | 243 | 478 | 16 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_keys.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_keep.a",
+      "before": "| internal/oracle/testdata/map_foreach_keep.a | 516 | 516 | 625 | 931 | 35 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_keep.a | 516 | 516 | 626 | 932 | 35 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_keep.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_keep.a",
+      "before": "| internal/oracle/testdata/set_foreach_keep.a | 290 | 290 | 385 | 520 | 18 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_keep.a | 290 | 290 | 386 | 521 | 18 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_keep.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_objects.a",
+      "before": "| internal/oracle/testdata/map_foreach_objects.a | 732 | 732 | 834 | 1076 | 63 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_objects.a | 732 | 732 | 835 | 1077 | 63 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_objects.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_objects.a",
+      "before": "| internal/oracle/testdata/set_foreach_objects.a | 368 | 368 | 515 | 586 | 30 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_objects.a | 368 | 368 | 516 | 587 | 30 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_objects.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_closures.a",
+      "before": "| internal/oracle/testdata/map_foreach_closures.a | 816 | 816 | 1044 | 1277 | 87 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_closures.a | 816 | 816 | 1045 | 1278 | 87 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_closures.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_closures.a",
+      "before": "| internal/oracle/testdata/set_foreach_closures.a | 411 | 411 | 634 | 705 | 39 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_closures.a | 411 | 411 | 635 | 706 | 39 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_closures.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_numbers.a",
+      "before": "| internal/oracle/testdata/map_foreach_numbers.a | 373 | 373 | 155 | 478 | 14 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_numbers.a | 373 | 373 | 156 | 479 | 14 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_numbers.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_numbers.a",
+      "before": "| internal/oracle/testdata/set_foreach_numbers.a | 214 | 214 | 140 | 317 | 11 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_numbers.a | 214 | 214 | 141 | 318 | 11 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_numbers.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_arrays.a",
+      "before": "| internal/oracle/testdata/map_foreach_arrays.a | 995 | 995 | 932 | 1355 | 95 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_arrays.a | 995 | 995 | 933 | 1356 | 95 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_arrays.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_arrays.a",
+      "before": "| internal/oracle/testdata/set_foreach_arrays.a | 516 | 516 | 524 | 713 | 58 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_arrays.a | 516 | 516 | 525 | 714 | 58 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_arrays.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_named_more.a",
+      "before": "| internal/oracle/testdata/map_foreach_named_more.a | 395 | 395 | 569 | 819 | 36 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_named_more.a | 395 | 395 | 570 | 820 | 36 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_named_more.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_named_more.a",
+      "before": "| internal/oracle/testdata/set_foreach_named_more.a | 179 | 179 | 297 | 378 | 26 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_named_more.a | 179 | 179 | 298 | 379 | 26 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_named_more.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_named_objects.a",
+      "before": "| internal/oracle/testdata/map_foreach_named_objects.a | 165 | 165 | 207 | 278 | 31 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_named_objects.a | 165 | 165 | 208 | 279 | 31 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_named_objects.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_named_objects.a",
+      "before": "| internal/oracle/testdata/set_foreach_named_objects.a | 87 | 87 | 110 | 149 | 22 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_named_objects.a | 87 | 87 | 111 | 150 | 22 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_named_objects.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_named_closures.a",
+      "before": "| internal/oracle/testdata/map_foreach_named_closures.a | 117 | 117 | 179 | 219 | 29 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_named_closures.a | 117 | 117 | 180 | 220 | 29 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_named_closures.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/set_foreach_named_closures.a",
+      "before": "| internal/oracle/testdata/set_foreach_named_closures.a | 95 | 95 | 155 | 187 | 28 | 0 |",
+      "after": "| internal/oracle/testdata/set_foreach_named_closures.a | 95 | 95 | 156 | 188 | 28 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__set_foreach_named_closures.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_fnexpr.a",
+      "before": "| internal/oracle/testdata/map_foreach_fnexpr.a | 44 | 44 | 64 | 100 | 15 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_fnexpr.a | 44 | 44 | 65 | 101 | 15 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_fnexpr.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/map_foreach_named_numbers.a",
+      "before": "| internal/oracle/testdata/map_foreach_named_numbers.a | 117 | 117 | 73 | 177 | 12 | 0 |",
+      "after": "| internal/oracle/testdata/map_foreach_named_numbers.a | 117 | 117 | 74 | 178 | 12 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__map_foreach_named_numbers.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/borrow_chain_coverage_finally.a",
+      "before": "| internal/oracle/testdata/borrow_chain_coverage_finally.a | 13 | 13 | 9 | 13 | 6 | 0 |",
+      "after": "| internal/oracle/testdata/borrow_chain_coverage_finally.a | 13 | 13 | 12 | 16 | 6 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__borrow_chain_coverage_finally.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_object_freeze.a",
+      "before": "| internal/oracle/testdata/library_object_freeze.a | 16 | 16 | 10 | 27 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/library_object_freeze.a | 16 | 16 | 10 | 28 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_object_freeze.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_object_freeze_write.a",
+      "before": "| internal/oracle/testdata/library_object_freeze_write.a | 2 | 1 | 5 | 6 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/library_object_freeze_write.a | 3 | 3 | 7 | 11 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_object_freeze_write.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_object_freeze_alias.a",
+      "before": "| internal/oracle/testdata/library_object_freeze_alias.a | 4 | 1 | 7 | 8 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/library_object_freeze_alias.a | 5 | 5 | 9 | 14 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_object_freeze_alias.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_object_freeze_assign.a",
+      "before": "| internal/oracle/testdata/library_object_freeze_assign.a | 4 | 2 | 6 | 8 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/library_object_freeze_assign.a | 10 | 10 | 10 | 18 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_object_freeze_assign.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_array_with.a",
+      "before": "| internal/oracle/testdata/library_array_with.a | 68 | 68 | 43 | 109 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/library_array_with.a | 68 | 68 | 64 | 130 | 10 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_array_with.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_array_flat_map.a",
+      "before": "| internal/oracle/testdata/library_array_flat_map.a | 50 | 50 | 60 | 109 | 17 | 0 |",
+      "after": "| internal/oracle/testdata/library_array_flat_map.a | 50 | 50 | 61 | 110 | 17 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_array_flat_map.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_array_spliced.a",
+      "before": "| internal/oracle/testdata/library_array_spliced.a | 72 | 72 | 40 | 114 | 12 | 0 |",
+      "after": "| internal/oracle/testdata/library_array_spliced.a | 72 | 72 | 41 | 115 | 12 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_array_spliced.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_function_expressions.a",
+      "before": "| internal/oracle/testdata/library_function_expressions.a | 56 | 56 | 49 | 96 | 19 | 0 |",
+      "after": "| internal/oracle/testdata/library_function_expressions.a | 56 | 56 | 50 | 97 | 19 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_function_expressions.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/dead_zone.a",
+      "before": "| internal/oracle/testdata/dead_zone.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/dead_zone.a | 1 | 1 | 2 | 1 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__dead_zone.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/number_formats.a",
+      "before": "| internal/oracle/testdata/number_formats.a | 225 | 225 | 55 | 262 | 18 | 0 |",
+      "after": "| internal/oracle/testdata/number_formats.a | 225 | 225 | 97 | 304 | 18 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__number_formats.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/precision_range.a",
+      "before": "| internal/oracle/testdata/precision_range.a | 4 | 3 | 1 | 4 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/precision_range.a | 5 | 5 | 4 | 9 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__precision_range.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/radix_range.a",
+      "before": "| internal/oracle/testdata/radix_range.a | 3 | 3 | 0 | 3 | 1 | 0 |",
+      "after": "| internal/oracle/testdata/radix_range.a | 4 | 4 | 3 | 6 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__radix_range.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/fill_length.a",
+      "before": "| internal/oracle/testdata/fill_length.a | 2 | 2 | 0 | 2 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/fill_length.a | 3 | 3 | 3 | 5 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__fill_length.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/array_from_length.a",
+      "before": "| internal/oracle/testdata/array_from_length.a | 5 | 3 | 3 | 7 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/array_from_length.a | 6 | 6 | 6 | 12 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__array_from_length.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/fresh_writes.a",
+      "before": "| internal/oracle/testdata/fresh_writes.a | 330 | 330 | 369 | 485 | 132 | 0 |",
+      "after": "| internal/oracle/testdata/fresh_writes.a | 330 | 330 | 370 | 486 | 132 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__fresh_writes.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/exceptions.a",
+      "before": "| internal/oracle/testdata/exceptions.a | 133 | 133 | 163 | 229 | 20 | 0 |",
+      "after": "| internal/oracle/testdata/exceptions.a | 133 | 133 | 186 | 252 | 20 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__exceptions.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/exceptions_uncaught.a",
+      "before": "| internal/oracle/testdata/exceptions_uncaught.a | 3 | 1 | 3 | 5 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/exceptions_uncaught.a | 3 | 3 | 3 | 6 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__exceptions_uncaught.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/exceptions_empty.a",
+      "before": "| internal/oracle/testdata/exceptions_empty.a | 2 | 1 | 6 | 4 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/exceptions_empty.a | 2 | 2 | 8 | 8 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__exceptions_empty.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/closures_throw.a",
+      "before": "| internal/oracle/testdata/closures_throw.a | 418 | 418 | 1566 | 1801 | 142 | 0 |",
+      "after": "| internal/oracle/testdata/closures_throw.a | 418 | 418 | 1585 | 1820 | 142 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__closures_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/closures_throw_uncaught.a",
+      "before": "| internal/oracle/testdata/closures_throw_uncaught.a | 31 | 29 | 20 | 36 | 13 | 0 |",
+      "after": "| internal/oracle/testdata/closures_throw_uncaught.a | 31 | 31 | 20 | 37 | 13 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__closures_throw_uncaught.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/finally_leaves.a",
+      "before": "| internal/oracle/testdata/finally_leaves.a | 157 | 157 | 59 | 174 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/finally_leaves.a | 157 | 157 | 64 | 179 | 10 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__finally_leaves.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/param_assigned_in_try.a",
+      "before": "| internal/oracle/testdata/param_assigned_in_try.a | 46 | 46 | 29 | 64 | 12 | 0 |",
+      "after": "| internal/oracle/testdata/param_assigned_in_try.a | 46 | 46 | 31 | 66 | 12 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__param_assigned_in_try.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/named_function_values.a",
+      "before": "| internal/oracle/testdata/named_function_values.a | 116 | 116 | 127 | 222 | 25 | 0 |",
+      "after": "| internal/oracle/testdata/named_function_values.a | 116 | 116 | 128 | 223 | 25 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__named_function_values.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/string_too_long.a",
+      "before": "| internal/oracle/testdata/string_too_long.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/string_too_long.a | 1 | 1 | 3 | 3 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__string_too_long.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/normalize_form.a",
+      "before": "| internal/oracle/testdata/normalize_form.a | 3 | 2 | 0 | 3 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/normalize_form.a | 4 | 4 | 3 | 7 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__normalize_form.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/long_literals.a",
+      "before": "| internal/oracle/testdata/long_literals.a | 6117 | 6117 | 85 | 14610 | 8 | 0 |",
+      "after": "| internal/oracle/testdata/long_literals.a | 6117 | 6117 | 86 | 14611 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__long_literals.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_as_interface.a",
+      "before": "| internal/oracle/testdata/class_as_interface.a | 372 | 372 | 303 | 468 | 60 | 0 |",
+      "after": "| internal/oracle/testdata/class_as_interface.a | 372 | 372 | 304 | 469 | 60 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_as_interface.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regions_throw.a",
+      "before": "| internal/oracle/testdata/regions_throw.a | 124 | 95 | 9 | 99 | 31 | 29 |",
+      "after": "| internal/oracle/testdata/regions_throw.a | 124 | 95 | 15 | 105 | 31 | 29 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regions_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/borrow_loop.a",
+      "before": "| internal/oracle/testdata/borrow_loop.a | 128 | 126 | 110 | 181 | 14 | 2 |",
+      "after": "| internal/oracle/testdata/borrow_loop.a | 128 | 126 | 116 | 187 | 14 | 2 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__borrow_loop.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/borrow_loop_calls.a",
+      "before": "| internal/oracle/testdata/borrow_loop_calls.a | 263 | 261 | 176 | 342 | 25 | 2 |",
+      "after": "| internal/oracle/testdata/borrow_loop_calls.a | 263 | 261 | 179 | 345 | 25 | 2 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__borrow_loop_calls.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/borrow_element_throw.a",
+      "before": "| internal/oracle/testdata/borrow_element_throw.a | 38 | 38 | 30 | 50 | 8 | 0 |",
+      "after": "| internal/oracle/testdata/borrow_element_throw.a | 38 | 38 | 36 | 56 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__borrow_element_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/move_throw.a",
+      "before": "| internal/oracle/testdata/move_throw.a | 42 | 42 | 22 | 50 | 9 | 0 |",
+      "after": "| internal/oracle/testdata/move_throw.a | 42 | 42 | 24 | 52 | 9 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__move_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_map_set_group_by.a",
+      "before": "| internal/oracle/testdata/library_map_set_group_by.a | 115 | 115 | 117 | 201 | 36 | 0 |",
+      "after": "| internal/oracle/testdata/library_map_set_group_by.a | 115 | 115 | 118 | 202 | 36 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_map_set_group_by.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/generic_method_return.a",
+      "before": "| internal/oracle/testdata/generic_method_return.a | 23 | 15 | 28 | 36 | 5 | 6 |",
+      "after": "| internal/oracle/testdata/generic_method_return.a | 23 | 17 | 30 | 39 | 5 | 6 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__generic_method_return.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/search_from_sweep.a",
+      "before": "| internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 33 | 154 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 34 | 155 | 10 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__search_from_sweep.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/reuse_throw.a",
+      "before": "| internal/oracle/testdata/reuse_throw.a | 26 | 26 | 24 | 41 | 8 | 0 |",
+      "after": "| internal/oracle/testdata/reuse_throw.a | 26 | 26 | 27 | 44 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__reuse_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp.a",
+      "before": "| internal/oracle/testdata/regexp.a | 437 | 437 | 382 | 417 | 58 | 0 |",
+      "after": "| internal/oracle/testdata/regexp.a | 437 | 437 | 381 | 416 | 58 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regexp.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp_matchall_nonglobal.a",
+      "before": "| internal/oracle/testdata/regexp_matchall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |",
+      "after": "| internal/oracle/testdata/regexp_matchall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regexp_matchall_nonglobal.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+      "before": "| internal/oracle/testdata/regexp_replaceall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |",
+      "after": "| internal/oracle/testdata/regexp_replaceall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regexp_replaceall_nonglobal.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp_replace.a",
+      "before": "| internal/oracle/testdata/regexp_replace.a | 625 | 625 | 206 | 336 | 113 | 0 |",
+      "after": "| internal/oracle/testdata/regexp_replace.a | 625 | 625 | 205 | 335 | 113 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regexp_replace.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_features_static.a",
+      "before": "| internal/oracle/testdata/class_features_static.a | 110 | 110 | 55 | 162 | 28 | 0 |",
+      "after": "| internal/oracle/testdata/class_features_static.a | 110 | 110 | 58 | 165 | 28 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_features_static.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_features_static_private.a",
+      "before": "| internal/oracle/testdata/class_features_static_private.a | 42 | 42 | 53 | 94 | 12 | 0 |",
+      "after": "| internal/oracle/testdata/class_features_static_private.a | 42 | 42 | 73 | 114 | 12 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_features_static_private.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_features_accessors.a",
+      "before": "| internal/oracle/testdata/class_features_accessors.a | 67 | 67 | 47 | 104 | 21 | 0 |",
+      "after": "| internal/oracle/testdata/class_features_accessors.a | 67 | 67 | 49 | 106 | 21 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_features_accessors.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_inheritance_exceptions.a",
+      "before": "| internal/oracle/testdata/class_inheritance_exceptions.a | 29 | 29 | 19 | 39 | 8 | 0 |",
+      "after": "| internal/oracle/testdata/class_inheritance_exceptions.a | 29 | 29 | 23 | 43 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_inheritance_exceptions.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_inheritance_conditional.a",
+      "before": "| internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 146 | 249 | 35 | 0 |",
+      "after": "| internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 157 | 260 | 35 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_inheritance_conditional.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/class_instance_key_throw.a",
+      "before": "| internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 5 | 10 | 5 | 1 |",
+      "after": "| internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 7 | 12 | 5 | 1 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__class_instance_key_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/debugger_fail.a",
+      "before": "| internal/oracle/testdata/debugger_fail.a | 2 | 2 | 4 | 4 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/debugger_fail.a | 2 | 2 | 5 | 5 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__debugger_fail.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/devirtualize.a",
+      "before": "| internal/oracle/testdata/devirtualize.a | 43 | 39 | 22 | 62 | 10 | 4 |",
+      "after": "| internal/oracle/testdata/devirtualize.a | 43 | 39 | 24 | 64 | 10 | 4 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__devirtualize.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/entries_record_alias.a",
+      "before": "| internal/oracle/testdata/entries_record_alias.a | 65 | 65 | 89 | 118 | 28 | 0 |",
+      "after": "| internal/oracle/testdata/entries_record_alias.a | 65 | 65 | 90 | 119 | 28 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__entries_record_alias.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/fallthrough_exceptions.a",
+      "before": "| internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 10 | 29 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 12 | 31 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__fallthrough_exceptions.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/inherited_fields_guard.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/inherited_fields_guard.a | 2 | 2 | 1 | 4 | 2 | 0 |",
+      "member": "inherit-guards",
+      "source": "16a0b626",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "f9b57ffe92f722a5ca300f64928efc31741857fd3a453a286806a5ac7195d8d2",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "f9b57ffe92f722a5ca300f64928efc31741857fd3a453a286806a5ac7195d8d2",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__inherited_fields_guard.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/user_iterators.a",
+      "before": "| internal/oracle/testdata/user_iterators.a | 663 | 663 | 455 | 904 | 64 | 0 |",
+      "after": "| internal/oracle/testdata/user_iterators.a | 663 | 663 | 466 | 915 | 64 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__user_iterators.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+      "before": "| internal/oracle/testdata/user_iterators_rest_tdz.a | 5 | 0 | 5 | 3 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/user_iterators_rest_tdz.a | 6 | 6 | 7 | 10 | 6 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__user_iterators_rest_tdz.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+      "before": "| internal/oracle/testdata/method_coverage_empty_alias_tdz.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/method_coverage_empty_alias_tdz.a | 1 | 1 | 2 | 1 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__method_coverage_empty_alias_tdz.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/method_coverage_format_failure.a",
+      "before": "| internal/oracle/testdata/method_coverage_format_failure.a | 1 | 0 | 0 | 1 | 1 | 0 |",
+      "after": "| internal/oracle/testdata/method_coverage_format_failure.a | 2 | 2 | 4 | 6 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__method_coverage_format_failure.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/method_coverage_string_repeat.a",
+      "before": "| internal/oracle/testdata/method_coverage_string_repeat.a | 2 | 2 | 3 | 6 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/method_coverage_string_repeat.a | 2 | 2 | 5 | 8 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "8ea05e5060672f20eb794c4c7e27c2660b07a749cdffca2b821a79ca01a88704",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "0e8dd29de298ab071f9b82af48731ed8a2e6fb45a24da173fd4c1dc3d3fa108e",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__method_coverage_string_repeat.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/library_method_values_dead_zone.a",
+      "before": "| internal/oracle/testdata/library_method_values_dead_zone.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/library_method_values_dead_zone.a | 1 | 1 | 2 | 1 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "83d2f2208e71707580ab4eab9abd18b0d1c4dce00623b22cd1d0b11f79cd0d2d",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "254c63b8c1d93e672a1fbfa9158a337f04526e04a2978141436acd8f06fd0ce6",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__library_method_values_dead_zone.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/module_namespace_reads/early.a",
+      "before": "| internal/oracle/testdata/module_namespace_reads/early.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/module_namespace_reads/early.a | 1 | 1 | 2 | 1 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "1e8c3f94a752c241e1a85d6a9a060f88eb4f10ee3cbcf8e4726fe5add97eada8",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "f7053e8e9ae412ec748a31cf927f41f825363fd894fd7c0e9e22723fe8be6e62",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__module_namespace_reads__early.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/module_namespace_reads/direct_early.a",
+      "before": "| internal/oracle/testdata/module_namespace_reads/direct_early.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "after": "| internal/oracle/testdata/module_namespace_reads/direct_early.a | 1 | 1 | 2 | 1 | 1 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "44b7f5712b61183030fd3a395b279edf9b36efb692954e386a2e3c345a8d56e8",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "5c2e7d70b609978299c4f1f998c1ae765441d85253b66bcc6f6821ca913ef518",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__module_namespace_reads__direct_early.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/nested_tdz.a",
+      "before": "| internal/oracle/testdata/nested_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/nested_tdz.a | 3 | 3 | 3 | 3 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "1f51b7f53df411842a0ecade2e88e2a091efb5dd9bf59a6c6c52782d344e53b3",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "5c381c13087cdb501de33bea87f15fc49feb1676f8fece878483517cafeb63a6",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__nested_tdz.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/nested_tdz_write.a",
+      "before": "| internal/oracle/testdata/nested_tdz_write.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/nested_tdz_write.a | 3 | 3 | 3 | 3 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "b8824403ba8dfd1f23dbcef19ee51b6b58d9ee37d4bf01c8272704ebe0c64b9d",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "fd79aca27d9c840aa92c5fa2c80083a43b94e20430adacfab7a93f883af8b91f",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__nested_tdz_write.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/nested_destructured_tdz.a",
+      "before": "| internal/oracle/testdata/nested_destructured_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/nested_destructured_tdz.a | 3 | 3 | 3 | 3 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "511a03ceeeb72b066946bac0014977fde7de01b79f7af02421459a8f3d1fd54c",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "aa102c54e74560c11c457f8435bed8f388073bf043c700eee97c59a24ca82740",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__nested_destructured_tdz.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_buffer_digest_twice.a",
+      "before": "| internal/oracle/testdata/node_buffer_digest_twice.a | 4 | 2 | 4 | 6 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/node_buffer_digest_twice.a | 5 | 5 | 7 | 10 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "c65bce482119854960e41a84b29821765f5908d333f327379b90e96675563aec",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "af814cee97a682856da08ca7e65a82d06325bc82b5871ad21487df5c9f2a49c2",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_buffer_digest_twice.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_buffer_finalized.a",
+      "before": "| internal/oracle/testdata/node_buffer_finalized.a | 4 | 2 | 4 | 6 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/node_buffer_finalized.a | 5 | 5 | 7 | 10 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "fddc7c9d131745225ec8e4c521400374580e3e932db520ef0932732e2f3cb0cc",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "1cf4baa57fcfc73024d4fce671dd38501a00a5e4e2974a50abdd4f9ccd0e915b",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_buffer_finalized.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp_replace/throw.a",
+      "before": "| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 11 | 14 | 11 | 0 |",
+      "after": "| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 12 | 15 | 11 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "c6e2749460be5e8d9b60d19af72916ff9d60fd7eab5170aaadb62be6984ca5bd",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "367b20d9d7cdd1aa995a5f3168f58df9dbe1db29307c7ed4bf77d750edd8c831",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__regexp_replace__throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/statements_small_throw.a",
+      "before": "| internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 9 | 13 | 4 | 0 |",
+      "after": "| internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 16 | 20 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "f4aa8f7d3f1e7c63e350e82ecb87cb3dd691aea27cc87ad5fe827dd5518241cd",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "275ca680c57ba0a48dfef476e0f9ef37e3a562b45989c3a2054d96134b838597",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__statements_small_throw.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_catch_callback.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_catch_callback.a | 17 | 17 | 12 | 24 | 6 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "cfe934b3abc905278cd857288c1a70b889e590f51006e671188790c31efeb3e0",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "c64e8d2a8756832339961308eb08ec33eb6386a2cef1441fc4ae00601647a485",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_catch_callback.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_finally_callback.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_finally_callback.a | 19 | 19 | 18 | 34 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "49c04fa0560a77a150e59875d947bcbf4c7146b75e8d44f75192e7a6ec169a30",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "c27fe2c71b22a388eca5b0f634426774c0e99cde50020ed9233f512de9c2a206",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_finally_callback.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_rethrow.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_rethrow.a | 13 | 13 | 22 | 32 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "4dc1c4ab7c2b66935d9c11646e76790ce38b71a0ccce5011d19659af02768d77",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "5134f1ad11c264eb2d0631fd1c720e264cba072b11269acca46873cbbcccf383",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_rethrow.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_finally_completion.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_finally_completion.a | 17 | 17 | 6 | 19 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "08e8c7a1757e156c818a5ff90301d4b6267bfc27a0a14d5e12f1658bb3618b8d",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "893675d246475002b840951b9d5ffd08327831df916791ab9da85431504b5bfa",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_finally_completion.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_liveness.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_liveness.a | 12 | 12 | 9 | 17 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "e65a51303bb7b8709ae9e0fa5540dfcb1337de39d3addcd53c93403a19ca2002",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "25353f37c46b0dcfa615ff0a4e2cc8e9b12f6c447a0aa1b0aee9a2e9c488f276",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_liveness.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_dynamic.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_dynamic.a | 65 | 65 | 49 | 100 | 6 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_dynamic.a:5:27: Adamic 0.1 refuses throwing a undefined; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "0a9b032de109a24e8db876fb8151197540a121361c7394033e13a2cf9b957144",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_region_payload.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_region_payload.a | 3 | 3 | 3 | 5 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_region_payload.a:5:45: Adamic 0.1 refuses throwing a Failure; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "ff63c5b272634ab8057c8071e25c727326b83ec304c82826b8257d1914df91f5",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_dynamic_uncaught.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_dynamic_uncaught.a | 0 | 0 | 1 | 2 | 0 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_dynamic_uncaught.a:2:37: Adamic 0.1 refuses throwing a undefined; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "41710b686e404a6efb4c4709c1d1551a71fdbf1b726a11718632cf51385a1cf2",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_object_uncaught.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_object_uncaught.a | 3 | 3 | 2 | 4 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_object_uncaught.a:7:7: Adamic 0.1 refuses throwing a Payload; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "1add5bfaf1c0e9b8fafe3a7e353357730907331aca4a73303393ce48a0406528",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_library_failures.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_library_failures.a | 35 | 35 | 56 | 82 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_failures.a:6:96: stage 0 can't lower instanceof against a value that isn't a declared class yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "803d2bc496744373848b2f506d515dd06f058bee08d995b0909ad8720c94deb6",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_library_types.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_library_types.a | 22 | 22 | 36 | 51 | 9 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_types.a:5:92: stage 0 can't lower instanceof against a value that isn't a declared class yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "193c1c35901b19aab6f2c000fa2f36ffd0fccce4e7a7b5bcf1f21f8a768bb92f",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_library_host.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_library_host.a | 25 | 25 | 31 | 48 | 7 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_host.a:18:21: stage 0 can't lower instanceof against a value that isn't a declared class yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "efffd0b3350f6c69a70ed5174c30871b0edf15a9266862230ab569ec690b9cd9",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_error_subclasses.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_error_subclasses.a | 16 | 16 | 37 | 45 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_error_subclasses.a:29:17: Adamic 0.1 refuses throwing a Other; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "939087074c6853d3f3dfa1dafe85ee86116d35162ac0557e91261d79de735cd2",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_saved_error.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_saved_error.a | 20 | 20 | 37 | 47 | 7 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_saved_error.a:20:20: stage 0 can't lower a base that isn't a declared class yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "cfef58b6277e24261a504f9d01c2ebc5efd5020c6e2ef22a3eb110ed2e7dbec1",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/step21_soundness_terminal.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_soundness_terminal.a | 3 | 2 | 3 | 5 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 0,
+        "sha256": "96bf389d719d94bf85ec9cb607c46d3c5e742aac5955292efc61e9376e3c8b13",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "f8965723a7a3539bc23f52b9c47ccb64e18754524087af14923df2f47efc201e",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__step21_soundness_terminal.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_builtin_narrow_terminal.a | 6 | 4 | 8 | 9 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_builtin_narrow_terminal.a:2:22: stage 0 can't lower new an Identifier yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "9b3e5cd0717f16529b775abb667e5d32d28dd4d1719779153f3e1b47e2404f88",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/lowering_chain_tdz_catch.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/lowering_chain_tdz_catch.a | 4 | 4 | 6 | 8 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/lowering_chain_tdz_catch.a:3:21: stage 0 can't lower instanceof against a value that isn't a declared class yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "83bdb0350bd1045921b6c7ccc099a55647f08e1703bb25ebe8cb6e5a5d7f290a",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/statements_small_stopped/structural_error.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/statements_small_stopped/structural_error.a | 2 | 2 | 5 | 5 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/statements_small_stopped/structural_error.a:3:11: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "382a20c71bb900c3fed9ba2a06494ab6db510913ee17b52ff1d2394b497dbf6e",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_9984394_lib_dispatch.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/review/refused/fxspptb_9984394_lib_dispatch.a | 4 | 4 | 8 | 11 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_9984394_lib_dispatch.a:14:2: stage 0 can't lower a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "e8b4838a7043e7dc8c87d6f88c9ff92f6cda7a797a43f916b9667b5a6ddfc62d",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_903f25b_try_assign.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/review/refused/fxspptb_903f25b_try_assign.a | 8 | 8 | 7 | 14 | 6 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_903f25b_try_assign.a:3:1: stage 0 can't lower a try around Object.assign into a potentially frozen object, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "e200f6611675f8b90d5f2d9f7cc1f4d64034a808821be6209563df3f01906ec3",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_57f2d04_with_frozen.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/review/refused/fxspptb_57f2d04_with_frozen.a | 6 | 6 | 2 | 10 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "new fixture registration",
+      "main": {
+        "exit": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_57f2d04_with_frozen.a:2:1: stage 0 can't lower a try around a write to a potentially frozen object, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n"
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "2128bd1546186eb2120ec8075730cf11a142355ac8771f9a81c4376e52576121",
+        "diagnostic": ""
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+      "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 8 | 5 | 7 | 8 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 9 | 9 | 9 | 13 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "a5ab76c292ede4193e446abe0ab31eb59700cfe99cf9535f62da048e71ec9066",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "f9795b9a3d1b9dd573369e7dcf9eb278c3054bcacfd0805aa9c557fc17f720a8",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__switch_case_declarations__dead_zone.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+      "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 3 | 3 | 3 | 5 | 2 | 0 |",
+      "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 4 | 4 | 5 | 7 | 2 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "9cce277b84bcb3952e9b9759f33ff48c844571150676088c9b36b2d3b1301251",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "78a14ba5158a0e4dc2069196f4725a00b9bc16a36a9a81f88b90f70d69849fb7",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__switch_case_declarations__dead_zone_direct.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+      "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 3 | 0 | 3 | 1 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 4 | 4 | 5 | 6 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "93e35d5664d9bbe39107d6bbb6afa1fe3b3ddc52e251992ac69090aa9264862a",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "2bba2cf3acf124bdcdcacd76952ac457b4e6b6d4e0039dc2687e5bdbf0b80e49",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__switch_case_declarations__dead_zone_initializer.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+      "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 5 | 1 | 3 | 2 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 6 | 6 | 5 | 7 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "64c14c513066acff180afa65aefa232c6753e198dc35b7271ef63e26478ffe08",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "47d02d90d5e1c9ca03b974cd16cfd16038e2331bb93eadcbf83df402cd2ffbe3",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__switch_case_declarations__dead_zone_write.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/taste_comma.a",
+      "before": "| internal/oracle/testdata/taste_comma.a | 51 | 51 | 5 | 54 | 4 | 0 |",
+      "after": "| internal/oracle/testdata/taste_comma.a | 51 | 51 | 6 | 55 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "0b8ebac2dd8b123fb80a6b8fedc48e72c0af7dc44d48325cf9e58572d251430a",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "5febe439d317bab5cf495d5e3046b1b25639b723a186c7d34c4ea47d3f937abb",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__taste_comma.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/taste_void.a",
+      "before": "| internal/oracle/testdata/taste_void.a | 39 | 39 | 8 | 44 | 4 | 0 |",
+      "after": "| internal/oracle/testdata/taste_void.a | 39 | 39 | 9 | 45 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "3d43d362d166929b16f249753dbd14fef84771f369c8c52676b84af0f2163b7b",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "11214ba21c276bd23c23596a98d8daae5296bfc1bce0b445134f727c8d1bf56a",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__taste_void.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_views.a",
+      "before": "| internal/oracle/testdata/typed_arrays_views.a | 83 | 83 | 40 | 111 | 13 | 0 |",
+      "after": "| internal/oracle/testdata/typed_arrays_views.a | 83 | 83 | 40 | 115 | 13 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "115efbbf6e6d31da6b866063a8410cf68fb96cf7d6461c1353380895a504a86b",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "fbde24c5d7610ce3ea6ae930251927053930385aa9998ab395f55e3d23b9c8c4",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__typed_arrays_views.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_order.a",
+      "before": "| internal/oracle/testdata/typed_arrays_order.a | 34 | 34 | 12 | 50 | 8 | 0 |",
+      "after": "| internal/oracle/testdata/typed_arrays_order.a | 34 | 34 | 12 | 51 | 8 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "9c98de2182a2619e0b0284cafeb640a9df29a73889a70ee2b46e896699cbe9c8",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "257d25b4d284146255ecc59a67e68a23d9c26e573bd48bd99526cd70259050d0",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__typed_arrays_order.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_stats.a",
+      "before": "| internal/oracle/testdata/typed_arrays_stats.a | 54 | 54 | 14 | 61 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/typed_arrays_stats.a | 54 | 54 | 14 | 66 | 10 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "029fbebcecc4951a11da0de9b7ad1ee81a2262d6a156ed29d9946f5a9122ddf4",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "e8a9e8a58735316dce72f08b69813c447b53187e123a7a0a5ec886a93e24f046",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__typed_arrays_stats.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "before": "| internal/oracle/testdata/typed_arrays_workers_stats.a | 513 | 513 | 82 | 584 | 23 | 0 |",
+      "after": "| internal/oracle/testdata/typed_arrays_workers_stats.a | 513 | 513 | 82 | 600 | 23 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "d96722d3134249dbef46cf88ae81940870a28f8fd84d1da2c58c79c417bdd688",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "54735b5d5fc0723099bc86097d3e0767e9f307ad5816d004dcfb067724c37e34",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__typed_arrays_workers_stats.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/unknown_narrowing.a",
+      "before": "| internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 42 | 63 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 43 | 64 | 3 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "1b8d7dcbb8424968918bbbe674e4ee1ff231894a9646e2c91eb9007a54e3ceb3",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "d6a60d65f1c9e8a3710071a8e67b7f35f0a3f319b370d6e983fb5f7b1de2903f",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__unknown_narrowing.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/walk.a",
+      "before": "| internal/oracle/testdata/walk.a | 222 | 222 | 117 | 288 | 36 | 0 |",
+      "after": "| internal/oracle/testdata/walk.a | 222 | 222 | 131 | 302 | 36 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "f1fc0628c2c1cc6f90bf9c35655fa20ba71ce18a6bc0a348fc4b8e9e10e9b4bc",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "0548663333652fd34f3f0125299fe916dbf27c1382df2a12f97d1bd296e10145",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__walk.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_fs_file_close.a",
+      "before": "| internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 13 | 30 | 7 | 0 |",
+      "after": "| internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 16 | 33 | 7 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "806412d2d562e8d375f71e9bab7ad4838edc102756733a2e9c56a250f7326cde",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "5724b09b21be82d29593d9b9dbe40252aed238a978fbadb11e29fa387e76c9c2",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_fs_file_close.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_fs_file_write_file.a",
+      "before": "| internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 11 | 36 | 9 | 0 |",
+      "after": "| internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 13 | 38 | 9 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "53afa3cb6f836504bcc3e6e70e2ad1b1b1dfdb82b899ee74a309ffeaf4e78ead",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "df1e2cc481af44b862effa547ece87ecc3aa538b10a1289b39d55fff5dd145f1",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_fs_file_write_file.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_fs_file_mkdir.a",
+      "before": "| internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 24 | 81 | 10 | 0 |",
+      "after": "| internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 29 | 86 | 10 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "0f6e2fa2f8ea196cd6b2f3125e0d4e2f53936f65094f5b3190209bc84dd636e0",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "2e05a4c8576a5a3c7a0263cc58b156d2408b065ebcfd8cce2d567e3c96134e77",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_fs_file_mkdir.a.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+      "before": "| internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 11 | 45 | 12 | 0 |",
+      "after": "| internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 15 | 49 | 12 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 + 71972e18",
+      "reason": "catchable throw edges and owned unwind/finally slots change generated C",
+      "main": {
+        "exit": 0,
+        "sha256": "e20a444446d99a5c65d45d59b1685762ba55a18fffa67c52ba914e9059a1f76f",
+        "diagnostic": ""
+      },
+      "slice": {
+        "exit": 0,
+        "sha256": "7bce9ccb475a43a7b92b599e75bf10db1ea17cb99374a6cac07b8149dbd04312",
+        "diagnostic": ""
+      },
+      "diff": "review/compiler/chain-slice-6/counts-diffs/internal__oracle__testdata__node_fs_file_write_buffer.a.patch"
+    }
+  ]
+}

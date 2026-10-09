@@ -1,0 +1,549 @@
+--- main/internal/oracle/testdata/typed_arrays_order.a
++++ slice/internal/oracle/testdata/typed_arrays_order.a
+@@ -20,6 +20,7 @@
+ static adamic_string adamic_string_12 = ADAMIC_STRING("write");
+ static adamic_string adamic_string_13 = ADAMIC_STRING("write ");
+ static adamic_string adamic_string_14 = ADAMIC_STRING("copied constructor ");
++static adamic_string adamic_string_15 = ADAMIC_STRING("offset is out of bounds");
+ 
+ static adamic_typed_array * adamic_global_0_receiver = NULL;
+ static bool adamic_ready_0 = false;
+@@ -34,14 +35,21 @@
+ 
+ static double adamic_function_0_numberArgument(adamic_string * adamic_local_5_name, double adamic_local_6_value);
+ static adamic_typed_array * adamic_function_1_sourceArgument(void);
++static adamic_object * adamic_function_2_exception_typed_array_set(adamic_typed_array * adamic_local_7_argument, adamic_typed_array * adamic_local_8_argument, adamic_maybe_number adamic_local_9_argument);
++static adamic_object * adamic_function_2_exception_typed_array_set_in(adamic_region *region, adamic_typed_array * adamic_local_7_argument, adamic_typed_array * adamic_local_8_argument, adamic_maybe_number adamic_local_9_argument);
+ 
+ static double adamic_function_0_numberArgument(adamic_string * adamic_local_5_name, double adamic_local_6_value) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_write_line(adamic_stdout, adamic_local_5_name);
+ 	adamic_typed_array * adamic_temporary_1 = adamic_typed_array_new(adamic_typed_array_uint8, (0x0p+00));
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'receiver' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'receiver' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_1);
++		return 0.0;
++	}
+ 	}
+ 	adamic_typed_array * adamic_temporary_2 = adamic_global_0_receiver;
+ 	adamic_global_0_receiver = adamic_temporary_1;
+@@ -56,8 +64,13 @@
+ 	adamic_write_line(adamic_stdout, &adamic_string_0);
+ 	adamic_typed_array * adamic_temporary_4 = adamic_typed_array_new(adamic_typed_array_uint8, (0x0p+00));
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'receiver' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'receiver' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_4);
++		return NULL;
++	}
+ 	}
+ 	adamic_typed_array * adamic_temporary_5 = adamic_global_0_receiver;
+ 	adamic_global_0_receiver = adamic_temporary_4;
+@@ -72,171 +85,349 @@
+ 	adamic_unreachable();
+ }
+ 
++static adamic_object * adamic_function_2_exception_typed_array_set(adamic_typed_array * adamic_local_7_argument, adamic_typed_array * adamic_local_8_argument, adamic_maybe_number adamic_local_9_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_temporary_9;
++	if (adamic_local_9_argument.present) {
++		adamic_temporary_9 = adamic_local_9_argument.number;
++	} else {
++		adamic_temporary_9 = (0x0p+00);
++	}
++	double adamic_temporary_11;
++	if (isnan(adamic_temporary_9)) {
++		adamic_temporary_11 = (0x0p+00);
++	} else {
++		double adamic_temporary_10;
++		if (adamic_local_9_argument.present) {
++			adamic_temporary_10 = adamic_local_9_argument.number;
++		} else {
++			adamic_temporary_10 = (0x0p+00);
++		}
++		adamic_temporary_11 = trunc(adamic_temporary_10);
++	}
++	double adamic_local_10_offset = adamic_temporary_11;
++	bool adamic_temporary_14 = (adamic_local_10_offset < (0x0p+00));
++	if (!adamic_temporary_14) {
++		double adamic_temporary_12 = adamic_typed_array_length(adamic_local_8_argument);
++		double adamic_temporary_13 = adamic_typed_array_length(adamic_local_7_argument);
++		adamic_temporary_14 = ((adamic_local_10_offset + adamic_temporary_12) > adamic_temporary_13);
++	}
++	if (adamic_temporary_14) {
++		adamic_object * adamic_temporary_15 = adamic_error_new_kind(&adamic_string_15, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_15)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_15);
++		return NULL;
++	}
++	adamic_maybe_number adamic_temporary_16 = ((adamic_maybe_number){true, adamic_local_10_offset});
++	adamic_typed_array_set_from(adamic_local_7_argument, adamic_local_8_argument, adamic_temporary_16.number, adamic_temporary_16.present);
++	(void)0;
++	adamic_object * adamic_temporary_17 = NULL;
++	return adamic_temporary_17;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_2_exception_typed_array_set_in(adamic_region *region, adamic_typed_array * adamic_local_7_argument, adamic_typed_array * adamic_local_8_argument, adamic_maybe_number adamic_local_9_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_temporary_18;
++	if (adamic_local_9_argument.present) {
++		adamic_temporary_18 = adamic_local_9_argument.number;
++	} else {
++		adamic_temporary_18 = (0x0p+00);
++	}
++	double adamic_temporary_20;
++	if (isnan(adamic_temporary_18)) {
++		adamic_temporary_20 = (0x0p+00);
++	} else {
++		double adamic_temporary_19;
++		if (adamic_local_9_argument.present) {
++			adamic_temporary_19 = adamic_local_9_argument.number;
++		} else {
++			adamic_temporary_19 = (0x0p+00);
++		}
++		adamic_temporary_20 = trunc(adamic_temporary_19);
++	}
++	double adamic_local_10_offset = adamic_temporary_20;
++	bool adamic_temporary_23 = (adamic_local_10_offset < (0x0p+00));
++	if (!adamic_temporary_23) {
++		double adamic_temporary_21 = adamic_typed_array_length(adamic_local_8_argument);
++		double adamic_temporary_22 = adamic_typed_array_length(adamic_local_7_argument);
++		adamic_temporary_23 = ((adamic_local_10_offset + adamic_temporary_21) > adamic_temporary_22);
++	}
++	if (adamic_temporary_23) {
++		adamic_object * adamic_temporary_24 = adamic_error_new_kind(&adamic_string_15, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_24)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_24);
++		return NULL;
++	}
++	adamic_maybe_number adamic_temporary_25 = ((adamic_maybe_number){true, adamic_local_10_offset});
++	adamic_typed_array_set_from(adamic_local_7_argument, adamic_local_8_argument, adamic_temporary_25.number, adamic_temporary_25.present);
++	(void)0;
++	adamic_object * adamic_temporary_26 = NULL;
++	return adamic_temporary_26;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_array * adamic_temporary_9 = adamic_array_new(4, false);
+-	adamic_array_push(adamic_temporary_9, (adamic_value){.number = (0x1p+00)});
+-	adamic_array_push(adamic_temporary_9, (adamic_value){.number = (0x1p+01)});
+-	adamic_array_push(adamic_temporary_9, (adamic_value){.number = (0x1.8p+01)});
+-	adamic_array_push(adamic_temporary_9, (adamic_value){.number = (0x1p+02)});
+-	adamic_typed_array * adamic_temporary_10 = adamic_typed_array_from_numbers(adamic_typed_array_uint8, adamic_temporary_9);
+-	adamic_typed_array * adamic_temporary_11 = adamic_global_0_receiver;
+-	adamic_global_0_receiver = adamic_temporary_10;
+-	adamic_release(adamic_temporary_11);
++	adamic_array * adamic_temporary_27 = adamic_array_new(4, false);
++	adamic_array_push(adamic_temporary_27, (adamic_value){.number = (0x1p+00)});
++	adamic_array_push(adamic_temporary_27, (adamic_value){.number = (0x1p+01)});
++	adamic_array_push(adamic_temporary_27, (adamic_value){.number = (0x1.8p+01)});
++	adamic_array_push(adamic_temporary_27, (adamic_value){.number = (0x1p+02)});
++	adamic_typed_array * adamic_temporary_28 = adamic_typed_array_from_numbers(adamic_typed_array_uint8, adamic_temporary_27);
++	adamic_typed_array * adamic_temporary_29 = adamic_global_0_receiver;
++	adamic_global_0_receiver = adamic_temporary_28;
++	adamic_release(adamic_temporary_29);
+ 	adamic_ready_0 = true;
+-	adamic_release(adamic_temporary_9);
+-	adamic_typed_array * adamic_temporary_12 = adamic_retain(adamic_global_0_receiver);
+-	adamic_typed_array * adamic_temporary_13 = adamic_global_1_original;
+-	adamic_global_1_original = adamic_temporary_12;
+-	adamic_release(adamic_temporary_13);
++	adamic_release(adamic_temporary_27);
++	adamic_typed_array * adamic_temporary_30 = adamic_retain(adamic_global_0_receiver);
++	adamic_typed_array * adamic_temporary_31 = adamic_global_1_original;
++	adamic_global_1_original = adamic_temporary_30;
++	adamic_release(adamic_temporary_31);
+ 	adamic_ready_1 = true;
+-	adamic_typed_array * adamic_temporary_14 = adamic_retain(adamic_global_0_receiver);
+-	double adamic_temporary_15 = adamic_function_0_numberArgument(&adamic_string_1, (0x1.2cp+08));
+-	double adamic_temporary_16 = adamic_temporary_15;
+-	double adamic_temporary_17 = adamic_function_0_numberArgument(&adamic_string_2, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_18 = ((adamic_maybe_number){true, adamic_temporary_17});
+-	double adamic_temporary_19 = adamic_function_0_numberArgument(&adamic_string_3, (0x1.8p+01));
+-	adamic_maybe_number adamic_temporary_20 = ((adamic_maybe_number){true, adamic_temporary_19});
+-	adamic_typed_array_fill(adamic_temporary_14, adamic_temporary_16, adamic_temporary_18.number, adamic_temporary_20.number, adamic_temporary_18.present, adamic_temporary_20.present);
+-	(void)adamic_temporary_14;
+-	adamic_release(adamic_temporary_14);
+-	adamic_typed_array * adamic_temporary_21 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_22 = adamic_typed_array_get(adamic_temporary_21, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_23 = adamic_temporary_22;
+-	adamic_string * adamic_temporary_24 = adamic_string_from_maybe_number(adamic_temporary_23);
+-	adamic_typed_array * adamic_temporary_25 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_26 = adamic_typed_array_get(adamic_temporary_25, (0x1p+01));
+-	adamic_maybe_number adamic_temporary_27 = adamic_temporary_26;
+-	adamic_string * adamic_temporary_28 = adamic_string_from_maybe_number(adamic_temporary_27);
+-	adamic_typed_array * adamic_temporary_29 = adamic_global_0_receiver;
+-	double adamic_temporary_30 = adamic_typed_array_length(adamic_temporary_29);
+-	double adamic_temporary_31 = adamic_temporary_30;
+-	adamic_string * adamic_temporary_32 = adamic_string_from_number(adamic_temporary_31);
+-	adamic_string * adamic_temporary_33 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_4, adamic_temporary_24, &adamic_string_5, adamic_temporary_28, &adamic_string_5, adamic_temporary_32});
+-	adamic_write_line(adamic_stdout, adamic_temporary_33);
+-	adamic_release(adamic_temporary_33);
++	adamic_typed_array * adamic_temporary_32 = adamic_retain(adamic_global_0_receiver);
++	double adamic_temporary_33 = adamic_function_0_numberArgument(&adamic_string_1, (0x1.2cp+08));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_32);
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	double adamic_temporary_34 = adamic_temporary_33;
++	double adamic_temporary_35 = adamic_function_0_numberArgument(&adamic_string_2, (0x1p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_32);
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_maybe_number adamic_temporary_36 = ((adamic_maybe_number){true, adamic_temporary_35});
++	double adamic_temporary_37 = adamic_function_0_numberArgument(&adamic_string_3, (0x1.8p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_32);
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_maybe_number adamic_temporary_38 = ((adamic_maybe_number){true, adamic_temporary_37});
++	adamic_typed_array_fill(adamic_temporary_32, adamic_temporary_34, adamic_temporary_36.number, adamic_temporary_38.number, adamic_temporary_36.present, adamic_temporary_38.present);
++	(void)adamic_temporary_32;
+ 	adamic_release(adamic_temporary_32);
+-	adamic_release(adamic_temporary_28);
+-	adamic_release(adamic_temporary_24);
+-	adamic_typed_array * adamic_temporary_34 = adamic_retain(adamic_global_1_original);
+-	adamic_typed_array * adamic_temporary_35 = adamic_global_0_receiver;
+-	adamic_global_0_receiver = adamic_temporary_34;
+-	adamic_release(adamic_temporary_35);
+-	adamic_typed_array * adamic_temporary_36 = adamic_retain(adamic_global_0_receiver);
+-	double adamic_temporary_37 = adamic_function_0_numberArgument(&adamic_string_6, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_38 = ((adamic_maybe_number){true, adamic_temporary_37});
+-	double adamic_temporary_39 = adamic_function_0_numberArgument(&adamic_string_7, (0x1.8p+01));
+-	adamic_maybe_number adamic_temporary_40 = ((adamic_maybe_number){true, adamic_temporary_39});
+-	adamic_typed_array * adamic_temporary_41 = adamic_typed_array_subarray(adamic_temporary_36, (adamic_temporary_38.present ? adamic_temporary_38.number : 0.0), adamic_temporary_40.number, adamic_temporary_40.present);
+-	adamic_typed_array * adamic_temporary_42 = adamic_global_2_view;
+-	adamic_global_2_view = adamic_temporary_41;
++	adamic_typed_array * adamic_temporary_39 = adamic_global_1_original;
++	adamic_maybe_number adamic_temporary_40 = adamic_typed_array_get(adamic_temporary_39, (0x1p+00));
++	adamic_maybe_number adamic_temporary_41 = adamic_temporary_40;
++	adamic_string * adamic_temporary_42 = adamic_string_from_maybe_number(adamic_temporary_41);
++	adamic_typed_array * adamic_temporary_43 = adamic_global_1_original;
++	adamic_maybe_number adamic_temporary_44 = adamic_typed_array_get(adamic_temporary_43, (0x1p+01));
++	adamic_maybe_number adamic_temporary_45 = adamic_temporary_44;
++	adamic_string * adamic_temporary_46 = adamic_string_from_maybe_number(adamic_temporary_45);
++	adamic_typed_array * adamic_temporary_47 = adamic_global_0_receiver;
++	double adamic_temporary_48 = adamic_typed_array_length(adamic_temporary_47);
++	double adamic_temporary_49 = adamic_temporary_48;
++	adamic_string * adamic_temporary_50 = adamic_string_from_number(adamic_temporary_49);
++	adamic_string * adamic_temporary_51 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_4, adamic_temporary_42, &adamic_string_5, adamic_temporary_46, &adamic_string_5, adamic_temporary_50});
++	adamic_write_line(adamic_stdout, adamic_temporary_51);
++	adamic_release(adamic_temporary_51);
++	adamic_release(adamic_temporary_50);
++	adamic_release(adamic_temporary_46);
+ 	adamic_release(adamic_temporary_42);
++	adamic_typed_array * adamic_temporary_52 = adamic_retain(adamic_global_1_original);
++	adamic_typed_array * adamic_temporary_53 = adamic_global_0_receiver;
++	adamic_global_0_receiver = adamic_temporary_52;
++	adamic_release(adamic_temporary_53);
++	adamic_typed_array * adamic_temporary_54 = adamic_retain(adamic_global_0_receiver);
++	double adamic_temporary_55 = adamic_function_0_numberArgument(&adamic_string_6, (0x1p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_54);
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_maybe_number adamic_temporary_56 = ((adamic_maybe_number){true, adamic_temporary_55});
++	double adamic_temporary_57 = adamic_function_0_numberArgument(&adamic_string_7, (0x1.8p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_54);
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_maybe_number adamic_temporary_58 = ((adamic_maybe_number){true, adamic_temporary_57});
++	adamic_typed_array * adamic_temporary_59 = adamic_typed_array_subarray(adamic_temporary_54, (adamic_temporary_56.present ? adamic_temporary_56.number : 0.0), adamic_temporary_58.number, adamic_temporary_58.present);
++	adamic_typed_array * adamic_temporary_60 = adamic_global_2_view;
++	adamic_global_2_view = adamic_temporary_59;
++	adamic_release(adamic_temporary_60);
+ 	adamic_ready_2 = true;
+-	adamic_release(adamic_temporary_36);
+-	adamic_typed_array * adamic_temporary_43 = adamic_retain(adamic_global_2_view);
+-	adamic_typed_array_set(adamic_temporary_43, (0x0p+00), (-(0x1p+00)));
+-	adamic_release(adamic_temporary_43);
+-	adamic_typed_array * adamic_temporary_44 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_45 = adamic_typed_array_get(adamic_temporary_44, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_46 = adamic_temporary_45;
+-	adamic_string * adamic_temporary_47 = adamic_string_from_maybe_number(adamic_temporary_46);
+-	adamic_typed_array * adamic_temporary_48 = adamic_global_2_view;
+-	double adamic_temporary_49 = adamic_typed_array_length(adamic_temporary_48);
+-	double adamic_temporary_50 = adamic_temporary_49;
+-	adamic_string * adamic_temporary_51 = adamic_string_from_number(adamic_temporary_50);
+-	adamic_typed_array * adamic_temporary_52 = adamic_global_0_receiver;
+-	double adamic_temporary_53 = adamic_typed_array_length(adamic_temporary_52);
+-	double adamic_temporary_54 = adamic_temporary_53;
+-	adamic_string * adamic_temporary_55 = adamic_string_from_number(adamic_temporary_54);
+-	adamic_string * adamic_temporary_56 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_8, adamic_temporary_47, &adamic_string_5, adamic_temporary_51, &adamic_string_5, adamic_temporary_55});
+-	adamic_write_line(adamic_stdout, adamic_temporary_56);
+-	adamic_release(adamic_temporary_56);
+-	adamic_release(adamic_temporary_55);
+-	adamic_release(adamic_temporary_51);
+-	adamic_release(adamic_temporary_47);
+-	adamic_typed_array * adamic_temporary_57 = adamic_retain(adamic_global_1_original);
+-	adamic_typed_array * adamic_temporary_58 = adamic_global_0_receiver;
+-	adamic_global_0_receiver = adamic_temporary_57;
+-	adamic_release(adamic_temporary_58);
+-	adamic_typed_array * adamic_temporary_59 = adamic_retain(adamic_global_0_receiver);
+-	adamic_typed_array * adamic_temporary_60 = adamic_function_1_sourceArgument();
+-	double adamic_temporary_61 = adamic_function_0_numberArgument(&adamic_string_9, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_62 = ((adamic_maybe_number){true, adamic_temporary_61});
+-	adamic_typed_array_set_from(adamic_temporary_59, adamic_temporary_60, adamic_temporary_62.number, adamic_temporary_62.present);
+-	(void)0;
+-	adamic_release(adamic_temporary_60);
+-	adamic_release(adamic_temporary_59);
+-	adamic_typed_array * adamic_temporary_63 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_64 = adamic_typed_array_get(adamic_temporary_63, (0x1p+00));
+-	adamic_maybe_number adamic_temporary_65 = adamic_temporary_64;
+-	adamic_string * adamic_temporary_66 = adamic_string_from_maybe_number(adamic_temporary_65);
+-	adamic_typed_array * adamic_temporary_67 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_68 = adamic_typed_array_get(adamic_temporary_67, (0x1p+01));
+-	adamic_maybe_number adamic_temporary_69 = adamic_temporary_68;
+-	adamic_string * adamic_temporary_70 = adamic_string_from_maybe_number(adamic_temporary_69);
+-	adamic_typed_array * adamic_temporary_71 = adamic_global_0_receiver;
+-	double adamic_temporary_72 = adamic_typed_array_length(adamic_temporary_71);
+-	double adamic_temporary_73 = adamic_temporary_72;
+-	adamic_string * adamic_temporary_74 = adamic_string_from_number(adamic_temporary_73);
+-	adamic_string * adamic_temporary_75 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_10, adamic_temporary_66, &adamic_string_5, adamic_temporary_70, &adamic_string_5, adamic_temporary_74});
+-	adamic_write_line(adamic_stdout, adamic_temporary_75);
+-	adamic_release(adamic_temporary_75);
++	adamic_release(adamic_temporary_54);
++	adamic_typed_array * adamic_temporary_61 = adamic_retain(adamic_global_2_view);
++	adamic_typed_array_set(adamic_temporary_61, (0x0p+00), (-(0x1p+00)));
++	adamic_release(adamic_temporary_61);
++	adamic_typed_array * adamic_temporary_62 = adamic_global_1_original;
++	adamic_maybe_number adamic_temporary_63 = adamic_typed_array_get(adamic_temporary_62, (0x1p+00));
++	adamic_maybe_number adamic_temporary_64 = adamic_temporary_63;
++	adamic_string * adamic_temporary_65 = adamic_string_from_maybe_number(adamic_temporary_64);
++	adamic_typed_array * adamic_temporary_66 = adamic_global_2_view;
++	double adamic_temporary_67 = adamic_typed_array_length(adamic_temporary_66);
++	double adamic_temporary_68 = adamic_temporary_67;
++	adamic_string * adamic_temporary_69 = adamic_string_from_number(adamic_temporary_68);
++	adamic_typed_array * adamic_temporary_70 = adamic_global_0_receiver;
++	double adamic_temporary_71 = adamic_typed_array_length(adamic_temporary_70);
++	double adamic_temporary_72 = adamic_temporary_71;
++	adamic_string * adamic_temporary_73 = adamic_string_from_number(adamic_temporary_72);
++	adamic_string * adamic_temporary_74 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_8, adamic_temporary_65, &adamic_string_5, adamic_temporary_69, &adamic_string_5, adamic_temporary_73});
++	adamic_write_line(adamic_stdout, adamic_temporary_74);
+ 	adamic_release(adamic_temporary_74);
+-	adamic_release(adamic_temporary_70);
+-	adamic_release(adamic_temporary_66);
+-	adamic_typed_array * adamic_temporary_76 = adamic_retain(adamic_global_1_original);
+-	adamic_typed_array * adamic_temporary_77 = adamic_global_0_receiver;
+-	adamic_global_0_receiver = adamic_temporary_76;
++	adamic_release(adamic_temporary_73);
++	adamic_release(adamic_temporary_69);
++	adamic_release(adamic_temporary_65);
++	adamic_typed_array * adamic_temporary_75 = adamic_retain(adamic_global_1_original);
++	adamic_typed_array * adamic_temporary_76 = adamic_global_0_receiver;
++	adamic_global_0_receiver = adamic_temporary_75;
++	adamic_release(adamic_temporary_76);
++	adamic_typed_array * adamic_temporary_77 = adamic_retain(adamic_global_0_receiver);
++	adamic_typed_array * adamic_temporary_78 = adamic_function_1_sourceArgument();
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_78);
++		adamic_release(adamic_temporary_77);
++		adamic_release(adamic_global_2_view);
++		adamic_global_2_view = NULL;
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	double adamic_temporary_79 = adamic_function_0_numberArgument(&adamic_string_9, (0x1p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_78);
++		adamic_release(adamic_temporary_77);
++		adamic_release(adamic_global_2_view);
++		adamic_global_2_view = NULL;
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_80 = adamic_function_2_exception_typed_array_set(adamic_temporary_77, adamic_temporary_78, ((adamic_maybe_number){true, adamic_temporary_79}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_80);
++		adamic_release(adamic_temporary_78);
++		adamic_release(adamic_temporary_77);
++		adamic_release(adamic_global_2_view);
++		adamic_global_2_view = NULL;
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	(void)adamic_temporary_80;
++	adamic_release(adamic_temporary_80);
++	adamic_release(adamic_temporary_78);
+ 	adamic_release(adamic_temporary_77);
+-	adamic_typed_array * adamic_temporary_78 = adamic_retain(adamic_global_0_receiver);
+-	double adamic_temporary_79 = adamic_function_0_numberArgument(&adamic_string_11, (0x1.8p+01));
+-	double adamic_temporary_80 = adamic_function_0_numberArgument(&adamic_string_12, (0x1.2cp+08));
+-	adamic_typed_array_set(adamic_temporary_78, adamic_temporary_79, adamic_temporary_80);
+-	adamic_release(adamic_temporary_78);
+ 	adamic_typed_array * adamic_temporary_81 = adamic_global_1_original;
+-	adamic_maybe_number adamic_temporary_82 = adamic_typed_array_get(adamic_temporary_81, (0x1.8p+01));
++	adamic_maybe_number adamic_temporary_82 = adamic_typed_array_get(adamic_temporary_81, (0x1p+00));
+ 	adamic_maybe_number adamic_temporary_83 = adamic_temporary_82;
+ 	adamic_string * adamic_temporary_84 = adamic_string_from_maybe_number(adamic_temporary_83);
+-	adamic_typed_array * adamic_temporary_85 = adamic_global_0_receiver;
+-	double adamic_temporary_86 = adamic_typed_array_length(adamic_temporary_85);
+-	double adamic_temporary_87 = adamic_temporary_86;
+-	adamic_string * adamic_temporary_88 = adamic_string_from_number(adamic_temporary_87);
+-	adamic_string * adamic_temporary_89 = adamic_string_concat(4, (adamic_string *const[]){&adamic_string_13, adamic_temporary_84, &adamic_string_5, adamic_temporary_88});
+-	adamic_write_line(adamic_stdout, adamic_temporary_89);
+-	adamic_release(adamic_temporary_89);
++	adamic_typed_array * adamic_temporary_85 = adamic_global_1_original;
++	adamic_maybe_number adamic_temporary_86 = adamic_typed_array_get(adamic_temporary_85, (0x1p+01));
++	adamic_maybe_number adamic_temporary_87 = adamic_temporary_86;
++	adamic_string * adamic_temporary_88 = adamic_string_from_maybe_number(adamic_temporary_87);
++	adamic_typed_array * adamic_temporary_89 = adamic_global_0_receiver;
++	double adamic_temporary_90 = adamic_typed_array_length(adamic_temporary_89);
++	double adamic_temporary_91 = adamic_temporary_90;
++	adamic_string * adamic_temporary_92 = adamic_string_from_number(adamic_temporary_91);
++	adamic_string * adamic_temporary_93 = adamic_string_concat(6, (adamic_string *const[]){&adamic_string_10, adamic_temporary_84, &adamic_string_5, adamic_temporary_88, &adamic_string_5, adamic_temporary_92});
++	adamic_write_line(adamic_stdout, adamic_temporary_93);
++	adamic_release(adamic_temporary_93);
++	adamic_release(adamic_temporary_92);
+ 	adamic_release(adamic_temporary_88);
+ 	adamic_release(adamic_temporary_84);
+-	adamic_array * adamic_temporary_90 = adamic_array_new(2, false);
+-	adamic_array_push(adamic_temporary_90, (adamic_value){.number = (0x1.2cp+08)});
+-	adamic_array_push(adamic_temporary_90, (adamic_value){.number = (-(0x1p+00))});
+-	adamic_array * adamic_temporary_91 = adamic_global_3_source;
+-	adamic_global_3_source = adamic_temporary_90;
+-	adamic_release(adamic_temporary_91);
++	adamic_typed_array * adamic_temporary_94 = adamic_retain(adamic_global_1_original);
++	adamic_typed_array * adamic_temporary_95 = adamic_global_0_receiver;
++	adamic_global_0_receiver = adamic_temporary_94;
++	adamic_release(adamic_temporary_95);
++	adamic_typed_array * adamic_temporary_96 = adamic_retain(adamic_global_0_receiver);
++	double adamic_temporary_97 = adamic_function_0_numberArgument(&adamic_string_11, (0x1.8p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_96);
++		adamic_release(adamic_global_2_view);
++		adamic_global_2_view = NULL;
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	double adamic_temporary_98 = adamic_function_0_numberArgument(&adamic_string_12, (0x1.2cp+08));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_96);
++		adamic_release(adamic_global_2_view);
++		adamic_global_2_view = NULL;
++		adamic_release(adamic_global_1_original);
++		adamic_global_1_original = NULL;
++		adamic_release(adamic_global_0_receiver);
++		adamic_global_0_receiver = NULL;
++		adamic_uncaught();
++	}
++	adamic_typed_array_set(adamic_temporary_96, adamic_temporary_97, adamic_temporary_98);
++	adamic_release(adamic_temporary_96);
++	adamic_typed_array * adamic_temporary_99 = adamic_global_1_original;
++	adamic_maybe_number adamic_temporary_100 = adamic_typed_array_get(adamic_temporary_99, (0x1.8p+01));
++	adamic_maybe_number adamic_temporary_101 = adamic_temporary_100;
++	adamic_string * adamic_temporary_102 = adamic_string_from_maybe_number(adamic_temporary_101);
++	adamic_typed_array * adamic_temporary_103 = adamic_global_0_receiver;
++	double adamic_temporary_104 = adamic_typed_array_length(adamic_temporary_103);
++	double adamic_temporary_105 = adamic_temporary_104;
++	adamic_string * adamic_temporary_106 = adamic_string_from_number(adamic_temporary_105);
++	adamic_string * adamic_temporary_107 = adamic_string_concat(4, (adamic_string *const[]){&adamic_string_13, adamic_temporary_102, &adamic_string_5, adamic_temporary_106});
++	adamic_write_line(adamic_stdout, adamic_temporary_107);
++	adamic_release(adamic_temporary_107);
++	adamic_release(adamic_temporary_106);
++	adamic_release(adamic_temporary_102);
++	adamic_array * adamic_temporary_108 = adamic_array_new(2, false);
++	adamic_array_push(adamic_temporary_108, (adamic_value){.number = (0x1.2cp+08)});
++	adamic_array_push(adamic_temporary_108, (adamic_value){.number = (-(0x1p+00))});
++	adamic_array * adamic_temporary_109 = adamic_global_3_source;
++	adamic_global_3_source = adamic_temporary_108;
++	adamic_release(adamic_temporary_109);
+ 	adamic_ready_3 = true;
+-	adamic_array * adamic_temporary_92 = adamic_retain(adamic_global_3_source);
+-	adamic_typed_array * adamic_temporary_93 = adamic_typed_array_from_numbers(adamic_typed_array_uint8, adamic_temporary_92);
+-	adamic_typed_array * adamic_temporary_94 = adamic_global_4_constructed;
+-	adamic_global_4_constructed = adamic_temporary_93;
+-	adamic_release(adamic_temporary_94);
++	adamic_array * adamic_temporary_110 = adamic_retain(adamic_global_3_source);
++	adamic_typed_array * adamic_temporary_111 = adamic_typed_array_from_numbers(adamic_typed_array_uint8, adamic_temporary_110);
++	adamic_typed_array * adamic_temporary_112 = adamic_global_4_constructed;
++	adamic_global_4_constructed = adamic_temporary_111;
++	adamic_release(adamic_temporary_112);
+ 	adamic_ready_4 = true;
+-	adamic_release(adamic_temporary_92);
+-	adamic_array * adamic_temporary_95 = adamic_retain(adamic_global_3_source);
+-	adamic_array_set(adamic_temporary_95, (0x0p+00), (adamic_value){.number = (0x1.1p+04)});
+-	adamic_release(adamic_temporary_95);
+-	adamic_typed_array * adamic_temporary_96 = adamic_global_4_constructed;
+-	adamic_maybe_number adamic_temporary_97 = adamic_typed_array_get(adamic_temporary_96, (0x0p+00));
+-	adamic_maybe_number adamic_temporary_98 = adamic_temporary_97;
+-	adamic_string * adamic_temporary_99 = adamic_string_from_maybe_number(adamic_temporary_98);
+-	adamic_array * adamic_temporary_100 = adamic_global_3_source;
+-	adamic_value *adamic_temporary_101 = adamic_array_at(adamic_temporary_100, (0x0p+00));
+-	adamic_maybe_number adamic_temporary_102 = adamic_temporary_101 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_101->number});
+-	adamic_maybe_number adamic_temporary_103 = adamic_temporary_102;
+-	adamic_string * adamic_temporary_104 = adamic_string_from_maybe_number(adamic_temporary_103);
+-	adamic_string * adamic_temporary_105 = adamic_string_concat(4, (adamic_string *const[]){&adamic_string_14, adamic_temporary_99, &adamic_string_5, adamic_temporary_104});
+-	adamic_write_line(adamic_stdout, adamic_temporary_105);
+-	adamic_release(adamic_temporary_105);
+-	adamic_release(adamic_temporary_104);
+-	adamic_release(adamic_temporary_99);
++	adamic_release(adamic_temporary_110);
++	adamic_array * adamic_temporary_113 = adamic_retain(adamic_global_3_source);
++	adamic_array_set(adamic_temporary_113, (0x0p+00), (adamic_value){.number = (0x1.1p+04)});
++	adamic_release(adamic_temporary_113);
++	adamic_typed_array * adamic_temporary_114 = adamic_global_4_constructed;
++	adamic_maybe_number adamic_temporary_115 = adamic_typed_array_get(adamic_temporary_114, (0x0p+00));
++	adamic_maybe_number adamic_temporary_116 = adamic_temporary_115;
++	adamic_string * adamic_temporary_117 = adamic_string_from_maybe_number(adamic_temporary_116);
++	adamic_array * adamic_temporary_118 = adamic_global_3_source;
++	adamic_value *adamic_temporary_119 = adamic_array_at(adamic_temporary_118, (0x0p+00));
++	adamic_maybe_number adamic_temporary_120 = adamic_temporary_119 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_119->number});
++	adamic_maybe_number adamic_temporary_121 = adamic_temporary_120;
++	adamic_string * adamic_temporary_122 = adamic_string_from_maybe_number(adamic_temporary_121);
++	adamic_string * adamic_temporary_123 = adamic_string_concat(4, (adamic_string *const[]){&adamic_string_14, adamic_temporary_117, &adamic_string_5, adamic_temporary_122});
++	adamic_write_line(adamic_stdout, adamic_temporary_123);
++	adamic_release(adamic_temporary_123);
++	adamic_release(adamic_temporary_122);
++	adamic_release(adamic_temporary_117);
+ 	adamic_release(adamic_global_4_constructed);
+ 	adamic_global_4_constructed = NULL;
+ 	adamic_release(adamic_global_3_source);

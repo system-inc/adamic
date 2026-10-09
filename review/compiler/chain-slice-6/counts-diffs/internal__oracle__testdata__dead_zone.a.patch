@@ -1,0 +1,27 @@
+--- main/internal/oracle/testdata/dead_zone.a
++++ slice/internal/oracle/testdata/dead_zone.a
+@@ -18,8 +18,12 @@
+ static double adamic_function_0_readLater(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'later' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'later' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	}
+ 	double adamic_temporary_1 = adamic_global_1_later;
+ 	double adamic_temporary_2 = (adamic_temporary_1 * (0x1p+01));
+@@ -31,6 +35,9 @@
+ 	adamic_start(argc, argv);
+ 	adamic_write_line(adamic_stdout, &adamic_string_0);
+ 	double adamic_temporary_3 = adamic_function_0_readLater();
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_global_0_early = adamic_temporary_3;
+ 	adamic_ready_0 = true;
+ 	adamic_global_1_later = (0x1.5p+04);

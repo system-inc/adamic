@@ -1,0 +1,2481 @@
+--- main/internal/oracle/testdata/class_as_interface.a
++++ slice/internal/oracle/testdata/class_as_interface.a
+@@ -43,18 +43,20 @@
+ static adamic_string adamic_string_35 = ADAMIC_STRING("yak");
+ static adamic_string adamic_string_36 = ADAMIC_STRING("");
+ static adamic_string adamic_string_37 = ADAMIC_STRING("negative");
+-static adamic_string adamic_string_38 = ADAMIC_STRING("unknown");
+-static adamic_string adamic_string_39 = ADAMIC_STRING("empty");
+-static adamic_string adamic_string_40 = ADAMIC_STRING("a");
+-static adamic_string adamic_string_41 = ADAMIC_STRING("b");
+-static adamic_string adamic_string_42 = ADAMIC_STRING("c");
+-static adamic_string adamic_string_43 = ADAMIC_STRING("maybe");
+-static adamic_string adamic_string_44 = ADAMIC_STRING("elk");
+-static adamic_string adamic_string_45 = ADAMIC_STRING("none");
+-static adamic_string adamic_string_46 = ADAMIC_STRING("never");
+-static adamic_string adamic_string_47 = ADAMIC_STRING("no class");
+-static adamic_string adamic_string_48 = ADAMIC_STRING("no literal");
+-static adamic_string adamic_string_49 = ADAMIC_STRING("gone");
++static adamic_string adamic_string_38 = ADAMIC_STRING("object");
++static adamic_string adamic_string_39 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
++static adamic_string adamic_string_40 = ADAMIC_STRING("unknown");
++static adamic_string adamic_string_41 = ADAMIC_STRING("empty");
++static adamic_string adamic_string_42 = ADAMIC_STRING("a");
++static adamic_string adamic_string_43 = ADAMIC_STRING("b");
++static adamic_string adamic_string_44 = ADAMIC_STRING("c");
++static adamic_string adamic_string_45 = ADAMIC_STRING("maybe");
++static adamic_string adamic_string_46 = ADAMIC_STRING("elk");
++static adamic_string adamic_string_47 = ADAMIC_STRING("none");
++static adamic_string adamic_string_48 = ADAMIC_STRING("never");
++static adamic_string adamic_string_49 = ADAMIC_STRING("no class");
++static adamic_string adamic_string_50 = ADAMIC_STRING("no literal");
++static adamic_string adamic_string_51 = ADAMIC_STRING("gone");
+ 
+ static adamic_object * adamic_global_0_variable = NULL;
+ static bool adamic_ready_0 = false;
+@@ -122,10 +124,11 @@
+ static adamic_object * adamic_function_26_Strict_new_in(adamic_region *region);
+ static double adamic_function_27_Strict_check(adamic_object * adamic_local_47_this, double adamic_local_48_value);
+ static void adamic_function_28_Strict_new_initialize(void);
+-static adamic_object * adamic_function_29_Counter_string_new(adamic_array * adamic_local_54_values);
+-static adamic_object * adamic_function_29_Counter_string_new_in(adamic_region *region, adamic_array * adamic_local_54_values);
+-static adamic_string * adamic_function_30_Counter_string_next(adamic_object * adamic_local_52_this);
+-static void adamic_function_31_Counter_string_new_initialize(void);
++static adamic_object * adamic_function_29_narrowed_union_member(adamic_heap * adamic_local_52_argument);
++static adamic_object * adamic_function_30_Counter_string_new(adamic_array * adamic_local_55_values);
++static adamic_object * adamic_function_30_Counter_string_new_in(adamic_region *region, adamic_array * adamic_local_55_values);
++static adamic_string * adamic_function_31_Counter_string_next(adamic_object * adamic_local_53_this);
++static void adamic_function_32_Counter_string_new_initialize(void);
+ 
+ static const char *const adamic_shape_0_names[] = {"handle", "count", "busy", "reset"};
+ static const bool adamic_shape_0_references[] = {true, true, true, true};
+@@ -237,49 +240,49 @@
+ static const adamic_method adamic_shape_5_method_code[] = {adamic_method_27};
+ static const adamic_methods adamic_shape_5_methods = {1, adamic_shape_5_method_names, adamic_shape_5_method_code};
+ static const adamic_shape adamic_shape_5 = {0, NULL, NULL, &adamic_shape_5_methods};
+-static adamic_method_function adamic_method_30;
+-static adamic_value adamic_method_30(adamic_object *self, adamic_value *arguments) {
++static adamic_method_function adamic_method_31;
++static adamic_value adamic_method_31(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+-	return (adamic_value){.reference = adamic_function_30_Counter_string_next(self)};
++	return (adamic_value){.reference = adamic_function_31_Counter_string_next(self)};
+ }
+ static const char *const adamic_shape_6_method_names[] = {"next"};
+-static const adamic_method adamic_shape_6_method_code[] = {adamic_method_30};
++static const adamic_method adamic_shape_6_method_code[] = {adamic_method_31};
+ static const adamic_methods adamic_shape_6_methods = {1, adamic_shape_6_method_names, adamic_shape_6_method_code};
+ static const char *const adamic_shape_6_names[] = {"index", "values"};
+ static const bool adamic_shape_6_references[] = {false, true};
+ static const adamic_shape adamic_shape_6 = {2, adamic_shape_6_names, adamic_shape_6_references, &adamic_shape_6_methods};
+-static adamic_slot_cache adamic_cache_241;
+-static adamic_slot_cache adamic_cache_242;
++static adamic_slot_cache adamic_cache_243;
+ static adamic_slot_cache adamic_cache_244;
+-static adamic_slot_cache adamic_cache_245;
+-static adamic_slot_cache adamic_cache_248;
+-static adamic_slot_cache adamic_cache_249;
+-static adamic_slot_cache adamic_cache_254;
+-static adamic_slot_cache adamic_cache_255;
++static adamic_slot_cache adamic_cache_246;
++static adamic_slot_cache adamic_cache_247;
++static adamic_slot_cache adamic_cache_250;
++static adamic_slot_cache adamic_cache_251;
++static adamic_slot_cache adamic_cache_256;
+ static adamic_slot_cache adamic_cache_257;
+-static adamic_slot_cache adamic_cache_258;
+-static adamic_slot_cache adamic_cache_261;
+-static adamic_slot_cache adamic_cache_262;
+-static adamic_slot_cache adamic_cache_274;
+-static adamic_slot_cache adamic_cache_275;
+-static adamic_slot_cache adamic_cache_330;
+-static adamic_slot_cache adamic_cache_337;
+-static adamic_slot_cache adamic_cache_352;
+-static adamic_slot_cache adamic_cache_358;
+-static adamic_slot_cache adamic_cache_373;
+-static adamic_slot_cache adamic_cache_382;
+-static adamic_slot_cache adamic_cache_393;
+-static adamic_slot_cache adamic_cache_400;
+-static adamic_slot_cache adamic_cache_413;
+-static adamic_slot_cache adamic_cache_421;
+-static adamic_slot_cache adamic_cache_431;
+-static adamic_slot_cache adamic_cache_487;
+-static adamic_slot_cache adamic_cache_511;
+-static adamic_slot_cache adamic_cache_520;
+-static adamic_slot_cache adamic_cache_532;
+-static adamic_slot_cache adamic_cache_541;
+-static adamic_slot_cache adamic_cache_555;
+-static adamic_slot_cache adamic_cache_566;
++static adamic_slot_cache adamic_cache_259;
++static adamic_slot_cache adamic_cache_260;
++static adamic_slot_cache adamic_cache_263;
++static adamic_slot_cache adamic_cache_264;
++static adamic_slot_cache adamic_cache_276;
++static adamic_slot_cache adamic_cache_277;
++static adamic_slot_cache adamic_cache_332;
++static adamic_slot_cache adamic_cache_339;
++static adamic_slot_cache adamic_cache_354;
++static adamic_slot_cache adamic_cache_360;
++static adamic_slot_cache adamic_cache_375;
++static adamic_slot_cache adamic_cache_384;
++static adamic_slot_cache adamic_cache_395;
++static adamic_slot_cache adamic_cache_402;
++static adamic_slot_cache adamic_cache_415;
++static adamic_slot_cache adamic_cache_423;
++static adamic_slot_cache adamic_cache_433;
++static adamic_slot_cache adamic_cache_491;
++static adamic_slot_cache adamic_cache_515;
++static adamic_slot_cache adamic_cache_524;
++static adamic_slot_cache adamic_cache_536;
++static adamic_slot_cache adamic_cache_545;
++static adamic_slot_cache adamic_cache_559;
++static adamic_slot_cache adamic_cache_570;
+ static const char *const adamic_shape_7_names[] = {"seen", "label"};
+ static const bool adamic_shape_7_references[] = {true, true};
+ static const adamic_shape adamic_shape_7 = {2, adamic_shape_7_names, adamic_shape_7_references, NULL};
+@@ -298,7 +301,7 @@
+ static const adamic_class adamic_class_2 = {NULL, 0, 2, adamic_methods_2, 2, &adamic_shape_7, NULL, 0, false, 0, NULL};
+ static const size_t adamic_methods_3[] = {27};
+ static const adamic_class adamic_class_3 = {NULL, 0, 0, adamic_methods_3, 3, &adamic_shape_8, NULL, 0, false, 0, NULL};
+-static const size_t adamic_methods_4[] = {30};
++static const size_t adamic_methods_4[] = {31};
+ static const adamic_class adamic_class_4 = {NULL, 0, 2, adamic_methods_4, 4, &adamic_shape_9, NULL, 0, false, 0, NULL};
+ static adamic_string * adamic_function_0_built(adamic_string * adamic_local_13_text, double adamic_local_14_index) {
+ 	ADAMIC_CHECK_STACK();
+@@ -374,7 +377,7 @@
+ 	adamic_object * adamic_temporary_22 = adamic_object_new(&adamic_shape_1);
+ 	adamic_temporary_22->slots[0].reference = adamic_temporary_21;
+ 	adamic_value adamic_temporary_23 = (adamic_temporary_20 != NULL ? adamic_temporary_20->code(adamic_temporary_20, (adamic_value[]){{.reference = adamic_temporary_22}}) : adamic_temporary_18(adamic_local_16_handler, (adamic_value[]){{.reference = adamic_temporary_22}}));
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_22);
+ 		adamic_release(adamic_temporary_20);
+ 		return &adamic_string_empty;
+@@ -389,7 +392,7 @@
+ 	adamic_object * adamic_temporary_29 = adamic_object_new(&adamic_shape_1);
+ 	adamic_temporary_29->slots[0].reference = adamic_temporary_28;
+ 	adamic_value adamic_temporary_30 = (adamic_temporary_27 != NULL ? adamic_temporary_27->code(adamic_temporary_27, (adamic_value[]){{.reference = adamic_temporary_29}}) : adamic_temporary_25(adamic_local_16_handler, (adamic_value[]){{.reference = adamic_temporary_29}}));
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_29);
+ 		adamic_release(adamic_temporary_27);
+ 		adamic_release(adamic_local_24_first);
+@@ -402,7 +405,7 @@
+ 	adamic_method adamic_temporary_32 = NULL;
+ 	adamic_closure * adamic_temporary_34 = adamic_retain(adamic_object_callee(adamic_local_16_handler, "count", &adamic_cache_33, &adamic_temporary_32));
+ 	adamic_value adamic_temporary_35 = (adamic_temporary_34 != NULL ? adamic_temporary_34->code(adamic_temporary_34, NULL) : adamic_temporary_32(adamic_local_16_handler, NULL));
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_34);
+ 		adamic_release(adamic_local_25_second);
+ 		adamic_release(adamic_local_24_first);
+@@ -413,7 +416,7 @@
+ 	adamic_method adamic_temporary_38 = NULL;
+ 	adamic_closure * adamic_temporary_40 = adamic_retain(adamic_object_callee(adamic_local_16_handler, "busy", &adamic_cache_39, &adamic_temporary_38));
+ 	adamic_value adamic_temporary_41 = (adamic_temporary_40 != NULL ? adamic_temporary_40->code(adamic_temporary_40, NULL) : adamic_temporary_38(adamic_local_16_handler, NULL));
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_40);
+ 		adamic_release(adamic_temporary_37);
+ 		adamic_release(adamic_temporary_34);
+@@ -482,8 +485,14 @@
+ 	adamic_string * adamic_temporary_63 = adamic_function_0_built(&adamic_string_10, (0x1.cp+03));
+ 	adamic_object * adamic_temporary_64 = adamic_function_13_Echo_new(adamic_temporary_63);
+ 	if (!adamic_ready_3) {
+-		static const char message[] = "ReferenceError: Cannot access 'current' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'current' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_64);
++		adamic_release(adamic_temporary_63);
++		return NULL;
++	}
+ 	}
+ 	adamic_object * adamic_temporary_65 = adamic_global_3_current;
+ 	adamic_global_3_current = adamic_temporary_64;
+@@ -502,8 +511,14 @@
+ 	adamic_string * adamic_temporary_69 = adamic_function_0_built(&adamic_string_10, (0x1.cp+03));
+ 	adamic_object * adamic_temporary_70 = adamic_function_13_Echo_new(adamic_temporary_69);
+ 	if (!adamic_ready_3) {
+-		static const char message[] = "ReferenceError: Cannot access 'current' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'current' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_70);
++		adamic_release(adamic_temporary_69);
++		return NULL;
++	}
+ 	}
+ 	adamic_object * adamic_temporary_71 = adamic_global_3_current;
+ 	adamic_global_3_current = adamic_temporary_70;
+@@ -606,13 +621,21 @@
+ static adamic_object * adamic_function_7_counted(double adamic_local_21_index) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_10) {
+-		static const char message[] = "ReferenceError: Cannot access 'evaluated' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'evaluated' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	double adamic_temporary_105 = adamic_global_10_evaluated;
+ 	if (!adamic_ready_10) {
+-		static const char message[] = "ReferenceError: Cannot access 'evaluated' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'evaluated' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	adamic_global_10_evaluated = (adamic_temporary_105 + (0x1p+00));
+ 	adamic_string * adamic_temporary_106 = adamic_function_0_built(&adamic_string_17, adamic_local_21_index);
+@@ -626,13 +649,21 @@
+ static adamic_object * adamic_function_7_counted_in(adamic_region *region, double adamic_local_21_index) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_10) {
+-		static const char message[] = "ReferenceError: Cannot access 'evaluated' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'evaluated' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	double adamic_temporary_109 = adamic_global_10_evaluated;
+ 	if (!adamic_ready_10) {
+-		static const char message[] = "ReferenceError: Cannot access 'evaluated' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'evaluated' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	adamic_global_10_evaluated = (adamic_temporary_109 + (0x1p+00));
+ 	adamic_string * adamic_temporary_110 = adamic_function_0_built(&adamic_string_17, adamic_local_21_index);
+@@ -646,8 +677,12 @@
+ static adamic_object * adamic_function_8_displace(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'handlers' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'handlers' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	adamic_array * adamic_temporary_113 = adamic_retain(adamic_global_1_handlers);
+ 	adamic_string * adamic_temporary_114 = adamic_function_0_built(&adamic_string_18, (0x1.4p+04));
+@@ -657,6 +692,10 @@
+ 	adamic_release(adamic_temporary_114);
+ 	adamic_release(adamic_temporary_113);
+ 	adamic_object * adamic_temporary_116 = adamic_function_7_counted((0x1.4p+04));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_116);
++		return NULL;
++	}
+ 	adamic_object * adamic_temporary_117 = adamic_temporary_116;
+ 	return adamic_temporary_117;
+ 	adamic_unreachable();
+@@ -665,8 +704,12 @@
+ static adamic_object * adamic_function_8_displace_in(adamic_region *region) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'handlers' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'handlers' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	}
+ 	adamic_array * adamic_temporary_118 = adamic_retain(adamic_global_1_handlers);
+ 	adamic_string * adamic_temporary_119 = adamic_function_0_built(&adamic_string_18, (0x1.4p+04));
+@@ -676,6 +719,9 @@
+ 	adamic_release(adamic_temporary_119);
+ 	adamic_release(adamic_temporary_118);
+ 	adamic_object *adamic_temporary_121 = adamic_function_7_counted_in(region, (0x1.4p+04));
++	if (adamic_exception_pending) {
++		return NULL;
++	}
+ 	adamic_object * adamic_temporary_122 = adamic_temporary_121;
+ 	return adamic_temporary_122;
+ 	adamic_unreachable();
+@@ -1036,8 +1082,9 @@
+ 	if (adamic_local_48_value < (0x0p+00)) {
+ 		{
+ 			adamic_string * adamic_temporary_236 = adamic_function_0_built(&adamic_string_37, adamic_local_48_value);
+-			adamic_object * adamic_temporary_237 = adamic_error_new(adamic_temporary_236);
+-			adamic_thrown = adamic_retain(adamic_temporary_237);
++			adamic_object * adamic_temporary_237 = adamic_error_new_kind(adamic_temporary_236, "Error");
++			adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_237)));
++			adamic_exception_pending = true;
+ 			adamic_release(adamic_temporary_237);
+ 			adamic_release(adamic_temporary_236);
+ 			return 0.0;
+@@ -1052,255 +1099,283 @@
+ 	ADAMIC_CHECK_STACK();
+ }
+ 
+-static adamic_object * adamic_function_29_Counter_string_new(adamic_array * adamic_local_54_values) {
+-	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_239 = adamic_object_new(&adamic_shape_6);
+-	adamic_temporary_239->class = &adamic_class_4;
+-	adamic_temporary_239->slots[0].number = (0x0p+00);
+-	adamic_temporary_239->slots[1].reference = NULL;
+-	adamic_object * adamic_local_53_this = adamic_temporary_239;
++static adamic_object * adamic_function_29_narrowed_union_member(adamic_heap * adamic_local_52_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_239 = adamic_instanceof(adamic_local_52_argument, &adamic_error_class);
++	if (!adamic_temporary_239) {
++		adamic_panic((&adamic_string_39)->bytes, (&adamic_string_39)->length);
++	}
++	adamic_object * adamic_temporary_240 = adamic_retain(((adamic_object *)adamic_local_52_argument));
++	return adamic_temporary_240;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_30_Counter_string_new(adamic_array * adamic_local_55_values) {
++	ADAMIC_CHECK_STACK();
++	adamic_object * adamic_temporary_241 = adamic_object_new(&adamic_shape_6);
++	adamic_temporary_241->class = &adamic_class_4;
++	adamic_temporary_241->slots[0].number = (0x0p+00);
++	adamic_temporary_241->slots[1].reference = NULL;
++	adamic_object * adamic_local_54_this = adamic_temporary_241;
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'index')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "index");
++	adamic_value *adamic_temporary_242 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[0]) : adamic_object_data_field(adamic_local_54_this, "index", &adamic_cache_244));
++	adamic_temporary_242->number = (0x0p+00);
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "values");
++	adamic_value *adamic_temporary_245 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[1]) : adamic_object_data_field(adamic_local_54_this, "values", &adamic_cache_247));
++	void *adamic_temporary_248 = adamic_temporary_245->reference;
++	adamic_temporary_245->reference = NULL;
++	if (adamic_temporary_248 != NULL) adamic_release(adamic_temporary_248);
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "values");
++	adamic_value *adamic_temporary_249 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[1]) : adamic_object_data_field(adamic_local_54_this, "values", &adamic_cache_251));
++	void *adamic_temporary_252 = adamic_temporary_249->reference;
++	adamic_temporary_249->reference = adamic_retain(adamic_local_55_values);
++	if (adamic_temporary_252 != NULL) adamic_release(adamic_temporary_252);
++	adamic_object * adamic_temporary_253 = adamic_retain(adamic_local_54_this);
++	adamic_release(adamic_local_54_this);
++	return adamic_temporary_253;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_30_Counter_string_new_in(adamic_region *region, adamic_array * adamic_local_55_values) {
++	ADAMIC_CHECK_STACK();
++	adamic_object *adamic_temporary_254 = adamic_object_new_in(region, &adamic_shape_6);
++	adamic_temporary_254->class = &adamic_class_4;
++	adamic_temporary_254->slots[0].number = (0x0p+00);
++	adamic_temporary_254->slots[1].reference = NULL;
++	adamic_object * adamic_local_54_this = adamic_retain(adamic_temporary_254);
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'index')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "index");
++	adamic_value *adamic_temporary_255 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[0]) : adamic_object_data_field(adamic_local_54_this, "index", &adamic_cache_257));
++	adamic_temporary_255->number = (0x0p+00);
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "values");
++	adamic_value *adamic_temporary_258 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[1]) : adamic_object_data_field(adamic_local_54_this, "values", &adamic_cache_260));
++	void *adamic_temporary_261 = adamic_temporary_258->reference;
++	adamic_temporary_258->reference = NULL;
++	if (adamic_temporary_261 != NULL) adamic_release(adamic_temporary_261);
++	if (adamic_local_54_this == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_local_54_this, "values");
++	adamic_value *adamic_temporary_262 = (adamic_local_54_this->shape == &adamic_shape_6 ? (&adamic_local_54_this->slots[1]) : adamic_object_data_field(adamic_local_54_this, "values", &adamic_cache_264));
++	void *adamic_temporary_265 = adamic_temporary_262->reference;
++	adamic_temporary_262->reference = adamic_retain(adamic_local_55_values);
++	if (adamic_temporary_265 != NULL) adamic_release(adamic_temporary_265);
++	adamic_object * adamic_temporary_266 = adamic_local_54_this;
++	adamic_release(adamic_local_54_this);
++	return adamic_temporary_266;
++	adamic_unreachable();
++}
++
++static adamic_string * adamic_function_31_Counter_string_next(adamic_object * adamic_local_53_this) {
++	ADAMIC_CHECK_STACK();
++	adamic_array * adamic_temporary_267 = ((adamic_array *)(&adamic_local_53_this->slots[1])->reference);
++	double adamic_temporary_268 = (&adamic_local_53_this->slots[0])->number;
++	adamic_array * adamic_temporary_269 = ((adamic_array *)(&adamic_local_53_this->slots[1])->reference);
++	double adamic_temporary_270 = (double)adamic_temporary_269->length;
++	double adamic_temporary_271 = adamic_temporary_270;
++	adamic_value *adamic_temporary_272 = adamic_array_at(adamic_temporary_267, fmod(adamic_temporary_268, adamic_temporary_271));
++	adamic_string * adamic_temporary_273 = adamic_temporary_272 == NULL ? NULL : (adamic_string *)adamic_retain(adamic_temporary_272->reference);
++	adamic_string * adamic_local_56_value = adamic_temporary_273;
++	double adamic_temporary_274 = (&adamic_local_53_this->slots[0])->number;
+ 	if (adamic_local_53_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'index')";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+ 	adamic_object_check_data_write(adamic_local_53_this, "index");
+-	adamic_value *adamic_temporary_240 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[0]) : adamic_object_data_field(adamic_local_53_this, "index", &adamic_cache_242));
+-	adamic_temporary_240->number = (0x0p+00);
+-	if (adamic_local_53_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_53_this, "values");
+-	adamic_value *adamic_temporary_243 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[1]) : adamic_object_data_field(adamic_local_53_this, "values", &adamic_cache_245));
+-	void *adamic_temporary_246 = adamic_temporary_243->reference;
+-	adamic_temporary_243->reference = NULL;
+-	if (adamic_temporary_246 != NULL) adamic_release(adamic_temporary_246);
+-	if (adamic_local_53_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_53_this, "values");
+-	adamic_value *adamic_temporary_247 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[1]) : adamic_object_data_field(adamic_local_53_this, "values", &adamic_cache_249));
+-	void *adamic_temporary_250 = adamic_temporary_247->reference;
+-	adamic_temporary_247->reference = adamic_retain(adamic_local_54_values);
+-	if (adamic_temporary_250 != NULL) adamic_release(adamic_temporary_250);
+-	adamic_object * adamic_temporary_251 = adamic_retain(adamic_local_53_this);
+-	adamic_release(adamic_local_53_this);
+-	return adamic_temporary_251;
+-	adamic_unreachable();
+-}
+-
+-static adamic_object * adamic_function_29_Counter_string_new_in(adamic_region *region, adamic_array * adamic_local_54_values) {
+-	ADAMIC_CHECK_STACK();
+-	adamic_object *adamic_temporary_252 = adamic_object_new_in(region, &adamic_shape_6);
+-	adamic_temporary_252->class = &adamic_class_4;
+-	adamic_temporary_252->slots[0].number = (0x0p+00);
+-	adamic_temporary_252->slots[1].reference = NULL;
+-	adamic_object * adamic_local_53_this = adamic_retain(adamic_temporary_252);
+-	if (adamic_local_53_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'index')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_53_this, "index");
+-	adamic_value *adamic_temporary_253 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[0]) : adamic_object_data_field(adamic_local_53_this, "index", &adamic_cache_255));
+-	adamic_temporary_253->number = (0x0p+00);
+-	if (adamic_local_53_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_53_this, "values");
+-	adamic_value *adamic_temporary_256 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[1]) : adamic_object_data_field(adamic_local_53_this, "values", &adamic_cache_258));
+-	void *adamic_temporary_259 = adamic_temporary_256->reference;
+-	adamic_temporary_256->reference = NULL;
+-	if (adamic_temporary_259 != NULL) adamic_release(adamic_temporary_259);
+-	if (adamic_local_53_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'values')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_53_this, "values");
+-	adamic_value *adamic_temporary_260 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[1]) : adamic_object_data_field(adamic_local_53_this, "values", &adamic_cache_262));
+-	void *adamic_temporary_263 = adamic_temporary_260->reference;
+-	adamic_temporary_260->reference = adamic_retain(adamic_local_54_values);
+-	if (adamic_temporary_263 != NULL) adamic_release(adamic_temporary_263);
+-	adamic_object * adamic_temporary_264 = adamic_local_53_this;
+-	adamic_release(adamic_local_53_this);
+-	return adamic_temporary_264;
+-	adamic_unreachable();
+-}
+-
+-static adamic_string * adamic_function_30_Counter_string_next(adamic_object * adamic_local_52_this) {
+-	ADAMIC_CHECK_STACK();
+-	adamic_array * adamic_temporary_265 = ((adamic_array *)(&adamic_local_52_this->slots[1])->reference);
+-	double adamic_temporary_266 = (&adamic_local_52_this->slots[0])->number;
+-	adamic_array * adamic_temporary_267 = ((adamic_array *)(&adamic_local_52_this->slots[1])->reference);
+-	double adamic_temporary_268 = (double)adamic_temporary_267->length;
+-	double adamic_temporary_269 = adamic_temporary_268;
+-	adamic_value *adamic_temporary_270 = adamic_array_at(adamic_temporary_265, fmod(adamic_temporary_266, adamic_temporary_269));
+-	adamic_string * adamic_temporary_271 = adamic_temporary_270 == NULL ? NULL : (adamic_string *)adamic_retain(adamic_temporary_270->reference);
+-	adamic_string * adamic_local_55_value = adamic_temporary_271;
+-	double adamic_temporary_272 = (&adamic_local_52_this->slots[0])->number;
+-	if (adamic_local_52_this == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'index')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_local_52_this, "index");
+-	adamic_value *adamic_temporary_273 = (adamic_local_52_this->shape == &adamic_shape_6 ? (&adamic_local_52_this->slots[0]) : adamic_object_data_field(adamic_local_52_this, "index", &adamic_cache_275));
+-	adamic_temporary_273->number = (adamic_temporary_272 + (0x1p+00));
+-	if (adamic_local_55_value == NULL) {
++	adamic_value *adamic_temporary_275 = (adamic_local_53_this->shape == &adamic_shape_6 ? (&adamic_local_53_this->slots[0]) : adamic_object_data_field(adamic_local_53_this, "index", &adamic_cache_277));
++	adamic_temporary_275->number = (adamic_temporary_274 + (0x1p+00));
++	if (adamic_local_56_value == NULL) {
+ 		{
+-			adamic_object * adamic_temporary_276 = adamic_error_new(&adamic_string_39);
+-			adamic_thrown = adamic_retain(adamic_temporary_276);
+-			adamic_release(adamic_temporary_276);
+-			adamic_release(adamic_local_55_value);
++			adamic_object * adamic_temporary_278 = adamic_error_new_kind(&adamic_string_41, "Error");
++			adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_278)));
++			adamic_exception_pending = true;
++			adamic_release(adamic_temporary_278);
++			adamic_release(adamic_local_56_value);
+ 			return &adamic_string_empty;
+ 		}
+ 	}
+-	if (adamic_local_55_value == NULL) {
++	if (adamic_local_56_value == NULL) {
+ 		static const char message[] = "undefined where the checker narrowed it away: a call since the narrowing put it back";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_string * adamic_temporary_277 = adamic_retain(adamic_local_55_value);
+-	adamic_release(adamic_local_55_value);
+-	return adamic_temporary_277;
+-	adamic_unreachable();
+-}
+-
+-static void adamic_function_31_Counter_string_new_initialize(void) {
++	adamic_string * adamic_temporary_279 = adamic_retain(adamic_local_56_value);
++	adamic_release(adamic_local_56_value);
++	return adamic_temporary_279;
++	adamic_unreachable();
++}
++
++static void adamic_function_32_Counter_string_new_initialize(void) {
+ 	ADAMIC_CHECK_STACK();
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_string * adamic_temporary_278 = adamic_function_0_built(&adamic_string_19, (0x1p+00));
+-	adamic_object * adamic_temporary_279 = adamic_function_20_Kennel_new(adamic_temporary_278);
+-	adamic_object * adamic_temporary_280 = adamic_global_0_variable;
+-	adamic_global_0_variable = adamic_temporary_279;
++	adamic_string * adamic_temporary_280 = adamic_function_0_built(&adamic_string_19, (0x1p+00));
++	adamic_object * adamic_temporary_281 = adamic_function_20_Kennel_new(adamic_temporary_280);
++	adamic_object * adamic_temporary_282 = adamic_global_0_variable;
++	adamic_global_0_variable = adamic_temporary_281;
++	adamic_release(adamic_temporary_282);
++	adamic_ready_0 = true;
+ 	adamic_release(adamic_temporary_280);
+-	adamic_ready_0 = true;
+-	adamic_release(adamic_temporary_278);
+-	adamic_object * adamic_temporary_281 = adamic_retain(adamic_global_0_variable);
+-	adamic_string * adamic_temporary_282 = adamic_function_0_built(&adamic_string_20, (0x1p+00));
+-	adamic_object * adamic_temporary_283 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_283->slots[0].reference = adamic_temporary_282;
+-	adamic_value adamic_temporary_284 = adamic_method_21(adamic_temporary_281, (adamic_value[]){{.reference = adamic_temporary_283}});
+-	if (adamic_thrown != NULL) {
++	adamic_object * adamic_temporary_283 = adamic_retain(adamic_global_0_variable);
++	adamic_string * adamic_temporary_284 = adamic_function_0_built(&adamic_string_20, (0x1p+00));
++	adamic_object * adamic_temporary_285 = adamic_object_new(&adamic_shape_1);
++	adamic_temporary_285->slots[0].reference = adamic_temporary_284;
++	adamic_value adamic_temporary_286 = adamic_method_21(adamic_temporary_283, (adamic_value[]){{.reference = adamic_temporary_285}});
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_285);
+ 		adamic_release(adamic_temporary_283);
+-		adamic_release(adamic_temporary_281);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_285 = (adamic_string *)adamic_temporary_284.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_285);
++	adamic_string * adamic_temporary_287 = (adamic_string *)adamic_temporary_286.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_287);
++	adamic_release(adamic_temporary_287);
+ 	adamic_release(adamic_temporary_285);
+ 	adamic_release(adamic_temporary_283);
+-	adamic_release(adamic_temporary_281);
+-	adamic_object * adamic_temporary_286 = adamic_retain(adamic_global_0_variable);
+-	adamic_value adamic_temporary_287 = adamic_method_22(adamic_temporary_286, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_286);
++	adamic_object * adamic_temporary_288 = adamic_retain(adamic_global_0_variable);
++	adamic_value adamic_temporary_289 = adamic_method_22(adamic_temporary_288, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_288);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	double adamic_temporary_288 = adamic_temporary_287.number;
+-	adamic_string * adamic_temporary_289 = adamic_string_from_number(adamic_temporary_288);
+-	adamic_object * adamic_temporary_290 = adamic_retain(adamic_global_0_variable);
+-	adamic_value adamic_temporary_291 = adamic_method_23(adamic_temporary_290, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_290);
+-		adamic_release(adamic_temporary_289);
+-		adamic_release(adamic_temporary_286);
++	double adamic_temporary_290 = adamic_temporary_289.number;
++	adamic_string * adamic_temporary_291 = adamic_string_from_number(adamic_temporary_290);
++	adamic_object * adamic_temporary_292 = adamic_retain(adamic_global_0_variable);
++	adamic_value adamic_temporary_293 = adamic_method_23(adamic_temporary_292, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_292);
++		adamic_release(adamic_temporary_291);
++		adamic_release(adamic_temporary_288);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	bool adamic_temporary_292 = adamic_temporary_291.boolean;
+-	adamic_string * adamic_temporary_293 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_289, &adamic_string_6, ((adamic_temporary_292) ? &adamic_string_true : &adamic_string_false)});
+-	adamic_write_line(adamic_stdout, adamic_temporary_293);
+-	adamic_release(adamic_temporary_293);
+-	adamic_release(adamic_temporary_290);
+-	adamic_release(adamic_temporary_289);
+-	adamic_release(adamic_temporary_286);
+-	adamic_object * adamic_temporary_294 = adamic_retain(adamic_global_0_variable);
+-	adamic_method_24(adamic_temporary_294, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_294);
++	bool adamic_temporary_294 = adamic_temporary_293.boolean;
++	adamic_string * adamic_temporary_295 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_291, &adamic_string_6, ((adamic_temporary_294) ? &adamic_string_true : &adamic_string_false)});
++	adamic_write_line(adamic_stdout, adamic_temporary_295);
++	adamic_release(adamic_temporary_295);
++	adamic_release(adamic_temporary_292);
++	adamic_release(adamic_temporary_291);
++	adamic_release(adamic_temporary_288);
++	adamic_object * adamic_temporary_296 = adamic_retain(adamic_global_0_variable);
++	adamic_method_24(adamic_temporary_296, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_296);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+ 	(void)0;
+-	adamic_release(adamic_temporary_294);
+-	adamic_object * adamic_temporary_295 = adamic_retain(adamic_global_0_variable);
+-	adamic_value adamic_temporary_296 = adamic_method_22(adamic_temporary_295, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_295);
++	adamic_release(adamic_temporary_296);
++	adamic_object * adamic_temporary_297 = adamic_retain(adamic_global_0_variable);
++	adamic_value adamic_temporary_298 = adamic_method_22(adamic_temporary_297, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_297);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	double adamic_temporary_297 = adamic_temporary_296.number;
+-	adamic_string * adamic_temporary_298 = adamic_string_from_number(adamic_temporary_297);
+-	adamic_string * adamic_temporary_299 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_298});
+-	adamic_write_line(adamic_stdout, adamic_temporary_299);
+-	adamic_release(adamic_temporary_299);
+-	adamic_release(adamic_temporary_298);
+-	adamic_release(adamic_temporary_295);
+-	adamic_string * adamic_temporary_300 = adamic_function_0_built(&adamic_string_21, (0x1p+01));
+-	adamic_object * adamic_temporary_301 = adamic_function_20_Kennel_new(adamic_temporary_300);
+-	adamic_string * adamic_temporary_302 = adamic_function_2_visit(adamic_temporary_301, (0x1p+01));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_302);
+-		adamic_release(adamic_temporary_301);
+-		adamic_release(adamic_temporary_300);
+-		adamic_uncaught();
+-	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_302);
+-	adamic_release(adamic_temporary_302);
++	double adamic_temporary_299 = adamic_temporary_298.number;
++	adamic_string * adamic_temporary_300 = adamic_string_from_number(adamic_temporary_299);
++	adamic_string * adamic_temporary_301 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_300});
++	adamic_write_line(adamic_stdout, adamic_temporary_301);
+ 	adamic_release(adamic_temporary_301);
+ 	adamic_release(adamic_temporary_300);
+-	adamic_string * adamic_temporary_303 = adamic_function_0_built(&adamic_string_22, (0x1.8p+01));
+-	adamic_object * adamic_temporary_304 = adamic_function_13_Echo_new(adamic_temporary_303);
+-	adamic_string * adamic_temporary_305 = adamic_function_2_visit(adamic_temporary_304, (0x1.8p+01));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_305);
++	adamic_release(adamic_temporary_297);
++	adamic_string * adamic_temporary_302 = adamic_function_0_built(&adamic_string_21, (0x1p+01));
++	adamic_object * adamic_temporary_303 = adamic_function_20_Kennel_new(adamic_temporary_302);
++	adamic_string * adamic_temporary_304 = adamic_function_2_visit(adamic_temporary_303, (0x1p+01));
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_304);
+ 		adamic_release(adamic_temporary_303);
++		adamic_release(adamic_temporary_302);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_305);
+-	adamic_release(adamic_temporary_305);
++	adamic_write_line(adamic_stdout, adamic_temporary_304);
+ 	adamic_release(adamic_temporary_304);
+ 	adamic_release(adamic_temporary_303);
+-	adamic_string * adamic_temporary_306 = adamic_function_0_built(&adamic_string_23, (0x1p+02));
+-	adamic_object * adamic_temporary_307 = adamic_function_1_literalHandler(adamic_temporary_306);
+-	adamic_string * adamic_temporary_308 = adamic_function_2_visit(adamic_temporary_307, (0x1p+02));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_308);
++	adamic_release(adamic_temporary_302);
++	adamic_string * adamic_temporary_305 = adamic_function_0_built(&adamic_string_22, (0x1.8p+01));
++	adamic_object * adamic_temporary_306 = adamic_function_13_Echo_new(adamic_temporary_305);
++	adamic_string * adamic_temporary_307 = adamic_function_2_visit(adamic_temporary_306, (0x1.8p+01));
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_307);
+ 		adamic_release(adamic_temporary_306);
++		adamic_release(adamic_temporary_305);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_308);
+-	adamic_release(adamic_temporary_308);
++	adamic_write_line(adamic_stdout, adamic_temporary_307);
+ 	adamic_release(adamic_temporary_307);
+ 	adamic_release(adamic_temporary_306);
+-	adamic_string * adamic_temporary_309 = adamic_function_0_built(&adamic_string_24, (0x1.4p+02));
+-	adamic_object * adamic_temporary_310 = adamic_function_20_Kennel_new(adamic_temporary_309);
+-	adamic_string * adamic_temporary_311 = adamic_function_0_built(&adamic_string_25, (0x1.8p+02));
+-	adamic_object * adamic_temporary_312 = adamic_function_1_literalHandler(adamic_temporary_311);
+-	adamic_string * adamic_temporary_313 = adamic_function_0_built(&adamic_string_26, (0x1.cp+02));
+-	adamic_object * adamic_temporary_314 = adamic_function_13_Echo_new(adamic_temporary_313);
+-	adamic_string * adamic_temporary_315 = adamic_function_0_built(&adamic_string_27, (0x1p+03));
+-	adamic_object * adamic_temporary_316 = adamic_function_20_Kennel_new(adamic_temporary_315);
+-	adamic_array * adamic_temporary_317 = adamic_array_new(4, true);
+-	adamic_array_push(adamic_temporary_317, (adamic_value){.reference = adamic_retain(adamic_temporary_310)});
+-	adamic_array_push(adamic_temporary_317, (adamic_value){.reference = adamic_retain(adamic_temporary_312)});
+-	adamic_array_push(adamic_temporary_317, (adamic_value){.reference = adamic_retain(adamic_temporary_314)});
+-	adamic_array_push(adamic_temporary_317, (adamic_value){.reference = adamic_retain(adamic_temporary_316)});
+-	adamic_array * adamic_temporary_318 = adamic_global_1_handlers;
+-	adamic_global_1_handlers = adamic_temporary_317;
++	adamic_release(adamic_temporary_305);
++	adamic_string * adamic_temporary_308 = adamic_function_0_built(&adamic_string_23, (0x1p+02));
++	adamic_object * adamic_temporary_309 = adamic_function_1_literalHandler(adamic_temporary_308);
++	adamic_string * adamic_temporary_310 = adamic_function_2_visit(adamic_temporary_309, (0x1p+02));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_310);
++		adamic_release(adamic_temporary_309);
++		adamic_release(adamic_temporary_308);
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
++		adamic_uncaught();
++	}
++	adamic_write_line(adamic_stdout, adamic_temporary_310);
++	adamic_release(adamic_temporary_310);
++	adamic_release(adamic_temporary_309);
++	adamic_release(adamic_temporary_308);
++	adamic_string * adamic_temporary_311 = adamic_function_0_built(&adamic_string_24, (0x1.4p+02));
++	adamic_object * adamic_temporary_312 = adamic_function_20_Kennel_new(adamic_temporary_311);
++	adamic_string * adamic_temporary_313 = adamic_function_0_built(&adamic_string_25, (0x1.8p+02));
++	adamic_object * adamic_temporary_314 = adamic_function_1_literalHandler(adamic_temporary_313);
++	adamic_string * adamic_temporary_315 = adamic_function_0_built(&adamic_string_26, (0x1.cp+02));
++	adamic_object * adamic_temporary_316 = adamic_function_13_Echo_new(adamic_temporary_315);
++	adamic_string * adamic_temporary_317 = adamic_function_0_built(&adamic_string_27, (0x1p+03));
++	adamic_object * adamic_temporary_318 = adamic_function_20_Kennel_new(adamic_temporary_317);
++	adamic_array * adamic_temporary_319 = adamic_array_new(4, true);
++	adamic_array_push(adamic_temporary_319, (adamic_value){.reference = adamic_retain(adamic_temporary_312)});
++	adamic_array_push(adamic_temporary_319, (adamic_value){.reference = adamic_retain(adamic_temporary_314)});
++	adamic_array_push(adamic_temporary_319, (adamic_value){.reference = adamic_retain(adamic_temporary_316)});
++	adamic_array_push(adamic_temporary_319, (adamic_value){.reference = adamic_retain(adamic_temporary_318)});
++	adamic_array * adamic_temporary_320 = adamic_global_1_handlers;
++	adamic_global_1_handlers = adamic_temporary_319;
++	adamic_release(adamic_temporary_320);
++	adamic_ready_1 = true;
+ 	adamic_release(adamic_temporary_318);
+-	adamic_ready_1 = true;
++	adamic_release(adamic_temporary_317);
+ 	adamic_release(adamic_temporary_316);
+ 	adamic_release(adamic_temporary_315);
+ 	adamic_release(adamic_temporary_314);
+ 	adamic_release(adamic_temporary_313);
+ 	adamic_release(adamic_temporary_312);
+ 	adamic_release(adamic_temporary_311);
+-	adamic_release(adamic_temporary_310);
+-	adamic_release(adamic_temporary_309);
+ 	{
+ 		int64_t adamic_local_42_round = (int64_t)(0x0p+00);
+ 		for (;;) {
+@@ -1310,49 +1385,61 @@
+ 			{
+ 				{
+ 					{
+-						adamic_array * adamic_temporary_321 = adamic_retain(adamic_global_1_handlers);
+-						adamic_array * adamic_temporary_322 = adamic_temporary_321;
+-						for (size_t adamic_temporary_323 = 0; adamic_temporary_323 < adamic_temporary_322->length; adamic_temporary_323++) {
++						adamic_array * adamic_temporary_323 = adamic_retain(adamic_global_1_handlers);
++						adamic_array * adamic_temporary_324 = adamic_temporary_323;
++						for (size_t adamic_temporary_325 = 0; adamic_temporary_325 < adamic_temporary_324->length; adamic_temporary_325++) {
+ 							{
+-								adamic_object * adamic_local_43_handler = adamic_retain((adamic_object *)adamic_temporary_322->elements[adamic_temporary_323].reference);
++								adamic_object * adamic_local_43_handler = adamic_retain((adamic_object *)adamic_temporary_324->elements[adamic_temporary_325].reference);
+ 								{
+-									adamic_method adamic_temporary_329 = NULL;
+-									adamic_closure * adamic_temporary_331 = adamic_retain(adamic_object_callee(adamic_local_43_handler, "handle", &adamic_cache_330, &adamic_temporary_329));
+-									adamic_string * adamic_temporary_332 = adamic_function_0_built(&adamic_string_28, ((double)adamic_local_42_round));
+-									adamic_object * adamic_temporary_333 = adamic_object_new(&adamic_shape_1);
+-									adamic_temporary_333->slots[0].reference = adamic_temporary_332;
+-									adamic_value adamic_temporary_334 = (adamic_temporary_331 != NULL ? adamic_temporary_331->code(adamic_temporary_331, (adamic_value[]){{.reference = adamic_temporary_333}}) : adamic_temporary_329(adamic_local_43_handler, (adamic_value[]){{.reference = adamic_temporary_333}}));
+-									if (adamic_thrown != NULL) {
++									adamic_method adamic_temporary_331 = NULL;
++									adamic_closure * adamic_temporary_333 = adamic_retain(adamic_object_callee(adamic_local_43_handler, "handle", &adamic_cache_332, &adamic_temporary_331));
++									adamic_string * adamic_temporary_334 = adamic_function_0_built(&adamic_string_28, ((double)adamic_local_42_round));
++									adamic_object * adamic_temporary_335 = adamic_object_new(&adamic_shape_1);
++									adamic_temporary_335->slots[0].reference = adamic_temporary_334;
++									adamic_value adamic_temporary_336 = (adamic_temporary_333 != NULL ? adamic_temporary_333->code(adamic_temporary_333, (adamic_value[]){{.reference = adamic_temporary_335}}) : adamic_temporary_331(adamic_local_43_handler, (adamic_value[]){{.reference = adamic_temporary_335}}));
++									if (adamic_exception_pending) {
++										adamic_release(adamic_temporary_335);
+ 										adamic_release(adamic_temporary_333);
+-										adamic_release(adamic_temporary_331);
++										adamic_release(adamic_local_43_handler);
++										adamic_release(adamic_temporary_324);
++										adamic_release(adamic_global_1_handlers);
++										adamic_global_1_handlers = NULL;
++										adamic_release(adamic_global_0_variable);
++										adamic_global_0_variable = NULL;
+ 										adamic_uncaught();
+ 									}
+-									adamic_string * adamic_temporary_335 = (adamic_string *)adamic_temporary_334.reference;
+-									adamic_method adamic_temporary_336 = NULL;
+-									adamic_closure * adamic_temporary_338 = adamic_retain(adamic_object_callee(adamic_local_43_handler, "count", &adamic_cache_337, &adamic_temporary_336));
+-									adamic_value adamic_temporary_339 = (adamic_temporary_338 != NULL ? adamic_temporary_338->code(adamic_temporary_338, NULL) : adamic_temporary_336(adamic_local_43_handler, NULL));
+-									if (adamic_thrown != NULL) {
+-										adamic_release(adamic_temporary_338);
++									adamic_string * adamic_temporary_337 = (adamic_string *)adamic_temporary_336.reference;
++									adamic_method adamic_temporary_338 = NULL;
++									adamic_closure * adamic_temporary_340 = adamic_retain(adamic_object_callee(adamic_local_43_handler, "count", &adamic_cache_339, &adamic_temporary_338));
++									adamic_value adamic_temporary_341 = (adamic_temporary_340 != NULL ? adamic_temporary_340->code(adamic_temporary_340, NULL) : adamic_temporary_338(adamic_local_43_handler, NULL));
++									if (adamic_exception_pending) {
++										adamic_release(adamic_temporary_340);
++										adamic_release(adamic_temporary_337);
+ 										adamic_release(adamic_temporary_335);
+ 										adamic_release(adamic_temporary_333);
+-										adamic_release(adamic_temporary_331);
++										adamic_release(adamic_local_43_handler);
++										adamic_release(adamic_temporary_324);
++										adamic_release(adamic_global_1_handlers);
++										adamic_global_1_handlers = NULL;
++										adamic_release(adamic_global_0_variable);
++										adamic_global_0_variable = NULL;
+ 										adamic_uncaught();
+ 									}
+-									double adamic_temporary_340 = adamic_temporary_339.number;
+-									adamic_string * adamic_temporary_341 = adamic_string_from_number(adamic_temporary_340);
+-									adamic_string * adamic_temporary_342 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_335, &adamic_string_6, adamic_temporary_341});
+-									adamic_write_line(adamic_stdout, adamic_temporary_342);
+-									adamic_release(adamic_temporary_342);
+-									adamic_release(adamic_temporary_341);
+-									adamic_release(adamic_temporary_338);
++									double adamic_temporary_342 = adamic_temporary_341.number;
++									adamic_string * adamic_temporary_343 = adamic_string_from_number(adamic_temporary_342);
++									adamic_string * adamic_temporary_344 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_337, &adamic_string_6, adamic_temporary_343});
++									adamic_write_line(adamic_stdout, adamic_temporary_344);
++									adamic_release(adamic_temporary_344);
++									adamic_release(adamic_temporary_343);
++									adamic_release(adamic_temporary_340);
++									adamic_release(adamic_temporary_337);
+ 									adamic_release(adamic_temporary_335);
+ 									adamic_release(adamic_temporary_333);
+-									adamic_release(adamic_temporary_331);
+ 								}
+ 								adamic_release(adamic_local_43_handler);
+ 							}
+ 						}
+-						adamic_release(adamic_temporary_322);
++						adamic_release(adamic_temporary_324);
+ 					}
+ 				}
+ 			}
+@@ -1362,212 +1449,288 @@
+ 	{
+ 		int64_t adamic_local_44_index = (int64_t)(0x0p+00);
+ 		for (;;) {
+-			adamic_array * adamic_temporary_344 = adamic_global_1_handlers;
+-			double adamic_temporary_345 = (double)adamic_temporary_344->length;
+-			double adamic_temporary_346 = adamic_temporary_345;
+-			if (!(((double)adamic_local_44_index) < adamic_temporary_346)) {
++			adamic_array * adamic_temporary_346 = adamic_global_1_handlers;
++			double adamic_temporary_347 = (double)adamic_temporary_346->length;
++			double adamic_temporary_348 = adamic_temporary_347;
++			if (!(((double)adamic_local_44_index) < adamic_temporary_348)) {
+ 				break;
+ 			}
+ 			{
+ 				{
+-					adamic_array * adamic_temporary_348 = adamic_global_1_handlers;
+-					adamic_value *adamic_temporary_349 = adamic_array_at_integer(adamic_temporary_348, adamic_local_44_index);
+-					adamic_object * adamic_temporary_350 = adamic_temporary_349 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_349->reference);
+-					adamic_object * adamic_local_45_handler = adamic_temporary_350;
++					adamic_array * adamic_temporary_350 = adamic_global_1_handlers;
++					adamic_value *adamic_temporary_351 = adamic_array_at_integer(adamic_temporary_350, adamic_local_44_index);
++					adamic_object * adamic_temporary_352 = adamic_temporary_351 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_351->reference);
++					adamic_object * adamic_local_45_handler = adamic_temporary_352;
+ 					if (!(adamic_local_45_handler == NULL)) {
+ 						{
+ 							if (adamic_local_45_handler == NULL) {
+ 								static const char message[] = "TypeError: Cannot read properties of undefined (reading 'reset')";
+ 								adamic_panic(message, sizeof message - 1);
+ 							}
+-							adamic_method adamic_temporary_351 = NULL;
+-							adamic_closure * adamic_temporary_353 = adamic_retain(adamic_object_callee(adamic_local_45_handler, "reset", &adamic_cache_352, &adamic_temporary_351));
+-							(adamic_temporary_353 != NULL ? adamic_temporary_353->code(adamic_temporary_353, NULL) : adamic_temporary_351(adamic_local_45_handler, NULL));
+-							if (adamic_thrown != NULL) {
+-								adamic_release(adamic_temporary_353);
++							adamic_method adamic_temporary_353 = NULL;
++							adamic_closure * adamic_temporary_355 = adamic_retain(adamic_object_callee(adamic_local_45_handler, "reset", &adamic_cache_354, &adamic_temporary_353));
++							(adamic_temporary_355 != NULL ? adamic_temporary_355->code(adamic_temporary_355, NULL) : adamic_temporary_353(adamic_local_45_handler, NULL));
++							if (adamic_exception_pending) {
++								adamic_release(adamic_temporary_355);
++								adamic_release(adamic_local_45_handler);
++								adamic_release(adamic_global_1_handlers);
++								adamic_global_1_handlers = NULL;
++								adamic_release(adamic_global_0_variable);
++								adamic_global_0_variable = NULL;
+ 								adamic_uncaught();
+ 							}
+ 							(void)0;
+-							adamic_release(adamic_temporary_353);
++							adamic_release(adamic_temporary_355);
+ 						}
+ 					}
+-					adamic_array * adamic_temporary_354 = adamic_global_1_handlers;
+-					adamic_value *adamic_temporary_355 = adamic_array_at_integer(adamic_temporary_354, adamic_local_44_index);
+-					adamic_object * adamic_temporary_356 = adamic_temporary_355 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_355->reference);
+-					adamic_maybe_number adamic_temporary_362 = (adamic_maybe_number){false, 0.0};
+-					if (adamic_temporary_356 != NULL) {
+-						adamic_method adamic_temporary_357 = NULL;
+-						adamic_closure * adamic_temporary_359 = adamic_retain(adamic_object_callee(adamic_temporary_356, "count", &adamic_cache_358, &adamic_temporary_357));
+-						adamic_value adamic_temporary_360 = (adamic_temporary_359 != NULL ? adamic_temporary_359->code(adamic_temporary_359, NULL) : adamic_temporary_357(adamic_temporary_356, NULL));
+-						if (adamic_thrown != NULL) {
+-							adamic_release(adamic_temporary_359);
+-							adamic_release(adamic_temporary_356);
++					adamic_array * adamic_temporary_356 = adamic_global_1_handlers;
++					adamic_value *adamic_temporary_357 = adamic_array_at_integer(adamic_temporary_356, adamic_local_44_index);
++					adamic_object * adamic_temporary_358 = adamic_temporary_357 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_357->reference);
++					adamic_maybe_number adamic_temporary_364 = (adamic_maybe_number){false, 0.0};
++					if (adamic_temporary_358 != NULL) {
++						adamic_method adamic_temporary_359 = NULL;
++						adamic_closure * adamic_temporary_361 = adamic_retain(adamic_object_callee(adamic_temporary_358, "count", &adamic_cache_360, &adamic_temporary_359));
++						adamic_value adamic_temporary_362 = (adamic_temporary_361 != NULL ? adamic_temporary_361->code(adamic_temporary_361, NULL) : adamic_temporary_359(adamic_temporary_358, NULL));
++						if (adamic_exception_pending) {
++							adamic_release(adamic_temporary_361);
++							adamic_release(adamic_temporary_358);
++							adamic_release(adamic_local_45_handler);
++							adamic_release(adamic_global_1_handlers);
++							adamic_global_1_handlers = NULL;
++							adamic_release(adamic_global_0_variable);
++							adamic_global_0_variable = NULL;
+ 							adamic_uncaught();
+ 						}
+-						adamic_maybe_number adamic_temporary_361 = adamic_maybe_number_unpack(adamic_temporary_360.number);
+-						adamic_temporary_362 = adamic_temporary_361;
+-						adamic_release(adamic_temporary_359);
++						adamic_maybe_number adamic_temporary_363 = adamic_maybe_number_unpack(adamic_temporary_362.number);
++						adamic_temporary_364 = adamic_temporary_363;
++						adamic_release(adamic_temporary_361);
+ 					}
+-					double adamic_temporary_363;
+-					if (adamic_temporary_362.present) {
+-						adamic_temporary_363 = adamic_temporary_362.number;
++					double adamic_temporary_365;
++					if (adamic_temporary_364.present) {
++						adamic_temporary_365 = adamic_temporary_364.number;
+ 					} else {
+-						adamic_temporary_363 = (-(0x1p+00));
++						adamic_temporary_365 = (-(0x1p+00));
+ 					}
+-					adamic_string * adamic_temporary_364 = adamic_string_from_number(adamic_temporary_363);
+-					adamic_string * adamic_temporary_365 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_364});
+-					adamic_write_line(adamic_stdout, adamic_temporary_365);
+-					adamic_release(adamic_temporary_365);
+-					adamic_release(adamic_temporary_364);
+-					adamic_release(adamic_temporary_356);
++					adamic_string * adamic_temporary_366 = adamic_string_from_number(adamic_temporary_365);
++					adamic_string * adamic_temporary_367 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_366});
++					adamic_write_line(adamic_stdout, adamic_temporary_367);
++					adamic_release(adamic_temporary_367);
++					adamic_release(adamic_temporary_366);
++					adamic_release(adamic_temporary_358);
+ 					adamic_release(adamic_local_45_handler);
+ 				}
+ 			}
+ 			adamic_local_44_index += (int64_t)((0x1p+00));
+ 		}
+ 	}
+-	adamic_string * adamic_temporary_366 = adamic_function_0_built(&adamic_string_29, (0x1.2p+03));
+-	adamic_object * adamic_temporary_367 = adamic_function_20_Kennel_new(adamic_temporary_366);
+-	adamic_object * adamic_temporary_368 = adamic_object_new(&adamic_shape_2);
+-	adamic_temporary_368->slots[0].reference = adamic_temporary_367;
+-	adamic_object * adamic_temporary_369 = adamic_global_2_holder;
+-	adamic_global_2_holder = adamic_temporary_368;
+-	adamic_release(adamic_temporary_369);
++	adamic_string * adamic_temporary_368 = adamic_function_0_built(&adamic_string_29, (0x1.2p+03));
++	adamic_object * adamic_temporary_369 = adamic_function_20_Kennel_new(adamic_temporary_368);
++	adamic_object * adamic_temporary_370 = adamic_object_new(&adamic_shape_2);
++	adamic_temporary_370->slots[0].reference = adamic_temporary_369;
++	adamic_object * adamic_temporary_371 = adamic_global_2_holder;
++	adamic_global_2_holder = adamic_temporary_370;
++	adamic_release(adamic_temporary_371);
+ 	adamic_ready_2 = true;
+-	adamic_release(adamic_temporary_366);
+-	adamic_object * adamic_temporary_370 = adamic_global_2_holder;
+-	adamic_object * adamic_temporary_371 = adamic_retain(((adamic_object *)(&adamic_temporary_370->slots[0])->reference));
+-	adamic_method adamic_temporary_372 = NULL;
+-	adamic_closure * adamic_temporary_374 = adamic_retain(adamic_object_callee(adamic_temporary_371, "handle", &adamic_cache_373, &adamic_temporary_372));
+-	adamic_object * adamic_temporary_375 = adamic_global_2_holder;
+-	adamic_object * adamic_temporary_376 = adamic_function_3_replace(adamic_temporary_375);
+-	adamic_value adamic_temporary_377 = (adamic_temporary_374 != NULL ? adamic_temporary_374->code(adamic_temporary_374, (adamic_value[]){{.reference = adamic_temporary_376}}) : adamic_temporary_372(adamic_temporary_371, (adamic_value[]){{.reference = adamic_temporary_376}}));
+-	if (adamic_thrown != NULL) {
++	adamic_release(adamic_temporary_368);
++	adamic_object * adamic_temporary_372 = adamic_global_2_holder;
++	adamic_object * adamic_temporary_373 = adamic_retain(((adamic_object *)(&adamic_temporary_372->slots[0])->reference));
++	adamic_method adamic_temporary_374 = NULL;
++	adamic_closure * adamic_temporary_376 = adamic_retain(adamic_object_callee(adamic_temporary_373, "handle", &adamic_cache_375, &adamic_temporary_374));
++	adamic_object * adamic_temporary_377 = adamic_global_2_holder;
++	adamic_object * adamic_temporary_378 = adamic_function_3_replace(adamic_temporary_377);
++	adamic_value adamic_temporary_379 = (adamic_temporary_376 != NULL ? adamic_temporary_376->code(adamic_temporary_376, (adamic_value[]){{.reference = adamic_temporary_378}}) : adamic_temporary_374(adamic_temporary_373, (adamic_value[]){{.reference = adamic_temporary_378}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_378);
+ 		adamic_release(adamic_temporary_376);
+-		adamic_release(adamic_temporary_374);
+-		adamic_release(adamic_temporary_371);
++		adamic_release(adamic_temporary_373);
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_378 = (adamic_string *)adamic_temporary_377.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_378);
++	adamic_string * adamic_temporary_380 = (adamic_string *)adamic_temporary_379.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_380);
++	adamic_release(adamic_temporary_380);
+ 	adamic_release(adamic_temporary_378);
+ 	adamic_release(adamic_temporary_376);
+-	adamic_release(adamic_temporary_374);
+-	adamic_release(adamic_temporary_371);
+-	adamic_object * adamic_temporary_379 = adamic_global_2_holder;
+-	adamic_object * adamic_temporary_380 = adamic_retain(((adamic_object *)(&adamic_temporary_379->slots[0])->reference));
+-	adamic_method adamic_temporary_381 = NULL;
+-	adamic_closure * adamic_temporary_383 = adamic_retain(adamic_object_callee(adamic_temporary_380, "handle", &adamic_cache_382, &adamic_temporary_381));
+-	adamic_string * adamic_temporary_384 = adamic_function_0_built(&adamic_string_30, (0x1.6p+03));
+-	adamic_object * adamic_temporary_385 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_385->slots[0].reference = adamic_temporary_384;
+-	adamic_value adamic_temporary_386 = (adamic_temporary_383 != NULL ? adamic_temporary_383->code(adamic_temporary_383, (adamic_value[]){{.reference = adamic_temporary_385}}) : adamic_temporary_381(adamic_temporary_380, (adamic_value[]){{.reference = adamic_temporary_385}}));
+-	if (adamic_thrown != NULL) {
++	adamic_release(adamic_temporary_373);
++	adamic_object * adamic_temporary_381 = adamic_global_2_holder;
++	adamic_object * adamic_temporary_382 = adamic_retain(((adamic_object *)(&adamic_temporary_381->slots[0])->reference));
++	adamic_method adamic_temporary_383 = NULL;
++	adamic_closure * adamic_temporary_385 = adamic_retain(adamic_object_callee(adamic_temporary_382, "handle", &adamic_cache_384, &adamic_temporary_383));
++	adamic_string * adamic_temporary_386 = adamic_function_0_built(&adamic_string_30, (0x1.6p+03));
++	adamic_object * adamic_temporary_387 = adamic_object_new(&adamic_shape_1);
++	adamic_temporary_387->slots[0].reference = adamic_temporary_386;
++	adamic_value adamic_temporary_388 = (adamic_temporary_385 != NULL ? adamic_temporary_385->code(adamic_temporary_385, (adamic_value[]){{.reference = adamic_temporary_387}}) : adamic_temporary_383(adamic_temporary_382, (adamic_value[]){{.reference = adamic_temporary_387}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_387);
+ 		adamic_release(adamic_temporary_385);
+-		adamic_release(adamic_temporary_383);
+-		adamic_release(adamic_temporary_380);
++		adamic_release(adamic_temporary_382);
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_387 = (adamic_string *)adamic_temporary_386.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_387);
++	adamic_string * adamic_temporary_389 = (adamic_string *)adamic_temporary_388.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_389);
++	adamic_release(adamic_temporary_389);
+ 	adamic_release(adamic_temporary_387);
+ 	adamic_release(adamic_temporary_385);
+-	adamic_release(adamic_temporary_383);
+-	adamic_release(adamic_temporary_380);
+-	adamic_string * adamic_temporary_388 = adamic_function_0_built(&adamic_string_31, (0x1.ap+03));
+-	adamic_object * adamic_temporary_389 = adamic_function_20_Kennel_new(adamic_temporary_388);
+-	adamic_object * adamic_temporary_390 = adamic_global_3_current;
+-	adamic_global_3_current = adamic_temporary_389;
++	adamic_release(adamic_temporary_382);
++	adamic_string * adamic_temporary_390 = adamic_function_0_built(&adamic_string_31, (0x1.ap+03));
++	adamic_object * adamic_temporary_391 = adamic_function_20_Kennel_new(adamic_temporary_390);
++	adamic_object * adamic_temporary_392 = adamic_global_3_current;
++	adamic_global_3_current = adamic_temporary_391;
++	adamic_release(adamic_temporary_392);
++	adamic_ready_3 = true;
+ 	adamic_release(adamic_temporary_390);
+-	adamic_ready_3 = true;
+-	adamic_release(adamic_temporary_388);
+-	adamic_object * adamic_temporary_391 = adamic_retain(adamic_global_3_current);
+-	adamic_method adamic_temporary_392 = NULL;
+-	adamic_closure * adamic_temporary_394 = adamic_retain(adamic_object_callee(adamic_temporary_391, "handle", &adamic_cache_393, &adamic_temporary_392));
+-	adamic_object * adamic_temporary_395 = adamic_function_4_swap();
+-	adamic_value adamic_temporary_396 = (adamic_temporary_394 != NULL ? adamic_temporary_394->code(adamic_temporary_394, (adamic_value[]){{.reference = adamic_temporary_395}}) : adamic_temporary_392(adamic_temporary_391, (adamic_value[]){{.reference = adamic_temporary_395}}));
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_395);
+-		adamic_release(adamic_temporary_394);
+-		adamic_release(adamic_temporary_391);
++	adamic_object * adamic_temporary_393 = adamic_retain(adamic_global_3_current);
++	adamic_method adamic_temporary_394 = NULL;
++	adamic_closure * adamic_temporary_396 = adamic_retain(adamic_object_callee(adamic_temporary_393, "handle", &adamic_cache_395, &adamic_temporary_394));
++	adamic_object * adamic_temporary_397 = adamic_function_4_swap();
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_397);
++		adamic_release(adamic_temporary_396);
++		adamic_release(adamic_temporary_393);
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_397 = (adamic_string *)adamic_temporary_396.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_397);
++	adamic_value adamic_temporary_398 = (adamic_temporary_396 != NULL ? adamic_temporary_396->code(adamic_temporary_396, (adamic_value[]){{.reference = adamic_temporary_397}}) : adamic_temporary_394(adamic_temporary_393, (adamic_value[]){{.reference = adamic_temporary_397}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_397);
++		adamic_release(adamic_temporary_396);
++		adamic_release(adamic_temporary_393);
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_399 = (adamic_string *)adamic_temporary_398.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_399);
++	adamic_release(adamic_temporary_399);
+ 	adamic_release(adamic_temporary_397);
+-	adamic_release(adamic_temporary_395);
+-	adamic_release(adamic_temporary_394);
+-	adamic_release(adamic_temporary_391);
+-	adamic_object * adamic_temporary_398 = adamic_retain(adamic_global_3_current);
+-	adamic_method adamic_temporary_399 = NULL;
+-	adamic_closure * adamic_temporary_401 = adamic_retain(adamic_object_callee(adamic_temporary_398, "handle", &adamic_cache_400, &adamic_temporary_399));
+-	adamic_string * adamic_temporary_402 = adamic_function_0_built(&adamic_string_32, (0x1.ep+03));
+-	adamic_object * adamic_temporary_403 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_403->slots[0].reference = adamic_temporary_402;
+-	adamic_value adamic_temporary_404 = (adamic_temporary_401 != NULL ? adamic_temporary_401->code(adamic_temporary_401, (adamic_value[]){{.reference = adamic_temporary_403}}) : adamic_temporary_399(adamic_temporary_398, (adamic_value[]){{.reference = adamic_temporary_403}}));
+-	if (adamic_thrown != NULL) {
++	adamic_release(adamic_temporary_396);
++	adamic_release(adamic_temporary_393);
++	adamic_object * adamic_temporary_400 = adamic_retain(adamic_global_3_current);
++	adamic_method adamic_temporary_401 = NULL;
++	adamic_closure * adamic_temporary_403 = adamic_retain(adamic_object_callee(adamic_temporary_400, "handle", &adamic_cache_402, &adamic_temporary_401));
++	adamic_string * adamic_temporary_404 = adamic_function_0_built(&adamic_string_32, (0x1.ep+03));
++	adamic_object * adamic_temporary_405 = adamic_object_new(&adamic_shape_1);
++	adamic_temporary_405->slots[0].reference = adamic_temporary_404;
++	adamic_value adamic_temporary_406 = (adamic_temporary_403 != NULL ? adamic_temporary_403->code(adamic_temporary_403, (adamic_value[]){{.reference = adamic_temporary_405}}) : adamic_temporary_401(adamic_temporary_400, (adamic_value[]){{.reference = adamic_temporary_405}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_405);
+ 		adamic_release(adamic_temporary_403);
+-		adamic_release(adamic_temporary_401);
+-		adamic_release(adamic_temporary_398);
++		adamic_release(adamic_temporary_400);
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_405 = (adamic_string *)adamic_temporary_404.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_405);
++	adamic_string * adamic_temporary_407 = (adamic_string *)adamic_temporary_406.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_407);
++	adamic_release(adamic_temporary_407);
+ 	adamic_release(adamic_temporary_405);
+ 	adamic_release(adamic_temporary_403);
+-	adamic_release(adamic_temporary_401);
+-	adamic_release(adamic_temporary_398);
+-	adamic_string * adamic_temporary_406 = adamic_function_0_built(&adamic_string_33, (0x1p+04));
+-	adamic_object * adamic_temporary_407 = adamic_function_1_literalHandler(adamic_temporary_406);
+-	adamic_object * adamic_temporary_408 = adamic_global_4_plain;
+-	adamic_global_4_plain = adamic_temporary_407;
++	adamic_release(adamic_temporary_400);
++	adamic_string * adamic_temporary_408 = adamic_function_0_built(&adamic_string_33, (0x1p+04));
++	adamic_object * adamic_temporary_409 = adamic_function_1_literalHandler(adamic_temporary_408);
++	adamic_object * adamic_temporary_410 = adamic_global_4_plain;
++	adamic_global_4_plain = adamic_temporary_409;
++	adamic_release(adamic_temporary_410);
++	adamic_ready_4 = true;
+ 	adamic_release(adamic_temporary_408);
+-	adamic_ready_4 = true;
+-	adamic_release(adamic_temporary_406);
+-	adamic_object * adamic_temporary_409 = adamic_retain(adamic_global_4_plain);
+-	adamic_object * adamic_temporary_410 = adamic_global_5_wired;
+-	adamic_global_5_wired = adamic_temporary_409;
+-	adamic_release(adamic_temporary_410);
++	adamic_object * adamic_temporary_411 = adamic_retain(adamic_global_4_plain);
++	adamic_object * adamic_temporary_412 = adamic_global_5_wired;
++	adamic_global_5_wired = adamic_temporary_411;
++	adamic_release(adamic_temporary_412);
+ 	adamic_ready_5 = true;
+-	adamic_object * adamic_temporary_411 = adamic_retain(adamic_global_4_plain);
+-	adamic_method adamic_temporary_412 = NULL;
+-	adamic_closure * adamic_temporary_414 = adamic_retain(adamic_object_callee(adamic_temporary_411, "handle", &adamic_cache_413, &adamic_temporary_412));
+-	adamic_object * adamic_temporary_415 = adamic_retain(adamic_global_5_wired);
+-	adamic_object * adamic_temporary_416 = adamic_function_5_rewire(adamic_temporary_415);
+-	adamic_value adamic_temporary_417 = (adamic_temporary_414 != NULL ? adamic_temporary_414->code(adamic_temporary_414, (adamic_value[]){{.reference = adamic_temporary_416}}) : adamic_temporary_412(adamic_temporary_411, (adamic_value[]){{.reference = adamic_temporary_416}}));
+-	if (adamic_thrown != NULL) {
++	adamic_object * adamic_temporary_413 = adamic_retain(adamic_global_4_plain);
++	adamic_method adamic_temporary_414 = NULL;
++	adamic_closure * adamic_temporary_416 = adamic_retain(adamic_object_callee(adamic_temporary_413, "handle", &adamic_cache_415, &adamic_temporary_414));
++	adamic_object * adamic_temporary_417 = adamic_retain(adamic_global_5_wired);
++	adamic_object * adamic_temporary_418 = adamic_function_5_rewire(adamic_temporary_417);
++	adamic_value adamic_temporary_419 = (adamic_temporary_416 != NULL ? adamic_temporary_416->code(adamic_temporary_416, (adamic_value[]){{.reference = adamic_temporary_418}}) : adamic_temporary_414(adamic_temporary_413, (adamic_value[]){{.reference = adamic_temporary_418}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_418);
++		adamic_release(adamic_temporary_417);
+ 		adamic_release(adamic_temporary_416);
+-		adamic_release(adamic_temporary_415);
+-		adamic_release(adamic_temporary_414);
+-		adamic_release(adamic_temporary_411);
++		adamic_release(adamic_temporary_413);
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_418 = (adamic_string *)adamic_temporary_417.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_418);
++	adamic_string * adamic_temporary_420 = (adamic_string *)adamic_temporary_419.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_420);
++	adamic_release(adamic_temporary_420);
+ 	adamic_release(adamic_temporary_418);
++	adamic_release(adamic_temporary_417);
+ 	adamic_release(adamic_temporary_416);
+-	adamic_release(adamic_temporary_415);
+-	adamic_release(adamic_temporary_414);
+-	adamic_release(adamic_temporary_411);
+-	adamic_object * adamic_temporary_419 = adamic_retain(adamic_global_4_plain);
+-	adamic_method adamic_temporary_420 = NULL;
+-	adamic_closure * adamic_temporary_422 = adamic_retain(adamic_object_callee(adamic_temporary_419, "handle", &adamic_cache_421, &adamic_temporary_420));
+-	adamic_string * adamic_temporary_423 = adamic_function_0_built(&adamic_string_34, (0x1.1p+04));
+-	adamic_object * adamic_temporary_424 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_424->slots[0].reference = adamic_temporary_423;
+-	adamic_value adamic_temporary_425 = (adamic_temporary_422 != NULL ? adamic_temporary_422->code(adamic_temporary_422, (adamic_value[]){{.reference = adamic_temporary_424}}) : adamic_temporary_420(adamic_temporary_419, (adamic_value[]){{.reference = adamic_temporary_424}}));
+-	if (adamic_thrown != NULL) {
++	adamic_release(adamic_temporary_413);
++	adamic_object * adamic_temporary_421 = adamic_retain(adamic_global_4_plain);
++	adamic_method adamic_temporary_422 = NULL;
++	adamic_closure * adamic_temporary_424 = adamic_retain(adamic_object_callee(adamic_temporary_421, "handle", &adamic_cache_423, &adamic_temporary_422));
++	adamic_string * adamic_temporary_425 = adamic_function_0_built(&adamic_string_34, (0x1.1p+04));
++	adamic_object * adamic_temporary_426 = adamic_object_new(&adamic_shape_1);
++	adamic_temporary_426->slots[0].reference = adamic_temporary_425;
++	adamic_value adamic_temporary_427 = (adamic_temporary_424 != NULL ? adamic_temporary_424->code(adamic_temporary_424, (adamic_value[]){{.reference = adamic_temporary_426}}) : adamic_temporary_422(adamic_temporary_421, (adamic_value[]){{.reference = adamic_temporary_426}}));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_426);
+ 		adamic_release(adamic_temporary_424);
+-		adamic_release(adamic_temporary_422);
+-		adamic_release(adamic_temporary_419);
++		adamic_release(adamic_temporary_421);
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_426 = (adamic_string *)adamic_temporary_425.reference;
+-	adamic_write_line(adamic_stdout, adamic_temporary_426);
++	adamic_string * adamic_temporary_428 = (adamic_string *)adamic_temporary_427.reference;
++	adamic_write_line(adamic_stdout, adamic_temporary_428);
++	adamic_release(adamic_temporary_428);
+ 	adamic_release(adamic_temporary_426);
+ 	adamic_release(adamic_temporary_424);
+-	adamic_release(adamic_temporary_422);
+-	adamic_release(adamic_temporary_419);
++	adamic_release(adamic_temporary_421);
+ 	{
+ 		int64_t adamic_local_46_index = (int64_t)(0x0p+00);
+ 		for (;;) {
+@@ -1576,425 +1739,801 @@
+ 			}
+ 			{
+ 				{
+-					adamic_object * adamic_temporary_429 = adamic_function_6_choose(((double)adamic_local_46_index));
+-					adamic_method adamic_temporary_430 = NULL;
+-					adamic_closure * adamic_temporary_432 = adamic_retain(adamic_object_callee(adamic_temporary_429, "handle", &adamic_cache_431, &adamic_temporary_430));
+-					adamic_string * adamic_temporary_433 = adamic_function_0_built(&adamic_string_35, ((double)adamic_local_46_index));
+-					adamic_object * adamic_temporary_434 = adamic_object_new(&adamic_shape_1);
+-					adamic_temporary_434->slots[0].reference = adamic_temporary_433;
+-					adamic_value adamic_temporary_435 = (adamic_temporary_432 != NULL ? adamic_temporary_432->code(adamic_temporary_432, (adamic_value[]){{.reference = adamic_temporary_434}}) : adamic_temporary_430(adamic_temporary_429, (adamic_value[]){{.reference = adamic_temporary_434}}));
+-					if (adamic_thrown != NULL) {
++					adamic_object * adamic_temporary_431 = adamic_function_6_choose(((double)adamic_local_46_index));
++					adamic_method adamic_temporary_432 = NULL;
++					adamic_closure * adamic_temporary_434 = adamic_retain(adamic_object_callee(adamic_temporary_431, "handle", &adamic_cache_433, &adamic_temporary_432));
++					adamic_string * adamic_temporary_435 = adamic_function_0_built(&adamic_string_35, ((double)adamic_local_46_index));
++					adamic_object * adamic_temporary_436 = adamic_object_new(&adamic_shape_1);
++					adamic_temporary_436->slots[0].reference = adamic_temporary_435;
++					adamic_value adamic_temporary_437 = (adamic_temporary_434 != NULL ? adamic_temporary_434->code(adamic_temporary_434, (adamic_value[]){{.reference = adamic_temporary_436}}) : adamic_temporary_432(adamic_temporary_431, (adamic_value[]){{.reference = adamic_temporary_436}}));
++					if (adamic_exception_pending) {
++						adamic_release(adamic_temporary_436);
+ 						adamic_release(adamic_temporary_434);
+-						adamic_release(adamic_temporary_432);
+-						adamic_release(adamic_temporary_429);
++						adamic_release(adamic_temporary_431);
++						adamic_release(adamic_global_5_wired);
++						adamic_global_5_wired = NULL;
++						adamic_release(adamic_global_4_plain);
++						adamic_global_4_plain = NULL;
++						adamic_release(adamic_global_3_current);
++						adamic_global_3_current = NULL;
++						adamic_release(adamic_global_2_holder);
++						adamic_global_2_holder = NULL;
++						adamic_release(adamic_global_1_handlers);
++						adamic_global_1_handlers = NULL;
++						adamic_release(adamic_global_0_variable);
++						adamic_global_0_variable = NULL;
+ 						adamic_uncaught();
+ 					}
+-					adamic_string * adamic_temporary_436 = (adamic_string *)adamic_temporary_435.reference;
+-					adamic_write_line(adamic_stdout, adamic_temporary_436);
++					adamic_string * adamic_temporary_438 = (adamic_string *)adamic_temporary_437.reference;
++					adamic_write_line(adamic_stdout, adamic_temporary_438);
++					adamic_release(adamic_temporary_438);
+ 					adamic_release(adamic_temporary_436);
+ 					adamic_release(adamic_temporary_434);
+-					adamic_release(adamic_temporary_432);
+-					adamic_release(adamic_temporary_429);
++					adamic_release(adamic_temporary_431);
+ 				}
+ 			}
+ 			adamic_local_46_index += (int64_t)((0x1p+00));
+ 		}
+ 	}
+-	adamic_object * adamic_temporary_437 = adamic_function_26_Strict_new();
+-	adamic_object * adamic_temporary_438 = adamic_global_6_checker;
+-	adamic_global_6_checker = adamic_temporary_437;
+-	adamic_release(adamic_temporary_438);
++	adamic_object * adamic_temporary_439 = adamic_function_26_Strict_new();
++	adamic_object * adamic_temporary_440 = adamic_global_6_checker;
++	adamic_global_6_checker = adamic_temporary_439;
++	adamic_release(adamic_temporary_440);
+ 	adamic_ready_6 = true;
+ 	{
+-		adamic_array * adamic_temporary_439 = adamic_array_new(2, false);
+-		adamic_array_push(adamic_temporary_439, (adamic_value){.number = (0x1.8p+01)});
+-		adamic_array_push(adamic_temporary_439, (adamic_value){.number = (-(0x1p+00))});
+-		adamic_array * adamic_temporary_440 = adamic_temporary_439;
+-		for (size_t adamic_temporary_441 = 0; adamic_temporary_441 < adamic_temporary_440->length; adamic_temporary_441++) {
++		adamic_array * adamic_temporary_441 = adamic_array_new(2, false);
++		adamic_array_push(adamic_temporary_441, (adamic_value){.number = (0x1.8p+01)});
++		adamic_array_push(adamic_temporary_441, (adamic_value){.number = (-(0x1p+00))});
++		adamic_array * adamic_temporary_442 = adamic_temporary_441;
++		for (size_t adamic_temporary_443 = 0; adamic_temporary_443 < adamic_temporary_442->length; adamic_temporary_443++) {
+ 			{
+-				double adamic_local_50_value = adamic_temporary_440->elements[adamic_temporary_441].number;
++				double adamic_local_50_value = adamic_temporary_442->elements[adamic_temporary_443].number;
+ 				{
+ 					{
+-						adamic_object * adamic_temporary_448 = adamic_retain(adamic_global_6_checker);
+-						adamic_value adamic_temporary_449 = adamic_method_27(adamic_temporary_448, (adamic_value[]){{.number = adamic_local_50_value}});
+-						if (adamic_thrown != NULL) {
+-							adamic_release(adamic_temporary_448);
+-							goto adamic_landing_447;
++						adamic_object * adamic_temporary_450 = adamic_retain(adamic_global_6_checker);
++						adamic_value adamic_temporary_451 = adamic_method_27(adamic_temporary_450, (adamic_value[]){{.number = adamic_local_50_value}});
++						if (adamic_exception_pending) {
++							adamic_release(adamic_temporary_450);
++							goto adamic_landing_449;
+ 						}
+-						double adamic_temporary_450 = adamic_temporary_449.number;
+-						adamic_string * adamic_temporary_451 = adamic_string_from_number(adamic_temporary_450);
+-						adamic_string * adamic_temporary_452 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_451});
+-						adamic_write_line(adamic_stdout, adamic_temporary_452);
+-						adamic_release(adamic_temporary_452);
+-						adamic_release(adamic_temporary_451);
+-						adamic_release(adamic_temporary_448);
++						double adamic_temporary_452 = adamic_temporary_451.number;
++						adamic_string * adamic_temporary_453 = adamic_string_from_number(adamic_temporary_452);
++						adamic_string * adamic_temporary_454 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_453});
++						adamic_write_line(adamic_stdout, adamic_temporary_454);
++						adamic_release(adamic_temporary_454);
++						adamic_release(adamic_temporary_453);
++						adamic_release(adamic_temporary_450);
+ 					}
+-					goto adamic_done_447;
+-					adamic_landing_447:;
++					goto adamic_done_449;
++					adamic_landing_449:;
+ 					{
+-						adamic_object *adamic_temporary_453 = adamic_thrown;
++						adamic_heap *adamic_temporary_455 = adamic_thrown;
+ 						adamic_thrown = NULL;
+-						adamic_object * adamic_local_51_error = adamic_temporary_453;
+-						adamic_string * adamic_temporary_455;
+-						if (true) {
+-							adamic_string * adamic_temporary_454 = adamic_retain(((adamic_string *)(&adamic_local_51_error->slots[1])->reference));
+-							adamic_temporary_455 = adamic_retain(adamic_temporary_454);
+-							adamic_release(adamic_temporary_454);
++						adamic_exception_pending = false;
++						adamic_heap * adamic_local_51_error = ((adamic_heap *)adamic_temporary_455);
++						bool adamic_temporary_456 = adamic_instanceof(adamic_local_51_error, &adamic_error_class);
++						adamic_string * adamic_temporary_459;
++						if (adamic_temporary_456) {
++							adamic_object * adamic_temporary_457 = adamic_function_29_narrowed_union_member(adamic_local_51_error);
++							adamic_string * adamic_temporary_458 = adamic_retain(((adamic_string *)(&adamic_temporary_457->slots[1])->reference));
++							adamic_temporary_459 = adamic_retain(adamic_temporary_458);
++							adamic_release(adamic_temporary_458);
++							adamic_release(adamic_temporary_457);
+ 						} else {
+-							adamic_temporary_455 = adamic_retain(&adamic_string_38);
++							adamic_temporary_459 = adamic_retain(&adamic_string_40);
+ 						}
+-						adamic_write_line(adamic_stdout, adamic_temporary_455);
+-						adamic_release(adamic_temporary_455);
++						adamic_write_line(adamic_stdout, adamic_temporary_459);
++						adamic_release(adamic_temporary_459);
+ 						adamic_release(adamic_local_51_error);
+ 					}
+-					goto adamic_done_447;
+-					adamic_done_447:;
++					goto adamic_done_449;
++					adamic_done_449:;
+ 				}
+ 			}
+ 		}
+-		adamic_release(adamic_temporary_440);
+-	}
+-	adamic_string * adamic_temporary_456 = adamic_function_0_built(&adamic_string_40, (0x0p+00));
+-	adamic_string * adamic_temporary_457 = adamic_function_0_built(&adamic_string_41, (0x1p+00));
+-	adamic_array * adamic_temporary_458 = adamic_array_new(2, true);
+-	adamic_array_push(adamic_temporary_458, (adamic_value){.reference = adamic_retain(adamic_temporary_456)});
+-	adamic_array_push(adamic_temporary_458, (adamic_value){.reference = adamic_retain(adamic_temporary_457)});
+-	adamic_object * adamic_temporary_459 = adamic_function_29_Counter_string_new(adamic_temporary_458);
+-	adamic_object * adamic_temporary_460 = adamic_global_7_words;
+-	adamic_global_7_words = adamic_temporary_459;
+-	adamic_release(adamic_temporary_460);
++		adamic_release(adamic_temporary_442);
++	}
++	adamic_string * adamic_temporary_460 = adamic_function_0_built(&adamic_string_42, (0x0p+00));
++	adamic_string * adamic_temporary_461 = adamic_function_0_built(&adamic_string_43, (0x1p+00));
++	adamic_array * adamic_temporary_462 = adamic_array_new(2, true);
++	adamic_array_push(adamic_temporary_462, (adamic_value){.reference = adamic_retain(adamic_temporary_460)});
++	adamic_array_push(adamic_temporary_462, (adamic_value){.reference = adamic_retain(adamic_temporary_461)});
++	adamic_object * adamic_temporary_463 = adamic_function_30_Counter_string_new(adamic_temporary_462);
++	adamic_object * adamic_temporary_464 = adamic_global_7_words;
++	adamic_global_7_words = adamic_temporary_463;
++	adamic_release(adamic_temporary_464);
+ 	adamic_ready_7 = true;
+-	adamic_release(adamic_temporary_458);
+-	adamic_release(adamic_temporary_457);
+-	adamic_release(adamic_temporary_456);
+-	adamic_string * adamic_temporary_461 = adamic_function_0_built(&adamic_string_42, (0x1p+01));
+-	adamic_array * adamic_temporary_462 = adamic_array_new(1, true);
+-	adamic_array_push(adamic_temporary_462, (adamic_value){.reference = adamic_retain(adamic_temporary_461)});
+-	adamic_object * adamic_temporary_463 = adamic_function_29_Counter_string_new(adamic_temporary_462);
+-	adamic_object * adamic_temporary_464 = adamic_global_8_others;
+-	adamic_global_8_others = adamic_temporary_463;
+-	adamic_release(adamic_temporary_464);
+-	adamic_ready_8 = true;
+ 	adamic_release(adamic_temporary_462);
+ 	adamic_release(adamic_temporary_461);
+-	adamic_object * adamic_temporary_465 = adamic_retain(adamic_global_7_words);
+-	adamic_value adamic_temporary_466 = adamic_method_30(adamic_temporary_465, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_465);
++	adamic_release(adamic_temporary_460);
++	adamic_string * adamic_temporary_465 = adamic_function_0_built(&adamic_string_44, (0x1p+01));
++	adamic_array * adamic_temporary_466 = adamic_array_new(1, true);
++	adamic_array_push(adamic_temporary_466, (adamic_value){.reference = adamic_retain(adamic_temporary_465)});
++	adamic_object * adamic_temporary_467 = adamic_function_30_Counter_string_new(adamic_temporary_466);
++	adamic_object * adamic_temporary_468 = adamic_global_8_others;
++	adamic_global_8_others = adamic_temporary_467;
++	adamic_release(adamic_temporary_468);
++	adamic_ready_8 = true;
++	adamic_release(adamic_temporary_466);
++	adamic_release(adamic_temporary_465);
++	adamic_object * adamic_temporary_469 = adamic_retain(adamic_global_7_words);
++	adamic_value adamic_temporary_470 = adamic_method_31(adamic_temporary_469, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_469);
++		adamic_release(adamic_global_8_others);
++		adamic_global_8_others = NULL;
++		adamic_release(adamic_global_7_words);
++		adamic_global_7_words = NULL;
++		adamic_release(adamic_global_6_checker);
++		adamic_global_6_checker = NULL;
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_467 = (adamic_string *)adamic_temporary_466.reference;
+-	adamic_object * adamic_temporary_468 = adamic_retain(adamic_global_7_words);
+-	adamic_value adamic_temporary_469 = adamic_method_30(adamic_temporary_468, NULL);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_468);
+-		adamic_release(adamic_temporary_467);
+-		adamic_release(adamic_temporary_465);
++	adamic_string * adamic_temporary_471 = (adamic_string *)adamic_temporary_470.reference;
++	adamic_object * adamic_temporary_472 = adamic_retain(adamic_global_7_words);
++	adamic_value adamic_temporary_473 = adamic_method_31(adamic_temporary_472, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_472);
++		adamic_release(adamic_temporary_471);
++		adamic_release(adamic_temporary_469);
++		adamic_release(adamic_global_8_others);
++		adamic_global_8_others = NULL;
++		adamic_release(adamic_global_7_words);
++		adamic_global_7_words = NULL;
++		adamic_release(adamic_global_6_checker);
++		adamic_global_6_checker = NULL;
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_470 = (adamic_string *)adamic_temporary_469.reference;
+-	adamic_object * adamic_temporary_471 = adamic_retain(adamic_global_7_words);
+-	adamic_value adamic_temporary_472 = adamic_method_30(adamic_temporary_471, NULL);
+-	if (adamic_thrown != NULL) {
++	adamic_string * adamic_temporary_474 = (adamic_string *)adamic_temporary_473.reference;
++	adamic_object * adamic_temporary_475 = adamic_retain(adamic_global_7_words);
++	adamic_value adamic_temporary_476 = adamic_method_31(adamic_temporary_475, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_475);
++		adamic_release(adamic_temporary_474);
++		adamic_release(adamic_temporary_472);
+ 		adamic_release(adamic_temporary_471);
+-		adamic_release(adamic_temporary_470);
+-		adamic_release(adamic_temporary_468);
+-		adamic_release(adamic_temporary_467);
+-		adamic_release(adamic_temporary_465);
++		adamic_release(adamic_temporary_469);
++		adamic_release(adamic_global_8_others);
++		adamic_global_8_others = NULL;
++		adamic_release(adamic_global_7_words);
++		adamic_global_7_words = NULL;
++		adamic_release(adamic_global_6_checker);
++		adamic_global_6_checker = NULL;
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_473 = (adamic_string *)adamic_temporary_472.reference;
+-	adamic_object * adamic_temporary_474 = adamic_retain(adamic_global_8_others);
+-	adamic_value adamic_temporary_475 = adamic_method_30(adamic_temporary_474, NULL);
+-	if (adamic_thrown != NULL) {
++	adamic_string * adamic_temporary_477 = (adamic_string *)adamic_temporary_476.reference;
++	adamic_object * adamic_temporary_478 = adamic_retain(adamic_global_8_others);
++	adamic_value adamic_temporary_479 = adamic_method_31(adamic_temporary_478, NULL);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_478);
++		adamic_release(adamic_temporary_477);
++		adamic_release(adamic_temporary_475);
+ 		adamic_release(adamic_temporary_474);
+-		adamic_release(adamic_temporary_473);
++		adamic_release(adamic_temporary_472);
+ 		adamic_release(adamic_temporary_471);
+-		adamic_release(adamic_temporary_470);
+-		adamic_release(adamic_temporary_468);
+-		adamic_release(adamic_temporary_467);
+-		adamic_release(adamic_temporary_465);
++		adamic_release(adamic_temporary_469);
++		adamic_release(adamic_global_8_others);
++		adamic_global_8_others = NULL;
++		adamic_release(adamic_global_7_words);
++		adamic_global_7_words = NULL;
++		adamic_release(adamic_global_6_checker);
++		adamic_global_6_checker = NULL;
++		adamic_release(adamic_global_5_wired);
++		adamic_global_5_wired = NULL;
++		adamic_release(adamic_global_4_plain);
++		adamic_global_4_plain = NULL;
++		adamic_release(adamic_global_3_current);
++		adamic_global_3_current = NULL;
++		adamic_release(adamic_global_2_holder);
++		adamic_global_2_holder = NULL;
++		adamic_release(adamic_global_1_handlers);
++		adamic_global_1_handlers = NULL;
++		adamic_release(adamic_global_0_variable);
++		adamic_global_0_variable = NULL;
+ 		adamic_uncaught();
+ 	}
+-	adamic_string * adamic_temporary_476 = (adamic_string *)adamic_temporary_475.reference;
+-	adamic_string * adamic_temporary_477 = adamic_string_concat(7, (adamic_string *const[]){adamic_temporary_467, &adamic_string_6, adamic_temporary_470, &adamic_string_6, adamic_temporary_473, &adamic_string_6, adamic_temporary_476});
+-	adamic_write_line(adamic_stdout, adamic_temporary_477);
++	adamic_string * adamic_temporary_480 = (adamic_string *)adamic_temporary_479.reference;
++	adamic_string * adamic_temporary_481 = adamic_string_concat(7, (adamic_string *const[]){adamic_temporary_471, &adamic_string_6, adamic_temporary_474, &adamic_string_6, adamic_temporary_477, &adamic_string_6, adamic_temporary_480});
++	adamic_write_line(adamic_stdout, adamic_temporary_481);
++	adamic_release(adamic_temporary_481);
++	adamic_release(adamic_temporary_480);
++	adamic_release(adamic_temporary_478);
+ 	adamic_release(adamic_temporary_477);
+-	adamic_release(adamic_temporary_476);
++	adamic_release(adamic_temporary_475);
+ 	adamic_release(adamic_temporary_474);
+-	adamic_release(adamic_temporary_473);
++	adamic_release(adamic_temporary_472);
+ 	adamic_release(adamic_temporary_471);
+-	adamic_release(adamic_temporary_470);
+-	adamic_release(adamic_temporary_468);
+-	adamic_release(adamic_temporary_467);
+-	adamic_release(adamic_temporary_465);
+-	adamic_array * adamic_temporary_478 = adamic_global_1_handlers;
+-	double adamic_temporary_479 = (double)adamic_temporary_478->length;
+-	double adamic_temporary_480 = adamic_temporary_479;
+-	adamic_object * adamic_temporary_483;
+-	if (adamic_temporary_480 > (0x1p+01)) {
+-		adamic_string * adamic_temporary_481 = adamic_function_0_built(&adamic_string_43, (0x1.8p+03));
+-		adamic_object * adamic_temporary_482 = adamic_function_20_Kennel_new(adamic_temporary_481);
+-		adamic_temporary_483 = adamic_retain(adamic_temporary_482);
+-		adamic_release(adamic_temporary_482);
+-		adamic_release(adamic_temporary_481);
++	adamic_release(adamic_temporary_469);
++	adamic_array * adamic_temporary_482 = adamic_global_1_handlers;
++	double adamic_temporary_483 = (double)adamic_temporary_482->length;
++	double adamic_temporary_484 = adamic_temporary_483;
++	adamic_object * adamic_temporary_487;
++	if (adamic_temporary_484 > (0x1p+01)) {
++		adamic_string * adamic_temporary_485 = adamic_function_0_built(&adamic_string_45, (0x1.8p+03));
++		adamic_object * adamic_temporary_486 = adamic_function_20_Kennel_new(adamic_temporary_485);
++		adamic_temporary_487 = adamic_retain(adamic_temporary_486);
++		adamic_release(adamic_temporary_486);
++		adamic_release(adamic_temporary_485);
+ 	} else {
+-		adamic_temporary_483 = NULL;
+-	}
+-	adamic_object * adamic_temporary_484 = adamic_global_9_maybe;
+-	adamic_global_9_maybe = adamic_temporary_483;
+-	adamic_release(adamic_temporary_484);
++		adamic_temporary_487 = NULL;
++	}
++	adamic_object * adamic_temporary_488 = adamic_global_9_maybe;
++	adamic_global_9_maybe = adamic_temporary_487;
++	adamic_release(adamic_temporary_488);
+ 	adamic_ready_9 = true;
+-	adamic_object * adamic_temporary_485 = adamic_retain(adamic_global_9_maybe);
+-	adamic_string * adamic_temporary_493 = NULL;
+-	if (adamic_temporary_485 != NULL) {
+-		adamic_method adamic_temporary_486 = NULL;
+-		adamic_closure * adamic_temporary_488 = adamic_retain(adamic_object_callee(adamic_temporary_485, "handle", &adamic_cache_487, &adamic_temporary_486));
+-		adamic_string * adamic_temporary_489 = adamic_function_0_built(&adamic_string_44, (0x1.8p+03));
+-		adamic_object * adamic_temporary_490 = adamic_object_new(&adamic_shape_1);
+-		adamic_temporary_490->slots[0].reference = adamic_temporary_489;
+-		adamic_value adamic_temporary_491 = (adamic_temporary_488 != NULL ? adamic_temporary_488->code(adamic_temporary_488, (adamic_value[]){{.reference = adamic_temporary_490}}) : adamic_temporary_486(adamic_temporary_485, (adamic_value[]){{.reference = adamic_temporary_490}}));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_490);
+-			adamic_release(adamic_temporary_488);
+-			adamic_release(adamic_temporary_485);
++	adamic_object * adamic_temporary_489 = adamic_retain(adamic_global_9_maybe);
++	adamic_string * adamic_temporary_497 = NULL;
++	if (adamic_temporary_489 != NULL) {
++		adamic_method adamic_temporary_490 = NULL;
++		adamic_closure * adamic_temporary_492 = adamic_retain(adamic_object_callee(adamic_temporary_489, "handle", &adamic_cache_491, &adamic_temporary_490));
++		adamic_string * adamic_temporary_493 = adamic_function_0_built(&adamic_string_46, (0x1.8p+03));
++		adamic_object * adamic_temporary_494 = adamic_object_new(&adamic_shape_1);
++		adamic_temporary_494->slots[0].reference = adamic_temporary_493;
++		adamic_value adamic_temporary_495 = (adamic_temporary_492 != NULL ? adamic_temporary_492->code(adamic_temporary_492, (adamic_value[]){{.reference = adamic_temporary_494}}) : adamic_temporary_490(adamic_temporary_489, (adamic_value[]){{.reference = adamic_temporary_494}}));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_494);
++			adamic_release(adamic_temporary_492);
++			adamic_release(adamic_temporary_489);
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_string * adamic_temporary_492 = (adamic_string *)adamic_temporary_491.reference;
+-		adamic_temporary_493 = adamic_retain(adamic_temporary_492);
++		adamic_string * adamic_temporary_496 = (adamic_string *)adamic_temporary_495.reference;
++		adamic_temporary_497 = adamic_retain(adamic_temporary_496);
++		adamic_release(adamic_temporary_496);
++		adamic_release(adamic_temporary_494);
+ 		adamic_release(adamic_temporary_492);
+-		adamic_release(adamic_temporary_490);
+-		adamic_release(adamic_temporary_488);
+-	}
+-	adamic_string * adamic_temporary_494;
+-	if (adamic_temporary_493 != NULL) {
+-		adamic_temporary_494 = adamic_temporary_493;
++	}
++	adamic_string * adamic_temporary_498;
++	if (adamic_temporary_497 != NULL) {
++		adamic_temporary_498 = adamic_temporary_497;
+ 	} else {
+-		adamic_temporary_494 = adamic_retain(&adamic_string_45);
+-	}
+-	adamic_write_line(adamic_stdout, adamic_temporary_494);
+-	adamic_release(adamic_temporary_494);
+-	adamic_release(adamic_temporary_485);
++		adamic_temporary_498 = adamic_retain(&adamic_string_47);
++	}
++	adamic_write_line(adamic_stdout, adamic_temporary_498);
++	adamic_release(adamic_temporary_498);
++	adamic_release(adamic_temporary_489);
+ 	adamic_global_10_evaluated = (0x0p+00);
+ 	adamic_ready_10 = true;
+-	adamic_array * adamic_temporary_495 = adamic_global_1_handlers;
+-	double adamic_temporary_496 = (double)adamic_temporary_495->length;
+-	double adamic_temporary_497 = adamic_temporary_496;
+-	adamic_object * adamic_temporary_500;
+-	if (adamic_temporary_497 > (0x1.2p+03)) {
+-		adamic_string * adamic_temporary_498 = adamic_function_0_built(&adamic_string_46, (0x1.2p+04));
+-		adamic_object * adamic_temporary_499 = adamic_function_20_Kennel_new(adamic_temporary_498);
+-		adamic_temporary_500 = adamic_retain(adamic_temporary_499);
+-		adamic_release(adamic_temporary_499);
+-		adamic_release(adamic_temporary_498);
++	adamic_array * adamic_temporary_499 = adamic_global_1_handlers;
++	double adamic_temporary_500 = (double)adamic_temporary_499->length;
++	double adamic_temporary_501 = adamic_temporary_500;
++	adamic_object * adamic_temporary_504;
++	if (adamic_temporary_501 > (0x1.2p+03)) {
++		adamic_string * adamic_temporary_502 = adamic_function_0_built(&adamic_string_48, (0x1.2p+04));
++		adamic_object * adamic_temporary_503 = adamic_function_20_Kennel_new(adamic_temporary_502);
++		adamic_temporary_504 = adamic_retain(adamic_temporary_503);
++		adamic_release(adamic_temporary_503);
++		adamic_release(adamic_temporary_502);
+ 	} else {
+-		adamic_temporary_500 = NULL;
+-	}
+-	adamic_object * adamic_temporary_501 = adamic_global_11_missingClass;
+-	adamic_global_11_missingClass = adamic_temporary_500;
+-	adamic_release(adamic_temporary_501);
++		adamic_temporary_504 = NULL;
++	}
++	adamic_object * adamic_temporary_505 = adamic_global_11_missingClass;
++	adamic_global_11_missingClass = adamic_temporary_504;
++	adamic_release(adamic_temporary_505);
+ 	adamic_ready_11 = true;
+-	adamic_array * adamic_temporary_502 = adamic_global_1_handlers;
+-	double adamic_temporary_503 = (double)adamic_temporary_502->length;
+-	double adamic_temporary_504 = adamic_temporary_503;
+-	adamic_object * adamic_temporary_507;
+-	if (adamic_temporary_504 > (0x1.2p+03)) {
+-		adamic_string * adamic_temporary_505 = adamic_function_0_built(&adamic_string_46, (0x1.3p+04));
+-		adamic_object * adamic_temporary_506 = adamic_function_1_literalHandler(adamic_temporary_505);
+-		adamic_temporary_507 = adamic_retain(adamic_temporary_506);
+-		adamic_release(adamic_temporary_506);
+-		adamic_release(adamic_temporary_505);
++	adamic_array * adamic_temporary_506 = adamic_global_1_handlers;
++	double adamic_temporary_507 = (double)adamic_temporary_506->length;
++	double adamic_temporary_508 = adamic_temporary_507;
++	adamic_object * adamic_temporary_511;
++	if (adamic_temporary_508 > (0x1.2p+03)) {
++		adamic_string * adamic_temporary_509 = adamic_function_0_built(&adamic_string_48, (0x1.3p+04));
++		adamic_object * adamic_temporary_510 = adamic_function_1_literalHandler(adamic_temporary_509);
++		adamic_temporary_511 = adamic_retain(adamic_temporary_510);
++		adamic_release(adamic_temporary_510);
++		adamic_release(adamic_temporary_509);
+ 	} else {
+-		adamic_temporary_507 = NULL;
+-	}
+-	adamic_object * adamic_temporary_508 = adamic_global_12_missingLiteral;
+-	adamic_global_12_missingLiteral = adamic_temporary_507;
+-	adamic_release(adamic_temporary_508);
++		adamic_temporary_511 = NULL;
++	}
++	adamic_object * adamic_temporary_512 = adamic_global_12_missingLiteral;
++	adamic_global_12_missingLiteral = adamic_temporary_511;
++	adamic_release(adamic_temporary_512);
+ 	adamic_ready_12 = true;
+-	adamic_object * adamic_temporary_509 = adamic_retain(adamic_global_11_missingClass);
+-	adamic_string * adamic_temporary_516 = NULL;
+-	if (adamic_temporary_509 != NULL) {
+-		adamic_method adamic_temporary_510 = NULL;
+-		adamic_closure * adamic_temporary_512 = adamic_retain(adamic_object_callee(adamic_temporary_509, "handle", &adamic_cache_511, &adamic_temporary_510));
+-		adamic_object * adamic_temporary_513 = adamic_function_7_counted((0x1.2p+04));
+-		adamic_value adamic_temporary_514 = (adamic_temporary_512 != NULL ? adamic_temporary_512->code(adamic_temporary_512, (adamic_value[]){{.reference = adamic_temporary_513}}) : adamic_temporary_510(adamic_temporary_509, (adamic_value[]){{.reference = adamic_temporary_513}}));
+-		if (adamic_thrown != NULL) {
++	adamic_object * adamic_temporary_513 = adamic_retain(adamic_global_11_missingClass);
++	adamic_string * adamic_temporary_520 = NULL;
++	if (adamic_temporary_513 != NULL) {
++		adamic_method adamic_temporary_514 = NULL;
++		adamic_closure * adamic_temporary_516 = adamic_retain(adamic_object_callee(adamic_temporary_513, "handle", &adamic_cache_515, &adamic_temporary_514));
++		adamic_object * adamic_temporary_517 = adamic_function_7_counted((0x1.2p+04));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_517);
++			adamic_release(adamic_temporary_516);
+ 			adamic_release(adamic_temporary_513);
+-			adamic_release(adamic_temporary_512);
+-			adamic_release(adamic_temporary_509);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_string * adamic_temporary_515 = (adamic_string *)adamic_temporary_514.reference;
+-		adamic_temporary_516 = adamic_retain(adamic_temporary_515);
+-		adamic_release(adamic_temporary_515);
+-		adamic_release(adamic_temporary_513);
+-		adamic_release(adamic_temporary_512);
+-	}
+-	adamic_string * adamic_temporary_517;
+-	if (adamic_temporary_516 != NULL) {
+-		adamic_temporary_517 = adamic_temporary_516;
++		adamic_value adamic_temporary_518 = (adamic_temporary_516 != NULL ? adamic_temporary_516->code(adamic_temporary_516, (adamic_value[]){{.reference = adamic_temporary_517}}) : adamic_temporary_514(adamic_temporary_513, (adamic_value[]){{.reference = adamic_temporary_517}}));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_517);
++			adamic_release(adamic_temporary_516);
++			adamic_release(adamic_temporary_513);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
++			adamic_uncaught();
++		}
++		adamic_string * adamic_temporary_519 = (adamic_string *)adamic_temporary_518.reference;
++		adamic_temporary_520 = adamic_retain(adamic_temporary_519);
++		adamic_release(adamic_temporary_519);
++		adamic_release(adamic_temporary_517);
++		adamic_release(adamic_temporary_516);
++	}
++	adamic_string * adamic_temporary_521;
++	if (adamic_temporary_520 != NULL) {
++		adamic_temporary_521 = adamic_temporary_520;
+ 	} else {
+-		adamic_temporary_517 = adamic_retain(&adamic_string_47);
+-	}
+-	adamic_object * adamic_temporary_518 = adamic_retain(adamic_global_12_missingLiteral);
+-	adamic_string * adamic_temporary_525 = NULL;
+-	if (adamic_temporary_518 != NULL) {
+-		adamic_method adamic_temporary_519 = NULL;
+-		adamic_closure * adamic_temporary_521 = adamic_retain(adamic_object_callee(adamic_temporary_518, "handle", &adamic_cache_520, &adamic_temporary_519));
+-		adamic_object * adamic_temporary_522 = adamic_function_7_counted((0x1.3p+04));
+-		adamic_value adamic_temporary_523 = (adamic_temporary_521 != NULL ? adamic_temporary_521->code(adamic_temporary_521, (adamic_value[]){{.reference = adamic_temporary_522}}) : adamic_temporary_519(adamic_temporary_518, (adamic_value[]){{.reference = adamic_temporary_522}}));
+-		if (adamic_thrown != NULL) {
++		adamic_temporary_521 = adamic_retain(&adamic_string_49);
++	}
++	adamic_object * adamic_temporary_522 = adamic_retain(adamic_global_12_missingLiteral);
++	adamic_string * adamic_temporary_529 = NULL;
++	if (adamic_temporary_522 != NULL) {
++		adamic_method adamic_temporary_523 = NULL;
++		adamic_closure * adamic_temporary_525 = adamic_retain(adamic_object_callee(adamic_temporary_522, "handle", &adamic_cache_524, &adamic_temporary_523));
++		adamic_object * adamic_temporary_526 = adamic_function_7_counted((0x1.3p+04));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_526);
++			adamic_release(adamic_temporary_525);
+ 			adamic_release(adamic_temporary_522);
+ 			adamic_release(adamic_temporary_521);
+-			adamic_release(adamic_temporary_518);
+-			adamic_release(adamic_temporary_517);
+-			adamic_release(adamic_temporary_509);
++			adamic_release(adamic_temporary_513);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_string * adamic_temporary_524 = (adamic_string *)adamic_temporary_523.reference;
+-		adamic_temporary_525 = adamic_retain(adamic_temporary_524);
+-		adamic_release(adamic_temporary_524);
+-		adamic_release(adamic_temporary_522);
+-		adamic_release(adamic_temporary_521);
+-	}
+-	adamic_string * adamic_temporary_526;
+-	if (adamic_temporary_525 != NULL) {
+-		adamic_temporary_526 = adamic_temporary_525;
+-	} else {
+-		adamic_temporary_526 = adamic_retain(&adamic_string_48);
+-	}
+-	double adamic_temporary_527 = adamic_global_10_evaluated;
+-	adamic_string * adamic_temporary_528 = adamic_string_from_number(adamic_temporary_527);
+-	adamic_string * adamic_temporary_529 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_517, &adamic_string_6, adamic_temporary_526, &adamic_string_6, adamic_temporary_528});
+-	adamic_write_line(adamic_stdout, adamic_temporary_529);
+-	adamic_release(adamic_temporary_529);
+-	adamic_release(adamic_temporary_528);
+-	adamic_release(adamic_temporary_526);
+-	adamic_release(adamic_temporary_518);
+-	adamic_release(adamic_temporary_517);
+-	adamic_release(adamic_temporary_509);
+-	adamic_object * adamic_temporary_530 = adamic_retain(adamic_global_11_missingClass);
+-	adamic_maybe_number adamic_temporary_536 = (adamic_maybe_number){false, 0.0};
+-	if (adamic_temporary_530 != NULL) {
+-		adamic_method adamic_temporary_531 = NULL;
+-		adamic_closure * adamic_temporary_533 = adamic_retain(adamic_object_callee(adamic_temporary_530, "count", &adamic_cache_532, &adamic_temporary_531));
+-		adamic_value adamic_temporary_534 = (adamic_temporary_533 != NULL ? adamic_temporary_533->code(adamic_temporary_533, NULL) : adamic_temporary_531(adamic_temporary_530, NULL));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_533);
+-			adamic_release(adamic_temporary_530);
++		adamic_value adamic_temporary_527 = (adamic_temporary_525 != NULL ? adamic_temporary_525->code(adamic_temporary_525, (adamic_value[]){{.reference = adamic_temporary_526}}) : adamic_temporary_523(adamic_temporary_522, (adamic_value[]){{.reference = adamic_temporary_526}}));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_526);
++			adamic_release(adamic_temporary_525);
++			adamic_release(adamic_temporary_522);
++			adamic_release(adamic_temporary_521);
++			adamic_release(adamic_temporary_513);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_maybe_number adamic_temporary_535 = adamic_maybe_number_unpack(adamic_temporary_534.number);
+-		adamic_temporary_536 = adamic_temporary_535;
+-		adamic_release(adamic_temporary_533);
+-	}
+-	double adamic_temporary_537;
+-	if (adamic_temporary_536.present) {
+-		adamic_temporary_537 = adamic_temporary_536.number;
++		adamic_string * adamic_temporary_528 = (adamic_string *)adamic_temporary_527.reference;
++		adamic_temporary_529 = adamic_retain(adamic_temporary_528);
++		adamic_release(adamic_temporary_528);
++		adamic_release(adamic_temporary_526);
++		adamic_release(adamic_temporary_525);
++	}
++	adamic_string * adamic_temporary_530;
++	if (adamic_temporary_529 != NULL) {
++		adamic_temporary_530 = adamic_temporary_529;
+ 	} else {
+-		adamic_temporary_537 = (-(0x1p+00));
+-	}
+-	adamic_string * adamic_temporary_538 = adamic_string_from_number(adamic_temporary_537);
+-	adamic_object * adamic_temporary_539 = adamic_retain(adamic_global_9_maybe);
+-	adamic_maybe_number adamic_temporary_545 = (adamic_maybe_number){false, 0.0};
+-	if (adamic_temporary_539 != NULL) {
+-		adamic_method adamic_temporary_540 = NULL;
+-		adamic_closure * adamic_temporary_542 = adamic_retain(adamic_object_callee(adamic_temporary_539, "count", &adamic_cache_541, &adamic_temporary_540));
+-		adamic_value adamic_temporary_543 = (adamic_temporary_542 != NULL ? adamic_temporary_542->code(adamic_temporary_542, NULL) : adamic_temporary_540(adamic_temporary_539, NULL));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_542);
+-			adamic_release(adamic_temporary_539);
+-			adamic_release(adamic_temporary_538);
+-			adamic_release(adamic_temporary_530);
++		adamic_temporary_530 = adamic_retain(&adamic_string_50);
++	}
++	double adamic_temporary_531 = adamic_global_10_evaluated;
++	adamic_string * adamic_temporary_532 = adamic_string_from_number(adamic_temporary_531);
++	adamic_string * adamic_temporary_533 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_521, &adamic_string_6, adamic_temporary_530, &adamic_string_6, adamic_temporary_532});
++	adamic_write_line(adamic_stdout, adamic_temporary_533);
++	adamic_release(adamic_temporary_533);
++	adamic_release(adamic_temporary_532);
++	adamic_release(adamic_temporary_530);
++	adamic_release(adamic_temporary_522);
++	adamic_release(adamic_temporary_521);
++	adamic_release(adamic_temporary_513);
++	adamic_object * adamic_temporary_534 = adamic_retain(adamic_global_11_missingClass);
++	adamic_maybe_number adamic_temporary_540 = (adamic_maybe_number){false, 0.0};
++	if (adamic_temporary_534 != NULL) {
++		adamic_method adamic_temporary_535 = NULL;
++		adamic_closure * adamic_temporary_537 = adamic_retain(adamic_object_callee(adamic_temporary_534, "count", &adamic_cache_536, &adamic_temporary_535));
++		adamic_value adamic_temporary_538 = (adamic_temporary_537 != NULL ? adamic_temporary_537->code(adamic_temporary_537, NULL) : adamic_temporary_535(adamic_temporary_534, NULL));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_537);
++			adamic_release(adamic_temporary_534);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_maybe_number adamic_temporary_544 = adamic_maybe_number_unpack(adamic_temporary_543.number);
+-		adamic_temporary_545 = adamic_temporary_544;
+-		adamic_release(adamic_temporary_542);
+-	}
+-	double adamic_temporary_546;
+-	if (adamic_temporary_545.present) {
+-		adamic_temporary_546 = adamic_temporary_545.number;
++		adamic_maybe_number adamic_temporary_539 = adamic_maybe_number_unpack(adamic_temporary_538.number);
++		adamic_temporary_540 = adamic_temporary_539;
++		adamic_release(adamic_temporary_537);
++	}
++	double adamic_temporary_541;
++	if (adamic_temporary_540.present) {
++		adamic_temporary_541 = adamic_temporary_540.number;
+ 	} else {
+-		adamic_temporary_546 = (-(0x1p+00));
+-	}
+-	adamic_string * adamic_temporary_547 = adamic_string_from_number(adamic_temporary_546);
+-	double adamic_temporary_548 = adamic_global_10_evaluated;
+-	adamic_string * adamic_temporary_549 = adamic_string_from_number(adamic_temporary_548);
+-	adamic_string * adamic_temporary_550 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_538, &adamic_string_6, adamic_temporary_547, &adamic_string_6, adamic_temporary_549});
+-	adamic_write_line(adamic_stdout, adamic_temporary_550);
+-	adamic_release(adamic_temporary_550);
+-	adamic_release(adamic_temporary_549);
+-	adamic_release(adamic_temporary_547);
+-	adamic_release(adamic_temporary_539);
+-	adamic_release(adamic_temporary_538);
+-	adamic_release(adamic_temporary_530);
+-	adamic_array * adamic_temporary_551 = adamic_global_1_handlers;
+-	adamic_value *adamic_temporary_552 = adamic_array_at(adamic_temporary_551, (0x0p+00));
+-	adamic_object * adamic_temporary_553 = adamic_temporary_552 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_552->reference);
+-	adamic_string * adamic_temporary_560 = NULL;
+-	if (adamic_temporary_553 != NULL) {
+-		adamic_method adamic_temporary_554 = NULL;
+-		adamic_closure * adamic_temporary_556 = adamic_retain(adamic_object_callee(adamic_temporary_553, "handle", &adamic_cache_555, &adamic_temporary_554));
+-		adamic_object * adamic_temporary_557 = adamic_function_8_displace();
+-		adamic_value adamic_temporary_558 = (adamic_temporary_556 != NULL ? adamic_temporary_556->code(adamic_temporary_556, (adamic_value[]){{.reference = adamic_temporary_557}}) : adamic_temporary_554(adamic_temporary_553, (adamic_value[]){{.reference = adamic_temporary_557}}));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_557);
+-			adamic_release(adamic_temporary_556);
+-			adamic_release(adamic_temporary_553);
++		adamic_temporary_541 = (-(0x1p+00));
++	}
++	adamic_string * adamic_temporary_542 = adamic_string_from_number(adamic_temporary_541);
++	adamic_object * adamic_temporary_543 = adamic_retain(adamic_global_9_maybe);
++	adamic_maybe_number adamic_temporary_549 = (adamic_maybe_number){false, 0.0};
++	if (adamic_temporary_543 != NULL) {
++		adamic_method adamic_temporary_544 = NULL;
++		adamic_closure * adamic_temporary_546 = adamic_retain(adamic_object_callee(adamic_temporary_543, "count", &adamic_cache_545, &adamic_temporary_544));
++		adamic_value adamic_temporary_547 = (adamic_temporary_546 != NULL ? adamic_temporary_546->code(adamic_temporary_546, NULL) : adamic_temporary_544(adamic_temporary_543, NULL));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_546);
++			adamic_release(adamic_temporary_543);
++			adamic_release(adamic_temporary_542);
++			adamic_release(adamic_temporary_534);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_string * adamic_temporary_559 = (adamic_string *)adamic_temporary_558.reference;
+-		adamic_temporary_560 = adamic_retain(adamic_temporary_559);
+-		adamic_release(adamic_temporary_559);
+-		adamic_release(adamic_temporary_557);
+-		adamic_release(adamic_temporary_556);
+-	}
+-	adamic_string * adamic_temporary_561;
+-	if (adamic_temporary_560 != NULL) {
+-		adamic_temporary_561 = adamic_temporary_560;
++		adamic_maybe_number adamic_temporary_548 = adamic_maybe_number_unpack(adamic_temporary_547.number);
++		adamic_temporary_549 = adamic_temporary_548;
++		adamic_release(adamic_temporary_546);
++	}
++	double adamic_temporary_550;
++	if (adamic_temporary_549.present) {
++		adamic_temporary_550 = adamic_temporary_549.number;
+ 	} else {
+-		adamic_temporary_561 = adamic_retain(&adamic_string_49);
+-	}
+-	adamic_array * adamic_temporary_562 = adamic_global_1_handlers;
+-	adamic_value *adamic_temporary_563 = adamic_array_at(adamic_temporary_562, (0x0p+00));
+-	adamic_object * adamic_temporary_564 = adamic_temporary_563 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_563->reference);
+-	adamic_string * adamic_temporary_571 = NULL;
+-	if (adamic_temporary_564 != NULL) {
+-		adamic_method adamic_temporary_565 = NULL;
+-		adamic_closure * adamic_temporary_567 = adamic_retain(adamic_object_callee(adamic_temporary_564, "handle", &adamic_cache_566, &adamic_temporary_565));
+-		adamic_object * adamic_temporary_568 = adamic_function_7_counted((0x1.5p+04));
+-		adamic_value adamic_temporary_569 = (adamic_temporary_567 != NULL ? adamic_temporary_567->code(adamic_temporary_567, (adamic_value[]){{.reference = adamic_temporary_568}}) : adamic_temporary_565(adamic_temporary_564, (adamic_value[]){{.reference = adamic_temporary_568}}));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_568);
+-			adamic_release(adamic_temporary_567);
+-			adamic_release(adamic_temporary_564);
++		adamic_temporary_550 = (-(0x1p+00));
++	}
++	adamic_string * adamic_temporary_551 = adamic_string_from_number(adamic_temporary_550);
++	double adamic_temporary_552 = adamic_global_10_evaluated;
++	adamic_string * adamic_temporary_553 = adamic_string_from_number(adamic_temporary_552);
++	adamic_string * adamic_temporary_554 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_542, &adamic_string_6, adamic_temporary_551, &adamic_string_6, adamic_temporary_553});
++	adamic_write_line(adamic_stdout, adamic_temporary_554);
++	adamic_release(adamic_temporary_554);
++	adamic_release(adamic_temporary_553);
++	adamic_release(adamic_temporary_551);
++	adamic_release(adamic_temporary_543);
++	adamic_release(adamic_temporary_542);
++	adamic_release(adamic_temporary_534);
++	adamic_array * adamic_temporary_555 = adamic_global_1_handlers;
++	adamic_value *adamic_temporary_556 = adamic_array_at(adamic_temporary_555, (0x0p+00));
++	adamic_object * adamic_temporary_557 = adamic_temporary_556 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_556->reference);
++	adamic_string * adamic_temporary_564 = NULL;
++	if (adamic_temporary_557 != NULL) {
++		adamic_method adamic_temporary_558 = NULL;
++		adamic_closure * adamic_temporary_560 = adamic_retain(adamic_object_callee(adamic_temporary_557, "handle", &adamic_cache_559, &adamic_temporary_558));
++		adamic_object * adamic_temporary_561 = adamic_function_8_displace();
++		if (adamic_exception_pending) {
+ 			adamic_release(adamic_temporary_561);
+-			adamic_release(adamic_temporary_553);
++			adamic_release(adamic_temporary_560);
++			adamic_release(adamic_temporary_557);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
+ 			adamic_uncaught();
+ 		}
+-		adamic_string * adamic_temporary_570 = (adamic_string *)adamic_temporary_569.reference;
+-		adamic_temporary_571 = adamic_retain(adamic_temporary_570);
+-		adamic_release(adamic_temporary_570);
+-		adamic_release(adamic_temporary_568);
+-		adamic_release(adamic_temporary_567);
+-	}
+-	adamic_string * adamic_temporary_572;
+-	if (adamic_temporary_571 != NULL) {
+-		adamic_temporary_572 = adamic_temporary_571;
++		adamic_value adamic_temporary_562 = (adamic_temporary_560 != NULL ? adamic_temporary_560->code(adamic_temporary_560, (adamic_value[]){{.reference = adamic_temporary_561}}) : adamic_temporary_558(adamic_temporary_557, (adamic_value[]){{.reference = adamic_temporary_561}}));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_561);
++			adamic_release(adamic_temporary_560);
++			adamic_release(adamic_temporary_557);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
++			adamic_uncaught();
++		}
++		adamic_string * adamic_temporary_563 = (adamic_string *)adamic_temporary_562.reference;
++		adamic_temporary_564 = adamic_retain(adamic_temporary_563);
++		adamic_release(adamic_temporary_563);
++		adamic_release(adamic_temporary_561);
++		adamic_release(adamic_temporary_560);
++	}
++	adamic_string * adamic_temporary_565;
++	if (adamic_temporary_564 != NULL) {
++		adamic_temporary_565 = adamic_temporary_564;
+ 	} else {
+-		adamic_temporary_572 = adamic_retain(&adamic_string_49);
+-	}
+-	double adamic_temporary_573 = adamic_global_10_evaluated;
+-	adamic_string * adamic_temporary_574 = adamic_string_from_number(adamic_temporary_573);
+-	adamic_string * adamic_temporary_575 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_561, &adamic_string_6, adamic_temporary_572, &adamic_string_6, adamic_temporary_574});
+-	adamic_write_line(adamic_stdout, adamic_temporary_575);
+-	adamic_release(adamic_temporary_575);
+-	adamic_release(adamic_temporary_574);
+-	adamic_release(adamic_temporary_572);
+-	adamic_release(adamic_temporary_564);
+-	adamic_release(adamic_temporary_561);
+-	adamic_release(adamic_temporary_553);
++		adamic_temporary_565 = adamic_retain(&adamic_string_51);
++	}
++	adamic_array * adamic_temporary_566 = adamic_global_1_handlers;
++	adamic_value *adamic_temporary_567 = adamic_array_at(adamic_temporary_566, (0x0p+00));
++	adamic_object * adamic_temporary_568 = adamic_temporary_567 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_567->reference);
++	adamic_string * adamic_temporary_575 = NULL;
++	if (adamic_temporary_568 != NULL) {
++		adamic_method adamic_temporary_569 = NULL;
++		adamic_closure * adamic_temporary_571 = adamic_retain(adamic_object_callee(adamic_temporary_568, "handle", &adamic_cache_570, &adamic_temporary_569));
++		adamic_object * adamic_temporary_572 = adamic_function_7_counted((0x1.5p+04));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_572);
++			adamic_release(adamic_temporary_571);
++			adamic_release(adamic_temporary_568);
++			adamic_release(adamic_temporary_565);
++			adamic_release(adamic_temporary_557);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
++			adamic_uncaught();
++		}
++		adamic_value adamic_temporary_573 = (adamic_temporary_571 != NULL ? adamic_temporary_571->code(adamic_temporary_571, (adamic_value[]){{.reference = adamic_temporary_572}}) : adamic_temporary_569(adamic_temporary_568, (adamic_value[]){{.reference = adamic_temporary_572}}));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_572);
++			adamic_release(adamic_temporary_571);
++			adamic_release(adamic_temporary_568);
++			adamic_release(adamic_temporary_565);
++			adamic_release(adamic_temporary_557);
++			adamic_release(adamic_global_12_missingLiteral);
++			adamic_global_12_missingLiteral = NULL;
++			adamic_release(adamic_global_11_missingClass);
++			adamic_global_11_missingClass = NULL;
++			adamic_release(adamic_global_9_maybe);
++			adamic_global_9_maybe = NULL;
++			adamic_release(adamic_global_8_others);
++			adamic_global_8_others = NULL;
++			adamic_release(adamic_global_7_words);
++			adamic_global_7_words = NULL;
++			adamic_release(adamic_global_6_checker);
++			adamic_global_6_checker = NULL;
++			adamic_release(adamic_global_5_wired);
++			adamic_global_5_wired = NULL;
++			adamic_release(adamic_global_4_plain);
++			adamic_global_4_plain = NULL;
++			adamic_release(adamic_global_3_current);
++			adamic_global_3_current = NULL;
++			adamic_release(adamic_global_2_holder);
++			adamic_global_2_holder = NULL;
++			adamic_release(adamic_global_1_handlers);
++			adamic_global_1_handlers = NULL;
++			adamic_release(adamic_global_0_variable);
++			adamic_global_0_variable = NULL;
++			adamic_uncaught();
++		}
++		adamic_string * adamic_temporary_574 = (adamic_string *)adamic_temporary_573.reference;
++		adamic_temporary_575 = adamic_retain(adamic_temporary_574);
++		adamic_release(adamic_temporary_574);
++		adamic_release(adamic_temporary_572);
++		adamic_release(adamic_temporary_571);
++	}
++	adamic_string * adamic_temporary_576;
++	if (adamic_temporary_575 != NULL) {
++		adamic_temporary_576 = adamic_temporary_575;
++	} else {
++		adamic_temporary_576 = adamic_retain(&adamic_string_51);
++	}
++	double adamic_temporary_577 = adamic_global_10_evaluated;
++	adamic_string * adamic_temporary_578 = adamic_string_from_number(adamic_temporary_577);
++	adamic_string * adamic_temporary_579 = adamic_string_concat(5, (adamic_string *const[]){adamic_temporary_565, &adamic_string_6, adamic_temporary_576, &adamic_string_6, adamic_temporary_578});
++	adamic_write_line(adamic_stdout, adamic_temporary_579);
++	adamic_release(adamic_temporary_579);
++	adamic_release(adamic_temporary_578);
++	adamic_release(adamic_temporary_576);
++	adamic_release(adamic_temporary_568);
++	adamic_release(adamic_temporary_565);
++	adamic_release(adamic_temporary_557);
+ 	adamic_release(adamic_global_12_missingLiteral);
+ 	adamic_global_12_missingLiteral = NULL;
+ 	adamic_release(adamic_global_11_missingClass);

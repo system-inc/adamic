@@ -1,0 +1,64 @@
+--- main/internal/oracle/testdata/exceptions_uncaught.a
++++ slice/internal/oracle/testdata/exceptions_uncaught.a
+@@ -24,8 +24,9 @@
+ 		adamic_write_line(adamic_stdout, adamic_temporary_2);
+ 		adamic_release(adamic_temporary_2);
+ 		adamic_string * adamic_temporary_3 = adamic_string_concat(2, (adamic_string *const[]){adamic_local_0_label, &adamic_string_2});
+-		adamic_object * adamic_temporary_4 = adamic_error_new(adamic_temporary_3);
+-		adamic_thrown = adamic_retain(adamic_temporary_4);
++		adamic_object * adamic_temporary_4 = adamic_error_new_kind(adamic_temporary_3, "Error");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_4)));
++		adamic_exception_pending = true;
+ 		adamic_release(adamic_temporary_4);
+ 		adamic_release(adamic_temporary_3);
+ 		goto adamic_rethrow_1;
+@@ -36,12 +37,14 @@
+ 	goto adamic_done_1;
+ 	adamic_rethrow_1:;
+ 	{
+-		adamic_object *adamic_temporary_5 = adamic_thrown;
++		adamic_heap *adamic_temporary_5 = adamic_thrown;
+ 		adamic_thrown = NULL;
++		adamic_exception_pending = false;
+ 		{
+ 			adamic_write_line(adamic_stdout, &adamic_string_3);
+ 		}
+ 		adamic_thrown = adamic_temporary_5;
++		adamic_exception_pending = true;
+ 		adamic_temporary_5 = NULL;
+ 		adamic_release(adamic_temporary_5);
+ 		return 0.0;
+@@ -54,7 +57,7 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		double adamic_temporary_7 = adamic_function_0_inner(&adamic_string_4);
+-		if (adamic_thrown != NULL) {
++		if (adamic_exception_pending) {
+ 			goto adamic_rethrow_6;
+ 		}
+ 		double adamic_temporary_8 = adamic_temporary_7;
+@@ -69,12 +72,14 @@
+ 	goto adamic_done_6;
+ 	adamic_rethrow_6:;
+ 	{
+-		adamic_object *adamic_temporary_9 = adamic_thrown;
++		adamic_heap *adamic_temporary_9 = adamic_thrown;
+ 		adamic_thrown = NULL;
++		adamic_exception_pending = false;
+ 		{
+ 			adamic_write_line(adamic_stdout, &adamic_string_5);
+ 		}
+ 		adamic_thrown = adamic_temporary_9;
++		adamic_exception_pending = true;
+ 		adamic_temporary_9 = NULL;
+ 		adamic_release(adamic_temporary_9);
+ 		return 0.0;
+@@ -87,7 +92,7 @@
+ 	adamic_start(argc, argv);
+ 	adamic_write_line(adamic_stdout, &adamic_string_6);
+ 	double adamic_temporary_10 = adamic_function_1_outer();
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_uncaught();
+ 	}
+ 	adamic_string * adamic_temporary_11 = adamic_string_from_number(adamic_temporary_10);

@@ -1,0 +1,39 @@
+missing-exception-edge caught runtime error:
+assignment-kills-handler-value caught old text is dead
+throw-temporaries-leak caught leaks:
+pending-finally-leak caught leaks:
+error-message-not-retained caught AddressSanitizer: heap-use-after-free
+range-error-is-error caught stdout differs
+wrong-range-message caught stdout differs
+type-error-is-error caught stdout differs
+hash-failure-is-panic caught exit codes differ
+host-type-error-is-error caught stdout differs
+soundness-check-is-catchable caught want the inserted check to fire
+rethrow-wrapped caught stdout differs
+builtin-narrow-forgets-subtype caught want the inserted check to fire
+saved-error-wrapped caught stdout differs
+backend-renders-stack caught uncaught renderer wrote stderr
+error-ancestry-missing caught stdout differs
+error-default-name-wrong caught stdout differs
+error-prefix-released-twice caught AddressSanitizer: heap-use-after-free
+error-fields-out-of-order caught stdout differs
+implicit-string-conversion caught uncaught lifetime check: exit 70
+pending-undefined-lost caught stdout differs
+catch-assumes-error caught exit codes differ
+typeof-boolean-is-number caught stdout differs
+null-is-undefined caught stdout differs
+finally-releases-twice caught AddressSanitizer: heap-use-after-free
+region-payload-freed caught AddressSanitizer: heap-use-after-free
+uncaught-is-panic caught uncaught lifetime check: exit 70
+changed-source-keeps-terminal-mode NOT CAUGHT changed source borrowed terminal convention
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-6/run-exception-overlays.py", line 38, in <module>
+    for relative,old,new in changes:
+          ^^^^^^
+AssertionError: ('changed-source-keeps-terminal-mode', 'see /workspace/adamic/review/compiler/chain-slice-6/exception-mutants/changed-source-keeps-terminal-mode/test.log')
+changed-source-keeps-terminal-mode caught changed source borrowed terminal convention
+changed-dependency-keeps-terminal-mode caught changed dependency borrowed terminal convention
+backend-drops-entry-source caught JavaScript backend: exit codes differ
+readiness-old-panic caught JavaScript language TDZ
+readiness-old-effects caught stdout differs
+unknown-authorizes-assertion caught want Refused, got <nil>

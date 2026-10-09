@@ -1,0 +1,17 @@
+--- main/internal/oracle/testdata/module_namespace_reads/direct_early.a
++++ slice/internal/oracle/testdata/module_namespace_reads/direct_early.a
+@@ -11,8 +11,12 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	}
+ 	double adamic_temporary_1 = adamic_global_0_value;
+ 	adamic_string * adamic_temporary_2 = adamic_string_from_number(adamic_temporary_1);

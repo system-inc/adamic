@@ -1,0 +1,86 @@
+--- main/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
++++ slice/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+@@ -54,13 +54,27 @@
+ 					adamic_local_2_value_ready_cell->value.boolean = true;
+ 					bool adamic_temporary_11 = adamic_local_2_value_ready_cell->value.boolean;
+ 					if (!adamic_temporary_11) {
+-						static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-						adamic_panic(message, sizeof message - 1);
++					static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++					adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++					adamic_exception_pending = true;
++					if (adamic_exception_pending) {
++						adamic_release(adamic_local_3_write);
++						adamic_release(adamic_local_1_value_cell);
++						adamic_release(adamic_local_2_value_ready_cell);
++						return;
++					}
+ 					}
+ 					bool adamic_temporary_12 = adamic_local_2_value_ready_cell->value.boolean;
+ 					if (!adamic_temporary_12) {
+-						static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-						adamic_panic(message, sizeof message - 1);
++					static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++					adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++					adamic_exception_pending = true;
++					if (adamic_exception_pending) {
++						adamic_release(adamic_local_3_write);
++						adamic_release(adamic_local_1_value_cell);
++						adamic_release(adamic_local_2_value_ready_cell);
++						return;
++					}
+ 					}
+ 					adamic_string * adamic_temporary_13 = adamic_retain((adamic_string *)adamic_local_1_value_cell->value.reference);
+ 					adamic_write_line(adamic_stdout, adamic_temporary_13);
+@@ -69,10 +83,23 @@
+ 				} else {
+ 					if (adamic_temporary_6 == (0x1p+01)) {
+ 						if (!adamic_local_4_write_ready) {
+-							static const char message[] = "ReferenceError: Cannot access 'write' before initialization";
+-							adamic_panic(message, sizeof message - 1);
++						static adamic_string error_message = ADAMIC_STRING("Cannot access 'write' before initialization");
++						adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++						adamic_exception_pending = true;
++						if (adamic_exception_pending) {
++							adamic_release(adamic_local_3_write);
++							adamic_release(adamic_local_1_value_cell);
++							adamic_release(adamic_local_2_value_ready_cell);
++							return;
++						}
+ 						}
+ 						adamic_local_3_write->code(adamic_local_3_write, NULL);
++						if (adamic_exception_pending) {
++							adamic_release(adamic_local_3_write);
++							adamic_release(adamic_local_1_value_cell);
++							adamic_release(adamic_local_2_value_ready_cell);
++							return;
++						}
+ 						(void)0;
+ 						break;
+ 					} else {
+@@ -94,8 +121,13 @@
+ 	adamic_string * adamic_temporary_14 = adamic_function_0_replacement();
+ 	bool adamic_temporary_15 = self->cells[0]->value.boolean;
+ 	if (!adamic_temporary_15) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_14);
++		return (adamic_value){.number = 0};
++	}
+ 	}
+ 	void *adamic_temporary_16 = self->cells[1]->value.reference;
+ 	self->cells[1]->value.reference = adamic_temporary_14;
+@@ -108,6 +140,9 @@
+ 	adamic_start(argc, argv);
+ 	adamic_write_line(adamic_stdout, &adamic_string_3);
+ 	adamic_function_1_show((0x1p+01));
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, &adamic_string_4);
+ 	return 0;
+ }

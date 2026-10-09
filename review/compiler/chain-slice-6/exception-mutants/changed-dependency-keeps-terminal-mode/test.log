@@ -1,0 +1,8 @@
+=== RUN   TestStep21TerminalOracleDependencyHash
+=== PAUSE TestStep21TerminalOracleDependencyHash
+=== CONT  TestStep21TerminalOracleDependencyHash
+    step21_terminal_test.go:65: changed dependency borrowed terminal convention: exit 70 stderr "adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization\n"
+--- FAIL: TestStep21TerminalOracleDependencyHash (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.136s
+FAIL

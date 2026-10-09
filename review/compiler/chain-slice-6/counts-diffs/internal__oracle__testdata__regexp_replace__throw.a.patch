@@ -1,0 +1,136 @@
+--- main/internal/oracle/testdata/regexp_replace/throw.a
++++ slice/internal/oracle/testdata/regexp_replace/throw.a
+@@ -10,6 +10,8 @@
+ static adamic_string adamic_string_1 = ADAMIC_STRING("g");
+ static adamic_string adamic_string_2 = ADAMIC_STRING("aa");
+ static adamic_string adamic_string_3 = ADAMIC_STRING("");
++static adamic_string adamic_string_4 = ADAMIC_STRING("object");
++static adamic_string adamic_string_5 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
+ 
+ static const adamic_regex_range adamic_regex_0_ranges_0[] = {{97,97},};
+ static const adamic_regex_instruction adamic_regex_0_code[] = {
+@@ -34,9 +36,10 @@
+ static bool adamic_ready_0 = false;
+ 
+ static adamic_code_function adamic_function_0_closure;
++static adamic_object * adamic_function_1_narrowed_union_member(adamic_heap * adamic_local_3_argument);
+ 
+-static adamic_slot_cache adamic_cache_10;
+-static adamic_slot_cache adamic_cache_13;
++static adamic_slot_cache adamic_cache_14;
++static adamic_slot_cache adamic_cache_17;
+ 
+ static adamic_value adamic_function_0_closure(adamic_closure *self, adamic_value *arguments) {
+ 	ADAMIC_CHECK_STACK();
+@@ -44,8 +47,9 @@
+ 	(void)arguments;
+ 	adamic_string * adamic_local_1_match = (adamic_string *)arguments[0].reference;
+ 	adamic_retain(adamic_local_1_match);
+-	adamic_object * adamic_temporary_1 = adamic_error_new(adamic_local_1_match);
+-	adamic_thrown = adamic_retain(adamic_temporary_1);
++	adamic_object * adamic_temporary_1 = adamic_error_new_kind(adamic_local_1_match, "Error");
++	adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_1)));
++	adamic_exception_pending = true;
+ 	adamic_release(adamic_temporary_1);
+ 	adamic_release(adamic_local_1_match);
+ 	return (adamic_value){.number = 0};
+@@ -53,51 +57,66 @@
+ 	return (adamic_value){.number = 0};
+ }
+ 
++static adamic_object * adamic_function_1_narrowed_union_member(adamic_heap * adamic_local_3_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_2 = adamic_instanceof(adamic_local_3_argument, &adamic_error_class);
++	if (!adamic_temporary_2) {
++		adamic_panic((&adamic_string_5)->bytes, (&adamic_string_5)->length);
++	}
++	adamic_object * adamic_temporary_3 = adamic_retain(((adamic_object *)adamic_local_3_argument));
++	return adamic_temporary_3;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_object * adamic_temporary_2 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
+-	adamic_object * adamic_temporary_3 = adamic_global_0_regex;
+-	adamic_global_0_regex = adamic_temporary_2;
+-	adamic_release(adamic_temporary_3);
++	adamic_object * adamic_temporary_4 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
++	adamic_object * adamic_temporary_5 = adamic_global_0_regex;
++	adamic_global_0_regex = adamic_temporary_4;
++	adamic_release(adamic_temporary_5);
+ 	adamic_ready_0 = true;
+ 	{
+-		adamic_object * adamic_temporary_5 = adamic_retain(adamic_global_0_regex);
+-		adamic_closure * adamic_temporary_6 = adamic_closure_new(adamic_function_0_closure, 0);
+-		adamic_string *adamic_temporary_7 = adamic_regex_replace_callback(&adamic_string_2, adamic_temporary_5, adamic_temporary_6, false, (const unsigned char[]){1}, 1, 0, 0, NULL, 0, 0);
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_6);
+-			adamic_release(adamic_temporary_5);
+-			goto adamic_landing_4;
++		adamic_object * adamic_temporary_7 = adamic_retain(adamic_global_0_regex);
++		adamic_closure * adamic_temporary_8 = adamic_closure_new(adamic_function_0_closure, 0);
++		adamic_string *adamic_temporary_9 = adamic_regex_replace_callback(&adamic_string_2, adamic_temporary_7, adamic_temporary_8, false, (const unsigned char[]){1}, 1, 0, 0, NULL, 0, 0);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_8);
++			adamic_release(adamic_temporary_7);
++			goto adamic_landing_6;
+ 		}
+-		adamic_string * adamic_temporary_8 = adamic_temporary_7;
+-		adamic_write_line(adamic_stdout, adamic_temporary_8);
++		adamic_string * adamic_temporary_10 = adamic_temporary_9;
++		adamic_write_line(adamic_stdout, adamic_temporary_10);
++		adamic_release(adamic_temporary_10);
+ 		adamic_release(adamic_temporary_8);
+-		adamic_release(adamic_temporary_6);
+-		adamic_release(adamic_temporary_5);
++		adamic_release(adamic_temporary_7);
+ 	}
+-	goto adamic_done_4;
+-	adamic_landing_4:;
++	goto adamic_done_6;
++	adamic_landing_6:;
+ 	{
+-		adamic_object *adamic_temporary_9 = adamic_thrown;
++		adamic_heap *adamic_temporary_11 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_2_error = adamic_temporary_9;
+-		if (true) {
+-			adamic_string * adamic_temporary_11 = adamic_retain(((adamic_string *)adamic_object_data_field(adamic_local_2_error, "message", &adamic_cache_10)->reference));
+-			adamic_write_line(adamic_stdout, adamic_temporary_11);
+-			adamic_release(adamic_temporary_11);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_2_error = ((adamic_heap *)adamic_temporary_11);
++		bool adamic_temporary_12 = adamic_instanceof(adamic_local_2_error, &adamic_error_class);
++		if (adamic_temporary_12) {
++			adamic_object * adamic_temporary_13 = adamic_function_1_narrowed_union_member(adamic_local_2_error);
++			adamic_string * adamic_temporary_15 = adamic_retain(((adamic_string *)adamic_object_data_field(adamic_temporary_13, "message", &adamic_cache_14)->reference));
++			adamic_write_line(adamic_stdout, adamic_temporary_15);
++			adamic_release(adamic_temporary_15);
++			adamic_release(adamic_temporary_13);
+ 		}
+ 		adamic_release(adamic_local_2_error);
+ 	}
+-	goto adamic_done_4;
+-	adamic_done_4:;
+-	adamic_object * adamic_temporary_12 = adamic_global_0_regex;
+-	double adamic_temporary_14 = adamic_object_data_field(adamic_temporary_12, "lastIndex", &adamic_cache_13)->number;
+-	double adamic_temporary_15 = adamic_temporary_14;
+-	adamic_string * adamic_temporary_16 = adamic_string_from_number(adamic_temporary_15);
+-	adamic_string * adamic_temporary_17 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_16});
+-	adamic_write_line(adamic_stdout, adamic_temporary_17);
+-	adamic_release(adamic_temporary_17);
+-	adamic_release(adamic_temporary_16);
++	goto adamic_done_6;
++	adamic_done_6:;
++	adamic_object * adamic_temporary_16 = adamic_global_0_regex;
++	double adamic_temporary_18 = adamic_object_data_field(adamic_temporary_16, "lastIndex", &adamic_cache_17)->number;
++	double adamic_temporary_19 = adamic_temporary_18;
++	adamic_string * adamic_temporary_20 = adamic_string_from_number(adamic_temporary_19);
++	adamic_string * adamic_temporary_21 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_20});
++	adamic_write_line(adamic_stdout, adamic_temporary_21);
++	adamic_release(adamic_temporary_21);
++	adamic_release(adamic_temporary_20);
+ 	adamic_release(adamic_global_0_regex);
+ 	adamic_global_0_regex = NULL;
+ 	return 0;

@@ -1,0 +1,8 @@
+=== RUN   TestStep21TerminalOracleSourceHash
+=== PAUSE TestStep21TerminalOracleSourceHash
+=== CONT  TestStep21TerminalOracleSourceHash
+    step21_terminal_test.go:47: changed source borrowed terminal convention: exit 70 stderr "adamic: panic: Error: changed program\n"
+--- FAIL: TestStep21TerminalOracleSourceHash (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.211s
+FAIL

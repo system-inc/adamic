@@ -1,0 +1,99 @@
+--- main/internal/oracle/testdata/switch_case_declarations/dead_zone.a
++++ slice/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+@@ -40,10 +40,23 @@
+ 					adamic_release(adamic_temporary_5);
+ 					adamic_local_2_value_ready_cell->value.boolean = true;
+ 					if (!adamic_local_4_read_ready) {
+-						static const char message[] = "ReferenceError: Cannot access 'read' before initialization";
+-						adamic_panic(message, sizeof message - 1);
++					static adamic_string error_message = ADAMIC_STRING("Cannot access 'read' before initialization");
++					adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++					adamic_exception_pending = true;
++					if (adamic_exception_pending) {
++						adamic_release(adamic_local_3_read);
++						adamic_release(adamic_local_1_value_cell);
++						adamic_release(adamic_local_2_value_ready_cell);
++						return &adamic_string_empty;
++					}
+ 					}
+ 					adamic_value adamic_temporary_8 = adamic_local_3_read->code(adamic_local_3_read, NULL);
++					if (adamic_exception_pending) {
++						adamic_release(adamic_local_3_read);
++						adamic_release(adamic_local_1_value_cell);
++						adamic_release(adamic_local_2_value_ready_cell);
++						return &adamic_string_empty;
++					}
+ 					adamic_string * adamic_temporary_9 = (adamic_string *)adamic_temporary_8.reference;
+ 					adamic_string * adamic_temporary_10 = adamic_temporary_9;
+ 					adamic_release(adamic_local_3_read);
+@@ -53,10 +66,23 @@
+ 				} else {
+ 					if (adamic_temporary_3 == (0x1p+01)) {
+ 						if (!adamic_local_4_read_ready) {
+-							static const char message[] = "ReferenceError: Cannot access 'read' before initialization";
+-							adamic_panic(message, sizeof message - 1);
++						static adamic_string error_message = ADAMIC_STRING("Cannot access 'read' before initialization");
++						adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++						adamic_exception_pending = true;
++						if (adamic_exception_pending) {
++							adamic_release(adamic_local_3_read);
++							adamic_release(adamic_local_1_value_cell);
++							adamic_release(adamic_local_2_value_ready_cell);
++							return &adamic_string_empty;
++						}
+ 						}
+ 						adamic_value adamic_temporary_11 = adamic_local_3_read->code(adamic_local_3_read, NULL);
++						if (adamic_exception_pending) {
++							adamic_release(adamic_local_3_read);
++							adamic_release(adamic_local_1_value_cell);
++							adamic_release(adamic_local_2_value_ready_cell);
++							return &adamic_string_empty;
++						}
+ 						adamic_string * adamic_temporary_12 = (adamic_string *)adamic_temporary_11.reference;
+ 						adamic_string * adamic_temporary_13 = adamic_temporary_12;
+ 						adamic_release(adamic_local_3_read);
+@@ -86,13 +112,21 @@
+ 	(void)arguments;
+ 	bool adamic_temporary_15 = self->cells[0]->value.boolean;
+ 	if (!adamic_temporary_15) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return (adamic_value){.number = 0};
++	}
+ 	}
+ 	bool adamic_temporary_16 = self->cells[0]->value.boolean;
+ 	if (!adamic_temporary_16) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return (adamic_value){.number = 0};
++	}
+ 	}
+ 	adamic_string * adamic_temporary_17 = adamic_retain((adamic_string *)self->cells[1]->value.reference);
+ 	adamic_string * adamic_temporary_18 = adamic_temporary_17;
+@@ -103,10 +137,18 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_string * adamic_temporary_19 = adamic_function_0_show((0x1p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_19);
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, adamic_temporary_19);
+ 	adamic_release(adamic_temporary_19);
+ 	adamic_write_line(adamic_stdout, &adamic_string_2);
+ 	adamic_string * adamic_temporary_20 = adamic_function_0_show((0x1p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_20);
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, adamic_temporary_20);
+ 	adamic_release(adamic_temporary_20);
+ 	adamic_write_line(adamic_stdout, &adamic_string_3);

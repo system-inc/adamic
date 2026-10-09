@@ -1,0 +1,14 @@
+=== RUN   TestSplitTSGoRuntimeFeatures
+=== PAUSE TestSplitTSGoRuntimeFeatures
+=== CONT  TestSplitTSGoRuntimeFeatures
+    features_test.go:231: native: linking units: exit status 1
+        /usr/bin/ld: /tmp/adamic-gate/adamic-units-1512385616/f2edd3eb137b9aac60109e6d5bd494ed592fa1d10195109ef3be55bfbd4b77e6.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: /tmp/adamic-gate/adamic-units-1512385616/8771d1cc87ad717e7cad918fc3871d32be165b165482ebc6f46ce835b90075d9.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: /tmp/adamic-gate/adamic-units-1512385616/129f4ee4b12df203736cbf20c3614a175509cc00d5e9a383673b94536915588e.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: /tmp/adamic-gate/adamic-units-1512385616/e2da0b1554f8aa1b1bac4bff7f0a95063cb8034b3318f13ad7bb2d903aec9eab.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+--- FAIL: TestSplitTSGoRuntimeFeatures (9.56s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	9.593s
+FAIL

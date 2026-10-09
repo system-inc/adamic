@@ -1,0 +1,46 @@
+--- main/internal/oracle/testdata/radix_range.a
++++ slice/internal/oracle/testdata/radix_range.a
+@@ -4,6 +4,26 @@
+ 
+ #include <math.h>
+ #include <stdbool.h>
++
++static adamic_string adamic_string_0 = ADAMIC_STRING("toString() radix argument must be between 2 and 36");
++
++static adamic_string * adamic_function_0_exception_toString(double adamic_local_1_argument, double adamic_local_2_argument);
++
++static adamic_string * adamic_function_0_exception_toString(double adamic_local_1_argument, double adamic_local_2_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_local_3_digits = (isnan(adamic_local_2_argument) ? (0x0p+00) : trunc(adamic_local_2_argument));
++	if ((adamic_local_3_digits < (0x1p+01)) || (adamic_local_3_digits > (0x1.2p+05))) {
++		adamic_object * adamic_temporary_1 = adamic_error_new_kind(&adamic_string_0, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_1)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_1);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_2 = adamic_number_to_radix(adamic_local_1_argument, adamic_local_3_digits);
++	adamic_string * adamic_temporary_3 = adamic_temporary_2;
++	return adamic_temporary_3;
++	adamic_unreachable();
++}
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+@@ -15,9 +35,13 @@
+ 			}
+ 			{
+ 				{
+-					adamic_string * adamic_temporary_3 = adamic_number_to_radix((0x1.43cp+10), ((double)adamic_local_0_radix));
+-					adamic_write_line(adamic_stdout, adamic_temporary_3);
+-					adamic_release(adamic_temporary_3);
++					adamic_string * adamic_temporary_6 = adamic_function_0_exception_toString((0x1.43cp+10), ((double)adamic_local_0_radix));
++					if (adamic_exception_pending) {
++						adamic_release(adamic_temporary_6);
++						adamic_uncaught();
++					}
++					adamic_write_line(adamic_stdout, adamic_temporary_6);
++					adamic_release(adamic_temporary_6);
+ 				}
+ 			}
+ 			adamic_local_0_radix += (int64_t)((0x1p+00));

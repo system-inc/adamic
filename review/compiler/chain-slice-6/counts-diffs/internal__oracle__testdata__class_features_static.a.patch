@@ -1,0 +1,2429 @@
+--- main/internal/oracle/testdata/class_features_static.a
++++ slice/internal/oracle/testdata/class_features_static.a
+@@ -33,9 +33,11 @@
+ static adamic_string adamic_string_25 = ADAMIC_STRING("h");
+ static adamic_string adamic_string_26 = ADAMIC_STRING("one");
+ static adamic_string adamic_string_27 = ADAMIC_STRING("q");
+-static adamic_string adamic_string_28 = ADAMIC_STRING("r");
+-static adamic_string adamic_string_29 = ADAMIC_STRING("t");
+-static adamic_string adamic_string_30 = ADAMIC_STRING("n");
++static adamic_string adamic_string_28 = ADAMIC_STRING("object");
++static adamic_string adamic_string_29 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
++static adamic_string adamic_string_30 = ADAMIC_STRING("r");
++static adamic_string adamic_string_31 = ADAMIC_STRING("t");
++static adamic_string adamic_string_32 = ADAMIC_STRING("n");
+ 
+ static adamic_string * adamic_global_0_trace = &adamic_string_empty;
+ static bool adamic_ready_0 = false;
+@@ -131,12 +133,15 @@
+ static adamic_object * adamic_function_37_class_ready_new(adamic_object * adamic_local_68_class, adamic_string * adamic_local_69_item);
+ static adamic_object * adamic_function_37_class_ready_new_in(adamic_region *region, adamic_object * adamic_local_68_class, adamic_string * adamic_local_69_item);
+ static void adamic_function_38_StaticFailure_static_initialize(adamic_object * adamic_local_70_this);
+-static void adamic_function_39_StaticName_static_initialize(adamic_object * adamic_local_74_this);
+-static void adamic_function_40_StaticName_static_initialize(adamic_object * adamic_local_75_this);
+-static double adamic_function_41_property_getamount(adamic_object * adamic_local_76_object);
+-static void adamic_function_42_property_setamount(adamic_object * adamic_local_77_object, double adamic_local_78_value);
+-static adamic_string * adamic_function_43_property_getbroken(adamic_object * adamic_local_79_object);
+-static void adamic_function_44_property_setbroken(adamic_object * adamic_local_80_object, adamic_string * adamic_local_81_value);
++static adamic_object * adamic_function_39_narrowed_union_member(adamic_heap * adamic_local_72_argument);
++static adamic_object * adamic_function_40_narrowed_union_member(adamic_heap * adamic_local_74_argument);
++static adamic_object * adamic_function_41_narrowed_union_member(adamic_heap * adamic_local_76_argument);
++static void adamic_function_42_StaticName_static_initialize(adamic_object * adamic_local_77_this);
++static void adamic_function_43_StaticName_static_initialize(adamic_object * adamic_local_78_this);
++static double adamic_function_44_property_getamount(adamic_object * adamic_local_79_object);
++static void adamic_function_45_property_setamount(adamic_object * adamic_local_80_object, double adamic_local_81_value);
++static adamic_string * adamic_function_46_property_getbroken(adamic_object * adamic_local_82_object);
++static void adamic_function_47_property_setbroken(adamic_object * adamic_local_83_object, adamic_string * adamic_local_84_value);
+ 
+ static adamic_string * adamic_virtual_dispatch_3(adamic_object * argument_0) {
+ 	switch (adamic_virtual(argument_0, 0)) {
+@@ -222,17 +227,17 @@
+ static adamic_slot_cache adamic_cache_190;
+ static adamic_slot_cache adamic_cache_199;
+ static adamic_slot_cache adamic_cache_200;
+-static adamic_slot_cache adamic_cache_204;
+-static adamic_slot_cache adamic_cache_205;
+-static adamic_slot_cache adamic_cache_208;
+-static adamic_slot_cache adamic_cache_215;
+-static adamic_slot_cache adamic_cache_220;
++static adamic_slot_cache adamic_cache_210;
++static adamic_slot_cache adamic_cache_211;
++static adamic_slot_cache adamic_cache_214;
+ static adamic_slot_cache adamic_cache_221;
+-static adamic_slot_cache adamic_cache_222;
++static adamic_slot_cache adamic_cache_226;
++static adamic_slot_cache adamic_cache_227;
+ static adamic_slot_cache adamic_cache_228;
+-static adamic_slot_cache adamic_cache_233;
+ static adamic_slot_cache adamic_cache_234;
+-static adamic_slot_cache adamic_cache_235;
++static adamic_slot_cache adamic_cache_239;
++static adamic_slot_cache adamic_cache_240;
++static adamic_slot_cache adamic_cache_241;
+ static adamic_method_function adamic_method_4;
+ static adamic_value adamic_method_4(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+@@ -288,19 +293,19 @@
+ static const char *const adamic_shape_4_names[] = {"text", "#static-present:text", "second", "#static-present:second", "number", "#static-present:number", "#static-parent:2", "own", "#static-present:own", "summary", "#static-present:summary", "#static-parent:3", "last", "#static-present:last"};
+ static const bool adamic_shape_4_references[] = {true, false, true, false, false, false, true, true, false, true, false, true, true, false};
+ static const adamic_shape adamic_shape_4 = {14, adamic_shape_4_names, adamic_shape_4_references, &adamic_shape_4_methods};
+-static adamic_slot_cache adamic_cache_268;
+-static adamic_slot_cache adamic_cache_269;
+-static adamic_slot_cache adamic_cache_272;
+-static adamic_slot_cache adamic_cache_276;
++static adamic_slot_cache adamic_cache_274;
++static adamic_slot_cache adamic_cache_275;
++static adamic_slot_cache adamic_cache_278;
+ static adamic_slot_cache adamic_cache_282;
+-static adamic_slot_cache adamic_cache_283;
+ static adamic_slot_cache adamic_cache_288;
+ static adamic_slot_cache adamic_cache_289;
+-static adamic_slot_cache adamic_cache_292;
+-static adamic_slot_cache adamic_cache_296;
+-static adamic_slot_cache adamic_cache_301;
++static adamic_slot_cache adamic_cache_294;
++static adamic_slot_cache adamic_cache_295;
++static adamic_slot_cache adamic_cache_298;
++static adamic_slot_cache adamic_cache_302;
+ static adamic_slot_cache adamic_cache_307;
+-static adamic_slot_cache adamic_cache_312;
++static adamic_slot_cache adamic_cache_313;
++static adamic_slot_cache adamic_cache_318;
+ static const adamic_shape adamic_shape_5 = {0, NULL, NULL, NULL};
+ static const char *const adamic_shape_6_names[] = {"#static-parent:6", "value", "#static-present:value"};
+ static const bool adamic_shape_6_references[] = {true, true, false};
+@@ -316,7 +321,7 @@
+ static const char *const adamic_shape_7_names[] = {"value", "#static-present:value"};
+ static const bool adamic_shape_7_references[] = {true, false};
+ static const adamic_shape adamic_shape_7 = {2, adamic_shape_7_names, adamic_shape_7_references, &adamic_shape_7_methods};
+-static adamic_slot_cache adamic_cache_371;
++static adamic_slot_cache adamic_cache_377;
+ static adamic_method_function adamic_method_12;
+ static adamic_value adamic_method_12(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+@@ -356,8 +361,8 @@
+ static const char *const adamic_shape_9_names[] = {"text", "#static-present:text", "second", "#static-present:second", "number", "#static-present:number", "#static-parent:9"};
+ static const bool adamic_shape_9_references[] = {true, false, true, false, false, false, true};
+ static const adamic_shape adamic_shape_9 = {7, adamic_shape_9_names, adamic_shape_9_references, &adamic_shape_9_methods};
+-static adamic_slot_cache adamic_cache_401;
+-static adamic_slot_cache adamic_cache_409;
++static adamic_slot_cache adamic_cache_413;
++static adamic_slot_cache adamic_cache_421;
+ static adamic_method_function adamic_method_17;
+ static adamic_value adamic_method_17(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+@@ -471,21 +476,34 @@
+ static adamic_string * adamic_function_0_mark(adamic_string * adamic_local_23_label) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_1 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_2 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_1, adamic_local_23_label});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_2);
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_3 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_2;
+ 	adamic_release(adamic_temporary_3);
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_4 = adamic_global_0_trace;
+ 	double adamic_temporary_5 = adamic_string_length(adamic_temporary_4);
+@@ -508,11 +526,20 @@
+ static adamic_string * adamic_function_2_replaceBase(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticBase' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticBase' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_object * adamic_temporary_11 = adamic_retain(adamic_global_1_StaticBase);
+ 	adamic_string * adamic_temporary_12 = adamic_function_0_mark(&adamic_string_8);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_12);
++		adamic_release(adamic_temporary_11);
++		return &adamic_string_empty;
++	}
+ 	if (adamic_temporary_11 == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -540,14 +567,23 @@
+ static double adamic_function_4_StaticBase_static_getamount(adamic_object * adamic_local_26_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_22 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_23 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_22, &adamic_string_1});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_23);
++		return 0.0;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_24 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_23;
+@@ -561,14 +597,23 @@
+ static void adamic_function_5_StaticBase_static_setamount(adamic_object * adamic_local_27_this, double adamic_local_28_value) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_28 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_29 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_28, &adamic_string_2});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_29);
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_30 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_29;
+@@ -599,6 +644,9 @@
+ static double adamic_function_7_StaticChild_static_getamount(adamic_object * adamic_local_30_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	double adamic_temporary_40 = adamic_function_4_StaticBase_static_getamount(adamic_local_30_this);
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	double adamic_temporary_41 = (adamic_temporary_40 * (0x1p+01));
+ 	return adamic_temporary_41;
+ 	adamic_unreachable();
+@@ -607,6 +655,9 @@
+ static void adamic_function_8_StaticChild_static_setamount(adamic_object * adamic_local_31_this, double adamic_local_32_value) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_function_5_StaticBase_static_setamount(adamic_local_31_this, (adamic_local_32_value / (0x1p+01)));
++	if (adamic_exception_pending) {
++		return;
++	}
+ 	return;
+ }
+ 
+@@ -635,8 +686,9 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_52 = ((adamic_string *)adamic_object_field(adamic_local_37_this, "text", &adamic_cache_51)->reference);
+ 	adamic_string * adamic_temporary_53 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_52, &adamic_string_6});
+-	adamic_object * adamic_temporary_54 = adamic_error_new(adamic_temporary_53);
+-	adamic_thrown = adamic_retain(adamic_temporary_54);
++	adamic_object * adamic_temporary_54 = adamic_error_new_kind(adamic_temporary_53, "Error");
++	adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_54)));
++	adamic_exception_pending = true;
+ 	adamic_release(adamic_temporary_54);
+ 	adamic_release(adamic_temporary_53);
+ 	return &adamic_string_empty;
+@@ -647,8 +699,9 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_56 = ((adamic_string *)adamic_object_field(adamic_local_38_this, "text", &adamic_cache_55)->reference);
+ 	adamic_string * adamic_temporary_57 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_56, &adamic_string_7});
+-	adamic_object * adamic_temporary_58 = adamic_error_new(adamic_temporary_57);
+-	adamic_thrown = adamic_retain(adamic_temporary_58);
++	adamic_object * adamic_temporary_58 = adamic_error_new_kind(adamic_temporary_57, "Error");
++	adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_58)));
++	adamic_exception_pending = true;
+ 	adamic_release(adamic_temporary_58);
+ 	adamic_release(adamic_temporary_57);
+ 	return &adamic_string_empty;
+@@ -659,8 +712,9 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_60 = ((adamic_string *)adamic_object_field(adamic_local_39_this, "text", &adamic_cache_59)->reference);
+ 	adamic_string * adamic_temporary_61 = adamic_string_concat(2, (adamic_string *const[]){adamic_local_40_value, adamic_temporary_60});
+-	adamic_object * adamic_temporary_62 = adamic_error_new(adamic_temporary_61);
+-	adamic_thrown = adamic_retain(adamic_temporary_62);
++	adamic_object * adamic_temporary_62 = adamic_error_new_kind(adamic_temporary_61, "Error");
++	adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_62)));
++	adamic_exception_pending = true;
+ 	adamic_release(adamic_temporary_62);
+ 	adamic_release(adamic_temporary_61);
+ 	return;
+@@ -669,8 +723,12 @@
+ static adamic_string * adamic_function_14_SuperData_static_readBase(adamic_object * adamic_local_41_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_2) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticBase_class' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticBase_class' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_object * adamic_temporary_63 = adamic_global_2_StaticBase_class;
+ 	adamic_string * adamic_temporary_65 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_63, "text", &adamic_cache_64)->reference));
+@@ -701,8 +759,12 @@
+ static adamic_string * adamic_function_17_StaticName_static_readName(adamic_object * adamic_local_46_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_20) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticName_class' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticName_class' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return &adamic_string_empty;
++	}
+ 	}
+ 	adamic_object * adamic_temporary_71 = adamic_global_20_StaticName_class;
+ 	adamic_string * adamic_temporary_73 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_71, "value", &adamic_cache_72)->reference));
+@@ -715,6 +777,11 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_76 = adamic_retain(((adamic_string *)adamic_object_field(adamic_local_47_this, "text", &adamic_cache_75)->reference));
+ 	adamic_string * adamic_temporary_77 = adamic_function_2_replaceBase();
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_77);
++		adamic_release(adamic_temporary_76);
++		return &adamic_string_empty;
++	}
+ 	adamic_string * adamic_temporary_78 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_76, adamic_temporary_77});
+ 	adamic_string * adamic_temporary_79 = adamic_temporary_78;
+ 	adamic_release(adamic_temporary_77);
+@@ -726,6 +793,10 @@
+ static void adamic_function_19_StaticBase_static_initialize(adamic_object * adamic_local_48_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_80 = adamic_function_0_mark(&adamic_string_10);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_80);
++		return;
++	}
+ 	if (adamic_local_48_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -740,14 +811,23 @@
+ static void adamic_function_20_StaticBase_static_initialize(adamic_object * adamic_local_49_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_85 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_86 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_85, &adamic_string_11});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_86);
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_87 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_86;
+@@ -768,6 +848,10 @@
+ static void adamic_function_21_StaticBase_static_initialize(adamic_object * adamic_local_50_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_95 = adamic_function_0_mark(&adamic_string_13);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_95);
++		return;
++	}
+ 	if (adamic_local_50_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'second')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -793,6 +877,10 @@
+ static void adamic_function_23_StaticChild_static_initialize(adamic_object * adamic_local_52_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_103 = adamic_function_0_mark(&adamic_string_14);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_103);
++		return;
++	}
+ 	if (adamic_local_52_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'own')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -807,14 +895,23 @@
+ static void adamic_function_24_StaticChild_static_initialize(adamic_object * adamic_local_53_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_108 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_109 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_108, &adamic_string_15});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_109);
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_110 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_109;
+@@ -850,6 +947,10 @@
+ static void adamic_function_26_StaticLeaf_static_initialize(adamic_object * adamic_local_55_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_125 = adamic_function_0_mark(&adamic_string_16);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_125);
++		return;
++	}
+ 	if (adamic_local_55_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'last')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -864,14 +965,23 @@
+ static void adamic_function_27_StaticLeaf_static_initialize(adamic_object * adamic_local_56_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_130 = adamic_global_0_trace;
+ 	adamic_string * adamic_temporary_131 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_130, &adamic_string_17});
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'trace' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'trace' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_131);
++		return;
++	}
+ 	}
+ 	adamic_string * adamic_temporary_132 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_temporary_131;
+@@ -917,6 +1027,10 @@
+ static void adamic_function_31_StaticGeneric_static_initialize(adamic_object * adamic_local_61_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_148 = adamic_function_0_mark(&adamic_string_25);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_148);
++		return;
++	}
+ 	if (adamic_local_61_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'value')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -1083,6 +1197,10 @@
+ static void adamic_function_38_StaticFailure_static_initialize(adamic_object * adamic_local_70_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_197 = adamic_function_0_mark(&adamic_string_27);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_197);
++		return;
++	}
+ 	if (adamic_local_70_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -1094,248 +1212,418 @@
+ 	if (adamic_temporary_201 != NULL) adamic_release(adamic_temporary_201);
+ }
+ 
+-static void adamic_function_39_StaticName_static_initialize(adamic_object * adamic_local_74_this) {
+-	ADAMIC_CHECK_STACK();
+-	adamic_string * adamic_temporary_202 = adamic_function_0_mark(&adamic_string_30);
+-	if (adamic_local_74_this == NULL) {
++static adamic_object * adamic_function_39_narrowed_union_member(adamic_heap * adamic_local_72_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_202 = adamic_instanceof(adamic_local_72_argument, &adamic_error_class);
++	if (!adamic_temporary_202) {
++		adamic_panic((&adamic_string_29)->bytes, (&adamic_string_29)->length);
++	}
++	adamic_object * adamic_temporary_203 = adamic_retain(((adamic_object *)adamic_local_72_argument));
++	return adamic_temporary_203;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_40_narrowed_union_member(adamic_heap * adamic_local_74_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_204 = adamic_instanceof(adamic_local_74_argument, &adamic_error_class);
++	if (!adamic_temporary_204) {
++		adamic_panic((&adamic_string_29)->bytes, (&adamic_string_29)->length);
++	}
++	adamic_object * adamic_temporary_205 = adamic_retain(((adamic_object *)adamic_local_74_argument));
++	return adamic_temporary_205;
++	adamic_unreachable();
++}
++
++static adamic_object * adamic_function_41_narrowed_union_member(adamic_heap * adamic_local_76_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_206 = adamic_instanceof(adamic_local_76_argument, &adamic_error_class);
++	if (!adamic_temporary_206) {
++		adamic_panic((&adamic_string_29)->bytes, (&adamic_string_29)->length);
++	}
++	adamic_object * adamic_temporary_207 = adamic_retain(((adamic_object *)adamic_local_76_argument));
++	return adamic_temporary_207;
++	adamic_unreachable();
++}
++
++static void adamic_function_42_StaticName_static_initialize(adamic_object * adamic_local_77_this) {
++	ADAMIC_CHECK_STACK();
++	adamic_string * adamic_temporary_208 = adamic_function_0_mark(&adamic_string_32);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_208);
++		return;
++	}
++	if (adamic_local_77_this == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'value')";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_object_check_data_write(adamic_local_74_this, "value");
+-	adamic_value *adamic_temporary_203 = (adamic_local_74_this->class != NULL && adamic_local_74_this->class->is_static ? adamic_object_write_field(adamic_local_74_this, "value", &adamic_cache_204) : adamic_object_field(adamic_local_74_this, "value", &adamic_cache_205));
+-	void *adamic_temporary_206 = adamic_temporary_203->reference;
+-	adamic_temporary_203->reference = adamic_temporary_202;
+-	if (adamic_temporary_206 != NULL) adamic_release(adamic_temporary_206);
+-}
+-
+-static void adamic_function_40_StaticName_static_initialize(adamic_object * adamic_local_75_this) {
++	adamic_object_check_data_write(adamic_local_77_this, "value");
++	adamic_value *adamic_temporary_209 = (adamic_local_77_this->class != NULL && adamic_local_77_this->class->is_static ? adamic_object_write_field(adamic_local_77_this, "value", &adamic_cache_210) : adamic_object_field(adamic_local_77_this, "value", &adamic_cache_211));
++	void *adamic_temporary_212 = adamic_temporary_209->reference;
++	adamic_temporary_209->reference = adamic_temporary_208;
++	if (adamic_temporary_212 != NULL) adamic_release(adamic_temporary_212);
++}
++
++static void adamic_function_43_StaticName_static_initialize(adamic_object * adamic_local_78_this) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_20) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticName_class' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_207 = adamic_global_20_StaticName_class;
+-	adamic_string * adamic_temporary_209 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_207, "value", &adamic_cache_208)->reference));
+-	adamic_write_line(adamic_stdout, adamic_temporary_209);
+-	adamic_release(adamic_temporary_209);
+-}
+-
+-static double adamic_function_41_property_getamount(adamic_object * adamic_local_76_object) {
+-	ADAMIC_CHECK_STACK();
+-	bool adamic_temporary_210 = adamic_accessor_find(adamic_local_76_object, "amount") != NULL;
+-	if (adamic_temporary_210) {
+-		const adamic_accessor *adamic_temporary_211 = adamic_accessor_find(adamic_local_76_object, "amount");
+-		adamic_value adamic_temporary_212 = adamic_accessor_get(adamic_local_76_object, "amount");
+-		double adamic_temporary_213 = (adamic_temporary_211->type == 7 ? (adamic_maybe_number_unpack(adamic_temporary_212.number)).number : adamic_temporary_211->type == 10 ? ((const adamic_number_box *)adamic_temporary_212.reference)->number : adamic_temporary_212.number);
+-		double adamic_temporary_214 = adamic_temporary_213;
+-		return adamic_temporary_214;
+-	}
+-	double adamic_temporary_216 = adamic_object_data_field(adamic_local_76_object, "amount", &adamic_cache_215)->number;
+-	double adamic_temporary_217 = adamic_temporary_216;
+-	return adamic_temporary_217;
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticName_class' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return;
++	}
++	}
++	adamic_object * adamic_temporary_213 = adamic_global_20_StaticName_class;
++	adamic_string * adamic_temporary_215 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_213, "value", &adamic_cache_214)->reference));
++	adamic_write_line(adamic_stdout, adamic_temporary_215);
++	adamic_release(adamic_temporary_215);
++}
++
++static double adamic_function_44_property_getamount(adamic_object * adamic_local_79_object) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_216 = adamic_accessor_find(adamic_local_79_object, "amount") != NULL;
++	if (adamic_temporary_216) {
++		const adamic_accessor *adamic_temporary_217 = adamic_accessor_find(adamic_local_79_object, "amount");
++		adamic_value adamic_temporary_218 = adamic_accessor_get(adamic_local_79_object, "amount");
++		double adamic_temporary_219 = (adamic_temporary_217->type == 7 ? (adamic_maybe_number_unpack(adamic_temporary_218.number)).number : adamic_temporary_217->type == 10 ? ((const adamic_number_box *)adamic_temporary_218.reference)->number : adamic_temporary_218.number);
++		if (adamic_exception_pending) {
++			return 0.0;
++		}
++		double adamic_temporary_220 = adamic_temporary_219;
++		return adamic_temporary_220;
++	}
++	double adamic_temporary_222 = adamic_object_data_field(adamic_local_79_object, "amount", &adamic_cache_221)->number;
++	double adamic_temporary_223 = adamic_temporary_222;
++	return adamic_temporary_223;
+ 	adamic_unreachable();
+ }
+ 
+-static void adamic_function_42_property_setamount(adamic_object * adamic_local_77_object, double adamic_local_78_value) {
+-	ADAMIC_CHECK_STACK();
+-	bool adamic_temporary_218 = adamic_accessor_find(adamic_local_77_object, "amount") != NULL;
+-	if (adamic_temporary_218) {
+-		adamic_accessor_set(adamic_local_77_object, "amount", (adamic_value){.number = adamic_local_78_value}, 1);
+-	} else {
+-		if (adamic_local_77_object == NULL) {
+-			static const char message[] = "TypeError: Cannot set properties of undefined (setting 'amount')";
+-			adamic_panic(message, sizeof message - 1);
+-		}
+-		adamic_object_check_data_write(adamic_local_77_object, "amount");
+-		adamic_value *adamic_temporary_219 = adamic_object_data_field(adamic_local_77_object, "amount", &adamic_cache_222);
+-		adamic_temporary_219->number = adamic_local_78_value;
+-	}
+-}
+-
+-static adamic_string * adamic_function_43_property_getbroken(adamic_object * adamic_local_79_object) {
+-	ADAMIC_CHECK_STACK();
+-	bool adamic_temporary_223 = adamic_accessor_find(adamic_local_79_object, "broken") != NULL;
+-	if (adamic_temporary_223) {
+-		const adamic_accessor *adamic_temporary_224 = adamic_accessor_find(adamic_local_79_object, "broken");
+-		adamic_value adamic_temporary_225 = adamic_accessor_get(adamic_local_79_object, "broken");
+-		(void)adamic_temporary_224;
+-		adamic_string * adamic_temporary_226 = (adamic_string *)(adamic_temporary_225.reference);
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_226);
+-			return &adamic_string_empty;
+-		}
+-		adamic_string * adamic_temporary_227 = adamic_temporary_226;
+-		return adamic_temporary_227;
+-	}
+-	adamic_string * adamic_temporary_229 = adamic_retain(((adamic_string *)adamic_object_data_field(adamic_local_79_object, "broken", &adamic_cache_228)->reference));
+-	adamic_string * adamic_temporary_230 = adamic_temporary_229;
+-	return adamic_temporary_230;
+-	adamic_unreachable();
+-}
+-
+-static void adamic_function_44_property_setbroken(adamic_object * adamic_local_80_object, adamic_string * adamic_local_81_value) {
+-	ADAMIC_CHECK_STACK();
+-	bool adamic_temporary_231 = adamic_accessor_find(adamic_local_80_object, "broken") != NULL;
+-	if (adamic_temporary_231) {
+-		adamic_accessor_set(adamic_local_80_object, "broken", (adamic_value){.reference = adamic_local_81_value}, 3);
+-		if (adamic_thrown != NULL) {
++static void adamic_function_45_property_setamount(adamic_object * adamic_local_80_object, double adamic_local_81_value) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_224 = adamic_accessor_find(adamic_local_80_object, "amount") != NULL;
++	if (adamic_temporary_224) {
++		adamic_accessor_set(adamic_local_80_object, "amount", (adamic_value){.number = adamic_local_81_value}, 1);
++		if (adamic_exception_pending) {
+ 			return;
+ 		}
+ 	} else {
+ 		if (adamic_local_80_object == NULL) {
++			static const char message[] = "TypeError: Cannot set properties of undefined (setting 'amount')";
++			adamic_panic(message, sizeof message - 1);
++		}
++		adamic_object_check_data_write(adamic_local_80_object, "amount");
++		adamic_value *adamic_temporary_225 = adamic_object_data_field(adamic_local_80_object, "amount", &adamic_cache_228);
++		adamic_temporary_225->number = adamic_local_81_value;
++	}
++}
++
++static adamic_string * adamic_function_46_property_getbroken(adamic_object * adamic_local_82_object) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_229 = adamic_accessor_find(adamic_local_82_object, "broken") != NULL;
++	if (adamic_temporary_229) {
++		const adamic_accessor *adamic_temporary_230 = adamic_accessor_find(adamic_local_82_object, "broken");
++		adamic_value adamic_temporary_231 = adamic_accessor_get(adamic_local_82_object, "broken");
++		(void)adamic_temporary_230;
++		adamic_string * adamic_temporary_232 = (adamic_string *)(adamic_temporary_231.reference);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_232);
++			return &adamic_string_empty;
++		}
++		adamic_string * adamic_temporary_233 = adamic_temporary_232;
++		return adamic_temporary_233;
++	}
++	adamic_string * adamic_temporary_235 = adamic_retain(((adamic_string *)adamic_object_data_field(adamic_local_82_object, "broken", &adamic_cache_234)->reference));
++	adamic_string * adamic_temporary_236 = adamic_temporary_235;
++	return adamic_temporary_236;
++	adamic_unreachable();
++}
++
++static void adamic_function_47_property_setbroken(adamic_object * adamic_local_83_object, adamic_string * adamic_local_84_value) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_237 = adamic_accessor_find(adamic_local_83_object, "broken") != NULL;
++	if (adamic_temporary_237) {
++		adamic_accessor_set(adamic_local_83_object, "broken", (adamic_value){.reference = adamic_local_84_value}, 3);
++		if (adamic_exception_pending) {
++			return;
++		}
++	} else {
++		if (adamic_local_83_object == NULL) {
+ 			static const char message[] = "TypeError: Cannot set properties of undefined (setting 'broken')";
+ 			adamic_panic(message, sizeof message - 1);
+ 		}
+-		adamic_object_check_data_write(adamic_local_80_object, "broken");
+-		adamic_value *adamic_temporary_232 = adamic_object_data_field(adamic_local_80_object, "broken", &adamic_cache_235);
+-		void *adamic_temporary_236 = adamic_temporary_232->reference;
+-		adamic_temporary_232->reference = adamic_retain(adamic_local_81_value);
+-		if (adamic_temporary_236 != NULL) adamic_release(adamic_temporary_236);
++		adamic_object_check_data_write(adamic_local_83_object, "broken");
++		adamic_value *adamic_temporary_238 = adamic_object_data_field(adamic_local_83_object, "broken", &adamic_cache_241);
++		void *adamic_temporary_242 = adamic_temporary_238->reference;
++		adamic_temporary_238->reference = adamic_retain(adamic_local_84_value);
++		if (adamic_temporary_242 != NULL) adamic_release(adamic_temporary_242);
+ 	}
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_string * adamic_temporary_237 = adamic_global_0_trace;
++	adamic_string * adamic_temporary_243 = adamic_global_0_trace;
+ 	adamic_global_0_trace = adamic_retain(&adamic_string_5);
+-	adamic_release(adamic_temporary_237);
++	adamic_release(adamic_temporary_243);
+ 	adamic_ready_0 = true;
+-	adamic_object * adamic_temporary_238 = adamic_object_new(&adamic_shape_2);
+-	adamic_temporary_238->class = &adamic_class_1;
+-	adamic_temporary_238->slots[0].reference = NULL;
+-	adamic_temporary_238->slots[1].number = (0x0p+00);
+-	adamic_temporary_238->slots[2].reference = NULL;
+-	adamic_temporary_238->slots[3].number = (0x0p+00);
+-	adamic_temporary_238->slots[4].number = (0x0p+00);
+-	adamic_temporary_238->slots[5].number = (0x0p+00);
+-	adamic_object * adamic_temporary_239 = adamic_global_2_StaticBase_class;
+-	adamic_global_2_StaticBase_class = adamic_temporary_238;
+-	adamic_release(adamic_temporary_239);
++	adamic_object * adamic_temporary_244 = adamic_object_new(&adamic_shape_2);
++	adamic_temporary_244->class = &adamic_class_1;
++	adamic_temporary_244->slots[0].reference = NULL;
++	adamic_temporary_244->slots[1].number = (0x0p+00);
++	adamic_temporary_244->slots[2].reference = NULL;
++	adamic_temporary_244->slots[3].number = (0x0p+00);
++	adamic_temporary_244->slots[4].number = (0x0p+00);
++	adamic_temporary_244->slots[5].number = (0x0p+00);
++	adamic_object * adamic_temporary_245 = adamic_global_2_StaticBase_class;
++	adamic_global_2_StaticBase_class = adamic_temporary_244;
++	adamic_release(adamic_temporary_245);
+ 	adamic_ready_2 = true;
+-	adamic_object * adamic_temporary_240 = adamic_global_2_StaticBase_class;
+-	adamic_function_19_StaticBase_static_initialize(adamic_temporary_240);
+-	adamic_object * adamic_temporary_241 = adamic_global_2_StaticBase_class;
+-	adamic_function_20_StaticBase_static_initialize(adamic_temporary_241);
+-	adamic_object * adamic_temporary_242 = adamic_global_2_StaticBase_class;
+-	adamic_function_21_StaticBase_static_initialize(adamic_temporary_242);
+-	adamic_object * adamic_temporary_243 = adamic_global_2_StaticBase_class;
+-	adamic_function_22_StaticBase_static_initialize(adamic_temporary_243);
+-	adamic_object * adamic_temporary_244 = adamic_retain(adamic_global_2_StaticBase_class);
+-	adamic_object * adamic_temporary_245 = adamic_global_1_StaticBase;
+-	adamic_global_1_StaticBase = adamic_temporary_244;
+-	adamic_release(adamic_temporary_245);
++	adamic_object * adamic_temporary_246 = adamic_global_2_StaticBase_class;
++	adamic_function_19_StaticBase_static_initialize(adamic_temporary_246);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_247 = adamic_global_2_StaticBase_class;
++	adamic_function_20_StaticBase_static_initialize(adamic_temporary_247);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_248 = adamic_global_2_StaticBase_class;
++	adamic_function_21_StaticBase_static_initialize(adamic_temporary_248);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_249 = adamic_global_2_StaticBase_class;
++	adamic_function_22_StaticBase_static_initialize(adamic_temporary_249);
++	adamic_object * adamic_temporary_250 = adamic_retain(adamic_global_2_StaticBase_class);
++	adamic_object * adamic_temporary_251 = adamic_global_1_StaticBase;
++	adamic_global_1_StaticBase = adamic_temporary_250;
++	adamic_release(adamic_temporary_251);
+ 	adamic_ready_1 = true;
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticBase' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_246 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_object * adamic_temporary_247 = adamic_object_new(&adamic_shape_3);
+-	adamic_temporary_247->class = &adamic_class_2;
+-	adamic_temporary_247->slots[0].reference = NULL;
+-	adamic_temporary_247->slots[1].number = (0x0p+00);
+-	adamic_temporary_247->slots[2].reference = NULL;
+-	adamic_temporary_247->slots[3].number = (0x0p+00);
+-	adamic_temporary_247->slots[4].number = (0x0p+00);
+-	adamic_temporary_247->slots[5].number = (0x0p+00);
+-	adamic_temporary_247->slots[6].reference = adamic_temporary_246;
+-	adamic_temporary_247->slots[7].reference = NULL;
+-	adamic_temporary_247->slots[8].number = (0x0p+00);
+-	adamic_temporary_247->slots[9].reference = NULL;
+-	adamic_temporary_247->slots[10].number = (0x0p+00);
+-	adamic_object * adamic_temporary_248 = adamic_global_4_StaticChild_class;
+-	adamic_global_4_StaticChild_class = adamic_temporary_247;
+-	adamic_release(adamic_temporary_248);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticBase' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_252 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_object * adamic_temporary_253 = adamic_object_new(&adamic_shape_3);
++	adamic_temporary_253->class = &adamic_class_2;
++	adamic_temporary_253->slots[0].reference = NULL;
++	adamic_temporary_253->slots[1].number = (0x0p+00);
++	adamic_temporary_253->slots[2].reference = NULL;
++	adamic_temporary_253->slots[3].number = (0x0p+00);
++	adamic_temporary_253->slots[4].number = (0x0p+00);
++	adamic_temporary_253->slots[5].number = (0x0p+00);
++	adamic_temporary_253->slots[6].reference = adamic_temporary_252;
++	adamic_temporary_253->slots[7].reference = NULL;
++	adamic_temporary_253->slots[8].number = (0x0p+00);
++	adamic_temporary_253->slots[9].reference = NULL;
++	adamic_temporary_253->slots[10].number = (0x0p+00);
++	adamic_object * adamic_temporary_254 = adamic_global_4_StaticChild_class;
++	adamic_global_4_StaticChild_class = adamic_temporary_253;
++	adamic_release(adamic_temporary_254);
+ 	adamic_ready_4 = true;
+-	adamic_object * adamic_temporary_249 = adamic_global_4_StaticChild_class;
+-	adamic_function_23_StaticChild_static_initialize(adamic_temporary_249);
+-	adamic_object * adamic_temporary_250 = adamic_global_4_StaticChild_class;
+-	adamic_function_24_StaticChild_static_initialize(adamic_temporary_250);
+-	adamic_object * adamic_temporary_251 = adamic_global_4_StaticChild_class;
+-	adamic_function_25_StaticChild_static_initialize(adamic_temporary_251);
+-	adamic_object * adamic_temporary_252 = adamic_retain(adamic_global_4_StaticChild_class);
+-	adamic_object * adamic_temporary_253 = adamic_global_3_StaticChild;
+-	adamic_global_3_StaticChild = adamic_temporary_252;
+-	adamic_release(adamic_temporary_253);
++	adamic_object * adamic_temporary_255 = adamic_global_4_StaticChild_class;
++	adamic_function_23_StaticChild_static_initialize(adamic_temporary_255);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_256 = adamic_global_4_StaticChild_class;
++	adamic_function_24_StaticChild_static_initialize(adamic_temporary_256);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_257 = adamic_global_4_StaticChild_class;
++	adamic_function_25_StaticChild_static_initialize(adamic_temporary_257);
++	adamic_object * adamic_temporary_258 = adamic_retain(adamic_global_4_StaticChild_class);
++	adamic_object * adamic_temporary_259 = adamic_global_3_StaticChild;
++	adamic_global_3_StaticChild = adamic_temporary_258;
++	adamic_release(adamic_temporary_259);
+ 	adamic_ready_3 = true;
+ 	if (!adamic_ready_3) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticChild' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_254 = adamic_retain(adamic_global_3_StaticChild);
+-	adamic_object * adamic_temporary_255 = adamic_object_new(&adamic_shape_4);
+-	adamic_temporary_255->class = &adamic_class_3;
+-	adamic_temporary_255->slots[0].reference = NULL;
+-	adamic_temporary_255->slots[1].number = (0x0p+00);
+-	adamic_temporary_255->slots[2].reference = NULL;
+-	adamic_temporary_255->slots[3].number = (0x0p+00);
+-	adamic_temporary_255->slots[4].number = (0x0p+00);
+-	adamic_temporary_255->slots[5].number = (0x0p+00);
+-	adamic_temporary_255->slots[6].reference = NULL;
+-	adamic_temporary_255->slots[7].reference = NULL;
+-	adamic_temporary_255->slots[8].number = (0x0p+00);
+-	adamic_temporary_255->slots[9].reference = NULL;
+-	adamic_temporary_255->slots[10].number = (0x0p+00);
+-	adamic_temporary_255->slots[11].reference = adamic_temporary_254;
+-	adamic_temporary_255->slots[12].reference = NULL;
+-	adamic_temporary_255->slots[13].number = (0x0p+00);
+-	adamic_object * adamic_temporary_256 = adamic_global_6_StaticLeaf_class;
+-	adamic_global_6_StaticLeaf_class = adamic_temporary_255;
+-	adamic_release(adamic_temporary_256);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticChild' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_260 = adamic_retain(adamic_global_3_StaticChild);
++	adamic_object * adamic_temporary_261 = adamic_object_new(&adamic_shape_4);
++	adamic_temporary_261->class = &adamic_class_3;
++	adamic_temporary_261->slots[0].reference = NULL;
++	adamic_temporary_261->slots[1].number = (0x0p+00);
++	adamic_temporary_261->slots[2].reference = NULL;
++	adamic_temporary_261->slots[3].number = (0x0p+00);
++	adamic_temporary_261->slots[4].number = (0x0p+00);
++	adamic_temporary_261->slots[5].number = (0x0p+00);
++	adamic_temporary_261->slots[6].reference = NULL;
++	adamic_temporary_261->slots[7].reference = NULL;
++	adamic_temporary_261->slots[8].number = (0x0p+00);
++	adamic_temporary_261->slots[9].reference = NULL;
++	adamic_temporary_261->slots[10].number = (0x0p+00);
++	adamic_temporary_261->slots[11].reference = adamic_temporary_260;
++	adamic_temporary_261->slots[12].reference = NULL;
++	adamic_temporary_261->slots[13].number = (0x0p+00);
++	adamic_object * adamic_temporary_262 = adamic_global_6_StaticLeaf_class;
++	adamic_global_6_StaticLeaf_class = adamic_temporary_261;
++	adamic_release(adamic_temporary_262);
+ 	adamic_ready_6 = true;
+-	adamic_object * adamic_temporary_257 = adamic_global_6_StaticLeaf_class;
+-	adamic_function_26_StaticLeaf_static_initialize(adamic_temporary_257);
+-	adamic_object * adamic_temporary_258 = adamic_global_6_StaticLeaf_class;
+-	adamic_function_27_StaticLeaf_static_initialize(adamic_temporary_258);
+-	adamic_object * adamic_temporary_259 = adamic_retain(adamic_global_6_StaticLeaf_class);
+-	adamic_object * adamic_temporary_260 = adamic_global_5_StaticLeaf;
+-	adamic_global_5_StaticLeaf = adamic_temporary_259;
+-	adamic_release(adamic_temporary_260);
++	adamic_object * adamic_temporary_263 = adamic_global_6_StaticLeaf_class;
++	adamic_function_26_StaticLeaf_static_initialize(adamic_temporary_263);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_264 = adamic_global_6_StaticLeaf_class;
++	adamic_function_27_StaticLeaf_static_initialize(adamic_temporary_264);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_265 = adamic_retain(adamic_global_6_StaticLeaf_class);
++	adamic_object * adamic_temporary_266 = adamic_global_5_StaticLeaf;
++	adamic_global_5_StaticLeaf = adamic_temporary_265;
++	adamic_release(adamic_temporary_266);
+ 	adamic_ready_5 = true;
+-	adamic_string * adamic_temporary_261 = adamic_retain(adamic_global_0_trace);
+-	adamic_write_line(adamic_stdout, adamic_temporary_261);
+-	adamic_release(adamic_temporary_261);
+-	adamic_object * adamic_temporary_262 = adamic_global_5_StaticLeaf;
+-	adamic_string * adamic_temporary_263 = adamic_function_1_describe(adamic_temporary_262);
+-	adamic_write_line(adamic_stdout, adamic_temporary_263);
+-	adamic_release(adamic_temporary_263);
+-	adamic_object * adamic_temporary_264 = adamic_global_5_StaticLeaf;
+-	adamic_write_line(adamic_stdout, adamic_union_typeof((const adamic_heap *)(adamic_temporary_264), false));
+-	adamic_object * adamic_temporary_265 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_string * adamic_temporary_266 = adamic_function_0_mark(&adamic_string_18);
+-	if (adamic_temporary_265 == NULL) {
++	adamic_string * adamic_temporary_267 = adamic_retain(adamic_global_0_trace);
++	adamic_write_line(adamic_stdout, adamic_temporary_267);
++	adamic_release(adamic_temporary_267);
++	adamic_object * adamic_temporary_268 = adamic_global_5_StaticLeaf;
++	adamic_string * adamic_temporary_269 = adamic_function_1_describe(adamic_temporary_268);
++	adamic_write_line(adamic_stdout, adamic_temporary_269);
++	adamic_release(adamic_temporary_269);
++	adamic_object * adamic_temporary_270 = adamic_global_5_StaticLeaf;
++	adamic_write_line(adamic_stdout, adamic_union_typeof((const adamic_heap *)(adamic_temporary_270), false));
++	adamic_object * adamic_temporary_271 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_string * adamic_temporary_272 = adamic_function_0_mark(&adamic_string_18);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_272);
++		adamic_release(adamic_temporary_271);
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	if (adamic_temporary_271 == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_object_check_data_write(adamic_temporary_265, "text");
+-	adamic_value *adamic_temporary_267 = (adamic_temporary_265->class != NULL && adamic_temporary_265->class->is_static ? adamic_object_write_field(adamic_temporary_265, "text", &adamic_cache_268) : adamic_object_field(adamic_temporary_265, "text", &adamic_cache_269));
+-	void *adamic_temporary_270 = adamic_temporary_267->reference;
+-	adamic_temporary_267->reference = adamic_temporary_266;
+-	if (adamic_temporary_270 != NULL) adamic_release(adamic_temporary_270);
+-	adamic_release(adamic_temporary_265);
+-	adamic_object * adamic_temporary_271 = adamic_global_3_StaticChild;
+-	adamic_string * adamic_temporary_273 = ((adamic_string *)adamic_object_field(adamic_temporary_271, "text", &adamic_cache_272)->reference);
+-	adamic_string * adamic_temporary_274 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_273, &adamic_string_19});
+-	adamic_object * adamic_temporary_275 = adamic_global_5_StaticLeaf;
+-	adamic_string * adamic_temporary_277 = ((adamic_string *)adamic_object_field(adamic_temporary_275, "text", &adamic_cache_276)->reference);
+-	adamic_string * adamic_temporary_278 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_274, adamic_temporary_277});
+-	adamic_write_line(adamic_stdout, adamic_temporary_278);
+-	adamic_release(adamic_temporary_278);
+-	adamic_release(adamic_temporary_274);
+-	adamic_object * adamic_temporary_279 = adamic_retain(adamic_global_3_StaticChild);
+-	adamic_string * adamic_temporary_280 = adamic_function_0_mark(&adamic_string_20);
+-	if (adamic_temporary_279 == NULL) {
+-		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object_check_data_write(adamic_temporary_279, "text");
+-	adamic_value *adamic_temporary_281 = (adamic_temporary_279->class != NULL && adamic_temporary_279->class->is_static ? adamic_object_write_field(adamic_temporary_279, "text", &adamic_cache_282) : adamic_object_field(adamic_temporary_279, "text", &adamic_cache_283));
+-	void *adamic_temporary_284 = adamic_temporary_281->reference;
+-	adamic_temporary_281->reference = adamic_temporary_280;
+-	if (adamic_temporary_284 != NULL) adamic_release(adamic_temporary_284);
+-	adamic_release(adamic_temporary_279);
+-	adamic_object * adamic_temporary_285 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_string * adamic_temporary_286 = adamic_function_0_mark(&adamic_string_21);
++	adamic_object_check_data_write(adamic_temporary_271, "text");
++	adamic_value *adamic_temporary_273 = (adamic_temporary_271->class != NULL && adamic_temporary_271->class->is_static ? adamic_object_write_field(adamic_temporary_271, "text", &adamic_cache_274) : adamic_object_field(adamic_temporary_271, "text", &adamic_cache_275));
++	void *adamic_temporary_276 = adamic_temporary_273->reference;
++	adamic_temporary_273->reference = adamic_temporary_272;
++	if (adamic_temporary_276 != NULL) adamic_release(adamic_temporary_276);
++	adamic_release(adamic_temporary_271);
++	adamic_object * adamic_temporary_277 = adamic_global_3_StaticChild;
++	adamic_string * adamic_temporary_279 = ((adamic_string *)adamic_object_field(adamic_temporary_277, "text", &adamic_cache_278)->reference);
++	adamic_string * adamic_temporary_280 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_279, &adamic_string_19});
++	adamic_object * adamic_temporary_281 = adamic_global_5_StaticLeaf;
++	adamic_string * adamic_temporary_283 = ((adamic_string *)adamic_object_field(adamic_temporary_281, "text", &adamic_cache_282)->reference);
++	adamic_string * adamic_temporary_284 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_280, adamic_temporary_283});
++	adamic_write_line(adamic_stdout, adamic_temporary_284);
++	adamic_release(adamic_temporary_284);
++	adamic_release(adamic_temporary_280);
++	adamic_object * adamic_temporary_285 = adamic_retain(adamic_global_3_StaticChild);
++	adamic_string * adamic_temporary_286 = adamic_function_0_mark(&adamic_string_20);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_286);
++		adamic_release(adamic_temporary_285);
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
+ 	if (adamic_temporary_285 == NULL) {
+ 		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -1346,61 +1634,153 @@
+ 	adamic_temporary_287->reference = adamic_temporary_286;
+ 	if (adamic_temporary_290 != NULL) adamic_release(adamic_temporary_290);
+ 	adamic_release(adamic_temporary_285);
+-	adamic_object * adamic_temporary_291 = adamic_global_1_StaticBase;
+-	adamic_string * adamic_temporary_293 = ((adamic_string *)adamic_object_field(adamic_temporary_291, "text", &adamic_cache_292)->reference);
+-	adamic_string * adamic_temporary_294 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_293, &adamic_string_19});
+-	adamic_object * adamic_temporary_295 = adamic_global_3_StaticChild;
+-	adamic_string * adamic_temporary_297 = ((adamic_string *)adamic_object_field(adamic_temporary_295, "text", &adamic_cache_296)->reference);
+-	adamic_string * adamic_temporary_298 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_294, adamic_temporary_297});
+-	adamic_string * adamic_temporary_299 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_298, &adamic_string_19});
+-	adamic_object * adamic_temporary_300 = adamic_global_5_StaticLeaf;
+-	adamic_string * adamic_temporary_302 = ((adamic_string *)adamic_object_field(adamic_temporary_300, "text", &adamic_cache_301)->reference);
+-	adamic_string * adamic_temporary_303 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_299, adamic_temporary_302});
+-	adamic_write_line(adamic_stdout, adamic_temporary_303);
+-	adamic_release(adamic_temporary_303);
+-	adamic_release(adamic_temporary_299);
+-	adamic_release(adamic_temporary_298);
+-	adamic_release(adamic_temporary_294);
++	adamic_object * adamic_temporary_291 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_string * adamic_temporary_292 = adamic_function_0_mark(&adamic_string_21);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_292);
++		adamic_release(adamic_temporary_291);
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	if (adamic_temporary_291 == NULL) {
++		static const char message[] = "TypeError: Cannot set properties of undefined (setting 'text')";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object_check_data_write(adamic_temporary_291, "text");
++	adamic_value *adamic_temporary_293 = (adamic_temporary_291->class != NULL && adamic_temporary_291->class->is_static ? adamic_object_write_field(adamic_temporary_291, "text", &adamic_cache_294) : adamic_object_field(adamic_temporary_291, "text", &adamic_cache_295));
++	void *adamic_temporary_296 = adamic_temporary_293->reference;
++	adamic_temporary_293->reference = adamic_temporary_292;
++	if (adamic_temporary_296 != NULL) adamic_release(adamic_temporary_296);
++	adamic_release(adamic_temporary_291);
++	adamic_object * adamic_temporary_297 = adamic_global_1_StaticBase;
++	adamic_string * adamic_temporary_299 = ((adamic_string *)adamic_object_field(adamic_temporary_297, "text", &adamic_cache_298)->reference);
++	adamic_string * adamic_temporary_300 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_299, &adamic_string_19});
++	adamic_object * adamic_temporary_301 = adamic_global_3_StaticChild;
++	adamic_string * adamic_temporary_303 = ((adamic_string *)adamic_object_field(adamic_temporary_301, "text", &adamic_cache_302)->reference);
++	adamic_string * adamic_temporary_304 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_300, adamic_temporary_303});
++	adamic_string * adamic_temporary_305 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_304, &adamic_string_19});
++	adamic_object * adamic_temporary_306 = adamic_global_5_StaticLeaf;
++	adamic_string * adamic_temporary_308 = ((adamic_string *)adamic_object_field(adamic_temporary_306, "text", &adamic_cache_307)->reference);
++	adamic_string * adamic_temporary_309 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_305, adamic_temporary_308});
++	adamic_write_line(adamic_stdout, adamic_temporary_309);
++	adamic_release(adamic_temporary_309);
++	adamic_release(adamic_temporary_305);
++	adamic_release(adamic_temporary_304);
++	adamic_release(adamic_temporary_300);
+ 	{
+-		adamic_object * adamic_temporary_304 = adamic_retain(adamic_global_3_StaticChild);
+-		adamic_object * adamic_local_57_object = adamic_temporary_304;
+-		double adamic_temporary_305 = adamic_function_41_property_getamount(adamic_local_57_object);
+-		adamic_function_42_property_setamount(adamic_local_57_object, (adamic_temporary_305 + (0x1p+02)));
++		adamic_object * adamic_temporary_310 = adamic_retain(adamic_global_3_StaticChild);
++		adamic_object * adamic_local_57_object = adamic_temporary_310;
++		double adamic_temporary_311 = adamic_function_44_property_getamount(adamic_local_57_object);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_local_57_object);
++			adamic_release(adamic_global_5_StaticLeaf);
++			adamic_global_5_StaticLeaf = NULL;
++			adamic_release(adamic_global_6_StaticLeaf_class);
++			adamic_global_6_StaticLeaf_class = NULL;
++			adamic_release(adamic_global_3_StaticChild);
++			adamic_global_3_StaticChild = NULL;
++			adamic_release(adamic_global_4_StaticChild_class);
++			adamic_global_4_StaticChild_class = NULL;
++			adamic_release(adamic_global_1_StaticBase);
++			adamic_global_1_StaticBase = NULL;
++			adamic_release(adamic_global_2_StaticBase_class);
++			adamic_global_2_StaticBase_class = NULL;
++			adamic_release(adamic_global_0_trace);
++			adamic_global_0_trace = NULL;
++			adamic_uncaught();
++		}
++		adamic_function_45_property_setamount(adamic_local_57_object, (adamic_temporary_311 + (0x1p+02)));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_local_57_object);
++			adamic_release(adamic_global_5_StaticLeaf);
++			adamic_global_5_StaticLeaf = NULL;
++			adamic_release(adamic_global_6_StaticLeaf_class);
++			adamic_global_6_StaticLeaf_class = NULL;
++			adamic_release(adamic_global_3_StaticChild);
++			adamic_global_3_StaticChild = NULL;
++			adamic_release(adamic_global_4_StaticChild_class);
++			adamic_global_4_StaticChild_class = NULL;
++			adamic_release(adamic_global_1_StaticBase);
++			adamic_global_1_StaticBase = NULL;
++			adamic_release(adamic_global_2_StaticBase_class);
++			adamic_global_2_StaticBase_class = NULL;
++			adamic_release(adamic_global_0_trace);
++			adamic_global_0_trace = NULL;
++			adamic_uncaught();
++		}
+ 		adamic_release(adamic_local_57_object);
+ 	}
+-	adamic_object * adamic_temporary_306 = adamic_global_1_StaticBase;
+-	double adamic_temporary_308 = adamic_object_field(adamic_temporary_306, "number", &adamic_cache_307)->number;
+-	double adamic_temporary_309 = adamic_temporary_308;
+-	adamic_string * adamic_temporary_310 = adamic_string_from_number(adamic_temporary_309);
+-	adamic_object * adamic_temporary_311 = adamic_global_3_StaticChild;
+-	double adamic_temporary_313 = adamic_object_field(adamic_temporary_311, "number", &adamic_cache_312)->number;
+-	double adamic_temporary_314 = adamic_temporary_313;
+-	adamic_string * adamic_temporary_315 = adamic_string_from_number(adamic_temporary_314);
+-	adamic_object * adamic_temporary_316 = adamic_global_5_StaticLeaf;
+-	double adamic_temporary_317 = adamic_function_41_property_getamount(adamic_temporary_316);
+-	adamic_string * adamic_temporary_318 = adamic_string_from_number(adamic_temporary_317);
+-	adamic_string * adamic_temporary_319 = adamic_retain(adamic_global_0_trace);
+-	adamic_string * adamic_temporary_320 = adamic_string_concat(7, (adamic_string *const[]){adamic_temporary_310, &adamic_string_19, adamic_temporary_315, &adamic_string_19, adamic_temporary_318, &adamic_string_19, adamic_temporary_319});
+-	adamic_write_line(adamic_stdout, adamic_temporary_320);
+-	adamic_release(adamic_temporary_320);
+-	adamic_release(adamic_temporary_319);
+-	adamic_release(adamic_temporary_318);
+-	adamic_release(adamic_temporary_315);
+-	adamic_release(adamic_temporary_310);
+-	adamic_object * adamic_temporary_321 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_array * adamic_temporary_322 = adamic_class_object_keys(adamic_temporary_321);
+-	adamic_string * adamic_temporary_323 = adamic_array_join(adamic_temporary_322, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_324 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_323, &adamic_string_19});
+-	adamic_object * adamic_temporary_325 = adamic_retain(adamic_global_3_StaticChild);
+-	adamic_array * adamic_temporary_326 = adamic_class_object_keys(adamic_temporary_325);
+-	adamic_string * adamic_temporary_327 = adamic_array_join(adamic_temporary_326, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_328 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_324, adamic_temporary_327});
+-	adamic_string * adamic_temporary_329 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_328, &adamic_string_19});
+-	adamic_object * adamic_temporary_330 = adamic_retain(adamic_global_5_StaticLeaf);
+-	adamic_array * adamic_temporary_331 = adamic_class_object_keys(adamic_temporary_330);
+-	adamic_string * adamic_temporary_332 = adamic_array_join(adamic_temporary_331, &adamic_string_22, adamic_join_strings);
+-	adamic_string * adamic_temporary_333 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_329, adamic_temporary_332});
+-	adamic_write_line(adamic_stdout, adamic_temporary_333);
++	adamic_object * adamic_temporary_312 = adamic_global_1_StaticBase;
++	double adamic_temporary_314 = adamic_object_field(adamic_temporary_312, "number", &adamic_cache_313)->number;
++	double adamic_temporary_315 = adamic_temporary_314;
++	adamic_string * adamic_temporary_316 = adamic_string_from_number(adamic_temporary_315);
++	adamic_object * adamic_temporary_317 = adamic_global_3_StaticChild;
++	double adamic_temporary_319 = adamic_object_field(adamic_temporary_317, "number", &adamic_cache_318)->number;
++	double adamic_temporary_320 = adamic_temporary_319;
++	adamic_string * adamic_temporary_321 = adamic_string_from_number(adamic_temporary_320);
++	adamic_object * adamic_temporary_322 = adamic_global_5_StaticLeaf;
++	double adamic_temporary_323 = adamic_function_44_property_getamount(adamic_temporary_322);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_321);
++		adamic_release(adamic_temporary_316);
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_324 = adamic_string_from_number(adamic_temporary_323);
++	adamic_string * adamic_temporary_325 = adamic_retain(adamic_global_0_trace);
++	adamic_string * adamic_temporary_326 = adamic_string_concat(7, (adamic_string *const[]){adamic_temporary_316, &adamic_string_19, adamic_temporary_321, &adamic_string_19, adamic_temporary_324, &adamic_string_19, adamic_temporary_325});
++	adamic_write_line(adamic_stdout, adamic_temporary_326);
++	adamic_release(adamic_temporary_326);
++	adamic_release(adamic_temporary_325);
++	adamic_release(adamic_temporary_324);
++	adamic_release(adamic_temporary_321);
++	adamic_release(adamic_temporary_316);
++	adamic_object * adamic_temporary_327 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_array * adamic_temporary_328 = adamic_class_object_keys(adamic_temporary_327);
++	adamic_string * adamic_temporary_329 = adamic_array_join(adamic_temporary_328, &adamic_string_22, adamic_join_strings);
++	adamic_string * adamic_temporary_330 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_329, &adamic_string_19});
++	adamic_object * adamic_temporary_331 = adamic_retain(adamic_global_3_StaticChild);
++	adamic_array * adamic_temporary_332 = adamic_class_object_keys(adamic_temporary_331);
++	adamic_string * adamic_temporary_333 = adamic_array_join(adamic_temporary_332, &adamic_string_22, adamic_join_strings);
++	adamic_string * adamic_temporary_334 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_330, adamic_temporary_333});
++	adamic_string * adamic_temporary_335 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_334, &adamic_string_19});
++	adamic_object * adamic_temporary_336 = adamic_retain(adamic_global_5_StaticLeaf);
++	adamic_array * adamic_temporary_337 = adamic_class_object_keys(adamic_temporary_336);
++	adamic_string * adamic_temporary_338 = adamic_array_join(adamic_temporary_337, &adamic_string_22, adamic_join_strings);
++	adamic_string * adamic_temporary_339 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_335, adamic_temporary_338});
++	adamic_write_line(adamic_stdout, adamic_temporary_339);
++	adamic_release(adamic_temporary_339);
++	adamic_release(adamic_temporary_338);
++	adamic_release(adamic_temporary_337);
++	adamic_release(adamic_temporary_336);
++	adamic_release(adamic_temporary_335);
++	adamic_release(adamic_temporary_334);
+ 	adamic_release(adamic_temporary_333);
+ 	adamic_release(adamic_temporary_332);
+ 	adamic_release(adamic_temporary_331);
+@@ -1408,298 +1788,860 @@
+ 	adamic_release(adamic_temporary_329);
+ 	adamic_release(adamic_temporary_328);
+ 	adamic_release(adamic_temporary_327);
+-	adamic_release(adamic_temporary_326);
+-	adamic_release(adamic_temporary_325);
+-	adamic_release(adamic_temporary_324);
+-	adamic_release(adamic_temporary_323);
+-	adamic_release(adamic_temporary_322);
+-	adamic_release(adamic_temporary_321);
+-	adamic_object * adamic_temporary_334 = adamic_object_new(&adamic_shape_5);
+-	adamic_temporary_334->class = &adamic_class_4;
+-	adamic_object * adamic_temporary_335 = adamic_global_8_NeverConstructed_class;
+-	adamic_global_8_NeverConstructed_class = adamic_temporary_334;
+-	adamic_release(adamic_temporary_335);
++	adamic_object * adamic_temporary_340 = adamic_object_new(&adamic_shape_5);
++	adamic_temporary_340->class = &adamic_class_4;
++	adamic_object * adamic_temporary_341 = adamic_global_8_NeverConstructed_class;
++	adamic_global_8_NeverConstructed_class = adamic_temporary_340;
++	adamic_release(adamic_temporary_341);
+ 	adamic_ready_8 = true;
+-	adamic_object * adamic_temporary_336 = adamic_global_8_NeverConstructed_class;
+-	adamic_function_28_NeverConstructed_static_initialize(adamic_temporary_336);
+-	adamic_object * adamic_temporary_337 = adamic_retain(adamic_global_8_NeverConstructed_class);
+-	adamic_object * adamic_temporary_338 = adamic_global_7_NeverConstructed;
+-	adamic_global_7_NeverConstructed = adamic_temporary_337;
+-	adamic_release(adamic_temporary_338);
++	adamic_object * adamic_temporary_342 = adamic_global_8_NeverConstructed_class;
++	adamic_function_28_NeverConstructed_static_initialize(adamic_temporary_342);
++	adamic_object * adamic_temporary_343 = adamic_retain(adamic_global_8_NeverConstructed_class);
++	adamic_object * adamic_temporary_344 = adamic_global_7_NeverConstructed;
++	adamic_global_7_NeverConstructed = adamic_temporary_343;
++	adamic_release(adamic_temporary_344);
+ 	adamic_ready_7 = true;
+-	adamic_object * adamic_temporary_339 = adamic_object_new(&adamic_shape_5);
+-	adamic_temporary_339->class = &adamic_class_5;
+-	adamic_object * adamic_temporary_340 = adamic_global_35_PlainBase_class;
+-	adamic_global_35_PlainBase_class = adamic_temporary_339;
+-	adamic_release(adamic_temporary_340);
++	adamic_object * adamic_temporary_345 = adamic_object_new(&adamic_shape_5);
++	adamic_temporary_345->class = &adamic_class_5;
++	adamic_object * adamic_temporary_346 = adamic_global_35_PlainBase_class;
++	adamic_global_35_PlainBase_class = adamic_temporary_345;
++	adamic_release(adamic_temporary_346);
+ 	adamic_ready_35 = true;
+-	adamic_object * adamic_temporary_341 = adamic_retain(adamic_global_35_PlainBase_class);
+-	adamic_object * adamic_temporary_342 = adamic_global_34_PlainBase;
+-	adamic_global_34_PlainBase = adamic_temporary_341;
+-	adamic_release(adamic_temporary_342);
++	adamic_object * adamic_temporary_347 = adamic_retain(adamic_global_35_PlainBase_class);
++	adamic_object * adamic_temporary_348 = adamic_global_34_PlainBase;
++	adamic_global_34_PlainBase = adamic_temporary_347;
++	adamic_release(adamic_temporary_348);
+ 	adamic_ready_34 = true;
+ 	if (!adamic_ready_34) {
+-		static const char message[] = "ReferenceError: Cannot access 'PlainBase' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_343 = adamic_retain(adamic_global_34_PlainBase);
+-	adamic_object * adamic_temporary_344 = adamic_object_new(&adamic_shape_6);
+-	adamic_temporary_344->class = &adamic_class_6;
+-	adamic_temporary_344->slots[0].reference = adamic_temporary_343;
+-	adamic_temporary_344->slots[1].reference = NULL;
+-	adamic_temporary_344->slots[2].number = (0x0p+00);
+-	adamic_object * adamic_temporary_345 = adamic_global_10_StaticOnlyChild_class;
+-	adamic_global_10_StaticOnlyChild_class = adamic_temporary_344;
+-	adamic_release(adamic_temporary_345);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'PlainBase' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_349 = adamic_retain(adamic_global_34_PlainBase);
++	adamic_object * adamic_temporary_350 = adamic_object_new(&adamic_shape_6);
++	adamic_temporary_350->class = &adamic_class_6;
++	adamic_temporary_350->slots[0].reference = adamic_temporary_349;
++	adamic_temporary_350->slots[1].reference = NULL;
++	adamic_temporary_350->slots[2].number = (0x0p+00);
++	adamic_object * adamic_temporary_351 = adamic_global_10_StaticOnlyChild_class;
++	adamic_global_10_StaticOnlyChild_class = adamic_temporary_350;
++	adamic_release(adamic_temporary_351);
+ 	adamic_ready_10 = true;
+-	adamic_object * adamic_temporary_346 = adamic_global_10_StaticOnlyChild_class;
+-	adamic_function_29_StaticOnlyChild_static_initialize(adamic_temporary_346);
+-	adamic_object * adamic_temporary_347 = adamic_global_10_StaticOnlyChild_class;
+-	adamic_function_30_StaticOnlyChild_static_initialize(adamic_temporary_347);
+-	adamic_object * adamic_temporary_348 = adamic_retain(adamic_global_10_StaticOnlyChild_class);
+-	adamic_object * adamic_temporary_349 = adamic_global_9_StaticOnlyChild;
+-	adamic_global_9_StaticOnlyChild = adamic_temporary_348;
+-	adamic_release(adamic_temporary_349);
++	adamic_object * adamic_temporary_352 = adamic_global_10_StaticOnlyChild_class;
++	adamic_function_29_StaticOnlyChild_static_initialize(adamic_temporary_352);
++	adamic_object * adamic_temporary_353 = adamic_global_10_StaticOnlyChild_class;
++	adamic_function_30_StaticOnlyChild_static_initialize(adamic_temporary_353);
++	adamic_object * adamic_temporary_354 = adamic_retain(adamic_global_10_StaticOnlyChild_class);
++	adamic_object * adamic_temporary_355 = adamic_global_9_StaticOnlyChild;
++	adamic_global_9_StaticOnlyChild = adamic_temporary_354;
++	adamic_release(adamic_temporary_355);
+ 	adamic_ready_9 = true;
+-	adamic_object * adamic_temporary_350 = adamic_object_new(&adamic_shape_7);
+-	adamic_temporary_350->class = &adamic_class_7;
+-	adamic_temporary_350->slots[0].reference = NULL;
+-	adamic_temporary_350->slots[1].number = (0x0p+00);
+-	adamic_object * adamic_temporary_351 = adamic_global_12_StaticGeneric_class;
+-	adamic_global_12_StaticGeneric_class = adamic_temporary_350;
+-	adamic_release(adamic_temporary_351);
++	adamic_object * adamic_temporary_356 = adamic_object_new(&adamic_shape_7);
++	adamic_temporary_356->class = &adamic_class_7;
++	adamic_temporary_356->slots[0].reference = NULL;
++	adamic_temporary_356->slots[1].number = (0x0p+00);
++	adamic_object * adamic_temporary_357 = adamic_global_12_StaticGeneric_class;
++	adamic_global_12_StaticGeneric_class = adamic_temporary_356;
++	adamic_release(adamic_temporary_357);
+ 	adamic_ready_12 = true;
+-	adamic_object * adamic_temporary_352 = adamic_global_12_StaticGeneric_class;
+-	adamic_function_31_StaticGeneric_static_initialize(adamic_temporary_352);
+-	adamic_object * adamic_temporary_353 = adamic_retain(adamic_global_12_StaticGeneric_class);
+-	adamic_object * adamic_temporary_354 = adamic_global_11_StaticGeneric;
+-	adamic_global_11_StaticGeneric = adamic_temporary_353;
+-	adamic_release(adamic_temporary_354);
++	adamic_object * adamic_temporary_358 = adamic_global_12_StaticGeneric_class;
++	adamic_function_31_StaticGeneric_static_initialize(adamic_temporary_358);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_359 = adamic_retain(adamic_global_12_StaticGeneric_class);
++	adamic_object * adamic_temporary_360 = adamic_global_11_StaticGeneric;
++	adamic_global_11_StaticGeneric = adamic_temporary_359;
++	adamic_release(adamic_temporary_360);
+ 	adamic_ready_11 = true;
+ 	if (!adamic_ready_11) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticGeneric' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_355 = adamic_global_11_StaticGeneric;
+-	adamic_object * adamic_temporary_356 = adamic_function_34_class_ready_new(adamic_temporary_355, (0x1p+00));
+-	adamic_object * adamic_temporary_357 = adamic_global_13_genericNumber;
+-	adamic_global_13_genericNumber = adamic_temporary_356;
+-	adamic_release(adamic_temporary_357);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticGeneric' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_361 = adamic_global_11_StaticGeneric;
++	adamic_object * adamic_temporary_362 = adamic_function_34_class_ready_new(adamic_temporary_361, (0x1p+00));
++	adamic_object * adamic_temporary_363 = adamic_global_13_genericNumber;
++	adamic_global_13_genericNumber = adamic_temporary_362;
++	adamic_release(adamic_temporary_363);
+ 	adamic_ready_13 = true;
+ 	if (!adamic_ready_11) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticGeneric' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_358 = adamic_global_11_StaticGeneric;
+-	adamic_object * adamic_temporary_359 = adamic_function_37_class_ready_new(adamic_temporary_358, &adamic_string_26);
+-	adamic_object * adamic_temporary_360 = adamic_global_14_genericString;
+-	adamic_global_14_genericString = adamic_temporary_359;
+-	adamic_release(adamic_temporary_360);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticGeneric' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_364 = adamic_global_11_StaticGeneric;
++	adamic_object * adamic_temporary_365 = adamic_function_37_class_ready_new(adamic_temporary_364, &adamic_string_26);
++	adamic_object * adamic_temporary_366 = adamic_global_14_genericString;
++	adamic_global_14_genericString = adamic_temporary_365;
++	adamic_release(adamic_temporary_366);
+ 	adamic_ready_14 = true;
+-	adamic_object * adamic_temporary_361 = adamic_global_11_StaticGeneric;
+-	adamic_string * adamic_temporary_362 = adamic_function_10_StaticGeneric_static_read(adamic_temporary_361);
+-	adamic_write_line(adamic_stdout, adamic_temporary_362);
+-	adamic_release(adamic_temporary_362);
+-	adamic_object * adamic_temporary_363 = adamic_global_13_genericNumber;
+-	double adamic_temporary_364 = (&adamic_temporary_363->slots[0])->number;
+-	double adamic_temporary_365 = adamic_temporary_364;
+-	adamic_string * adamic_temporary_366 = adamic_string_from_number(adamic_temporary_365);
+-	adamic_object * adamic_temporary_367 = adamic_global_14_genericString;
+-	adamic_string * adamic_temporary_368 = ((adamic_string *)(&adamic_temporary_367->slots[0])->reference);
+-	adamic_string * adamic_temporary_369 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_366, &adamic_string_19, adamic_temporary_368});
+-	adamic_write_line(adamic_stdout, adamic_temporary_369);
+-	adamic_release(adamic_temporary_369);
+-	adamic_release(adamic_temporary_366);
+-	adamic_object * adamic_temporary_370 = adamic_global_3_StaticChild;
+-	adamic_string * adamic_temporary_372 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_370, "summary", &adamic_cache_371)->reference));
+-	adamic_write_line(adamic_stdout, adamic_temporary_372);
++	adamic_object * adamic_temporary_367 = adamic_global_11_StaticGeneric;
++	adamic_string * adamic_temporary_368 = adamic_function_10_StaticGeneric_static_read(adamic_temporary_367);
++	adamic_write_line(adamic_stdout, adamic_temporary_368);
++	adamic_release(adamic_temporary_368);
++	adamic_object * adamic_temporary_369 = adamic_global_13_genericNumber;
++	double adamic_temporary_370 = (&adamic_temporary_369->slots[0])->number;
++	double adamic_temporary_371 = adamic_temporary_370;
++	adamic_string * adamic_temporary_372 = adamic_string_from_number(adamic_temporary_371);
++	adamic_object * adamic_temporary_373 = adamic_global_14_genericString;
++	adamic_string * adamic_temporary_374 = ((adamic_string *)(&adamic_temporary_373->slots[0])->reference);
++	adamic_string * adamic_temporary_375 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_372, &adamic_string_19, adamic_temporary_374});
++	adamic_write_line(adamic_stdout, adamic_temporary_375);
++	adamic_release(adamic_temporary_375);
+ 	adamic_release(adamic_temporary_372);
+-	adamic_object * adamic_temporary_373 = adamic_object_new(&adamic_shape_8);
+-	adamic_temporary_373->class = &adamic_class_8;
+-	adamic_temporary_373->slots[0].reference = NULL;
+-	adamic_temporary_373->slots[1].number = (0x0p+00);
+-	adamic_object * adamic_temporary_374 = adamic_global_16_StaticFailure_class;
+-	adamic_global_16_StaticFailure_class = adamic_temporary_373;
+-	adamic_release(adamic_temporary_374);
++	adamic_object * adamic_temporary_376 = adamic_global_3_StaticChild;
++	adamic_string * adamic_temporary_378 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_376, "summary", &adamic_cache_377)->reference));
++	adamic_write_line(adamic_stdout, adamic_temporary_378);
++	adamic_release(adamic_temporary_378);
++	adamic_object * adamic_temporary_379 = adamic_object_new(&adamic_shape_8);
++	adamic_temporary_379->class = &adamic_class_8;
++	adamic_temporary_379->slots[0].reference = NULL;
++	adamic_temporary_379->slots[1].number = (0x0p+00);
++	adamic_object * adamic_temporary_380 = adamic_global_16_StaticFailure_class;
++	adamic_global_16_StaticFailure_class = adamic_temporary_379;
++	adamic_release(adamic_temporary_380);
+ 	adamic_ready_16 = true;
+-	adamic_object * adamic_temporary_375 = adamic_global_16_StaticFailure_class;
+-	adamic_function_38_StaticFailure_static_initialize(adamic_temporary_375);
+-	adamic_object * adamic_temporary_376 = adamic_retain(adamic_global_16_StaticFailure_class);
+-	adamic_object * adamic_temporary_377 = adamic_global_15_StaticFailure;
+-	adamic_global_15_StaticFailure = adamic_temporary_376;
+-	adamic_release(adamic_temporary_377);
++	adamic_object * adamic_temporary_381 = adamic_global_16_StaticFailure_class;
++	adamic_function_38_StaticFailure_static_initialize(adamic_temporary_381);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_382 = adamic_retain(adamic_global_16_StaticFailure_class);
++	adamic_object * adamic_temporary_383 = adamic_global_15_StaticFailure;
++	adamic_global_15_StaticFailure = adamic_temporary_382;
++	adamic_release(adamic_temporary_383);
+ 	adamic_ready_15 = true;
+ 	{
+-		adamic_object * adamic_temporary_379 = adamic_global_15_StaticFailure;
+-		adamic_string * adamic_temporary_380 = adamic_function_11_StaticFailure_static_fail(adamic_temporary_379);
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_380);
+-			goto adamic_landing_378;
++		adamic_object * adamic_temporary_385 = adamic_global_15_StaticFailure;
++		adamic_string * adamic_temporary_386 = adamic_function_11_StaticFailure_static_fail(adamic_temporary_385);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_386);
++			goto adamic_landing_384;
+ 		}
+-		adamic_write_line(adamic_stdout, adamic_temporary_380);
+-		adamic_release(adamic_temporary_380);
+-	}
+-	goto adamic_done_378;
+-	adamic_landing_378:;
++		adamic_write_line(adamic_stdout, adamic_temporary_386);
++		adamic_release(adamic_temporary_386);
++	}
++	goto adamic_done_384;
++	adamic_landing_384:;
+ 	{
+-		adamic_object *adamic_temporary_381 = adamic_thrown;
++		adamic_heap *adamic_temporary_387 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_71_error = adamic_temporary_381;
+-		if (true) {
+-			adamic_string * adamic_temporary_382 = adamic_retain(((adamic_string *)(&adamic_local_71_error->slots[1])->reference));
+-			adamic_write_line(adamic_stdout, adamic_temporary_382);
+-			adamic_release(adamic_temporary_382);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_71_error = ((adamic_heap *)adamic_temporary_387);
++		bool adamic_temporary_388 = adamic_instanceof(adamic_local_71_error, &adamic_error_class);
++		if (adamic_temporary_388) {
++			adamic_object * adamic_temporary_389 = adamic_function_39_narrowed_union_member(adamic_local_71_error);
++			adamic_string * adamic_temporary_390 = adamic_retain(((adamic_string *)(&adamic_temporary_389->slots[1])->reference));
++			adamic_write_line(adamic_stdout, adamic_temporary_390);
++			adamic_release(adamic_temporary_390);
++			adamic_release(adamic_temporary_389);
+ 		}
+ 		adamic_release(adamic_local_71_error);
+ 	}
+-	goto adamic_done_378;
+-	adamic_done_378:;
++	goto adamic_done_384;
++	adamic_done_384:;
+ 	{
+-		adamic_object * adamic_temporary_384 = adamic_global_15_StaticFailure;
+-		adamic_string * adamic_temporary_385 = adamic_function_43_property_getbroken(adamic_temporary_384);
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_385);
+-			goto adamic_landing_383;
++		adamic_object * adamic_temporary_392 = adamic_global_15_StaticFailure;
++		adamic_string * adamic_temporary_393 = adamic_function_46_property_getbroken(adamic_temporary_392);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_393);
++			goto adamic_landing_391;
+ 		}
+-		adamic_write_line(adamic_stdout, adamic_temporary_385);
+-		adamic_release(adamic_temporary_385);
+-	}
+-	goto adamic_done_383;
+-	adamic_landing_383:;
++		adamic_write_line(adamic_stdout, adamic_temporary_393);
++		adamic_release(adamic_temporary_393);
++	}
++	goto adamic_done_391;
++	adamic_landing_391:;
+ 	{
+-		adamic_object *adamic_temporary_386 = adamic_thrown;
++		adamic_heap *adamic_temporary_394 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_72_error = adamic_temporary_386;
+-		if (true) {
+-			adamic_string * adamic_temporary_387 = adamic_retain(((adamic_string *)(&adamic_local_72_error->slots[1])->reference));
+-			adamic_write_line(adamic_stdout, adamic_temporary_387);
+-			adamic_release(adamic_temporary_387);
+-		}
+-		adamic_release(adamic_local_72_error);
+-	}
+-	goto adamic_done_383;
+-	adamic_done_383:;
+-	{
+-		adamic_object * adamic_temporary_389 = adamic_retain(adamic_global_15_StaticFailure);
+-		adamic_string * adamic_temporary_390 = adamic_function_0_mark(&adamic_string_28);
+-		adamic_function_44_property_setbroken(adamic_temporary_389, adamic_temporary_390);
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_390);
+-			adamic_release(adamic_temporary_389);
+-			goto adamic_landing_388;
+-		}
+-		adamic_release(adamic_temporary_390);
+-		adamic_release(adamic_temporary_389);
+-	}
+-	goto adamic_done_388;
+-	adamic_landing_388:;
+-	{
+-		adamic_object *adamic_temporary_391 = adamic_thrown;
+-		adamic_thrown = NULL;
+-		adamic_object * adamic_local_73_error = adamic_temporary_391;
+-		if (true) {
+-			adamic_string * adamic_temporary_392 = adamic_retain(((adamic_string *)(&adamic_local_73_error->slots[1])->reference));
+-			adamic_write_line(adamic_stdout, adamic_temporary_392);
+-			adamic_release(adamic_temporary_392);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_73_error = ((adamic_heap *)adamic_temporary_394);
++		bool adamic_temporary_395 = adamic_instanceof(adamic_local_73_error, &adamic_error_class);
++		if (adamic_temporary_395) {
++			adamic_object * adamic_temporary_396 = adamic_function_40_narrowed_union_member(adamic_local_73_error);
++			adamic_string * adamic_temporary_397 = adamic_retain(((adamic_string *)(&adamic_temporary_396->slots[1])->reference));
++			adamic_write_line(adamic_stdout, adamic_temporary_397);
++			adamic_release(adamic_temporary_397);
++			adamic_release(adamic_temporary_396);
+ 		}
+ 		adamic_release(adamic_local_73_error);
+ 	}
+-	goto adamic_done_388;
+-	adamic_done_388:;
++	goto adamic_done_391;
++	adamic_done_391:;
++	{
++		adamic_object * adamic_temporary_399 = adamic_retain(adamic_global_15_StaticFailure);
++		adamic_string * adamic_temporary_400 = adamic_function_0_mark(&adamic_string_30);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_400);
++			adamic_release(adamic_temporary_399);
++			goto adamic_landing_398;
++		}
++		adamic_function_47_property_setbroken(adamic_temporary_399, adamic_temporary_400);
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_400);
++			adamic_release(adamic_temporary_399);
++			goto adamic_landing_398;
++		}
++		adamic_release(adamic_temporary_400);
++		adamic_release(adamic_temporary_399);
++	}
++	goto adamic_done_398;
++	adamic_landing_398:;
++	{
++		adamic_heap *adamic_temporary_401 = adamic_thrown;
++		adamic_thrown = NULL;
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_75_error = ((adamic_heap *)adamic_temporary_401);
++		bool adamic_temporary_402 = adamic_instanceof(adamic_local_75_error, &adamic_error_class);
++		if (adamic_temporary_402) {
++			adamic_object * adamic_temporary_403 = adamic_function_41_narrowed_union_member(adamic_local_75_error);
++			adamic_string * adamic_temporary_404 = adamic_retain(((adamic_string *)(&adamic_temporary_403->slots[1])->reference));
++			adamic_write_line(adamic_stdout, adamic_temporary_404);
++			adamic_release(adamic_temporary_404);
++			adamic_release(adamic_temporary_403);
++		}
++		adamic_release(adamic_local_75_error);
++	}
++	goto adamic_done_398;
++	adamic_done_398:;
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticBase' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_393 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_object * adamic_temporary_394 = adamic_object_new(&adamic_shape_9);
+-	adamic_temporary_394->class = &adamic_class_9;
+-	adamic_temporary_394->slots[0].reference = NULL;
+-	adamic_temporary_394->slots[1].number = (0x0p+00);
+-	adamic_temporary_394->slots[2].reference = NULL;
+-	adamic_temporary_394->slots[3].number = (0x0p+00);
+-	adamic_temporary_394->slots[4].number = (0x0p+00);
+-	adamic_temporary_394->slots[5].number = (0x0p+00);
+-	adamic_temporary_394->slots[6].reference = adamic_temporary_393;
+-	adamic_object * adamic_temporary_395 = adamic_global_18_SuperData_class;
+-	adamic_global_18_SuperData_class = adamic_temporary_394;
+-	adamic_release(adamic_temporary_395);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticBase' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_405 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_object * adamic_temporary_406 = adamic_object_new(&adamic_shape_9);
++	adamic_temporary_406->class = &adamic_class_9;
++	adamic_temporary_406->slots[0].reference = NULL;
++	adamic_temporary_406->slots[1].number = (0x0p+00);
++	adamic_temporary_406->slots[2].reference = NULL;
++	adamic_temporary_406->slots[3].number = (0x0p+00);
++	adamic_temporary_406->slots[4].number = (0x0p+00);
++	adamic_temporary_406->slots[5].number = (0x0p+00);
++	adamic_temporary_406->slots[6].reference = adamic_temporary_405;
++	adamic_object * adamic_temporary_407 = adamic_global_18_SuperData_class;
++	adamic_global_18_SuperData_class = adamic_temporary_406;
++	adamic_release(adamic_temporary_407);
+ 	adamic_ready_18 = true;
+-	adamic_object * adamic_temporary_396 = adamic_retain(adamic_global_18_SuperData_class);
+-	adamic_object * adamic_temporary_397 = adamic_global_17_SuperData;
+-	adamic_global_17_SuperData = adamic_temporary_396;
+-	adamic_release(adamic_temporary_397);
++	adamic_object * adamic_temporary_408 = adamic_retain(adamic_global_18_SuperData_class);
++	adamic_object * adamic_temporary_409 = adamic_global_17_SuperData;
++	adamic_global_17_SuperData = adamic_temporary_408;
++	adamic_release(adamic_temporary_409);
+ 	adamic_ready_17 = true;
+-	adamic_object * adamic_temporary_398 = adamic_retain(adamic_global_17_SuperData);
+-	adamic_string * adamic_temporary_399 = adamic_function_0_mark(&adamic_string_29);
+-	adamic_function_15_SuperData_static_writeOwn(adamic_temporary_398, adamic_temporary_399);
+-	adamic_release(adamic_temporary_399);
+-	adamic_release(adamic_temporary_398);
+-	adamic_object * adamic_temporary_400 = adamic_global_17_SuperData;
+-	adamic_string * adamic_temporary_402 = ((adamic_string *)adamic_object_field(adamic_temporary_400, "text", &adamic_cache_401)->reference);
+-	adamic_string * adamic_temporary_403 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_402, &adamic_string_19});
+-	adamic_object * adamic_temporary_404 = adamic_global_17_SuperData;
+-	adamic_string * adamic_temporary_405 = adamic_function_14_SuperData_static_readBase(adamic_temporary_404);
+-	adamic_string * adamic_temporary_406 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_403, adamic_temporary_405});
+-	adamic_string * adamic_temporary_407 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_406, &adamic_string_19});
+-	adamic_object * adamic_temporary_408 = adamic_global_1_StaticBase;
+-	adamic_string * adamic_temporary_410 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_408, "text", &adamic_cache_409)->reference));
+-	adamic_string * adamic_temporary_411 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_407, adamic_temporary_410});
+-	adamic_write_line(adamic_stdout, adamic_temporary_411);
++	adamic_object * adamic_temporary_410 = adamic_retain(adamic_global_17_SuperData);
++	adamic_string * adamic_temporary_411 = adamic_function_0_mark(&adamic_string_31);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_411);
++		adamic_release(adamic_temporary_410);
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_function_15_SuperData_static_writeOwn(adamic_temporary_410, adamic_temporary_411);
+ 	adamic_release(adamic_temporary_411);
+ 	adamic_release(adamic_temporary_410);
+-	adamic_release(adamic_temporary_407);
+-	adamic_release(adamic_temporary_406);
+-	adamic_release(adamic_temporary_405);
+-	adamic_release(adamic_temporary_403);
+-	adamic_object * adamic_temporary_412 = adamic_object_new(&adamic_shape_10);
+-	adamic_temporary_412->class = &adamic_class_10;
+-	adamic_temporary_412->slots[0].reference = NULL;
+-	adamic_temporary_412->slots[1].number = (0x0p+00);
+-	adamic_object * adamic_temporary_413 = adamic_global_20_StaticName_class;
+-	adamic_global_20_StaticName_class = adamic_temporary_412;
+-	adamic_release(adamic_temporary_413);
++	adamic_object * adamic_temporary_412 = adamic_global_17_SuperData;
++	adamic_string * adamic_temporary_414 = ((adamic_string *)adamic_object_field(adamic_temporary_412, "text", &adamic_cache_413)->reference);
++	adamic_string * adamic_temporary_415 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_414, &adamic_string_19});
++	adamic_object * adamic_temporary_416 = adamic_global_17_SuperData;
++	adamic_string * adamic_temporary_417 = adamic_function_14_SuperData_static_readBase(adamic_temporary_416);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_417);
++		adamic_release(adamic_temporary_415);
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_418 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_415, adamic_temporary_417});
++	adamic_string * adamic_temporary_419 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_418, &adamic_string_19});
++	adamic_object * adamic_temporary_420 = adamic_global_1_StaticBase;
++	adamic_string * adamic_temporary_422 = adamic_retain(((adamic_string *)adamic_object_field(adamic_temporary_420, "text", &adamic_cache_421)->reference));
++	adamic_string * adamic_temporary_423 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_419, adamic_temporary_422});
++	adamic_write_line(adamic_stdout, adamic_temporary_423);
++	adamic_release(adamic_temporary_423);
++	adamic_release(adamic_temporary_422);
++	adamic_release(adamic_temporary_419);
++	adamic_release(adamic_temporary_418);
++	adamic_release(adamic_temporary_417);
++	adamic_release(adamic_temporary_415);
++	adamic_object * adamic_temporary_424 = adamic_object_new(&adamic_shape_10);
++	adamic_temporary_424->class = &adamic_class_10;
++	adamic_temporary_424->slots[0].reference = NULL;
++	adamic_temporary_424->slots[1].number = (0x0p+00);
++	adamic_object * adamic_temporary_425 = adamic_global_20_StaticName_class;
++	adamic_global_20_StaticName_class = adamic_temporary_424;
++	adamic_release(adamic_temporary_425);
+ 	adamic_ready_20 = true;
+-	adamic_object * adamic_temporary_414 = adamic_global_20_StaticName_class;
+-	adamic_function_39_StaticName_static_initialize(adamic_temporary_414);
+-	adamic_object * adamic_temporary_415 = adamic_retain(adamic_global_20_StaticName_class);
+-	adamic_function_40_StaticName_static_initialize(adamic_temporary_415);
+-	adamic_release(adamic_temporary_415);
+-	adamic_object * adamic_temporary_416 = adamic_retain(adamic_global_20_StaticName_class);
+-	adamic_object * adamic_temporary_417 = adamic_global_19_StaticName;
+-	adamic_global_19_StaticName = adamic_temporary_416;
+-	adamic_release(adamic_temporary_417);
++	adamic_object * adamic_temporary_426 = adamic_global_20_StaticName_class;
++	adamic_function_42_StaticName_static_initialize(adamic_temporary_426);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_20_StaticName_class);
++		adamic_global_20_StaticName_class = NULL;
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_427 = adamic_retain(adamic_global_20_StaticName_class);
++	adamic_function_43_StaticName_static_initialize(adamic_temporary_427);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_427);
++		adamic_release(adamic_global_20_StaticName_class);
++		adamic_global_20_StaticName_class = NULL;
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_release(adamic_temporary_427);
++	adamic_object * adamic_temporary_428 = adamic_retain(adamic_global_20_StaticName_class);
++	adamic_object * adamic_temporary_429 = adamic_global_19_StaticName;
++	adamic_global_19_StaticName = adamic_temporary_428;
++	adamic_release(adamic_temporary_429);
+ 	adamic_ready_19 = true;
+-	adamic_object * adamic_temporary_418 = adamic_global_19_StaticName;
+-	adamic_string * adamic_temporary_419 = adamic_function_17_StaticName_static_readName(adamic_temporary_418);
+-	adamic_write_line(adamic_stdout, adamic_temporary_419);
+-	adamic_release(adamic_temporary_419);
++	adamic_object * adamic_temporary_430 = adamic_global_19_StaticName;
++	adamic_string * adamic_temporary_431 = adamic_function_17_StaticName_static_readName(adamic_temporary_430);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_431);
++		adamic_release(adamic_global_19_StaticName);
++		adamic_global_19_StaticName = NULL;
++		adamic_release(adamic_global_20_StaticName_class);
++		adamic_global_20_StaticName_class = NULL;
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_write_line(adamic_stdout, adamic_temporary_431);
++	adamic_release(adamic_temporary_431);
+ 	if (!adamic_ready_1) {
+-		static const char message[] = "ReferenceError: Cannot access 'StaticBase' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_420 = adamic_retain(adamic_global_1_StaticBase);
+-	adamic_object * adamic_temporary_421 = adamic_object_new(&adamic_shape_11);
+-	adamic_temporary_421->class = &adamic_class_11;
+-	adamic_temporary_421->slots[0].reference = NULL;
+-	adamic_temporary_421->slots[1].number = (0x0p+00);
+-	adamic_temporary_421->slots[2].reference = NULL;
+-	adamic_temporary_421->slots[3].number = (0x0p+00);
+-	adamic_temporary_421->slots[4].number = (0x0p+00);
+-	adamic_temporary_421->slots[5].number = (0x0p+00);
+-	adamic_temporary_421->slots[6].reference = adamic_temporary_420;
+-	adamic_object * adamic_temporary_422 = adamic_global_22_StaticAlias_class;
+-	adamic_global_22_StaticAlias_class = adamic_temporary_421;
+-	adamic_release(adamic_temporary_422);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'StaticBase' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		adamic_release(adamic_global_19_StaticName);
++		adamic_global_19_StaticName = NULL;
++		adamic_release(adamic_global_20_StaticName_class);
++		adamic_global_20_StaticName_class = NULL;
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	}
++	adamic_object * adamic_temporary_432 = adamic_retain(adamic_global_1_StaticBase);
++	adamic_object * adamic_temporary_433 = adamic_object_new(&adamic_shape_11);
++	adamic_temporary_433->class = &adamic_class_11;
++	adamic_temporary_433->slots[0].reference = NULL;
++	adamic_temporary_433->slots[1].number = (0x0p+00);
++	adamic_temporary_433->slots[2].reference = NULL;
++	adamic_temporary_433->slots[3].number = (0x0p+00);
++	adamic_temporary_433->slots[4].number = (0x0p+00);
++	adamic_temporary_433->slots[5].number = (0x0p+00);
++	adamic_temporary_433->slots[6].reference = adamic_temporary_432;
++	adamic_object * adamic_temporary_434 = adamic_global_22_StaticAlias_class;
++	adamic_global_22_StaticAlias_class = adamic_temporary_433;
++	adamic_release(adamic_temporary_434);
+ 	adamic_ready_22 = true;
+-	adamic_object * adamic_temporary_423 = adamic_retain(adamic_global_22_StaticAlias_class);
+-	adamic_object * adamic_temporary_424 = adamic_global_21_StaticAlias;
+-	adamic_global_21_StaticAlias = adamic_temporary_423;
+-	adamic_release(adamic_temporary_424);
++	adamic_object * adamic_temporary_435 = adamic_retain(adamic_global_22_StaticAlias_class);
++	adamic_object * adamic_temporary_436 = adamic_global_21_StaticAlias;
++	adamic_global_21_StaticAlias = adamic_temporary_435;
++	adamic_release(adamic_temporary_436);
+ 	adamic_ready_21 = true;
+-	adamic_object * adamic_temporary_425 = adamic_global_21_StaticAlias;
+-	adamic_string * adamic_temporary_426 = adamic_function_18_StaticAlias_static_combine(adamic_temporary_425);
+-	adamic_write_line(adamic_stdout, adamic_temporary_426);
+-	adamic_release(adamic_temporary_426);
++	adamic_object * adamic_temporary_437 = adamic_global_21_StaticAlias;
++	adamic_string * adamic_temporary_438 = adamic_function_18_StaticAlias_static_combine(adamic_temporary_437);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_438);
++		adamic_release(adamic_global_21_StaticAlias);
++		adamic_global_21_StaticAlias = NULL;
++		adamic_release(adamic_global_22_StaticAlias_class);
++		adamic_global_22_StaticAlias_class = NULL;
++		adamic_release(adamic_global_19_StaticName);
++		adamic_global_19_StaticName = NULL;
++		adamic_release(adamic_global_20_StaticName_class);
++		adamic_global_20_StaticName_class = NULL;
++		adamic_release(adamic_global_17_SuperData);
++		adamic_global_17_SuperData = NULL;
++		adamic_release(adamic_global_18_SuperData_class);
++		adamic_global_18_SuperData_class = NULL;
++		adamic_release(adamic_global_15_StaticFailure);
++		adamic_global_15_StaticFailure = NULL;
++		adamic_release(adamic_global_16_StaticFailure_class);
++		adamic_global_16_StaticFailure_class = NULL;
++		adamic_release(adamic_global_14_genericString);
++		adamic_global_14_genericString = NULL;
++		adamic_release(adamic_global_13_genericNumber);
++		adamic_global_13_genericNumber = NULL;
++		adamic_release(adamic_global_11_StaticGeneric);
++		adamic_global_11_StaticGeneric = NULL;
++		adamic_release(adamic_global_12_StaticGeneric_class);
++		adamic_global_12_StaticGeneric_class = NULL;
++		adamic_release(adamic_global_9_StaticOnlyChild);
++		adamic_global_9_StaticOnlyChild = NULL;
++		adamic_release(adamic_global_10_StaticOnlyChild_class);
++		adamic_global_10_StaticOnlyChild_class = NULL;
++		adamic_release(adamic_global_34_PlainBase);
++		adamic_global_34_PlainBase = NULL;
++		adamic_release(adamic_global_35_PlainBase_class);
++		adamic_global_35_PlainBase_class = NULL;
++		adamic_release(adamic_global_7_NeverConstructed);
++		adamic_global_7_NeverConstructed = NULL;
++		adamic_release(adamic_global_8_NeverConstructed_class);
++		adamic_global_8_NeverConstructed_class = NULL;
++		adamic_release(adamic_global_5_StaticLeaf);
++		adamic_global_5_StaticLeaf = NULL;
++		adamic_release(adamic_global_6_StaticLeaf_class);
++		adamic_global_6_StaticLeaf_class = NULL;
++		adamic_release(adamic_global_3_StaticChild);
++		adamic_global_3_StaticChild = NULL;
++		adamic_release(adamic_global_4_StaticChild_class);
++		adamic_global_4_StaticChild_class = NULL;
++		adamic_release(adamic_global_1_StaticBase);
++		adamic_global_1_StaticBase = NULL;
++		adamic_release(adamic_global_2_StaticBase_class);
++		adamic_global_2_StaticBase_class = NULL;
++		adamic_release(adamic_global_0_trace);
++		adamic_global_0_trace = NULL;
++		adamic_uncaught();
++	}
++	adamic_write_line(adamic_stdout, adamic_temporary_438);
++	adamic_release(adamic_temporary_438);
+ 	adamic_release(adamic_global_21_StaticAlias);
+ 	adamic_global_21_StaticAlias = NULL;
+ 	adamic_release(adamic_global_22_StaticAlias_class);

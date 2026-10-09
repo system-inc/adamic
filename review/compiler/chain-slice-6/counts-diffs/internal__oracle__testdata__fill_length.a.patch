@@ -1,0 +1,52 @@
+--- main/internal/oracle/testdata/fill_length.a
++++ slice/internal/oracle/testdata/fill_length.a
+@@ -6,18 +6,40 @@
+ #include <stdbool.h>
+ 
+ static adamic_string adamic_string_0 = ADAMIC_STRING(",");
++static adamic_string adamic_string_1 = ADAMIC_STRING("Invalid array length");
++
++static adamic_array * adamic_function_0_exception_array_length(double adamic_local_0_argument, double adamic_local_1_argument);
++
++static adamic_array * adamic_function_0_exception_array_length(double adamic_local_0_argument, double adamic_local_1_argument) {
++	ADAMIC_CHECK_STACK();
++	if (!((!((adamic_local_0_argument < (0x0p+00)) || (adamic_local_0_argument > (0x1.fffffffep+31)))) && (adamic_local_0_argument == (isnan(adamic_local_0_argument) ? (0x0p+00) : trunc(adamic_local_0_argument))))) {
++		adamic_object * adamic_temporary_1 = adamic_error_new_kind(&adamic_string_1, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_1)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_1);
++		return NULL;
++	}
++	adamic_array * adamic_temporary_2 = adamic_array_filled(adamic_local_0_argument, (adamic_value){.number = adamic_local_1_argument}, false);
++	adamic_array * adamic_temporary_3 = adamic_temporary_2;
++	return adamic_temporary_3;
++	adamic_unreachable();
++}
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_array * adamic_temporary_1 = adamic_array_filled((0x1.8p+01), (adamic_value){.number = (0x1p+00)}, false);
+-	adamic_string * adamic_temporary_2 = adamic_array_join(adamic_temporary_1, &adamic_string_0, adamic_join_numbers);
+-	adamic_write_line(adamic_stdout, adamic_temporary_2);
+-	adamic_release(adamic_temporary_2);
+-	adamic_release(adamic_temporary_1);
+-	adamic_array * adamic_temporary_3 = adamic_array_filled((0x1.4p+01), (adamic_value){.number = (0x0p+00)}, false);
+-	adamic_string * adamic_temporary_4 = adamic_array_join(adamic_temporary_3, &adamic_string_0, adamic_join_numbers);
+-	adamic_write_line(adamic_stdout, adamic_temporary_4);
++	adamic_array * adamic_temporary_4 = adamic_array_filled((0x1.8p+01), (adamic_value){.number = (0x1p+00)}, false);
++	adamic_string * adamic_temporary_5 = adamic_array_join(adamic_temporary_4, &adamic_string_0, adamic_join_numbers);
++	adamic_write_line(adamic_stdout, adamic_temporary_5);
++	adamic_release(adamic_temporary_5);
+ 	adamic_release(adamic_temporary_4);
+-	adamic_release(adamic_temporary_3);
++	adamic_array * adamic_temporary_6 = adamic_function_0_exception_array_length((0x1.4p+01), (0x0p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_6);
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_7 = adamic_array_join(adamic_temporary_6, &adamic_string_0, adamic_join_numbers);
++	adamic_write_line(adamic_stdout, adamic_temporary_7);
++	adamic_release(adamic_temporary_7);
++	adamic_release(adamic_temporary_6);
+ 	return 0;
+ }

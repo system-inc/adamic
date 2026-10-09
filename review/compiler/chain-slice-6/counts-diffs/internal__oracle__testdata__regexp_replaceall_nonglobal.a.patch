@@ -1,0 +1,53 @@
+--- main/internal/oracle/testdata/regexp_replaceall_nonglobal.a
++++ slice/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+@@ -8,6 +8,7 @@
+ static adamic_string adamic_string_0 = ADAMIC_STRING("a");
+ static adamic_string adamic_string_1 = ADAMIC_STRING("");
+ static adamic_string adamic_string_2 = ADAMIC_STRING("b");
++static adamic_string adamic_string_3 = ADAMIC_STRING("String.prototype.replaceAll called with a non-global RegExp argument");
+ 
+ static const adamic_regex_range adamic_regex_0_ranges_0[] = {{97,97},};
+ static const adamic_regex_instruction adamic_regex_0_code[] = {
+@@ -28,12 +29,37 @@
+ *position=at;*steps+=2;return true;
+ }
+ static const adamic_regex_program adamic_regex_0 = {adamic_regex_0_code,0,0,0,NULL,0,NULL,{UINT64_C(0),UINT64_C(8589934592)},true,adamic_regex_0_prefix,1,adamic_regex_0_fast,false,adamic_regex_0_ascii};
++static adamic_string * adamic_function_0_exception_regexp_global(adamic_string * adamic_local_0_argument, adamic_object * adamic_local_1_argument, adamic_string * adamic_local_2_argument);
++
++static adamic_slot_cache adamic_cache_1;
++
++static adamic_string * adamic_function_0_exception_regexp_global(adamic_string * adamic_local_0_argument, adamic_object * adamic_local_1_argument, adamic_string * adamic_local_2_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_2 = adamic_object_data_field(adamic_local_1_argument, "global", &adamic_cache_1)->boolean;
++	if (!adamic_temporary_2) {
++		adamic_object * adamic_temporary_3 = adamic_error_new_kind(&adamic_string_3, "TypeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_3)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_3);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_4 = adamic_regex_replace(adamic_local_0_argument, adamic_local_1_argument, adamic_local_2_argument, true);
++	adamic_string * adamic_temporary_5 = adamic_temporary_4;
++	return adamic_temporary_5;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_object * adamic_temporary_1 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
+-	adamic_string * adamic_temporary_2 = adamic_regex_replace(&adamic_string_0, adamic_temporary_1, &adamic_string_2, true);
+-	adamic_write_line(adamic_stdout, adamic_temporary_2);
+-	adamic_release(adamic_temporary_2);
+-	adamic_release(adamic_temporary_1);
++	adamic_object * adamic_temporary_6 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
++	adamic_string * adamic_temporary_7 = adamic_function_0_exception_regexp_global(&adamic_string_0, adamic_temporary_6, &adamic_string_2);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_7);
++		adamic_release(adamic_temporary_6);
++		adamic_uncaught();
++	}
++	adamic_write_line(adamic_stdout, adamic_temporary_7);
++	adamic_release(adamic_temporary_7);
++	adamic_release(adamic_temporary_6);
+ 	return 0;
+ }
