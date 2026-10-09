@@ -20,6 +20,7 @@ func init() {
 }
 
 func TestDateNodeOnlyMutants(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ fixture, operation, replacement string }{
 		{"epoch", "date_time", "date_getUTCSeconds"},
 		{"utc", "date_UTC", ""},
@@ -79,6 +80,7 @@ func TestDateNodeOnlyMutants(t *testing.T) {
 }
 
 func TestDateWASIAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -100,6 +102,7 @@ func TestDateWASIAgreesWithNode(t *testing.T) {
 	}
 }
 
+// Not parallel: t.Setenv changes the process-wide TZ environment variable.
 func TestDateFormsIgnoreHostTimezone(t *testing.T) {
 	t.Setenv("TZ", "Asia/Kathmandu")
 	for _, name := range []string{"format", "parse", "getters"} {

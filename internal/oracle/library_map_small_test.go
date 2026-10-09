@@ -23,6 +23,7 @@ func init() {
 // Every runtime mutant must compile, exit 0 and stay sanitizer-clean. Only source Node
 // decides whether its output is wrong; a native invariant failure does not kill these mutants.
 func TestMapSmallMutants(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"nan", "zero", "promotion_order", "promotion_iterator"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

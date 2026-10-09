@@ -34,6 +34,7 @@ func init() {
 // These mutants all finish cleanly. The independent source on Node is the only
 // check that rejects them; JavaScript and WASI exercise the same mutated IR too.
 func TestLibraryTscCensusMutants(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"substr_start", "substr_count", "push_order", "push_length", "push_snapshot"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

@@ -21,6 +21,7 @@ import (
 // subjects deduplicated. Every source-valid inventory pattern retains every
 // subject and its provenance; no expected Adamic result is stored.
 func TestRuntimeConstructorCorpusBudget(t *testing.T) {
+	t.Parallel()
 	file, err := os.Open(filepath.Join(repository, runtimeConstructorsDirectory, "corpus.json.gz"))
 	if err != nil {
 		t.Fatal(err)

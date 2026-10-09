@@ -17,6 +17,7 @@ func init() {
 	}{"internal/oracle/testdata/library_string_tail_repeat.a", true, false})
 }
 func TestStringTailRepeatMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_tail_repeat.a"))
 	if err != nil {
 		t.Fatal(err)

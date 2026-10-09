@@ -29,6 +29,7 @@ func init() {
 }
 
 func TestRuntimeConstructorFixtures(t *testing.T) {
+	t.Parallel()
 	if got := execute(t, "node", "--version"); string(got.stdout) != "v24.19.0\n" {
 		t.Fatal("requires Node 24.19.0")
 	}
@@ -130,6 +131,7 @@ func TestRuntimeConstructorCounts(t *testing.T) {
 }
 
 func TestRuntimeConstructorSites(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile(filepath.Join(repository, runtimeConstructorsDirectory, "sites.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -185,6 +187,7 @@ func TestRuntimeConstructorSites(t *testing.T) {
 }
 
 func TestRuntimeConstructorInputsGenerated(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TYPESCRIPT") == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT to the pinned TypeScript 6.0.3 module")
 	}
@@ -206,6 +209,7 @@ func runtimeConstructorArgs(t *testing.T, path, source string, args ...string) (
 }
 
 func TestRuntimeConstructorFailureSplit(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, runtimeConstructorsDirectory, "construction_failure.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -260,6 +264,7 @@ func TestRuntimeConstructorFailureSplit(t *testing.T) {
 // Run the scout's compiler shapes and the remaining constructors through the VM
 // with a finite budget too. Setting a limit disables optimized matcher paths.
 func TestRuntimeConstructorScoutBudget(t *testing.T) {
+	t.Parallel()
 	names := append([]string{}, scout23Fixtures...)
 	for _, name := range runtimeConstructorFixtures {
 		names = append(names, "new:"+name)

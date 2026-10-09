@@ -18,6 +18,7 @@ func init() {
 // ToUint16 in place of code-point validation finishes cleanly, but loses the catch and finally
 // observations that only the original source on Node can determine.
 func TestFromCodePointCatchMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/from_code_point_catch.a"))
 	if err != nil {
 		t.Fatal(err)

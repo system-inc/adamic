@@ -23,6 +23,7 @@ func init() {
 	}
 }
 func TestScout22PrototypeLinks(t *testing.T) {
+	t.Parallel()
 	original, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a"))
 	source, err := os.ReadFile(original)
 	if err != nil {
@@ -68,6 +69,7 @@ func TestScout22PrototypeLinks(t *testing.T) {
 }
 
 func TestScout22PrototypeLifetimes(t *testing.T) {
+	t.Parallel()
 	original, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a"))
 	if err != nil {
 		t.Fatal(err)

@@ -20,6 +20,7 @@ func init() {
 }
 
 func TestObjectSealNodeOnlyMutants(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, method, replacement string }{
 		{"shapes", "preventExtensions", "seal"},
 		{"shapes", "isFrozen", "isExtensible"},

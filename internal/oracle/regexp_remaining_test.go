@@ -24,6 +24,7 @@ func init() {
 
 var updateSurrogateCounts = flag.Bool("update-regexp-surrogate-counts", false, "update only surrogate fixture counts")
 
+// Not parallel: updates the shared internal/oracle/counts.md file with -update-regexp-surrogate-counts.
 func TestRegExpSurrogateCounts(t *testing.T) {
 	path := "internal/oracle/testdata/regexp_surrogate_methods.a"
 	row := counted(t, path, false, nil, false, false)

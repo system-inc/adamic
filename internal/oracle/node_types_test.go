@@ -32,6 +32,7 @@ func init() {
 // A separate test process supplies the real foreign compiler working directory
 // without changing the directory beneath parallel oracle tests.
 func TestEmbeddedNodeTypesPortable(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -106,6 +107,7 @@ func installDifferentNodeTypes(t *testing.T, root, directory string) {
 }
 
 func TestEmbeddedNodeTypesPortableWorker(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_NODE_PORTABLE_WORKER") != "1" {
 		t.Skip("executed by the foreign-directory portability test")
 	}

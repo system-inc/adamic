@@ -54,6 +54,7 @@ func TestLibraryIteratorDoneMutant(t *testing.T) {
 // Project roots are generated .ts copies of the authored .a fixtures. The ledger's
 // ambient witnesses themselves are checked by internal/load, not executed.
 func TestProjectIteratorBackends(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"iterable", "callback", "entries", "set_copy", "nested_entries", "done"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

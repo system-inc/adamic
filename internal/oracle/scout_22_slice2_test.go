@@ -21,6 +21,7 @@ func init() {
 	}
 }
 func TestScout22Slice2Fixtures(t *testing.T) {
+	t.Parallel()
 	for _, name := range scout22Slice2Fixtures {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
@@ -54,6 +55,7 @@ func TestScout22Slice2Fixtures(t *testing.T) {
 // Mutations remain well typed and terminate without diagnostics or leaks. The
 // source Node execution is the independent witness of the semantic difference.
 func TestScout22Slice2Mutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"conversion_hints", "conversion_errors", "property_errors", "range_errors", "padStart", "normalize", "toFixed", "toExponential", "toPrecision", "toString", "error_identity"} {
 		t.Run(family, func(t *testing.T) {
 			fixture := family

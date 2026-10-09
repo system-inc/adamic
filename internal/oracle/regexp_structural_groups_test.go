@@ -23,6 +23,7 @@ func init() {
 }
 
 func TestRegExpStructuralGroups(t *testing.T) {
+	t.Parallel()
 	for _, name := range regexpStructuralGroups {
 		t.Run(name, func(t *testing.T) {
 			path, _ := filepath.Abs(filepath.Join(repository, regexpStructuralGroupsDir+name+".a"))
@@ -48,6 +49,7 @@ func TestRegExpStructuralGroups(t *testing.T) {
 }
 
 func TestRegExpStructuralGroupsNodeMutants(t *testing.T) {
+	t.Parallel()
 	for _, mutant := range []struct{ name, fixture, old, new string }{
 		{"wrong-exec-start", "structural_exec", ".reference = adamic_regex_exec(self, arguments[0].reference)", ".reference = (self->slots[1].number = 2, adamic_regex_exec(self, arguments[0].reference))"},
 		{"wrong-test-result", "8e67677_structural_method", ".boolean = adamic_regex_test(self, arguments[0].reference)", ".boolean = !adamic_regex_test(self, arguments[0].reference)"},
@@ -95,6 +97,7 @@ func TestRegExpStructuralGroupsNodeMutants(t *testing.T) {
 // Diagnostic mutants finish normally: only the external Node comparison rejects
 // their incorrect catchable error messages, on every backend.
 func TestRegExpGroupDiagnosticNodeMutants(t *testing.T) {
+	t.Parallel()
 	for _, message := range []string{"groups.hasOwnProperty is not a function", "match.groups.toString is not a function"} {
 		t.Run(message, func(t *testing.T) {
 			path, _ := filepath.Abs(filepath.Join(repository, regexpStructuralGroupsDir+"caught.a"))

@@ -19,6 +19,7 @@ func init() {
 	}{literalFreshnessFixture, true, false})
 }
 
+// Not parallel: updates the shared internal/oracle/counts.md file with -update-regexp-literal-freshness-counts.
 func TestRegExpLiteralFreshnessCounts(t *testing.T) {
 	row := counted(t, literalFreshnessFixture, false, nil, false, false)
 	t.Log(row)

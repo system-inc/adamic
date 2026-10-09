@@ -25,6 +25,7 @@ func init() {
 // Each reader and backend is an independent shard. Mutants keep valid IR, finish cleanly, and
 // have no sanitizer findings; only comparison against Node catches them.
 func TestStringGenericMutants(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"receiver", "receiver_charat", "receiver_number", "pad_fill", "pad_fill_call", "errors"} {
 		t.Run(name, func(t *testing.T) {
 			for _, backend := range []string{"native", "JavaScript", "WASI"} {

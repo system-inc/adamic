@@ -177,10 +177,10 @@ func TestNodeProcessUnicodeDirectory(t *testing.T) {
 }
 
 func TestNodeProcessBlocking(t *testing.T) {
+	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux F_SETPIPE_SZ and inherited nonblocking pipe semantics")
 	}
-	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_blocking.a")
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	truth := nodeProcessTerminal(t, "backpressure", "node", "--disable-warning=ExperimentalWarning", runner, path)

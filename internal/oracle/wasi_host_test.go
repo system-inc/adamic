@@ -43,6 +43,7 @@ func wasiRuntimeRefusal(t *testing.T, actual run) {
 // The input fixtures hold the host members and their filesystem effects. Run
 // them with the same directory, arguments and uid as the native input leg.
 func TestWASIInputAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -99,6 +100,7 @@ func TestWASIInputAgreesWithNode(t *testing.T) {
 // Token pasting bypasses the target-aware generated-C check, so these calls
 // exercise the runtime refusal that a caller without target information sees.
 func TestWASIHostRuntimeRefusals(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -126,6 +128,7 @@ func TestWASIHostRuntimeRefusals(t *testing.T) {
 }
 
 func TestWASIFileAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

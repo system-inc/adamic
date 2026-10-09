@@ -13,6 +13,7 @@ import (
 // existing error formatter directly until the combined host landing arrives.
 // The source fixture remains Node's independent authority.
 func TestWASIEmptySymlinkAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

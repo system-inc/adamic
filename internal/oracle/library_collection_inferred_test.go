@@ -19,6 +19,7 @@ func init() {
 
 // Membership mutants execute cleanly; neither compilation nor sanitizers detect the wrong answer.
 func TestLibraryInferredCollectionMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"map", "set"} {
 		t.Run(family, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_"+family+"_inferred.a"))
