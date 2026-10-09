@@ -1,10 +1,21 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
+#ifdef ADAMIC_TARGET_WASI
+// Keep the inline path and also supply the request host's ownership export.
+#define adamic_release adamic_release_inline
+#endif
 #include "adamic.h"
+#ifdef ADAMIC_TARGET_WASI
+#undef adamic_release
+void adamic_release(void *value) { adamic_release_inline(value); }
+#endif
+#include "async.h"
 #include "count.h"
+#include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdatomic.h>
 
 // Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
 // chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
@@ -18,7 +29,10 @@
 // Under the address sanitizer every value comes from malloc and goes back to free, so ASan sees each
 // use after a free and LeakSanitizer each value never freed, as the oracle needs. ADAMIC_SLABS turns
 // the classes on there too, to test them: a free slot is then poisoned, so a use after a free is
-// still caught, though a leak isn't, since a chunk stays reachable.
+// still caught, though a leak isn't, since a chunk stays reachable. The oracle runs every fixture that
+// way as well, so a mistake in the classes themselves meets the sanitizers. ADAMIC_MALLOC turns them
+// off in a build without sanitizers, for macOS's leaks tool, which for the same reason can't see a
+// value leaked into a chunk.
 #if defined(__has_feature)
 #if __has_feature(address_sanitizer)
 #define SANITIZED 1
@@ -40,7 +54,7 @@
 #define UNPOISON(slot, size) ((void)(slot), (void)(size))
 #endif
 
-#if SANITIZED && !defined(ADAMIC_SLABS)
+#if (SANITIZED && !defined(ADAMIC_SLABS)) || defined(ADAMIC_MALLOC)
 #define SLABS 0
 #else
 #define SLABS 1
@@ -71,15 +85,18 @@ typedef struct chunk {
 	size_t live;
 	size_t class;
 	uint32_t number;
+	size_t owner;
+	_Atomic(struct remote_slot *) remote;
+	struct chunk *owned_next;
 } chunk;
 
 #define FIRST_SLOT ((sizeof(chunk) + GRANULE - 1) / GRANULE * GRANULE)
 
-static chunk *giving[CLASSES];
-static chunk *spares;
-static chunk **chunks;
-static size_t chunk_count;
-static size_t chunk_capacity;
+static _Thread_local chunk *giving[CLASSES];
+static _Thread_local chunk *spares;
+static _Thread_local chunk *owned_chunks;
+
+#include "heap_parallel.h"
 
 static void list_chunk(chunk *each) {
 	each->previous = NULL;
@@ -109,22 +126,16 @@ static chunk *new_chunk(size_t class) {
 	if (each != NULL) {
 		spares = each->next;
 	} else {
-		if (chunk_count == chunk_capacity) {
-			chunk_capacity = chunk_capacity == 0 ? 64 : chunk_capacity * 2;
-			chunk **grown = realloc(chunks, chunk_capacity * sizeof *grown);
-			if (grown == NULL || chunk_count >= UINT32_MAX) {
-				static const char message[] = "out of memory";
-				adamic_panic(message, sizeof message - 1);
-			}
-			chunks = grown;
-		}
 		each = malloc(CHUNK);
 		if (each == NULL) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
-		each->number = (uint32_t)chunk_count;
-		chunks[chunk_count++] = each;
+		each->owner = thread_number();
+		atomic_init(&each->remote, NULL);
+		each->owned_next = owned_chunks;
+		owned_chunks = each;
+		register_chunk(each);
 	}
 	each->free = NULL;
 	each->fresh = (char *)each + FIRST_SLOT;
@@ -136,7 +147,17 @@ static chunk *new_chunk(size_t class) {
 	return each;
 }
 
+static void drain_remote(chunk *each);
+
 static void *take(size_t class, uint32_t *number) {
+	// Full chunks may have remote frees waiting without being on a giving list.
+	if (giving[class] == NULL) {
+		for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) {
+			drain_remote(each);
+		}
+	} else {
+		drain_remote(giving[class]);
+	}
 	size_t size = (class + 1) * GRANULE;
 	chunk *each = giving[class];
 	if (each == NULL) {
@@ -161,8 +182,7 @@ static void *take(size_t class, uint32_t *number) {
 	return slot;
 }
 
-static void give(void *slot, uint32_t number) {
-	chunk *each = chunks[number];
+static void give_local(void *slot, chunk *each) {
 	size_t class = each->class;
 	size_t size = (class + 1) * GRANULE;
 	((free_slot *)slot)->next = each->free;
@@ -182,6 +202,34 @@ static void give(void *slot, uint32_t number) {
 		unlist_chunk(each);
 		each->next = spares;
 		spares = each;
+	}
+}
+
+// A remote free does not touch any owner-only list or live count. Queue nodes are out of line so
+// ASan can poison the entire freed slot, its first word included, exactly as on a local free.
+static void give(void *slot, uint32_t number) {
+	chunk *each = find_chunk(number);
+	if (each->owner == thread_number()) {
+		give_local(slot, each);
+		return;
+	}
+	ADAMIC_TSAN_PAUSE(adamic_tsan_remote_free);
+	remote_slot *node = malloc(sizeof *node);
+	if (node == NULL) { adamic_panic("out of memory", 13); }
+	node->slot = slot;
+	POISON(slot, (each->class + 1) * GRANULE);
+	remote_slot *head = atomic_load_explicit(&each->remote, memory_order_relaxed);
+	do { node->next = head; } while (!atomic_compare_exchange_weak_explicit(&each->remote, &head, node, memory_order_release, memory_order_relaxed));
+}
+
+static void drain_remote(chunk *each) {
+	remote_slot *node = atomic_exchange_explicit(&each->remote, NULL, memory_order_acquire);
+	while (node != NULL) {
+		remote_slot *next = node->next;
+		UNPOISON(node->slot, (each->class + 1) * GRANULE);
+		give_local(node->slot, each);
+		free(node);
+		node = next;
 	}
 }
 
@@ -208,23 +256,40 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 
 // deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
-	if (heap->slab == 0) {
+	uint32_t slab = heap->slab & ~ADAMIC_SHARED_HEADER;
+	if (slab == 0) {
 		free(heap);
 		return;
 	}
-	give(heap, heap->slab - 1);
+#if ADAMIC_SLAB_QUARANTINE
+	// Sanitized with slabs, a freed slot waits poisoned on this thread before it can be taken again,
+	// so a stale pointer can't read the next value made in it as its own; the slot it evicts is given
+	// back, to its chunk here or to its owner's remote list.
+	void *slot = heap;
+	uint32_t number = slab - 1;
+	if (!adamic_slab_quarantine(&slot, &number, (find_chunk(number)->class + 1) * GRANULE)) {
+		return;
+	}
+	give(slot, number);
+#else
+	give(heap, slab - 1);
+#endif
 }
 
-void *adamic_retain(void *value) {
-	ADAMIC_COUNT_RETAIN();
+void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES
+	// A canonical closure's interior cell is counted on its environment.
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
 #endif
-	if (heap != NULL && heap->references != 0) {
-		heap->references++;
+	if (heap != NULL) {
+		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
+		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
+		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
+		if ((intptr_t)count > 0) { heap->references = count + 1; }
+		else if (count != 0 && count != ADAMIC_SHARED) { ADAMIC_TSAN_PAUSE(adamic_tsan_shared_count); __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
 	}
 	return value;
 }
@@ -232,10 +297,10 @@ void *adamic_retain(void *value) {
 // Freeing works from a list, never by recursion, so letting go of a chain a million long can't
 // overflow the stack: a value whose count reaches zero is listed, and while the list has anything on
 // it, the next one is taken, its children are let go (perhaps listing them), and it's freed.
-static void **freeing;
-static size_t freeing_count;
-static size_t freeing_capacity;
-static bool draining;
+static _Thread_local void **freeing;
+static _Thread_local size_t freeing_count;
+static _Thread_local size_t freeing_capacity;
+static _Thread_local bool draining;
 
 static void list(void *value) {
 	if (freeing_count == freeing_capacity) {
@@ -251,22 +316,43 @@ static void list(void *value) {
 	freeing[freeing_count++] = value;
 }
 
-// let_go drops one reference and lists the value if that was its last.
-static void let_go(void *value) {
+// drop_reference lets go of one count and says what to free when it was the last: the value, or for
+// a canonical closure's interior cell its environment. It never touches the freeing queue itself.
+static adamic_heap *drop_reference(void *value) {
 	adamic_heap *heap = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
 #endif
-	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
-		list(heap);
+	if (heap == NULL) { return NULL; }
+	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
+	if ((intptr_t)count > 0) {
+		heap->references = count - 1;
+		return count == 1 ? heap : NULL;
 	}
+	if (count != 0 && count != ADAMIC_SHARED &&
+		__atomic_fetch_sub(&heap->references, 1, __ATOMIC_RELEASE) == ADAMIC_SHARED + 1) {
+		__atomic_thread_fence(__ATOMIC_ACQUIRE);
+		return heap;
+	}
+	return NULL;
+}
+
+// Children are queued for an outer drain, never freed recursively.
+static void let_go(void *value) {
+	adamic_heap *last = drop_reference(value);
+	if (last != NULL) { list(last); }
 }
 
 static void free_one(void *value) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
+	case adamic_kind_async_frame:
+	case adamic_kind_async_promise:
+	case adamic_kind_async_reaction:
+		adamic_async_free_children(value, let_go);
+		break;
 	case adamic_kind_string:
 		adamic_string_free_index(value);
 		// A shared slice lets go of the string whose bytes it reads.
@@ -360,17 +446,42 @@ __attribute__((noinline)) static void release_last(void *value) {
 		return;
 	}
 	draining = true;
-	while (freeing_count > 0) {
-		free_one(freeing[--freeing_count]);
-	}
+	while (freeing_count > 0) { free_one(freeing[--freeing_count]); }
 	draining = false;
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
-	adamic_heap *heap = value;
-	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
-		return;
+void adamic_release_slow(void *value) {
+	adamic_heap *last = drop_reference(value);
+	if (last != NULL) { release_last(last); }
+}
+
+void adamic_heap_thread_end(void) {
+#if ADAMIC_SLAB_QUARANTINE
+	// The slots this thread holds go back before its remote frees are drained, so its own come home.
+	adamic_slab_quarantine_drain(give);
+#endif
+	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
+	free(freeing);
+	freeing = NULL;
+	freeing_capacity = 0;
+}
+
+// Called only after all workers join. No owner can allocate or publish remote frees now.
+void adamic_heap_end(void) {
+	adamic_heap_thread_end();
+	size_t count = atomic_load_explicit(&chunk_count, memory_order_relaxed);
+	for (size_t index = 0; index < count; index++) {
+		chunk *each = find_chunk((uint32_t)index);
+		remote_slot *node = atomic_load_explicit(&each->remote, memory_order_relaxed);
+		while (node != NULL) { remote_slot *next = node->next; free(node); node = next; }
+		free(each);
 	}
-	release_last(value);
+	for (size_t page = 0; page < (count + PAGE_SIZE - 1) / PAGE_SIZE; page++) {
+		free(atomic_load_explicit(&chunk_pages[page], memory_order_relaxed));
+	}
+}
+
+__attribute__((constructor)) static void heap_cleanup_at_exit(void) {
+	// Registered before main, so the lazily registered pool join runs before this cleanup.
+	atexit(adamic_heap_end);
 }

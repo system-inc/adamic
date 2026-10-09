@@ -1,0 +1,2 @@
+async function fail(): Promise<void> { throw new Error(''); }
+await fail();

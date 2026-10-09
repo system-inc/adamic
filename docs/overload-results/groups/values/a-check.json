@@ -1,0 +1,49 @@
+{
+  "a_check": {
+    "internal/oracle/testdata/overload_values/module-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-liar.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | numbe"
+    },
+    "internal/oracle/testdata/overload_values/module-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-valid.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | numb"
+    },
+    "internal/oracle/testdata/overload_values/narrow-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefin"
+    },
+    "internal/oracle/testdata/overload_values/narrow-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefi"
+    },
+    "internal/oracle/testdata/overload_values/order-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefine"
+    },
+    "internal/oracle/testdata/overload_values/order-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefin"
+    },
+    "internal/oracle/testdata/overload_values/proven.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_values/returned-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undef"
+    },
+    "internal/oracle/testdata/overload_values/returned-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | unde"
+    }
+  }
+}

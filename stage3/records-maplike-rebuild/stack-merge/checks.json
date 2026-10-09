@@ -1,0 +1,172 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "go",
+      "build",
+      "./..."
+    ],
+    "exit": 0,
+    "seconds": 24.437
+  },
+  {
+    "name": "compiler",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/records-stack-validation/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 2.304
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/..."
+    ],
+    "exit": 0,
+    "seconds": 1.05
+  },
+  {
+    "name": "counts",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded$",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 149.683
+  },
+  {
+    "name": "a-check",
+    "command": [
+      "python3",
+      "/tmp/records-stack-validation/a-check.py",
+      "docs/hidden-boundaries/landing/fast-gate.py.txt"
+    ],
+    "exit": 0,
+    "seconds": 4.33
+  },
+  {
+    "name": "lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "Record|DetachedOwn|Enumeration|Entries|LibraryMethod|Hidden|Optional|TypedArray",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 12.432
+  },
+  {
+    "name": "oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestRecord|TestPartialRecord|TestNamedRecord|TestDetachedOwn|TestOptionalField|TestNativeAgreesWithNode/internal/oracle/testdata/(records_|detached_own_|optional_|object_|enum|library_method_values|library_string_raw|method_coverage_object_descriptors|entries_)",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 38.1
+  },
+  {
+    "name": "entries",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestEntriesAcceptance$|^TestEntriesProvenance$|^TestEntriesRuntimeReadiness$",
+      "-count=1",
+      "-timeout",
+      "20m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 4.03
+  },
+  {
+    "name": "native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRecordsAgainstNode$|^TestRecordMutants$|^TestRecordReadMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 56.397
+  },
+  {
+    "name": "stage3",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 22.132
+  },
+  {
+    "name": "static-mutants",
+    "command": [
+      "python3",
+      "stage3/records-maplike-rebuild/run-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 112.449
+  },
+  {
+    "name": "named-mutants",
+    "command": [
+      "python3",
+      "stage3/named-index-records/run-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 26.787
+  },
+  {
+    "name": "counts-check",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded$",
+      "-count=1",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "seconds": 149.161
+  }
+]

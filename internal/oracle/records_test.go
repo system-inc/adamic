@@ -148,7 +148,7 @@ func TestRecordOwnershipMutant(t *testing.T) {
 	if diff := disagreement(onNode(t, path), got); diff != "" {
 		t.Fatalf("mutant should preserve output: %s", diff)
 	}
-	report := leakSanitizer(t, binary)
+	report := leakChecked(t, changed, binary)
 	if !strings.Contains(report, "LeakSanitizer") {
 		t.Fatalf("ownership mutant survived: %s", report)
 	}

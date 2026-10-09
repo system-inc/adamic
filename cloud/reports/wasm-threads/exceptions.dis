@@ -1,0 +1,262 @@
+
+/tmp/wasm-threads/wasm-objects/exceptions.o:	file format wasm
+
+Disassembly of section CODE:
+
+00000000 <CODE>:
+        # 2 functions in section.
+
+00000001 <adamic_error_new>:
+        .local i32, i32
+       6: 41 80 80 80 80 00    	i32.const	0
+			00000007:  R_WASM_MEMORY_ADDR_SLEB	error_shape+0
+       c: 10 80 80 80 80 00    	call	0
+			0000000d:  R_WASM_FUNCTION_INDEX_LEB	adamic_object_new+0
+      12: 21 01        	local.set	1
+      14: 02 40        	block   	
+      16: 02 40        	block   	
+      18: 41 00        	i32.const	0
+      1a: 28 02 98 80 80 80 00 	i32.load	24
+			0000001c:  R_WASM_MEMORY_ADDR_LEB	error_name+8
+      21: 41 00        	i32.const	0
+      23: 48           	i32.lt_s
+      24: 0d 00        	br_if   	0                       # 0: down to label1
+      26: 41 00        	i32.const	0
+      28: 28 02 90 80 80 80 00 	i32.load	16
+			0000002a:  R_WASM_MEMORY_ADDR_LEB	error_name+0
+      2f: 22 02        	local.tee	2
+      31: 45           	i32.eqz
+      32: 0d 00        	br_if   	0                       # 0: down to label1
+      34: 41 00        	i32.const	0
+      36: 20 02        	local.get	2
+      38: 41 01        	i32.const	1
+      3a: 6a           	i32.add 
+      3b: 36 02 90 80 80 80 00 	i32.store	16
+			0000003d:  R_WASM_MEMORY_ADDR_LEB	error_name+0
+      42: 41 90 80 80 80 00    	i32.const	16
+			00000043:  R_WASM_MEMORY_ADDR_SLEB	error_name+0
+      48: 21 02        	local.set	2
+      4a: 0c 01        	br      	1                       # 1: down to label0
+      4c: 0b           	end
+      4d: 41 90 80 80 80 00    	i32.const	16
+			0000004e:  R_WASM_MEMORY_ADDR_SLEB	error_name+0
+      53: 10 81 80 80 80 00    	call	1
+			00000054:  R_WASM_FUNCTION_INDEX_LEB	adamic_retain_slow+0
+      59: 21 02        	local.set	2
+      5b: 0b           	end
+      5c: 20 01        	local.get	1
+      5e: 20 02        	local.get	2
+      60: 36 02 18     	i32.store	24
+      63: 02 40        	block   	
+      65: 20 00        	local.get	0
+      67: 45           	i32.eqz
+      68: 0d 00        	br_if   	0                       # 0: down to label2
+      6a: 20 00        	local.get	0
+      6c: 28 02 08     	i32.load	8
+      6f: 41 00        	i32.const	0
+      71: 48           	i32.lt_s
+      72: 0d 00        	br_if   	0                       # 0: down to label2
+      74: 20 00        	local.get	0
+      76: 28 02 00     	i32.load	0
+      79: 22 02        	local.tee	2
+      7b: 45           	i32.eqz
+      7c: 0d 00        	br_if   	0                       # 0: down to label2
+      7e: 20 00        	local.get	0
+      80: 20 02        	local.get	2
+      82: 41 01        	i32.const	1
+      84: 6a           	i32.add 
+      85: 36 02 00     	i32.store	0
+      88: 20 01        	local.get	1
+      8a: 20 00        	local.get	0
+      8c: 36 02 20     	i32.store	32
+      8f: 20 01        	local.get	1
+      91: 0f           	return
+      92: 0b           	end
+      93: 20 01        	local.get	1
+      95: 20 00        	local.get	0
+      97: 10 81 80 80 80 00    	call	1
+			00000098:  R_WASM_FUNCTION_INDEX_LEB	adamic_retain_slow+0
+      9d: 36 02 20     	i32.store	32
+      a0: 20 01        	local.get	1
+      a2: 0b           	end
+
+000000a3 <adamic_uncaught>:
+        .local i32, i32, i32, i32, i32, i32
+      a8: 02 40        	block   	
+      aa: 02 40        	block   	
+      ac: 41 00        	i32.const	0
+      ae: 28 02 c4 80 80 80 00 	i32.load	68
+			000000b0:  R_WASM_MEMORY_ADDR_LEB	adamic_thrown+0
+      b5: 22 00        	local.tee	0
+      b7: 28 02 10     	i32.load	16
+      ba: 22 01        	local.tee	1
+      bc: 45           	i32.eqz
+      bd: 0d 00        	br_if   	0                       # 0: down to label4
+      bf: 20 01        	local.get	1
+      c1: 2d 00 20     	i32.load8_u	32
+      c4: 41 01        	i32.const	1
+      c6: 47           	i32.ne  
+      c7: 0d 00        	br_if   	0                       # 0: down to label4
+      c9: 20 00        	local.get	0
+      cb: 41 c8 80 80 80 00    	i32.const	72
+			000000cc:  R_WASM_MEMORY_ADDR_SLEB	.L.str+0
+      d1: 41 b4 80 80 80 00    	i32.const	52
+			000000d2:  R_WASM_MEMORY_ADDR_SLEB	adamic_uncaught.name_cache+0
+      d7: 10 82 80 80 80 00    	call	2
+			000000d8:  R_WASM_FUNCTION_INDEX_LEB	adamic_static_field+0
+      dd: 21 00        	local.set	0
+      df: 0c 01        	br      	1                       # 1: down to label3
+      e1: 0b           	end
+      e2: 02 40        	block   	
+      e4: 41 00        	i32.const	0
+      e6: 28 02 b4 80 80 80 00 	i32.load	52
+			000000e8:  R_WASM_MEMORY_ADDR_LEB	adamic_uncaught.name_cache+0
+      ed: 20 00        	local.get	0
+      ef: 28 02 0c     	i32.load	12
+      f2: 47           	i32.ne  
+      f3: 0d 00        	br_if   	0                       # 0: down to label5
+      f5: 20 00        	local.get	0
+      f7: 41 00        	i32.const	0
+      f9: 28 02 b8 80 80 80 00 	i32.load	56
+			000000fb:  R_WASM_MEMORY_ADDR_LEB	adamic_uncaught.name_cache+4
+     100: 41 03        	i32.const	3
+     102: 74           	i32.shl 
+     103: 6a           	i32.add 
+     104: 41 18        	i32.const	24
+     106: 6a           	i32.add 
+     107: 21 00        	local.set	0
+     109: 0c 01        	br      	1                       # 1: down to label4
+     10b: 0b           	end
+     10c: 20 00        	local.get	0
+     10e: 41 c8 80 80 80 00    	i32.const	72
+			0000010f:  R_WASM_MEMORY_ADDR_SLEB	.L.str+0
+     114: 41 b4 80 80 80 00    	i32.const	52
+			00000115:  R_WASM_MEMORY_ADDR_SLEB	adamic_uncaught.name_cache+0
+     11a: 10 83 80 80 80 00    	call	3
+			0000011b:  R_WASM_FUNCTION_INDEX_LEB	adamic_object_find+0
+     120: 21 00        	local.set	0
+     122: 0b           	end
+     123: 20 00        	local.get	0
+     125: 28 02 00     	i32.load	0
+     128: 21 01        	local.set	1
+     12a: 02 40        	block   	
+     12c: 02 40        	block   	
+     12e: 41 00        	i32.const	0
+     130: 28 02 c4 80 80 80 00 	i32.load	68
+			00000132:  R_WASM_MEMORY_ADDR_LEB	adamic_thrown+0
+     137: 22 00        	local.tee	0
+     139: 28 02 10     	i32.load	16
+     13c: 22 02        	local.tee	2
+     13e: 45           	i32.eqz
+     13f: 0d 00        	br_if   	0                       # 0: down to label7
+     141: 20 02        	local.get	2
+     143: 2d 00 20     	i32.load8_u	32
+     146: 41 01        	i32.const	1
+     148: 47           	i32.ne  
+     149: 0d 00        	br_if   	0                       # 0: down to label7
+     14b: 20 00        	local.get	0
+     14d: 41 cd 80 80 80 00    	i32.const	77
+			0000014e:  R_WASM_MEMORY_ADDR_SLEB	.L.str.1+0
+     153: 41 bc 80 80 80 00    	i32.const	60
+			00000154:  R_WASM_MEMORY_ADDR_SLEB	adamic_uncaught.message_cache+0
+     159: 10 82 80 80 80 00    	call	2
+			0000015a:  R_WASM_FUNCTION_INDEX_LEB	adamic_static_field+0
+     15f: 21 00        	local.set	0
+     161: 0c 01        	br      	1                       # 1: down to label6
+     163: 0b           	end
+     164: 02 40        	block   	
+     166: 41 00        	i32.const	0
+     168: 28 02 bc 80 80 80 00 	i32.load	60
+			0000016a:  R_WASM_MEMORY_ADDR_LEB	adamic_uncaught.message_cache+0
+     16f: 20 00        	local.get	0
+     171: 28 02 0c     	i32.load	12
+     174: 47           	i32.ne  
+     175: 0d 00        	br_if   	0                       # 0: down to label8
+     177: 20 00        	local.get	0
+     179: 41 00        	i32.const	0
+     17b: 28 02 c0 80 80 80 00 	i32.load	64
+			0000017d:  R_WASM_MEMORY_ADDR_LEB	adamic_uncaught.message_cache+4
+     182: 41 03        	i32.const	3
+     184: 74           	i32.shl 
+     185: 6a           	i32.add 
+     186: 41 18        	i32.const	24
+     188: 6a           	i32.add 
+     189: 21 00        	local.set	0
+     18b: 0c 01        	br      	1                       # 1: down to label7
+     18d: 0b           	end
+     18e: 20 00        	local.get	0
+     190: 41 cd 80 80 80 00    	i32.const	77
+			00000191:  R_WASM_MEMORY_ADDR_SLEB	.L.str.1+0
+     196: 41 bc 80 80 80 00    	i32.const	60
+			00000197:  R_WASM_MEMORY_ADDR_SLEB	adamic_uncaught.message_cache+0
+     19c: 10 83 80 80 80 00    	call	3
+			0000019d:  R_WASM_FUNCTION_INDEX_LEB	adamic_object_find+0
+     1a2: 21 00        	local.set	0
+     1a4: 0b           	end
+     1a5: 02 40        	block   	
+     1a7: 20 00        	local.get	0
+     1a9: 28 02 00     	i32.load	0
+     1ac: 22 03        	local.tee	3
+     1ae: 28 02 0c     	i32.load	12
+     1b1: 22 00        	local.tee	0
+     1b3: 41 02        	i32.const	2
+     1b5: 6a           	i32.add 
+     1b6: 41 00        	i32.const	0
+     1b8: 20 00        	local.get	0
+     1ba: 1b           	f32.select
+     1bb: 20 01        	local.get	1
+     1bd: 28 02 0c     	i32.load	12
+     1c0: 22 02        	local.tee	2
+     1c2: 6a           	i32.add 
+     1c3: 22 04        	local.tee	4
+     1c5: 41 01        	i32.const	1
+     1c7: 6a           	i32.add 
+     1c8: 10 84 80 80 80 00    	call	4
+			000001c9:  R_WASM_FUNCTION_INDEX_LEB	malloc+0
+     1ce: 22 05        	local.tee	5
+     1d0: 45           	i32.eqz
+     1d1: 0d 00        	br_if   	0                       # 0: down to label9
+     1d3: 02 40        	block   	
+     1d5: 20 02        	local.get	2
+     1d7: 45           	i32.eqz
+     1d8: 0d 00        	br_if   	0                       # 0: down to label10
+     1da: 20 05        	local.get	5
+     1dc: 20 01        	local.get	1
+     1de: 28 02 10     	i32.load	16
+     1e1: 20 02        	local.get	2
+     1e3: fc 0a 00 00  	memory.copy	0, 0
+     1e7: 0b           	end
+     1e8: 02 40        	block   	
+     1ea: 20 00        	local.get	0
+     1ec: 45           	i32.eqz
+     1ed: 0d 00        	br_if   	0                       # 0: down to label11
+     1ef: 20 05        	local.get	5
+     1f1: 20 02        	local.get	2
+     1f3: 6a           	i32.add 
+     1f4: 22 01        	local.tee	1
+     1f6: 41 ba c0 00  	i32.const	8250
+     1fa: 3b 00 00     	i32.store16	0:p2align=0
+     1fd: 20 00        	local.get	0
+     1ff: 45           	i32.eqz
+     200: 0d 00        	br_if   	0                       # 0: down to label11
+     202: 20 01        	local.get	1
+     204: 41 02        	i32.const	2
+     206: 6a           	i32.add 
+     207: 20 03        	local.get	3
+     209: 28 02 10     	i32.load	16
+     20c: 20 00        	local.get	0
+     20e: fc 0a 00 00  	memory.copy	0, 0
+     212: 0b           	end
+     213: 20 05        	local.get	5
+     215: 20 04        	local.get	4
+     217: 10 85 80 80 80 00    	call	5
+			00000218:  R_WASM_FUNCTION_INDEX_LEB	adamic_panic+0
+     21d: 00           	unreachable
+     21e: 0b           	end
+     21f: 41 d5 80 80 80 00    	i32.const	85
+			00000220:  R_WASM_MEMORY_ADDR_SLEB	adamic_uncaught.out_of_memory+0
+     225: 41 0d        	i32.const	13
+     227: 10 85 80 80 80 00    	call	5
+			00000228:  R_WASM_FUNCTION_INDEX_LEB	adamic_panic+0
+     22d: 00           	unreachable
+     22e: 0b           	end

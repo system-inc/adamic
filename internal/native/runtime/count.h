@@ -11,18 +11,19 @@
 #define ADAMIC_COUNT_H
 
 #include <stddef.h>
+#include <stdatomic.h>
 
 typedef struct adamic_counts {
-	size_t allocations;
-	size_t frees;
-	size_t retains;
-	size_t releases;
+	_Atomic size_t allocations;
+	_Atomic size_t frees;
+	_Atomic size_t retains;
+	_Atomic size_t releases;
 	// live is allocations less frees, and peak the most that were ever live at once.
-	size_t live;
-	size_t peak;
+	_Atomic size_t live;
+	_Atomic size_t peak;
 	// regions is the values let go of with their region rather than freed one at a time (region.c):
 	// a finished program's allocations are its frees and its regions.
-	size_t regions;
+	_Atomic size_t regions;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
@@ -35,11 +36,11 @@ void adamic_count_report(void);
 
 #ifdef ADAMIC_COUNT
 #define ADAMIC_COUNT_ALLOCATION() adamic_count_allocation()
-#define ADAMIC_COUNT_FREE() (adamic_counted.frees++, adamic_counted.live--)
-#define ADAMIC_COUNT_RETAIN() (adamic_counted.retains++)
-#define ADAMIC_COUNT_RELEASE() (adamic_counted.releases++)
+#define ADAMIC_COUNT_FREE() (atomic_fetch_add_explicit(&adamic_counted.frees, 1, memory_order_relaxed), atomic_fetch_sub_explicit(&adamic_counted.live, 1, memory_order_relaxed))
+#define ADAMIC_COUNT_RETAIN() atomic_fetch_add_explicit(&adamic_counted.retains, 1, memory_order_relaxed)
+#define ADAMIC_COUNT_RELEASE() atomic_fetch_add_explicit(&adamic_counted.releases, 1, memory_order_relaxed)
 #define ADAMIC_COUNT_REPORT() adamic_count_report()
-#define ADAMIC_COUNT_REGION(count) (adamic_counted.regions += (count), adamic_counted.live -= (count))
+#define ADAMIC_COUNT_REGION(count) (atomic_fetch_add_explicit(&adamic_counted.regions, (count), memory_order_relaxed), atomic_fetch_sub_explicit(&adamic_counted.live, (count), memory_order_relaxed))
 #else
 #define ADAMIC_COUNT_ALLOCATION() ((void)0)
 #define ADAMIC_COUNT_FREE() ((void)0)

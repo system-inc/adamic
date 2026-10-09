@@ -80,10 +80,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "06_import_order_mutant/main.a",
@@ -97,10 +94,7 @@
       "stderr": "adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization\n",
       "exit": 70
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_namespace_barrel/main.a",

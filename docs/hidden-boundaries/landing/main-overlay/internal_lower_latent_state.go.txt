@@ -1,0 +1,654 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+func latentCopy_lowering(value lowering, seen map[any]any) lowering {
+	result := value
+	result.latentDeclarations = func(value map[int]*ast.Node) map[int]*ast.Node {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]*ast.Node, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.latentDeclarations)
+	result.latentReady = func(value map[int]bool) map[int]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.latentReady)
+	result.latentAncestors = func(value map[*ast.Node]bool) map[*ast.Node]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Node]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.latentAncestors)
+	result.result = latentCopyIR(value.result, seen)
+	result.provenModuleReads = func(value map[*ast.Node]bool) map[*ast.Node]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Node]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.provenModuleReads)
+	result.cycleReadFindings = func(value []Finding) []Finding {
+		if value == nil {
+			return nil
+		}
+		result := make([]Finding, len(value))
+		for i, item := range value {
+			result[i] = item
+		}
+		return result
+	}(value.cycleReadFindings)
+	result.strings = func(value map[string]int) map[string]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.strings)
+	result.locals = func(value map[*ast.Symbol]int) map[*ast.Symbol]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.locals)
+	result.functions = func(value map[*ast.Symbol]int) map[*ast.Symbol]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.functions)
+	result.function = latentCopyIR(value.function, seen)
+	result.closures = func(value []int) []int {
+		if value == nil {
+			return nil
+		}
+		result := make([]int, len(value))
+		for i, item := range value {
+			result[i] = item
+		}
+		return result
+	}(value.closures)
+	result.omittedOptionals = func(value map[*ast.Symbol]bool) map[*ast.Symbol]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.omittedOptionals)
+	result.classes = func(value map[*ast.Symbol]*ast.Node) map[*ast.Symbol]*ast.Node {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]*ast.Node, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.classes)
+	result.statics = func(value map[*ast.Symbol]*instance) map[*ast.Symbol]*instance {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]*instance, len(value))
+		for key, item := range value {
+			result[key] = latentCopyPointer_instance(item, seen)
+		}
+		return result
+	}(value.statics)
+	result.staticGlobals = func(value map[*ast.Symbol]int) map[*ast.Symbol]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.staticGlobals)
+	result.instances = func(value map[string]*instance) map[string]*instance {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]*instance, len(value))
+		for key, item := range value {
+			result[key] = latentCopyPointer_instance(item, seen)
+		}
+		return result
+	}(value.instances)
+	result.derivedAncestors = func(value map[*ast.Symbol]bool) map[*ast.Symbol]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.derivedAncestors)
+	result.privateOwners = func(value map[*ast.Node]int) map[*ast.Node]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Node]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.privateOwners)
+	result.instance = latentCopyPointer_instance(value.instance, seen)
+	result.substitution = func(value map[*checker.Type]ir.Type) map[*checker.Type]ir.Type {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*checker.Type]ir.Type, len(value))
+		for key, item := range value {
+			result[key] = latentCopyIR(item, seen)
+		}
+		return result
+	}(value.substitution)
+	result.alwaysUndefined = func(value map[*ast.Symbol]bool) map[*ast.Symbol]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.alwaysUndefined)
+	result.signed = func(value map[int]signed) map[int]signed {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]signed, len(value))
+		for key, item := range value {
+			result[key] = latentCopy_signed(item, seen)
+		}
+		return result
+	}(value.signed)
+	result.forwarders = func(value map[int]int) map[int]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.forwarders)
+	result.forwarderValues = func(value []ir.Statement) []ir.Statement {
+		if value == nil {
+			return nil
+		}
+		result := make([]ir.Statement, len(value))
+		for i, item := range value {
+			result[i] = latentCopyIR(item, seen)
+		}
+		return result
+	}(value.forwarderValues)
+	result.generics = func(value map[*ast.Symbol]*ast.Node) map[*ast.Symbol]*ast.Node {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]*ast.Node, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.generics)
+	result.genericInstances = func(value map[string]int) map[string]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.genericInstances)
+	result.classGenericInstances = func(value map[string]map[string]int) map[string]map[string]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]map[string]int, len(value))
+		for key, item := range value {
+			result[key] = func(value map[string]int) map[string]int {
+				if value == nil {
+					return nil
+				}
+				result := make(map[string]int, len(value))
+				for key, item := range value {
+					result[key] = item
+				}
+				return result
+			}(item)
+		}
+		return result
+	}(value.classGenericInstances)
+	result.caught = func(value map[*ast.Symbol]bool) map[*ast.Symbol]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Symbol]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.caught)
+	result.tries = func(value []tryRecord) []tryRecord {
+		if value == nil {
+			return nil
+		}
+		result := make([]tryRecord, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_tryRecord(item, seen)
+		}
+		return result
+	}(value.tries)
+	result.initializing = func(value map[int]*ast.Node) map[int]*ast.Node {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]*ast.Node, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.initializing)
+	result.localTypes = func(value map[int]*checker.Type) map[int]*checker.Type {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]*checker.Type, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.localTypes)
+	result.localAlso = func(value map[int][]*checker.Type) map[int][]*checker.Type {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int][]*checker.Type, len(value))
+		for key, item := range value {
+			result[key] = func(value []*checker.Type) []*checker.Type {
+				if value == nil {
+					return nil
+				}
+				result := make([]*checker.Type, len(value))
+				for i, item := range value {
+					result[i] = item
+				}
+				return result
+			}(item)
+		}
+		return result
+	}(value.localAlso)
+	result.localNodes = func(value map[int]*ast.Node) map[int]*ast.Node {
+		if value == nil {
+			return nil
+		}
+		result := make(map[int]*ast.Node, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.localNodes)
+	result.closureRecords = func(value []closureRecord) []closureRecord {
+		if value == nil {
+			return nil
+		}
+		result := make([]closureRecord, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_closureRecord(item, seen)
+		}
+		return result
+	}(value.closureRecords)
+	result.typeMapper = latentCopyPointer_typeMapper(value.typeMapper, seen)
+	result.instantiated = func(value []*checker.Type) []*checker.Type {
+		if value == nil {
+			return nil
+		}
+		result := make([]*checker.Type, len(value))
+		for i, item := range value {
+			result[i] = item
+		}
+		return result
+	}(value.instantiated)
+	result.writeSites = func(value []writeSite) []writeSite {
+		if value == nil {
+			return nil
+		}
+		result := make([]writeSite, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_writeSite(item, seen)
+		}
+		return result
+	}(value.writeSites)
+	result.accessorCaptures = func(value []accessorCapture) []accessorCapture {
+		if value == nil {
+			return nil
+		}
+		result := make([]accessorCapture, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_accessorCapture(item, seen)
+		}
+		return result
+	}(value.accessorCaptures)
+	result.accessorNames = func(value map[string]bool) map[string]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.accessorNames)
+	return result
+}
+func latentCopyPointer_lowering(value *lowering, seen map[any]any) *lowering {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*lowering)
+	}
+	result := new(lowering)
+	seen[value] = result
+	*result = latentCopy_lowering(*value, seen)
+	return result
+}
+func latentCopy_accessorCapture(value accessorCapture, seen map[any]any) accessorCapture {
+	result := value
+	return result
+}
+func latentCopyPointer_accessorCapture(value *accessorCapture, seen map[any]any) *accessorCapture {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*accessorCapture)
+	}
+	result := new(accessorCapture)
+	seen[value] = result
+	*result = latentCopy_accessorCapture(*value, seen)
+	return result
+}
+func latentCopy_closureRecord(value closureRecord, seen map[any]any) closureRecord {
+	result := value
+	return result
+}
+func latentCopyPointer_closureRecord(value *closureRecord, seen map[any]any) *closureRecord {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*closureRecord)
+	}
+	result := new(closureRecord)
+	seen[value] = result
+	*result = latentCopy_closureRecord(*value, seen)
+	return result
+}
+func latentCopy_instance(value instance, seen map[any]any) instance {
+	result := value
+	result.methods = func(value map[string]int) map[string]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.methods)
+	result.slots = func(value map[string]int) map[string]int {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]int, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.slots)
+	result.base = latentCopyPointer_instance(value.base, seen)
+	result.unreadyThis = func(value map[*ast.Node]bool) map[*ast.Node]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Node]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.unreadyThis)
+	result.superStates = func(value map[*ast.Node]uint8) map[*ast.Node]uint8 {
+		if value == nil {
+			return nil
+		}
+		result := make(map[*ast.Node]uint8, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.superStates)
+	result.staticMethods = func(value map[string]bool) map[string]bool {
+		if value == nil {
+			return nil
+		}
+		result := make(map[string]bool, len(value))
+		for key, item := range value {
+			result[key] = item
+		}
+		return result
+	}(value.staticMethods)
+	result.thisLocals = func(value []int) []int {
+		if value == nil {
+			return nil
+		}
+		result := make([]int, len(value))
+		for i, item := range value {
+			result[i] = item
+		}
+		return result
+	}(value.thisLocals)
+	result.templates = func(value []template) []template {
+		if value == nil {
+			return nil
+		}
+		result := make([]template, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_template(item, seen)
+		}
+		return result
+	}(value.templates)
+	return result
+}
+func latentCopyPointer_instance(value *instance, seen map[any]any) *instance {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*instance)
+	}
+	result := new(instance)
+	seen[value] = result
+	*result = latentCopy_instance(*value, seen)
+	return result
+}
+func latentCopy_signed(value signed, seen map[any]any) signed {
+	result := value
+	result.defaults = func(value []defaulted) []defaulted {
+		if value == nil {
+			return nil
+		}
+		result := make([]defaulted, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_defaulted(item, seen)
+		}
+		return result
+	}(value.defaults)
+	result.patterns = func(value []patterned) []patterned {
+		if value == nil {
+			return nil
+		}
+		result := make([]patterned, len(value))
+		for i, item := range value {
+			result[i] = latentCopy_patterned(item, seen)
+		}
+		return result
+	}(value.patterns)
+	return result
+}
+func latentCopyPointer_signed(value *signed, seen map[any]any) *signed {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*signed)
+	}
+	result := new(signed)
+	seen[value] = result
+	*result = latentCopy_signed(*value, seen)
+	return result
+}
+func latentCopy_tryRecord(value tryRecord, seen map[any]any) tryRecord {
+	result := value
+	result.body = func(value []ir.Statement) []ir.Statement {
+		if value == nil {
+			return nil
+		}
+		result := make([]ir.Statement, len(value))
+		for i, item := range value {
+			result[i] = latentCopyIR(item, seen)
+		}
+		return result
+	}(value.body)
+	return result
+}
+func latentCopyPointer_tryRecord(value *tryRecord, seen map[any]any) *tryRecord {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*tryRecord)
+	}
+	result := new(tryRecord)
+	seen[value] = result
+	*result = latentCopy_tryRecord(*value, seen)
+	return result
+}
+func latentCopy_typeMapper(value typeMapper, seen map[any]any) typeMapper {
+	result := value
+	return result
+}
+func latentCopyPointer_typeMapper(value *typeMapper, seen map[any]any) *typeMapper {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*typeMapper)
+	}
+	result := new(typeMapper)
+	seen[value] = result
+	*result = latentCopy_typeMapper(*value, seen)
+	return result
+}
+func latentCopy_writeSite(value writeSite, seen map[any]any) writeSite {
+	result := value
+	return result
+}
+func latentCopyPointer_writeSite(value *writeSite, seen map[any]any) *writeSite {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*writeSite)
+	}
+	result := new(writeSite)
+	seen[value] = result
+	*result = latentCopy_writeSite(*value, seen)
+	return result
+}
+func latentCopy_defaulted(value defaulted, seen map[any]any) defaulted {
+	result := value
+	return result
+}
+func latentCopyPointer_defaulted(value *defaulted, seen map[any]any) *defaulted {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*defaulted)
+	}
+	result := new(defaulted)
+	seen[value] = result
+	*result = latentCopy_defaulted(*value, seen)
+	return result
+}
+func latentCopy_patterned(value patterned, seen map[any]any) patterned {
+	result := value
+	return result
+}
+func latentCopyPointer_patterned(value *patterned, seen map[any]any) *patterned {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*patterned)
+	}
+	result := new(patterned)
+	seen[value] = result
+	*result = latentCopy_patterned(*value, seen)
+	return result
+}
+func latentCopy_template(value template, seen map[any]any) template { result := value; return result }
+func latentCopyPointer_template(value *template, seen map[any]any) *template {
+	if value == nil {
+		return nil
+	}
+	if prior, ok := seen[value]; ok {
+		return prior.(*template)
+	}
+	result := new(template)
+	seen[value] = result
+	*result = latentCopy_template(*value, seen)
+	return result
+}

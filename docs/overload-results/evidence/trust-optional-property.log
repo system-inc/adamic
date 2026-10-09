@@ -1,0 +1,10 @@
+=== RUN   TestOverloadResultsRefuses
+=== PAUSE TestOverloadResultsRefuses
+=== CONT  TestOverloadResultsRefuses
+=== RUN   TestOverloadResultsRefuses/optional_result_property
+    overload_results_test.go:107: wanted cannot be served, got <nil>
+--- FAIL: TestOverloadResultsRefuses (0.03s)
+    --- FAIL: TestOverloadResultsRefuses/optional_result_property (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.039s
+FAIL
