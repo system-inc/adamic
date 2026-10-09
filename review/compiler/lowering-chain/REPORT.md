@@ -102,3 +102,13 @@ Representation conflict keeps readonly-array views and opaque Function closure s
 ok  	github.com/system-inc/adamic/internal/oracle	82.026s
 
 Top-level pass seconds: {"TestMergedFieldAdamicReadRefused": 12.97, "TestFunctionAdamicUnusedAnnotationRefused": 12.99, "TestFunctionTypeScriptCallRefused": 13.04, "TestMergedFieldAdamicComputedRefused": 0.16, "TestMergedFieldAdamicInitializedAgreesWithNode": 13.35, "TestMergedFieldTypeScriptInitializedAgreesWithNode": 0.5, "TestMergedFieldTypeScriptComputedChecked": 0.51, "TestMergedFieldTypeScriptMissingChecked": 0.44, "TestFunctionAdamicCallAnnotationRefused": 0.11, "TestMergedFieldAdamicUnusedRefused": 0.15, "TestMergedFieldTypeScriptUnusedAccepted": 0.52, "TestFunctionTypeScriptUnusedAccepted": 0.42, "TestFunctionAdamicLengthAnnotationRefused": 0.14, "TestFunctionCallSignatureAgreesWithNode": 0.44, "TestNativeAgreesWithNode": 0.06, "TestFunctionTypeScriptLengthAgreesWithNode": 10.19}. All named controls pass; count-changes and results JSON retain every row and observation.
+
+## Member 10: compiler/assignment-proofs-main a6f05066866debe937c40062e276fcd385d60363
+
+Counts-only conflict regenerated on Linux. Six assignment-proof programs and six source mutants match Node in JavaScript, sanitized native and release native. No existing count row changes.
+
+ok  	github.com/system-inc/adamic/internal/oracle	57.874s
+
+Top-level pass seconds: {"TestAssignmentProofWiderTargetMutant": 1.46, "TestAssignmentProofChained": 1.49, "TestAssignmentProofIfNarrowingMutant": 1.51, "TestAssignmentProofScannerKeyword": 1.52, "TestAssignmentProofWiderTarget": 1.4, "TestAssignmentProofScannerKeywordMutant": 1.46, "TestAssignmentProofCompoundMutant": 1.54, "TestAssignmentProofReturnDefinedMutant": 1.52, "TestAssignmentProofReturnDefined": 1.4, "TestAssignmentProofCompound": 1.55, "TestAssignmentProofChainedMutant": 1.47, "TestAssignmentProofIfNarrowing": 1.56}. All named controls pass; count-changes and results JSON retain every row and observation.
+
+Member 9 ledger correction: the parser now includes .ts and TypeScript-mode row labels. The actual regeneration added eight rows, not the earlier summary of two. Six were mode-qualified. No counts value was edited.

@@ -8,7 +8,7 @@ prefix = 'member-' + number
 def rows(path):
     result = {}
     for line in path.read_text().splitlines():
-        if not line.startswith('| ') or '.a |' not in line:
+        if not line.startswith('| ') or not any(ext in line for ext in ('.a', '.ts')):
             continue
         parts = [part.strip() for part in line.split('|')[1:-1]]
         if len(parts) == 7:
@@ -16,7 +16,7 @@ def rows(path):
     return result
 before = rows(root / (prefix + '-before-counts.md'))
 incoming = rows(root / (prefix + '-incoming-counts.md'))
-after = rows(Path('internal/oracle/counts.md'))
+after = rows(Path(sys.argv[5]) if len(sys.argv) > 5 else Path('internal/oracle/counts.md'))
 retired_path = root / (prefix + '-retired-counts.json')
 retired = json.loads(retired_path.read_text()) if retired_path.exists() else {}
 assert before.keys() - after.keys() == retired.keys(), 'unrecorded own count rows lost'

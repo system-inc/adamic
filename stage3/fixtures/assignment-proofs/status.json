@@ -1,0 +1,98 @@
+[
+  {
+    "file": "01_scanner_keyword.a",
+    "tsc": [
+      "src/compiler/scanner.ts:1815-1828"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "02_if_narrowing.a",
+    "tsc": [
+      "ruling #cvhj5fk, October 8 2026 11:16: authored 02_if_narrowing.a"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "4 1\n-1 2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "03_return_defined.a",
+    "tsc": [
+      "ruling #cvhj5fk, October 8 2026 11:16: authored 03_return_defined.a"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "value1 value1 1\nvalue2 value2 2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "04_chained.a",
+    "tsc": [
+      "ruling #cvhj5fk, October 8 2026 11:16: authored 04_chained.a"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "value1 value1 value1 1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "05_compound.a",
+    "tsc": [
+      "ruling #cvhj5fk, October 8 2026 11:16: authored 05_compound.a"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "12 12 1\n14 14 2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "06_wider_target.a",
+    "tsc": [
+      "ruling #cvhj5fk, October 8 2026 11:16: authored 06_wider_target.a"
+    ],
+    "reason": "assignment expression proof propagation, step 12 ruling",
+    "node": {
+      "stdout": "128 128 1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  }
+]
