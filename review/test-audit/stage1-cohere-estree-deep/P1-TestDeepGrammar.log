@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:00:43.490891833Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:00:43.501628077Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar"}
+{"Time":"2026-10-09T12:00:43.501723369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"=== RUN   TestDeepGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:48.052859601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"    deep_test.go:38: Node: line 1: Go \"0 Program 0 19382 0 0 0 0 19382 0\", port \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:01:48.055630578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"--- FAIL: TestDeepGrammar (64.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:48.055836842Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Elapsed":64.55}
+{"Time":"2026-10-09T12:01:48.056184843Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:48.063663429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t64.572s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:48.063921153Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":64.573}

@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:58:08.11239226Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:58:08.125959537Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions"}
+{"Time":"2026-10-09T11:58:08.126039284Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"=== RUN   TestRecoveredExpressions\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:09.001852729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    expressions_test.go:17: build estree-oracle-answer 94398d7890ac hit 0.00\n"}
+{"Time":"2026-10-09T11:58:09.237952107Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    expressions_test.go:19: build estree-lowered-program 68e0dfbbd541 hit 0.05\n"}
+{"Time":"2026-10-09T11:58:09.274622188Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    expressions_test.go:19: build estree-sanitized-native e5ae3a529c82 hit 0.00\n"}
+{"Time":"2026-10-09T11:58:09.274657363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    recovery_shards_test.go:38: setup wall=0.272482s builds=0.056605s without-builds=0.215878s\n"}
+{"Time":"2026-10-09T11:58:09.698778041Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    expressions_test.go:25: 7 decorated class / await / yield cases, 8717 bytes match Go\n"}
+{"Time":"2026-10-09T11:58:09.698832889Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"    recovery_shards_test.go:33: TEST totalCPU=1.331741s\n"}
+{"Time":"2026-10-09T11:58:09.699982522Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Output":"--- PASS: TestRecoveredExpressions (1.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:09.700042169Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredExpressions","Elapsed":1.57}
+{"Time":"2026-10-09T11:58:09.7000815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:09.702111359Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.589s\n"}
+{"Time":"2026-10-09T11:58:09.70215834Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.5899999999999999}

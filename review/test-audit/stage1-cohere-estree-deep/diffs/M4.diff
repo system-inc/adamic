@@ -1,0 +1,14 @@
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -46,11 +46,6 @@
+     }
+     const converter = new Converter(parser, convertedText);
+     converter.babel = babel;
+-    for(let id = 0; id < parser.nodes.length; id++) {
+-        if(parser.nodes[id]?.kind === 'Decorator' && (converter.parents[id] ?? -1) < 0) {
+-            return panic('ESTree unattached decorator');
+-        }
+-    }
+     const comments = mergeComments(converter.arena, collectComments(converter, root));
+     const reference = referenceError(convertedText, converter.arena, comments);
+     if(reference !== '') {

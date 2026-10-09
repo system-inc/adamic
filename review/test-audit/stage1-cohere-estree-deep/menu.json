@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/estree/postprocess.ts",
+    "line": 193,
+    "old": "node.start = 0;",
+    "new": "node.start = 1;",
+    "kind": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/estree/binaryConvert.ts",
+    "line": 67,
+    "old": "        node.set('operator', stringValue(operator));\n",
+    "new": "",
+    "kind": "drop operator-field statement"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/estree/convert.ts",
+    "line": 229,
+    "old": "defaulted ? 'ExportDefaultDeclaration' : 'ExportNamedDeclaration'",
+    "new": "defaulted ? 'ExportNamedDeclaration' : 'ExportNamedDeclaration'",
+    "kind": "change node-kind constant"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 49,
+    "old": "    for(let id = 0; id < parser.nodes.length; id++) {\n        if(parser.nodes[id]?.kind === 'Decorator' && (converter.parents[id] ?? -1) < 0) {\n            return panic('ESTree unattached decorator');\n        }\n    }\n",
+    "new": "",
+    "kind": "drop whole orphan-decorator guard loop"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/postprocess.ts
++++ b/stage1/cohere/estree/postprocess.ts
+@@ -190,7 +190,7 @@
+     }
+     program(id: number): number {
+         const node = this.arena.node(id);
+-        node.start = 0;
++        node.start = 1;
+         node.end = utf8Length(this.text);
+         return this.visit(id);
+     }

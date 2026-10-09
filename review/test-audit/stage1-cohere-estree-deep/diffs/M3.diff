@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/convert.ts
++++ b/stage1/cohere/estree/convert.ts
+@@ -226,7 +226,7 @@
+         this.scanner.pos = this.ts(defaulted ? next : exported).end;
+         this.scanner.scan();
+         this.arena.node(result).start = this.byte(this.scanner.start);
+-        const wrapper = this.create(id, defaulted ? 'ExportDefaultDeclaration' : 'ExportNamedDeclaration');
++        const wrapper = this.create(id, defaulted ? 'ExportNamedDeclaration' : 'ExportNamedDeclaration');
+         this.arena.node(wrapper).start = this.start(exported);
+         if(defaulted) {
+             this.set(wrapper, 'declaration', childValue(result));

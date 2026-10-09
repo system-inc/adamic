@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:43:49.913527583Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:43:49.952367703Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries"}
+{"Time":"2026-10-09T11:43:49.954017336Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"=== RUN   TestOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:49.954082646Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"=== PAUSE TestOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:49.95408601Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries"}
+{"Time":"2026-10-09T11:43:49.954088914Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries"}
+{"Time":"2026-10-09T11:43:49.954090768Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"=== CONT  TestOriginalLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:51.429819455Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"    estree_test.go:292: raw: 78 files, 78 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:43:51.756101104Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"    estree_test.go:289: proved postprocessed case 38 known gap for \"x\\u00a0;\"\n"}
+{"Time":"2026-10-09T11:43:51.756163537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"    estree_test.go:289: proved postprocessed case 39 known gap for \"x\\u2028;\"\n"}
+{"Time":"2026-10-09T11:43:51.756949878Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"    estree_test.go:289: proved postprocessed case 40 known gap for \"x\\r\\n;\"\n"}
+{"Time":"2026-10-09T11:43:51.76347454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"    estree_test.go:292: postprocessed: 78 files, 75 identical, 3 differing\n"}
+{"Time":"2026-10-09T11:43:51.767269059Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Output":"--- PASS: TestOriginalLibraries (1.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:51.767289862Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestOriginalLibraries","Elapsed":1.82}
+{"Time":"2026-10-09T11:43:51.767339686Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:51.76870393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.854s\n"}
+{"Time":"2026-10-09T11:43:51.768799811Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.855}

@@ -1,0 +1,218 @@
+[
+  {
+    "label": "selector-control",
+    "row": "TestDecoratedExports",
+    "variant": "",
+    "exit": 0,
+    "wall": 68.84310198499952,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$",
+    "selector": ""
+  },
+  {
+    "label": "M1-TestDeepGrammar",
+    "row": "TestDeepGrammar",
+    "variant": "M1",
+    "exit": 1,
+    "wall": 67.73473888799981,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$",
+    "selector": "M1"
+  },
+  {
+    "label": "M1-TestGeneratedAgreement",
+    "row": "TestGeneratedAgreement",
+    "variant": "M1",
+    "exit": 1,
+    "wall": 9.043008616999941,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$",
+    "selector": "M1"
+  },
+  {
+    "label": "M1-TestDecoratedExports",
+    "row": "TestDecoratedExports",
+    "variant": "M1",
+    "exit": 1,
+    "wall": 4.180667026000265,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$",
+    "selector": "M1"
+  },
+  {
+    "label": "M1-TestRecoveredExpressions",
+    "row": "TestRecoveredExpressions",
+    "variant": "M1",
+    "exit": 1,
+    "wall": 78.07589043200005,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "selector": "M1"
+  },
+  {
+    "label": "M2-TestDeepGrammar",
+    "row": "TestDeepGrammar",
+    "variant": "M2",
+    "exit": 1,
+    "wall": 70.45279952299916,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$",
+    "selector": "M2"
+  },
+  {
+    "label": "M2-TestGeneratedAgreement",
+    "row": "TestGeneratedAgreement",
+    "variant": "M2",
+    "exit": 1,
+    "wall": 4.014065383999878,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$",
+    "selector": "M2"
+  },
+  {
+    "label": "M3-TestDeepGrammar",
+    "row": "TestDeepGrammar",
+    "variant": "M3",
+    "exit": 0,
+    "wall": 70.57226745000025,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$",
+    "selector": "M3"
+  },
+  {
+    "label": "M3-TestGeneratedAgreement",
+    "row": "TestGeneratedAgreement",
+    "variant": "M3",
+    "exit": 1,
+    "wall": 7.5897848230006275,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$",
+    "selector": "M3"
+  },
+  {
+    "label": "M3-TestDecoratedExports",
+    "row": "TestDecoratedExports",
+    "variant": "M3",
+    "exit": 1,
+    "wall": 5.219556246000138,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$",
+    "selector": "M3"
+  },
+  {
+    "label": "M3-TestRecoveredExpressions",
+    "row": "TestRecoveredExpressions",
+    "variant": "M3",
+    "exit": 0,
+    "wall": 4.629798726999979,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "selector": "M3"
+  },
+  {
+    "label": "M4-TestDeepGrammar",
+    "row": "TestDeepGrammar",
+    "variant": "M4",
+    "exit": 0,
+    "wall": 63.679611321000266,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$",
+    "selector": "M4"
+  },
+  {
+    "label": "M4-TestGeneratedAgreement",
+    "row": "TestGeneratedAgreement",
+    "variant": "M4",
+    "exit": 0,
+    "wall": 73.37644888399973,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$",
+    "selector": "M4"
+  },
+  {
+    "label": "M4-TestDecoratedExports",
+    "row": "TestDecoratedExports",
+    "variant": "M4",
+    "exit": 0,
+    "wall": 5.684322531000362,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$",
+    "selector": "M4"
+  },
+  {
+    "label": "M4-TestRecoveredExpressions",
+    "row": "TestRecoveredExpressions",
+    "variant": "M4",
+    "exit": 0,
+    "wall": 5.2702519739996205,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "selector": "M4"
+  },
+  {
+    "label": "M4-TestUnattachedDecorator",
+    "row": "TestUnattachedDecorator",
+    "variant": "M4",
+    "exit": 1,
+    "wall": 3.241333635999581,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$",
+    "selector": "M4"
+  },
+  {
+    "label": "P1-TestDeepGrammar",
+    "row": "TestDeepGrammar",
+    "variant": "P1",
+    "exit": 1,
+    "wall": 67.10410468300051,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$",
+    "selector": "P1"
+  },
+  {
+    "label": "P1-TestGeneratedAgreement",
+    "row": "TestGeneratedAgreement",
+    "variant": "P1",
+    "exit": 1,
+    "wall": 7.441194877000271,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$",
+    "selector": "P1"
+  },
+  {
+    "label": "P1-TestDecoratedExports",
+    "row": "TestDecoratedExports",
+    "variant": "P1",
+    "exit": 1,
+    "wall": 4.992980331000581,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$",
+    "selector": "P1"
+  },
+  {
+    "label": "P1-TestRecoveredExpressions",
+    "row": "TestRecoveredExpressions",
+    "variant": "P1",
+    "exit": 1,
+    "wall": 4.638803824000206,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "selector": "P1"
+  },
+  {
+    "label": "P1-TestUnattachedDecorator",
+    "row": "TestUnattachedDecorator",
+    "variant": "P1",
+    "exit": 1,
+    "wall": 4.036304693000602,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$",
+    "selector": "P1"
+  },
+  {
+    "label": "W1-TestDecoratedExportMutant",
+    "row": "TestDecoratedExportMutant",
+    "variant": "",
+    "exit": 1,
+    "wall": 72.3389214280005,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutant$",
+    "selector": ""
+  },
+  {
+    "label": "W1-TestRecoveredExpressionMutant",
+    "row": "TestRecoveredExpressionMutant",
+    "variant": "",
+    "exit": 1,
+    "wall": 5.408224869999685,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressionMutant$",
+    "selector": ""
+  },
+  {
+    "label": "W2-TestUnattachedDecoratorControl",
+    "row": "TestUnattachedDecoratorControl",
+    "variant": "",
+    "exit": 0,
+    "wall": 9.662396122000246,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -overlay=/tmp/u085/weak/W2.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$",
+    "selector": ""
+  }
+]

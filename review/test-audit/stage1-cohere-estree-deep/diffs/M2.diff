@@ -1,0 +1,10 @@
+--- a/stage1/cohere/estree/binaryConvert.ts
++++ b/stage1/cohere/estree/binaryConvert.ts
+@@ -64,7 +64,6 @@
+             ['&&', '||', '??'].includes(operator) ? 'LogicalExpression' : 'BinaryExpression',
+         );
+         const node = arena.node(result);
+-        node.set('operator', stringValue(operator));
+         node.set('left', childValue(left));
+         node.set('right', childValue(convert(source.child(id, 2), -1)));
+         left = result;

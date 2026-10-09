@@ -1,0 +1,354 @@
+[
+  {
+    "test": "TestDeepGrammar",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/deep_test.go",
+    "seconds": 69.442,
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: deep_test.go:38: Node: line 25: Go \"2 .operator string +\", port \"2 .left node\"",
+    "subsumed_by": [
+      "TestGeneratedAgreement"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 63.504,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ],
+    "oracle_kind": "external-run",
+    "oracle": "Unmodified Go cohere ESTree API through testdata/oracle.go. Exact canonical bytes are compared with the TypeScript port on source Node, sanitized native and emitted JavaScript.",
+    "mutants_run": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "verdict": "subsumed",
+    "subsumption_kills": 2,
+    "probe_status": "fail",
+    "evidence": "selector file /tmp/u085/selector=M2; ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$ > review/test-audit/stage1-cohere-estree-deep/M2-TestDeepGrammar.log 2>&1; deep_test.go:38: Node: line 25: Go \"2 .operator string +\", port \"2 .left node\""
+  },
+  {
+    "test": "TestGeneratedAgreement",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/estree_test.go",
+    "seconds": 63.504,
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: estree_test.go:186: source Node: line 2432: Go \"1 ExportDefaultDeclaration 32 62 0 0 0 32 62 0\", port \"1 ExportNamedDeclaration 32 62 0 0 0 32 62 0\"",
+    "subsumed_by": [
+      "TestDecoratedExports",
+      "TestDeepGrammar",
+      "TestRecoveredExpressions"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ],
+    "oracle_kind": "external-run",
+    "oracle": "Unmodified Go cohere ESTree API through testdata/oracle.go. Exact canonical bytes are compared with the TypeScript port on source Node, sanitized native and emitted JavaScript.",
+    "mutants_run": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "verdict": "overlapping",
+    "subsumption_kills": 3,
+    "probe_status": "fail",
+    "evidence": "selector file /tmp/u085/selector=M3; ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$ > review/test-audit/stage1-cohere-estree-deep/M3-TestGeneratedAgreement.log 2>&1; estree_test.go:186: source Node: line 2432: Go \"1 ExportDefaultDeclaration 32 62 0 0 0 32 62 0\", port \"1 ExportNamedDeclaration 32 62 0 0 0 32 62 0\""
+  },
+  {
+    "test": "TestOriginalLibraries family",
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/estree_test.go",
+      "stage1/cohere/estree/exports_test.go"
+    ],
+    "seconds": 2.072,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "members": [
+      "TestOriginalLibraries",
+      "TestDecoratedExportLibraries"
+    ],
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "oracle": "Go cohere compared with pinned @typescript-eslint/typescript-estree 8.65.0 and Prettier 3.9.6 using TypeScript 6.0.3; exact handwritten deltas permit three documented whitespace gaps in the generated corpus.",
+    "verdict": "cannot-judge",
+    "reason": "No Adamic port code executes. A meaningful mutation would change one of the external oracles, which the brief prohibits.",
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestOriginalLibraries|TestDecoratedExportLibraries)$; three family runs pass, no failing line produced"
+  },
+  {
+    "test": "TestDecoratedExports",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/exports_test.go",
+    "seconds": 2.64,
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-76710bcbab44ce4b799cae210ad896f1086115ab253caea159c7c662325372fb Node: line 3: Go \"1 ExportDefaultDeclaration 3 28 0 0 0 0 28 0\", port \"1 ExportNamedDeclaration 3 28 0 0 0 0 28 0\"",
+    "subsumed_by": [
+      "TestGeneratedAgreement"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 63.504,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ],
+    "oracle_kind": "external-run",
+    "oracle": "Unmodified Go cohere ESTree API through testdata/oracle.go. Exact canonical bytes are compared with the TypeScript port on source Node, sanitized native and emitted JavaScript.",
+    "mutants_run": [
+      "M1",
+      "M3",
+      "M4"
+    ],
+    "verdict": "subsumed",
+    "subsumption_kills": 2,
+    "probe_status": "fail",
+    "evidence": "selector file /tmp/u085/selector=M3; ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$ > review/test-audit/stage1-cohere-estree-deep/M3-TestDecoratedExports.log 2>&1; exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-76710bcbab44ce4b799cae210ad896f1086115ab253caea159c7c662325372fb Node: line 3: Go \"1 ExportDefaultDeclaration 3 28 0 0 0 0 28 0\", port \"1 ExportNamedDeclaration 3 28 0 0 0 0 28 0\""
+  },
+  {
+    "test": "TestDecoratedExportsPlantedDisagreement",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/exports_test.go",
+    "seconds": 0.03,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: exports_test.go:42: planted failure must be caught only by TestDecoratedExportsPlantedDisagreement/shard-009: exit=<nil>",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "oracle_kind": "self",
+    "oracle": "Planted agree/disagree answers and exact owning-shard failure are handwritten.",
+    "verdict": "witness",
+    "witness_checks": [
+      "W1"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestDecoratedExportsPlantedDisagreement|TestDecoratedExportMutantPlantedSurvivor)$ > review/test-audit/stage1-cohere-estree-deep/W1-planted.log 2>&1; exports_test.go:42: planted failure must be caught only by TestDecoratedExportsPlantedDisagreement/shard-009: exit=<nil>"
+  },
+  {
+    "test": "TestDecoratedExportMutant",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/exports_test.go",
+    "seconds": 2.191,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: exports_test.go:73: stage1/cohere/estree/exports_test.go:export-mutant:source-077658c3c7c53cf94a025164758bd4b02ac60dca27b566c0ba2ca2a7d0db9189 native: mutant survived",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "oracle": "Go cohere bytes and expected disagreement from a built-in source mutant; production mutation failures do not establish the witness.",
+    "verdict": "witness",
+    "witness_checks": [
+      "W1"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutant$ > review/test-audit/stage1-cohere-estree-deep/W1-TestDecoratedExportMutant.log 2>&1; exports_test.go:73: stage1/cohere/estree/exports_test.go:export-mutant:source-077658c3c7c53cf94a025164758bd4b02ac60dca27b566c0ba2ca2a7d0db9189 native: mutant survived"
+  },
+  {
+    "test": "TestDecoratedExportMutantPlantedSurvivor",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/exports_test.go",
+    "seconds": 0.026,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: exports_test.go:81: planted failure must be caught only by TestDecoratedExportMutantPlantedSurvivor/shard-023: exit=exit status 1",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "oracle_kind": "self",
+    "oracle": "Planted agree/disagree answers and exact owning-shard failure are handwritten.",
+    "verdict": "witness",
+    "witness_checks": [
+      "W1"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestDecoratedExportsPlantedDisagreement|TestDecoratedExportMutantPlantedSurvivor)$ > review/test-audit/stage1-cohere-estree-deep/W1-planted.log 2>&1; exports_test.go:81: planted failure must be caught only by TestDecoratedExportMutantPlantedSurvivor/shard-023: exit=exit status 1"
+  },
+  {
+    "test": "TestRecoveredExpressions",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/expressions_test.go",
+    "seconds": 1.926,
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: expressions_test.go:22: Node: line 1: Go \"0 Program 0 22 0 0 0 0 22 0\", port \"0 Program 1 22 0 0 0 1 22 0\"",
+    "subsumed_by": [
+      "TestDecoratedExports"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 2.64,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ],
+    "oracle_kind": "external-run",
+    "oracle": "Unmodified Go cohere ESTree API through testdata/oracle.go. Exact canonical bytes are compared with the TypeScript port on source Node, sanitized native and emitted JavaScript.",
+    "mutants_run": [
+      "M1",
+      "M3",
+      "M4"
+    ],
+    "verdict": "subsumed",
+    "subsumption_kills": 1,
+    "probe_status": "fail",
+    "evidence": "selector file /tmp/u085/selector=M1; ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$ > review/test-audit/stage1-cohere-estree-deep/M1-TestRecoveredExpressions.log 2>&1; expressions_test.go:22: Node: line 1: Go \"0 Program 0 22 0 0 0 0 22 0\", port \"0 Program 1 22 0 0 0 1 22 0\""
+  },
+  {
+    "test": "TestRecoveredExpressionMutant",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/expressions_test.go",
+    "seconds": 1.674,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: expressions_test.go:36: Node mutant survived",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "oracle_kind": "external-run",
+    "oracle": "Go cohere bytes and expected disagreement from a built-in source mutant; production mutation failures do not establish the witness.",
+    "verdict": "witness",
+    "witness_checks": [
+      "W1"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -overlay=/tmp/u085/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressionMutant$ > review/test-audit/stage1-cohere-estree-deep/W1-TestRecoveredExpressionMutant.log 2>&1; expressions_test.go:36: Node mutant survived"
+  },
+  {
+    "test": "TestUnattachedDecorator",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/expressions_test.go",
+    "seconds": 1.1,
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: expressions_test.go:51: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestUnattachedDecorator2012039104/001/input.ts]: timeout=false exit=<nil> stdout=343 stderr=",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ],
+    "oracle_kind": "self",
+    "oracle": "Handwritten ESTree unattached decorator diagnostic substring, failed exit, empty stdout, and 2-second CPU deadline; no external authority checked.",
+    "mutants_run": [
+      "M4"
+    ],
+    "verdict": "sacred",
+    "probe_status": "fail",
+    "evidence": "selector file /tmp/u085/selector=M4; ADAMIC_ESTREE_LIBRARY=/tmp/u085/library ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$ > review/test-audit/stage1-cohere-estree-deep/M4-TestUnattachedDecorator.log 2>&1; expressions_test.go:51: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestUnattachedDecorator2012039104/001/input.ts]: timeout=false exit=<nil> stdout=343 stderr="
+  },
+  {
+    "test": "TestUnattachedDecoratorControl",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/expressions_test.go",
+    "seconds": 1.42,
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "oracle": "Go cohere audit must contain two errors; guard-disabled source Node and native must contain two Program records. Counts do not establish diagnostic identity or correct AST bytes. This proves the fixture precondition but does not execute the refusal comparison it is meant to support.",
+    "verdict": "untrue",
+    "witness_checks": [
+      "W2"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u085/weak/W2.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$; refusedBeforeDeadline disabled, --- PASS: TestUnattachedDecoratorControl"
+  }
+]

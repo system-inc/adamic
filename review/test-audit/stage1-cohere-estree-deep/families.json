@@ -1,0 +1,7 @@
+{
+  "TestOriginalLibraries family": [
+    "TestOriginalLibraries",
+    "TestDecoratedExportLibraries"
+  ],
+  "reason": "These two wrappers call checkOriginalLibraries with only their input corpus and expected gap count changed. Other requested tests have their own backend orchestration, refusal assertions or witness obligations; generic byte-difference primitives do not merge those obligations."
+}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:50:16.668318979Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:50:16.68012938Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator"}
+{"Time":"2026-10-09T11:50:16.680206447Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"=== RUN   TestUnattachedDecorator\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:50:16.952711042Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    expressions_test.go:46: build estree-lowered-program 4c65968c2627 hit 0.06\n"}
+{"Time":"2026-10-09T11:50:16.98492789Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    expressions_test.go:46: build estree-sanitized-native 1223d02cedaa hit 0.00\n"}
+{"Time":"2026-10-09T11:50:16.984973511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    recovery_shards_test.go:38: setup wall=0.304766s builds=0.061070s without-builds=0.243696s\n"}
+{"Time":"2026-10-09T11:50:17.766444932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    recovery_shards_test.go:33: TEST totalCPU=2.027173s\n"}
+{"Time":"2026-10-09T11:50:17.766553232Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"--- PASS: TestUnattachedDecorator (1.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:50:17.766564708Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Elapsed":1.09}
+{"Time":"2026-10-09T11:50:17.766605663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:50:17.769398202Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.100s\n"}
+{"Time":"2026-10-09T11:50:17.769453176Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.101}

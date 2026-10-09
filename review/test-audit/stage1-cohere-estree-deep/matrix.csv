@@ -1,0 +1,5 @@
+mutant,native-build-valid,TestDeepGrammar,TestGeneratedAgreement,TestDecoratedExports,TestRecoveredExpressions,TestUnattachedDecorator
+M1,True,fail,fail,fail,fail,not-reached
+M2,True,fail,fail,not-reached,not-reached,not-reached
+M3,True,pass,fail,fail,pass,not-reached
+M4,True,pass,pass,pass,pass,fail

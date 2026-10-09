@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:54:03.600287476Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:54:03.611136569Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement"}
+{"Time":"2026-10-09T11:54:03.611285895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"=== RUN   TestGeneratedAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:54:04.953773786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:186: source Node: line 1: Go \"0 Program 0 109 0 0 0 0 109 0\", port \"0 Program 1 109 0 0 0 1 109 0\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:54:04.954970841Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- FAIL: TestGeneratedAgreement (1.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:54:04.954990885Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":1.34}
+{"Time":"2026-10-09T11:54:04.955051868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:54:04.956142066Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.355s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:54:04.956169006Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.3559999999999999}

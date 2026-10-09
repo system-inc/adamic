@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:46:58.670163116Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:46:58.687135682Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries"}
+{"Time":"2026-10-09T11:46:58.687246931Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"=== RUN   TestDecoratedExportLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:46:58.687287794Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"=== PAUSE TestDecoratedExportLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:46:58.687291102Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries"}
+{"Time":"2026-10-09T11:46:58.68729953Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries"}
+{"Time":"2026-10-09T11:46:58.68730166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"=== CONT  TestDecoratedExportLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:00.079537076Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"    estree_test.go:292: raw: 6 files, 6 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:47:00.274098934Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"    estree_test.go:292: postprocessed: 6 files, 6 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:47:00.275845124Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Output":"--- PASS: TestDecoratedExportLibraries (1.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:00.275976468Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDecoratedExportLibraries","Elapsed":1.59}
+{"Time":"2026-10-09T11:47:00.276032264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:00.27712283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.606s\n"}
+{"Time":"2026-10-09T11:47:00.277172661Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.607}
