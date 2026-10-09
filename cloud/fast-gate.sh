@@ -238,6 +238,12 @@ if [ -n "${nested}" ]; then
   echo "void: ${sha} fast gate, box $(hostname) slot ${slot} holds nested checkout copies:${nested}" > ~/"${out}"/status.txt
   exit 0
 fi
+# The tree is exactly its commit, submodules included: no generated file or node_modules from another candidate
+# (cloud/fast-gate/clean-tree.sh). After the nested-copy check, which a person reads before anything is moved.
+if ! bash ~/fast-gate/tools${suffix}/cloud/fast-gate/clean-tree.sh ~/fast-gate/tree${suffix} > ~/"${out}"/clean-tree.log 2>&1; then
+  echo "void: ${sha} fast gate, box $(hostname) slot ${slot} couldn't clean its tree: $(tail -3 ~/"${out}"/clean-tree.log | tr '\n' ' ')" > ~/"${out}"/status.txt
+  exit 0
+fi
 # A declared tool (cloud/fast-gate/tools.txt) the box lacks makes the gate void, naming the box: it says
 # nothing about the change, so the watcher gates it again elsewhere (@system_adamic, Oct 8 05:49).
 if ! lacks=$(bash ~/fast-gate/tools${suffix}/cloud/fast-gate/tools-check.sh); then

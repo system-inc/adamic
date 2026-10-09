@@ -286,6 +286,13 @@ if ! lacks=\$(bash ~/full-gate/tools/cloud/fast-gate/tools-check.sh); then
 fi
 git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree switch -q --detach "${sha}"
 git -C ~/full-gate/tree submodule update -q --init --recursive
+# The tree is exactly its commit, submodules included (cloud/fast-gate/clean-tree.sh): nothing another candidate
+# generated is there for a test to read (Oct 9, TestDotARename on 6b2c73f9).
+if ! bash ~/full-gate/tools/cloud/fast-gate/clean-tree.sh ~/full-gate/tree > ~/"${out}"/clean-tree.log 2>&1; then
+  echo "void: ${sha} full gate, box \$(hostname) couldn't clean its tree: \$(tail -3 ~/"${out}"/clean-tree.log | tr '\n' ' ')" > ~/"${out}"/status.txt
+  echo '{"finished": true, "void": true}' > ~/"${out}"/full.json
+  exit 0
+fi
 cpus=\$(nproc --all)
 first=\$([ "${share}" = quarter ] && echo \$((cpus * 3 / 4)) || echo 0)
 taskset -c "\$first-\$((cpus - 1))" python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}" ${runToEnd}
