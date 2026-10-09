@@ -1,0 +1,9 @@
+--- a/stage1/cohere/static_single_assignment/construct.ts
++++ b/stage1/cohere/static_single_assignment/construct.ts
+@@ -402,5 +402,5 @@
+     // Elimination is part of construction rather than an optional follow-up, because Braun's placement
+     // cannot avoid producing redundant phis and their share is not marginal: measured over 1,945
+     // functions of real TypeScript, 24,418 phis before elimination and 2,746 after.
+-    eliminateRedundantPhis(graph, fn);
++    // audit mutant: elimination dropped
+ }

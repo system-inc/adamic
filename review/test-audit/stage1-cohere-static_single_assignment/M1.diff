@@ -1,0 +1,11 @@
+--- a/stage1/cohere/static_single_assignment/graph.ts
++++ b/stage1/cohere/static_single_assignment/graph.ts
+@@ -229,7 +229,7 @@
+  * finalizer did not reach.
+  */
+ export function markEvaluationOrder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+-    let order = 1;
++    let order = 0;
+     for(const block of graph.blocks(fn)) {
+         const count = graph.instructionCount(fn, block);
+         for(let index = 0; index < count; index++) {

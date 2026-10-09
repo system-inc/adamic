@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1293,7 +1293,7 @@
+ 			return nil
+ 		}
+ 	}
+-	return l.notYet(call, "a call through ?. (an optional call)")
++	return l.notYet(call, "an optional call")
+ }
+ 
+ // callClosure lowers a call through a function value.

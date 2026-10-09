@@ -1,0 +1,149 @@
+[
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/main.ts",
+    "functions": [
+      "<anonymous/module>",
+      "<instance_members_initializer>",
+      "OracleInstruction",
+      "<instance_members_initializer>",
+      "OracleBlock",
+      "<instance_members_initializer>",
+      "OracleFunction",
+      "identifierOf",
+      "instructionOf",
+      "visitAll",
+      "entry",
+      "blockBound",
+      "block",
+      "blocks",
+      "setBlocks",
+      "retain",
+      "id",
+      "predecessors",
+      "setPredecessors",
+      "phis",
+      "setPhis",
+      "eachEdge",
+      "instructionCount",
+      "eachInstructionPlace",
+      "isContextStore",
+      "setInstructionOrder",
+      "eachTerminalPlace",
+      "setTerminalOrder",
+      "params",
+      "returns",
+      "declaration",
+      "mint",
+      "named",
+      "identifierOf",
+      "withIdentifier",
+      "numberField",
+      "textField",
+      "placeField",
+      "edgeKind",
+      "placeText",
+      "placesText",
+      "<anonymous/module>",
+      "describe",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "run"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/construct.ts",
+    "functions": [
+      "<anonymous/module>",
+      "newSingleAssignmentState",
+      "<instance_members_initializer>",
+      "SingleAssignmentBuilder",
+      "run",
+      "visit",
+      "visitPlace",
+      "defineInMaybeContext",
+      "useIn",
+      "valueAt",
+      "valueFromPredecessor",
+      "addPhi",
+      "renameReturns",
+      "construct"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/eliminate.ts",
+    "functions": [
+      "<anonymous/module>",
+      "redundantPhiValue",
+      "eliminateRedundantPhis"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/graph.ts",
+    "functions": [
+      "<anonymous/module>",
+      "inRange",
+      "reversePostorder",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "<anonymous/module>",
+      "collect",
+      "enter",
+      "<anonymous/module>",
+      "edgesOf",
+      "<anonymous/module>",
+      "markPredecessors",
+      "markEvaluationOrder"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/phi.ts",
+    "functions": [
+      "<anonymous/module>",
+      "operandIndex",
+      "withPhiOperand"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/verify.ts",
+    "functions": [
+      "<anonymous/module>",
+      "<instance_members_initializer>",
+      "Dominance",
+      "dominates",
+      "computeDominance",
+      "<anonymous/module>",
+      "immediateOf",
+      "intersect",
+      "verifySingleAssignment",
+      "recordDefinition",
+      "recordInstruction",
+      "recordTerminal",
+      "checkUse",
+      "checkInstruction",
+      "checkTerminal",
+      "collectSingleAssignmentStats",
+      "note",
+      "instruction",
+      "terminal"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/gaps/1_block_arrow_returning_class.ts",
+    "functions": [
+      "<anonymous/module>",
+      "<instance_members_initializer>",
+      "Box",
+      "make"
+    ]
+  },
+  {
+    "file": "file:///workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts",
+    "functions": [
+      "<anonymous/module>",
+      "<instance_members_initializer>"
+    ]
+  }
+]

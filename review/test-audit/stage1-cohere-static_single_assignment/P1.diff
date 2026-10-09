@@ -1,0 +1,99 @@
+--- a/stage1/cohere/static_single_assignment/main.ts
++++ b/stage1/cohere/static_single_assignment/main.ts
+@@ -311,96 +311,3 @@
+     describe(fn);
+ }
+ 
+-const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file>');
+-const read = readTextFile(casesPath);
+-if(read.kind === 'Error') {
+-    panic(read.message);
+-}
+-
+-let current: OracleFunction | undefined;
+-let currentBlock: OracleBlock | undefined;
+-let currentInstruction: OracleInstruction | undefined;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') {
+-        continue;
+-    }
+-    const fields = line.split(' ');
+-    const record = fields[0] ?? '';
+-    if(record === 'function') {
+-        current = new OracleFunction(textField(fields, 1, line));
+-        currentBlock = undefined;
+-        currentInstruction = undefined;
+-        continue;
+-    }
+-    const fn = current ?? panic(`a record before any function: ${line}`);
+-    switch(record) {
+-        case 'entry':
+-            fn.entry = numberField(fields, 1, line);
+-            break;
+-        case 'bound':
+-            fn.bound = numberField(fields, 1, line);
+-            break;
+-        case 'identifier':
+-            fn.identifiers.push({ declaration: numberField(fields, 1, line), name: textField(fields, 2, line) });
+-            break;
+-        case 'contextual':
+-            fn.contextual.set(numberField(fields, 1, line), true);
+-            break;
+-        case 'param':
+-            fn.params.push(placeField(fields, line));
+-            break;
+-        case 'returns':
+-            fn.returns = placeField(fields, line);
+-            break;
+-        case 'block': {
+-            const block = new OracleBlock(numberField(fields, 1, line), false);
+-            fn.blocks = [...fn.blocks, block];
+-            fn.table.set(block.id, block);
+-            currentBlock = block;
+-            currentInstruction = undefined;
+-            break;
+-        }
+-        case 'return':
+-            (currentBlock ?? panic(`a return outside a block: ${line}`)).returns = true;
+-            break;
+-        case 'edge':
+-            (currentBlock ?? panic(`an edge outside a block: ${line}`)).edges.push({
+-                to: numberField(fields, 1, line),
+-                kind: edgeKind(fields[2] ?? '', line),
+-            });
+-            break;
+-        case 'instruction': {
+-            const instruction = new OracleInstruction(numberField(fields, 1, line));
+-            (currentBlock ?? panic(`an instruction outside a block: ${line}`)).instructions.push(instruction);
+-            currentInstruction = instruction;
+-            break;
+-        }
+-        case 'context':
+-            (currentInstruction ?? panic(`a context outside an instruction: ${line}`)).contextStore = true;
+-            break;
+-        case 'use':
+-            (currentInstruction ?? panic(`a use outside an instruction: ${line}`)).uses.push(placeField(fields, line));
+-            break;
+-        case 'define':
+-            (currentInstruction ?? panic(`a define outside an instruction: ${line}`)).defines.push(
+-                placeField(fields, line),
+-            );
+-            break;
+-        case 'terminal-use':
+-            (currentBlock ?? panic(`a terminal use outside a block: ${line}`)).terminalUses.push(
+-                placeField(fields, line),
+-            );
+-            break;
+-        case 'terminal-define':
+-            (currentBlock ?? panic(`a terminal define outside a block: ${line}`)).terminalDefines.push(
+-                placeField(fields, line),
+-            );
+-            break;
+-        case 'passes':
+-            run(fn, textField(fields, 1, line), line);
+-            current = undefined;
+-            break;
+-        default:
+-            panic(`an unknown record: ${line}`);
+-    }
+-}

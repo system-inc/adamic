@@ -1,0 +1,117 @@
+u136: two current top-level rows audited at d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb.
+Clean baseline 23.868s; restored full package 24.565s; no skips or timeouts.
+Four production mutants caught: both rows sacred within this package; no survivors.
+Both own-entry empty probes rejected; all twelve comparison witnesses fail under W1.
+Evidence branch test-audit/stage1-cohere-static_single_assignment, directory review/test-audit/stage1-cohere-static_single_assignment/.
+
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/static_single_assignment",
+    "file": "stage1/cohere/static_single_assignment/gaps_test.go:27",
+    "seconds": 0.142,
+    "oracle": "Node executes both fixtures and stdout is checked; diagnostic type and exact What text are self-written expectations from GAPS.md. M4 proves label sensitivity only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: gaps_test.go:63: stage 0 refuses another way now (/workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts:8:15: stage 0 can't lower an optional call yet), where GAPS.md records \"a call through ?. (an optional call)\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortMakesWhatGoCohereMakes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/M4.log 2>&1; gaps_test.go:63: stage 0 refuses another way now (/workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts:8:15: stage 0 can't lower an optional call yet), where GAPS.md records \"a call through ?. (an optional call)\"",
+    "timing_samples": [
+      0.139,
+      0.142,
+      0.151
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestThePortMakesWhatGoCohereMakes",
+    "package": "stage1/cohere/static_single_assignment",
+    "file": "stage1/cohere/static_single_assignment/static_single_assignment_test.go:54",
+    "seconds": 20.993,
+    "oracle": "Go cohere executes the same passes and supplies fresh byte-for-byte answers compared to native, Node and JavaScript backend output; ASan/UBSan and LeakSanitizer must accept native runs. GAPS.md documents a shared dominance defect, not independently verified here.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: static_single_assignment_test.go:73: native and Go cohere differ: line 19: \"stats 1 3 2\", Go cohere \"stats 1 3 1\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortMakesWhatGoCohereMakes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/M3.log 2>&1; static_single_assignment_test.go:73: native and Go cohere differ: line 19: \"stats 1 3 2\", Go cohere \"stats 1 3 1\"",
+    "timing_samples": [
+      19.366,
+      24.896,
+      20.993
+    ],
+    "vacuous_subcases": [],
+    "witness_evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/W1.log 2>&1; static_single_assignment_test.go:120: natively the mutant agrees with Go cohere: the comparison cannot see it",
+    "witness_subcases_proven": 12,
+    "probe_note": "P1 fails semantic agreement; all twelve catches subcases pass on an empty driver because empty output differs from Go. These are witness subcases, not independent semantic rows."
+  }
+]
+
+Mutant table (origin/main locations):
+M1 | graph.ts:232 | let order = 1 -> 0 | TestThePortMakesWhatGoCohereMakes
+M2 | construct.ts:405 | drop eliminateRedundantPhis(graph, fn) | TestThePortMakesWhatGoCohereMakes
+M3 | verify.ts:332 | let uses = 0 -> 1 | TestThePortMakesWhatGoCohereMakes
+M4 | internal/lower/expression.go:1296 | optional-call diagnostic -> "an optional call" | TestEachGapStandsWhereGapsMdSaysItDoes
+Port paths above are under stage1/cohere/static_single_assignment/. P1, P2 and W1 are separate probes, not production kills.
+
+Survivors: none among four production mutants. No equivalent candidates.
+
+Brief issues, interpretation and costs:
+1. The main top-level test combines semantic agreement and twelve planted-failure witnesses. A whole-row witness verdict would discard native semantic assertions; a bare sacred verdict would omit its check of the check. The JSON keeps one top-level row, bases sacred on M1-M3 semantic failures, and separately records W1 proving all twelve witnesses fail when firstDifference returns empty. No built-in mutation is credited as a production kill.
+2. Empty answers distinguish those jobs. P1 compiles and exits normally with no output, fails native/Node/backend semantic agreement, yet passes all twelve witness subcases because no output differs from Go. The row is not vacuous. Witness subcases alone cannot prove meaningful execution. W1 proves they reject an always-agree comparator.
+3. GAPS.md expectations are Adamic diagnostic snapshots. Node checks fixture output, not whether Adamic should refuse the programs. This oracle is external-run plus self. M4 proves sensitivity to the optional-call label; it does not prove sensitivity to removal of the refusal. P2 does show both cases reject nil success.
+4. The main oracle is external Go execution, but external implementations can share defects. GAPS.md documents incorrect dominance from Go and this port on generated graphs. This audit read that document and exercised fresh Go comparisons, but did not independently recompute the defect. Sacred here means a unique observed detector of incompatibility, not independent proof of SSA semantics.
+5. The brief asks about three mutants per grouped row and also at most four when separately rebuilding a native port. The four-mutant rebuild alternative was used, preselected from source and spread over graph ordering, construction, statistics and a compiler diagnostic. No runtime switch was inserted. No supplemental statement-insertion mutant supports a verdict. Four mutants are a small sample.
+6. The suite rebuilds its twelve built-in mutants each run, so each external mutant entails thirteen native program builds rather than one. Compiler invocation times and exits are logged. Concurrent compile times sum to more than elapsed run time. Each external mutant uses a separate ADAMIC_BUILD_CACHE_DIR; ADAMIC_NATIVE_SPLIT is not used as a cache key.
+7. Parent t.Parallel durations exclude parallel child work: the main row reports around half a second while its complete isolated package takes twenty seconds. Timing uses each isolated run's own package ok line, including children. One gap-coverage compiler build overlapped part of those timing runs; all samples and the median are retained without corrections.
+8. README recommends a 30-minute timeout, but this package fit the brief's 90-second limit. No narrowing was needed. The actual list contains two top-level tests. This full-package brief supplies no historic names to compare for movement.
+9. /usr/bin/time is absent. The first wrapper attempt executed neither npm nor the baseline. Bash time replaced it, npm ci then completed before the actual passing baseline. The invalid attempt supports no result. Toolchain setup was skipped after env.sh, Go and Node worked.
+10. A report-generation quoting error required one corrected write; it changed no test evidence or source. The evidence paths were staged again after the correction.
+
+Timings and uncovered scope:
+Toolchain setup 0s, warm; npm ci 0.571s; nproc 5. Baseline23.868s, restored clean24.565s. Gap samples0.139,0.142,0.151s, median0.142s; main samples19.366,24.896,20.993s, median20.993s.
+M1: wall 32.756s; binary 30.714s; semantic native clang rebuild 4.955s; 13 native builds, summed program compile 55.896s; every clang exit zero.
+M2: wall 23.619s; binary 21.548s; semantic native clang rebuild 3.991s; 13 native builds, summed program compile 49.913s; every clang exit zero.
+M3: wall 22.740s; binary 20.564s; semantic native clang rebuild 4.572s; 13 native builds, summed program compile 50.549s; every clang exit zero.
+M4: wall 31.047s; binary 19.978s; semantic native clang rebuild 4.226s; 13 native builds, summed program compile 48.133s; every clang exit zero.
+P1 wall7.596s, P2 wall5.423s, W1 wall27.946s. Sources and harness restored. No other packages audited, no alternate seeds/corpora tested, and no independent dominance proof. Exact commands, raw test JSON, vet logs, apply checks, coverage and standalone diffs accompany this report.

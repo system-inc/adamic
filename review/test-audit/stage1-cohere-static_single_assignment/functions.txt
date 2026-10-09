@@ -1,0 +1,83 @@
+stage1/cohere/static_single_assignment/construct.ts:68: function newSingleAssignmentState<P>(): SingleAssignmentStateInterface<P> {
+stage1/cohere/static_single_assignment/construct.ts:111: constructor(graph: GraphInterface<F, B, P>, fn: F) {
+stage1/cohere/static_single_assignment/construct.ts:116: run(): void {
+stage1/cohere/static_single_assignment/construct.ts:182: private visitPlace(place: P, role: RoleType): P {
+stage1/cohere/static_single_assignment/construct.ts:199: private defineIn(blockId: BlockIdType, place: P): P {
+stage1/cohere/static_single_assignment/construct.ts:214: private defineInMaybeContext(blockId: BlockIdType, place: P, contextStore: boolean): P {
+stage1/cohere/static_single_assignment/construct.ts:229: private useIn(blockId: BlockIdType, place: P): P {
+stage1/cohere/static_single_assignment/construct.ts:248: private valueAt(place: P, blockId: BlockIdType): IdentifierIdType {
+stage1/cohere/static_single_assignment/construct.ts:305: private valueFromPredecessor(place: P, predecessor: BlockIdType): IdentifierIdType {
+stage1/cohere/static_single_assignment/construct.ts:313: private addPhi(blockId: BlockIdType, original: P, renamed: P): void {
+stage1/cohere/static_single_assignment/construct.ts:332: private fixIncompletePhis(blockId: BlockIdType): void {
+stage1/cohere/static_single_assignment/construct.ts:351: private renameReturns(): void {
+stage1/cohere/static_single_assignment/construct.ts:384: export function construct<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+stage1/cohere/static_single_assignment/construct.ts:395: for(const block of graph.blocks(fn)) {
+stage1/cohere/static_single_assignment/eliminate.ts:29: function redundantPhiValue<F, B, P>(
+stage1/cohere/static_single_assignment/eliminate.ts:35: for(const entry of phi.operands) {
+stage1/cohere/static_single_assignment/eliminate.ts:52: function applyRewrites<F, B, P>(
+stage1/cohere/static_single_assignment/eliminate.ts:63: for(const block of graph.blocks(fn)) {
+stage1/cohere/static_single_assignment/eliminate.ts:77: for(let index = 0; index < params.length; index++) {
+stage1/cohere/static_single_assignment/eliminate.ts:84: if(returns !== undefined) {
+stage1/cohere/static_single_assignment/eliminate.ts:93: export function eliminateRedundantPhis<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+stage1/cohere/static_single_assignment/eliminate.ts:94: for(;;) {
+stage1/cohere/static_single_assignment/graph.ts:24: function inRange(id: BlockIdType, bound: number): boolean {
+stage1/cohere/static_single_assignment/graph.ts:50: export function reversePostorder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+stage1/cohere/static_single_assignment/graph.ts:113: if(entry === undefined) {
+stage1/cohere/static_single_assignment/graph.ts:118: while(stack.length > 0) {
+stage1/cohere/static_single_assignment/graph.ts:139: for(let index = postorder.length - 1; index >= 0; index--) {
+stage1/cohere/static_single_assignment/graph.ts:182: export function edgesOf<F, B, P>(graph: GraphInterface<F, B, P>, block: B): EdgeToInterface[] {
+stage1/cohere/static_single_assignment/graph.ts:199: export function markPredecessors<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+stage1/cohere/static_single_assignment/graph.ts:201: for(const block of blocks) {
+stage1/cohere/static_single_assignment/graph.ts:204: for(const block of blocks) {
+stage1/cohere/static_single_assignment/graph.ts:231: export function markEvaluationOrder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+stage1/cohere/static_single_assignment/graph.ts:233: for(const block of graph.blocks(fn)) {
+stage1/cohere/static_single_assignment/main.ts:74: constructor(result: IdentifierIdType) {
+stage1/cohere/static_single_assignment/main.ts:96: constructor(id: BlockIdType, placeholder: boolean) {
+stage1/cohere/static_single_assignment/main.ts:118: constructor(name: string) {
+stage1/cohere/static_single_assignment/main.ts:123: function identifierOf(fn: OracleFunction, id: IdentifierIdType): OracleIdentifierInterface {
+stage1/cohere/static_single_assignment/main.ts:127: function instructionOf(block: OracleBlock, index: number): OracleInstruction {
+stage1/cohere/static_single_assignment/main.ts:132: function visitAll(
+stage1/cohere/static_single_assignment/main.ts:137: for(let index = 0; index < places.length; index++) {
+stage1/cohere/static_single_assignment/main.ts:143: function placeholderOf(fn: OracleFunction, block: OracleBlock): OracleBlock {
+stage1/cohere/static_single_assignment/main.ts:219: function numberField(fields: readonly string[], index: number, line: string): number {
+stage1/cohere/static_single_assignment/main.ts:222: if(Number.isNaN(value)) {
+stage1/cohere/static_single_assignment/main.ts:228: function textField(fields: readonly string[], index: number, line: string): string {
+stage1/cohere/static_single_assignment/main.ts:233: function placeField(fields: readonly string[], line: string): OraclePlaceInterface {
+stage1/cohere/static_single_assignment/main.ts:237: function edgeKind(text: string, line: string): EdgeType {
+stage1/cohere/static_single_assignment/main.ts:238: switch(text) {
+stage1/cohere/static_single_assignment/main.ts:247: function placeText(place: OraclePlaceInterface): string {
+stage1/cohere/static_single_assignment/main.ts:251: function placesText(places: readonly OraclePlaceInterface[]): string {
+stage1/cohere/static_single_assignment/main.ts:256: function describe(fn: OracleFunction): void {
+stage1/cohere/static_single_assignment/main.ts:259: for(const block of fn.blocks) {
+stage1/cohere/static_single_assignment/main.ts:279: for(let id = 0; id < fn.bound; id++) {
+stage1/cohere/static_single_assignment/main.ts:286: for(const violation of verifySingleAssignment(oracleGraph, fn)) {
+stage1/cohere/static_single_assignment/main.ts:292: for(const block of fn.blocks) {
+stage1/cohere/static_single_assignment/main.ts:301: function run(fn: OracleFunction, passes: string, line: string): void {
+stage1/cohere/static_single_assignment/main.ts:305: if(passes === 'construct') {
+stage1/cohere/static_single_assignment/main.ts:324: if(line === '') {
+stage1/cohere/static_single_assignment/main.ts:329: if(record === 'function') {
+stage1/cohere/static_single_assignment/main.ts:336: switch(record) {
+stage1/cohere/static_single_assignment/phi.ts:17: function operandIndex<P>(
+stage1/cohere/static_single_assignment/phi.ts:22: for(const operand of operands) {
+stage1/cohere/static_single_assignment/phi.ts:32: export function phiOperand<P>(operands: readonly PhiOperandInterface<P>[], predecessor: BlockIdType): P | undefined {
+stage1/cohere/static_single_assignment/phi.ts:34: if(!position.found) {
+stage1/cohere/static_single_assignment/phi.ts:41: export function withPhiOperand<P>(
+stage1/cohere/static_single_assignment/phi.ts:48: if(position.found && existing !== undefined) {
+stage1/cohere/static_single_assignment/phi.ts:56: export function withoutPhiOperand<P>(
+stage1/cohere/static_single_assignment/phi.ts:61: if(!position.found) {
+stage1/cohere/static_single_assignment/phi.ts:71: export function phiOperandsInOrder<P>(phi: PhiInterface<P>): BlockIdType[] {
+stage1/cohere/static_single_assignment/verify.ts:37: constructor(position: Map<BlockIdType, number>, immediate: number[]) {
+stage1/cohere/static_single_assignment/verify.ts:44: dominates(dominator: BlockIdType, block: BlockIdType): boolean {
+stage1/cohere/static_single_assignment/verify.ts:70: export function computeDominance<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): Dominance {
+stage1/cohere/static_single_assignment/verify.ts:73: for(let index = 0; index < blocks.length; index++) {
+stage1/cohere/static_single_assignment/verify.ts:80: if(blocks.length === 0) {
+stage1/cohere/static_single_assignment/verify.ts:101: while(changed) {
+stage1/cohere/static_single_assignment/verify.ts:151: export function verifySingleAssignment<F, B, P>(
+stage1/cohere/static_single_assignment/verify.ts:157: if(blocks.length === 0) {
+stage1/cohere/static_single_assignment/verify.ts:184: for(const param of graph.params(fn)) {
+stage1/cohere/static_single_assignment/verify.ts:215: for(const block of blocks) {
+stage1/cohere/static_single_assignment/verify.ts:280: for(const block of blocks) {
+stage1/cohere/static_single_assignment/verify.ts:326: export function collectSingleAssignmentStats<F, B, P>(
+stage1/cohere/static_single_assignment/verify.ts:358: for(const block of graph.blocks(fn)) {
+
+Adapter callbacks oracleGraph in main.ts:151-215; nested visitors/traversal closures in each pass. Types-only static_single_assignment.ts has no executable functions. phiOperand, withoutPhiOperand, phiOperandsInOrder are exported but not called by this driver. Gap CUT entry Lower, refusal classViewRefusal/viewSite/nominalMismatch and optionalCall, their transitive lower callees to be captured by coverage.

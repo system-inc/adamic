@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M1",
+    "rows": {
+      "TestEachGapStandsWhereGapsMdSaysItDoes": "pass",
+      "TestThePortMakesWhatGoCohereMakes": "fail"
+    },
+    "semantic_failures": [
+      "static_single_assignment_test.go:73: native and Go cohere differ: line 3: \"block 1 - predecessors= terminal=1 return=0\", Go cohere \"block 1 - predecessors= terminal=2 return=0\""
+    ]
+  },
+  {
+    "id": "M2",
+    "rows": {
+      "TestEachGapStandsWhereGapsMdSaysItDoes": "pass",
+      "TestThePortMakesWhatGoCohereMakes": "fail"
+    },
+    "semantic_failures": [
+      "static_single_assignment_test.go:73: native and Go cohere differ: line 54: \"phi 5:i 1=4:i 3=5:i\", Go cohere \"instruction 3 - uses=4:i defines=\""
+    ]
+  },
+  {
+    "id": "M3",
+    "rows": {
+      "TestEachGapStandsWhereGapsMdSaysItDoes": "pass",
+      "TestThePortMakesWhatGoCohereMakes": "fail"
+    },
+    "semantic_failures": [
+      "static_single_assignment_test.go:73: native and Go cohere differ: line 19: \"stats 1 3 2\", Go cohere \"stats 1 3 1\""
+    ]
+  },
+  {
+    "id": "M4",
+    "rows": {
+      "TestEachGapStandsWhereGapsMdSaysItDoes": "fail",
+      "TestThePortMakesWhatGoCohereMakes": "pass"
+    },
+    "semantic_failures": [
+      "gaps_test.go:63: stage 0 refuses another way now (/workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts:8:15: stage 0 can't lower an optional call yet), where GAPS.md records \"a call through ?. (an optional call)\""
+    ]
+  }
+]

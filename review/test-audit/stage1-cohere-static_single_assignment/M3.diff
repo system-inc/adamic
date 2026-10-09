@@ -1,0 +1,11 @@
+--- a/stage1/cohere/static_single_assignment/verify.ts
++++ b/stage1/cohere/static_single_assignment/verify.ts
+@@ -329,7 +329,7 @@
+ ): SingleAssignmentStatsInterface {
+     let phis = 0;
+     let namedValues = 0;
+-    let uses = 0;
++    let uses = 1;
+     const seen = new Map<IdentifierIdType, boolean>();
+     const note = function(place: P): void {
+         const id = graph.identifierOf(place);

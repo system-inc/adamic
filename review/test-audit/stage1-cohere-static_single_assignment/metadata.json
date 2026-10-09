@@ -1,0 +1,12 @@
+{
+  "unit": "u136",
+  "base": "d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb",
+  "branch": "test-audit/stage1-cohere-static_single_assignment",
+  "scope": "full package, two top-level tests, no families/helpers/skips",
+  "toolchain": "Go1.27.1 Node24.19.0, warm env.sh, 5CPUs",
+  "final_clean_test_binary_seconds": 24.565,
+  "created_utc": "2026-10-09T13:03:07.345697+00:00",
+  "restoration": "git diff --exit-code passed",
+  "diff_validation": "All seven diffs apply to starting main. Native compiler exits zero for M1-M4/P1/W1; go vet passes for M4/P2/W1.",
+  "coverage": "Pre-mutation source inventory and sample port/gap compiler coverage; full clean Node port coverage added after restoration."
+}

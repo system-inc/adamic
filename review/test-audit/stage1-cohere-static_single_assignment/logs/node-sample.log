@@ -1,0 +1,25 @@
+function diamond
+order 1 2 3 4
+block 1 - predecessors= terminal=2 return=0
+instruction 1 - uses= defines=4:x
+terminal uses= defines=
+block 2 - predecessors=1 terminal=4 return=0
+instruction 3 - uses= defines=5:x
+terminal uses= defines=
+block 3 - predecessors=1 terminal=5 return=0
+terminal uses= defines=
+block 4 - predecessors=2,3 terminal=7 return=1
+phi 6:x 2=5:x 3=4:x
+instruction 6 - uses=6:x defines=
+terminal uses=6:x defines=
+params 
+returns -
+table 1 2 3 4
+identifiers 7
+stats 1 3 2
+dominators 1=1
+dominators 2=1,2
+dominators 3=1,3
+dominators 4=1,4
+(node:133128) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

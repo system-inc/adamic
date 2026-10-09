@@ -1,0 +1,44 @@
+{
+  "base": "d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/static_single_assignment/graph.ts",
+      "from_": "    let order = 1;",
+      "to": "    let order = 0;",
+      "menu": "change constant",
+      "line": 232
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/static_single_assignment/construct.ts",
+      "from_": "    eliminateRedundantPhis(graph, fn);",
+      "to": "    // audit mutant: elimination dropped",
+      "menu": "drop statement",
+      "line": 405
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/static_single_assignment/verify.ts",
+      "from_": "    let uses = 0;",
+      "to": "    let uses = 1;",
+      "menu": "change constant",
+      "line": 332
+    },
+    {
+      "id": "M4",
+      "file": "internal/lower/expression.go",
+      "from_": "\"a call through ?. (an optional call)\"",
+      "to": "\"an optional call\"",
+      "menu": "change diagnostic constant",
+      "line": 1296
+    }
+  ],
+  "probes": [
+    "P1: empty main.ts module driver",
+    "P2: Lower returns nil,nil"
+  ],
+  "witness": "W1: firstDifference always returns empty string",
+  "matrix": "whole package, both top-level rows; built-in witness failures excluded as production kill evidence",
+  "rebuild_strategy": "four separate source mutants, each own native cache, no runtime switch"
+}

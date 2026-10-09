@@ -1,0 +1,77 @@
+{
+  "nproc": 5,
+  "toolchain_setup_seconds": 0,
+  "npm_ci_wall_seconds": 0.571,
+  "baseline_test_binary_seconds": 23.868,
+  "isolated_samples": {
+    "TestEachGapStandsWhereGapsMdSaysItDoes": [
+      0.139,
+      0.142,
+      0.151
+    ],
+    "TestThePortMakesWhatGoCohereMakes": [
+      19.366,
+      24.896,
+      20.993
+    ]
+  },
+  "mutant_runs": [
+    {
+      "id": "M1",
+      "test_binary_seconds": 30.714,
+      "wall_seconds": 32.75565454700154,
+      "program_native_builds": 13,
+      "sum_program_compile_seconds": 55.89584281899988,
+      "all_clang_returncodes_zero": true,
+      "semantic_product_compile_seconds": 4.9550902569990285
+    },
+    {
+      "id": "M2",
+      "test_binary_seconds": 21.548000000000002,
+      "wall_seconds": 23.61885442700077,
+      "program_native_builds": 13,
+      "sum_program_compile_seconds": 49.913034014000004,
+      "all_clang_returncodes_zero": true,
+      "semantic_product_compile_seconds": 3.9909622960003617
+    },
+    {
+      "id": "M3",
+      "test_binary_seconds": 20.564,
+      "wall_seconds": 22.740003860000797,
+      "program_native_builds": 13,
+      "sum_program_compile_seconds": 50.54899819500315,
+      "all_clang_returncodes_zero": true,
+      "semantic_product_compile_seconds": 4.571877781001604
+    },
+    {
+      "id": "M4",
+      "test_binary_seconds": 19.978,
+      "wall_seconds": 31.047031953999976,
+      "program_native_builds": 13,
+      "sum_program_compile_seconds": 48.133178814998246,
+      "all_clang_returncodes_zero": true,
+      "semantic_product_compile_seconds": 4.226083625000683
+    }
+  ],
+  "probe_witness_runs": [
+    {
+      "id": "P1",
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run ^TestThePortMakesWhatGoCohereMakes$ > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/P1.log 2>&1",
+      "wall_seconds": 7.595833743000185,
+      "returncode": 1
+    },
+    {
+      "id": "P2",
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$ > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/P2.log 2>&1",
+      "wall_seconds": 5.422913459000483,
+      "returncode": 1
+    },
+    {
+      "id": "W1",
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u136/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/static_single_assignment/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-static_single_assignment/logs/W1.log 2>&1",
+      "wall_seconds": 27.946450457000537,
+      "returncode": 1
+    }
+  ],
+  "final_clean_test_binary_seconds": 24.565
+}
