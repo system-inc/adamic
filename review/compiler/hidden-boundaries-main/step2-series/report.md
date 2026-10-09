@@ -278,3 +278,13 @@ All 33 mutants fail their owning assertion. Sources are .go.txt and overlays; no
 ## Scope
 
 This lands the whole overload-result series toward step 30. No new full TypeScript or cohere census was run. Optional array access and receiver-independent method destructuring remain later steps. Raw .ts fixtures are the original TypeScript-only unchecked controls paired with .a proof/refusal fixtures.
+
+## Final main merge and lane
+
+Merged landed main 291ee604 with no conflicts. It changes test paths only. On the merged tip, the focused lower run passed in 2.112 seconds and Node fixture comparisons passed in 5.961 seconds.
+
+Lane output before the main merge:
+
+```text
+lane checks 1.8 s: gofmt and tools on 36 Go files, t.Parallel on 3 test packages; vet 3 packages
+```
