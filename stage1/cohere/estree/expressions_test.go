@@ -11,6 +11,7 @@ func recoveredExpressions() []string {
 	return []string{"const C = @d class {};", "const C = @d @e(1) class Named extends Base { static x=1; };", "(@d class { m(){return 1;} });", "function f(){ await 'x'; await 1; await true; await this; }", "function f(){ yield 'x'; yield 1; yield true; }", "await\nx; yield\nx;", "await(x); yield(x);"}
 }
 func TestRecoveredExpressions(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, recoveredExpressions())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	main, _ := filepath.Abs("main.ts")
@@ -23,6 +24,7 @@ func TestRecoveredExpressions(t *testing.T) {
 	t.Logf("%d decorated class / await / yield cases, %d bytes match Go", len(recoveredExpressions()), len(want))
 }
 func TestRecoveredExpressionMutant(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, recoveredExpressions())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	path := mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
@@ -37,6 +39,7 @@ func TestRecoveredExpressionMutant(t *testing.T) {
 }
 
 func TestUnattachedDecorator(t *testing.T) {
+	t.Parallel()
 	main, _ := filepath.Abs("main.ts")
 	binary, script := recoveryBuild(t, main, true)
 	for _, body := range []string{"@dec\nawait 1", "@dec\nx"} {
@@ -49,6 +52,7 @@ func TestUnattachedDecorator(t *testing.T) {
 }
 
 func TestUnattachedDecoratorControl(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
 	statuses := string(recoveryAnswer(t, goOracle(t), list, "--audit"))
 	if strings.Count(statuses, `"status":"error"`) != 2 {

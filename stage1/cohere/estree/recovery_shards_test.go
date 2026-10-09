@@ -269,7 +269,18 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(executable, "-test.v", "-test.run=^TestRecoveryShardProofChild$")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, executable, "-test.v", "-test.timeout=75s", "-test.run=^TestRecoveryShardProofChild$")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	for _, entry := range os.Environ() {
 		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_ESTREE_SHARD_PROOF=") {
 			command.Env = append(command.Env, entry)
@@ -277,6 +288,9 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	}
 	command.Env = append(command.Env, "ADAMIC_ESTREE_SHARD_PROOF="+string(data))
 	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatalf("planted proof subprocess cooked: %v", ctx.Err())
+	}
 	owner := fmt.Sprintf("shard-%03d", planted%count)
 	prefix := "--- FAIL: TestRecoveryShardProofChild/"
 	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), prefix+owner+" ") {
@@ -285,6 +299,7 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	t.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
 }
 func TestRecoveryShardProofChild(t *testing.T) {
+	t.Parallel()
 	data := os.Getenv("ADAMIC_ESTREE_SHARD_PROOF")
 	if data == "" {
 		return

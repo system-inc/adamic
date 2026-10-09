@@ -102,7 +102,10 @@ func checkRecoveryMutantUnion(t *testing.T) {
 		}
 	}
 }
-func TestRecoveryMutantsUnion(t *testing.T) { checkRecoveryMutantUnion(t) }
+func TestRecoveryMutantsUnion(t *testing.T) {
+	t.Parallel()
+	checkRecoveryMutantUnion(t)
+}
 
 func runRecoveryMutantTop(t *testing.T, shard int) {
 	selected, n := recoveryShardSelection(t)
@@ -157,6 +160,7 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 	}
 }
 func TestRecoveryMutantsTopSurvivor(t *testing.T) {
+	t.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)

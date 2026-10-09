@@ -28,6 +28,7 @@ func recoveredGrammar() []string {
 	}
 }
 func TestRecoveredGrammar(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, recoveredGrammar())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	main, _ := filepath.Abs("main.ts")
@@ -62,14 +63,17 @@ func recoveryMutantCases() []recoveryCase {
 // ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
 // Each mutant retains the entire grammar corpus on both Node and sanitized native.
 func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
 	// Compatibility enumeration only; execution lives in the top-level shards.
 	checkRecoveryMutantUnion(t)
 }
 
 func TestRecoveryMutantsShardSurvivor(t *testing.T) {
+	t.Parallel()
 	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
 func TestRecoveryLibraryGaps(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")

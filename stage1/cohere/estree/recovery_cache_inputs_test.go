@@ -11,6 +11,7 @@ import (
 // candidate must get a different one. This catches accidental use of private
 // paths in a key and accidental omission of mutable source content.
 func TestRecoveryCacheInputKeys(t *testing.T) {
+	t.Parallel()
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
