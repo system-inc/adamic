@@ -188,7 +188,7 @@ One survivor changes behavior; eight selected entry probes were caught. Evidence
     "oracle_kind": "self",
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "W01: record_test.go:274: exact stop contract did not catch mutant",
+    "last_proven_fail": "W01: record_test.go:277 (overlay log line 274): exact stop contract did not catch mutant",
     "verdict": "witness",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -213,7 +213,7 @@ One survivor changes behavior; eight selected entry probes were caught. Evidence
       "TestRecordMutants family",
       "TestRegExpBytecodeRandomNode family"
     ],
-    "evidence": "timeout 120 go test -json -overlay /tmp/u052-witness-overlay.json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordReadMutants|TestRecordMutantsUnit.*)$ => record_test.go:274: exact stop contract did not catch mutant",
+    "evidence": "timeout 120 go test -json -overlay /tmp/u052-witness-overlay.json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordReadMutants|TestRecordMutantsUnit.*)$ => record_test.go:274: exact stop contract did not catch mutant; origin/main assertion line 277",
     "members": [
       "TestRecordReadMutants"
     ],
@@ -696,7 +696,7 @@ One survivor changes behavior; eight selected entry probes were caught. Evidence
     ],
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "W02: record_test.go:236: Node comparison did not catch mutant",
+    "last_proven_fail": "W02: record_test.go:239 (overlay log line 236): Node comparison did not catch mutant",
     "verdict": "witness",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -721,7 +721,7 @@ One survivor changes behavior; eight selected entry probes were caught. Evidence
       "TestRecordMutants family",
       "TestRegExpBytecodeRandomNode family"
     ],
-    "evidence": "timeout 120 go test -json -overlay /tmp/u052-witness-overlay.json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordReadMutants|TestRecordMutantsUnit.*)$ => record_test.go:236: Node comparison did not catch mutant",
+    "evidence": "timeout 120 go test -json -overlay /tmp/u052-witness-overlay.json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordReadMutants|TestRecordMutantsUnit.*)$ => record_test.go:236: Node comparison did not catch mutant; origin/main assertion line 239",
     "members": [
       "TestRecordMutantsUnit00",
       "TestRecordMutantsUnit01",
