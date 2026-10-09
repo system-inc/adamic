@@ -6,6 +6,7 @@ import (
 )
 
 func TestLibraryLanguageBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, source, reason string }{
 		{"array", `for(const key in [1,2]) { console.log(key); }`, "for...in over an array"},
 		{"hidden array", `const value: {} = [1,2]; for(const key in value) { console.log(key); }`, "plain-object origin"},
@@ -20,6 +21,7 @@ func TestLibraryLanguageBoundaries(t *testing.T) {
 		{"inherited field", `const value = {}; const inherited = value.hasOwnProperty;`, "unbound-method"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, test.source)
 			if err == nil || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("want %q refusal, got %v", test.reason, err)

@@ -10,6 +10,7 @@ import (
 
 // External types and bodies are normalized; declaration forms are retained, including blockers.
 func TestTscNamespaceDeclarationShapes(t *testing.T) {
+	t.Parallel()
 	// Namespace overloads must follow the module-level implementation policy.
 	// Integration admits checked overloads; this branch still reports bodyless signatures.
 	_, overloadError := lowerSource(t, "function read():number; function read():number; function read():number{return 0;} console.log(`${read()}`);")
@@ -31,6 +32,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"tracingEnabled", "no runtime container is emitted"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			path := filepath.Join("../../stage3/namespaces/shapes", test.name+".a")
 			source, err := os.ReadFile(path)
 			if err != nil {
