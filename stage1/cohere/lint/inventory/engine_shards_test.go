@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"hash/fnv"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"slices"
@@ -72,7 +71,8 @@ func inventoryEngineBuild(t *testing.T, mutant bool) (string, string, time.Durat
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command := exec.Command("go", "test", "-c", "-overlay="+path, "-o", binary, virtual, virtualTest)
+		command, cancel := inventoryEngineTestCommand(t, "go", "test", "-c", "-overlay="+path, "-o", binary, virtual, virtualTest)
+		defer cancel()
 		command.Dir = cohere
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -114,7 +114,8 @@ func inventoryEnginePartition(cases []string) ([][]string, error) {
 
 func inventoryEngineUnion(t *testing.T, binary, directory string) [][]string {
 	t.Helper()
-	command := exec.Command(binary, "-test.list=^Test")
+	command, cancel := inventoryEngineTestCommand(t, binary, "-test.list=^Test")
+	defer cancel()
 	command.Dir = directory
 	output, err := command.CombinedOutput()
 	if err != nil {
@@ -189,8 +190,9 @@ func TestInventoryEngineShardAssignment(t *testing.T) {
 	}
 }
 
-func inventoryEngineRun(binary, directory, name string) ([]byte, error) {
-	command := exec.Command(binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+func inventoryEngineRun(t *testing.T, binary, directory, name string) ([]byte, error) {
+	command, cancel := inventoryEngineTestCommand(t, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+	defer cancel()
 	command.Dir = directory
 	return command.CombinedOutput()
 }
@@ -219,7 +221,7 @@ func TestInventoryEngineShardMutant(t *testing.T) {
 	caught := []string{}
 	for index, cases := range shards {
 		for _, name := range cases {
-			output, err := inventoryEngineRun(binary, cohere, name)
+			output, err := inventoryEngineRun(t, binary, cohere, name)
 			if err == nil {
 				continue
 			}
