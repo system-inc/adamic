@@ -1,0 +1,57 @@
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline (setup)	172.76	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere	73.32	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity	52.86	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/03_void_zero.a (setup)	41.79	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/02_module_name.a (setup)	41.41	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/05_kind_switch.a (setup)	41.24	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/06_signed_numeric.a (setup)	41.23	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/04_literal_or.a (setup)	41.06	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/08_flags.a (setup)	41.04	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/09_assert_defined.a (setup)	40.88	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/10_nullish.a (setup)	40.85	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/11_empty_assert.a (setup)	40.68	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/07_typeof.a (setup)	40.52	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/01_identifier.a (setup)	40.25	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/non-null-assertion/main.a (setup)	40.08	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/function-without-body/main.a (setup)	39.91	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/structural-method-statics/main.a (setup)	39.43	fail
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/prefix-unary-value/main.a (setup)	39.32	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/value-condition/main.a (setup)	38.85	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/binary-value-value/main.a (setup)	38.73	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/any-value/main.a (setup)	38.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/optional-boolean-field/main.a (setup)	38.23	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/generic-optional-return/main.a (setup)	37.94	fail
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/real/type-predicate/main.a (setup)	37.62	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/10_hoisted_before_body/main.a (setup)	37.30	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/09_function_value_load/main.a (setup)	37.00	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/02_reverse_barrel/main.a (setup)	36.65	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/04_directory_callback/main.a (setup)	36.44	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/03_extensions/main.a (setup)	36.30	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/06_import_order_mutant/main.a (setup)	36.11	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/07_namespace_barrel/main.a (setup)	35.85	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/05_safe_load_read/main.a (setup)	35.68	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/runner/02_is_string.a (setup)	35.53	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/runner/03_return_true.a (setup)	35.15	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/08_named_reexports/main.a (setup)	35.00	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/02_diagnostic_message.a (setup)	34.85	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/03_diagnostic_file.a (setup)	34.56	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/04_jsx_runtime.a (setup)	34.26	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/05_this_type.a (setup)	34.00	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/06_localized_message.a (setup)	33.85	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/07_compact.a (setup)	33.62	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/08_for_each.a (setup)	33.47	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/09_literal_cache.a (setup)	33.31	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/10_global_import_meta.a (setup)	32.93	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/11_build_info_pending.a (setup)	32.77	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/12_symbol_links.a (setup)	32.77	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/13_void_callback.a (setup)	32.15	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/14_relative_complement.a (setup)	32.02	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/15_barrel.a (setup)	31.59	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/16_scan_exclamation.a (setup)	31.38	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/17_binder_flow.a (setup)	31.21	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/18_named_export.a (setup)	31.04	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/19_deprecated_flags.a (setup)	30.60	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	30.49	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/20_jsdoc_terminate.a (setup)	30.33	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	30.18	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/refused/21_truthy_loops.a (setup)	30.15	pass
