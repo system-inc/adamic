@@ -1,0 +1,3 @@
+exec(open('/tmp/defend-interface-cast/run.py').read().replace("plans=[('D01'", "plans=[('D01'" ).split("plans=[")[0])
+plans=[('D03','internal/lower/expression.go','property.Method = true','property.Method = l.checker.GetSymbolAtLocation(node.AsCallExpression().Expression).Flags&ast.SymbolFlagsMethod != 0','Change receiver dispatch option to require a method-signature symbol'),('D04','internal/lower/class.go','if !identicalTypes(l.checker, from[index], to[index]) {','if !identicalTypes(l.checker, from[index], to[index]) && to[index].Flags()&checker.TypeFlagsUnion == 0 {','Loosen generic-argument identity for union targets')]
+source=open('/tmp/defend-interface-cast/run.py').read();exec(source[source.index('for ident,file,old,new,why in plans:'):])

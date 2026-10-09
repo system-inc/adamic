@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..8cb7117e 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -544,7 +544,7 @@ func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
+ // A class view needs nominal ancestry, even when TypeScript's structural relation accepts two
+ // unrelated classes or a plain object. Otherwise a virtual call would trust a table that isn't there.
+ func (l *lowering) classViewRefusal(node *ast.Node) error {
+-	if !viewSite(node) || node.Kind == ast.KindParenthesizedExpression {
++	if !viewSite(node) || node.Kind == ast.KindParenthesizedExpression || (node.Kind == ast.KindNewExpression && l.iteratorMember(l.checker.GetTypeAtLocation(node)) != nil) {
+ 		return nil
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Name().Kind == ast.KindArrayBindingPattern {
