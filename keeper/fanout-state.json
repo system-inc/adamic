@@ -338,11 +338,12 @@
   "ds:stage1~cohere~estree",
   "rp:M06p",
   "ds:internal~oracle",
-  "rp:M08k"
+  "rp:M08k",
+  "rp:verify-u045",
+  "rp:verify-M08u",
+  "rp:oracle-full"
  ],
- "running": {
-  "01a11ef9-5acd-7186-bfb1-6182ccfbb010": "rp:oracle-full"
- },
+ "running": {},
  "dropped": [
   "u093",
   "u095",

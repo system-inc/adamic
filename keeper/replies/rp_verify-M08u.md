@@ -1,0 +1,24 @@
+The pair catches M08 after counts regeneration: 33 rows changed, `TestCountsAreRecorded` passed, and all six statement-region checks failed. After restoring source and golden, both tests passed; logs are pushed to `test-audit/u045-verify` under `review/test-audit/u045-verify/M08u/`, and the tree is clean.
+
+```json
+{
+  "main": "946a8f095a",
+  "counts_rows_changed": 33,
+  "after_update": {
+    "TestCountsAreRecorded": 0,
+    "TestStatementRegionsAreUsed": 1
+  },
+  "failing_lines": [
+    "statement_regions_test.go:48: internal/oracle/testdata/route_targets_virtual_fresh.a: In regions = 0, want at least 1",
+    "statement_regions_test.go:48: internal/oracle/testdata/borrow_chain_override.a: In regions = 0, want at least 1",
+    "statement_regions_test.go:48: internal/oracle/testdata/regions.a: In regions = 0, want at least 1",
+    "statement_regions_test.go:48: internal/oracle/testdata/regions_throw.a: In regions = 0, want at least 1",
+    "statement_regions_test.go:48: internal/oracle/testdata/devirtualize_factory.a: In regions = 0, want at least 1",
+    "statement_regions_test.go:48: internal/oracle/testdata/call_targets_region.a: In regions = 0, want at least 1"
+  ],
+  "base_after_restore": {
+    "TestCountsAreRecorded": 0,
+    "TestStatementRegionsAreUsed": 0
+  }
+}
+```
