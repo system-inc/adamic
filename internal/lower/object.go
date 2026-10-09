@@ -339,6 +339,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.generatorResultRead(node); handled {
+		return value, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -671,6 +674,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.generatorCall(node); handled {
+		return value, handled, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}

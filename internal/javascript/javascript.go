@@ -738,6 +738,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "(" + e.value(expression.Value) + ", false)"
 		}
 		return "(" + e.value(expression.Value) + " === null)"
+	case ir.GeneratorFrame:
+		return e.value(expression.Value)
 	case ir.NumberConstant:
 		return number(expression.Value)
 	case ir.BooleanConstant:

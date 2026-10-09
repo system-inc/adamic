@@ -66,6 +66,32 @@ Every diagnostic includes the source file, line and column and the named path.
   fix: "use represented values and an iterator whose protocol is known". The
   compiler must identify the unsupported path before emitting either backend.
 
+The initial lowering also keeps these paths stopped:
+
+- A used yield whose next type excludes undefined: "a generator yield result whose next argument is not proved present; use a
+  next type admitting undefined". JavaScript permits next() without an
+  argument. A narrower next promise needs a per-resume proof before an unbox can
+  trust it. Yield, return and next storage remain separate.
+- An unknown generator receiver or delegate: "generator suspension receiver has
+  no proved generator factory origin" or "generator suspension delegate has no
+  proved generator factory origin". Opaque structural protocol views do not prove
+  the native receiver convention. Closed generator factories and their aliases
+  preserve it.
+- A protocol replacement through the generator or a wider object alias:
+  "generator suspension protocol replacement needs a proved receiver convention".
+  The factory does not prove the calling convention of a replacement method.
+- A throw argument outside represented Error completions: "generator throw
+  argument needs the represented Error completion protocol". Primitive abrupt
+  completion values require a represented exception-value extension.
+- A nested closure capturing a body local: "generator suspension nested capture
+  <name> needs a weak frame reference". Retaining the frame from a closure kept
+  in that frame would create a strong cycle; native stack cells cannot survive
+  suspension as a substitute.
+- Unproved initialization, captured per-iteration cells, labeled suspension
+  targets, a yield in a switch case test, a short-circuit yield, and a string or non-array for-of inside a
+  generator identify their named suspension path. Their existing eager lowering
+  cannot be reused by leaving a borrowed local on the native stack.
+
 A synchronous generator is never accepted by erasing yield, eagerly executing
 its body or collecting its yields into an array. Unsupported paths remain
 visible; they do not turn into partial execution or unchecked frame storage.

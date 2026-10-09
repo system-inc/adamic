@@ -1,0 +1,9 @@
+let calls=0;
+function make(): string { calls++; console.log('default'); return 'owned'; }
+function* delayed(value: string=make()): Generator<string, string, string> {
+ yield value; return value;
+}
+const g=delayed();
+console.log(`${calls}`);
+console.log(`${g.next('ignored').value}`);
+console.log(`${g.next('sent').value}`);

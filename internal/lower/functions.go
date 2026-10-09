@@ -104,6 +104,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.Returns = valueType
 		}
 	}
+	if isGenerator(declaration) {
+		types, err := l.generatorTypes(declaration)
+		if err != nil {
+			return err
+		}
+		function.Generator, function.Returns = types, ir.Object
+	}
 	outerIndexForParameters := l.functionIndex
 	l.functionIndex = index
 	defer func() { l.functionIndex = outerIndexForParameters }()
@@ -207,6 +214,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		outerClosures := l.closures
 		l.closures = nil
 		defer func() { l.closures = outerClosures }()
+	}
+	if function.Generator != nil && !function.Generator.Lowering {
+		return l.generatorBody(index, declaration, this, defaults, patterns)
 	}
 	body := declaration.Body()
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
@@ -316,6 +326,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Environment = l.result.Functions[index].Environment
 	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
 	function.ReferenceParents = l.result.Functions[index].ReferenceParents
+	if function.Generator != nil {
+		function.Generator.Prologue = len(function.Body) + len(prologue)
+	}
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
 	l.finishNestedEnvironment(&function, index)

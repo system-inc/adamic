@@ -67,13 +67,13 @@ func TestIteratorDestructuringDoesNotLieAboutExhaustion(t *testing.T) {
 	}
 }
 
-func TestGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
+func TestAsyncGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"function* empty(){return 1;} empty();", "const empty=function*(){return 1;};empty();", "const source={*empty(){return 1;}};source.empty();"} {
+	for _, source := range []string{"async function* empty(){return 1;} empty();", "const empty=async function*(){return 1;};empty();", "const source={async *empty(){return 1;}};source.empty();"} {
 		_, err := lowerSource(t, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "suspended frames") {
-			t.Errorf("got %v, want the generator ownership refusal", err)
+		if !errors.As(err, &refused) || refused.What != "an async generator function" {
+			t.Errorf("got %v, want the async generator ownership refusal", err)
 		}
 	}
 }
