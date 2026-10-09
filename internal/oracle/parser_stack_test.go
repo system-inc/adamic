@@ -88,7 +88,8 @@ func TestParserStackTinyLimit(t *testing.T) {
 		}
 		for _, limit := range []string{"64", "128"} {
 			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", "-c", `ulimit -s "$1" && exec "$0"`, binary, limit)
-			want := "adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\n"
+			// At these limits the checked repeat helper stops while building input, before parseNested.
+			want := "adamic: panic: RangeError: Maximum call stack size exceeded in exception_repeat\n"
 			if got.exitCode != 70 || string(got.stderr) != want || len(got.stdout) != 0 {
 				t.Errorf("%s KiB sanitized=%t: exit %d stderr %.500q", limit, sanitized, got.exitCode, got.stderr)
 			}
