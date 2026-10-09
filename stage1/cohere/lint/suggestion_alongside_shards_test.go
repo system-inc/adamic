@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -227,6 +228,15 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=native")
 	output, err := command.CombinedOutput()
 	if err == nil || bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 || !bytes.Contains(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte("planted automatic fix mismatch")) {
