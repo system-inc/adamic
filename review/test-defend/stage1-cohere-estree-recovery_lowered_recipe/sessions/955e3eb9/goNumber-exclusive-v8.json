@@ -1,0 +1,140 @@
+[
+  {
+    "startOffset": 1267,
+    "endOffset": 1271,
+    "transformed_text": "? 16",
+    "transformed_start_line": 55
+  },
+  {
+    "startOffset": 1290,
+    "endOffset": 1293,
+    "transformed_text": "? 8",
+    "transformed_start_line": 55
+  },
+  {
+    "startOffset": 1312,
+    "endOffset": 1315,
+    "transformed_text": "? 2",
+    "transformed_start_line": 55
+  },
+  {
+    "startOffset": 1343,
+    "endOffset": 1418,
+    "transformed_text": "{\n        let digits = text.slice(2);\n        while(digits.startsWith('0'))",
+    "transformed_start_line": 56
+  },
+  {
+    "startOffset": 1418,
+    "endOffset": 1467,
+    "transformed_text": "{\n            digits = digits.slice(1);\n        }",
+    "transformed_start_line": 58
+  },
+  {
+    "startOffset": 1467,
+    "endOffset": 1492,
+    "transformed_text": "\n        if (base === 16 ",
+    "transformed_start_line": 60
+  },
+  {
+    "startOffset": 1492,
+    "endOffset": 1513,
+    "transformed_text": "&& digits.length > 16",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1513,
+    "endOffset": 1514,
+    "transformed_text": " ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1514,
+    "endOffset": 1528,
+    "transformed_text": "|| base === 2 ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1528,
+    "endOffset": 1549,
+    "transformed_text": "&& digits.length > 64",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1549,
+    "endOffset": 1550,
+    "transformed_text": " ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1550,
+    "endOffset": 1564,
+    "transformed_text": "|| base === 8 ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1564,
+    "endOffset": 1611,
+    "transformed_text": "&& (digits.length > 22 || digits.length === 22 ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1611,
+    "endOffset": 1640,
+    "transformed_text": "&& digits.slice(0, 1) !== '1'",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1640,
+    "endOffset": 1641,
+    "transformed_text": ")",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1641,
+    "endOffset": 1643,
+    "transformed_text": ") ",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1643,
+    "endOffset": 1678,
+    "transformed_text": "{\n            return NaN;\n        }",
+    "transformed_start_line": 61
+  },
+  {
+    "startOffset": 1678,
+    "endOffset": 1708,
+    "transformed_text": "\n        return digits === '' ",
+    "transformed_start_line": 63
+  },
+  {
+    "startOffset": 1708,
+    "endOffset": 1711,
+    "transformed_text": "? 0",
+    "transformed_start_line": 64
+  },
+  {
+    "startOffset": 1711,
+    "endOffset": 1712,
+    "transformed_text": " ",
+    "transformed_start_line": 64
+  },
+  {
+    "startOffset": 1712,
+    "endOffset": 1743,
+    "transformed_text": ": Number.parseInt(digits, base)",
+    "transformed_start_line": 64
+  },
+  {
+    "startOffset": 1743,
+    "endOffset": 1750,
+    "transformed_text": ";\n    }",
+    "transformed_start_line": 64
+  },
+  {
+    "startOffset": 1850,
+    "endOffset": 1855,
+    "transformed_text": "? NaN",
+    "transformed_start_line": 67
+  }
+]

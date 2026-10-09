@@ -1,0 +1,40 @@
+[
+  {
+    "mode": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestDecoratedExports|TestJSXAgreement|TestJSXAgreement_000|TestJSXAgreement_001|TestJSXAgreement_002|TestJSXAgreement_003|TestJSXAgreement_004|TestJSXAgreement_005|TestJSXAgreement_006|TestJSXAgreement_007|TestJSXAgreement_008|TestJSXAgreement_009|TestJSXAgreement_010|TestJSXAgreement_011|TestJSXAgreement_012|TestJSXAgreement_013|TestJSXAgreement_014|TestJSXAgreement_015|TestJSXAgreement_016|TestJSXAgreement_017|TestJSXAgreement_018|TestJSXAgreement_019|TestJSXAgreement_020|TestJSXAgreement_021|TestJSXAgreement_022|TestJSXAgreement_023|TestJSXAgreement_024|TestJSXAgreement_025|TestJSXAgreement_026|TestJSXAgreement_027|TestJSXAgreement_028|TestJSXAgreement_029|TestJSXAgreement_030|TestJSXAgreement_031|TestBoundedPortParser_000|TestBoundedPortParser_001|TestBoundedPortParser_002|TestBoundedPortParser_003|TestBoundedPortParser_004|TestBoundedPortParser_005|TestBoundedPortParser_006|TestBoundedPortParser_007|TestBoundedPortParser_008|TestBoundedPortParser_009|TestBoundedPortParser_010|TestBoundedPortParser_011|TestBoundedPortParser_012|TestBoundedPortParser_013|TestBoundedPortParser_014|TestBoundedPortParser_015|TestBoundedPortParser_016|TestBoundedPortParser_017|TestBoundedPortParser_018|TestBoundedPortParser_019|TestBoundedPortParser_020|TestBoundedPortParser_021|TestBoundedPortParser_022|TestBoundedPortParser_023|TestBoundedPortParser_024|TestBoundedPortParser_025|TestBoundedPortParser_026|TestBoundedPortParser_027|TestBoundedPortParser_028|TestBoundedPortParser_029|TestBoundedPortParser_030|TestBoundedPortParser_031|TestBoundedPortParser_032|TestBoundedPortParser_033|TestBoundedPortParser_034|TestBoundedPortParser_035|TestBoundedPortParser_036|TestBoundedPortParser_037|TestBoundedPortParser_038|TestBoundedPortParser_039|TestBoundedPortParser_040|TestBoundedPortParser_041|TestBoundedPortParser_042|TestBoundedPortParser_043|TestBoundedPortParser_044|TestBoundedPortParser_045|TestBoundedPortParser_046|TestBoundedPortParser_047|TestBoundedPortParser_048|TestBoundedPortParser_049|TestBoundedPortParser_050|TestBoundedPortParser_051|TestBoundedPortParser_052|TestBoundedPortParser_053|TestBoundedPortParser_054|TestBoundedPortParser_055|TestBoundedPortParser_056|TestBoundedPortParser_057|TestBoundedPortParser_058|TestBoundedPortParser_059|TestBoundedPortParser_060|TestBoundedPortParser_061|TestBoundedPortParser_062|TestBoundedPortParser_063|TestBoundedPortParserUnion)$"
+    ],
+    "cache": null,
+    "exit": 0,
+    "wall_seconds": 48.31228661500063
+  },
+  {
+    "mode": "D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestDecoratedExports|TestJSXAgreement|TestJSXAgreement_000|TestJSXAgreement_001|TestJSXAgreement_002|TestJSXAgreement_003|TestJSXAgreement_004|TestJSXAgreement_005|TestJSXAgreement_006|TestJSXAgreement_007|TestJSXAgreement_008|TestJSXAgreement_009|TestJSXAgreement_010|TestJSXAgreement_011|TestJSXAgreement_012|TestJSXAgreement_013|TestJSXAgreement_014|TestJSXAgreement_015|TestJSXAgreement_016|TestJSXAgreement_017|TestJSXAgreement_018|TestJSXAgreement_019|TestJSXAgreement_020|TestJSXAgreement_021|TestJSXAgreement_022|TestJSXAgreement_023|TestJSXAgreement_024|TestJSXAgreement_025|TestJSXAgreement_026|TestJSXAgreement_027|TestJSXAgreement_028|TestJSXAgreement_029|TestJSXAgreement_030|TestJSXAgreement_031|TestBoundedPortParser_000|TestBoundedPortParser_001|TestBoundedPortParser_002|TestBoundedPortParser_003|TestBoundedPortParser_004|TestBoundedPortParser_005|TestBoundedPortParser_006|TestBoundedPortParser_007|TestBoundedPortParser_008|TestBoundedPortParser_009|TestBoundedPortParser_010|TestBoundedPortParser_011|TestBoundedPortParser_012|TestBoundedPortParser_013|TestBoundedPortParser_014|TestBoundedPortParser_015|TestBoundedPortParser_016|TestBoundedPortParser_017|TestBoundedPortParser_018|TestBoundedPortParser_019|TestBoundedPortParser_020|TestBoundedPortParser_021|TestBoundedPortParser_022|TestBoundedPortParser_023|TestBoundedPortParser_024|TestBoundedPortParser_025|TestBoundedPortParser_026|TestBoundedPortParser_027|TestBoundedPortParser_028|TestBoundedPortParser_029|TestBoundedPortParser_030|TestBoundedPortParser_031|TestBoundedPortParser_032|TestBoundedPortParser_033|TestBoundedPortParser_034|TestBoundedPortParser_035|TestBoundedPortParser_036|TestBoundedPortParser_037|TestBoundedPortParser_038|TestBoundedPortParser_039|TestBoundedPortParser_040|TestBoundedPortParser_041|TestBoundedPortParser_042|TestBoundedPortParser_043|TestBoundedPortParser_044|TestBoundedPortParser_045|TestBoundedPortParser_046|TestBoundedPortParser_047|TestBoundedPortParser_048|TestBoundedPortParser_049|TestBoundedPortParser_050|TestBoundedPortParser_051|TestBoundedPortParser_052|TestBoundedPortParser_053|TestBoundedPortParser_054|TestBoundedPortParser_055|TestBoundedPortParser_056|TestBoundedPortParser_057|TestBoundedPortParser_058|TestBoundedPortParser_059|TestBoundedPortParser_060|TestBoundedPortParser_061|TestBoundedPortParser_062|TestBoundedPortParser_063|TestBoundedPortParserUnion)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 48.937877340998966
+  }
+]

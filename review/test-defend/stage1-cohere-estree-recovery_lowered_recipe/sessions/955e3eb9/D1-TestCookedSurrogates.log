@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T16:00:48.809501569Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:00:48.816750255Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates"}
+{"Time":"2026-10-09T16:00:48.816849541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"=== RUN   TestCookedSurrogates\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:27.426711299Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"    utf8_test.go:25: 8 cooked-surrogate files, 3606 bytes match Go\n"}
+{"Time":"2026-10-09T16:01:27.426765679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"--- PASS: TestCookedSurrogates (38.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:27.426769405Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Elapsed":38.61}
+{"Time":"2026-10-09T16:01:27.426789404Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:27.430152105Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t38.620s\n"}
+{"Time":"2026-10-09T16:01:27.430204052Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":38.621}

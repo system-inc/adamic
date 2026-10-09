@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T15:54:47.786560416Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T15:54:47.794835259Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar"}
+{"Time":"2026-10-09T15:54:47.794887206Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"=== RUN   TestDeepGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:55:29.692630896Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"    deep_test.go:41: three 4096-operand cases, 2551820 identical bytes in all builds\n"}
+{"Time":"2026-10-09T15:55:29.695092608Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"--- PASS: TestDeepGrammar (41.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:55:29.695105798Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Elapsed":41.9}
+{"Time":"2026-10-09T15:55:29.695145436Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:55:29.697949555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t41.911s\n"}
+{"Time":"2026-10-09T15:55:29.697996345Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":41.911}

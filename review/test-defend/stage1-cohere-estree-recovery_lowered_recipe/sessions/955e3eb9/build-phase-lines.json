@@ -1,0 +1,382 @@
+[
+  {
+    "log": "D1-additional.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:21: build Go oracle: 0.581940s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build estree-misc-sanitized-emitted f77a3617de2f miss 37.86"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 37.905135s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestDecoratedExports",
+    "output": "misc_shards_test.go:358: build estree-misc-oracle-answers 26f8cf635204 miss 0.02"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_016",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.13"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_016",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.158234s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_041",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.14"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_041",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.170553s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_033",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.13"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_033",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.166270s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_035",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.15"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_035",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.186072s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_034",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.15"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_034",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.189876s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_041",
+    "output": "stalls_test.go:82: build Go oracle: 0.865408s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_016",
+    "output": "stalls_test.go:82: build Go oracle: 0.914673s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_034",
+    "output": "stalls_test.go:82: build Go oracle: 0.911085s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_035",
+    "output": "stalls_test.go:82: build Go oracle: 0.937430s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_041",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed miss 0.08"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_016",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.06"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_034",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.03"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_035",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.01"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_033",
+    "output": "stalls_test.go:82: build Go oracle: 0.990164s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_033",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_020",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.17"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_020",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.205340s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_019",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.17"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_019",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.199702s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_052",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.16"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_052",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.210776s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_060",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.07"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_060",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.113056s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_058",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.06"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_058",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.113660s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_019",
+    "output": "stalls_test.go:82: build Go oracle: 0.922603s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_019",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_020",
+    "output": "stalls_test.go:82: build Go oracle: 1.013629s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_052",
+    "output": "stalls_test.go:82: build Go oracle: 0.886039s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_020",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_052",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_060",
+    "output": "stalls_test.go:82: build Go oracle: 0.838501s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_060",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_058",
+    "output": "stalls_test.go:82: build Go oracle: 1.059716s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_058",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_057",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.14"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_057",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.175606s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_013",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.10"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_013",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.154750s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_003",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.07"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_003",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.096762s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_057",
+    "output": "stalls_test.go:82: build Go oracle: 0.742035s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_057",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_013",
+    "output": "stalls_test.go:82: build Go oracle: 0.747413s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_013",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_003",
+    "output": "stalls_test.go:82: build Go oracle: 0.735704s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_003",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_001",
+    "output": "stalls_test.go:81: build estree-misc-sanitized-emitted f77a3617de2f hit 0.06"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_001",
+    "output": "stalls_test.go:81: build lowered/sanitized/emitted products: 0.095196s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestJSXAgreement_023",
+    "output": "scalar_edges_split_products_test.go:128: build scalar-edges-go-oracle cce69e57ded0 hit 1.51"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_001",
+    "output": "stalls_test.go:82: build Go oracle: 0.609864s"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestBoundedPortParser_001",
+    "output": "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed hit 0.00"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestJSXAgreement_023",
+    "output": "scalar_edges_split_products_test.go:129: build scalar-edges-lowered c5d4c00d4240 hit 1.17"
+  },
+  {
+    "log": "D1-additional.log",
+    "test": "TestJSXAgreement_023",
+    "output": "scalar_edges_split_products_test.go:129: build scalar-edges-sanitized-native-v2 3d5cc2436aed hit 1.09"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredExpressions",
+    "output": "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.00"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredExpressions",
+    "output": "expressions_test.go:18: build estree-lowered-program 33414a9e0581 miss 19.73"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredExpressions",
+    "output": "expressions_test.go:18: build estree-sanitized-native 528e135a4392 miss 23.79"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredGrammar",
+    "output": "recovery_test.go:33: build estree-oracle-answer 6ec2bbbf823a miss 0.00"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredGrammar",
+    "output": "recovery_test.go:35: build estree-lowered-program 33414a9e0581 hit 0.04"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestRecoveredGrammar",
+    "output": "recovery_test.go:35: build estree-sanitized-native 528e135a4392 hit 0.00"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "output": "scalar_edges_split_products_test.go:287: build scalar-edges-go-oracle cce69e57ded0 miss 2.37"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestScalarEdges_Setup",
+    "output": "scalar_edges_split_products_test.go:128: build scalar-edges-go-oracle cce69e57ded0 hit 2.37"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestProduct_scalar_edges_lowered",
+    "output": "scalar_edges_split_products_test.go:292: build scalar-edges-lowered c5d4c00d4240 miss 21.57"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "output": "scalar_edges_split_products_test.go:297: build scalar-edges-lowered c5d4c00d4240 hit 21.57"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestScalarEdges_Setup",
+    "output": "scalar_edges_split_products_test.go:129: build scalar-edges-lowered c5d4c00d4240 hit 19.20"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestScalarEdges_Setup",
+    "output": "scalar_edges_split_products_test.go:129: build scalar-edges-sanitized-native-v2 3d5cc2436aed miss 3.07"
+  },
+  {
+    "log": "D1-core.log",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "output": "scalar_edges_split_products_test.go:298: build scalar-edges-sanitized-native-v2 3d5cc2436aed hit 3.07"
+  }
+]

@@ -1,0 +1,145 @@
+[
+  {
+    "batch": "core",
+    "rows": [
+      "TestScalarEdgesUnion",
+      "TestScalarEdges_000",
+      "TestScalarEdges_001",
+      "TestScalarEdges_002",
+      "TestScalarEdges_003",
+      "TestRecoveredGrammar",
+      "TestRecoveredExpressions",
+      "TestScalarEdges",
+      "TestScalarEdges_Setup",
+      "TestProduct_scalar_edges_go_oracle",
+      "TestProduct_scalar_edges_lowered",
+      "TestProduct_scalar_edges_sanitized_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003|TestRecoveredGrammar|TestRecoveredExpressions|TestScalarEdges|TestScalarEdges_Setup|TestProduct_scalar_edges_go_oracle|TestProduct_scalar_edges_lowered|TestProduct_scalar_edges_sanitized_native)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 1,
+    "wall_seconds": 72.42539660499824
+  },
+  {
+    "batch": "TestGeneratedAgreement",
+    "rows": [
+      "TestGeneratedAgreement"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestGeneratedAgreement)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 40.56946119799977
+  },
+  {
+    "batch": "TestAcceptanceGrammar",
+    "rows": [
+      "TestAcceptanceGrammar"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestAcceptanceGrammar)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 40.116983775002154
+  },
+  {
+    "batch": "TestSyntaxGrammar",
+    "rows": [
+      "TestSyntaxGrammar"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestSyntaxGrammar)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 40.65763643799801
+  },
+  {
+    "batch": "TestCookedSurrogates",
+    "rows": [
+      "TestCookedSurrogates"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestCookedSurrogates)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 40.46432544999698
+  },
+  {
+    "batch": "TestDeepGrammar",
+    "rows": [
+      "TestDeepGrammar"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestDeepGrammar)$"
+    ],
+    "cache": "/tmp/defend-estree-scalars/cache/D1",
+    "exit": 0,
+    "wall_seconds": 42.30475124200166
+  }
+]

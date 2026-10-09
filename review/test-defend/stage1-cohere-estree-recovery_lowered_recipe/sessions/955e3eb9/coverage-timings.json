@@ -1,0 +1,44 @@
+[
+  {
+    "row": "scalar-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_[0-9]{3})$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/tmp/defend-estree-scalars/scalar-family.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 39.47866204299862,
+    "NODE_V8_COVERAGE": "/tmp/defend-estree-scalars/v8/scalar-family"
+  },
+  {
+    "row": "recovered-grammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/tmp/defend-estree-scalars/recovered-grammar.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 48.192057635998935,
+    "NODE_V8_COVERAGE": "/tmp/defend-estree-scalars/v8/recovered-grammar"
+  }
+]

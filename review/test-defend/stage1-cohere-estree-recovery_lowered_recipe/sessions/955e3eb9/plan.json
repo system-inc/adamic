@@ -1,0 +1,30 @@
+{
+  "base": "955e3eb92b9cd04aca420974d1006048b4615d51",
+  "code_under_test": "stage1/cohere/estree TypeScript port, values.goNumber called by the converter/pipeline/main; code is run on source Node, sanitized native and emitted JS.",
+  "oracle": "external-run: unchanged Go cohere ESTree adapter canonical dump, byte-for-byte with all three products.",
+  "target_family": [
+    "TestScalarEdgesUnion",
+    "TestScalarEdges_000",
+    "TestScalarEdges_001",
+    "TestScalarEdges_002",
+    "TestScalarEdges_003"
+  ],
+  "family_preparation_separate": [
+    "TestScalarEdges",
+    "TestScalarEdges_Setup"
+  ],
+  "semantic_difference": "Scalar corpus exercises hex/radix uint64 overflow, while recovered grammar executes only decimal goNumber. V8 confirms radix branch and overflow return are exclusive to scalar inputs.",
+  "mutants": [
+    {
+      "id": "D1",
+      "file": "stage1/cohere/estree/values.ts",
+      "line": 65,
+      "old": "base === 16 && digits.length > 16",
+      "new": "base === 16 && digits.length > 17",
+      "menu": "off-by-one a bound",
+      "aim": "Allow one extra hexadecimal digit, making 0x10000000000000000 produce a finite value rather than the Go oracle NaN."
+    }
+  ],
+  "matrix_limit": "Whole package discovery has 245 names and baseline cooked at 90.015 seconds without individual failures. Matrix expands beyond the two audit rows to 17 current top-level functions, bounded in six batches to limit uncached native compilation. All remaining rows unknown.",
+  "coverage_limit": "Go compiler coverage does not instrument port TypeScript or native runtime. Actual port coverage is V8 function/block ranges against Node stripTypeScriptTypes mode transform output. goNumber body range mapping uses transformed source, then the unchanged source condition identifies origin/main values.ts:65; no fabricated direct TS go -coverpkg profile."
+}

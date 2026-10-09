@@ -1,0 +1,110 @@
+[
+  {
+    "batch": "core",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003|TestRecoveredGrammar|TestRecoveredExpressions|TestScalarEdges|TestScalarEdges_Setup|TestProduct_scalar_edges_go_oracle|TestProduct_scalar_edges_lowered|TestProduct_scalar_edges_sanitized_native)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 10.315302216000418
+  },
+  {
+    "batch": "TestGeneratedAgreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestGeneratedAgreement)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 41.317352682999626
+  },
+  {
+    "batch": "TestAcceptanceGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestAcceptanceGrammar)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 39.954487947001326
+  },
+  {
+    "batch": "TestSyntaxGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestSyntaxGrammar)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 40.45002591999946
+  },
+  {
+    "batch": "TestCookedSurrogates",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestCookedSurrogates)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 40.64190932299971
+  },
+  {
+    "batch": "TestDeepGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestDeepGrammar)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 43.649298795000504
+  }
+]

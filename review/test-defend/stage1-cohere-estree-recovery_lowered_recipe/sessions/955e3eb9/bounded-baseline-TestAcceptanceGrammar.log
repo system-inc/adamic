@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T15:52:46.706668063Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T15:52:46.713154605Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-09T15:52:46.713210548Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:24.953735893Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:27: 11 acceptance grammar cases, 8800 identical canonical bytes\n"}
+{"Time":"2026-10-09T15:53:24.953790093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- PASS: TestAcceptanceGrammar (38.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:24.953798896Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":38.24}
+{"Time":"2026-10-09T15:53:24.953817383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:24.956454806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t38.249s\n"}
+{"Time":"2026-10-09T15:53:24.95648436Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":38.25}

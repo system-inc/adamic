@@ -1,0 +1,56 @@
+[
+  {
+    "product": "Go oracle",
+    "command": [
+      "/tmp/defend-estree-scalars/cache/D1/cce69e57ded058b19f8f5744d82ea084443cfea01ad0038d5973a1238ba869a5/oracle",
+      "--manifest",
+      "/tmp/defend-estree-scalars/hex-boundary.manifest"
+    ],
+    "exit": 0,
+    "value_lines": [
+      "2 .value number NaN"
+    ]
+  },
+  {
+    "product": "sanitized native",
+    "command": [
+      "/tmp/defend-estree-scalars/cache/D1/3d5cc2436aedb53e30060bd16a6d4f2d7f71b2ee8fe67992116b8408018f0918/port",
+      "--manifest",
+      "/tmp/defend-estree-scalars/hex-boundary.manifest"
+    ],
+    "exit": 0,
+    "value_lines": [
+      "2 .value number 18446744073709552000"
+    ]
+  },
+  {
+    "product": "emitted JS",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/defend-estree-scalars/cache/D1/c5d4c00d4240f81214ccdc78c40a88b91c5d8f3eda24ed3ae56919fe0afa042f/port.mjs",
+      "--manifest",
+      "/tmp/defend-estree-scalars/hex-boundary.manifest"
+    ],
+    "exit": 0,
+    "value_lines": [
+      "2 .value number 18446744073709552000"
+    ]
+  },
+  {
+    "product": "source Node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/estree/main.ts",
+      "--manifest",
+      "/tmp/defend-estree-scalars/hex-boundary.manifest"
+    ],
+    "exit": 0,
+    "value_lines": [
+      "2 .value number 18446744073709552000"
+    ]
+  }
+]

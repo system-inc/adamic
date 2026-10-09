@@ -1,0 +1,13 @@
+0 Program 0 21 0 0 0 0 21 0
+0 .body list 1
+1 ExpressionStatement 0 20 0 1 19 0 19 1
+1 .directive null
+1 .expression node
+2 Literal 0 19 0 0 0 0 19 0
+2 .raw string 0x10000000000000000
+2 .value number 18446744073709552000
+0 .comments null
+0 .sourceType string module
+0 .tokens null
+0 .directives null
+stripped 0x10000000000000000;\u000a
