@@ -21,9 +21,14 @@ with tempfile.TemporaryDirectory(prefix='checked-write-mutants-') as directory:
     scratch = Path(directory)
     for family in manifest['families']:
         name = family['files']['out']
-        if not by_name[name]['checked_write_pass']:
+        baseline = by_name[name]
+        # A diagnostic-content gap must not hide a testable runtime check.
+        native_baseline = baseline['ts_runtime']
+        js_baseline = baseline['ts_javascript']
+        if not (native_baseline and js_baseline and native_baseline == js_baseline and
+                native_baseline['exit'] == 70 and native_baseline['stdout'] == 'before write\n'):
             results.append(dict(family=family['family'], file=name, status='blocked',
-                                reason='unmutated checked-write runtime contract has not passed'))
+                                reason='unmutated native/JS exit-70 write stop unavailable'))
             continue
         source = scratch / name.replace('.a', '.ts')
         source.write_bytes((ROOT / name).read_bytes())

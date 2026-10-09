@@ -1,3 +1,4 @@
+// a-check: refused a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
 // From TypeScript 6.0.3, src/compiler/checker.ts:51498
 // Census reason: a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
 

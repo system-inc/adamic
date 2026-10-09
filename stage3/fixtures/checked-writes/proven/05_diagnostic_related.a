@@ -1,3 +1,4 @@
+// a-check: refused a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
 // From TypeScript 6.0.3, src/compiler/utilities.ts:10349
 // Census reason: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
 

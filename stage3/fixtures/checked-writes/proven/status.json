@@ -11,8 +11,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/01_truthiness.a:12:16: stage 0 can't lower a BinaryExpression with a value and a value yet\nexit status 1\n"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -27,8 +27,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/02_control.a:8:13: stage 0 can't lower a BinaryExpression with a value and a boolean yet\nexit status 1\n"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -43,8 +43,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/03_kind_reader.a:10:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n"
+      "outcome": "NotYet",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/03_kind_reader.a:14:45: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet\n"
     }
   },
   {
@@ -60,7 +60,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/04_range_reader.a:35:33: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/04_range_reader.a:36:33: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
     }
   },
   {
@@ -76,7 +76,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/05_diagnostic_related.a:24:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/05_diagnostic_related.a:25:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
     }
   },
   {
@@ -92,7 +92,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/06_modifiers_initialize.a:11:72: Adamic 0.1 refuses ||=; write the if\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/06_modifiers_initialize.a:12:32: Adamic 0.1 refuses a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   },
   {
@@ -108,7 +108,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/07_assert_clause.a:11:14: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/07_assert_clause.a:12:14: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   },
   {
@@ -124,7 +124,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/08_property_initializer.a:12:54: Adamic 0.1 refuses a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/08_property_initializer.a:13:54: Adamic 0.1 refuses a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   },
   {
@@ -140,7 +140,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/09_static_modifiers.a:19:10: Adamic 0.1 refuses a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/09_static_modifiers.a:20:10: Adamic 0.1 refuses a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   },
   {
@@ -156,7 +156,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/10_module_parent.a:9:22: Adamic 0.1 refuses a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/10_module_parent.a:10:22: Adamic 0.1 refuses a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     }
   }
 ]

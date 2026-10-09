@@ -15,7 +15,7 @@ for (const mode of ['complete-stand-in', 'insert-check', 'refuse-site', 'drop-si
     if (mode === 'drop-site') observation.records.pop();
     const file = path.join(scratch, mode + '.json');
     fs.writeFileSync(file, JSON.stringify(observation));
-    const run = child.spawnSync(process.execPath, [path.join(__dirname, 'verify.cjs'), '--compiler-control'], { encoding: 'utf8', env: { ...process.env, PROVEN_COMPILER_RESULTS: file } });
+    const run = child.spawnSync(process.execPath, [path.join(__dirname, 'verify.cjs'), '--compiler-control'], { encoding: 'utf8', timeout: 60000, env: { ...process.env, PROVEN_COMPILER_RESULTS: file } });
     fs.writeFileSync(path.join(scratch, mode + '.log'), run.stdout + run.stderr);
     assert.equal(run.status, mode === 'complete-stand-in' ? 0 : 1, mode);
     const message = { 'insert-check': 'static proof must elide checks', 'refuse-site': 'compile required', 'drop-site': 'compiler result coverage' }[mode];

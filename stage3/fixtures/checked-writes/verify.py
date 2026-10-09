@@ -18,7 +18,7 @@ REPO = ROOT.parents[2]
 
 
 def run(command, cwd=REPO, environment=None):
-    result = subprocess.run(command, cwd=cwd, env=environment, capture_output=True, text=True, timeout=120)
+    result = subprocess.run(command, cwd=cwd, env=environment, capture_output=True, text=True, timeout=30)
     return dict(exit=result.returncode, stdout=result.stdout, stderr=result.stderr)
 
 

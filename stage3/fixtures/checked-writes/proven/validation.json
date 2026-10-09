@@ -45,7 +45,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "05_diagnostic_related.a.ts:15:9",
+          "where": "05_diagnostic_related.a.ts:16:9",
           "path": "relatedInformation",
           "operation": "=",
           "original_domains": [
@@ -60,7 +60,7 @@
           "feasible_counterexample": false
         },
         {
-          "where": "05_diagnostic_related.a.ts:18:5",
+          "where": "05_diagnostic_related.a.ts:19:5",
           "path": "relatedInformation.[]",
           "operation": "push",
           "original_domains": [
@@ -81,7 +81,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "05_diagnostic_related.a.ts:15:9",
+          "where": "05_diagnostic_related.a.ts:16:9",
           "path": "relatedInformation",
           "operation": "=",
           "original_domains": [
@@ -96,7 +96,7 @@
           "feasible_counterexample": false
         },
         {
-          "where": "05_diagnostic_related.a.ts:18:5",
+          "where": "05_diagnostic_related.a.ts:19:5",
           "path": "relatedInformation.[]",
           "operation": "push",
           "original_domains": [
@@ -117,7 +117,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "06_modifiers_initialize.a.ts:11:31",
+          "where": "06_modifiers_initialize.a.ts:12:31",
           "path": "modifiers",
           "operation": "||=",
           "original_domains": [
@@ -138,7 +138,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "07_assert_clause.a.ts:11:13",
+          "where": "07_assert_clause.a.ts:12:13",
           "path": "assertClause",
           "operation": "=",
           "original_domains": [
@@ -159,7 +159,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "08_property_initializer.a.ts:12:53",
+          "where": "08_property_initializer.a.ts:13:53",
           "path": "initializer",
           "operation": "=",
           "original_domains": [
@@ -180,7 +180,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "09_static_modifiers.a.ts:19:9",
+          "where": "09_static_modifiers.a.ts:20:9",
           "path": "modifiers",
           "operation": "=",
           "original_domains": [
@@ -201,7 +201,7 @@
       "classification": "b",
       "writes": [
         {
-          "where": "10_module_parent.a.ts:9:21",
+          "where": "10_module_parent.a.ts:10:21",
           "path": "parent",
           "operation": "=",
           "original_domains": [

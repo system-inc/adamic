@@ -1,0 +1,452 @@
+[
+  {
+    "file": "01_located-diagnostic_in.a",
+    "header": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "body_sha256": "4859254ca0eb35b392da6fee536866658000557de8398a8e882a63a887f65476",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/01_located-diagnostic_in.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "01_located-diagnostic_out.a",
+    "header": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "body_sha256": "d9825c86218a95922fc574a489f216109973e064db4eca313c613710f5460531",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/01_located-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "02_shared-empty_in.a",
+    "header": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "previous_header": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "body_sha256": "68f67e2816e848e8288840ba07b2a8c3cfe6a98b8b81061eba71ede9de32c1a9",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/02_shared-empty_in.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "02_shared-empty_out.a",
+    "header": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "previous_header": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "body_sha256": "21930e31ee0fa2057e60a43f21b8620fd0c699699902f14a1d98628d1f80eb34",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "03_flow-node_in.a",
+    "header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "previous_header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "body_sha256": "1863b0920cf477dcf9e112568f5ffc2ffdd13fc321df446e4083282d63cd7bf3",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/03_flow-node_in.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "03_flow-node_out.a",
+    "header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "previous_header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "body_sha256": "4d4991e73fb2478b80e108d1769dfd6790186ea30b15cd11ace15af8b441be6b",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "04_resolved-members_in.a",
+    "header": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+    "previous_header": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+    "body_sha256": "5b91a3da3b22e5eff388f775d30251afc98766a92118387dac6dc3f0d92e77b2",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/04_resolved-members_in.a:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "04_resolved-members_out.a",
+    "header": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+    "previous_header": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+    "body_sha256": "6b10f39d7de7f999fd6fb59d15b3f24ce5c0e5ac5af17c6f24767e7e5adc9b8d",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/04_resolved-members_out.a:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "05_generic-range_in.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "31cf31a954715b720658cdd5767be7da9fd7d75d4df315147fd6d10913cf2674",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/05_generic-range_in.a:8:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "05_generic-range_out.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "9568cda20a15a69a38c7c718b082d434249b61aa6121ae5a32871ba7128ef4ef",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/05_generic-range_out.a:8:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "06_builder-tracker_in.a",
+    "header": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read",
+    "previous_header": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read",
+    "body_sha256": "0dca606fd886060f270f68f39c72b72064a33178b9f4fb4deaf12aeb8bf1a002",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/06_builder-tracker_in.a:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "06_builder-tracker_out.a",
+    "header": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read",
+    "previous_header": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read",
+    "body_sha256": "db361983a429ce8549c25339a9932c529bf7c34b5f284ecff361985585bbe2f5",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/06_builder-tracker_out.a:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "07_diagnostic-array_in.a",
+    "header": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+    "body_sha256": "bf3674fa2321f22209fa991888ff20e8ed558ad58f904fc9f753bbf59a7b06e2",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/07_diagnostic-array_in.a:16:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "07_diagnostic-array_out.a",
+    "header": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+    "body_sha256": "fbb818e34a39909671824249616dd35a8beb04ce8e1fdd4d7b626ee2e8fb82ac",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/07_diagnostic-array_out.a:16:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "08_generated-identifier_in.a",
+    "header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "bb38d9046333b611aa5d66f4777b65f260d89ca76cc255b6033b27d0048bed50",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/08_generated-identifier_in.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "08_generated-identifier_out.a",
+    "header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "5ec83df7409c61bd8f7ed346b58d2950945a49391c3e127b5ad69ba936d0c78b",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/08_generated-identifier_out.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "09_identifier-flags_in.a",
+    "header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "42a53fce386bb08bf7587d631a0189d6d0f80838b9a501dc88bc6d98debe7edf",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/09_identifier-flags_in.a:9:6: Adamic 0.1 refuses a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "09_identifier-flags_out.a",
+    "header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "fe59d20280e9bc1e10930494d74a72a1afaa38f467bdcdc3eed169a5da514a33",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/09_identifier-flags_out.a:9:6: Adamic 0.1 refuses a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "10_expression-range_in.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "e1d51aeee9da3fb0e0622ae6c38a178c390d5f089bf4b452a089a00292f2df95",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/10_expression-range_in.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "10_expression-range_out.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "352eb8a1c22481087b6907723efa86c3a2463d242d8fdd9d7d989df9bb1b3f9e",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/10_expression-range_out.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "11_node-flags_in.a",
+    "header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "c569442c8cf79e043c91225724fec48f5bd950ca1bd6db2714cbb10b2c2679f2",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/11_node-flags_in.a:8:6: Adamic 0.1 refuses a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "11_node-flags_out.a",
+    "header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "4b4a6f03acccaea010446a72e88a2501ca490283d4fbb3a2ada14298799c8539",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/11_node-flags_out.a:8:6: Adamic 0.1 refuses a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "12_captured-this_in.a",
+    "header": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "dea348373a779d593c21157471b73ade536eee8de9f5694c8f4e9e012c433e20",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/12_captured-this_in.a:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "12_captured-this_out.a",
+    "header": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "66e1668bd4adcd9091486a444b1623d289bbeeb615deb2810d2385b48e525ce0",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/12_captured-this_out.a:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "13_declaration-array_in.a",
+    "header": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "previous_header": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "body_sha256": "dc8a5f016d3f4249de7cef2145048b601636207565b9fd8bfeedebb3660cb63e",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/13_declaration-array_in.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "13_declaration-array_out.a",
+    "header": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "previous_header": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "body_sha256": "7bbc54ae0d74b26559aa07438354ad63d74c8e549a27ab6c861a6584c58876d9",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "14_statement-array-range_in.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "58917a0f440b9d653a2e80f3e350a91d7d60fd6de1f994a82cca7eea31ea91b4",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/14_statement-array-range_in.a:10:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "14_statement-array-range_out.a",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "body_sha256": "5c05a41c6f05b80f2f7894ae01673661c3ab0d30b7754c7bf4bd0ced30e8b10c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/14_statement-array-range_out.a:10:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "15_detached-diagnostic_in.a",
+    "header": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "body_sha256": "b68e8c34bc85e36bcf9d9720f101ee21f2eaebc783407e37d2cb53eb2d298824",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/15_detached-diagnostic_in.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "15_detached-diagnostic_out.a",
+    "header": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "previous_header": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "body_sha256": "a08604fce0d0d112abe380fe198c3e6aaa8dd6c83e0b2795cb7f86cb9abfe41d",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "16_flow-assignment-union_in.a",
+    "header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "previous_header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "body_sha256": "9b929cbdae0981c8d714aeda786b82f8bc06b91212d59e8b3c286adc7747650c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/16_flow-assignment-union_in.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "16_flow-assignment-union_out.a",
+    "header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "previous_header": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "body_sha256": "01f2bf38d793503975902032f303f88761dc83219fb746c9733bb26879d81c0b",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "17_generated-node-union_in.a",
+    "header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "21d0d9490da1953e83b99d571558d0195b817d9fb50cf4032f2390c14db8bbc2",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/17_generated-node-union_in.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "17_generated-node-union_out.a",
+    "header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "671a30e227492f6340de0dab1223db7811b645c8559aaeda51249dbf9f6bc3c1",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/17_generated-node-union_out.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "18_synthetic-super_in.a",
+    "header": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "240671f7c093abc1463475be8ae3a8857b68fa324458f0fbf5ff7304449db407",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/18_synthetic-super_in.a:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "18_synthetic-super_out.a",
+    "header": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "previous_header": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+    "body_sha256": "a66854e97bad1c9baeca317ba906503ab297ff5866dfa40c7f8a8c818492c9f4",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/18_synthetic-super_out.a:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "19_mutable-generated_in.a",
+    "header": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read",
+    "previous_header": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read",
+    "body_sha256": "72989b60b22096ae1cf036bb6ace04448836ee3f1ff1c0681dc9907969e356a3",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/19_mutable-generated_in.a:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "19_mutable-generated_out.a",
+    "header": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read",
+    "previous_header": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read",
+    "body_sha256": "6e99ccf2d719424bb85ee2f72ab1dffd8c5d66dfa6394dae0922429a846281d2",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/19_mutable-generated_out.a:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "20_diagnostic-union_in.a",
+    "header": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "previous_header": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "body_sha256": "0494faf6edcfcca0e6aecaf085d62706a0c6ab7069b67b884e8316c910f3425f",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/20_diagnostic-union_in.a:15:11: Adamic 0.1 refuses a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "20_diagnostic-union_out.a",
+    "header": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "previous_header": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+    "body_sha256": "182b832db3d072d5788e7f9a7b9035f52bf811558c1b9bf22f90c30ba607b43d",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/20_diagnostic-union_out.a:15:11: Adamic 0.1 refuses a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/01_truthiness.a",
+    "header": "",
+    "previous_header": "",
+    "body_sha256": "6a0b2c4ccb42bd4106f4a4cbe720f1781ae5a7368fe3dbf1ee486d6bad222045",
+    "exit": 0,
+    "stderr": "",
+    "matches": true
+  },
+  {
+    "file": "proven/02_control.a",
+    "header": "",
+    "previous_header": "",
+    "body_sha256": "477614299b7dc7cf3a49466b142a45f2f6d869d34f27ecb4dacaabaac2f15771",
+    "exit": 0,
+    "stderr": "",
+    "matches": true
+  },
+  {
+    "file": "proven/03_kind_reader.a",
+    "header": "",
+    "previous_header": "",
+    "body_sha256": "d27c6d444fabec2ce7dd6e028ff475ddd09b57def3bd45cd1afbebeee2504acf",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/03_kind_reader.a:14:45: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet\n",
+    "matches": true
+  },
+  {
+    "file": "proven/04_range_reader.a",
+    "header": "// a-check: refused the non-null assertion !",
+    "previous_header": "",
+    "body_sha256": "939db5ce2ba53e18061c2769739d1aa0b44d28fa7d3724f236bff11b430b3396",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/04_range_reader.a:35:33: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+    "matches": true
+  },
+  {
+    "file": "proven/05_diagnostic_related.a",
+    "header": "// a-check: refused a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+    "previous_header": "",
+    "body_sha256": "3275a272879538e78f393a82500eea045b5ffbc8268a3e4a2aa25dfe844ba577",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/05_diagnostic_related.a:24:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/06_modifiers_initialize.a",
+    "header": "// a-check: refused a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "",
+    "body_sha256": "0de4f7f3ad630f2ba65360a3db0f2de90f103577a68cf47d0177f2ba5befef8d",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/06_modifiers_initialize.a:11:32: Adamic 0.1 refuses a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/07_assert_clause.a",
+    "header": "// a-check: refused a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "",
+    "body_sha256": "ba4b5b1c5ef84b54e0b3b80d7f5de4492ee0763a855ba716996b6ef8354c1db0",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/07_assert_clause.a:11:14: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/08_property_initializer.a",
+    "header": "// a-check: refused a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "",
+    "body_sha256": "b8aa9fa646a97d9304eeb68a2beb1df3c9ca640f7e9844d65d8fbb5e444d0bd7",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/08_property_initializer.a:12:54: Adamic 0.1 refuses a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/09_static_modifiers.a",
+    "header": "// a-check: refused a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "",
+    "body_sha256": "dafa2db56c513c021f46fc2f49c3ef60303e7c2bb5f453eaa221bad1810e53ee",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/09_static_modifiers.a:19:10: Adamic 0.1 refuses a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  },
+  {
+    "file": "proven/10_module_parent.a",
+    "header": "// a-check: refused a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "previous_header": "",
+    "body_sha256": "ed8321776228d38ff6d612e50ff30367c7506a047c9061342d79d63ab6a2e061",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/10_module_parent.a:9:22: Adamic 0.1 refuses a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "matches": true
+  }
+]

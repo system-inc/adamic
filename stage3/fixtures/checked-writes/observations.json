@@ -1,7 +1,7 @@
 {
   "fixture_base_commit": "45487a809f89885a3fc651cd590e7dabf31362dc",
-  "compiler_revision": "6a093f039c0aa71105c857b2187c6fe680d5c607",
-  "compiler_sha256": "f1d5628a4a4ddf4434de1bc518778210d6dfb161962063643da887fb656a2c0d",
+  "compiler_revision": "781766edccfd21ed4f2e9f9106dd488d28751e96",
+  "compiler_sha256": "dd595f5903da0c265f700dd41c3d449a6797761e14d94190596ca6f00fcf2f2f",
   "node_version": "v24.19.0",
   "fixtures": [
     {
@@ -104,15 +104,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/02_shared-empty_in.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/02_shared-empty_in.ts:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nlength 0\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nlength 0\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nlength 0\n",
+        "stderr": "adamic: counts: allocations 3 frees 3 retains 0 releases 4 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 3,
+        "retains": 0,
+        "releases": 4,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "02_shared-empty_out.a",
@@ -128,14 +147,33 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/02_shared-empty_out.ts:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects never, got 1\nadamic: counts: allocations 2 frees 0 retains 1 releases 1 peak 2 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 2,
+        "frees": 0,
+        "retains": 1,
+        "releases": 1,
+        "peak": 2,
+        "regions": 0
+      },
       "checked_write_pass": false
     },
     {
@@ -152,15 +190,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/03_flow-node_in.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/03_flow-node_in.ts:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 5 releases 9 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 5,
+        "releases": 9,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "03_flow-node_out.a",
@@ -176,14 +233,33 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/03_flow-node_out.ts:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 4,
+        "releases": 3,
+        "peak": 3,
+        "regions": 0
+      },
       "checked_write_pass": false
     },
     {
@@ -200,15 +276,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/04_resolved-members_in.a:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/04_resolved-members_in.ts:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored members\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored members\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored members\n",
+        "stderr": "adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 3,
+        "retains": 4,
+        "releases": 7,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "04_resolved-members_out.a",
@@ -224,15 +319,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/04_resolved-members_out.a:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/04_resolved-members_out.ts:15:14: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: type.members expects SymbolTable, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: type.members expects SymbolTable, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: type.members expects SymbolTable, got undefined\nadamic: counts: allocations 2 frees 0 retains 3 releases 2 peak 2 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 2,
+        "frees": 0,
+        "retains": 3,
+        "releases": 2,
+        "peak": 2,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "05_generic-range_in.a",
@@ -334,15 +448,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/06_builder-tracker_in.a:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/06_builder-tracker_in.ts:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored complete\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored complete\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored complete\n",
+        "stderr": "adamic: counts: allocations 7 frees 7 retains 3 releases 9 peak 7 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 7,
+        "frees": 7,
+        "retains": 3,
+        "releases": 9,
+        "peak": 7,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "06_builder-tracker_out.a",
@@ -358,15 +491,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/06_builder-tracker_out.a:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/06_builder-tracker_out.ts:17:14: Adamic 0.1 refuses a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: context.tracker expects SymbolTrackerImpl, got object\nadamic: counts: allocations 6 frees 0 retains 2 releases 3 peak 6 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 6,
+        "frees": 0,
+        "retains": 2,
+        "releases": 3,
+        "peak": 6,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "07_diagnostic-array_in.a",
@@ -384,7 +536,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/07_diagnostic-array_in.ts:16:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_in.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -408,7 +560,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/07_diagnostic-array_out.ts:16:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/07_diagnostic-array_out.ts:9:5: Adamic 0.1 refuses inherited library member unshift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -430,15 +582,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/08_generated-identifier_in.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/08_generated-identifier_in.ts:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 3 releases 7 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 3,
+        "releases": 7,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "08_generated-identifier_out.a",
@@ -454,15 +625,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/08_generated-identifier_out.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/08_generated-identifier_out.ts:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\nadamic: counts: allocations 3 frees 0 retains 2 releases 2 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 2,
+        "releases": 2,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "09_identifier-flags_in.a",
@@ -736,15 +926,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/12_captured-this_in.a:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/12_captured-this_in.ts:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 4 releases 7 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 4,
+        "releases": 7,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "12_captured-this_out.a",
@@ -760,15 +969,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/12_captured-this_out.a:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/12_captured-this_out.ts:18:15: Adamic 0.1 refuses a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\nadamic: counts: allocations 3 frees 0 retains 3 releases 2 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 3,
+        "releases": 2,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "13_declaration-array_in.a",
@@ -784,15 +1012,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/13_declaration-array_in.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/13_declaration-array_in.ts:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored Declaration\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored Declaration\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored Declaration\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 6 releases 10 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 6,
+        "releases": 10,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "13_declaration-array_out.a",
@@ -808,14 +1055,33 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/13_declaration-array_out.ts:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: array[] expects Declaration, got object\nadamic: counts: allocations 3 frees 0 retains 3 releases 3 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 3,
+        "releases": 3,
+        "peak": 3,
+        "regions": 0
+      },
       "checked_write_pass": false
     },
     {
@@ -834,7 +1100,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/14_statement-array-range_in.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_in.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -858,7 +1124,7 @@
       "ts_build": {
         "exit": 1,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/14_statement-array-range_out.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
+        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a_lvyzgv/14_statement-array-range_out.ts:15:7: stage 0 can't lower a value of type NodeArray<Statement> & { readonly pos: 0; readonly end: 0; } yet\n"
       },
       "ts_runtime": null,
       "ts_javascript": null,
@@ -880,15 +1146,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/15_detached-diagnostic_in.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/15_detached-diagnostic_in.ts:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": "adamic: counts: allocations 3 frees 3 retains 5 releases 9 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 3,
+        "retains": 5,
+        "releases": 9,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "15_detached-diagnostic_out.a",
@@ -904,14 +1189,33 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/15_detached-diagnostic_out.ts:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: diagnostic.file expects undefined, got object\nadamic: counts: allocations 2 frees 0 retains 2 releases 2 peak 2 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 2,
+        "frees": 0,
+        "retains": 2,
+        "releases": 2,
+        "peak": 2,
+        "regions": 0
+      },
       "checked_write_pass": false
     },
     {
@@ -928,15 +1232,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/16_flow-assignment-union_in.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/16_flow-assignment-union_in.ts:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored BinaryExpression\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 5 releases 9 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 5,
+        "releases": 9,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "16_flow-assignment-union_out.a",
@@ -952,14 +1275,33 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/16_flow-assignment-union_out.ts:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got object\nadamic: counts: allocations 3 frees 0 retains 4 releases 3 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 4,
+        "releases": 3,
+        "peak": 3,
+        "regions": 0
+      },
       "checked_write_pass": false
     },
     {
@@ -976,15 +1318,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/17_generated-node-union_in.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/17_generated-node-union_in.ts:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 3 releases 7 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 3,
+        "releases": 7,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "17_generated-node-union_out.a",
@@ -1000,15 +1361,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/17_generated-node-union_out.a:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/17_generated-node-union_out.ts:17:15: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\nadamic: counts: allocations 3 frees 0 retains 2 releases 2 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 2,
+        "releases": 2,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "18_synthetic-super_in.a",
@@ -1024,15 +1404,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/18_synthetic-super_in.a:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/18_synthetic-super_in.ts:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 4 releases 7 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 4,
+        "releases": 7,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "18_synthetic-super_out.a",
@@ -1048,15 +1447,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/18_synthetic-super_out.a:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/18_synthetic-super_out.ts:18:15: Adamic 0.1 refuses a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\nadamic: counts: allocations 3 frees 0 retains 3 releases 2 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 3,
+        "releases": 2,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "19_mutable-generated_in.a",
@@ -1072,15 +1490,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/19_mutable-generated_in.a:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/19_mutable-generated_in.ts:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": ""
+      },
+      "ts_counted": {
+        "exit": 0,
+        "stdout": "before write\nstored generated\n",
+        "stderr": "adamic: counts: allocations 4 frees 4 retains 3 releases 7 peak 4 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 4,
+        "frees": 4,
+        "retains": 3,
+        "releases": 7,
+        "peak": 4,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "19_mutable-generated_out.a",
@@ -1096,15 +1533,34 @@
         "stderr": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/19_mutable-generated_out.a:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
       },
       "ts_build": {
-        "exit": 1,
+        "exit": 0,
         "stdout": "",
-        "stderr": "adamic: /tmp/adamic-gate/checked-writes-a9p7gwko/19_mutable-generated_out.ts:18:15: Adamic 0.1 refuses a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+        "stderr": ""
       },
-      "ts_runtime": null,
-      "ts_javascript": null,
-      "ts_counted": null,
-      "native_counts": null,
-      "checked_write_pass": false
+      "ts_runtime": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_javascript": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\n"
+      },
+      "ts_counted": {
+        "exit": 70,
+        "stdout": "before write\n",
+        "stderr": "adamic: panic: write failed: node.emitNode expects GeneratedEmitNode, got undefined\nadamic: counts: allocations 3 frees 0 retains 2 releases 2 peak 3 regions 0\n"
+      },
+      "native_counts": {
+        "allocations": 3,
+        "frees": 0,
+        "retains": 2,
+        "releases": 2,
+        "peak": 3,
+        "regions": 0
+      },
+      "checked_write_pass": true
     },
     {
       "file": "20_diagnostic-union_in.a",
@@ -1580,37 +2036,18 @@
     "a_headers_pass": 40,
     "header_predicate_mutants_caught": 80,
     "input_mutants_caught": 20,
-    "checked_write_pass": 12,
-    "checked_write_pending": 28
+    "checked_write_pass": 31,
+    "checked_write_pending": 9
   },
   "checked_write_pending": [
-    "02_shared-empty_in.a",
     "02_shared-empty_out.a",
-    "03_flow-node_in.a",
     "03_flow-node_out.a",
-    "04_resolved-members_in.a",
-    "04_resolved-members_out.a",
-    "06_builder-tracker_in.a",
-    "06_builder-tracker_out.a",
     "07_diagnostic-array_in.a",
     "07_diagnostic-array_out.a",
-    "08_generated-identifier_in.a",
-    "08_generated-identifier_out.a",
-    "12_captured-this_in.a",
-    "12_captured-this_out.a",
-    "13_declaration-array_in.a",
     "13_declaration-array_out.a",
     "14_statement-array-range_in.a",
     "14_statement-array-range_out.a",
-    "15_detached-diagnostic_in.a",
     "15_detached-diagnostic_out.a",
-    "16_flow-assignment-union_in.a",
-    "16_flow-assignment-union_out.a",
-    "17_generated-node-union_in.a",
-    "17_generated-node-union_out.a",
-    "18_synthetic-super_in.a",
-    "18_synthetic-super_out.a",
-    "19_mutable-generated_in.a",
-    "19_mutable-generated_out.a"
+    "16_flow-assignment-union_out.a"
   ]
 }

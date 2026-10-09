@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 // From TypeScript 6.0.3, src/compiler/emitter.ts:5110
 // Census reason: a value of type NodeArray<Statement> seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
 

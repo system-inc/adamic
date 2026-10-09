@@ -12,9 +12,9 @@ const ledger = JSON.parse(fs.readFileSync(path.join(directory, 'sites.json'), 'u
 const mode = process.argv[2];
 const digest = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 assert.equal(ts.version, '6.0.3');
-const original = child.execFileSync('git', ['show', `${ledger.classification_ref}:${ledger.classification_path}`], { cwd: repository, maxBuffer: 4 * 1024 * 1024 });
+const original = child.execFileSync('git', ['show', `${ledger.classification_ref}:${ledger.classification_path}`], { cwd: repository, maxBuffer: 4 * 1024 * 1024, timeout: 30000 });
 assert.equal(digest(original), ledger.classification_sha256, 'classification pin');
-const auditSource = child.execFileSync('git', ['show', `${ledger.classification_ref}:stage3/adapt/71-writable-views/language-decision/audit.cjs`], { cwd: repository });
+const auditSource = child.execFileSync('git', ['show', `${ledger.classification_ref}:stage3/adapt/71-writable-views/language-decision/audit.cjs`], { cwd: repository, timeout: 30000 });
 assert.equal(digest(fs.readFileSync(path.join(directory, 'receiving-audit.cjs'))), digest(auditSource), 'receiver audit pin');
 const selected = JSON.parse(original).records.filter(record => ['a', 'b'].includes(record.classification));
 const rows = structuredClone(ledger.records);
@@ -103,7 +103,7 @@ for (const fixture of ledger.fixtures) {
         nodeFile = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'proven-output-mutant-')), fixture.file);
         fs.writeFileSync(nodeFile, source);
     }
-    const run = child.spawnSync(process.execPath, ['--disable-warning=ExperimentalWarning', path.join(repository, 'oracle/node.mjs'), nodeFile]);
+    const run = child.spawnSync(process.execPath, ['--disable-warning=ExperimentalWarning', path.join(repository, 'oracle/node.mjs'), nodeFile], { timeout: 30000 });
     const expectedNode = status.find(row => row.file === fixture.file).node;
     assert.deepEqual(run.stdout, Buffer.from(expectedNode.stdout), `${fixture.file}: Node stdout bytes`);
     assert.deepEqual(run.stderr, Buffer.from(expectedNode.stderr), `${fixture.file}: Node stderr bytes`);
@@ -112,7 +112,7 @@ for (const fixture of ledger.fixtures) {
 }
 const mutants = [];
 if (!mode) for (const mutation of ['--bad-write', '--drop-row', '--node-output']) {
-    const result = child.spawnSync(process.execPath, [__filename, mutation], { encoding: 'utf8' });
+    const result = child.spawnSync(process.execPath, [__filename, mutation], { encoding: 'utf8', timeout: 60000 });
     assert.equal(result.status, 1, `${mutation} must fail`);
     assert(result.stderr.includes('AssertionError'), result.stderr);
     assert(result.stderr.includes(mutation === '--bad-write' ? '03_kind_reader.a: proven contract changed' : mutation === '--drop-row' ? 'exact 98-site coverage' : '03_kind_reader.a: Node stdout bytes'), result.stderr);

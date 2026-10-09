@@ -28,6 +28,11 @@ func main() {
 		panic(err)
 	}
 	removed := 0
+	// The rebuilt compiler also checks container writes through this IR flag.
+	if program.CheckedElements {
+		program.CheckedElements = false
+		removed++
+	}
 	var visit func(reflect.Value)
 	visit = func(value reflect.Value) {
 		if !value.IsValid() {
@@ -35,6 +40,21 @@ func main() {
 		}
 		switch value.Kind() {
 		case reflect.Interface:
+			if value.IsNil() {
+				return
+			}
+			if array, ok := value.Interface().(ir.ArrayLiteral); ok && array.Never {
+				array.Never = false
+				value.Set(reflect.ValueOf(array))
+				removed++
+			}
+			if container, ok := value.Interface().(ir.ContractContainer); ok {
+				// Container runtimes also enforce the allocation contract.
+				value.Set(reflect.ValueOf(container.Value))
+				removed++
+				visit(value)
+				return
+			}
 			if store, ok := value.Interface().(ir.SetProperty); ok {
 				if store.WriteCheck != "" {
 					store.WriteCheck = ""
@@ -43,7 +63,10 @@ func main() {
 				}
 				return
 			}
-			visit(value.Elem())
+			copy := reflect.New(value.Elem().Type()).Elem()
+			copy.Set(value.Elem())
+			visit(copy)
+			value.Set(copy)
 		case reflect.Struct:
 			for index := 0; index < value.NumField(); index++ {
 				visit(value.Field(index))
