@@ -1,0 +1,4 @@
+loom-build: tree c0ada198abb9483b310825610842833eedb0ff41 setup 3 s
+loom-runner: still running after 150 s
+loom-build: go build ./... passed
+loom-build: go vet ./... passed

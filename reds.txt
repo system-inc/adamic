@@ -1,0 +1,7 @@
+run adamic-verify-20261009T055526-0d906094: void, 35 tests in 5 units, 1 failed, 1 units broken, 0 killed over budget
+BROKEN tests-04: exited 2, Loom's fault (last output "none            8.8G  5.4G  3.5G  61% /tmp")
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestEveryTestIsParallelOrSaysWhy (tests-05)
+    parallel_test.go:93: checked 23335 top-level tests; 63 fail the parallel rule
+    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/tsc_corpus_test.go	TestTSCCorpusAgreement
+    parallel_test.go:130: serial baseline contains 63 entries
+    parallel_test.go:137: cmd/adamic-gate/main_test.go	TestShardChildren: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason
