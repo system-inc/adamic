@@ -1,0 +1,8 @@
+target cf735d9fba9e38de6368575e5630e44375a86eaf
+logs /home/ahra/full-gate/out/cf735d9fba9e-20261009T134246Z/catalog-units/08-bx_ojelj/adamic-catalog-logs-hr7zps5g
+build flags: commit=cf735d9fba9e38de6368575e5630e44375a86eaf; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+09 literal-undefined-field: applies-and-fails-as-recorded
+09 made against=d772b5c990de4304de990e723835f19ebb613641
+09 wall=324.880s setup=235.248s check=79.432s cleanup=8.255s load=18.01 17.15 19.82 59/957 1424959 -> 75.27 47.85 31.54 69/1207 1529124
+total wall=324.942s load=18.01 17.15 19.82 99/930 1424805 -> 75.27 47.85 31.54 70/1207 1529125

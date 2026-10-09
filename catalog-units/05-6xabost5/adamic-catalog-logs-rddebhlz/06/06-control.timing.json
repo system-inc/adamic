@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$"
+  ],
+  "seconds": 37.82510674301011,
+  "exit_code": 0,
+  "go_reported_test_seconds": 2.404,
+  "load_before": "71.96 38.77 27.35 68/1210 1459865",
+  "load_after": "72.94 42.55 29.03 57/1341 1489664"
+}

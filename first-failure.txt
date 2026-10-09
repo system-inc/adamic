@@ -1,0 +1,6 @@
+github.com/system-inc/adamic/internal/oracle TestReviewProgramsAgreeWithNode/fxspptb_d96d304_normalize_edge.a
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_d96d304_normalize_edge.a
+    review_test.go:90: review unit took 39.185825689s; must be under 30s
+--- FAIL: TestReviewProgramsAgreeWithNode/fxspptb_d96d304_normalize_edge.a (39.19s)
+
+(box load 49.5 on 64 cores at first failure)
