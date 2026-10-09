@@ -20,7 +20,7 @@ import (
 
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
-	testBlockLayout(t, "lists")
+	listLayoutSetup(t)
 }
 
 func TestMarkdownQuoteLayout(t *testing.T) {
