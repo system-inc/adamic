@@ -1,3 +1,4 @@
+// a-check: type error TS2740
 // A custom ES2024 Set-shaped value without ES2025 operations.
 class CustomSet {
     readonly size = 0;

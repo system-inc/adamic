@@ -56,6 +56,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return kind, true
 	}
 	flags := proven.Flags()
+	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
+		return ir.Object, true
+	}
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
 	}

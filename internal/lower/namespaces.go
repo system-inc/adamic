@@ -265,7 +265,13 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			return visit(branch)
 		}
 		if ast.IsClassLike(node) {
-			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+			var heritage *ast.NodeList
+			if node.Kind == ast.KindClassDeclaration {
+				heritage = node.AsClassDeclaration().HeritageClauses
+			} else {
+				heritage = node.AsClassExpression().HeritageClauses
+			}
+			for _, clause := range nodesOf(heritage) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 					for _, element := range clause.AsHeritageClause().Types.Nodes {
 						if err := visit(element.AsExpressionWithTypeArguments().Expression); err != nil {
@@ -276,7 +282,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			}
 			// Instance fields and constructor bodies execute at new, not at the
 			// declaration. Unknown construction keeps the checks in those bodies.
-			for _, member := range node.AsClassDeclaration().Members.Nodes {
+			for _, member := range node.Members() {
 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
 					if err := visit(member); err != nil {
 						return err

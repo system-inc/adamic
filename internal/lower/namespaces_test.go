@@ -136,6 +136,7 @@ func TestNamespaceClosedCallGraphEdges(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		"function read():boolean{return N.x;} class C {static readonly x=read();} namespace N {export let x=false;}",
+		"function read():boolean{return N.x;} const C = class {static readonly x=read();}; namespace N {export let x=false;}",
 		"function read():boolean{return N.x;} const alias=read; alias(); namespace N {export let x=false;}",
 		"function read():boolean{return N.x;} [1].map(read); namespace N {export let x=false;}",
 		"function read(x:boolean=N.x):boolean{return x;} read(); namespace N {export let x=false;}",

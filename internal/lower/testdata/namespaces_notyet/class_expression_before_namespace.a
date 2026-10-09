@@ -1,0 +1,3 @@
+function read(): boolean { return N.x; }
+const C = class { static readonly x = read(); };
+namespace N { export let x = false; }

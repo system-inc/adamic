@@ -104,7 +104,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindIndexSignature {
+		if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
 			if _, supported := l.recordInfo(l.checker.GetTypeAtLocation(node.Parent)); !supported {
 				found = l.notYet(node, recordLimit)
 				return true

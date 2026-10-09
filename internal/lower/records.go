@@ -96,7 +96,7 @@ func (l *lowering) recordUse(node *ast.Node) error {
 
 func (l *lowering) recordLiteral(node *ast.Node) (ir.Expression, bool, error) {
 	t := l.checker.GetContextualType(node, checker.ContextFlagsNone)
-	if t == nil || len(l.checker.GetIndexInfosOfType(t)) == 0 {
+	if t == nil || len(l.checker.GetIndexInfosOfType(t)) == 0 || l.enumerationRecordStorageType(t) || l.enumerationReadonlyType(t) {
 		return nil, false, nil
 	}
 	info, ok := l.recordInfo(t)
