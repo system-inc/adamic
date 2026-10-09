@@ -22,7 +22,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const compilerAgreementFileBuckets = 64
