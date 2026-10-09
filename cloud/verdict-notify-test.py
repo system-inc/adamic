@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Who hears a fast gate's verdict, and what they read, with a stand-in router and a stand-in ahra."""
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -21,6 +22,11 @@ def fleetArea(fleet):
 
 
 class VerdictTests(unittest.TestCase):
+    def setUp(self):
+        self.jobsDirectory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.jobsDirectory.cleanup)
+        self.jobs = Path(self.jobsDirectory.name)
+
     def send(self, branch, log, toIntegration=False):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -36,7 +42,7 @@ class VerdictTests(unittest.TestCase):
             if toIntegration:
                 (root / 'state/verdicts-to-integration').touch()
             (root / 'gate.log').write_text(log)
-            env = dict(os.environ, PATH=str(root / 'bin') + ':' + os.environ['PATH'], SENDS=str(root / 'sends'),
+            env = dict(os.environ, PATH=str(root / 'bin') + ':' + os.environ['PATH'], SENDS=str(root / 'sends'), ADAMIC_AB_JOBS=str(self.jobs),
                        ADAMIC_VERDICT_ROUTES_DIR=str(root / 'routes'), ADAMIC_FAST_GATE_WATCH_STATE=str(root / 'state'),
                        ADAMIC_FAST_GATE_AHRA_DIR=tmp, ADAMIC_FLEET_ROSTER=str(root / 'roster.json'))
             subprocess.run(['python3', str(script), branch, SHA, str(root / 'gate.log')], env=env, check=True, capture_output=True)
@@ -92,6 +98,20 @@ class VerdictTests(unittest.TestCase):
         # At the core count, no label.
         level = self.red.replace('TestOwnershipShapes\n', 'TestOwnershipShapes\n(box load 64.0 on 64 cores at first failure)\n')
         self.assertNotIn('under load', self.send('codex/compiler-loops', level)[0][1])
+
+    def test_a_stalled_red_asks_loom_for_an_a_b_against_its_base_for_the_same_names(self):
+        stalled = self.red.replace('TestOwnershipShapes\n', 'TestOwnershipShapes\n    run_test.go:9: stalled: no output for 2m0s\n')
+        self.send('codex/compiler-loops', stalled)
+        jobs = list(self.jobs.glob('*.json'))
+        self.assertEqual(len(jobs), 1)
+        job = json.loads(jobs[0].read_text())
+        self.assertEqual((job['candidate'], job['main'], job['leaf']), (SHA, '2f024dda2787de4168550bdd6bc419536dc6a924', 'TestOwnershipShapes'))
+        self.assertEqual((job['red'], job['notify']), ('gate-logs/ababababab/20261008T160758Z/fast', ['system_adamic_compiler']))
+        # An assertion red asks for nothing.
+        for job in jobs:
+            job.unlink()
+        self.send('codex/compiler-loops', self.red)
+        self.assertEqual(list(self.jobs.glob('*.json')), [])
 
     def test_no_all_caps_word_survives(self):
         log = self.red.replace('TestOwnershipShapes', 'TestJSONShapes')

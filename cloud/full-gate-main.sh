@@ -318,6 +318,15 @@ BOX
         else
           (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
         fi
+        # A red that may be load (a timeout, a stall, a kill) gets Loom's same-instance A/B against the candidate's first
+        # parent, and the verdict comes back to integration (cloud/ab-trigger.py; @system_adamic from the witness, Oct 9).
+        firstFailure=$(mktemp)
+        if ssh "${box}" "cat ~/${out}/first-failure.txt" > "${firstFailure}" 2> /dev/null; then
+          git -C "${here}" fetch -q origin "${sha}" 2> /dev/null || true
+          python3 "${here}/cloud/ab-trigger.py" write --candidate "${sha}" --main "$(git -C "${here}" rev-parse "${sha}^1" 2> /dev/null)" \
+            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_integration || true
+        fi
+        rm -f "${firstFailure}"
       fi
       previous=${status}
     fi

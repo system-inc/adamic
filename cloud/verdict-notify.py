@@ -214,6 +214,23 @@ def main():
         sent = subprocess.run(['ahra', 'os', 'send', name, text, '--from', 'system_adamic_developer_tools'],
                               cwd=str(ahra), capture_output=True, text=True)
         print('%s %s %s: %s' % (time.strftime('%H:%M:%S', time.gmtime()), 'told' if sent.returncode == 0 else 'could not tell', name, text))
+    abTest(sha, log, early, names)
+
+
+def abTest(sha, log, early, names):
+    """A red whose first failure is a timeout, a stall or a kill gets Loom's same-instance A/B against its base
+    (cloud/ab-trigger.py), and its verdict comes back to the same names."""
+    text = Path(log).read_text(errors='replace')
+    block = re.search(r'^FIRST FAILURE \([^\n]*\n(.*?)(?=^(?:green|red|void): |\Z)', text, re.M | re.S)
+    base = re.search(r'^fast gate: \S+ against \S+ ([0-9a-f]{40})', text, re.M)
+    if not block or not base:
+        return
+    published = re.findall(r'^published (gate-logs/\S+)', text, re.M)
+    with tempfile.NamedTemporaryFile('w', suffix='.txt') as handle:
+        handle.write(block.group(1))
+        handle.flush()
+        subprocess.run(['python3', str(Path(__file__).with_name('ab-trigger.py')), 'write', '--candidate', sha, '--main', base.group(1),
+                        '--red', early or (published[-1] if published else ''), '--first-failure', handle.name, '--notify', ','.join(names)])
 
 
 if __name__ == '__main__':
