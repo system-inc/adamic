@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -328,7 +329,18 @@ func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(binary, "-test.run=^TestOwnedWitnesses_[0-9]{3}$", "-test.timeout=75s", "-test.v")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, "-test.run=^TestOwnedWitnesses_[0-9]{3}$", "-test.timeout=75s", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_OWNED_WITNESS_PROBE=1", "ADAMIC_TEST_SHARD=")
 	output, err := command.CombinedOutput()
 	if err == nil {
