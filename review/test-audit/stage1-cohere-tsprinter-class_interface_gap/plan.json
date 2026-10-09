@@ -1,0 +1,98 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/tsprinter/doc.ts",
+    "from_": "while(remaining >= 0) {",
+    "to": "while(remaining > 0) {",
+    "menu": "off-by-one bound",
+    "line": 198
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/tsprinter/width.ts",
+    "from_": "return text.length;",
+    "to": "return text.length + 1;",
+    "menu": "off-by-one width",
+    "line": 79
+  },
+  {
+    "id": "M3",
+    "file": "internal/lower/iteration_origin.go",
+    "from_": "func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {",
+    "to": "return nil at entry",
+    "menu": "return early",
+    "line": 64
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/assignments.go",
+    "from_": "Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)",
+    "to": "Right: ir.NumberConstant{Value: 2}}, Checked: l.checked(local)",
+    "menu": "change constant",
+    "line": 242
+  },
+  {
+    "id": "M5",
+    "file": "internal/lower/library_math_number.go",
+    "from_": "return ir.NumberCall{Function: \"convert\", Arguments: []ir.Expression{value}}, nil",
+    "to": "return ir.NumberCall{Function: \"parseFloat\", Arguments: []ir.Expression{value}}, nil",
+    "menu": "change option",
+    "line": 66
+  },
+  {
+    "id": "M6",
+    "file": "internal/lower/expression.go",
+    "from_": "return ir.MaybeOf{Of: to}",
+    "to": "return ir.MaybeOf{Value: ir.BooleanConstant{Value: false}, Of: to}",
+    "menu": "change missing value option",
+    "line": 705
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/tsprinter/corpus_test.go",
+    "from_": "strings.HasSuffix(path, \".ts\")",
+    "to": "strings.HasSuffix(path, \".tsx\")",
+    "menu": "setup: change extension",
+    "line": 28
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/tsprinter/expression_products_test.go",
+    "from_": "if !canonical {",
+    "to": "if canonical {",
+    "menu": "setup: flip first condition",
+    "line": 96
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go",
+    "from_": "selected[i] = i%boxes == index",
+    "to": "selected[i] = i%boxes != index",
+    "menu": "setup: flip selection",
+    "line": 44
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go",
+    "from_": "if bytes.Equal(result.stdout, want) {",
+    "to": "if true {",
+    "menu": "witness: accept disagreements",
+    "line": 221
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go",
+    "from_": "func expressionUnion",
+    "to": "return nil at entry",
+    "menu": "witness: disable union validation",
+    "line": 186
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/tsprinter/mutant_grain_test.go",
+    "from_": "if string(side.result.stdout) == want {",
+    "to": "if true {",
+    "menu": "witness: treat every result as agreeing",
+    "line": 65
+  }
+]

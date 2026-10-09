@@ -1,0 +1,50 @@
+[
+  {
+    "id": "P-Lower-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.8978549590028706,
+    "exit": 0
+  },
+  {
+    "id": "baseline-family-members",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestExpressionsAgainstGoAndPrettier_000|TestMutants_000)$"
+    ],
+    "seconds": 17.16494105500169,
+    "exit": 0
+  },
+  {
+    "id": "M1-family-member",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionsAgainstGoAndPrettier_000$"
+    ],
+    "seconds": 47.114459495998744,
+    "exit": 1
+  }
+]

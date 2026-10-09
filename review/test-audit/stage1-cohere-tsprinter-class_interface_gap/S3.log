@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:16:12.374298344Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:16:12.387181176Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection"}
+{"Time":"2026-10-09T13:16:12.3873498Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Output":"=== RUN   TestExpressionUnitBoxSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387413812Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Output":"=== PAUSE TestExpressionUnitBoxSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387416858Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection"}
+{"Time":"2026-10-09T13:16:12.387423589Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection"}
+{"Time":"2026-10-09T13:16:12.387425721Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Output":"=== CONT  TestExpressionUnitBoxSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387428377Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Output":"    expression_units_test.go:66: shard-000 assigned 0 times across 1 boxes\n","OutputType":"error"}
+{"Time":"2026-10-09T13:16:12.387437686Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Output":"--- FAIL: TestExpressionUnitBoxSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387439993Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitBoxSelection","Elapsed":0}
+{"Time":"2026-10-09T13:16:12.387451833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387698343Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.013s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.387714855Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.013}

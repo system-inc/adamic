@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T13:16:40.374870442Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:16:40.387516553Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000"}
+{"Time":"2026-10-09T13:16:40.387594468Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"=== RUN   TestMutants_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:40.387617683Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"=== PAUSE TestMutants_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:40.387620054Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000"}
+{"Time":"2026-10-09T13:16:40.387628754Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000"}
+{"Time":"2026-10-09T13:16:40.387630828Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"=== CONT  TestMutants_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:46.696449939Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_products_test.go:94: docs: 5072 cases in 5 largest-first processes\n"}
+{"Time":"2026-10-09T13:16:46.758833865Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    expressions_test.go:170: build TS_printer_mutant_000_Go_oracle_corpus d9df73eefc2f miss 2.45\n"}
+{"Time":"2026-10-09T13:16:46.759709131Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_grain_shards_test.go:49: grain oracle setup: 6.371s\n"}
+{"Time":"2026-10-09T13:16:51.182077648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_products_test.go:57: grain lowering: 1.059s\n"}
+{"Time":"2026-10-09T13:16:51.40657434Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_products_test.go:60: grain C emission: 0.223s\n"}
+{"Time":"2026-10-09T13:16:57.130201935Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_products_test.go:63: grain clang runtime/compile/link: 5.725s\n"}
+{"Time":"2026-10-09T13:16:57.212044756Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    expressions_test.go:170: build TS_printer_mutant_000_sanitized_native d9ce222fa7eb miss 8.59\n"}
+{"Time":"2026-10-09T13:16:57.214255767Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_grain_shards_test.go:49: grain total build setup: 16.827s\n"}
+{"Time":"2026-10-09T13:16:57.214270856Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_grain_shards_test.go:49: mutant 1/29: protocol width confuses Number with parseFloat\n"}
+{"Time":"2026-10-09T13:16:58.408970799Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_grain_shards_test.go:49: Node mutant escaped the byte comparison\n","OutputType":"error"}
+{"Time":"2026-10-09T13:16:58.409022898Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"    mutant_grain_test.go:30: grain own work: 1.195s\n"}
+{"Time":"2026-10-09T13:16:58.40983906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Output":"--- FAIL: TestMutants_000 (18.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:58.409846969Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestMutants_000","Elapsed":18.02}
+{"Time":"2026-10-09T13:16:58.409939478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:58.415911821Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t18.041s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:58.415937638Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":18.041}

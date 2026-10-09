@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/mutant_grain_test.go
++++ b/stage1/cohere/tsprinter/mutant_grain_test.go
+@@ -62,7 +62,7 @@
+ 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+ 			t.Fatalf("%s mutant must finish normally: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
+ 		}
+-		if string(side.result.stdout) == want {
++		if true {
+ 			t.Fatalf("%s mutant escaped the byte comparison", side.name)
+ 		}
+ 		difference := firstDifference(string(side.result.stdout), want)

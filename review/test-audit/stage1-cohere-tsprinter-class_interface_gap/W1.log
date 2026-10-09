@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:16:22.360540286Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:16:22.384389696Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:16:22.384476753Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== RUN   TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.384554261Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== PAUSE TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.384557507Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:16:22.38460688Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:16:22.384609675Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== CONT  TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.469902585Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"    expression_units_test.go:269: planted case caught by 0 units, want exactly one\n","OutputType":"error"}
+{"Time":"2026-10-09T13:16:22.469991412Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"--- FAIL: TestExpressionUnitPlantedDisagreement (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.470001005Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Elapsed":0.09}
+{"Time":"2026-10-09T13:16:22.470033838Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.471545509Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.110s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:22.471577121Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.111}

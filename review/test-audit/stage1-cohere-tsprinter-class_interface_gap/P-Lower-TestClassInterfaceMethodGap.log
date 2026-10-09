@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:14:21.276627462Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:14:21.288874151Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClassInterfaceMethodGap"}
+{"Time":"2026-10-09T13:14:21.288995378Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClassInterfaceMethodGap","Output":"=== RUN   TestClassInterfaceMethodGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:21.492306433Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClassInterfaceMethodGap","Output":"    class_interface_gap_test.go:40: recorded lowering gap changed: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T13:14:21.492517227Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClassInterfaceMethodGap","Output":"--- FAIL: TestClassInterfaceMethodGap (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:21.492528443Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClassInterfaceMethodGap","Elapsed":0.2}
+{"Time":"2026-10-09T13:14:21.492576093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:21.494555787Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.217s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:21.494582177Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.218}

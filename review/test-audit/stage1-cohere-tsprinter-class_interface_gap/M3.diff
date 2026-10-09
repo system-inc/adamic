@@ -1,0 +1,53 @@
+--- a/internal/lower/iteration_origin.go
++++ b/internal/lower/iteration_origin.go
+@@ -62,49 +62,7 @@
+ }
+ 
+ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
+-	modules, err := l.moduleOrder(l.program.Files()[0])
+-	if err != nil {
+-		return err
+-	}
+-	var found error
+-	var visit ast.Visitor
+-	visit = func(candidate *ast.Node) bool {
+-		if found != nil {
+-			return true
+-		}
+-		if candidate.Kind == ast.KindObjectLiteralExpression || candidate.Kind == ast.KindNewExpression {
+-			shape := l.checker.GetTypeAtLocation(candidate)
+-			field := l.checker.GetPropertyOfType(shape, name)
+-			if field != nil && l.iterationShapeFits(shape, view) {
+-				if literalMethod(field) {
+-					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
+-						return candidate.ForEachChild(visit)
+-					}
+-					found = l.notYet(where, "a literal method through a view that erases its receiver")
+-					return true
+-				}
+-				for _, root := range l.checker.GetRootSymbols(field) {
+-					for _, declaration := range root.Declarations {
+-						if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
+-							// Method calls preserve the existing class prototype dispatch. Arrow-field
+-							// views and destructuring still erase the represented method origin.
+-							member := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(view), name)
+-							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
+-								continue
+-							}
+-							found = l.notYet(where, "a class method through a view that erases its prototype origin")
+-							return true
+-						}
+-					}
+-				}
+-			}
+-		}
+-		return candidate.ForEachChild(visit)
+-	}
+-	for _, module := range modules {
+-		module.AsNode().ForEachChild(visit)
+-	}
+-	return found
++	return nil
+ }
+ 
+ // Known factories pin the actual method origins. Comparing every structurally compatible shape

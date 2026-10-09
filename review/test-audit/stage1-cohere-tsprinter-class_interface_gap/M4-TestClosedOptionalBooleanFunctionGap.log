@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T13:12:55.266212189Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:12:55.281150232Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedOptionalBooleanFunctionGap"}
+{"Time":"2026-10-09T13:12:55.281242279Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedOptionalBooleanFunctionGap","Output":"=== RUN   TestClosedOptionalBooleanFunctionGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:55.745882833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedOptionalBooleanFunctionGap","Output":"--- PASS: TestClosedOptionalBooleanFunctionGap (0.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:55.745934214Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedOptionalBooleanFunctionGap","Elapsed":0.46}
+{"Time":"2026-10-09T13:12:55.745958161Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:55.748786515Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.482s\n"}
+{"Time":"2026-10-09T13:12:55.748863948Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.483}

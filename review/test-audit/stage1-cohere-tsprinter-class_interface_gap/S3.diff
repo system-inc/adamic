@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/expression_units_test.go
++++ b/stage1/cohere/tsprinter/expression_units_test.go
+@@ -41,7 +41,7 @@
+ 	}
+ 	selected := make([]bool, count)
+ 	for i := range selected {
+-		selected[i] = i%boxes == index
++		selected[i] = i%boxes != index
+ 	}
+ 	return selected, nil
+ }

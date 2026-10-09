@@ -1,0 +1,536 @@
+[
+  {
+    "test": "TestClassInterfaceMethodGap",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/class_interface_gap_test.go:16",
+    "seconds": 0.686,
+    "oracle": "Node executes the refused source and the callback workaround; exact NotYet type, location and wording are handwritten.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3: class_interface_gap_test.go:40: recorded lowering gap changed: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Lower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$ > M3.log 2>&1; class_interface_gap_test.go:40: recorded lowering gap changed: <nil>"
+  },
+  {
+    "test": "TestClosedOptionalBooleanFunctionGap",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/class_interface_gap_test.go:70",
+    "seconds": 0.548,
+    "oracle": "Node, sanitized native and JavaScript backend must print the handwritten absent string; leak check also runs.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M6"
+    ],
+    "unique_kills": [
+      "M6"
+    ],
+    "last_proven_fail": "M6: class_interface_gap_test.go:88: native ASan/UBSan: 0 \"present\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Lower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$ > M6.log 2>&1; class_interface_gap_test.go:88: native ASan/UBSan: 0 \"present\\n\""
+  },
+  {
+    "test": "TestTrackedCorpusRoots",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/corpus_test.go:68",
+    "seconds": 0.032,
+    "oracle": "Handwritten tracked-file and missing/empty-root invariants; Git supplies the fixture index.",
+    "oracle_kind": "self",
+    "kills": [
+      "S1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S1: corpus_test.go:87: named tracked corpus: [] corpus root named: no git-tracked .ts files",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTrackedCorpusRoots"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestTrackedCorpusRoots$ > S1.log 2>&1; corpus_test.go:87: named tracked corpus: [] corpus root named: no git-tracked .ts files"
+  },
+  {
+    "test": "TestDocumentsAgainstGoAndPrettier",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/doc_test.go:33",
+    "seconds": 10.782,
+    "oracle": "5072 exact output cases from executing Go cohere and Prettier 3.9.6, compared with Node port, native and JavaScript backend; sanitizers and leaks checked.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M4",
+      "M5"
+    ],
+    "unique_kills": [
+      "M2",
+      "M5"
+    ],
+    "last_proven_fail": "M2: doc_test.go:39: Node exit 0 stderr  diff /workspace/u140-tmp/TestDocumentsAgainstGoAndPrettier520781458/001/docs.json:case 290: line 1: \"ok\\tlongerdef\u00e9\\\\n\", Go cohere \"ok\\tlongerdef\u00e9\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Documents"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$ > M2.log 2>&1; doc_test.go:39: Node exit 0 stderr  diff /workspace/u140-tmp/TestDocumentsAgainstGoAndPrettier520781458/001/docs.json:case 290: line 1: \"ok\\tlongerdef\u00e9\\\\n\", Go cohere \"ok\\tlongerdef\u00e9\""
+  },
+  {
+    "test": "TestTSPrinterCachedMetadataRelocation",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/expression_products_test.go:170",
+    "seconds": 0.013,
+    "oracle": "Handwritten relocation, Source/Want preservation and immutable shared-product invariants.",
+    "oracle_kind": "self",
+    "kills": [
+      "S2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S2: expression_products_test.go:209: relocation changed an oracle case: [{Label:/workspace/u140-tmp/TestTSPrinterCachedMetadataRelocation873042522/001/case.ts:3:expression Source:'repo/keep.ts' Want:typescript/keep.ts}]",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTSPrinterCachedMetadataRelocation"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestTSPrinterCachedMetadataRelocation$ > S2.log 2>&1; expression_products_test.go:209: relocation changed an oracle case: [{Label:/workspace/u140-tmp/TestTSPrinterCachedMetadataRelocation873042522/001/case.ts:3:expression Source:'repo/keep.ts' Want:typescript/keep.ts}]"
+  },
+  {
+    "test": "TestExpressionUnitBoxSelection",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go:49",
+    "seconds": 0.011,
+    "oracle": "Handwritten exactly-once selection, invalid-selector and unset-selector invariants.",
+    "oracle_kind": "self",
+    "kills": [
+      "S3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S3: expression_units_test.go:66: shard-000 assigned 0 times across 1 boxes",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestExpressionUnitBoxSelection"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestExpressionUnitBoxSelection$ > S3.log 2>&1; expression_units_test.go:66: shard-000 assigned 0 times across 1 boxes"
+  },
+  {
+    "test": "TestExpressionUnitPlantedDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go:240",
+    "seconds": 0.1,
+    "oracle": "Node emits a handwritten planted string; self-written requirement of exactly one correctly labelled rejection.",
+    "oracle_kind": "self",
+    "kills": [
+      "W1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W1: expression_units_test.go:269: planted case caught by 0 units, want exactly one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestExpressionUnitPlantedDisagreement"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestExpressionUnitPlantedDisagreement$ > W1.log 2>&1; expression_units_test.go:269: planted case caught by 0 units, want exactly one"
+  },
+  {
+    "test": "TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go:273",
+    "seconds": 0.01,
+    "oracle": "Handwritten missing/repeated union rejection.",
+    "oracle_kind": "self",
+    "kills": [
+      "W2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W2: expression_units_test.go:251: invalid union accepted: [0]",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestExpressionUnitUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestExpressionUnitUnionRejectsMissingAndRepeated$ > W2.log 2>&1; expression_units_test.go:251: invalid union accepted: [0]",
+    "failure_origin": "expression_units_test.go:278; scratch log line 251 after the checker body was removed"
+  },
+  {
+    "test": "TestExpressionsAgainstGoAndPrettier family",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/expression_top_level_test.go:5",
+    "seconds": null,
+    "oracle": "Executing Go cohere, Prettier 3.9.6 and embedded Prettier; exact text plus independently pinned allowance records. Narrow member 000 covers 2644 cases.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1-family-member: expressions_test.go:89: Node: shard-000 case-019962 /workspace/adamic/stage1/cohere/tsprinter/expressions.ts:24769:KindBinaryExpression: line 335: \"ok\\tprintedBody = this.docs.group(\\\\n    this.docs.concat([\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text('(')),\\\\n        this.docs.indent(\\\\n            this.docs.concat([this.docs.softline(), printedBody]),\\\\n        ),\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text(')')),\\\\n        index === this.state.expandedArrow\\\\n            ? this.docs.ifBreak(this.docs.text(','), this.docs.text(''))\\\\n            : this.docs.text(''),\\\\n        index === this.state.expandedArrow\\\\n            ? this.docs.softline()\\\\n            : this.docs.text(''),\\\\n    ]),\\\\n);\\\\n\", Go cohere \"ok\\tprintedBody = this.docs.group(\\\\n    this.docs.concat([\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text('(')),\\\\n        this.docs.indent(this.docs.concat([this.docs.softline(), printedBody])),\\\\n        this.docs.ifBreak(this.docs.text(",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDocumentsAgainstGoAndPrettier"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": 10.782,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestExpressionsAgainstGoAndPrettier_000$ > M1-family-member.log 2>&1; expressions_test.go:89: Node: shard-000 case-019962 /workspace/adamic/stage1/cohere/tsprinter/expressions.ts:24769:KindBinaryExpression: line 335: \"ok\\tprintedBody = this.docs.group(\\\\n    this.docs.concat([\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text('(')),\\\\n        this.docs.indent(\\\\n            this.docs.concat([this.docs.softline(), printedBody]),\\\\n        ),\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text(')')),\\\\n        index === this.state.expandedArrow\\\\n            ? this.docs.ifBreak(this.docs.text(','), this.docs.text(''))\\\\n            : this.docs.text(''),\\\\n        index === this.state.expandedArrow\\\\n            ? this.docs.softline()\\\\n            : this.docs.text(''),\\\\n    ]),\\\\n);\\\\n\", Go cohere \"ok\\tprintedBody = this.docs.group(\\\\n    this.docs.concat([\\\\n        this.docs.ifBreak(this.docs.text(''), this.docs.text('(')),\\\\n        this.docs.indent(this.docs.concat([this.docs.softline(), printedBody])),\\\\n        this.docs.ifBreak(this.docs.text(",
+    "members": [
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsAgainstGoAndPrettier_001",
+      "TestExpressionsAgainstGoAndPrettier_002",
+      "TestExpressionsAgainstGoAndPrettier_003",
+      "TestExpressionsAgainstGoAndPrettier_004",
+      "TestExpressionsAgainstGoAndPrettier_005",
+      "TestExpressionsAgainstGoAndPrettier_006",
+      "TestExpressionsAgainstGoAndPrettier_007",
+      "TestExpressionsAgainstGoAndPrettier_008",
+      "TestExpressionsAgainstGoAndPrettier_009",
+      "TestExpressionsAgainstGoAndPrettier_010",
+      "TestExpressionsAgainstGoAndPrettier_011",
+      "TestExpressionsAgainstGoAndPrettier_012",
+      "TestExpressionsAgainstGoAndPrettier_013",
+      "TestExpressionsAgainstGoAndPrettier_014",
+      "TestExpressionsAgainstGoAndPrettier_015",
+      "TestExpressionsAgainstGoAndPrettier_016",
+      "TestExpressionsAgainstGoAndPrettier_017",
+      "TestExpressionsAgainstGoAndPrettier_018",
+      "TestExpressionsAgainstGoAndPrettier_019",
+      "TestExpressionsAgainstGoAndPrettier_020",
+      "TestExpressionsAgainstGoAndPrettier_021",
+      "TestExpressionsAgainstGoAndPrettier_022",
+      "TestExpressionsAgainstGoAndPrettier_023",
+      "TestExpressionsAgainstGoAndPrettier_024",
+      "TestExpressionsAgainstGoAndPrettier_025",
+      "TestExpressionsAgainstGoAndPrettier_026",
+      "TestExpressionsAgainstGoAndPrettier_027",
+      "TestExpressionsAgainstGoAndPrettier_028",
+      "TestExpressionsAgainstGoAndPrettier_029",
+      "TestExpressionsAgainstGoAndPrettier_030",
+      "TestExpressionsAgainstGoAndPrettier_031",
+      "TestExpressionsAgainstGoAndPrettier_032",
+      "TestExpressionsAgainstGoAndPrettier_033",
+      "TestExpressionsAgainstGoAndPrettier_034",
+      "TestExpressionsAgainstGoAndPrettier_035",
+      "TestExpressionsAgainstGoAndPrettier_036",
+      "TestExpressionsAgainstGoAndPrettier_037",
+      "TestExpressionsAgainstGoAndPrettier_038",
+      "TestExpressionsAgainstGoAndPrettier_039",
+      "TestExpressionsAgainstGoAndPrettier_040",
+      "TestExpressionsAgainstGoAndPrettier_041",
+      "TestExpressionsAgainstGoAndPrettier_042",
+      "TestExpressionsAgainstGoAndPrettier_043",
+      "TestExpressionsAgainstGoAndPrettier_044",
+      "TestExpressionsAgainstGoAndPrettier_045",
+      "TestExpressionsAgainstGoAndPrettier_046",
+      "TestExpressionsAgainstGoAndPrettier_047",
+      "TestExpressionsAgainstGoAndPrettier_048",
+      "TestExpressionsAgainstGoAndPrettier_049",
+      "TestExpressionsAgainstGoAndPrettier_050",
+      "TestExpressionsAgainstGoAndPrettier_051",
+      "TestExpressionsAgainstGoAndPrettier_052",
+      "TestExpressionsAgainstGoAndPrettier_053",
+      "TestExpressionsAgainstGoAndPrettier_054",
+      "TestExpressionsAgainstGoAndPrettier_055",
+      "TestExpressionsAgainstGoAndPrettier_056",
+      "TestExpressionsAgainstGoAndPrettier_057",
+      "TestExpressionsAgainstGoAndPrettier_058",
+      "TestExpressionsAgainstGoAndPrettier_059",
+      "TestExpressionsAgainstGoAndPrettier_060",
+      "TestExpressionsAgainstGoAndPrettier_061",
+      "TestExpressionsAgainstGoAndPrettier_062",
+      "TestExpressionsAgainstGoAndPrettier_063",
+      "TestExpressionsAgainstGoAndPrettier_064",
+      "TestExpressionsAgainstGoAndPrettierUnion"
+    ],
+    "matrix_members": [
+      "TestExpressionsAgainstGoAndPrettier_000"
+    ],
+    "unknown_mutants": [
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "timing_limitation": "Whole family exceeded 90 seconds; no three-run median. Subsumption rests on one observed mutant, not a deletion recommendation."
+  },
+  {
+    "test": "TestCompilerGaps",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/gaps_test.go:13",
+    "seconds": 0.166,
+    "oracle": "Node prints im; handwritten substring names the default-sort refusal. This checks diagnostic text, not the Refused type.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Lower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "No planned production mutant altered arraySort; sorting quality remains unjudged within the budget. P-Lower-TestCompilerGaps.log: gaps_test.go:34: expected recorded gap \"Adamic 0.1 refuses sort without a comparator\", got <nil>"
+  },
+  {
+    "test": "TestClosedPrefixUpdateValueGap",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/gaps_test.go:45",
+    "seconds": 0.437,
+    "oracle": "Node, native and JavaScript backend must print handwritten 2; leak check runs.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: gaps_test.go:54: prefix update value: {stdout:[49 10] stderr:[] exitCode:0}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDocumentsAgainstGoAndPrettier"
+    ],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Lower"
+    ],
+    "subsumer_seconds": 10.782,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$ > M4.log 2>&1; gaps_test.go:54: prefix update value: {stdout:[49 10] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestNumberConstructor",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/gaps_test.go:63",
+    "seconds": 0.472,
+    "oracle": "Node, native and backend check only Number('17') prints 17. It passes M5 even though the native Number('17x') witness changes NaN to 17; the input cannot distinguish convert from parseFloat.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P-Lower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestTrackedCorpusRoots",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap",
+      "TestNumberConstructor",
+      "TestExpressionsAgainstGoAndPrettier family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$ > M5.log 2>&1; --- PASS: TestNumberConstructor; separate number-witness.ts outputs baseline NaN, M5 17",
+    "relevant_mutants": 1
+  },
+  {
+    "test": "TestMutants family",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/mutant_grain_shards_test.go:11",
+    "seconds": null,
+    "oracle": "Builtin port mutants must finish normally and disagree with executing Go cohere. Weakened shared comparison tested through member 000.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W3: mutant_grain_shards_test.go:49: Node mutant escaped the byte comparison",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutants family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestMutants_000$ > W3.log 2>&1; mutant_grain_shards_test.go:49: Node mutant escaped the byte comparison",
+    "members": [
+      "TestMutants_000",
+      "TestMutants_001",
+      "TestMutants_002",
+      "TestMutants_003",
+      "TestMutants_004",
+      "TestMutants_005",
+      "TestMutants_006",
+      "TestMutants_007",
+      "TestMutants_008",
+      "TestMutants_009",
+      "TestMutants_010",
+      "TestMutants_011",
+      "TestMutants_012",
+      "TestMutants_013",
+      "TestMutants_014",
+      "TestMutants_015",
+      "TestMutants_016",
+      "TestMutants_017",
+      "TestMutants_018",
+      "TestMutants_019",
+      "TestMutants_020",
+      "TestMutants_021",
+      "TestMutants_022",
+      "TestMutants_023",
+      "TestMutants_024",
+      "TestMutants_025",
+      "TestMutants_026",
+      "TestMutants_027",
+      "TestMutants_028",
+      "TestMutantsUnion"
+    ],
+    "matrix_members": [
+      "TestMutants_000"
+    ],
+    "timing_limitation": "Whole family exceeded 90 seconds; no three-run median. Other members not independently checked with W3."
+  }
+]

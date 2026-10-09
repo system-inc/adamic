@@ -1,0 +1,11 @@
+--- a/internal/lower/library_math_number.go
++++ b/internal/lower/library_math_number.go
+@@ -63,7 +63,7 @@
+ 	default:
+ 		return nil, l.notYet(node, "Number conversion of an object")
+ 	}
+-	return ir.NumberCall{Function: "convert", Arguments: []ir.Expression{value}}, nil
++	return ir.NumberCall{Function: "parseFloat", Arguments: []ir.Expression{value}}, nil
+ }
+ 
+ func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {

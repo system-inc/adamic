@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:15:44.760737573Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:15:44.788462492Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T13:15:44.788608986Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== RUN   TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:44.788718062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== PAUSE TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:44.78872158Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T13:15:44.788724513Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T13:15:44.788726601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== CONT  TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:45.655869689Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"    doc_test.go:35: docs: 5072 cases in 5 largest-first processes\n"}
+{"Time":"2026-10-09T13:15:46.355083907Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"    doc_test.go:39: Node exit 0 stderr  diff /workspace/u140-tmp/TestDocumentsAgainstGoAndPrettier2720025141/001/docs.json:case 0: line 1: \"ok\\t\", Go cohere \"ok\\t\\\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:15:46.355777308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"--- FAIL: TestDocumentsAgainstGoAndPrettier (1.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:46.355783988Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Elapsed":1.57}
+{"Time":"2026-10-09T13:15:46.355844786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:46.357539542Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t1.596s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:15:46.357583659Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":1.597}

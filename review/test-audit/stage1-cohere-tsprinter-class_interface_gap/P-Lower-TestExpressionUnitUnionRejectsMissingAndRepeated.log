@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:14:44.056995091Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:14:44.069464621Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T13:14:44.069594836Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated","Output":"=== RUN   TestExpressionUnitUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:44.069703695Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated","Output":"=== PAUSE TestExpressionUnitUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:44.069709197Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T13:14:44.069713466Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T13:14:44.069716428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated","Output":"=== CONT  TestExpressionUnitUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:44.069726426Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated","Output":"--- PASS: TestExpressionUnitUnionRejectsMissingAndRepeated (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:44.069730152Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitUnionRejectsMissingAndRepeated","Elapsed":0}
+{"Time":"2026-10-09T13:14:44.069747887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:14:44.070034818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.012s\n"}
+{"Time":"2026-10-09T13:14:44.07007036Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.013}

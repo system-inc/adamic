@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:13:30.803707678Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:13:30.815814056Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap"}
+{"Time":"2026-10-09T13:13:30.815895581Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"=== RUN   TestClosedPrefixUpdateValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:31.260833198Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"    gaps_test.go:54: prefix update value: {stdout:[49 10] stderr:[] exitCode:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T13:13:31.261460382Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"--- FAIL: TestClosedPrefixUpdateValueGap (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:31.261468166Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Elapsed":0.45}
+{"Time":"2026-10-09T13:13:31.26167584Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:31.263329005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.459s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:31.26336738Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.46}

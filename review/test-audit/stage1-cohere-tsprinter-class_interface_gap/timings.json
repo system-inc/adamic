@@ -1,0 +1,596 @@
+[
+  {
+    "test": "TestClassInterfaceMethodGap",
+    "run": 0,
+    "wall_seconds": 5.596839216999797,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClassInterfaceMethodGap$"
+    ]
+  },
+  {
+    "test": "TestClassInterfaceMethodGap",
+    "run": 1,
+    "wall_seconds": 3.3891859610012034,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClassInterfaceMethodGap$"
+    ]
+  },
+  {
+    "test": "TestClassInterfaceMethodGap",
+    "run": 2,
+    "wall_seconds": 3.7761892179987626,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClassInterfaceMethodGap$"
+    ]
+  },
+  {
+    "test": "TestClosedOptionalBooleanFunctionGap",
+    "run": 0,
+    "wall_seconds": 3.348714399002347,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$"
+    ]
+  },
+  {
+    "test": "TestClosedOptionalBooleanFunctionGap",
+    "run": 1,
+    "wall_seconds": 3.093459799998527,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$"
+    ]
+  },
+  {
+    "test": "TestClosedOptionalBooleanFunctionGap",
+    "run": 2,
+    "wall_seconds": 3.4973653449997073,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$"
+    ]
+  },
+  {
+    "test": "TestTrackedCorpusRoots",
+    "run": 0,
+    "wall_seconds": 2.4697493099993153,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ]
+  },
+  {
+    "test": "TestTrackedCorpusRoots",
+    "run": 1,
+    "wall_seconds": 2.770310968000558,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ]
+  },
+  {
+    "test": "TestTrackedCorpusRoots",
+    "run": 2,
+    "wall_seconds": 2.803317584002798,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ]
+  },
+  {
+    "test": "TestDocumentsAgainstGoAndPrettier",
+    "run": 0,
+    "wall_seconds": 13.370174889998452,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ]
+  },
+  {
+    "test": "TestDocumentsAgainstGoAndPrettier",
+    "run": 1,
+    "wall_seconds": 13.73124079000263,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ]
+  },
+  {
+    "test": "TestDocumentsAgainstGoAndPrettier",
+    "run": 2,
+    "wall_seconds": 13.166249128000345,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ]
+  },
+  {
+    "test": "TestTSPrinterCachedMetadataRelocation",
+    "run": 0,
+    "wall_seconds": 2.5117907819985703,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ]
+  },
+  {
+    "test": "TestTSPrinterCachedMetadataRelocation",
+    "run": 1,
+    "wall_seconds": 2.3216858289997617,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ]
+  },
+  {
+    "test": "TestTSPrinterCachedMetadataRelocation",
+    "run": 2,
+    "wall_seconds": 2.3883076999991317,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitBoxSelection",
+    "run": 0,
+    "wall_seconds": 2.568625375002739,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitBoxSelection",
+    "run": 1,
+    "wall_seconds": 2.4359826449981483,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitBoxSelection",
+    "run": 2,
+    "wall_seconds": 2.6147292089990515,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitPlantedDisagreement",
+    "run": 0,
+    "wall_seconds": 5.62844677099929,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitPlantedDisagreement",
+    "run": 1,
+    "wall_seconds": 2.9971121130001848,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitPlantedDisagreement",
+    "run": 2,
+    "wall_seconds": 3.1141693480021786,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "run": 0,
+    "wall_seconds": 2.6045674300003157,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "run": 1,
+    "wall_seconds": 2.5322123170008126,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ]
+  },
+  {
+    "test": "TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "run": 2,
+    "wall_seconds": 2.511105043999123,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ]
+  },
+  {
+    "test": "TestCompilerGaps",
+    "run": 0,
+    "wall_seconds": 3.1528017290002026,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestCompilerGaps$"
+    ]
+  },
+  {
+    "test": "TestCompilerGaps",
+    "run": 1,
+    "wall_seconds": 2.564042055997561,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestCompilerGaps$"
+    ]
+  },
+  {
+    "test": "TestCompilerGaps",
+    "run": 2,
+    "wall_seconds": 2.4050639679990127,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestCompilerGaps$"
+    ]
+  },
+  {
+    "test": "TestClosedPrefixUpdateValueGap",
+    "run": 0,
+    "wall_seconds": 3.1033254239991948,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$"
+    ]
+  },
+  {
+    "test": "TestClosedPrefixUpdateValueGap",
+    "run": 1,
+    "wall_seconds": 2.8443491329999233,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$"
+    ]
+  },
+  {
+    "test": "TestClosedPrefixUpdateValueGap",
+    "run": 2,
+    "wall_seconds": 2.8240323569989414,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$"
+    ]
+  },
+  {
+    "test": "TestNumberConstructor",
+    "run": 0,
+    "wall_seconds": 2.743416162000358,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestNumberConstructor$"
+    ]
+  },
+  {
+    "test": "TestNumberConstructor",
+    "run": 1,
+    "wall_seconds": 2.8608530970013817,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestNumberConstructor$"
+    ]
+  },
+  {
+    "test": "TestNumberConstructor",
+    "run": 2,
+    "wall_seconds": 2.796249376002379,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestNumberConstructor$"
+    ]
+  }
+]

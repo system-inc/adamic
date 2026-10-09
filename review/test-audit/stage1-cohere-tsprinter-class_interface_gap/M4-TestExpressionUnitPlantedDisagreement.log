@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:13:22.903899604Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:13:22.91743959Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:13:22.917564772Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== RUN   TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:22.91759065Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== PAUSE TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:22.917593476Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:13:22.917608336Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement"}
+{"Time":"2026-10-09T13:13:22.917610705Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"=== CONT  TestExpressionUnitPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:22.972852599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"    expression_units_test.go:265: planted disagreement caught: shard-000 case-2: line 2: \"planted\", Go cohere \"ok\"\n"}
+{"Time":"2026-10-09T13:13:23.02339437Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Output":"--- PASS: TestExpressionUnitPlantedDisagreement (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:23.023443104Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestExpressionUnitPlantedDisagreement","Elapsed":0.11}
+{"Time":"2026-10-09T13:13:23.023468047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:23.024450133Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.120s\n"}
+{"Time":"2026-10-09T13:13:23.024538567Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.121}

@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T13:13:28.191205687Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:13:28.204527279Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T13:13:28.204605748Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== RUN   TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.204632702Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== PAUSE TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.204635388Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T13:13:28.204638849Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T13:13:28.204640777Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== CONT  TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.204644577Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T13:13:28.2046474Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== RUN   TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.20465354Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== PAUSE TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.20465566Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T13:13:28.204659831Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T13:13:28.204662387Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== CONT  TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.356702992Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"    gaps_test.go:36: Node \"im\\n\"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts:2:1: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"}
+{"Time":"2026-10-09T13:13:28.357139148Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"--- PASS: TestCompilerGaps/defaultSort (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.357163753Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Elapsed":0.15}
+{"Time":"2026-10-09T13:13:28.357189897Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"--- PASS: TestCompilerGaps (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.357200546Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Elapsed":0}
+{"Time":"2026-10-09T13:13:28.357205103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:28.358191261Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.166s\n"}
+{"Time":"2026-10-09T13:13:28.358250967Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.167}

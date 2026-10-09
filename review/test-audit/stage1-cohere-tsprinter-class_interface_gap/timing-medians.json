@@ -1,0 +1,90 @@
+{
+  "TestClassInterfaceMethodGap": {
+    "samples": [
+      0.686,
+      0.684,
+      0.726
+    ],
+    "seconds": 0.686
+  },
+  "TestClosedOptionalBooleanFunctionGap": {
+    "samples": [
+      0.548,
+      0.516,
+      0.582
+    ],
+    "seconds": 0.548
+  },
+  "TestTrackedCorpusRoots": {
+    "samples": [
+      0.029,
+      0.032,
+      0.032
+    ],
+    "seconds": 0.032
+  },
+  "TestDocumentsAgainstGoAndPrettier": {
+    "samples": [
+      10.88,
+      10.782,
+      10.325
+    ],
+    "seconds": 10.782
+  },
+  "TestTSPrinterCachedMetadataRelocation": {
+    "samples": [
+      0.016,
+      0.013,
+      0.013
+    ],
+    "seconds": 0.013
+  },
+  "TestExpressionUnitBoxSelection": {
+    "samples": [
+      0.011,
+      0.011,
+      0.014
+    ],
+    "seconds": 0.011
+  },
+  "TestExpressionUnitPlantedDisagreement": {
+    "samples": [
+      0.1,
+      0.088,
+      0.114
+    ],
+    "seconds": 0.1
+  },
+  "TestExpressionUnitUnionRejectsMissingAndRepeated": {
+    "samples": [
+      0.01,
+      0.01,
+      0.016
+    ],
+    "seconds": 0.01
+  },
+  "TestCompilerGaps": {
+    "samples": [
+      0.181,
+      0.166,
+      0.16
+    ],
+    "seconds": 0.166
+  },
+  "TestClosedPrefixUpdateValueGap": {
+    "samples": [
+      0.431,
+      0.437,
+      0.442
+    ],
+    "seconds": 0.437
+  },
+  "TestNumberConstructor": {
+    "samples": [
+      0.435,
+      0.472,
+      0.538
+    ],
+    "seconds": 0.472
+  }
+}

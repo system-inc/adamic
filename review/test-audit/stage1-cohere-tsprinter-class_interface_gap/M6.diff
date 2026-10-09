@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -702,7 +702,7 @@
+ 		return ir.MaybeOf{Value: value, Of: to}
+ 	}
+ 	if _, isUndefined := value.(ir.Undefined); isUndefined {
+-		return ir.MaybeOf{Of: to}
++		return ir.MaybeOf{Value: ir.BooleanConstant{Value: false}, Of: to}
+ 	}
+ 	return value
+ }

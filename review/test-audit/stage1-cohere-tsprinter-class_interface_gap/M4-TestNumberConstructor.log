@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T13:13:37.058903916Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T13:13:37.070963759Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor"}
+{"Time":"2026-10-09T13:13:37.071061542Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Output":"=== RUN   TestNumberConstructor\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:37.537280229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Output":"--- PASS: TestNumberConstructor (0.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:37.53801666Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Elapsed":0.47}
+{"Time":"2026-10-09T13:13:37.538096599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:13:37.542667997Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.483s\n"}
+{"Time":"2026-10-09T13:13:37.542792244Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.484}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/doc.ts
++++ b/stage1/cohere/tsprinter/doc.ts
+@@ -195,7 +195,7 @@
+         let trailingWidth = 0;
+         let hasSuffix = suffix;
+         let remaining = width;
+-        while(remaining >= 0) {
++        while(remaining > 0) {
+             if(commands.length === 0) {
+                 if(restIndex === 0) return true;
+                 restIndex--;

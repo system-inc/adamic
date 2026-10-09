@@ -1,0 +1,10 @@
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -239,5 +239,5 @@
+ 		step = ir.Subtract
+ 	}
+ 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
+-	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
+-}
++	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 2}}, Checked: l.checked(local)}), nil
++}

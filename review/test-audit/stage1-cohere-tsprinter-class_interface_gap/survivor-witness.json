@@ -1,0 +1,36 @@
+[
+  {
+    "selector": "",
+    "seconds": 16.15179554000133,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "/workspace/u140-tmp/number-witness.ts",
+      "-o",
+      "/workspace/u140-tmp/number-baseline",
+      "--sanitize"
+    ]
+  },
+  {
+    "selector": "M5",
+    "seconds": 1.330778718998772,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "/workspace/u140-tmp/number-witness.ts",
+      "-o",
+      "/workspace/u140-tmp/number-M5",
+      "--sanitize"
+    ]
+  }
+]

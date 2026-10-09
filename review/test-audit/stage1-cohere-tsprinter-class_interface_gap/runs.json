@@ -1,0 +1,821 @@
+[
+  {
+    "id": "M3-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 1.0208138080015488,
+    "exit": 0
+  },
+  {
+    "id": "M4-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 1.6375097640011518,
+    "exit": 0
+  },
+  {
+    "id": "M5-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.9323882370008505,
+    "exit": 0
+  },
+  {
+    "id": "M6-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 1.186473024001316,
+    "exit": 0
+  },
+  {
+    "id": "S1-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 0.7969712100020843,
+    "exit": 0
+  },
+  {
+    "id": "S2-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 0.8898268669981917,
+    "exit": 0
+  },
+  {
+    "id": "S3-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 0.7479796970001189,
+    "exit": 0
+  },
+  {
+    "id": "W1-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 0.49377243100025225,
+    "exit": 0
+  },
+  {
+    "id": "W2-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 0.7575077000001329,
+    "exit": 0
+  },
+  {
+    "id": "W3-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./stage1/cohere/tsprinter/"
+    ],
+    "seconds": 1.8153086579986848,
+    "exit": 0
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 44.66232965400195,
+    "exit": 1
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 24.80942597199828,
+    "exit": 1
+  },
+  {
+    "id": "M4-TestClassInterfaceMethodGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClassInterfaceMethodGap$"
+    ],
+    "seconds": 5.281443854000827,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestClosedOptionalBooleanFunctionGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$"
+    ],
+    "seconds": 3.6621871140014264,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestTrackedCorpusRoots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ],
+    "seconds": 2.8251111889985623,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestDocumentsAgainstGoAndPrettier",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ],
+    "seconds": 16.541751881999517,
+    "exit": 1
+  },
+  {
+    "id": "M4-TestTSPrinterCachedMetadataRelocation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ],
+    "seconds": 2.646031047002907,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestExpressionUnitBoxSelection",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ],
+    "seconds": 2.6179875070010894,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestExpressionUnitPlantedDisagreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ],
+    "seconds": 2.644301346001157,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ],
+    "seconds": 2.7074776100016607,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestCompilerGaps",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestCompilerGaps$"
+    ],
+    "seconds": 2.6220122480008285,
+    "exit": 0
+  },
+  {
+    "id": "M4-TestClosedPrefixUpdateValueGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$"
+    ],
+    "seconds": 2.901147859000048,
+    "exit": 1
+  },
+  {
+    "id": "M4-TestNumberConstructor",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestNumberConstructor$"
+    ],
+    "seconds": 6.292300247001549,
+    "exit": 0
+  },
+  {
+    "id": "M5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 21.11493026199969,
+    "exit": 1
+  },
+  {
+    "id": "M6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 16.220337218997884,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 3.2111759340004937,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestClassInterfaceMethodGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClassInterfaceMethodGap$"
+    ],
+    "seconds": 3.382363119002548,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestClosedOptionalBooleanFunctionGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedOptionalBooleanFunctionGap$"
+    ],
+    "seconds": 3.392018831000314,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestTrackedCorpusRoots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ],
+    "seconds": 3.2010998490004567,
+    "exit": 0
+  },
+  {
+    "id": "P-Lower-TestDocumentsAgainstGoAndPrettier",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ],
+    "seconds": 4.444036333999975,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestTSPrinterCachedMetadataRelocation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ],
+    "seconds": 2.964020788000198,
+    "exit": 0
+  },
+  {
+    "id": "P-Lower-TestExpressionUnitBoxSelection",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ],
+    "seconds": 2.823616078003397,
+    "exit": 0
+  },
+  {
+    "id": "P-Lower-TestExpressionUnitPlantedDisagreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ],
+    "seconds": 2.8004097619996173,
+    "exit": 0
+  },
+  {
+    "id": "P-Lower-TestExpressionUnitUnionRejectsMissingAndRepeated",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ],
+    "seconds": 2.9367390270017495,
+    "exit": 0
+  },
+  {
+    "id": "P-Lower-TestCompilerGaps",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestCompilerGaps$"
+    ],
+    "seconds": 2.6503545999985363,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestClosedPrefixUpdateValueGap",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestClosedPrefixUpdateValueGap$"
+    ],
+    "seconds": 2.7265808090014616,
+    "exit": 1
+  },
+  {
+    "id": "P-Lower-TestNumberConstructor",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestNumberConstructor$"
+    ],
+    "seconds": 3.1333484900023905,
+    "exit": 1
+  },
+  {
+    "id": "M1-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/tsprinter/docMain.ts",
+      "-o",
+      "/workspace/u140-tmp/M1",
+      "--sanitize"
+    ],
+    "seconds": 16.2418923289988,
+    "exit": 0
+  },
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 8.807182243999705,
+    "exit": 1
+  },
+  {
+    "id": "M2-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/tsprinter/docMain.ts",
+      "-o",
+      "/workspace/u140-tmp/M2",
+      "--sanitize"
+    ],
+    "seconds": 8.583268308997503,
+    "exit": 0
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestTrackedCorpusRoots|TestDocumentsAgainstGoAndPrettier|TestTSPrinterCachedMetadataRelocation|TestExpressionUnitBoxSelection|TestExpressionUnitPlantedDisagreement|TestExpressionUnitUnionRejectsMissingAndRepeated|TestCompilerGaps|TestClosedPrefixUpdateValueGap|TestNumberConstructor)$"
+    ],
+    "seconds": 8.264563939999789,
+    "exit": 1
+  },
+  {
+    "id": "P-Documents-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/tsprinter/docMain.ts",
+      "-o",
+      "/workspace/u140-tmp/P-Documents",
+      "--sanitize"
+    ],
+    "seconds": 6.699333534998004,
+    "exit": 0
+  },
+  {
+    "id": "P-Documents",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestDocumentsAgainstGoAndPrettier$"
+    ],
+    "seconds": 5.166548526001861,
+    "exit": 1
+  },
+  {
+    "id": "S1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTrackedCorpusRoots$"
+    ],
+    "seconds": 9.284275415000593,
+    "exit": 1
+  },
+  {
+    "id": "S2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestTSPrinterCachedMetadataRelocation$"
+    ],
+    "seconds": 8.512760350000462,
+    "exit": 1
+  },
+  {
+    "id": "S3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitBoxSelection$"
+    ],
+    "seconds": 8.230787939999573,
+    "exit": 1
+  },
+  {
+    "id": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitPlantedDisagreement$"
+    ],
+    "seconds": 10.085321075999673,
+    "exit": 1
+  },
+  {
+    "id": "W2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestExpressionUnitUnionRejectsMissingAndRepeated$"
+    ],
+    "seconds": 8.600139349997335,
+    "exit": 1
+  },
+  {
+    "id": "W3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/tsprinter/",
+      "-run",
+      "^TestMutants_000$"
+    ],
+    "seconds": 27.337042898998334,
+    "exit": 1
+  }
+]
