@@ -1,0 +1,9 @@
+=== RUN   TestNamespaceForwarderReadinessBeforeInitialization
+=== PAUSE TestNamespaceForwarderReadinessBeforeInitialization
+=== CONT  TestNamespaceForwarderReadinessBeforeInitialization
+    namespace_readiness_guard_test.go:7: JavaScript backend stdout = "ReferenceError\nready:7\ncontinued\n", source Node = "TypeError\nready:7\ncontinued\n"
+--- FAIL: TestNamespaceForwarderReadinessBeforeInitialization (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.140s
+FAIL
+

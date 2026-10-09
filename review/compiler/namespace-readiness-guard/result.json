@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "^TestNamespaceForwarderReadinessBeforeInitialization$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-v"
+  ],
+  "exit": 1
+}

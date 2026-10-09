@@ -1,0 +1,11 @@
+
+function read(): number { return Pending.value; }
+let indirect = read;
+try {
+    console.log("early:" + indirect());
+} catch (error) {
+    if (error instanceof Error) { console.log(error.name); }
+}
+namespace Pending { export const value = 7; }
+console.log("ready:" + indirect());
+console.log("continued");
