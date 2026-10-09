@@ -128,10 +128,19 @@ func Build(source string, output string, options Options) error {
 		return fmt.Errorf("native: %w", err)
 	}
 	// Neither the build directory nor the runtime cache under this machine's home may reach the binary, so its bytes are a
-	// function of its inputs wherever it's built (see cachedRuntime).
-	arguments := append(Flags(options), "-ffile-prefix-map="+directory+"=/adamic-build", "-ffile-prefix-map="+filepath.Dir(library)+"=/adamic-runtime", "-I", filepath.Dir(library), "-o", output)
+	// function of its inputs wherever it's built (see cachedRuntime). Clang runs in the build directory and names every source relatively: main.c, and the runtime's headers through a
+	// runtime link to the cache under this machine's home. The sanitizers' source locations keep a file's name as it was
+	// given, which no prefix map rewrites, so an absolute name would put the random build directory and the home into
+	// the binary (Oct 9: two builds of one program differed only in those two names). The map covers debug info.
+	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	if output, err = filepath.Abs(output); err != nil {
+		return fmt.Errorf("native: %w", err)
+	}
+	arguments := append(Flags(options), "-ffile-prefix-map="+directory+"=/adamic-build", "-I", "runtime", "-o", output)
 	if !options.Request {
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, "main.c")
 	}
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
@@ -142,7 +151,7 @@ func Build(source string, output string, options Options) error {
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	if options.Request {
 		// Runtime constructors precede module initialization at the same default priority.
-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+		arguments = append(arguments, "main.c")
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
