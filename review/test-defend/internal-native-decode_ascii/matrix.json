@@ -1,0 +1,34 @@
+{
+  "mutant": "D1",
+  "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat review/test-defend/internal-native-decode_ascii/matrix.regex)\"",
+  "passed": [
+    "TestCEndsInNewline",
+    "TestCallTargetsElementBorrowPlan",
+    "TestClosureConventionDropCount",
+    "TestClosureConventionRuntimeDropCount",
+    "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "TestClosureConventionWrongOrder",
+    "TestDevirtualizeBorrowDocClaim",
+    "TestDevirtualizedCalls",
+    "TestGlobalArgumentLending",
+    "TestLoopArrayHoldC",
+    "TestLoopBorrowPlan",
+    "TestLoopCallCoverage",
+    "TestNbodyBorrowedLoopC",
+    "TestNbodyIndexedElementsBorrow",
+    "TestNoReaderCallingConvention",
+    "TestNodeBufferRuntimeWithoutDeclarations",
+    "TestOptionalMethodThunksMatchNode",
+    "TestOptionalWriteMissingSlotRemainsChecked",
+    "TestParserHasNoUnusedOptionalMethodThunks",
+    "TestRegexProgramsKeepCheckedFieldReads",
+    "TestRuntimeFieldLayoutsAreIncluded",
+    "TestTSGoBuildSeesTheProgramsFeatures",
+    "TestThrowElementBorrowPlan",
+    "TestUniformFieldsMatchNode"
+  ],
+  "failed": [
+    "TestExactReceiverRejectsAssignments"
+  ],
+  "unknown_outside_matrix": true
+}

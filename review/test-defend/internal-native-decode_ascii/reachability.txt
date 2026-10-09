@@ -1,0 +1,22 @@
+internal/native/tsgo_features_test.go:27:	source := C(program)
+internal/native/library_array_test.go:18:		source := C(program)
+internal/native/fields_test.go:81:	generated := C(program)
+internal/native/fields_test.go:197:	generated := C(program)
+internal/native/element_borrow_test.go:40:	generated := C(program)
+internal/native/devirtualize_test.go:35:		code := e.callCode(call, arguments)
+internal/native/devirtualize_test.go:43:		case e.exactReceiverClass(call.Arguments[0]) != 0:
+internal/native/devirtualize_test.go:58:	code := C(program)
+internal/native/devirtualize_test.go:64:		function, known := e.exactReceiverMethod(ir.Read{Local: local, Of: ir.Object}, "run")
+internal/native/devirtualize_test.go:91:	if got := e.exactReceiverClass(ir.Read{Local: 0, Of: ir.Object}); got != 0 {
+internal/native/node_buffer_test.go:91:		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/loop_borrow_test.go:67:	generated := C(program)
+internal/native/loop_borrow_test.go:126:		generated := C(program)
+internal/native/loop_borrow_test.go:194:	generated := C(program)
+internal/native/closure_convention_test.go:28:	source := C(program)
+internal/native/closure_convention_test.go:78:	source := changed + "\n" + strings.ReplaceAll(C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+internal/native/closure_convention_test.go:89:	library, err := RuntimeLibraryForSource("", C(program), Options{})
+internal/native/closure_convention_test.go:116:	source := C(program)
+internal/native/closure_convention_test.go:183:	code := C(program)
+internal/native/closure_convention_test.go:226:	code := C(program)
+internal/native/closure_convention_test.go:250:	if err := Build(C(program), binary, Options{}); err != nil {
+internal/native/arguments_length_test.go:33:			code := C(program)

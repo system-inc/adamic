@@ -1,0 +1,10 @@
+--- a/internal/native/devirtualize.go
++++ b/internal/native/devirtualize.go
+@@ -39,7 +39,6 @@
+ 				case ir.Assign:
+ 					written = written || statement.Local == value.Local
+ 				}
+-				walkStatement(statement, func(ir.Expression) {}, statements)
+ 			}
+ 		}
+ 		statements(e.program.Main)

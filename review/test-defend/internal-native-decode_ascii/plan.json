@@ -1,0 +1,8 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/native/devirtualize.go:42",
+    "change": "Drop recursive walkStatement from exactReceiverClass; nested assignments are ignored, top-level assignments remain tracked.",
+    "menu": "drop statement"
+  }
+]

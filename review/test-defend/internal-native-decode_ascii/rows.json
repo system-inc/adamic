@@ -1,0 +1,51 @@
+[
+  {
+    "test": "TestExactReceiverRejectsAssignments",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDevirtualizedCalls"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1, internal/native/devirtualize.go:42",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/devirtualize.go:42",
+        "change": "Drop recursive walkStatement from exactReceiverClass; nested assignments are ignored, top-level assignments remain tracked.",
+        "rows_failed": [
+          "TestExactReceiverRejectsAssignments"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat review/test-defend/internal-native-decode_ascii/matrix.regex)\"; devirtualize_test.go:92: assigned receiver taken as exact: 1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestExactReceiverRejectsAssignments",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ]
+  }
+]
