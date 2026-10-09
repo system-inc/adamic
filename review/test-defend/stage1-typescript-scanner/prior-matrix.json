@@ -1,0 +1,100 @@
+{
+  "starting_commit": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "rows": {
+    "TestGapStandsWhereGapsMdSays": [
+      "TestGapStandsWhereGapsMdSays"
+    ],
+    "TestBigintGapStandsWhereGapsMdSays": [
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "TestProfileArtifacts": [
+      "TestProfileArtifacts"
+    ],
+    "TestProfileSnapshotsAgree": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "TestPerformance": [
+      "TestPerformance"
+    ],
+    "TestProduct_Scanner family": [
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerRegexRescan"
+    ],
+    "TestScannerShardCoverage": [
+      "TestScannerShardCoverage"
+    ],
+    "TestScannerAgreesWithTypescriptGo family": [
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015"
+    ]
+  },
+  "primary": {
+    "M1": {
+      "TestGapStandsWhereGapsMdSays": "pass",
+      "TestBigintGapStandsWhereGapsMdSays": "pass",
+      "TestProfileArtifacts": "pass",
+      "TestProfileSnapshotsAgree": "fail",
+      "TestPerformance": "pass",
+      "TestProduct_Scanner family": "pass",
+      "TestScannerShardCoverage": "pass",
+      "TestScannerAgreesWithTypescriptGo family": "fail"
+    },
+    "M2": {
+      "TestGapStandsWhereGapsMdSays": "pass",
+      "TestBigintGapStandsWhereGapsMdSays": "pass",
+      "TestProfileArtifacts": "pass",
+      "TestProfileSnapshotsAgree": "pass",
+      "TestPerformance": "fail",
+      "TestProduct_Scanner family": "pass",
+      "TestScannerShardCoverage": "pass",
+      "TestScannerAgreesWithTypescriptGo family": "pass"
+    },
+    "M3": {
+      "TestGapStandsWhereGapsMdSays": "pass",
+      "TestBigintGapStandsWhereGapsMdSays": "pass",
+      "TestProfileArtifacts": "pass",
+      "TestProfileSnapshotsAgree": "fail",
+      "TestPerformance": "pass",
+      "TestProduct_Scanner family": "pass",
+      "TestScannerShardCoverage": "pass",
+      "TestScannerAgreesWithTypescriptGo family": "fail"
+    },
+    "M4": {
+      "TestGapStandsWhereGapsMdSays": "fail",
+      "TestBigintGapStandsWhereGapsMdSays": "fail",
+      "TestProfileArtifacts": "pass",
+      "TestProfileSnapshotsAgree": "pass",
+      "TestPerformance": "pass",
+      "TestProduct_Scanner family": "pass",
+      "TestScannerShardCoverage": "pass",
+      "TestScannerAgreesWithTypescriptGo family": "pass"
+    }
+  },
+  "invalid_runs": [
+    "M1-invalid",
+    "M2-invalid",
+    "M3-invalid",
+    "P1-invalid",
+    "P1-partial-invalid"
+  ],
+  "bounded": false
+}
