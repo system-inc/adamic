@@ -6,6 +6,7 @@ import (
 )
 
 func TestHiddenNeverArrayRejectsWritableWidening(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`const items: never[] = []; const writable: number[] = items; writable.push(1);`,
 		`const items: never[] = []; const writable: string[] = items; writable.push('text');`,
