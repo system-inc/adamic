@@ -1,0 +1,146 @@
+[
+  {
+    "name": "build-oracle",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "./internal/oracle",
+      "-o",
+      "/workspace/generic-values-proof-tmp/refresh-oracle.test"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 8.2,
+    "expected": 0
+  },
+  {
+    "name": "build-lower",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "./internal/lower",
+      "-o",
+      "/workspace/generic-values-proof-tmp/refresh-lower.test"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 8.16,
+    "expected": 0
+  },
+  {
+    "name": "build-ir",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "./internal/ir",
+      "-o",
+      "/workspace/generic-values-proof-tmp/refresh-ir.test"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 12.081,
+    "expected": 0
+  },
+  {
+    "name": "build-native",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "./internal/native",
+      "-o",
+      "/workspace/generic-values-proof-tmp/refresh-native.test"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 7.748,
+    "expected": 0
+  },
+  {
+    "name": "generic-values",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-oracle.test",
+      "-test.run=^TestGenericValue",
+      "-test.count=1",
+      "-test.timeout=85s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/oracle",
+    "exit": 0,
+    "seconds": 2.083,
+    "expected": 0
+  },
+  {
+    "name": "json-identity",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-native.test",
+      "-test.run=^TestGenericValueLibraryIdentityViews$",
+      "-test.count=1",
+      "-test.timeout=85s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/native",
+    "exit": 0,
+    "seconds": 0.295,
+    "expected": 0
+  },
+  {
+    "name": "reader-guard",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-ir.test",
+      "-test.run=^TestCallTargetReaders$",
+      "-test.count=1",
+      "-test.timeout=85s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/ir",
+    "exit": 0,
+    "seconds": 19.013,
+    "expected": 0
+  },
+  {
+    "name": "lower-1",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-lower.test",
+      "-test.run=^(TestAgreementRejectsWrongLoweredOutput|TestAgreementAcceptsComputedAnswer|TestAgreementEnumConstantWitness|TestAgreementParameterPropertyWitness|TestAgreementParseIntRadixWitness|TestNativeAgreementRejectsWrongExit|TestMixedTupleSpreadIsNotYet|TestArgumentsLengthRefusalFixtures|TestArrayPredicatePreservesDeclaredElementContract|TestArrayPredicateDoesNotMisclassifyNativeTuples|TestArrayPredicateCoexistsWithUnknownReflection|TestStep18UnknownDetachedCallable|TestCheckedCastProofAndElision|TestCensusMarkerZeroCallIsNotAssumedSafe|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverloadReturnProof|TestCensusPredicateInteractionEscapes|TestCensusPredicateMarkerCallStaysNotYet|TestCensusSmallFiniteKeyRead|TestCensusBooleanDeadBranch|TestCheckPragmaNeighborsCompile|TestClassFeaturesReadonlyChecker|TestClassFeaturesPrivateStorage|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesStaticParentCycle|TestInheritanceRefusesUnsoundOverrides|TestInheritanceAllowsSoundOverrides|TestInheritanceCycleFinderIncludesInheritedFields|TestInheritanceRefusesFalseNominalViews|TestInheritanceKeepsNominalTupleDestructuring|TestInheritanceRefusesGrowingGenericClasses|TestInheritanceConditionalThisRules|TestInheritanceGenericNominalConstraints|TestInheritanceNativeSignatureNeighbors|TestClassArgumentsUseCheckerIdentity|TestClassStaticSideEffectMatchesNode|TestClassWrongOutputKeysRepair|TestClockGenericReturnsT01Shapes|TestClockGenericReturnsT01RejectsNullBeforeBody|TestConstructorCacheOneArgumentRemainsNotYet|TestDefiniteAssignmentSoundNeighbors|TestEEPPresence1|TestEEPPresence3|TestEEPPresence5|TestEEPPresenceSupported|TestEmptyLiteralGenericReturnUsesSamePath|TestEntriesRecordBoundaries|TestFlagEnumsDomain|TestFlagEnumLiteralSpellings|TestEnumNameEnumeration|TestFlagEnumAliasBoundaries|TestEnumFlagProofsWithoutObservableLoweringEffect|TestEnumInitializationReach|TestEnumNamespaceSharedCycle|TestStringEnumsStayClosed|TestNumericEnumLiteralPromises|TestEnumSwitchExhaustiveness|TestConstEnumErasesRuntimeObject|TestParserFactoryCompletionBeforeReturn|TestParserFactoryCompletionBothBranches|TestParserFactoryCompletionBeforeEscape|TestParserFactoryCompletionEarlyReturn|TestParserFactoryCompletionCaptured|TestParserFactoryReadBeforeCompletion|TestParseIntMapUsesIndexRadix|TestFSRemoveDefaultRetryDelayLowers|TestFSStatThrowsByDefault|TestGeneratorNextPromiseNeedsResumeProof|TestGeneratorOpaqueReceiverRemainsExplicit|TestGeneratorEmptyBodyUsesOwnedFrame|TestGeneratorDestructuredParameterCycle|TestGenericBodyRelationsRefuse|TestGenericBodyRelationsReadonlyBound|TestGenericBodyRelationsThisRead|TestGenericUnionFixtureHasSeparateInstances|TestHigherRankSlotAdamic|TestHigherRankParameter|TestGenericValueUnusedBinderIsRefused|TestHigherRankBindersBeforeTraversalLimit|TestHigherRankNestedCallableContract|TestUndecidedCycleReadsUseReadyChecks|TestInheritanceVoidBooleanOverrideReason|TestInputSpreadCoverage|TestDefaultTaggedInterfaceNeedsNoFlag|TestIteratorViewsDispatchHiddenReturn|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodSignatureViewsDoNotLoseThis|TestRepresentedMethodReplacementIsNotYet|TestGenericIteratorViewsPreserveNativeArguments|TestIteratorSymbolKeysAreNotStringKeys|TestIteratorOptionalCloseResultMustBeObject|TestLibraryLanguageBoundaries|TestLibraryMapSetIteratorCopyTypesRefused|TestLibraryMethodValueBoundaries|TestNodeBufferRefusals|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeFSFileRefusesVoidValues|TestNodeFSFileNamespaceImport|TestNodeFSFileKeepsDetachedMethodRefusal|TestNodeFSFileScratchOptionsBorrow|TestNodeLibraryNamesUnimplementedMembers|TestNodeLibraryDistinguishesReceiverOwners|TestObjectRefusalsExplainSoundness|TestObjectHasOwnInterface|TestLibraryStringRefusals|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestAMutableLocationSeenWiderIsRefused|TestATupleSeenAsAnArrayIsNotYet|TestModuleNamespaceLimitsStayLoud|TestCallableNamespaceLimitsStayLoud|TestNamespaceClassEarlyConstructionStaysLoud|TestNamespaceAmbientHostInitialization|TestNamespaceCallGraphLinearWork|TestNamespaceEnumInitializationIndependentOfModuleAnalysis|TestMissingBindingSymbolHasStructuredLocation|TestNamespaceLimitsStayLoud|TestNamespaceTypesErase|TestDebugNamespaceMergedCapabilities|TestNamespaceInitializationReachability|TestEmptyNeverMapCannotGainWritableInhabitants|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentCycleIncludesDisjointSlots|TestClosedFrameInputRejectsMutation|TestNestedCallbackCycleIsRefused|TestNestedRestIsSupported|TestParserNodeArrayPresence|TestAdamicNullishAssertionsAreRefused|TestNonNullAssertionOnPresentTypeIsErased|TestStep18CallableReceiverContract|TestOptionalDeletionRequiresPlainStorage|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalWideningCensus|TestOptionalWideningAllowed|TestOverloadInferenceWitnesses|TestOverrideOptionalNumberRefusesNativeSignature|TestParameterPropertiesSoundness|TestParameterPropertyCallbackReceiver|TestPlaceholderTypedBoundaryAssignmentResult|TestPlaceholderTypedBoundaryAliasReset|TestPlaceholderTypedBoundarySavedCopy|TestPlaceholderTypedBoundaryCall|TestPlaceholderTypedBoundaryTypedLocal|TestPlaceholderTypedBoundaryArrayElement|TestPlaceholderTypedBoundaryElementWrite|TestPlaceholderTypedBoundaryOptionalParameterLaterTUse|TestPlaceholderTypedBoundaryDominatingWrite|TestPlaceholderTypedBoundaryPlaceholderFieldCopy|TestPredicateSummaryParameterIndex|TestIndirectPredicateOverloadIsPending|TestConditionAssertionAdmission|TestEveryNeedsCallbackEffects|TestPredicateUseRegions|TestUnprovenPredicateReturnsAreRefused|TestPrimitiveAdmittingSlotsUseBoxes|TestPrototypeMethodsAreRefusedWithReasons|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestProvenRelationsErase|TestRegExpNativeRefusals|TestRegExpUnicodeClassSourceAgreesWithNode|TestRegExpEscapedSlashSourceAgreesWithNode|TestPrivateAndPublicStaticsAgreeWithNode|TestReadinessErrorIncludesReceiverExpression|TestSuppressionDirectivesAreRefused|TestSwitchConditionalBreakFallsThrough|TestSwitchEmptyCaseFallsThrough|TestTasteRepresentationLimitsStayExplicit|TestTypedArrayGaps|TestTypedArrayFromArray|TestUnknownReflectionRefusals|TestViewObjectContractsAreAvailableToEraser|TestMixedUnionContractGraph|TestMixedUnionContractUnknownMemberFails|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestUntaggedViewMemberTags)$",
+      "-test.count=1",
+      "-test.timeout=85s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/lower",
+    "exit": 0,
+    "seconds": 30.096,
+    "expected": 0
+  },
+  {
+    "name": "lower-2",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-lower.test",
+      "-test.run=^(TestAgreementRejectsEmptyAnswer|TestAgreementAcceptsExpectedPanic|TestAgreementInheritedFieldWitness|TestAgreementStaticInitializerWitness|TestNativeAgreementRejectsWrongOutput|TestArgumentsLengthRefusals|TestArgumentsLengthReadNeighbors|TestArgumentsLengthReadKeepsReaderFact|TestArrayPredicateCannotInventAnElementContract|TestUnknownArrayPredicateRefusesUnrepresentedObservations|TestStep18DetachedCallableOrigins|TestUncheckableCastsStayRefused|TestCensusMarkerResultIsAssignable|TestOptionalFunctionValueRelation|TestCensusOverloadBinderGuards|TestCensusPredicateInteractionBoundary|TestCensusPredicateMarkerKeepsProofBoundaries|TestCensusOverloadRelation|TestCensusRestMutableElements|TestCheckPragmasAreRefused|TestTsgoHonorsNoCheckInAdamicFiles|TestClassFeaturesPrivateChecker|TestClassFeaturesAccessorRefusals|TestClassFeaturesStaticSoundness|TestClassFeaturesNarrowedAccessor|TestClassFeaturesStaticInterfaceCycle|TestInheritanceKeepsCheckerConstructorRules|TestInheritanceHasClassIdentity|TestInheritanceRejectsUnsupportedConstructorShapes|TestInheritanceRefusesThisBeforeSuperReturns|TestInheritanceGenericMonomorphizations|TestInheritanceGenericSoundness|TestInheritanceGenericViewsKeepNominalArguments|TestInheritanceGenericFactoryLayouts|TestInheritanceNativeSignatureLimits|TestClassStaticInitializerCallIsEmitted|TestClassWrongOutputIteratorReceiver|TestClassWrongOutputPrivateRepair|TestClockGenericReturnsT01DeclinesBrandedPrimitives|TestClockGenericReturnsT01RejectsIndexBeforeBody|TestDefiniteAssignmentUsesReadiness|TestEEPPresence0|TestEEPPresence2|TestEEPPresence4|TestEEPPresence6|TestNestedEmptyArrayElementKinds|TestEntriesAllocationProof|TestFlagEnumsOpen|TestEnumNeverDefault|TestFlagEnumMemberAliases|TestFlagEnumInlineIteration|TestEnumMemberValuesAndReverseNameMatchNode|TestEnumReverseMappingUsesSingleSlot|TestEnumInitializationGraphMemo|TestNumericEnumsAreOpen|TestNumericEnumNeverProof|TestEnumSlotViews|TestEnumLimitsStayLoud|TestEnumIdentityAcrossModules|TestParserFactoryCompletionAlias|TestParserFactoryCompletionOneBranch|TestParserFactoryCompletionWrongPayloadAssertion|TestParserFactoryCompletionLoopMayNotRun|TestParserFactoryCompletionShortCircuit|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites|TestFSOpenStringFlagsLower|TestFSExistsOperation|TestFunctionValueUnionViewsStayNotYet|TestGeneratorPrimitiveThrowRemainsExplicit|TestGeneratorNestedFrameCaptureRemainsExplicit|TestGeneratorProtocolReplacementRemainsExplicit|TestGenericBodyRelationsCensus|TestGenericBodyRelationsWitness|TestGenericBodyRelationsIndexedReturnMapper|TestGenericFunctionPolymorphicRecursionIsRefused|TestGenericJSONUnionArrayIsNotYet|TestHigherRankSlotTypeScript|TestHigherRankContainer|TestGenericValueDeclaredDefault|TestGenericValueRecursiveArgumentContract|TestOriginalCycleLedger|TestInheritanceDerivedFieldOrder|TestInputSpreadArgumentsAreNotYet|TestDefaultTaggedInterfaceAdmission|TestIteratorGapsAreExplicit|TestIteratorViewsDispatchReceivers|TestAsyncGeneratorsAreRefusedEvenWithoutYield|TestLiteralMethodViewsDoNotLoseThis|TestIteratorDescriptorReasons|TestDestructuredMethodsCannotLoadOwnSlots|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorBuiltInStorageViewsArePending|TestIteratorDeclaredNextHasNoRuntimeMethod|TestLibraryMapSetGapsStayRefused|TestLibraryMethodValues|TestLibraryMethodValueSafety|TestNodeFSFileOptionsBorrow|TestNodeFSFileRefusesOptionEffects|TestNodeFSFileRefusesPinnedUnsupportedOverloads|TestNodeFSFileQualifiedErrorType|TestNodeFSFileBufferBorrow|TestNodeFSFileScratchOverloadsAreNamed|TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames|TestNodeLibraryQualifiedTypeAssertion|TestObjectUnprovenShapesStayNotYet|TestLibraryRegexOffsetRequiresNoCaptures|TestConsoleLowersToWriteLine|TestWhatZeroOneRefusesIsRefusedWithAFix|TestAViewThatCantWriteIsNotRefused|TestAMethodReadAsAValueIsRefused|TestModuleNamespaceInitializedReadProof|TestCallableNamespaceReceiverStaysLoud|TestNamespaceReceiverArrowInheritsScope|TestNamespaceAmbientContextsDoNotExecute|TestNamespaceCallGraphCycleUnion|TestParserFactoryBindingHoisting|TestTscNamespaceDeclarationShapes|TestNamespaceReceiverRefusal|TestTracingNamespaceEscapeLowers|TestNamespaceReturnedAssignmentLimits|TestNamespaceClosedCallGraphEdges|TestNestedFunctionGapsAreLoud|TestNestedEnvironmentHasOneAllocationSite|TestNestedCapturedParametersAreOwned|TestNestedRebindingNotYet|TestNestedBodylessDeclarationsAreLoud|TestParserNodeArrayLayout|TestParserNodeArraySchemaFailsClosed|TestNonNullAssertionLowersToNullishPanic|TestStep18OptionalCallableBoundaries|TestOptionalAssignHiddenKeys|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningRefused|TestOptionalWideningSpreadOverwrite|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature|TestParameterPropertyCheckerContracts|TestParameterPropertyValueMatchesNode|TestPlaceholderTypedBoundaryReturnAssignment|TestPlaceholderTypedBoundaryArgument|TestPlaceholderTypedBoundaryProperty|TestPlaceholderTypedBoundaryReturn|TestPlaceholderTypedBoundaryOrdinaryField|TestPlaceholderTypedBoundaryOptionalArrayElement|TestPlaceholderTypedBoundaryOptionalReceiver|TestPlaceholderTypedBoundaryPresence|TestPlaceholderTypedBoundarySavedAfterWrite|TestPlaceholderWeakSlotStaysNotYet|TestPredicateOverloadRuntime|TestPredicateBodyProof|TestPredicateCallbackContracts|TestPredicateOverloadCallback|TestPredicateUsesBelongToEachCall|TestPredicateBodiesAreProven|TestInheritedLibraryReadsNeverLoadOwnFields|TestNullishPrototypeReadsAreRejectedByChecker|TestUnrepresentedPrototypeCallsAreNotYet|TestProvenRelationsRefuse|TestReadinessElisionRequiresDominatingAssignment|TestRegExpSourceNode|TestRegExpSlashClassSourceAgreesWithNode|TestRepresentationClockSourceCheckedTypes|TestNamespaceFactoryBindingsAgreeWithNode|TestStep21LibraryAdmission|TestSuppressionDirectiveSoundNeighbors|TestSwitchEmptyElseFallsThrough|TestSwitchEmptyBlockFallsThrough|TestTypedArraysLower|TestTypedArrayViewsCannotChangeRepresentation|TestTypedArrayFromEmptyArray|TestUnknownAbsentSpreadPresence|TestViewObjectWritesNeedSourceCertificate|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractRecursiveMember|TestMixedUnionContractPhantomVoidIsUndefined|TestUntaggedViewStructuralFallback)$",
+      "-test.count=1",
+      "-test.timeout=85s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/lower",
+    "exit": 0,
+    "seconds": 47.396,
+    "expected": 0
+  },
+  {
+    "name": "counts",
+    "command": [
+      "/workspace/generic-values-proof-tmp/refresh-oracle.test",
+      "-test.run=^TestCountsAreRecorded$",
+      "-test.count=1",
+      "-test.timeout=600s",
+      "-test.v"
+    ],
+    "cwd": "/workspace/adamic/internal/oracle",
+    "exit": 0,
+    "seconds": 90.58,
+    "expected": 0
+  }
+]

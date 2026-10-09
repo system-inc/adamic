@@ -1,0 +1,61 @@
+{
+  "base": "2a28375f9c8c487d29abb89f38489858fc9d5c92",
+  "head": "6f800def962b4e404b3ee794e5b25a199b575880",
+  "programs": 1129,
+  "classes": {
+    "accepted-by-both": 983,
+    "newly-accepted": 5,
+    "refused-by-both": 141
+  },
+  "verdict": "pass",
+  "complete_corpus": true,
+  "omitted": 0,
+  "newly_admitted": [
+    {
+      "path": "stage3/fixtures/generic-values/01_comparer.a",
+      "stdout": "true false true false\ntrue true false true\n1 4 4\n1 true 0 true\n",
+      "exit": 0,
+      "stderr": "",
+      "all_backends_agree": true
+    },
+    {
+      "path": "stage3/fixtures/generic-values/02_index_default.a",
+      "stdout": "true false true false\n",
+      "exit": 0,
+      "stderr": "",
+      "all_backends_agree": true
+    },
+    {
+      "path": "stage3/fixtures/generic-values/03_utility_default.a",
+      "stdout": "true false true false\n",
+      "exit": 0,
+      "stderr": "",
+      "all_backends_agree": true
+    },
+    {
+      "path": "stage3/fixtures/generic-values/04_alias.a",
+      "stdout": "4 x\n5 v4\n6\n7 y\n",
+      "exit": 0,
+      "stderr": "",
+      "all_backends_agree": true
+    },
+    {
+      "path": "stage3/fixtures/generics/04_function_value.a",
+      "stdout": "true false\n",
+      "exit": 0,
+      "stderr": "",
+      "all_backends_agree": true
+    }
+  ],
+  "phase_seconds": {
+    "base_build": 9.047140036,
+    "checkout": 2.595385005,
+    "checkout_and_provision": 2.984995702,
+    "classification": 105.009775484,
+    "head_build": 20.694376679,
+    "manifest_and_verification": 2.546742322,
+    "provision": 0.38960505,
+    "runtime": 2.811109386,
+    "total": 143.098246646
+  }
+}

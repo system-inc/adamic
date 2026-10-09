@@ -1,0 +1,23 @@
+[
+  {
+    "name": "widening-guard-mutant",
+    "exit": 1,
+    "seconds": 31.689,
+    "catcher": "must stop before emission: <nil>",
+    "count": 4
+  },
+  {
+    "name": "json-layout-mutant",
+    "exit": 1,
+    "seconds": 26.692,
+    "catcher": "--- FAIL: TestGenericValueLibraryIdentityViews",
+    "count": 1
+  },
+  {
+    "name": "json-shape-mutant",
+    "exit": 1,
+    "seconds": 18.601,
+    "catcher": "--- FAIL: TestGenericValueLibraryIdentityViews",
+    "count": 1
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/library_language.c
++++ b/internal/native/runtime/library_language.c
+@@ -79,7 +79,7 @@
+ 	static adamic_closure string = {.heap = {0, adamic_kind_closure, 0}};
+ 	static adamic_closure boolean = {.heap = {0, adamic_kind_closure, 0}};
+ 	static adamic_closure object = {.heap = {0, adamic_kind_closure, 0}};
+-	static const adamic_shape json_shape = {.count = 0};
++	static const adamic_shape json_shape = {.count = 1};
+ 	static adamic_object json = {.heap = {0, adamic_kind_object, 0}, .shape = &json_shape};
+ 	static adamic_closure array = {.heap = {0, adamic_kind_closure, 0}};
+ 	static adamic_closure regexp = {.heap = {0, adamic_kind_closure, 0}};
