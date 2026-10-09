@@ -77,3 +77,7 @@ Named checked .ts calls and their direction report are built on the selected tra
 ## Item 3 implementation
 
 Independent qualified-enum and immutable kind-alias proofs are built for the largest candidate group. Checked predicate directions retire when the body proves the tag partition and the complete target's remaining field view is admitted. Optional declarations remain intact; an optional field alias read still stops on this train and is recorded as pending. See stage3/scouts/step09/predicates/kind-proof-report.md for body-liar refusals, executable default-return mutants, the readonly-getter purity mutant, exact commands and all four new counts rows. The original 577-body measurement is not relabelled as an adapted-tree pass.
+
+## Corpus measurement after the build
+
+The original 580 bodies are remeasured at 90a78f49 with all source hashes preserved: 309 logical proofs, 18 admitted proofs, 291 .a NotYet view stops and 271 .a Refused bodies. In .ts, 18 predicates construct 54 call checks; 495 predicates are pending on views. The complete group table, every checked call and the remaining unobserved/other cases are in [the corpus report](../stage3/scouts/step09/predicates/corpus-report.md). It preserves all 320 baseline checker diagnostics and distinguishes a proved condition-only Debug.assert body from its 445 calls still blocked by target reification. Current origin/main 031a1259 was merged into the feature branch; Git reports it is already included. Focused checks and counts pass with no new count row.

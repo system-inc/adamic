@@ -5,6 +5,7 @@ const path = require('node:path');
 const ts = require(path.resolve('stage3/api/node_modules/typescript'));
 const read = file => JSON.parse(zlib.gunzipSync(fs.readFileSync(file)));
 const [inventoryFile, resultsFile, outputFile] = process.argv.slice(2);
+const allBodies = process.argv.includes("--all-bodies");
 const inventory = read(inventoryFile), results = read(resultsFile);
 const key = location => location.replace(/^.*?\/src\/compiler\//, 'src/compiler/');
 const observations = new Map(results.predicates.map(p => [key(p.location), p]));
@@ -56,10 +57,10 @@ const rows = [];
 for (const p of inventory.predicates) {
  const observation = observations.get(p.location);
  if (!observation) throw Error('missing observation: ' + p.location);
- if (!p.hasBody || observation.status === 'Proven') continue;
+ if (!p.hasBody || !allBodies && observation.status === 'Proven') continue;
  rows.push({...p, status: observation.status, diagnostic: observation.diagnostic, detail: classify(p), group: ['constant, assertion or erased claims', 'primitive, array or nominal tests', 'other semantic or generic conditions'].includes(classify(p)) ? 'other value, generic, assertion or erased claims' : classify(p)});
 }
-if (inventory.predicates.length !== 651 || inventory.predicates.filter(p => p.hasBody).length !== 580 || rows.length !== 577) throw Error('pinned totals drift');
+if (inventory.predicates.length !== 651 || inventory.predicates.filter(p => p.hasBody).length !== 580 || rows.length !== (allBodies ? 580 : 577)) throw Error('pinned totals drift');
 const groups = [...new Set(rows.map(p => p.group))].map(group => ({group, count: rows.filter(p => p.group === group).length, examples: rows.filter(p => p.group === group).slice(0, 3).map(p => p.location)})).sort((a,b) => b.count-a.count);
 fs.writeFileSync(outputFile, JSON.stringify({typescript: ts.version, groups, predicates: rows}, null, 2)+'\n');
 console.log(JSON.stringify(groups, null, 2));
