@@ -323,7 +323,8 @@ int main(int argc, char **argv) {
 				}
 			} else {
 				var exit *exec.ExitError
-				if !errors.As(err, &exit) || exit.ExitCode() != 70 || string(output) != "adamic: panic: regexp: instruction step limit exceeded\n" {
+				// A budget stop names its pattern (ebcb16c9); this harness's program has an empty source.
+				if !errors.As(err, &exit) || exit.ExitCode() != 70 || string(output) != "adamic: panic: regexp: instruction step limit exceeded //\n" {
 					t.Errorf("%d instructions at limit %d: want exit 70 and step-limit diagnostic, got exit=%v output=%q", steps, limit, err, output)
 				}
 			}
