@@ -582,6 +582,8 @@ func (e *emitter) statement(at *ir.Statement) {
 			caught := e.temporary()
 			e.line("} catch (%s) {", caught)
 			e.indent++
+			// Stack exhaustion is terminal before user handlers or instrumentation run.
+			e.line("if (%s instanceof RangeError && %s.message === %s) panic(%s);", caught, caught, quote("Maximum call stack size exceeded"), quote(stackOverflowMessage))
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
 			e.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
@@ -1384,3 +1386,6 @@ func (e *emitter) allocateEnvironment(cells []int) {
 		e.line("const %s = %s[%d];", e.cellName(local), environment, position)
 	}
 }
+
+// stackOverflowMessage is the terminal guard in internal/native/runtime/stack.c.
+const stackOverflowMessage = "RangeError: Maximum call stack size exceeded"

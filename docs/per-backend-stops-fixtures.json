@@ -1,0 +1,23 @@
+{
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "fixtures": [
+    {
+      "fixture": "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a",
+      "source_branch": "integration/review-lane-fxspptb",
+      "source_commit": "d3c854e7d94e30946c8451f82a4429aff3b009a3",
+      "original_path": "review/fxspptb/4ddd17f_weak_single_narrowed.a",
+      "source_path": "internal/oracle/testdata/review/agree/fxspptb_4ddd17f_weak_single_narrowed.a",
+      "sha256": "17fd77a177ed513711dacf4d83111945b526097fe0716e03ae7f64d5d558aaed",
+      "identical_to_original_commit": "cfc3bc070545983b36b1df1447064e2442a04f5b"
+    },
+    {
+      "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
+      "source_branch": "integration/review-lane-fxspptb",
+      "source_commit": "d3c854e7d94e30946c8451f82a4429aff3b009a3",
+      "original_path": "review/fxspptb/d96d304_try_stack.a",
+      "source_path": "internal/oracle/testdata/review/agree/fxspptb_d96d304_try_stack.a",
+      "sha256": "0ea11023a7858d244c238bc740e7cbe9fa68877d4c3f53c16046f4c422c3a4be",
+      "identical_to_original_commit": "cfc3bc070545983b36b1df1447064e2442a04f5b"
+    }
+  ]
+}
