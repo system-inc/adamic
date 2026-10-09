@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a
+    oracle_test.go:755: Load: /workspace/adamic/internal/oracle/testdata/recursive_initializer_tdz.a:4:3: error TS2448: Block-scoped variable 'visit' used before its declaration.
+        /workspace/adamic/internal/oracle/testdata/recursive_initializer_tdz.a:4:3: error TS2454: Variable 'visit' is used before being assigned.
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_tdz.a (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/recursive_initializer_gap.a (16.73s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.767s
+FAIL

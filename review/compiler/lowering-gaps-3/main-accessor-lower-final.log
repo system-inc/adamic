@@ -1,0 +1,10 @@
+=== RUN   TestClassFeaturesAccessorRefusals
+=== PAUSE TestClassFeaturesAccessorRefusals
+=== RUN   TestClassFeaturesThrowingAccessorSpread
+=== PAUSE TestClassFeaturesThrowingAccessorSpread
+=== CONT  TestClassFeaturesAccessorRefusals
+=== CONT  TestClassFeaturesThrowingAccessorSpread
+--- PASS: TestClassFeaturesAccessorRefusals (0.13s)
+--- PASS: TestClassFeaturesThrowingAccessorSpread (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.177s

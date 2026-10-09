@@ -1,0 +1,8 @@
+=== RUN   TestClassFeaturesThrowingAccessorSpread
+=== PAUSE TestClassFeaturesThrowingAccessorSpread
+=== CONT  TestClassFeaturesThrowingAccessorSpread
+    class_features_test.go:139: Lower refused acceptance row: main.a: stage 0 can't lower spreading an accessor literal whose getter may throw yet
+--- FAIL: TestClassFeaturesThrowingAccessorSpread (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.056s
+FAIL

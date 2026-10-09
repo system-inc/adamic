@@ -1,0 +1,49 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:754: gate cache node hit
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (20.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (20.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (20.80s)
+PASS
+gate cache: native hits=3 misses=6
+gate cache: node hits=6 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	20.861s

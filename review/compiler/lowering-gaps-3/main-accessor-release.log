@@ -1,0 +1,99 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:754: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==21144==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 94 byte(s) in 1 object(s) allocated from:
+            #0 0x55d4c38af274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55d4c390689f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4288122670/heap.c:196:10
+            #2 0x55d4c392b6bf in adamic_object_copy /home/agent/.cache/adamic/runtime/.build-4288122670/object.c:45:73
+            #3 0x55d4c38f292d in main /tmp/adamic-gate/adamic-build-2966097458/main.c:306:2
+        
+        Indirect leak of 75 byte(s) in 1 object(s) allocated from:
+            #0 0x55d4c38af274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55d4c390689f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4288122670/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 169 byte(s) leaked in 2 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==21153==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 94 byte(s) in 1 object(s) allocated from:
+            #0 0x560678abe274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x560678b1589f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4288122670/heap.c:196:10
+            #2 0x560678b3a6bf in adamic_object_copy /home/agent/.cache/adamic/runtime/.build-4288122670/object.c:45:73
+            #3 0x560678b0192d in main /tmp/adamic-gate/adamic-build-960839036/main.c:306:2
+        
+        Indirect leak of 151 byte(s) in 2 object(s) allocated from:
+            #0 0x560678abe274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x560678b1589f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4288122670/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 245 byte(s) leaked in 3 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==21143==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 94 byte(s) in 1 object(s) allocated from:
+            #0 0x5575c030e274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5575c036589f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4288122670/heap.c:196:10
+            #2 0x5575c038a6bf in adamic_object_copy /home/agent/.cache/adamic/runtime/.build-4288122670/object.c:45:73
+            #3 0x5575c0351928 in main /tmp/adamic-gate/adamic-build-1254097739/main.c:306:2
+        
+        SUMMARY: AddressSanitizer: 94 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (19.83s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (19.84s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (19.84s)
+FAIL
+gate cache: native hits=3 misses=6
+gate cache: node hits=6 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	19.879s
+FAIL

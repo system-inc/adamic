@@ -1,0 +1,18 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:752: Lower: static_constructor_spread_owned.a: stage 0 can't lower spreading in a program with static constructor objects yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:752: Lower: static_constructor_spread_gap.a: stage 0 can't lower spreading in a program with static constructor objects yet
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.081s
+FAIL

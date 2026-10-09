@@ -1,0 +1,66 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:805: leaks:
+        exit 1
+        
+        =================================================================
+        ==13224==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 104 byte(s) in 1 object(s) allocated from:
+            #0 0x557ce7dc82d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x557ce7e22e8f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2427518135/heap.c:196:10
+        
+        Indirect leak of 151 byte(s) in 2 object(s) allocated from:
+            #0 0x557ce7dc82d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x557ce7e22e8f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2427518135/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 255 byte(s) leaked in 3 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:805: leaks:
+        exit 1
+        
+        =================================================================
+        ==13226==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 104 byte(s) in 1 object(s) allocated from:
+            #0 0x56325de992d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x56325def3e8f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2427518135/heap.c:196:10
+        
+        Indirect leak of 75 byte(s) in 1 object(s) allocated from:
+            #0 0x56325de992d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x56325def3e8f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2427518135/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 179 byte(s) leaked in 2 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:805: leaks:
+        exit 1
+        
+        =================================================================
+        ==13232==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 104 byte(s) in 1 object(s) allocated from:
+            #0 0x55fd0bd972d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55fd0bdf1e7f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2427518135/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 104 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (20.98s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (20.98s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (21.00s)
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	21.024s
+FAIL

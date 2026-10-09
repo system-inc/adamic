@@ -1,0 +1,35 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:754: gate cache node miss
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_gap.a (11.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/static_constructor_spread_owned.a (11.53s)
+PASS
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.578s
