@@ -1,0 +1,2 @@
+^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$
+Excluded as over budget at clean baseline: DotARename family, RulesAgree family and its shared-product witness. All other package tests outside named slice remain unknown.

@@ -1,0 +1,393 @@
+[
+  {
+    "test": "TestFactoryHooks family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:54",
+    "seconds": 3.94,
+    "oracle": "Hand-written hook prefix only. Node, emitted JavaScript and native execute CUT, but there is no independent expected trace. M02 wrong fixes survive the prefix check.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M03"
+    ],
+    "last_proven_fail": "M01: factory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M01.log 2>&1\nfactory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "members": [
+      "TestFactoryHooksUnion",
+      "TestFactoryHooks_000",
+      "TestFactoryHooks_001",
+      "TestFactoryHooks_002",
+      "TestFactoryHooks_003",
+      "TestFactoryHooks_004"
+    ],
+    "vacuous_subcases": [
+      "TestFactoryHooks_004",
+      "TestFactoryHooks_003"
+    ]
+  },
+  {
+    "test": "TestFactoryHooksPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:77",
+    "seconds": 0.023,
+    "oracle": "Own hook matcher; accepts wrong native order when weakened to always true.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: factory_hooks_shards_test.go:95: planted disagreement caught by []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestFactoryHooksPlantedFailure$' > logs/W01.log 2>&1\nfactory_hooks_shards_test.go:95: planted disagreement caught by []"
+  },
+  {
+    "test": "TestFactoryHooks_NativeBuildWorker",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:305",
+    "seconds": null,
+    "oracle": "Subprocess-only native builder; parent is TestFactoryHooks family.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "Skip unless parent sets ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE.",
+    "parent": "TestFactoryHooks family"
+  },
+  {
+    "test": "TestNestedConstructorGap",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/gaps_test.go:13",
+    "seconds": 0.128,
+    "oracle": "Node prints self-written 1; Lower must produce Refused with a hand-written diagnostic substring. M04 proves wording, not full constructor semantics.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: gaps_test.go:34: GAPS.md records a false constructor refusal, got /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before any field is set; assign every field first, then use this",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M04.log 2>&1\ngaps_test.go:34: GAPS.md records a false constructor refusal, got /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before any field is set; assign every field first, then use this"
+  },
+  {
+    "test": "TestProduct_DotARenameSource",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:148",
+    "seconds": 0.189,
+    "oracle": "Successful source copy and rename only; returned path is never inspected.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K01: --- FAIL: TestProduct_DotARenameSource (0.23s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_DotARenameSource$' > logs/K01.log 2>&1\n--- FAIL: TestProduct_DotARenameSource (0.23s)"
+  },
+  {
+    "test": "TestProduct_DotARenameOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:155",
+    "seconds": 0.183,
+    "oracle": "Successful Go oracle construction only; no semantic output or returned-path assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K02: --- FAIL: TestProduct_DotARenameOracle (0.19s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_DotARenameOracle$' > logs/K02.log 2>&1\n--- FAIL: TestProduct_DotARenameOracle (0.19s)"
+  },
+  {
+    "test": "TestDotARename family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:352",
+    "seconds": null,
+    "oracle": "Intended Go cohere comparison on Node, emitted JavaScript and native plus byte-preserving rename and coverage invariants. Shared cold products exceed 90 s.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "Clean DotARename family timed out at 90.037 s.",
+    "members": [
+      "TestDotARenameUnion",
+      "TestDotARename_000",
+      "TestDotARename_001"
+    ]
+  },
+  {
+    "test": "TestProduct_RulesAgreeOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_products_test.go:11",
+    "seconds": 0.145,
+    "oracle": "Successful Go oracle construction only; returned empty path passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K03: --- FAIL: TestProduct_RulesAgreeOracle (0.16s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_RulesAgreeOracle$' > logs/K03.log 2>&1\n--- FAIL: TestProduct_RulesAgreeOracle (0.16s)"
+  },
+  {
+    "test": "TestRulesAgreeLoweringCacheKey",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:95",
+    "seconds": 0.025,
+    "oracle": "Own cache-input collection and content-key invariants.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K04: grain_rules_agree_shards_test.go:127: test-only moves invalidated the lowered product",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgreeLoweringCacheKey$' > logs/K04.log 2>&1\ngrain_rules_agree_shards_test.go:127: test-only moves invalidated the lowered product"
+  },
+  {
+    "test": "TestRulesAgree family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:415",
+    "seconds": 13.422,
+    "oracle": "Go cohere findings and fixes compared byte for byte on Node, emitted JavaScript and native. Own union invariants; unsupported recovery checks permit a generic panic or CPU guard.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02-RulesAgree-2: --- FAIL: TestRulesAgree_015 (2.74s)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey",
+      "TestRulesAgree family"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgree(Union|_[0-9]{3})$' > logs/M02-RulesAgree-2.log 2>&1\n--- FAIL: TestRulesAgree_015 (2.74s)",
+    "members": [
+      "TestRulesAgreeUnion",
+      "TestRulesAgree_000",
+      "TestRulesAgree_001",
+      "TestRulesAgree_002",
+      "TestRulesAgree_003",
+      "TestRulesAgree_004",
+      "TestRulesAgree_005",
+      "TestRulesAgree_006",
+      "TestRulesAgree_007",
+      "TestRulesAgree_008",
+      "TestRulesAgree_009",
+      "TestRulesAgree_010",
+      "TestRulesAgree_011",
+      "TestRulesAgree_012",
+      "TestRulesAgree_013",
+      "TestRulesAgree_014",
+      "TestRulesAgree_015"
+    ],
+    "unknown_mutants": [
+      "M01",
+      "M03",
+      "M04"
+    ]
+  },
+  {
+    "test": "TestRulesAgreePlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:463",
+    "seconds": 2.26,
+    "oracle": "Own differential comparator; disabling differences makes the planted output disagreement go uncaught.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02-retry: grain_rules_agree_shards_test.go:516: planted failure caught 0 times",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/W02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgreePlantedFailure$' > logs/W02-retry.log 2>&1\ngrain_rules_agree_shards_test.go:516: planted failure caught 0 times"
+  }
+]

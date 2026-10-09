@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:30:49.489383971Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:30:49.513052093Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:30:49.513242219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== RUN   TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.513300847Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== PAUSE TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.513303421Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:30:49.513311002Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:30:49.513313216Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== CONT  TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.638128484Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"    gaps_test.go:34: GAPS.md records a false constructor refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T12:30:49.638208485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"--- FAIL: TestNestedConstructorGap (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.638255796Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Elapsed":0.13}
+{"Time":"2026-10-09T12:30:49.638290869Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.639974992Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.150s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:30:49.639990095Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.151}

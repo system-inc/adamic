@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:22:06.572459043Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:22:06.594081674Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle"}
+{"Time":"2026-10-09T12:22:06.594162716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"=== RUN   TestProduct_DotARenameOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.594187453Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"=== PAUSE TestProduct_DotARenameOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.594189577Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle"}
+{"Time":"2026-10-09T12:22:06.594192952Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle"}
+{"Time":"2026-10-09T12:22:06.594194714Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"=== CONT  TestProduct_DotARenameOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.753502084Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle 62b717aa3c70 hit 0.12\n"}
+{"Time":"2026-10-09T12:22:06.753554743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 0.159s\n"}
+{"Time":"2026-10-09T12:22:06.75357924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Output":"--- PASS: TestProduct_DotARenameOracle (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.753582315Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_DotARenameOracle","Elapsed":0.16}
+{"Time":"2026-10-09T12:22:06.753602095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.755470095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.183s\n"}
+{"Time":"2026-10-09T12:22:06.755494461Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.183}

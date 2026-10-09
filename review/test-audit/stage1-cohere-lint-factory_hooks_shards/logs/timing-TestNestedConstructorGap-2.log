@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:21:51.6315162Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:21:51.654569135Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:21:51.65465888Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== RUN   TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:51.654689506Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== PAUSE TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:51.65469184Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:21:51.65469899Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-09T12:21:51.654700793Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== CONT  TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:51.757256385Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\n"}
+{"Time":"2026-10-09T12:21:51.757340031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"--- PASS: TestNestedConstructorGap (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:51.757344448Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Elapsed":0.1}
+{"Time":"2026-10-09T12:21:51.757366321Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:51.75875512Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.127s\n"}
+{"Time":"2026-10-09T12:21:51.758782771Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.127}

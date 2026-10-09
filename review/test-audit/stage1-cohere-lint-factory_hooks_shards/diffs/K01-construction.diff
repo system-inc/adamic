@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/grain_dot_a_rename_test.go
++++ b/stage1/cohere/lint/grain_dot_a_rename_test.go
+@@ -79,7 +79,7 @@
+ 	t.Helper()
+ 	return dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
+ 		copyPort(t, dir, "", "")
+-		return os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts"))
++		return os.Rename(filepath.Join(dir, "rules/no-var/rule.ts"), filepath.Join(dir, "rules/no-var/rule.a"))
+ 	})
+ }
+ 

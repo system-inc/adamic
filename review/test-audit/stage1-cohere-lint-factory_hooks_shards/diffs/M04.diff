@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -770,7 +770,7 @@
+ 			return nil
+ 		}
+ 	}
+-	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
++	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before any field is set", Fix: "assign every field first, then use this"}
+ }
+ 
+ // The checker owns type identity, including recursive structural types. Reuse the

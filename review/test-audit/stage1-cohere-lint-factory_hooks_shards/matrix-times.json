@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M01",
+    "wall": 43.6889546600014,
+    "exit": 1,
+    "regex": "^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$"
+  },
+  {
+    "id": "M02",
+    "wall": 40.88689323700055,
+    "exit": 0,
+    "regex": "^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$"
+  },
+  {
+    "id": "M03",
+    "wall": 41.554007642000215,
+    "exit": 1,
+    "regex": "^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$"
+  },
+  {
+    "id": "M04",
+    "wall": 52.36514983900088,
+    "exit": 1,
+    "regex": "^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$"
+  }
+]

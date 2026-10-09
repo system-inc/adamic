@@ -1,0 +1,850 @@
+stage1/cohere/lint/unicode.ts:1518:export function foldPoint(point: number): number {
+stage1/cohere/lint/unicode.ts:1519:    if(point < 128) {
+stage1/cohere/lint/unicode.ts:1617:export function printable(point: number): boolean {
+stage1/cohere/lint/unicode.ts:1620:    while(left < right) {
+stage1/cohere/lint/unicode.ts:1637:export function foldedRange(character: string, first: number, last: number): boolean {
+stage1/cohere/lint/unicode.ts:1639:    if(point >= first && point <= last) {
+stage1/cohere/lint/unicode.ts:1643:    if(minimum >= first && minimum <= last) {
+stage1/cohere/lint/unicode.ts:1646:    for(const key of folds.keys()) {
+stage1/cohere/lint/regex/patterns.a:2:export function fixedPatterns(): RegExp[] {
+stage1/cohere/lint/regex/patterns.a:89:export function inlineCommentDirective(): RegExp { return /^(?:eslint[- ]|(?:globals?|exported) )/u; }
+stage1/cohere/lint/regex/patterns.a:90:export function warningSelfDirective(): RegExp { return /\bno-warning-comments\b/u; }
+stage1/cohere/lint/regex/options.a:2:export function optionPattern(pattern: string): RegExp { return new RegExp(pattern, 'u'); }
+stage1/cohere/lint/suggestions.a:6:    constructor(start: number, end: number, text: string) {
+stage1/cohere/lint/suggestions.a:16:    constructor(id: string, message: string, edits: readonly SuggestionEdit[]) {
+stage1/cohere/lint/settings.ts:9:    load(text: string): void {
+stage1/cohere/lint/settings.ts:65:    read(name: string, fallback: string): string {
+stage1/cohere/lint/settings.ts:72:    list(name: string, fallback: string[]): string[] {
+stage1/cohere/lint/main.ts:11:function run(row: string, countOnly: boolean): number {
+stage1/cohere/lint/main.ts:15:    if(source.kind === 'Error') {
+stage1/cohere/lint/main.ts:34:    if(countOnly) {
+stage1/cohere/lint/main.ts:40:    for(let index = 0; index < source.text.length; index++) {
+stage1/cohere/lint/main.ts:52:    for(const finding of linter.findings) {
+stage1/cohere/lint/main.ts:133:    if(fields[6] === 'recovery') {
+stage1/cohere/lint/main.ts:153:    if(manifest.kind === 'Error') {
+stage1/cohere/lint/main.ts:164:    if(shardFlag >= 0) {
+stage1/cohere/lint/main.ts:174:    for(const row of manifest.text.split('\n')) {
+stage1/cohere/lint/main.ts:186:    if(countOnly) {
+stage1/cohere/lint/main.ts:191:    run(first, false);
+stage1/cohere/lint/lint.ts:20:function compareFindings(left: Finding, right: Finding): number {
+stage1/cohere/lint/lint.ts:23:function compareEdits(left: Finding, right: Finding): number {
+stage1/cohere/lint/lint.ts:25:    if(position !== 0) {
+stage1/cohere/lint/lint.ts:29:    if(end !== 0) {
+stage1/cohere/lint/lint.ts:56:    constructor(
+stage1/cohere/lint/lint.ts:75:    run(): void {
+stage1/cohere/lint/lint.ts:106:    ancestry(index: number, parent: number): void {
+stage1/cohere/lint/lint.ts:112:    node(index: number): ParseNode {
+stage1/cohere/lint/lint.ts:115:    walk(index: number, parent: number, rules: RuleSet): void {
+stage1/cohere/lint/lint.ts:121:    fixed(): string {
+stage1/cohere/lint/rules/vars-on-top/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/vars-on-top/rule.ts:12:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/vars-on-top/rule.ts:58:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/comment_ranges.a:4:function lineIndex(lines: readonly number[], position: number): number {
+stage1/cohere/lint/comment_ranges.a:7:    while(left < right) {
+stage1/cohere/lint/comment_ranges.a:26:    constructor(source: string, start: number, end: number, lines: readonly number[]) {
+stage1/cohere/lint/comment_ranges.a:36:export function comments(
+stage1/cohere/lint/comment_ranges.a:42:    for(let cursor = 0; cursor < source.length; cursor++) {
+stage1/cohere/lint/comment_ranges.a:52:    for(let cursor = 0; cursor < source.length;) {
+stage1/cohere/lint/rules/unicode-bom/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/unicode-bom/rule.ts:13:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/unicode-bom/rule.ts:29:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:11:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:16:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:36:    enumSelf(declaration: number, index: number): boolean {
+stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:78:    enumAllowed(declaration: number, index: number, part: boolean, bitwise: boolean): boolean {
+stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:125:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/context.ts:15:function lineStartsOf(source: string): number[] {
+stage1/cohere/lint/context.ts:17:    for(let position = 0; position < source.length; position++) {
+stage1/cohere/lint/context.ts:33:function isFunctionKind(kind: string): boolean {
+stage1/cohere/lint/context.ts:34:    switch(kind) {
+stage1/cohere/lint/context.ts:50:function isLiteralPartKind(kind: string): boolean {
+stage1/cohere/lint/context.ts:51:    switch(kind) {
+stage1/cohere/lint/context.ts:64:export function space(character: string): boolean {
+stage1/cohere/lint/context.ts:85:    constructor(
+stage1/cohere/lint/context.ts:108:    node(index: number): ParseNode {
+stage1/cohere/lint/context.ts:111:    enabled(name: string): boolean {
+stage1/cohere/lint/context.ts:114:    start(index: number): number {
+stage1/cohere/lint/context.ts:120:    report(
+stage1/cohere/lint/context.ts:145:    reportNode(
+stage1/cohere/lint/context.ts:155:    reportRange(
+stage1/cohere/lint/context.ts:189:    edit(index: number, text: string): SuggestionEdit {
+stage1/cohere/lint/context.ts:192:    line(position: number): number {
+stage1/cohere/lint/context.ts:213:    literalEnds(): readonly number[] {
+stage1/cohere/lint/context.ts:221:    literalSpans(index: number, ends: number[]): void {
+stage1/cohere/lint/context.ts:230:    child(index: number, position: number): number {
+stage1/cohere/lint/context.ts:233:    parent(index: number): number {
+stage1/cohere/lint/context.ts:238:    kind(index: number): string {
+stage1/cohere/lint/context.ts:241:    functionLike(index: number): boolean {
+stage1/cohere/lint/context.ts:245:    has(index: number, kind: string): boolean {
+stage1/cohere/lint/context.ts:253:    children(index: number, kind: string): number[] {
+stage1/cohere/lint/context.ts:256:    scanAt(position: number): string {
+stage1/cohere/lint/context.ts:260:    scanStart(): number {
+stage1/cohere/lint/context.ts:263:    scanEnd(): number {
+stage1/cohere/lint/context.ts:266:    scanKind(): string {
+stage1/cohere/lint/context.ts:269:    raw(index: number): string {
+stage1/cohere/lint/context.ts:274:    name(index: number): number {
+stage1/cohere/lint/context.ts:295:    memberName(index: number): number {
+stage1/cohere/lint/context.ts:300:    members(index: number): number[] {
+stage1/cohere/lint/context.ts:314:    arguments(index: number): number[] {
+stage1/cohere/lint/context.ts:318:    property(index: number): number {
+stage1/cohere/lint/context.ts:322:    questionDot(index: number): boolean {
+stage1/cohere/lint/context.ts:325:    initializer(index: number): number {
+stage1/cohere/lint/context.ts:330:    extendsClass(index: number): boolean {
+stage1/cohere/lint/context.ts:333:    comment(index: number): boolean {
+stage1/cohere/lint/context.ts:345:    unwrap(index: number): number {
+stage1/cohere/lint/context.ts:352:    literalType(index: number): string {
+stage1/cohere/lint/context.ts:371:    tokens(start: number, end: number): string {
+stage1/cohere/lint/context.ts:379:    signature(index: number): string {
+stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:9:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:12:    prepare(index: number): void {
+stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:30:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:65:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/comments.ts:6:export function word(character: string): boolean {
+stage1/cohere/lint/comments.ts:15:export function space(character: string): boolean {
+stage1/cohere/lint/comments.ts:31:export function selfDirective(value: string): boolean {
+stage1/cohere/lint/comments.ts:35:    while(position >= 0) {
+stage1/cohere/lint/comments.ts:42:    if(!named) {
+stage1/cohere/lint/comments.ts:46:    while(start < value.length && space(value[start] ?? '')) {
+stage1/cohere/lint/comments.ts:50:    for(const prefix of [
+stage1/cohere/lint/comments.ts:65:function validDecoration(decoration: string[]): boolean {
+stage1/cohere/lint/comments.ts:66:    for(let index = 0; index < decoration.length; index++) {
+stage1/cohere/lint/comments.ts:76:function decorated(character: string, decoration: string[]): boolean {
+stage1/cohere/lint/comments.ts:77:    for(let index = 0; index < decoration.length; index++) {
+stage1/cohere/lint/comments.ts:90:export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
+stage1/cohere/lint/comments.ts:93:    if(location === 'start' && !validDecoration(decoration)) {
+stage1/cohere/lint/comments.ts:97:    if(location === 'start') {
+stage1/cohere/lint/comments.ts:107:    for(let index = 0; index <= (location === 'start' ? prefix : value.length); index++) {
+stage1/cohere/lint/comments.ts:136:export function quote(value: string): string {
+stage1/cohere/lint/comments.ts:139:    while(cursor < value.length) {
+stage1/cohere/lint/comments.ts:159:    for(let index = 0; index < normalized.length; index++) {
+stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:10:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:44:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/finding.ts:18:    constructor(
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:8:function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:10:    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:12:function visit(context: RuleContext, rule: Rule, index: number): void {
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:14:    if(['VariableDeclaration', 'BinaryExpression'].includes(node.kind)) { rule.visit(node, index); }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:15:    for(const child of node.children) { visit(context, rule, child); }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:17:function run(path: string, countOnly: boolean): number {
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:19:    if(read.kind === 'Error') { panic(read.message); }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:24:    for(const node of parser.nodes) { parents.push(-1); }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:27:    ancestry(context, parents, root, -1);
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:28:    visit(context, rule, root);
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:29:    if(countOnly) { return context.findings.length; }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:32:    for(let index = 0; index < source.length; index++) {
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:39:    for(const finding of context.findings) {
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:52:    if(path === '') { continue; }
+stage1/cohere/lint/rules/typescript-no-this-alias/profile.a:53:    if(!countOnly) { console.log(`case ${index}`); }
+stage1/cohere/lint/helpers/comments/sort_by_position.ts:2:export function sortByPosition(comments: Comment[]): void {
+stage1/cohere/lint/helpers/comments/sort_by_position.ts:3:    for(let outer = 1; outer < comments.length; outer++) {
+stage1/cohere/lint/helpers/option_schema.ts:9:    constructor(text: string) {
+stage1/cohere/lint/helpers/option_schema.ts:15:    audit(index: number): void {
+stage1/cohere/lint/helpers/option_schema.ts:32:    field(index: number, name: string): number { return this.schema.field(index, name); }
+stage1/cohere/lint/helpers/option_schema.ts:33:    limit(index: number, name: string, fallback: number): number {
+stage1/cohere/lint/helpers/option_schema.ts:36:    reference(text: string): number {
+stage1/cohere/lint/helpers/option_schema.ts:47:    validate(schemaIndex: number, values: OptionsJson, valueIndex: number, depth: number): boolean {
+stage1/cohere/lint/helpers/option_schema.ts:106:    check(options: string): string {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:14:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:17:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:32:    method(index: number, key: string): void {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:104:    property(index: number, key: string): void {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:127:    report(index: number, id: string, message: string): void {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:130:    containsKind(index: number, kind: string): boolean {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:136:    returnType(index: number): number {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:150:    parametersText(index: number): string {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:178:    delimiter(index: number): string {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:182:    signatureKey(index: number): string {
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:188:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/helpers/main.ts:6:function read(path: string): string { const value = readTextFile(path); if(value.kind === 'Error') { panic(value.message); } return value.text; }
+stage1/cohere/lint/helpers/main.ts:10:function text(index: number, name: string): string { const value = cases.field(index, name); return value < 0 ? '' : cases.node(value).text; }
+stage1/cohere/lint/helpers/main.ts:12:function schemaText(index: number): string { const key = text(index, 'Schema'); return cases.node(cases.field(definitions, key)).text; }
+stage1/cohere/lint/helpers/main.ts:17:    if(kind === 'json') { const reader = new OptionsJson(input); console.log(reader.parse() >= 0 ? 'valid' : 'invalid'); }
+stage1/cohere/lint/helpers/comments/main.ts:9:function read(path: string): string {
+stage1/cohere/lint/helpers/comments/main.ts:11:    if(result.kind === 'Error') {
+stage1/cohere/lint/helpers/comments/main.ts:27:    if(adapted < 0 && name.endsWith('.tsx')) {
+stage1/cohere/lint/helpers/comments/main.ts:31:    if(adapted < 0) {
+stage1/cohere/lint/helpers/comments/main.ts:54:    for(const comment of first) {
+stage1/cohere/lint/helpers/comments/main.ts:61:    for(const comment of comments) {
+stage1/cohere/lint/helpers/comments/main.ts:67:    sortByPosition(comments);
+stage1/cohere/lint/helpers/comments/main.ts:70:    for(let position = 0; position <= source.length; position++) {
+stage1/cohere/lint/helpers/comments/for_file.ts:11:    constructor(parser: Parser | undefined, root: number) {
+stage1/cohere/lint/helpers/comments/for_file.ts:15:    get(): Comment[] {
+stage1/cohere/lint/helpers/comments/for_file.ts:23:export function forFile(parser: Parser | undefined, root: number, cache: FileCommentCache | undefined): Comment[] {
+stage1/cohere/lint/helpers/comments/for_file.ts:24:    if(cache === undefined) {
+stage1/cohere/lint/helpers/policy_message.ts:8:    constructor(text: string) {
+stage1/cohere/lint/helpers/policy_message.ts:12:    template(rule: string, id: string): number {
+stage1/cohere/lint/helpers/policy_message.ts:18:    names(text: string): string[] {
+stage1/cohere/lint/helpers/policy_message.ts:32:    render(rule: string, id: string, values: ReadonlyMap<string, string>, choices: readonly MessageChoice[]): string {
+stage1/cohere/lint/rules/typescript-init-declarations/rule.a:10:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/typescript-init-declarations/rule.a:15:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/typescript-init-declarations/rule.a:67:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/typescript-init-declarations/messages.a:1:export function initializedMessage(name: string): string {
+stage1/cohere/lint/rules/typescript-init-declarations/messages.a:5:export function notInitializedMessage(name: string): string {
+stage1/cohere/lint/rules/typescript-init-declarations/initializer.a:5:export function hasInitializer(context: RuleContext, declaration: ParseNode): boolean {
+stage1/cohere/lint/rules/typescript-init-declarations/initializer.a:7:    for(const index of declaration.children) {
+stage1/cohere/lint/helpers/options_json.ts:16:    constructor(source: string) { this.source = source; }
+stage1/cohere/lint/helpers/options_json.ts:17:    node(index: number): OptionValue { return this.nodes[index] ?? panic('missing option value'); }
+stage1/cohere/lint/helpers/options_json.ts:18:    add(kind: string, text: string, number: number, keys: string[], children: number[]): number {
+stage1/cohere/lint/helpers/options_json.ts:23:    skip(): void {
+stage1/cohere/lint/helpers/options_json.ts:26:    string(): string {
+stage1/cohere/lint/helpers/options_json.ts:61:    digit(): boolean {
+stage1/cohere/lint/helpers/options_json.ts:65:    value(depth: number): number {
+stage1/cohere/lint/helpers/options_json.ts:124:    parse(): number {
+stage1/cohere/lint/helpers/options_json.ts:129:    field(index: number, name: string): number {
+stage1/cohere/lint/helpers/options_json.ts:133:    equal(left: number, other: OptionsJson, right: number): boolean {
+stage1/cohere/lint/helpers/strict_options.ts:8:    constructor(descriptor: string) { this.shapes = new OptionsJson(descriptor); this.root = this.shapes.parse(); }
+stage1/cohere/lint/helpers/strict_options.ts:9:    matches(shape: number, values: OptionsJson, index: number): boolean {
+stage1/cohere/lint/helpers/strict_options.ts:58:    check(raw: string): string {
+stage1/cohere/lint/helpers/comments/comment.ts:10:    constructor(
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:6:function identifier(text: string): boolean {
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:7:    if(text.length === 0) return false;
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:9:    while(index < text.length) {
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:19:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:20:    visit(container: ParseNode, _index: number): void {
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:104:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a:1:export function adjacentSignature(display: string): string {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:6:function tokenStart(parser: Parser, index: number): number {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:12:function isParameterListKind(kind: string): boolean {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:13:    switch(kind) {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:32:function isBracedListKind(kind: string): boolean {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:33:    switch(kind) {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:52:export function collectListInteriors(parser: Parser, index: number): number[] {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:60:    if(parameterList || argumentsList || bracedList || arrayList || caseList) {
+stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:109:    if(node.kind === 'JsxExpression' && node.children.length === 0) {
+stage1/cohere/lint/helpers/comments/can_begin_at.ts:2:export function canBeginAt(text: string, position: number): boolean {
+stage1/cohere/lint/helpers/comments/can_begin_at.ts:3:    if(position < 0 || position > text.length) {
+stage1/cohere/lint/helpers/comments/can_begin_at.ts:6:    if(position === 0 && text.startsWith('#!')) {
+stage1/cohere/lint/helpers/comments/can_begin_at.ts:9:    for(let index = position; index < text.length; index++) {
+stage1/cohere/lint/helpers/comments/all.ts:11:export function all(parser: Parser | undefined, root: number): Comment[] {
+stage1/cohere/lint/helpers/comments/all.ts:12:    if(parser === undefined) {
+stage1/cohere/lint/helpers/comments/all.ts:18:    while(pending.length > 0) {
+stage1/cohere/lint/helpers/comments/all.ts:31:    for(let anchor = 0; anchor < anchors.length; anchor++) {
+stage1/cohere/lint/helpers/comments/all.ts:73:    for(let index = 0; index < parser.scanner.text.length;) {
+stage1/cohere/lint/helpers/comments/all.ts:92:    for(const [start, end] of ends) {
+stage1/cohere/lint/helpers/comments/all.ts:105:    sortByPosition(comments);
+stage1/cohere/lint/rules/no-ex-assign/rule.a:7:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-ex-assign/rule.a:8:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-ex-assign/rule.a:16:    assignments(index: number, name: string): void {
+stage1/cohere/lint/rules/no-ex-assign/rule.a:39:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/require-yield/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/require-yield/rule.ts:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/require-yield/rule.ts:25:    containsYield(index: number): boolean {
+stage1/cohere/lint/rules/require-yield/rule.ts:50:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-empty-static-block/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-empty-static-block/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-empty-static-block/rule.a:23:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:2:export function noRedundantShouldComponentUpdate(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:3:    if(!['ClassDeclaration', 'ClassExpression'].includes(context.kind(index))) {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:7:    for(const clause of context.children(index, 'HeritageClause')) {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:30:    if(!pure) {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:33:    for(const member of context.members(index)) {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:61:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:64:    visit(index: number): void {
+stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:69:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-empty-pattern/rule.a:9:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-empty-pattern/rule.a:14:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/no-empty-pattern/rule.a:33:    allowedParameter(parent: number): boolean {
+stage1/cohere/lint/rules/no-empty-pattern/rule.a:46:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:3:export function noIsMounted(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:4:    if(context.kind(index) !== 'CallExpression') {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:8:    if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(context.kind(callee))) {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:11:    if(context.kind(context.child(callee, 0)) !== 'ThisKeyword') {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:15:    if(context.node(name).text !== 'isMounted') {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:18:    if(
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:25:    while(ancestor >= 0) {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:36:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:39:    visit(index: number): void {
+stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:44:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:11:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:14:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:74:    precedence(index: number): number {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:197:    invert(index: number): string {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:221:    alwaysBoolean(index: number): boolean {
+stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:232:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-empty-character-class/rule.a:9:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-empty-character-class/rule.a:12:    visit(node: ParseNode, _index: number): void {
+stage1/cohere/lint/rules/no-empty-character-class/rule.a:51:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-empty-character-class/escapes.a:2:export function escapeEnd(pattern: string, start: number, unicode: boolean): number {
+stage1/cohere/lint/rules/no-empty-character-class/escapes.a:3:    if(start + 1 >= pattern.length) return -1;
+stage1/cohere/lint/rules/no-empty-character-class/escapes.a:5:    if(unicode && ['u', 'p', 'P', 'q'].includes(letter) && pattern[start + 2] === '{') {
+stage1/cohere/lint/rules/no-empty-character-class/escapes.a:9:    if(letter === 'c' && start + 2 < pattern.length) return start + 3;
+stage1/cohere/lint/rules/no-empty-character-class/escapes.a:11:    if(width > 0 && start + 2 + width <= pattern.length) {
+stage1/cohere/lint/rules/no-empty/rule.ts:6:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-empty/rule.ts:9:    visit(index: number, parent: number): void {
+stage1/cohere/lint/rules/no-empty/rule.ts:44:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-duplicate-case/rule.ts:5:function duplicateCases(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/no-duplicate-case/rule.ts:7:    for(const clause of context.node(index).children) {
+stage1/cohere/lint/rules/no-duplicate-case/rule.ts:22:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-duplicate-case/rule.ts:25:    visit(index: number): void {
+stage1/cohere/lint/rules/no-duplicate-case/rule.ts:34:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-div-regex/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-div-regex/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-div-regex/rule.ts:22:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:3:export function noFindDomNode(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:4:    if(context.kind(index) !== 'CallExpression') {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:9:    if(context.kind(callee) === 'Identifier') {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:28:    if(name >= 0 && context.node(name).text === 'findDOMNode') {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:35:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:38:    visit(index: number): void {
+stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:43:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-debugger/rule.ts:6:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-debugger/rule.ts:9:    visit(index: number, parent: number): void {
+stage1/cohere/lint/rules/no-debugger/rule.ts:29:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:4:export function jsxNoCommentTextnodes(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:5:    if(context.kind(index) !== 'JsxText') {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:11:    for(let position = 0; position < raw.length; position++) {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:36:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:39:    visit(index: number): void {
+stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:44:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:10:function after(context: RuleContext, expression: number, id: string, message: string): void {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:13:    if(start < context.source.length && context.line(start) !== context.line(context.node(expression).end - 1)) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:17:export function noUnexpectedMultiline(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:19:    if(kind === 'CallExpression' && !context.questionDot(index) && context.node(index).list > 0) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:22:    if(kind === 'ElementAccessExpression' && !context.questionDot(index)) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:25:    if(kind === 'TaggedTemplateExpression') {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:44:    if(kind !== 'BinaryExpression' || context.node(context.child(index, 1)).kind !== 'SlashToken') {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:48:    if(context.kind(left) !== 'BinaryExpression' || context.kind(context.child(left, 1)) !== 'SlashToken') {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:53:    while(end < context.source.length && 'gimsuy'.includes(context.source.slice(end, end + 1))) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:56:    if(end === start) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:59:    if(end < context.source.length) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:74:    after(context, context.child(left, 0), 'division', messageUnexpectedMultilineDivision);
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:79:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:82:    visit(index: number): void {
+stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:87:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-continue/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-continue/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-continue/rule.ts:16:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-caller/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-caller/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-caller/rule.a:28:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:10:export function forwardRefUsesRef(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:11:    if(context.kind(index) !== 'CallExpression') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:16:    if(context.kind(callee) === 'Identifier') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:19:    if(context.kind(callee) === 'PropertyAccessExpression') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:22:    if(context.kind(callee) === 'ElementAccessExpression') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:28:    if(name !== 'forwardRef') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:33:    if(!['ArrowFunction', 'FunctionExpression'].includes(context.kind(first))) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:38:    for(const parameter of parameters) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:48:    if(counted !== 1) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:53:    while(context.kind(ancestor) === 'ParenthesizedExpression') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:56:    if(
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:68:    while(space(context.source.slice(start, start + 1))) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:72:    while(open > context.node(first).pos && space(context.source.slice(open - 1, open))) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:76:    if(open > context.node(first).pos && context.source.slice(open - 1, open) === '(') {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:86:    if(text.endsWith(')')) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:89:    while(space(text.slice(-1))) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:92:    if(text.endsWith(',')) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:95:    if(!text.startsWith('(')) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:115:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:118:    visit(index: number): void {
+stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:123:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-caller/messages.a:2:export function messageNoCaller(name: string): string {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:6:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:7:    flag(name: string, fallback: string): boolean { return this.context.settings.read(name, fallback) === 'true'; }
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:8:    reportable(name: string): boolean { return name !== '' && name !== '_' && (name.startsWith('_') || name.endsWith('_')) && !this.context.settings.list('allow', []).includes(name); }
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:9:    report(index: number, name: string): void {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:12:    name(index: number): number {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:21:    bindingName(index: number): number {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:30:    bindings(index: number, declaration: number, pattern: string): void {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:43:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-underscore-dangle/rule.a:80:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:8:function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:10:    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:12:function visit(context: RuleContext, rule: Rule, index: number): void {
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:14:    if(["FunctionDeclaration", "FunctionExpression", "ArrowFunction", "VariableDeclaration", "PropertyAccessExpression", "MethodDeclaration", "PropertyDeclaration"].includes(node.kind)) { rule.visit(node, index); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:15:    for(const child of node.children) { visit(context, rule, child); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:17:function run(row: string, countOnly: boolean): number {
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:23:    if(read.kind === 'Error') { panic(read.message); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:28:    for(const node of parser.nodes) { parents.push(-1); }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:31:    ancestry(context, parents, root, -1);
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:32:    visit(context, rule, root);
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:33:    if(countOnly) { return context.findings.length; }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:36:    for(let index = 0; index < source.length; index++) {
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:43:    for(const finding of context.findings) {
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:60:    if(path === '') { continue; }
+stage1/cohere/lint/rules/no-underscore-dangle/profile.a:61:    if(!countOnly) { console.log(`case ${index}`); }
+stage1/cohere/lint/rules/no-bitwise/rule.ts:7:function bitwiseOperator(kind: string): string {
+stage1/cohere/lint/rules/no-bitwise/rule.ts:8:    switch(kind) {
+stage1/cohere/lint/rules/no-bitwise/rule.ts:42:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-bitwise/rule.ts:45:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-bitwise/rule.ts:75:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/prefer-template/rule.ts:5:function tokenStart(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/prefer-template/rule.ts:8:    while(position < end) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:31:function tokenText(context: RuleContext, index: number): string {
+stage1/cohere/lint/rules/prefer-template/rule.ts:34:function triviaText(context: RuleContext, index: number): string {
+stage1/cohere/lint/rules/prefer-template/rule.ts:36:    while(space(context.source.slice(position, position + 1))) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:41:function concatenation(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/prefer-template/rule.ts:44:function string(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/prefer-template/rule.ts:47:function contains(context: RuleContext, index: number, strings: boolean): boolean {
+stage1/cohere/lint/rules/prefer-template/rule.ts:49:    if(concatenation(context, node)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:54:function legacy(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/prefer-template/rule.ts:56:    if(concatenation(context, node)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:59:    if(context.kind(node) !== 'StringLiteral') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:63:    for(let position = 0; position < raw.length; position++) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:76:function escape(inner: string): string {
+stage1/cohere/lint/rules/prefer-template/rule.ts:78:    for(let position = 0; position < inner.length;) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:97:function curly(context: RuleContext, index: number, end: boolean): boolean {
+stage1/cohere/lint/rules/prefer-template/rule.ts:100:    if(concatenation(context, node)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:103:    if(context.kind(node) === 'TemplateExpression') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:109:function build(context: RuleContext, index: number, before: string, after: string): string {
+stage1/cohere/lint/rules/prefer-template/rule.ts:112:    if(kind === 'StringLiteral') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:117:    if(kind === 'NoSubstitutionTemplateLiteral' || kind === 'TemplateExpression') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:120:    if(concatenation(context, node) && contains(context, node, true)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:142:export function preferTemplate(context: RuleContext, reported: Set<number>, index: number): void {
+stage1/cohere/lint/rules/prefer-template/rule.ts:143:    if(!string(context, index) || !concatenation(context, context.parent(index))) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:147:    while(context.parent(top) >= 0) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:160:    if(reported.has(top)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:164:    if(!contains(context, top, false)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:167:    if(legacy(context, top)) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:178:    while(context.kind(parent) === 'ParenthesizedExpression') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:181:    if(context.kind(parent) === 'ExpressionStatement') {
+stage1/cohere/lint/rules/prefer-template/rule.ts:203:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/prefer-template/rule.ts:206:    visit(index: number): void {
+stage1/cohere/lint/rules/prefer-template/rule.ts:211:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/prefer-destructuring/rule.a:9:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/prefer-destructuring/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/prefer-destructuring/rule.a:63:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-await-in-loop/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-await-in-loop/rule.ts:10:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/no-await-in-loop/rule.ts:31:    awaitedLoop(index: number): boolean {
+stage1/cohere/lint/rules/no-await-in-loop/rule.ts:72:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:6:export function initializer(context: RuleContext, node: ParseNode, bound: number): number {
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:7:    if(bound < 0) return -1;
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:9:    for(const child of node.children) {
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:21:export function enabled(context: RuleContext, declarator: boolean, array: boolean): boolean {
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:22:    if(context.settings.text === '' || context.settings.text === 'null') return true;
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:29:export function commentsInside(context: RuleContext, start: number, end: number): number {
+stage1/cohere/lint/rules/prefer-destructuring/helpers.a:32:    for(let at = start; at < end;) {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:39:    report(name: number, id: string, message: string): void {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:43:    constEnum(index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:82:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts:2:export function messageNoTypeAliasSuffix(name: string): string {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts:7:export function messageNoInterfaceSuffix(name: string): string {
+stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts:12:export function messageNoConstEnumSuffix(name: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:9:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:16:    visit(node: ParseNode, _index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:28:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:9:function isShoutedToken(token: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:10:    if(allowedUppercaseTokens.includes(token) || currencyCodes.includes(token)) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:13:    if(accepts(digitOrUnderscore, token) || token.length < 2) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:21:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:24:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:54:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a:3:export function stutteringName(name: string): string { return text.replaceAll('{{name}}', name); }
+stage1/cohere/lint/rules/no-with/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-with/rule.ts:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-with/rule.ts:17:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a:4:export function shoutingMessage(tokens: readonly string[]): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a:6:    for(const token of tokens.slice(0, 4)) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:7:export function accepts(pattern: RegExp, text: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:12:function blank(text: string, pattern: RegExp, keepNewlines: boolean): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:16:    for(;;) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:29:function asciiLetterOrDigit(character: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:34:function capitalPhrases(text: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:38:    for(;;) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:56:function wrappedDoubleQuotes(text: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:58:    for(let index = 0; index + 1 < lines.length; index++) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:72:function indentedBlocks(text: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:76:    for(let index = 0; index < lines.length; index++) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:94:function examplesAndCommands(text: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:97:    for(let index = 0; index < lines.length; index++) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:112:    for(let index = 0; index < lines.length; index++) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:121:export function maskCodeAndCommands(text: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a:2:function whiteSpace(code: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a:17:export function trim(value: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a:20:    while(start < end && whiteSpace(value.charCodeAt(start))) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a:23:    while(end > start && whiteSpace(value.charCodeAt(end - 1))) {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:8:function isParameterListKind(kind: string): boolean {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:9:    switch(kind) {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:28:function isBracedListKind(kind: string): boolean {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:29:    switch(kind) {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:52:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:55:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:69:    commentAnchors(index: number): void {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:131:    reachableComments(anchors: readonly boolean[]): boolean[] {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:185:    scanWarnings(literalEnds: readonly number[], reachable: readonly boolean[], terms: readonly string[]): void {
+stage1/cohere/lint/rules/no-warning-comments/rule.ts:248:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:11:function noSingleLineJsdoc(context: RuleContext, ranges: readonly CommentRange[]): void {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:13:    for(const comment of ranges) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:60:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:63:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:68:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-warning-comments/messages.ts:2:export function messageWarningComment(term: string, quoted: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:4:function lineIndex(lines: readonly number[], position: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:7:    while(left < right) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:26:    constructor(source: string, start: number, end: number, lines: readonly number[]) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:36:export function comments(
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:42:    for(let cursor = 0; cursor < source.length; cursor++) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:52:    for(let cursor = 0; cursor < source.length;) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:7:function lineIndex(lines: readonly number[], position: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:10:    while(left < right) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:29:    constructor(source: string, start: number, end: number, lines: readonly number[]) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:39:export function comments(
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:45:    for(let cursor = 0; cursor < source.length; cursor++) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:55:    for(let cursor = 0; cursor < source.length;) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:90:function isParameterListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:91:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:110:function isBracedListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:111:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:129:function commentAnchors(context: RuleContext, node: ParseNode, anchors: boolean[]): void {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:192:function reachableComments(source: string, anchors: readonly boolean[]): boolean[] {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:242:export function fileComments(context: RuleContext, root: ParseNode): CommentRange[] {
+stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:244:    commentAnchors(context, root, anchors);
+stage1/cohere/lint/rules/no-var/rule.a:6:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-var/rule.a:9:    visit(index: number, parent: number): void {
+stage1/cohere/lint/rules/no-var/rule.a:33:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:5:function isParameterListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:6:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:25:function isBracedListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:26:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:48:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:52:    collect(node: ParseNode): boolean[] {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:61:    commentAnchors(index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:123:    reachableComments(anchors: readonly boolean[]): boolean[] {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:5:function forwarding(context: RuleContext, body: number, parameters: readonly number[]): boolean {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:6:    if(context.node(body).children.length !== 1) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:10:    if(context.kind(statement) !== 'ExpressionStatement') {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:14:    if(context.kind(call) !== 'CallExpression' || context.kind(context.child(call, 0)) !== 'SuperKeyword') {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:17:    for(const parameter of parameters) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:27:    if(arguments_.length === 1 && context.kind(arguments_[0] ?? -1) === 'SpreadElement') {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:33:    if(parameters.length !== arguments_.length) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:36:    for(let position = 0; position < parameters.length; position++) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:53:export function noUselessConstructor(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:60:    if(context.kind(index) !== 'Constructor' && !quoted) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:64:    if(body < 0) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:68:    for(const parameter of parameters) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:87:    if(
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:94:    if(extending ? !forwarding(context, body, parameters) : context.node(body).children.length !== 0) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:99:    while(context.source.slice(end, end + 1) !== '(' && end < context.node(index).end) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:102:    while(space(context.source.slice(end - 1, end))) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:110:    if(
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:131:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:134:    visit(index: number): void {
+stage1/cohere/lint/rules/no-useless-constructor/rule.ts:139:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:7:function claimed(context: RuleContext, node: ParseNode): string {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:8:    if(node.kind !== 'CallExpression') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:12:    if(callee < 0 || context.node(callee).kind !== 'PropertyAccessExpression') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:17:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:26:function inherited(context: RuleContext, index: number, onlyThis: boolean): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:28:    if(node.kind === 'ThisKeyword') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:31:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:37:    if(!onlyThis && node.kind === 'Identifier' && node.text === 'arguments') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:60:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:68:    for(const child of node.children) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:75:function report(context: RuleContext, node: ParseNode, index: number, id: string, fields: string[]): void {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:77:    for(const child of node.children) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:86:    for(const child of node.children) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:102:    if(genericEnd >= 0) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:114:    if(arrowStart < parametersStart) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:118:    if(!signature.startsWith('(')) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:123:    if(!block) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:128:    for(let cursor = index; context.parent(cursor) >= 0;) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:152:function noMultilineArrowFunction(context: RuleContext, node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:153:    if(node.kind === 'CallExpression') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:176:    if(body < 0 || context.node(body).kind !== 'Block' || inherited(context, body, true)) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:179:    if(context.line(context.start(index)) === context.line(node.end)) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:183:    if(owner >= 0 && claimed(context, context.node(owner)) !== '') {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:186:    report(context, node, index, 'multilineArrow', []);
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:191:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:194:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:199:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-proto/rule.a:7:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-proto/rule.a:8:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-proto/rule.a:30:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a:1:export function message(id: string, fields: readonly string[]): string {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a:2:    switch(id) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:3:export function first(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:7:export function last(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:13:function goSpace(code: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:19:export function trim(value: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:22:    while(start < end && goSpace(value.charCodeAt(start))) {
+stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:25:    while(end > start && goSpace(value.charCodeAt(end - 1))) {
+stage1/cohere/lint/rules/no-useless-concat/rule.a:7:function concatenation(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/no-useless-concat/rule.a:11:function literal(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/no-useless-concat/rule.a:17:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-useless-concat/rule.a:18:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-useless-concat/rule.a:33:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-plusplus/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-plusplus/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-plusplus/rule.ts:29:    afterthought(index: number): boolean {
+stage1/cohere/lint/rules/no-plusplus/rule.ts:70:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:9:function report(context: RuleContext, run: readonly CommentRange[], maximum: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:10:    if(run.length <= maximum) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:18:    for(const comment of run) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:30:    if(safe) { edits.push(new SuggestionEdit(first.start, last.end, replacement)); }
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:40:export function noLongLineComment(context: RuleContext, ranges: readonly CommentRange[]): void {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:45:    for(const comment of ranges) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:96:    report(context, run, maximum);
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:101:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:102:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:106:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-plusplus/messages.ts:2:export function messageUnexpectedUnaryOp(operator: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a:1:export function messageLongLineComment(lineCount: string): string {
+stage1/cohere/lint/rules/no-useless-catch/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-useless-catch/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-useless-catch/rule.a:54:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:3:export function noOctalEscape(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:4:    if(context.kind(index) !== 'StringLiteral') {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:8:    for(let position = 0; position < raw.length; position++) {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:58:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:61:    visit(index: number): void {
+stage1/cohere/lint/rules/no-octal-escape/rule.ts:66:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts:35:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-new/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-new/rule.ts:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-new/rule.ts:19:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:2:function assignment(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:25:function destructuring(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:27:    while(context.parent(current) >= 0) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:45:function writeOnly(context: RuleContext, access: number): boolean {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:49:    if(kind === 'BinaryExpression') {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:56:    if(kind === 'PrefixUnaryExpression') {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:59:    if(kind === 'PostfixUnaryExpression') {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:62:    if(['ForInStatement', 'ForOfStatement'].includes(kind)) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:65:    if(['ArrayLiteralExpression', 'SpreadElement'].includes(kind)) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:68:    if(kind === 'PropertyAssignment') {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:73:function used(context: RuleContext, index: number, name: string, accessor: boolean): boolean {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:74:    if(context.kind(index) === 'PrivateIdentifier') {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:84:    if(['ClassDeclaration', 'ClassExpression'].includes(context.kind(index))) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:92:    for(const child of context.node(index).children) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:99:export function noUnusedPrivateClassMembers(context: RuleContext, index: number): void {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:100:    if(!['ClassDeclaration', 'ClassExpression'].includes(context.kind(index))) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:105:    for(const member of members) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:145:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:148:    visit(index: number): void {
+stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:153:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:17:    assignmentTarget(index: number): boolean {
+stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:91:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-sequences/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-sequences/rule.ts:12:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/no-sequences/rule.ts:18:    chain(index: number, parent: number): void {
+stage1/cohere/lint/rules/no-sequences/rule.ts:41:    comma(index: number): boolean {
+stage1/cohere/lint/rules/no-sequences/rule.ts:50:    forSlot(index: number): boolean {
+stage1/cohere/lint/rules/no-sequences/rule.ts:107:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-negated-condition/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-negated-condition/rule.ts:12:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-negated-condition/rule.ts:31:    negated(index: number): boolean {
+stage1/cohere/lint/rules/no-negated-condition/rule.ts:42:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:8:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:9:    pattern(index: number): boolean { return index >= 0 && ['ObjectBindingPattern', 'ArrayBindingPattern', 'ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(this.context.node(index).kind); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:10:    reaching(index: number, arithmetic: boolean): void {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:30:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:70:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:8:function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:10:    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:12:function visit(context: RuleContext, rule: Rule, index: number): void {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:14:    if(["PropertyAccessExpression", "ElementAccessExpression", "CallExpression", "NewExpression", "TaggedTemplateExpression", "ForOfStatement", "WithStatement", "ClassDeclaration", "ClassExpression", "VariableDeclaration", "Parameter", "BindingElement", "SpreadElement", "BinaryExpression", "PrefixUnaryExpression"].includes(node.kind)) { rule.visit(node, index); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:15:    for(const child of node.children) { visit(context, rule, child); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:17:function run(row: string, countOnly: boolean): number {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:23:    if(read.kind === 'Error') { panic(read.message); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:28:    for(const node of parser.nodes) { parents.push(-1); }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:31:    ancestry(context, parents, root, -1);
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:32:    visit(context, rule, root);
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:33:    if(countOnly) { return context.findings.length; }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:36:    for(let index = 0; index < source.length; index++) {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:43:    for(const finding of context.findings) {
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:60:    if(path === '') { continue; }
+stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a:61:    if(!countOnly) { console.log(`case ${index}`); }
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:10:function isParameterListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:11:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:30:function isBracedListKind(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:31:    switch(kind) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:49:export function trim(value: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:52:    while(start < end && commentSpace(value[start] ?? '')) { start++; }
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:53:    while(end > start && commentSpace(value[end - 1] ?? '')) { end--; }
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:56:export function commentRanges(context: RuleContext, node: ParseNode, index: number): readonly CommentRange[] {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:58:    commentAnchors(context, index, anchors, node);
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:62:export function commentAnchors(context: RuleContext, index: number, anchors: boolean[], node: ParseNode): void {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:70:    if(parameterList || argumentsList || bracedList || arrayList || caseList) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:119:    for(const child of node.children) {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:123:export function reachableComments(context: RuleContext, anchors: readonly boolean[]): boolean[] {
+stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:125:    for(let anchor = 0; anchor < anchors.length; anchor++) {
+stage1/cohere/lint/rules/no-multi-assign/rule.a:7:function assignment(context: RuleContext, node: ParseNode): boolean {
+stage1/cohere/lint/rules/no-multi-assign/rule.a:9:    if(operator === undefined) {
+stage1/cohere/lint/rules/no-multi-assign/rule.a:24:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-multi-assign/rule.a:27:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-multi-assign/rule.a:54:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:17:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts:17:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-labels/rule.ts:11:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-labels/rule.ts:14:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-labels/rule.ts:17:    walk(index: number): void {
+stage1/cohere/lint/rules/no-labels/rule.ts:53:    allowedLabel(index: number): boolean {
+stage1/cohere/lint/rules/no-labels/rule.ts:61:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unsafe-negation/rule.a:7:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/no-unsafe-negation/rule.a:8:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-unsafe-negation/rule.a:27:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:8:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:9:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:19:    report(node: ParseNode, id: string, message: string): void {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:24:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a:2:export function messageNoSingleLetter(name: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a:5:export function messageNoAmbiguousE(context: string): string {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:8:function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:10:    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:12:function visit(context: RuleContext, rule: Rule, index: number): void {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:14:    if(node.kind === 'BinaryExpression') { rule.visit(node, index); }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:15:    for(const child of node.children) { visit(context, rule, child); }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:17:function run(row: string, countOnly: boolean): number {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:23:    if(read.kind === 'Error') { panic(read.message); }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:28:    for(const node of parser.nodes) { parents.push(-1); }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:31:    ancestry(context, parents, root, -1);
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:32:    visit(context, rule, root);
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:33:    if(countOnly) { return context.findings.length; }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:36:    for(let index = 0; index < source.length; index++) {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:43:    for(const finding of context.findings) {
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:60:    if(path === '') { continue; }
+stage1/cohere/lint/rules/no-unsafe-negation/profile.a:61:    if(!countOnly) { console.log(`case ${index}`); }
+stage1/cohere/lint/rules/no-iterator/rule.a:10:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-iterator/rule.a:13:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-iterator/rule.a:34:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:8:export function comparator(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:9:    for(let cursor = context.parent(index); cursor >= 0; cursor = context.parent(cursor)) {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:19:export function eventContext(context: RuleContext, index: number): string {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:21:    if(context.kind(declaration) === 'VariableDeclaration' && context.kind(context.parent(declaration)) === 'CatchClause' && context.name(declaration) === index) { return 'error'; }
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:22:    for(let cursor = context.parent(index); cursor >= 0; cursor = context.parent(cursor)) {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:53:export function foreignName(context: RuleContext, index: number, node: ParseNode): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:55:    if(owner < 0) { return false; }
+stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:59:    switch(parent.kind) {
+stage1/cohere/lint/rules/no-script-url/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-script-url/rule.a:10:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/no-script-url/rule.a:25:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/no-unsafe-finally/rule.a:12:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-unsafe-finally/rule.a:15:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-unsafe-finally/rule.a:53:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:7:function binding(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:9:    if(node.kind === 'PropertyAccessExpression' || node.kind === 'ImportSpecifier' || node.kind === 'ExportSpecifier') {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:12:    if(node.kind === 'BindingElement') {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:21:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:51:function nonbinding(kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:67:function rest(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:76:function prepareBindings(context: RuleContext, state: Bindings): void {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:77:    if(state.bindingsReady) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:80:    for(let index = 0; index < context.parser.nodes.length; index++) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:102:function imported(context: RuleContext, text: string, state: Bindings): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:103:    prepareBindings(context, state);
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:106:function onlyRest(context: RuleContext, state: Bindings): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:107:    prepareBindings(context, state);
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:110:function nested(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:112:    if(owner < 0 || binding(context, owner) !== index) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:116:    if(['Parameter', 'BindingElement'].includes(kind)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:119:    if(['FunctionDeclaration', 'ClassDeclaration'].includes(kind)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:123:    if(kind === 'VariableDeclaration') {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:129:function routeContract(path: string, text: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:132:    if(!segments.slice(0, -1).includes('app')) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:136:    for(const extension of ['.tsx', '.ts', '.jsx', '.js']) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:143:    while(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:150:    if(['icon', 'apple-icon', 'opengraph-image', 'twitter-image'].includes(numberless)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:153:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:169:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:186:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:192:    if(stem === 'route' && ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH'].includes(text)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:195:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:203:function filePattern(context: RuleContext, option: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:204:    for(const pattern of context.settings.list(option, [])) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:211:function frameworkName(context: RuleContext, text: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:212:    if(context.settings.list('frameworkparameterscopenames', []).includes(text)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:216:    for(const suffix of ['Properties', 'Interface', 'Options', 'Type']) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:221:    for(const suffix of context.settings.list('frameworkparameterscopesuffixes', [])) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:228:function frameworkScope(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:231:    for(let cursor = parent(context, index); cursor >= 0; cursor = parent(context, cursor)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:254:function referenceProperty(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:256:    if(owner < 0) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:260:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:267:    for(let cursor = owner; cursor >= 0; cursor = parent(context, cursor)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:289:function noAbbreviatedIdentifier(context: RuleContext, node: ParseNode, index: number, state: Bindings): void {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:292:    if(finding === undefined) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:300:    if(foreign(context, index) && !typeKey) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:303:    if(imported(context, text, state) || (routeContract(context.parser.path, text) && !nested(context, index))) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:306:    if(
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:313:    if(finding.form === 'whole') {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:324:    emit(context, index, 'nexus/consistency-no-abbreviated-identifier', finding.id, finding.fields);
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:330:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:331:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:335:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/no-return-assign/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-return-assign/rule.ts:12:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-return-assign/rule.ts:71:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:2:export function prefixMatches(word: string, text: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:3:    switch(word) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:36:export function segmentMatches(word: string, text: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:37:    switch(word) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:51:export function replaceSegment(word: string, text: string, replacement: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a:52:    switch(word) {
+stage1/cohere/lint/rules/max-classes-per-file/rule.a:11:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/max-classes-per-file/rule.a:27:    visit(node: ParseNode, index: number, parent: number): void {
+stage1/cohere/lint/rules/max-classes-per-file/rule.a:45:    finish(root: number): void {
+stage1/cohere/lint/rules/max-classes-per-file/rule.a:61:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a:4:export function policyMessage(rule: string, id: string, fields: readonly string[]): string {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a:6:    switch(`${rule}/${id}`) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a:25:    for(let index = 0; index < fields.length; index += 2) {
+stage1/cohere/lint/rules/no-self-compare/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/no-self-compare/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/no-self-compare/rule.a:32:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:5:export function parent(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:8:export function first(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:11:export function last(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:15:export function name(context: RuleContext, index: number): number {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:16:    for(const child of context.node(index).children) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:33:export function emit(context: RuleContext, index: number, rule: string, id: string, fields: string[]): Finding {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:36:export function betweenToken(context: RuleContext, start: number, end: number, kind: string): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:38:    while(cursor < end) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:54:export function foreign(context: RuleContext, index: number): boolean {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:56:    if(owner < 0) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:60:    switch(node.kind) {
+stage1/cohere/lint/rules/eqeqeq/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/eqeqeq/rule.ts:10:    visit(index: number): void {
+stage1/cohere/lint/rules/eqeqeq/rule.ts:60:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a:7:    recordBinding(text: string, imported: boolean, rest: boolean): void {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a:12:    completeBindings(): void {
+stage1/cohere/lint/rules/eqeqeq/messages.ts:1:export function description(actual: string, expected: string): string {
+stage1/cohere/lint/rules/eqeqeq/messages.ts:5:export function suggestionDescription(actual: string, expected: string): string {
+stage1/cohere/lint/rules/base-consistency-no-console/rule.ts:8:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/base-consistency-no-console/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/base-consistency-no-console/rule.ts:30:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/base-consistency-no-console/messages.ts:2:export function messageConsistencyNoConsole(methodName: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:10:    constructor(form: string, word: string, id: string, fields: string[]) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:17:function capitalized(value: string): string {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:20:function prefixFinding(text: string, entry: readonly string[]): Abbreviation {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:31:export function abbreviation(text: string): Abbreviation | undefined {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:32:    if(allowedNames.includes(text)) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:35:    for(const entry of vocabulary) {
+stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:47:    for(const phase of ['early', 'suffix', 'late', 'segment']) {
+stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:8:    constructor(context: RuleContext) { this.context = context; }
+stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:9:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:43:export function create(context: RuleContext): Rule { return new Rule(context); }
+stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a:2:export function paginationType(text: string): boolean {
+stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a:7:export function paginationName(text: string): boolean {
+stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:10:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:24:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/max-nested-callbacks/rule.a:10:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/max-nested-callbacks/rule.a:21:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/max-nested-callbacks/rule.a:49:    reportHead(node: ParseNode, index: number, depth: number): void {
+stage1/cohere/lint/rules/max-nested-callbacks/rule.a:86:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/max-nested-callbacks/messages.a:4:export function exceedMessage(depth: number, maximum: number): string {
+stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:40:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:7:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:11:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:16:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/max-depth/rule.a:10:    constructor(context: RuleContext) {
+stage1/cohere/lint/rules/max-depth/rule.a:15:    elseIf(node: ParseNode, index: number): boolean {
+stage1/cohere/lint/rules/max-depth/rule.a:26:    counted(node: ParseNode, index: number): boolean {
+stage1/cohere/lint/rules/max-depth/rule.a:43:    visit(node: ParseNode, index: number): void {
+stage1/cohere/lint/rules/max-depth/rule.a:71:export function create(context: RuleContext): Rule {
+stage1/cohere/lint/rules/max-depth/options.a:4:export function integer(value: string): number {
+stage1/cohere/lint/rules/max-depth/options.a:8:    if(value[0] === '-') {
+stage1/cohere/lint/rules/max-depth/options.a:12:    for(; position < value.length; position++) {

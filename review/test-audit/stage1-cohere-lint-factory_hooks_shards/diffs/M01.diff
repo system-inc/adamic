@@ -1,0 +1,10 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -97,7 +97,6 @@
+         const rules = createRuleSet(context);
+         rules.prepare(this.root);
+         this.walk(this.root, -1, rules);
+-        rules.finish(this.root);
+         for(const finding of context.findings) {
+             this.findings.push(finding);
+         }

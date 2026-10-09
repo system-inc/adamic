@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/grain_rules_agree_shards_test.go
++++ b/stage1/cohere/lint/grain_rules_agree_shards_test.go
+@@ -69,7 +69,7 @@
+ 				}
+ 				return nil
+ 			}
+-			if name == ".git" || strings.HasSuffix(name, "_test.go") {
++			if name == ".git" || strings.HasSuffix(name, "_tesT.go") {
+ 				return nil
+ 			}
+ 			switch filepath.Ext(name) {

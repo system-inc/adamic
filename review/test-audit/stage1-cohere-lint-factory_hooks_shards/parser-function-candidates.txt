@@ -1,0 +1,168 @@
+stage1/typescript/scanner/scanner.ts:14:function decimalDigits(text: string, base: number): string {
+stage1/typescript/scanner/scanner.ts:16:    for(const character of text) {
+stage1/typescript/scanner/scanner.ts:31:    while(first < result.length - 1 && result.charCodeAt(first) === 48) {
+stage1/typescript/scanner/scanner.ts:37:function numberValue(text: string): string {
+stage1/typescript/scanner/scanner.ts:38:    if(text === '') {
+stage1/typescript/scanner/scanner.ts:62:    constructor(text: string) {
+stage1/typescript/scanner/scanner.ts:65:    code(offset = 0): number {
+stage1/typescript/scanner/scanner.ts:73:    advance(code: number): void {
+stage1/typescript/scanner/scanner.ts:76:    error(code: number, start: number = this.pos, length = 0): void {
+stage1/typescript/scanner/scanner.ts:81:    fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {
+stage1/typescript/scanner/scanner.ts:122:    unicode(report: boolean): number {
+stage1/typescript/scanner/scanner.ts:173:    escape(report: boolean): string {
+stage1/typescript/scanner/scanner.ts:251:    identifier(prefix: number): boolean {
+stage1/typescript/scanner/scanner.ts:289:    string(): void {
+stage1/typescript/scanner/scanner.ts:324:    template(report: boolean): void {
+stage1/typescript/scanner/scanner.ts:370:    bigint(): void {
+stage1/typescript/scanner/scanner.ts:385:    number(): void {
+stage1/typescript/scanner/scanner.ts:492:    scan(): string {
+stage1/typescript/scanner/scanner.ts:676:    punctuation(code: number): string {
+stage1/typescript/scanner/scanner.ts:817:    rescanGreater(): void {
+stage1/typescript/scanner/scanner.ts:834:    rescanTemplate(): void {
+stage1/typescript/scanner/scanner.ts:840:    rescanSlash(): void {
+stage1/typescript/scanner/scanner.ts:936:    scanJsxIdentifier(): void {
+stage1/typescript/scanner/scanner.ts:948:    scanJsxAttributeValue(): void {
+stage1/typescript/scanner/scanner.ts:978:    scanJsx(): string {
+stage1/typescript/parser/statements.ts:51:    constructor(parser: StatementContextInterface) {
+stage1/typescript/parser/statements.ts:54:    block(): number {
+stage1/typescript/parser/statements.ts:64:    semicolon(): void {
+stage1/typescript/parser/statements.ts:76:    variableList(): number {
+stage1/typescript/parser/statements.ts:117:    lookahead(offset: number): string {
+stage1/typescript/parser/statements.ts:140:    decorator(): number {
+stage1/typescript/parser/statements.ts:143:    canExportName(): boolean {
+stage1/typescript/parser/statements.ts:150:    specifiers(importing: boolean): number {
+stage1/typescript/parser/statements.ts:212:    attributes(): number {
+stage1/typescript/parser/statements.ts:218:    attributeBody(pos: number, operator: string): number {
+stage1/typescript/parser/statements.ts:244:    importDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:335:    exportDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:389:    moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+stage1/typescript/parser/statements.ts:420:    exportedClauseAhead(): boolean {
+stage1/typescript/parser/statements.ts:442:    functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+stage1/typescript/parser/statements.ts:479:    classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/statements.ts:640:    forStatement(): number {
+stage1/typescript/parser/statements.ts:682:    switchStatement(): number {
+stage1/typescript/parser/statements.ts:713:    tryStatement(): number {
+stage1/typescript/parser/statements.ts:741:    statement(): number {
+stage1/typescript/scanner/main.ts:5:function written(text: string): string {
+stage1/typescript/scanner/main.ts:7:    for(let index = 0; index < text.length; index++) {
+stage1/typescript/scanner/main.ts:16:function run(path: string, mode: string, countOnly: boolean): number {
+stage1/typescript/scanner/main.ts:18:    if(read.kind === 'Error') {
+stage1/typescript/scanner/main.ts:24:    if(!countOnly) {
+stage1/typescript/scanner/main.ts:42:    for(;;) {
+stage1/typescript/scanner/main.ts:96:    if(manifest.kind === 'Error') {
+stage1/typescript/scanner/main.ts:102:    for(const line of manifest.text.split('\n')) {
+stage1/typescript/scanner/main.ts:113:    if(countOnly) {
+stage1/typescript/scanner/main.ts:118:    run(first, args[1] ?? 'scan', false);
+stage1/typescript/scanner/characters.ts:240:function contains(ranges: readonly number[], code: number): boolean {
+stage1/typescript/scanner/characters.ts:243:    while(low <= high) {
+stage1/typescript/scanner/characters.ts:259:export function isIdentifierStart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:268:export function isIdentifierPart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:271:export function isLineBreak(code: number): boolean {
+stage1/typescript/scanner/characters.ts:274:export function isSpace(code: number): boolean {
+stage1/typescript/scanner/characters.ts:290:export function digit(code: number): number {
+stage1/typescript/parser/jsx.ts:26:    constructor(parser: JsxContextInterface) {
+stage1/typescript/parser/jsx.ts:29:    make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/jsx.ts:32:    identifier(): number {
+stage1/typescript/parser/jsx.ts:41:    name(tag: boolean): number {
+stage1/typescript/parser/jsx.ts:64:    text(): number {
+stage1/typescript/parser/jsx.ts:74:    finishGreater(expression: boolean): void {
+stage1/typescript/parser/jsx.ts:87:    expression(attribute: boolean): number {
+stage1/typescript/parser/jsx.ts:108:    attributes(): number {
+stage1/typescript/parser/jsx.ts:143:    tagKey(index: number): string {
+stage1/typescript/parser/jsx.ts:151:    element(inExpression: boolean): number {
+stage1/typescript/parser/grammar.ts:2:export function precedence(kind: string): number {
+stage1/typescript/parser/grammar.ts:3:    switch(kind) {
+stage1/typescript/parser/parser.ts:19:    constructor(text: string, path = 'source') {
+stage1/typescript/parser/parser.ts:27:    kind(): string {
+stage1/typescript/parser/parser.ts:30:    next(): void {
+stage1/typescript/parser/parser.ts:33:    node(index: number): ParseNode {
+stage1/typescript/parser/parser.ts:36:    make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/parser.ts:40:    token(): number {
+stage1/typescript/parser/parser.ts:46:    expect(kind: string): void {
+stage1/typescript/parser/parser.ts:52:    literal(): number {
+stage1/typescript/parser/parser.ts:72:    identifier(): number {
+stage1/typescript/parser/parser.ts:80:    primary(): number {
+stage1/typescript/parser/parser.ts:179:    jsxParser(): Jsx {
+stage1/typescript/parser/parser.ts:204:    bindingIdentifier(): boolean {
+stage1/typescript/parser/parser.ts:209:    nextIdentifierSameLine(): boolean {
+stage1/typescript/parser/parser.ts:218:    yieldOperandAhead(): boolean {
+stage1/typescript/parser/parser.ts:229:    mark(): ParserStateInterface {
+stage1/typescript/parser/parser.ts:241:    rewind(state: ParserStateInterface): void {
+stage1/typescript/parser/parser.ts:251:    docTypes(): number[] {
+stage1/typescript/parser/parser.ts:280:    tupleNameAhead(): boolean {
+stage1/typescript/parser/parser.ts:294:    typeArguments(): number[] {
+stage1/typescript/parser/parser.ts:310:    typeParameters(): number[] {
+stage1/typescript/parser/parser.ts:340:    entityName(): number {
+stage1/typescript/parser/parser.ts:350:    importType(): number {
+stage1/typescript/parser/parser.ts:387:    type(minimum = 0, conditional = true): number {
+stage1/typescript/parser/parser.ts:667:    mappedAhead(): boolean {
+stage1/typescript/parser/parser.ts:685:    mappedType(): number {
+stage1/typescript/parser/parser.ts:724:    indexSignatureAhead(): boolean {
+stage1/typescript/parser/parser.ts:732:    typeLiteral(): number {
+stage1/typescript/parser/parser.ts:812:    parameters(): number[] {
+stage1/typescript/parser/parser.ts:857:    bindingName(): number {
+stage1/typescript/parser/parser.ts:897:    decorator(): number {
+stage1/typescript/parser/parser.ts:909:    rootAssignment(): number {
+stage1/typescript/parser/parser.ts:918:    rootExpression(): number {
+stage1/typescript/parser/parser.ts:927:    arrow(allowReturn: boolean): number {
+stage1/typescript/parser/parser.ts:964:    returnType(): number {
+stage1/typescript/parser/parser.ts:988:    functionExpression(): number {
+stage1/typescript/parser/parser.ts:1027:    statements(): Statements {
+stage1/typescript/parser/parser.ts:1075:    block(): number {
+stage1/typescript/parser/parser.ts:1078:    statement(): number {
+stage1/typescript/parser/parser.ts:1081:    semicolon(): void {
+stage1/typescript/parser/parser.ts:1084:    classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/parser.ts:1088:    peek(): string {
+stage1/typescript/parser/parser.ts:1107:    optionalChain(index: number): boolean {
+stage1/typescript/parser/parser.ts:1122:    spread(): number {
+stage1/typescript/parser/parser.ts:1128:    arguments(): number[] {
+stage1/typescript/parser/parser.ts:1147:    suffix(expression: number, allowCall: boolean): number {
+stage1/typescript/parser/parser.ts:1276:    templatePart(): number {
+stage1/typescript/parser/parser.ts:1289:    templateType(): number {
+stage1/typescript/parser/parser.ts:1305:    template(): number {
+stage1/typescript/parser/parser.ts:1324:    array(): number {
+stage1/typescript/parser/parser.ts:1351:    propertyName(): number {
+stage1/typescript/parser/parser.ts:1367:    methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
+stage1/typescript/parser/parser.ts:1396:    object(): number {
+stage1/typescript/parser/parser.ts:1478:    unary(): number {
+stage1/typescript/parser/parser.ts:1548:    binary(minimum: number): number {
+stage1/typescript/parser/parser.ts:1576:    assignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1612:    allowInAssignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1622:    allowInExpression(): number {
+stage1/typescript/parser/parser.ts:1632:    expression(): number {
+stage1/typescript/parser/parser.ts:1642:    file(): number {
+stage1/typescript/parser/gaps/4_class_interface_method.ts:5:    count(): number { return 1; }
+stage1/typescript/parser/gaps/4_class_interface_method.ts:7:function read(counter: CounterInterface): number { return counter.count(); }
+stage1/typescript/parser/gaps/3_import_cycle_peer.ts:2:export function value(entry: Entry): number {
+stage1/typescript/parser/nodes.ts:18:    constructor(kind: string, pos: number, end: number, children: number[]) {
+stage1/typescript/parser/nodes.ts:26:export function written(text: string): string {
+stage1/typescript/parser/nodes.ts:28:    for(let index = 0; index < text.length; index++) {
+stage1/typescript/parser/nodes.ts:38:export function printTree(
+stage1/typescript/parser/nodes.ts:50:    for(const child of node.children) {
+stage1/typescript/parser/nodes.ts:56:export function countTree(nodes: readonly ParseNode[], root: number): number {
+stage1/typescript/parser/nodes.ts:59:    for(const child of node.children) {
+stage1/typescript/parser/main.ts:5:function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+stage1/typescript/parser/main.ts:7:    if(source.kind === 'Error') {
+stage1/typescript/parser/main.ts:14:    if(!countOnly) {
+stage1/typescript/parser/main.ts:30:    for(const root of docTypes ? types : whole ? [file] : parser.roots) {
+stage1/typescript/parser/main.ts:44:    if(manifest.kind === 'Error') {
+stage1/typescript/parser/main.ts:50:    for(const path of manifest.text.split('\n')) {
+stage1/typescript/parser/main.ts:60:    if(countOnly) {
+stage1/typescript/parser/main.ts:65:    run(first, false, args.includes('--whole'), args.includes('--doc-types'));
+stage1/typescript/parser/lookahead.ts:16:function kind(scanner: Scanner): string {
+stage1/typescript/parser/lookahead.ts:31:    constructor(scanner: Scanner) {
+stage1/typescript/parser/lookahead.ts:41:    prepare(): void {
+stage1/typescript/parser/lookahead.ts:74:    next(): void {
+stage1/typescript/parser/lookahead.ts:79:    restore(): void {
+stage1/typescript/parser/lookahead.ts:90:function optionalParameterAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:98:export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+stage1/typescript/parser/lookahead.ts:101:    if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:117:    if(kind(scanner) === 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:132:    if(kind(scanner) === 'OpenParenToken') {
+stage1/typescript/parser/lookahead.ts:188:export function jsxArrowAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:190:    if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:193:    if(kind(scanner) !== 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:198:    if(kind(scanner) === 'ConstKeyword') {
+stage1/typescript/parser/lookahead.ts:203:    if(kind(scanner) === 'ExtendsKeyword') {
+stage1/typescript/parser/lookahead.ts:212:export function typeArgumentsAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:220:    while(kind(scanner) !== 'EndOfFile') {

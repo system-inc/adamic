@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/grain_dot_a_rename_test.go
++++ b/stage1/cohere/lint/grain_dot_a_rename_test.go
+@@ -202,7 +202,7 @@
+ 		return "", err
+ 	}
+ 	binary := filepath.Join(directory, "oracle")
+-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
++	args := append([]string{"audit-invalid", "-overlay=" + path, "-o", binary}, virtualFiles...)
+ 	ctx, cancel := context.WithCancel(context.Background())
+ 	defer cancel()
+ 	command := exec.CommandContext(ctx, "go", args...)

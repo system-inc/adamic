@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -12,7 +12,7 @@
+ import type { Settings } from './settings.ts';
+ 
+ // passBudget and passBudgetMessage are cohere's edit engine's DefaultMaxPasses and ReasonPassesReached.
+-const passBudget = 10;
++const passBudget = 0;
+ const passBudgetMessage = 'the pass budget was exhausted before the file converged';
+ 
+ // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order

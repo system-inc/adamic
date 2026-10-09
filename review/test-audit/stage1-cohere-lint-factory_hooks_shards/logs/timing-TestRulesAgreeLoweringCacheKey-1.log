@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:22:14.952353818Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:22:14.974416432Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey"}
+{"Time":"2026-10-09T12:22:14.974494169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey","Output":"=== RUN   TestRulesAgreeLoweringCacheKey\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:14.974519677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey","Output":"=== PAUSE TestRulesAgreeLoweringCacheKey\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:14.974522081Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey"}
+{"Time":"2026-10-09T12:22:14.975133611Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey"}
+{"Time":"2026-10-09T12:22:14.975138388Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey","Output":"=== CONT  TestRulesAgreeLoweringCacheKey\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:14.976773818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey","Output":"--- PASS: TestRulesAgreeLoweringCacheKey (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:14.976796933Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgreeLoweringCacheKey","Elapsed":0}
+{"Time":"2026-10-09T12:22:14.976809151Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:14.97697803Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.024s\n"}
+{"Time":"2026-10-09T12:22:14.976996238Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.025}

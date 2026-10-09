@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 100,
+    "old": "        rules.finish(this.root);\n",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 15,
+    "old": "const passBudget = 10;",
+    "new": "const passBudget = 0;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 70,
+    "old": "return values[0] ?? fallback;",
+    "new": "return values[1] ?? fallback;",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/class.go",
+    "line": 773,
+    "old": "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)",
+    "new": "this escaping a constructor before any field is set",
+    "menu": "change diagnostic constant"
+  }
+]

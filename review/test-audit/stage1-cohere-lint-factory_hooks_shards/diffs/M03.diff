@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/settings.ts
++++ b/stage1/cohere/lint/settings.ts
+@@ -67,7 +67,7 @@
+         if(values === undefined) {
+             return fallback;
+         }
+-        return values[0] ?? fallback;
++        return values[1] ?? fallback;
+     }
+     list(name: string, fallback: string[]): string[] {
+         return this.values.get(name) ?? fallback;

@@ -1,0 +1,149 @@
+[
+  {
+    "row": "FactoryHooks family",
+    "trial": 1,
+    "regex": "^TestFactoryHooks(Union|_[0-9]{3})$",
+    "wall": 6.144937403998483,
+    "exit": 0
+  },
+  {
+    "row": "FactoryHooks family",
+    "trial": 2,
+    "regex": "^TestFactoryHooks(Union|_[0-9]{3})$",
+    "wall": 6.0051082909994875,
+    "exit": 0
+  },
+  {
+    "row": "FactoryHooks family",
+    "trial": 3,
+    "regex": "^TestFactoryHooks(Union|_[0-9]{3})$",
+    "wall": 6.017413757999748,
+    "exit": 0
+  },
+  {
+    "row": "TestFactoryHooksPlantedFailure",
+    "trial": 1,
+    "regex": "^TestFactoryHooksPlantedFailure$",
+    "wall": 1.9660747890011407,
+    "exit": 0
+  },
+  {
+    "row": "TestFactoryHooksPlantedFailure",
+    "trial": 2,
+    "regex": "^TestFactoryHooksPlantedFailure$",
+    "wall": 2.1120776040006604,
+    "exit": 0
+  },
+  {
+    "row": "TestFactoryHooksPlantedFailure",
+    "trial": 3,
+    "regex": "^TestFactoryHooksPlantedFailure$",
+    "wall": 1.9253832340000372,
+    "exit": 0
+  },
+  {
+    "row": "TestNestedConstructorGap",
+    "trial": 1,
+    "regex": "^TestNestedConstructorGap$",
+    "wall": 1.9919648860013695,
+    "exit": 0
+  },
+  {
+    "row": "TestNestedConstructorGap",
+    "trial": 2,
+    "regex": "^TestNestedConstructorGap$",
+    "wall": 1.925893855999675,
+    "exit": 0
+  },
+  {
+    "row": "TestNestedConstructorGap",
+    "trial": 3,
+    "regex": "^TestNestedConstructorGap$",
+    "wall": 2.0030142899995553,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameSource",
+    "trial": 1,
+    "regex": "^TestProduct_DotARenameSource$",
+    "wall": 2.059370752000177,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameSource",
+    "trial": 2,
+    "regex": "^TestProduct_DotARenameSource$",
+    "wall": 2.19660913000007,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameSource",
+    "trial": 3,
+    "regex": "^TestProduct_DotARenameSource$",
+    "wall": 2.238183556999502,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameOracle",
+    "trial": 1,
+    "regex": "^TestProduct_DotARenameOracle$",
+    "wall": 2.128068046999033,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameOracle",
+    "trial": 2,
+    "regex": "^TestProduct_DotARenameOracle$",
+    "wall": 2.224615298999197,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_DotARenameOracle",
+    "trial": 3,
+    "regex": "^TestProduct_DotARenameOracle$",
+    "wall": 2.1430485019991465,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_RulesAgreeOracle",
+    "trial": 1,
+    "regex": "^TestProduct_RulesAgreeOracle$",
+    "wall": 1.9411272249999456,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_RulesAgreeOracle",
+    "trial": 2,
+    "regex": "^TestProduct_RulesAgreeOracle$",
+    "wall": 2.0394113849997666,
+    "exit": 0
+  },
+  {
+    "row": "TestProduct_RulesAgreeOracle",
+    "trial": 3,
+    "regex": "^TestProduct_RulesAgreeOracle$",
+    "wall": 2.2081255030007014,
+    "exit": 0
+  },
+  {
+    "row": "TestRulesAgreeLoweringCacheKey",
+    "trial": 1,
+    "regex": "^TestRulesAgreeLoweringCacheKey$",
+    "wall": 2.0305901740011905,
+    "exit": 0
+  },
+  {
+    "row": "TestRulesAgreeLoweringCacheKey",
+    "trial": 2,
+    "regex": "^TestRulesAgreeLoweringCacheKey$",
+    "wall": 1.9197621139992407,
+    "exit": 0
+  },
+  {
+    "row": "TestRulesAgreeLoweringCacheKey",
+    "trial": 3,
+    "regex": "^TestRulesAgreeLoweringCacheKey$",
+    "wall": 1.8437567510009103,
+    "exit": 0
+  }
+]

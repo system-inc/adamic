@@ -1,0 +1,70 @@
+{"Time":"2026-10-09T12:21:31.877647979Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:21:31.899568125Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion"}
+{"Time":"2026-10-09T12:21:31.899655587Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Output":"=== RUN   TestFactoryHooksUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899680254Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Output":"=== PAUSE TestFactoryHooksUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899682677Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion"}
+{"Time":"2026-10-09T12:21:31.899688376Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000"}
+{"Time":"2026-10-09T12:21:31.899690008Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"=== RUN   TestFactoryHooks_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899692362Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"=== PAUSE TestFactoryHooks_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899694165Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000"}
+{"Time":"2026-10-09T12:21:31.899695957Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001"}
+{"Time":"2026-10-09T12:21:31.89969773Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"=== RUN   TestFactoryHooks_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899699623Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"=== PAUSE TestFactoryHooks_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899701175Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001"}
+{"Time":"2026-10-09T12:21:31.899702918Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002"}
+{"Time":"2026-10-09T12:21:31.8997044Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"=== RUN   TestFactoryHooks_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899706944Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"=== PAUSE TestFactoryHooks_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899708446Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002"}
+{"Time":"2026-10-09T12:21:31.899710089Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003"}
+{"Time":"2026-10-09T12:21:31.89971139Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"=== RUN   TestFactoryHooks_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899713263Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"=== PAUSE TestFactoryHooks_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899714756Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003"}
+{"Time":"2026-10-09T12:21:31.899716338Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004"}
+{"Time":"2026-10-09T12:21:31.89971769Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"=== RUN   TestFactoryHooks_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899732462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"=== PAUSE TestFactoryHooks_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899735326Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004"}
+{"Time":"2026-10-09T12:21:31.899738391Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion"}
+{"Time":"2026-10-09T12:21:31.899805392Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Output":"=== CONT  TestFactoryHooksUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899811882Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Output":"    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"}
+{"Time":"2026-10-09T12:21:31.899820725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Output":"--- PASS: TestFactoryHooksUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899826474Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooksUnion","Elapsed":0}
+{"Time":"2026-10-09T12:21:31.899837811Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004"}
+{"Time":"2026-10-09T12:21:31.899839393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"=== CONT  TestFactoryHooks_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899841696Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002"}
+{"Time":"2026-10-09T12:21:31.899843219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"=== CONT  TestFactoryHooks_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899844821Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003"}
+{"Time":"2026-10-09T12:21:31.899846584Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"=== CONT  TestFactoryHooks_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899848196Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000"}
+{"Time":"2026-10-09T12:21:31.899849709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"=== CONT  TestFactoryHooks_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:31.899851581Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001"}
+{"Time":"2026-10-09T12:21:31.899853234Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"=== CONT  TestFactoryHooks_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:32.017842965Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.116s\n"}
+{"Time":"2026-10-09T12:21:32.01789277Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"}
+{"Time":"2026-10-09T12:21:33.258082961Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 2f72cca02f14 hit 1.24\n"}
+{"Time":"2026-10-09T12:21:33.258129Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"}
+{"Time":"2026-10-09T12:21:34.55544036Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 5db73286b51d hit 1.30\n"}
+{"Time":"2026-10-09T12:21:35.635132665Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:293: build factory-hooks-native c5ed6592d76c hit 1.07\n"}
+{"Time":"2026-10-09T12:21:35.635178934Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 3.735s\n"}
+{"Time":"2026-10-09T12:21:35.645811487Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"    factory_hooks_shards_test.go:428: native: 0.010s\n"}
+{"Time":"2026-10-09T12:21:35.645852669Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"    factory_hooks_shards_test.go:428: shard-002: 0.011s cooked=false\n"}
+{"Time":"2026-10-09T12:21:35.645861723Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Output":"--- PASS: TestFactoryHooks_002 (3.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.697739191Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_002","Elapsed":3.75}
+{"Time":"2026-10-09T12:21:35.697789927Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:436: emitted JavaScript mutant: 0.062s\n"}
+{"Time":"2026-10-09T12:21:35.697797859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"    factory_hooks_shards_test.go:436: shard-004: 0.062s cooked=false\n"}
+{"Time":"2026-10-09T12:21:35.697803708Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Output":"--- PASS: TestFactoryHooks_004 (3.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.70474632Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_004","Elapsed":3.8}
+{"Time":"2026-10-09T12:21:35.70477939Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"    factory_hooks_shards_test.go:424: emitted JavaScript: 0.069s\n"}
+{"Time":"2026-10-09T12:21:35.70478597Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"    factory_hooks_shards_test.go:424: shard-001: 0.069s cooked=false\n"}
+{"Time":"2026-10-09T12:21:35.704792149Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Output":"--- PASS: TestFactoryHooks_001 (3.81s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.798464141Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_001","Elapsed":3.81}
+{"Time":"2026-10-09T12:21:35.798508587Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"    factory_hooks_shards_test.go:420: Node: 0.163s\n"}
+{"Time":"2026-10-09T12:21:35.798520175Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"    factory_hooks_shards_test.go:420: shard-000: 0.163s cooked=false\n"}
+{"Time":"2026-10-09T12:21:35.798537521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Output":"--- PASS: TestFactoryHooks_000 (3.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.815765914Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_000","Elapsed":3.9}
+{"Time":"2026-10-09T12:21:35.815814457Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"    factory_hooks_shards_test.go:432: Node mutant: 0.180s\n"}
+{"Time":"2026-10-09T12:21:35.815822249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"    factory_hooks_shards_test.go:432: shard-003: 0.180s cooked=false\n"}
+{"Time":"2026-10-09T12:21:35.8158299Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Output":"--- PASS: TestFactoryHooks_003 (3.92s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.815831933Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_003","Elapsed":3.92}
+{"Time":"2026-10-09T12:21:35.815833846Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:21:35.818059834Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t3.940s\n"}
+{"Time":"2026-10-09T12:21:35.818090971Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":3.94}

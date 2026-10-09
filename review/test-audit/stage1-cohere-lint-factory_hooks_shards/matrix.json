@@ -1,0 +1,54 @@
+{
+  "M01": {
+    "TestFactoryHooks family": "fail",
+    "TestFactoryHooksPlantedFailure": "pass",
+    "TestFactoryHooks_NativeBuildWorker": "skip",
+    "TestNestedConstructorGap": "pass",
+    "TestProduct_DotARenameSource": "pass",
+    "TestProduct_DotARenameOracle": "pass",
+    "TestDotARename family": null,
+    "TestProduct_RulesAgreeOracle": "pass",
+    "TestRulesAgreeLoweringCacheKey": "pass",
+    "TestRulesAgree family": null,
+    "TestRulesAgreePlantedFailure": null
+  },
+  "M02": {
+    "TestFactoryHooks family": "pass",
+    "TestFactoryHooksPlantedFailure": "pass",
+    "TestFactoryHooks_NativeBuildWorker": "skip",
+    "TestNestedConstructorGap": "pass",
+    "TestProduct_DotARenameSource": "pass",
+    "TestProduct_DotARenameOracle": "pass",
+    "TestDotARename family": null,
+    "TestProduct_RulesAgreeOracle": "pass",
+    "TestRulesAgreeLoweringCacheKey": "pass",
+    "TestRulesAgree family": "fail",
+    "TestRulesAgreePlantedFailure": null
+  },
+  "M03": {
+    "TestFactoryHooks family": "fail",
+    "TestFactoryHooksPlantedFailure": "pass",
+    "TestFactoryHooks_NativeBuildWorker": "skip",
+    "TestNestedConstructorGap": "pass",
+    "TestProduct_DotARenameSource": "pass",
+    "TestProduct_DotARenameOracle": "pass",
+    "TestDotARename family": null,
+    "TestProduct_RulesAgreeOracle": "pass",
+    "TestRulesAgreeLoweringCacheKey": "pass",
+    "TestRulesAgree family": null,
+    "TestRulesAgreePlantedFailure": null
+  },
+  "M04": {
+    "TestFactoryHooks family": "pass",
+    "TestFactoryHooksPlantedFailure": "pass",
+    "TestFactoryHooks_NativeBuildWorker": "skip",
+    "TestNestedConstructorGap": "fail",
+    "TestProduct_DotARenameSource": "pass",
+    "TestProduct_DotARenameOracle": "pass",
+    "TestDotARename family": null,
+    "TestProduct_RulesAgreeOracle": "pass",
+    "TestRulesAgreeLoweringCacheKey": "pass",
+    "TestRulesAgree family": null,
+    "TestRulesAgreePlantedFailure": null
+  }
+}

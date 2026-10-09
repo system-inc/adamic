@@ -1,0 +1,110 @@
+[
+  {
+    "id": "W01",
+    "kind": "witness",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+    "regex": "^TestFactoryHooksPlantedFailure$",
+    "line": 51,
+    "wall": 7.151840294000067,
+    "exit": 1
+  },
+  {
+    "id": "K01",
+    "kind": "construction",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go",
+    "regex": "^TestProduct_DotARenameSource$",
+    "line": 82,
+    "wall": 7.632884503000241,
+    "exit": 1
+  },
+  {
+    "id": "K02",
+    "kind": "construction",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go",
+    "regex": "^TestProduct_DotARenameOracle$",
+    "line": 205,
+    "wall": 7.470785204001004,
+    "exit": 1
+  },
+  {
+    "id": "K03",
+    "kind": "construction",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go",
+    "regex": "^TestProduct_RulesAgreeOracle$",
+    "line": 629,
+    "wall": 7.42435246399873,
+    "exit": 1
+  },
+  {
+    "id": "K04",
+    "kind": "construction",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go",
+    "regex": "^TestRulesAgreeLoweringCacheKey$",
+    "line": 72,
+    "wall": 7.904769112999929,
+    "exit": 1
+  },
+  {
+    "id": "P01",
+    "kind": "empty-answer",
+    "file": "stage1/cohere/lint/main.ts",
+    "regex": "^TestFactoryHooks(Union|_[0-9]{3})$",
+    "line": 149,
+    "wall": 29.76510606100055,
+    "exit": 1
+  },
+  {
+    "id": "P02",
+    "kind": "empty-answer",
+    "file": "internal/lower/lower.go",
+    "regex": "^TestNestedConstructorGap$",
+    "line": 1,
+    "wall": 7.856910358999812,
+    "exit": 1
+  },
+  {
+    "id": "P03",
+    "kind": "empty-answer construction",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go",
+    "regex": "^TestProduct_DotARenameSource$",
+    "line": 78,
+    "wall": 7.501209227999425,
+    "exit": 0
+  },
+  {
+    "id": "P04",
+    "kind": "empty-answer construction",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go",
+    "regex": "^TestProduct_DotARenameOracle$",
+    "line": 86,
+    "wall": 7.342681744999936,
+    "exit": 0
+  },
+  {
+    "id": "P05",
+    "kind": "empty-answer construction",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go",
+    "regex": "^TestProduct_RulesAgreeOracle$",
+    "line": 216,
+    "wall": 7.082070480999391,
+    "exit": 0
+  },
+  {
+    "id": "P06",
+    "kind": "empty-answer construction",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go",
+    "regex": "^TestRulesAgreeLoweringCacheKey$",
+    "line": 57,
+    "wall": 7.048634941998898,
+    "exit": 1
+  },
+  {
+    "id": "W02",
+    "kind": "witness",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "regex": "^TestRulesAgreePlantedFailure$",
+    "line": 158,
+    "wall": 90.67212886400011,
+    "exit": 1
+  }
+]

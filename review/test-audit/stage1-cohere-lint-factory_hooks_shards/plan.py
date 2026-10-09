@@ -1,0 +1,11 @@
+from pathlib import Path
+import subprocess,json,difflib
+root=Path('/workspace/adamic');out=root/'review/test-audit/stage1-cohere-lint-factory_hooks_shards';(out/'diffs').mkdir(exist_ok=True)
+plans=[('M01','stage1/cohere/lint/lint.ts','        rules.finish(this.root);\n','','drop statement'),('M02','stage1/cohere/lint/lint.ts','const passBudget = 10;','const passBudget = 0;','change constant'),('M03','stage1/cohere/lint/settings.ts','return values[0] ?? fallback;','return values[1] ?? fallback;','off-by-one bound'),('M04','internal/lower/class.go','this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)','this escaping a constructor before any field is set','change diagnostic constant')]
+rows=[]
+for id,file,old,new,menu in plans:
+ s=subprocess.check_output(['git','show','HEAD:'+file],cwd=root).decode();assert s.count(old)==1
+ (out/'diffs'/f'{id}.diff').write_text(''.join(difflib.unified_diff(s.splitlines(True),s.replace(old,new).splitlines(True),fromfile='a/'+file,tofile='b/'+file)))
+ rows.append(dict(id=id,file=file,line=s[:s.index(old)].count('\n')+1,old=old,new=new,menu=menu))
+(out/'plan.json').write_text(json.dumps(rows,indent=2)+'\n')
+(out/'PLAN.txt').write_text('CODE UNDER TEST: lint port source for runtime families; lower.Lower/useOfThis for constructor gap; own source-copy, oracle-build and cache-input construction for product/cache checks. ORACLE: executed Go cohere/Node for runtime comparisons, self-written hook prefix and refusal wording, self construction invariants. Candidate function inventories were recorded before production diffs. They conservatively include functions not proved reached; actual complete reachability is not claimed without coverage. Preselected production menu: M01 drop finish; M02 change passBudget; M03 option slot off-by-one; M04 change constructor refusal constant. No production outcome was inspected before this plan. Construction probes: reverse source rename, invalid Go build option in each oracle product recipe, include moved test files in the source key. Witness probes: always-accept hook matcher; always-agree differential comparator. Entry probes: no main driver output, and nil,nil from Lower. Every probe is separate from production kills.\n')

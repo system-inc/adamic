@@ -1,0 +1,31 @@
+--- a/stage1/cohere/lint/grain_rules_agree_shards_test.go
++++ b/stage1/cohere/lint/grain_rules_agree_shards_test.go
+@@ -214,27 +214,7 @@
+ var rulesAgreeOracleDirectory, rulesAgreeCaptureDirectory string
+ 
+ func rulesAgreeOracle(t *testing.T) string {
+-	t.Helper()
+-	rulesAgreeOracleOnce.Do(func() {
+-		directory := packageDirectory
+-		// GoBuild is not present on this main. Cache the original overlay build
+-		// as a Product so a filtered shard never recompiles everyone's oracle.
+-		oracleInputs := buildcache.Inputs{
+-			Name:      "lint-rules-agree-go-oracle",
+-			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
+-			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
+-			Toolchain: []string{runtime.Version()},
+-		}
+-		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
+-			_, err := rulesAgreeGoOracleIn(directory, output)
+-			return err
+-		})
+-
+-	})
+-	if rulesAgreeOracleDirectory == "" {
+-		t.Fatal("oracle preparation failed")
+-	}
+-	return rulesAgreeOracleDirectory
++	return ""
+ }
+ 
+ func rulesAgreeCapture(t *testing.T) string {

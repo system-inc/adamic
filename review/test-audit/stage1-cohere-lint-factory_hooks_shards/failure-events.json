@@ -1,0 +1,1460 @@
+{
+  "M01": [
+    {
+      "Time": "2026-10-09T12:23:38.179219557Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksUnion",
+      "Output": "    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:23:38.291076067Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.111s\n"
+    },
+    {
+      "Time": "2026-10-09T12:23:38.291139793Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:23:49.803063297Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 2c1cdf2716f0 miss 11.51\n"
+    },
+    {
+      "Time": "2026-10-09T12:23:49.803467525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:01.212016866Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 a30f35b109e4 miss 11.41\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.673683324Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:293: build factory-hooks-native 098e94f94c7a miss 14.44\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.673729143Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 37.494s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.687078578Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.687199139Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_NativeBuildWorker",
+      "Output": "    factory_hooks_shards_test.go:309: invoked only by factory hook product builds\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.687211087Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksPlantedFailure",
+      "Output": "    factory_hooks_shards_test.go:97: planted native hook-order disagreement caught only by shard 002\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.739830933Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: hook sequence on emitted JavaScript (mutant=false): case 0\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.755257208Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: emitted JavaScript mutant: 0.081s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.755299011Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: shard-004: 0.082s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.890467166Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: Node mutant: 0.216s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.890517832Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: shard-003: 0.217s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:15.907113857Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: hook sequence on Node (mutant=false): case 0\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:24:16.044483784Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestNestedConstructorGap",
+      "Output": "    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:16.162798968Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source 147bf049f10e miss 0.26\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:16.16280638Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.407s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:18.847316785Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle f40b96d77e12 miss 3.06\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:18.847337646Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 3.106s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:18.851853439Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle 74f50e2e9520 miss 3.12\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:18.851859088Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 3.167s\n"
+    }
+  ],
+  "M02": [
+    {
+      "Time": "2026-10-09T12:24:20.736345289Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksUnion",
+      "Output": "    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:20.738336404Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksPlantedFailure",
+      "Output": "    factory_hooks_shards_test.go:97: planted native hook-order disagreement caught only by shard 002\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:20.864136623Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.128s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:20.864204705Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:20.972751171Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source 76869144195f miss 0.19\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:20.97279696Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.234s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:23.65827167Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle cdd16d41ce28 miss 2.66\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:23.6583182Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 2.685s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:26.298560431Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle 94354478084a miss 2.61\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:26.298603546Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 2.640s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:26.399452012Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestNestedConstructorGap",
+      "Output": "    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:32.795118413Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 35d92a51c8a3 miss 11.93\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:32.795173616Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:44.939493711Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 cc57528cbf73 miss 12.14\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.542628004Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:293: build factory-hooks-native c1af94d861a6 miss 14.60\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.542680213Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 38.806s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.557320324Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: native: 0.014s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.557396529Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: shard-002: 0.014s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.557416489Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_NativeBuildWorker",
+      "Output": "    factory_hooks_shards_test.go:309: invoked only by factory hook product builds\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.602067583Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: emitted JavaScript mutant: 0.057s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.602096276Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: shard-004: 0.057s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.603954732Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: emitted JavaScript: 0.060s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.60400693Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: shard-001: 0.061s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.703403633Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: Node mutant: 0.160s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.703412196Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: shard-003: 0.161s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.737300922Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: Node: 0.194s\n"
+    },
+    {
+      "Time": "2026-10-09T12:24:59.737309354Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: shard-000: 0.195s cooked=false\n"
+    }
+  ],
+  "M03": [
+    {
+      "Time": "2026-10-09T12:25:02.14926814Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksUnion",
+      "Output": "    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:02.361223469Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.212s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:02.362426128Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:02.538143443Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source a78af117e2bb miss 0.30\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:02.538294039Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.389s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:02.755337047Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestNestedConstructorGap",
+      "Output": "    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:05.54160532Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle 6a9a092f00d0 miss 3.31\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:05.541648184Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 3.392s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:05.604787679Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle d9cee3dce4ca miss 3.42\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:05.604827168Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 3.455s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:14.858051494Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 c59f6a632e27 miss 12.50\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:14.858093678Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:26.288108464Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 cd9d0a6d4d99 miss 11.43\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.348677193Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:293: build factory-hooks-native b2c220f800aa miss 15.05\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.348747148Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 39.199s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.355196829Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: /tmp/u108/cache/M03/b2c220f800aa1b7a0a02f48d116bd0ba97f3f34ec7000b56cefeb9d49f17a307/scanner [--manifest /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-1131901228/manifest]: exit status 70\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.3552836Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_NativeBuildWorker",
+      "Output": "    factory_hooks_shards_test.go:309: invoked only by factory hook product builds\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.355298252Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksPlantedFailure",
+      "Output": "    factory_hooks_shards_test.go:97: planted native hook-order disagreement caught only by shard 002\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.40728455Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/u108/cache/M03/c59f6a632e271630b51d51504444f1c2b6d1f7799b968baa64292b7415e8a344/lint.mjs --manifest /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-1131901228/manifest]: exit status 70\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.414113352Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/u108/cache/M03/cd9d0a6d4d999867ec1a2456cc969aee9ade63300404553b4531d67547c6b149/lint.mjs --manifest /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-2756792593/manifest]: exit status 70\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.544767869Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-1131901228/main.ts --manifest /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-1131901228/manifest]: exit status 70\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:25:41.550913903Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-2756792593/main.ts --manifest /tmp/adamic-gate/lint-shared-1586517912/factory-hooks-2756792593/manifest]: exit status 70\n",
+      "OutputType": "error"
+    }
+  ],
+  "M04": [
+    {
+      "Time": "2026-10-09T12:25:54.318880827Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksUnion",
+      "Output": "    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:54.319130813Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_NativeBuildWorker",
+      "Output": "    factory_hooks_shards_test.go:309: invoked only by factory hook product builds\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:54.465309485Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.146s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:54.465353011Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:57.124629822Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle 6f51e08c3b9e miss 2.75\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:57.127063548Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 2.806s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:59.775084709Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle b245c93f95be miss 2.63\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:59.775137298Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 2.646s\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:59.775159051Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksPlantedFailure",
+      "Output": "    factory_hooks_shards_test.go:97: planted native hook-order disagreement caught only by shard 002\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:59.96234195Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source ab89e21d0195 miss 0.16\n"
+    },
+    {
+      "Time": "2026-10-09T12:25:59.962404514Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.189s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:00.081937102Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestNestedConstructorGap",
+      "Output": "    gaps_test.go:34: GAPS.md records a false constructor refusal, got /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before any field is set; assign every field first, then use this\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:26:06.165493524Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 f6405078a885 miss 11.70\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:06.165540224Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:18.010632976Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 35707c5e3852 miss 11.84\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.293913688Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:293: build factory-hooks-native c5ed6592d76c miss 16.28\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.293963483Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 39.975s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.319950728Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: native: 0.025s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.319995325Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: shard-002: 0.026s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.350956056Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: emitted JavaScript: 0.057s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.35096519Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: shard-001: 0.057s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.372348083Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: emitted JavaScript mutant: 0.073s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.372358499Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: shard-004: 0.078s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.462176522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: Node: 0.168s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.462184885Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: shard-000: 0.168s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.477145749Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: Node mutant: 0.182s\n"
+    },
+    {
+      "Time": "2026-10-09T12:26:34.477161272Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: shard-003: 0.183s cooked=false\n"
+    }
+  ],
+  "M02-RulesAgree-2": [
+    {
+      "Time": "2026-10-09T12:39:53.513978104Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeUnion",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle cdd16d41ce28 hit 0.14\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:53.534445062Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:154: build lint-rules-agree-lowered a322c2362384 hit 0.13\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:53.67223843Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:196: build lint-rules-agree-native-sanitized ddb5db5608b4 hit 0.13\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.710952253Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeUnion",
+      "Output": "    grain_rules_agree_shards_test.go:250: build lint-rules-agree-capture ff8ddd9ee35d hit 1.19\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.759790019Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeUnion",
+      "Output": "    grain_rules_agree_shards_test.go:419: union (setup corpus): 1.403s\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.759841987Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeUnion",
+      "Output": "    grain_rules_agree_shards_test.go:440: union: 3922 cases, each exactly once, 16 top-level shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.759847235Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeUnion",
+      "Output": "    grain_rules_agree_shards_test.go:421: union (own work): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.759857871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:359: TestRulesAgree_Setup: 1.403s\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.779857816Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_004",
+      "Output": "    grain_rules_agree_shards_test.go:539: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.780236966Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:555: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.79758331Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:555: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-285/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:54.810910112Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_004",
+      "Output": "    grain_rules_agree_shards_test.go:539: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-278/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:55.301109488Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_004",
+      "Output": "    grain_rules_agree_shards_test.go:539: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-278/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:55.312838471Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:555: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-285/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.100301426Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_015",
+      "Output": "    grain_rules_agree_shards_test.go:583: Node: case 0 line 38: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t\\\\ufeffif(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.100429028Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_015",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-015: 1.340s cooked=false cases=238\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.120456665Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_012",
+      "Output": "    grain_rules_agree_shards_test.go:571: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.141325638Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_012",
+      "Output": "    grain_rules_agree_shards_test.go:571: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-294/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.200173811Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_013",
+      "Output": "    grain_rules_agree_shards_test.go:575: Node: case 0 line 38: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\ta == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) == null; /a/ == null; `a` !== 'b';\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.200276435Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_013",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-013: 1.440s cooked=false cases=236\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.245067138Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_014",
+      "Output": "    grain_rules_agree_shards_test.go:579: Node: case 0 line 34: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.245146888Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_014",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-014: 1.485s cooked=false cases=233\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.273626569Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_010",
+      "Output": "    grain_rules_agree_shards_test.go:563: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.530480075Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_012",
+      "Output": "    grain_rules_agree_shards_test.go:571: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-294/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.597369695Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:555: Node: case 0 line 34: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.597478929Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_008",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-008: 1.838s cooked=false cases=257\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.613471046Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_009",
+      "Output": "    grain_rules_agree_shards_test.go:559: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.629244603Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_009",
+      "Output": "    grain_rules_agree_shards_test.go:559: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-284/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.679741194Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_004",
+      "Output": "    grain_rules_agree_shards_test.go:539: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tif(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:56.679813052Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_004",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-004: 1.920s cooked=false cases=277\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:57.063085296Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_009",
+      "Output": "    grain_rules_agree_shards_test.go:559: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-284/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:57.393201194Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_011",
+      "Output": "    grain_rules_agree_shards_test.go:567: Node: case 0 line 34: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tif(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:57.393287624Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_011",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-011: 1.193s cooked=false cases=245\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:57.682262379Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_012",
+      "Output": "    grain_rules_agree_shards_test.go:571: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tdebugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:57.682330392Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_012",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-012: 1.582s cooked=false cases=235\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.474193511Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_009",
+      "Output": "    grain_rules_agree_shards_test.go:559: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tif(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.474257657Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_009",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-009: 1.877s cooked=false cases=235\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.50743854Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_001",
+      "Output": "    grain_rules_agree_shards_test.go:527: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.521004047Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_001",
+      "Output": "    grain_rules_agree_shards_test.go:527: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-298/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.818659249Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_006",
+      "Output": "    grain_rules_agree_shards_test.go:547: Node: case 0 line 34: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.818742374Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_006",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-006: 1.425s cooked=false cases=255\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.840010187Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_000",
+      "Output": "    grain_rules_agree_shards_test.go:523: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.883973159Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_000",
+      "Output": "    grain_rules_agree_shards_test.go:523: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-299/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:58.942187609Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_001",
+      "Output": "    grain_rules_agree_shards_test.go:527: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-298/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:59.027411689Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_005",
+      "Output": "    grain_rules_agree_shards_test.go:543: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\touter: while(x){continue outer; break outer; await f(); async function nested(){await g();}} with(x){y();} new C(); void new D(); const holes=[,,x]; ([,a]=b); function* missing(){function* inner(){yield 1;} return 1;} function* good(){yield 1;} f(); var late;\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:39:59.02747886Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_005",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-005: 1.345s cooked=false cases=245\n"
+    },
+    {
+      "Time": "2026-10-09T12:39:59.26032945Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_010",
+      "Output": "    grain_rules_agree_shards_test.go:563: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=true: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner --manifest /tmp/adamic-gate/TestRulesAgree_0102179435802/003/manifest.txt: child CPU hang guard exceeded: CPU 2.086976s, budget 2s: signal: CPU time limit exceeded: \n"
+    },
+    {
+      "Time": "2026-10-09T12:39:59.300772687Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_000",
+      "Output": "    grain_rules_agree_shards_test.go:523: explicit unsupported recovery: node: CPU-guard=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/u108/cache/M02/ff8ddd9ee35d60ce8d471feca20ca5bbbe3e413454fd511fd1f97701b98f7750/case-299/repository/source/Thing.ts\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.352197613Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_003",
+      "Output": "    grain_rules_agree_shards_test.go:535: Node: case 0 line 34: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.352291854Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_003",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-003: 1.324s cooked=false cases=232\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.389959955Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_002",
+      "Output": "    grain_rules_agree_shards_test.go:531: Go recovered output: case 0\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.423344953Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_001",
+      "Output": "    grain_rules_agree_shards_test.go:527: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tdebugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.423481469Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_001",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-001: 1.949s cooked=false cases=235\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.930236148Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_000",
+      "Output": "    grain_rules_agree_shards_test.go:523: Node: case 0 line 2: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\tdebugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:00.930261346Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_000",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-000: 2.111s cooked=false cases=276\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:01.028655405Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_010",
+      "Output": "    grain_rules_agree_shards_test.go:563: explicit unsupported recovery: node: CPU-guard=true: node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestRulesAgree_0102179435802/003/manifest.txt: child CPU hang guard exceeded: CPU 2.140145s, budget 2s: signal: CPU time limit exceeded: \n"
+    },
+    {
+      "Time": "2026-10-09T12:40:01.687492187Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_010",
+      "Output": "    grain_rules_agree_shards_test.go:563: Node: case 0 line 38: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\ta == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ === null; `a` !== 'b';\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:01.687596203Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_010",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-010: 5.442s cooked=false cases=242\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:02.664570344Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_002",
+      "Output": "    grain_rules_agree_shards_test.go:531: explicit unsupported recovery: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner: CPU-guard=true: /tmp/u108/cache/M02/ddb5db5608b48766bda0b50fa9b873817b674b51439417e28a6d63a4297f83c1/scanner --manifest /tmp/adamic-gate/TestRulesAgree_002927774452/003/manifest.txt: child CPU hang guard exceeded: CPU 2.137417s, budget 2s: signal: CPU time limit exceeded: \n"
+    },
+    {
+      "Time": "2026-10-09T12:40:03.688443231Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_002",
+      "Output": "    grain_rules_agree_shards_test.go:531: explicit unsupported recovery: node: CPU-guard=true: node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestRulesAgree_002927774452/003/manifest.txt: child CPU hang guard exceeded: CPU 2.102767s, budget 2s: signal: CPU time limit exceeded: \n"
+    },
+    {
+      "Time": "2026-10-09T12:40:04.319360491Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_002",
+      "Output": "    grain_rules_agree_shards_test.go:531: Node: case 0 line 38: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\ta == b; 1 === 2; 1 == 1n; (typeof a) !== 'number'; (null) === null; /a/ === null; `a` !== 'b';\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:04.319587522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_002",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-002: 3.967s cooked=false cases=242\n"
+    },
+    {
+      "Time": "2026-10-09T12:40:04.47933488Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_007",
+      "Output": "    grain_rules_agree_shards_test.go:551: Node: case 0 line 38: port \"rejected fix-engine 0 0  the pass budget was exhausted before the file converged (0 passes)\", Go \"fixed\\t\\\\ufeff if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }\"\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:40:04.482695595Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgree_007",
+      "Output": "    grain_rules_agree_shards_test.go:396: shard-007: 7.796s cooked=false cases=239\n"
+    }
+  ],
+  "W01": [
+    {
+      "Time": "2026-10-09T12:29:39.316899404Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksPlantedFailure",
+      "Output": "    factory_hooks_shards_test.go:95: planted disagreement caught by []\n",
+      "OutputType": "error"
+    }
+  ],
+  "W02-retry": [
+    {
+      "Time": "2026-10-09T12:37:32.192643387Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle 3e3f01d8d939 hit 0.14\n"
+    },
+    {
+      "Time": "2026-10-09T12:37:32.206937147Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:154: build lint-rules-agree-lowered a46aac1e0dd5 hit 0.13\n"
+    },
+    {
+      "Time": "2026-10-09T12:37:32.377285575Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:196: build lint-rules-agree-native-sanitized 237d2dd9fe46 hit 0.16\n"
+    },
+    {
+      "Time": "2026-10-09T12:37:33.474584106Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:250: build lint-rules-agree-capture 869e2613e522 hit 1.28\n"
+    },
+    {
+      "Time": "2026-10-09T12:37:33.516783302Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:359: TestRulesAgree_Setup: 1.482s\n"
+    },
+    {
+      "Time": "2026-10-09T12:37:34.309221043Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:516: planted failure caught 0 times\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:37:34.309264539Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreePlantedFailure",
+      "Output": "    grain_rules_agree_shards_test.go:467: planted failure (own work): 0.792s\n"
+    }
+  ],
+  "K01": [
+    {
+      "Time": "2026-10-09T12:29:47.367069005Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source: rename /tmp/u108/cache/K01/.building-a3c0d13b0114-1194216227/rules/no-var/rule.ts /tmp/u108/cache/K01/.building-a3c0d13b0114-1194216227/rules/no-var/rule.a: no such file or directory\n",
+      "OutputType": "error"
+    }
+  ],
+  "K02": [
+    {
+      "Time": "2026-10-09T12:29:55.278286211Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle: Go oracle build: exit status 2\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:29:55.278331729Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "        go audit-invalid: unknown command\n",
+      "OutputType": "error-continue"
+    }
+  ],
+  "K03": [
+    {
+      "Time": "2026-10-09T12:30:03.104129404Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle: go [audit-invalid -overlay=/tmp/u108/cache/K03/.building-3e3f01d8d939-1044889622/overlay.json -o /tmp/u108/cache/K03/.building-3e3f01d8d939-1044889622/oracle /workspace/adamic/cohere/adamic_lint_oracle.go /workspace/adamic/cohere/adamic_lint_registry.go /workspace/adamic/cohere/adamic_lint_no_debugger.go /workspace/adamic/cohere/adamic_lint_no_empty.go /workspace/adamic/cohere/adamic_lint_eqeqeq.go /workspace/adamic/cohere/adamic_lint_no_var.go /workspace/adamic/cohere/adamic_lint_no_duplicate_case.go /workspace/adamic/cohere/adamic_lint_no_octal_escape.go /workspace/adamic/cohere/adamic_lint_no_unexpected_multiline.go /workspace/adamic/cohere/adamic_lint_no_unused_private_class_members.go /workspace/adamic/cohere/adamic_lint_no_useless_constructor.go /workspace/adamic/cohere/adamic_lint_prefer_template.go /workspace/adamic/cohere/adamic_lint_react_forward_ref_uses_ref.go /workspace/adamic/cohere/adamic_lint_react_jsx_no_comment_text",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:30:03.104202815Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "        go audit-invalid: unknown command\n",
+      "OutputType": "error-continue"
+    }
+  ],
+  "K04": [
+    {
+      "Time": "2026-10-09T12:30:11.488879216Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeLoweringCacheKey",
+      "Output": "    grain_rules_agree_shards_test.go:127: test-only moves invalidated the lowered product\n",
+      "OutputType": "error"
+    }
+  ],
+  "P01": [
+    {
+      "Time": "2026-10-09T12:30:13.581432427Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooksUnion",
+      "Output": "    factory_hooks_shards_test.go:74: union: 5 cases, each exactly once across 5 shards\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:13.691593593Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:203: TestFactoryHooks (setup): 0.112s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:13.692490342Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:26.153728019Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 3912515b7645 miss 12.46\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:26.153776531Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.000s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:39.191804538Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 9576fae8fbe7 miss 13.04\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.044302485Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:293: build factory-hooks-native b13368986c02 miss 1.84\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.044346922Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:214: TestFactoryHooks_Setup: 27.465s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.055496412Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_002",
+      "Output": "    factory_hooks_shards_test.go:428: hook sequence on native (mutant=false): \n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.107044049Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: emitted JavaScript mutant: 0.058s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.107069777Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_004",
+      "Output": "    factory_hooks_shards_test.go:436: shard-004: 0.058s cooked=false\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.111238247Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_001",
+      "Output": "    factory_hooks_shards_test.go:424: hook sequence on emitted JavaScript (mutant=false): \n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.250569756Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_000",
+      "Output": "    factory_hooks_shards_test.go:420: hook sequence on Node (mutant=false): \n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.253948739Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: Node mutant: 0.209s\n"
+    },
+    {
+      "Time": "2026-10-09T12:30:41.253953906Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestFactoryHooks_003",
+      "Output": "    factory_hooks_shards_test.go:432: shard-003: 0.209s cooked=false\n"
+    }
+  ],
+  "P02": [
+    {
+      "Time": "2026-10-09T12:30:49.638128484Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestNestedConstructorGap",
+      "Output": "    gaps_test.go:34: GAPS.md records a false constructor refusal, got <nil>\n",
+      "OutputType": "error"
+    }
+  ],
+  "P03": [
+    {
+      "Time": "2026-10-09T12:30:57.638611122Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameSource",
+      "Output": "    grain_dot_a_rename_test.go:148: TestProduct_DotARenameSource: 0.000s\n"
+    }
+  ],
+  "P04": [
+    {
+      "Time": "2026-10-09T12:31:05.452786482Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_DotARenameOracle",
+      "Output": "    grain_dot_a_rename_test.go:155: TestProduct_DotARenameOracle: 0.000s\n"
+    }
+  ],
+  "P05": [
+    {
+      "Time": "2026-10-09T12:31:12.977422959Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestProduct_RulesAgreeOracle",
+      "Output": "    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 0.000s\n"
+    }
+  ],
+  "P06": [
+    {
+      "Time": "2026-10-09T12:31:20.557982413Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "Test": "TestRulesAgreeLoweringCacheKey",
+      "Output": "    grain_rules_agree_shards_test.go:100: lowering input go.mod did not invalidate the product\n",
+      "OutputType": "error"
+    }
+  ]
+}

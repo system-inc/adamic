@@ -1,0 +1,425 @@
+u108 starts at origin/main 16f436a16a8e3b9cd2343f449eb1b0b4577c135c.
+34 named tests exist, grouped into 11 rows; TestProduct_RulesAgreeCapture vanished.
+Bounded results: 3 sacred, 2 witness, 4 setup-check, 1 helper, 1 cannot-judge.
+Four production mutants caught in completed scopes; three product rows accept empty paths.
+Production restored; evidence branch test-audit/stage1-cohere-lint-factory_hooks_shards.
+
+[
+  {
+    "test": "TestFactoryHooks family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:54",
+    "seconds": 3.94,
+    "oracle": "Hand-written hook prefix only. Node, emitted JavaScript and native execute CUT, but there is no independent expected trace. M02 wrong fixes survive the prefix check.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M03"
+    ],
+    "last_proven_fail": "M01: factory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M01.log 2>&1\nfactory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "members": [
+      "TestFactoryHooksUnion",
+      "TestFactoryHooks_000",
+      "TestFactoryHooks_001",
+      "TestFactoryHooks_002",
+      "TestFactoryHooks_003",
+      "TestFactoryHooks_004"
+    ],
+    "vacuous_subcases": [
+      "TestFactoryHooks_004",
+      "TestFactoryHooks_003"
+    ]
+  },
+  {
+    "test": "TestFactoryHooksPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:77",
+    "seconds": 0.023,
+    "oracle": "Own hook matcher; accepts wrong native order when weakened to always true.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: factory_hooks_shards_test.go:95: planted disagreement caught by []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestFactoryHooksPlantedFailure$' > logs/W01.log 2>&1\nfactory_hooks_shards_test.go:95: planted disagreement caught by []"
+  },
+  {
+    "test": "TestFactoryHooks_NativeBuildWorker",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go:305",
+    "seconds": null,
+    "oracle": "Subprocess-only native builder; parent is TestFactoryHooks family.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "Skip unless parent sets ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE.",
+    "parent": "TestFactoryHooks family"
+  },
+  {
+    "test": "TestNestedConstructorGap",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/gaps_test.go:13",
+    "seconds": 0.128,
+    "oracle": "Node prints self-written 1; Lower must produce Refused with a hand-written diagnostic substring. M04 proves wording, not full constructor semantics.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: gaps_test.go:34: GAPS.md records a false constructor refusal, got /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before any field is set; assign every field first, then use this",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M04.log 2>&1\ngaps_test.go:34: GAPS.md records a false constructor refusal, got /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before any field is set; assign every field first, then use this"
+  },
+  {
+    "test": "TestProduct_DotARenameSource",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:148",
+    "seconds": 0.189,
+    "oracle": "Successful source copy and rename only; returned path is never inspected.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K01: --- FAIL: TestProduct_DotARenameSource (0.23s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_DotARenameSource$' > logs/K01.log 2>&1\n--- FAIL: TestProduct_DotARenameSource (0.23s)"
+  },
+  {
+    "test": "TestProduct_DotARenameOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:155",
+    "seconds": 0.183,
+    "oracle": "Successful Go oracle construction only; no semantic output or returned-path assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K02: --- FAIL: TestProduct_DotARenameOracle (0.19s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_DotARenameOracle$' > logs/K02.log 2>&1\n--- FAIL: TestProduct_DotARenameOracle (0.19s)"
+  },
+  {
+    "test": "TestDotARename family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_dot_a_rename_test.go:352",
+    "seconds": null,
+    "oracle": "Intended Go cohere comparison on Node, emitted JavaScript and native plus byte-preserving rename and coverage invariants. Shared cold products exceed 90 s.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "Clean DotARename family timed out at 90.037 s.",
+    "members": [
+      "TestDotARenameUnion",
+      "TestDotARename_000",
+      "TestDotARename_001"
+    ]
+  },
+  {
+    "test": "TestProduct_RulesAgreeOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_products_test.go:11",
+    "seconds": 0.145,
+    "oracle": "Successful Go oracle construction only; returned empty path passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K03: --- FAIL: TestProduct_RulesAgreeOracle (0.16s)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_RulesAgreeOracle$' > logs/K03.log 2>&1\n--- FAIL: TestProduct_RulesAgreeOracle (0.16s)"
+  },
+  {
+    "test": "TestRulesAgreeLoweringCacheKey",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:95",
+    "seconds": 0.025,
+    "oracle": "Own cache-input collection and content-key invariants.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "K04: grain_rules_agree_shards_test.go:127: test-only moves invalidated the lowered product",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/K04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgreeLoweringCacheKey$' > logs/K04.log 2>&1\ngrain_rules_agree_shards_test.go:127: test-only moves invalidated the lowered product"
+  },
+  {
+    "test": "TestRulesAgree family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:415",
+    "seconds": 13.422,
+    "oracle": "Go cohere findings and fixes compared byte for byte on Node, emitted JavaScript and native. Own union invariants; unsupported recovery checks permit a generic panic or CPU guard.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02-RulesAgree-2: --- FAIL: TestRulesAgree_015 (2.74s)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey",
+      "TestRulesAgree family"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgree(Union|_[0-9]{3})$' > logs/M02-RulesAgree-2.log 2>&1\n--- FAIL: TestRulesAgree_015 (2.74s)",
+    "members": [
+      "TestRulesAgreeUnion",
+      "TestRulesAgree_000",
+      "TestRulesAgree_001",
+      "TestRulesAgree_002",
+      "TestRulesAgree_003",
+      "TestRulesAgree_004",
+      "TestRulesAgree_005",
+      "TestRulesAgree_006",
+      "TestRulesAgree_007",
+      "TestRulesAgree_008",
+      "TestRulesAgree_009",
+      "TestRulesAgree_010",
+      "TestRulesAgree_011",
+      "TestRulesAgree_012",
+      "TestRulesAgree_013",
+      "TestRulesAgree_014",
+      "TestRulesAgree_015"
+    ],
+    "unknown_mutants": [
+      "M01",
+      "M03",
+      "M04"
+    ]
+  },
+  {
+    "test": "TestRulesAgreePlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/grain_rules_agree_shards_test.go:463",
+    "seconds": 2.26,
+    "oracle": "Own differential comparator; disabling differences makes the planted output disagreement go uncaught.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02-retry: grain_rules_agree_shards_test.go:516: planted failure caught 0 times",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks family",
+      "TestFactoryHooksPlantedFailure",
+      "TestFactoryHooks_NativeBuildWorker",
+      "TestNestedConstructorGap",
+      "TestProduct_DotARenameSource",
+      "TestProduct_DotARenameOracle",
+      "TestProduct_RulesAgreeOracle",
+      "TestRulesAgreeLoweringCacheKey"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/W02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestRulesAgreePlantedFailure$' > logs/W02-retry.log 2>&1\ngrain_rules_agree_shards_test.go:516: planted failure caught 0 times"
+  }
+]
+
+Production mutant table:
+M01 | stage1/cohere/lint/lint.ts:100 | drop statement: rules.finish(this.root); -> <drop> | failed: TestFactoryHooks family
+M02 | stage1/cohere/lint/lint.ts:15 | change constant: const passBudget = 10; -> const passBudget = 0; | failed: TestRulesAgree family
+M03 | stage1/cohere/lint/settings.ts:70 | off-by-one bound: return values[0] ?? fallback; -> return values[1] ?? fallback; | failed: TestFactoryHooks family
+M04 | internal/lower/class.go:773 | change diagnostic constant: this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise) -> this escaping a constructor before any field is set | failed: TestNestedConstructorGap
+
+Survivors: none in completed scopes. M02 initially survived the small matrix: Node changed fixed \u000a to fixed debugger;\u000a and added the zero-pass rejection, also present natively. The recovered RulesAgree family subsequently caught it. DotARename results remain unknown for every mutant; RulesAgree is unknown for M01/M03/M04.
+
+Brief problems and costs:
+
+The supplied 35-test list is stale: TestProduct_RulesAgreeCapture no longer exists, although rulesAgreeCapture remains called by RulesAgree setup. All other 34 exist in the listed files. Counting unions with their corpus families leaves 11 rows rather than 12. Product rows use different recipes; they are construction checks, not semantic port assertions. The helper is skipped normally and invoked by its parent during native builds. No other selected row has an opt-in. Package tests outside the named slice remain unknown.
+
+The whole package cooked at 90.286 s, the named slice at 90.034 s, DotARename alone at 90.037 s and initial RulesAgree alone at 90.078 s. These are budget timeouts, not red assertion baselines. FactoryHooks alone passed cold in 39.939 s and the construction/gap baseline passed. Matrix runs were narrowed to those reached rows. RulesAgree later published correct full lowering/native products before its weakened-witness run timed out; retrying the unchanged content-addressed products let its default witness and family complete. A first extended M02 run cooked after publishing its exact mutated full native product, so the cached rerun ran all 16 shards and observed their failures. No row after a panic is credited from that cooked run.
+
+Three isolated count=1 timing runs were completed for every judged row except the subprocess helper. DotARename has no median because its cold product exceeded 90 s; repeated cold attempts would not yield a measured test cost within the grain. RulesAgree defaults were measured after preparation completed, not with the failed supplemental probe. An attempted single-case witness using the smaller FactoryHooks product failed its structured-option precondition; it is retained as invalid evidence and supports no verdict. The successful witness proof uses the default complete RulesAgree products and only weakens difference.
+
+FactoryHooks checks only a hand-written prefix. A zero fix-pass budget gives completely wrong fixed output after that prefix yet passes every FactoryHooks shard. Its negative/mutant shards also accept an entirely empty driver. The positive shards fail the empty driver, so the grouped family is not vacuous. Source and oracle product Tests all ignore the returned path: empty paths pass P03/P04/P05. Broken construction recipes do fail K01/K02/K03, so they are setup-check and vacuous, both findings. The cache-key construction fails K04 and the empty input-list probe P06. Witness and construction diffs are kept separate from production kills.
+
+The compiler gap tests a refusal, not the lint port. Its production mutant changes the diagnostic string, and its Lower entry probe returns nil,nil; both fail. This proves a wording contract and missing-error detection, not full constructor semantics. All four production mutations were fixed from fully read production functions before any outcome was checked. Four separately rebuilt patches use the brief’s rebuild alternative instead of a switch; each has its own build cache. Port diffs compile through the existing sanitized FactoryHooks product; M02 additionally builds the complete lint product. Full lint builds for M01/M03 were not completed. M04 passes go vet and the native FactoryHooks rebuild. All scratch Go witness/construction/probe patches pass go vet; every diff independently applies to starting main. No production oracle, input fixture or comparison was mutated.
+
+Pre-mutation static inventories list all candidate lint/parser declarations conservatively, without claiming every candidate ran. Final V8 and gap coverage record actual observed calls. Coverage cannot establish complete static transitive reachability, and the DotARename build block prevents a full reachability census for that family. Family unions are grouped as requested, rather than counted as semantic uniqueness catches of their own. Central replay must settle package/repository uniqueness and all unknown matrix cells.
+
+Setup/build/run times: warm env.sh worked, so toolchain setup was skipped; nproc=5. npm ci timing is in logs/npm.log. Small-matrix wall seconds: M01=43.689, M02=40.887, M03=41.554, M04=52.365. Native product rebuild logs report M01=14.44 s, M02=14.60 s, M03=15.05 s, M04=16.28 s, including their sanitized runtime/main builds. Full M02 lowering took 79.89 s (C emission 71.000 s), its full native build 3.17 s, and its completed family replay 11.156 s. Standalone row medians are in rows.json. Budgeted runs stop at the binary’s 90-second deadline; multi-run tool cells are only orchestration.
+
+Not covered: DotARename semantic outcomes or its own empty-driver probe, RulesAgree M01/M03/M04 outcomes or its own entry probe, tests outside the slice, repo-wide uniqueness, alternate corpora/options, and full default-port builds for M01/M03. No PR and no main push. Source, matrix, raw logs, standalone diffs, construction/probe/witness checks and replay scripts are under this directory.

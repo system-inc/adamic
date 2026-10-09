@@ -1,0 +1,63 @@
+{
+  "base": "16f436a16a8e3b9cd2343f449eb1b0b4577c135c",
+  "nproc": 5,
+  "missing": [
+    "TestProduct_RulesAgreeCapture"
+  ],
+  "rows": 11,
+  "families": {
+    "TestFactoryHooks family": [
+      "TestFactoryHooksUnion",
+      "TestFactoryHooks_000",
+      "TestFactoryHooks_001",
+      "TestFactoryHooks_002",
+      "TestFactoryHooks_003",
+      "TestFactoryHooks_004"
+    ],
+    "TestDotARename family": [
+      "TestDotARenameUnion",
+      "TestDotARename_000",
+      "TestDotARename_001"
+    ],
+    "TestRulesAgree family": [
+      "TestRulesAgreeUnion",
+      "TestRulesAgree_000",
+      "TestRulesAgree_001",
+      "TestRulesAgree_002",
+      "TestRulesAgree_003",
+      "TestRulesAgree_004",
+      "TestRulesAgree_005",
+      "TestRulesAgree_006",
+      "TestRulesAgree_007",
+      "TestRulesAgree_008",
+      "TestRulesAgree_009",
+      "TestRulesAgree_010",
+      "TestRulesAgree_011",
+      "TestRulesAgree_012",
+      "TestRulesAgree_013",
+      "TestRulesAgree_014",
+      "TestRulesAgree_015"
+    ]
+  },
+  "matrix_small_rows": [
+    "TestFactoryHooks family",
+    "TestFactoryHooksPlantedFailure",
+    "TestFactoryHooks_NativeBuildWorker",
+    "TestNestedConstructorGap",
+    "TestProduct_DotARenameSource",
+    "TestProduct_DotARenameOracle",
+    "TestProduct_RulesAgreeOracle",
+    "TestRulesAgreeLoweringCacheKey"
+  ],
+  "M02_extended_rows": [
+    "TestFactoryHooks family",
+    "TestFactoryHooksPlantedFailure",
+    "TestFactoryHooks_NativeBuildWorker",
+    "TestNestedConstructorGap",
+    "TestProduct_DotARenameSource",
+    "TestProduct_DotARenameOracle",
+    "TestProduct_RulesAgreeOracle",
+    "TestRulesAgreeLoweringCacheKey",
+    "TestRulesAgree family"
+  ]
+}
