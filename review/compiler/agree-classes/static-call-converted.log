@@ -1,0 +1,5 @@
+--- FAIL: TestClassFeaturesStaticDeclarationsExecute (0.13s)
+    class_features_test.go:79: JavaScript backend stdout = "done\n", source Node = "static side effect\ndone\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.141s
+FAIL
