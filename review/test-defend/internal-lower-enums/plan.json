@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/input.go:34",
+    "change": "for _, argument := range arguments { -> for _, argument := range arguments[:min(1, len(arguments))] {",
+    "reason": "Limit the spread scan to the first argument; two-argument later-spread calls lose their second slot."
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/input.go:30",
+    "change": "for _, name := range inputFunctions { -> for _, name := range inputFunctions[:len(inputFunctions)-1] {",
+    "reason": "Off-by-one prelude-function scan drops programArguments."
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/lower/input.go:36",
+    "change": "\"a spread argument to \"+name -> \"a tuple spread argument to \"+name",
+    "reason": "Change the diagnostic prefix for the rejected tuple spread."
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/lower/input.go:35",
+    "change": "argument.Kind == ast.KindSpreadElement -> argument.Kind != ast.KindSpreadElement",
+    "reason": "Invert spread-element recognition."
+  }
+]

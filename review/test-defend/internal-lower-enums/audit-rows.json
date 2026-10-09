@@ -1,0 +1,100 @@
+[
+  {
+    "test": "TestInputSpreadArgumentsAreNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/input_test.go:17",
+    "seconds": 0.282,
+    "oracle": "Self-written NotYet type and diagnostic naming each prelude door.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13 input_test.go:33: got lower: /tmp/adamic-gate/TestInputSpreadArgumentsAreNotYetprogramArguments2691799448/001/main.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInputSpreadCoverage"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "PLower",
+      "POrder"
+    ],
+    "subsumer_seconds": 0.959,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumSlotViews",
+      "TestEnumSwitchExhaustiveness",
+      "TestEnumLimitsStayLoud",
+      "TestConstEnumErasesRuntimeObject",
+      "TestEnumIdentityAcrossModules",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestFunctionValueUnionViewsStayNotYet",
+      "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "TestGenericUnionFixtureHasSeparateInstances",
+      "TestGenericJSONUnionArrayIsNotYet",
+      "TestOriginalCycleLedger",
+      "TestUndecidedCycleReadsUseReadyChecks",
+      "TestInputSpreadArgumentsAreNotYet",
+      "TestInputSpreadCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u032/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"$pattern\" > M13.log 2>&1; input_test.go:33: got lower: /tmp/adamic-gate/TestInputSpreadArgumentsAreNotYetprogramArguments2691799448/001/main.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet"
+  },
+  {
+    "test": "TestInputSpreadCoverage",
+    "package": "internal/lower",
+    "file": "internal/lower/input_test.go:43",
+    "seconds": 0.959,
+    "oracle": "Self-written fixture count 47, Lower NotYet name/location or local NotYet; copied TypeScript array-spread diagnostic text is also matched against the running checker. The seven _array cases never call Lower and pass PLower.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "kills": [
+      "M12",
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13 input_test.go:77 (multiline assertion): : got lower: /workspace/adamic/internal/lower/testdata/input-spread/programArguments_tuple.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet naming programArguments",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "PLower",
+      "POrder"
+    ],
+    "subsumer_seconds": 0.282,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumSlotViews",
+      "TestEnumSwitchExhaustiveness",
+      "TestEnumLimitsStayLoud",
+      "TestConstEnumErasesRuntimeObject",
+      "TestEnumIdentityAcrossModules",
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestFunctionValueUnionViewsStayNotYet",
+      "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "TestGenericUnionFixtureHasSeparateInstances",
+      "TestGenericJSONUnionArrayIsNotYet",
+      "TestOriginalCycleLedger",
+      "TestUndecidedCycleReadsUseReadyChecks",
+      "TestInputSpreadArgumentsAreNotYet",
+      "TestInputSpreadCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u032/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"$pattern\" > M13.log 2>&1; input_test.go:77 (multiline assertion): : got lower: /workspace/adamic/internal/lower/testdata/input-spread/programArguments_tuple.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet naming programArguments",
+    "vacuous_subcases": [
+      "readTextFile_array.a",
+      "readDirectory_array.a",
+      "programArguments_array.a",
+      "fileStatus_array.a",
+      "writeTextFile_array.a",
+      "utf8Length_array.a",
+      "utf8At_array.a"
+    ]
+  }
+]

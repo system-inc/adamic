@@ -1,0 +1,11 @@
+--- a/internal/lower/input.go
++++ b/internal/lower/input.go
+@@ -31,7 +31,7 @@
+ 		if !l.isPreludeFunction(callee, name) {
+ 			continue
+ 		}
+-		for _, argument := range arguments {
++		for _, argument := range arguments[:min(1, len(arguments))] {
+ 			if argument.Kind == ast.KindSpreadElement {
+ 				return nil, true, l.notYet(argument, "a spread argument to "+name)
+ 			}
