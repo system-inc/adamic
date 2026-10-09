@@ -27,3 +27,5 @@ TestCallTargetReaders checks the new tests; they read none of Call.Function, Cal
 This unit adds a behavioral guard for the missing fallthrough edge toward the compiler agreement work named by #qa0ybgb. The brief supplies no numbered roadmap step, so no number is inferred.
 
 Final focused clean result: pass, 0.282s. Restored leaf seconds: conditional break 0.24, explicit empty else 0.22, empty case 0.24, empty block 0.27. TestCallTargetReaders passed in 12.786s. Logs: restored.log and call-target-readers.log.
+
+Delivery: test and mutation-evidence commit 113560b5. Lane checks passed: `lane checks 1.0 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages`. The lane fetch discovered newer main 7911f07b, which adds only an unrelated regex test. Merged it as 7f4d97d3; the four focused rows passed again in 0.169s, with each leaf 0.16s, and TestCallTargetReaders passed again in 0.755s. merged.log and call-target-readers-merged.log preserve those runs. Lane checks were repeated on the final committed state before pushing.
