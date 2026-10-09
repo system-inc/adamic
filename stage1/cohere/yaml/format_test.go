@@ -208,6 +208,7 @@ func TestBundledParserDifference(t *testing.T) {
 	t.Logf("%s", actual)
 }
 
+// Not parallel: initializes process-wide fileDriverShared build products before parallel shards.
 func TestFileDriver(t *testing.T) {
 	fileDriverGet(t)
 }

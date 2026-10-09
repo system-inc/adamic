@@ -162,7 +162,6 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	if selected >= 0 && selected != shard {
 		t.Skip("different ADAMIC_TEST_SHARD selected")
 	}
-	t.Parallel()
 	changes := jsxMutantsChanges()
 	if len(changes) != testJsxMutantsShards {
 		t.Fatalf("enumerated %d mutants, want %d", len(changes), testJsxMutantsShards)
@@ -197,17 +196,18 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
 }
 
-func TestJsxMutants_000(t *testing.T) { jsxMutantsRun(t, 0) }
-func TestJsxMutants_001(t *testing.T) { jsxMutantsRun(t, 1) }
-func TestJsxMutants_002(t *testing.T) { jsxMutantsRun(t, 2) }
-func TestJsxMutants_003(t *testing.T) { jsxMutantsRun(t, 3) }
-func TestJsxMutants_004(t *testing.T) { jsxMutantsRun(t, 4) }
-func TestJsxMutants_005(t *testing.T) { jsxMutantsRun(t, 5) }
-func TestJsxMutants_006(t *testing.T) { jsxMutantsRun(t, 6) }
-func TestJsxMutants_007(t *testing.T) { jsxMutantsRun(t, 7) }
-func TestJsxMutants_008(t *testing.T) { jsxMutantsRun(t, 8) }
+func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
+func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }
+func TestJsxMutants_002(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 2) }
+func TestJsxMutants_003(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 3) }
+func TestJsxMutants_004(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 4) }
+func TestJsxMutants_005(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 5) }
+func TestJsxMutants_006(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 6) }
+func TestJsxMutants_007(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 7) }
+func TestJsxMutants_008(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 8) }
 
 func TestJsxMutantsUnion(t *testing.T) {
+	t.Parallel()
 	changes := jsxMutantsChanges()
 	if len(changes) != testJsxMutantsShards {
 		t.Fatalf("enumerated %d shards, want %d", len(changes), testJsxMutantsShards)
@@ -226,6 +226,7 @@ func TestJsxMutantsUnion(t *testing.T) {
 	t.Logf("union: %d mutants x %d inputs = %d unique case ids", len(changes), count, len(changes)*count)
 }
 
+// Not parallel: the child runs all nine shards sharing this worker's CPU and build-product cache.
 func TestJsxMutantsPlantedFailure(t *testing.T) {
 	executable, err := os.Executable()
 	if err != nil {
