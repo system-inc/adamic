@@ -36,7 +36,7 @@ const testJSXAgreementShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX case.
-// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestJSXAgreement(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
@@ -147,7 +147,7 @@ const testJSXMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
-// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestJSXMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()

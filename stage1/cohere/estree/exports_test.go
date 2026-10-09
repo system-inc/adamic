@@ -13,7 +13,7 @@ const testDecoratedExportsShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export.
-// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestDecoratedExports(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
@@ -52,7 +52,7 @@ const testDecoratedExportMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export mutant case.
-// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestDecoratedExportMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
@@ -87,7 +87,4 @@ func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
 	})
 }
 
-func TestDecoratedExportLibraries(t *testing.T) {
-	t.Parallel()
-	checkOriginalLibraries(t, decoratedExports(), 0)
-}
+func TestDecoratedExportLibraries(t *testing.T) { t.Parallel(); checkOriginalLibraries(t, decoratedExports(), 0) }
