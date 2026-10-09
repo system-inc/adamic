@@ -210,15 +210,13 @@ const (
 	// Semantic slot tags reserve null and undefined independently of storage.
 	NullRepresentation
 	UndefinedRepresentation
-	// Record is reserved for the dictionary slice; V2 does not admit it.
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
 	Record
 
 	// Typed arrays hold numbers in one flat buffer of the element width.
 	Uint8Array
 	Int32Array
 	Float64Array
-	// Record is a dictionary of own string entries, distinct from fixed object slots.
-	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |

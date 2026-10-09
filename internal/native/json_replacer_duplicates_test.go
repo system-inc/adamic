@@ -41,7 +41,7 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := portabilityRun(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	want := jsonReplacerRun(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
 	files, err := readRuntime(runtime, "runtime")
 	if err != nil {
 		t.Fatal(err)
@@ -98,7 +98,7 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 	if output, err := exec.CommandContext(t.Context(), compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("mutant compile: %v\n%s", err, output)
 	}
-	got := portabilityRun(t, binary)
+	got := jsonReplacerRun(t, binary)
 	if bytes.Equal(got, want) {
 		t.Fatalf("dedup mutant survived: %q", got)
 	}
@@ -106,4 +106,15 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 		t.Fatalf("unexpected mutant output: %q", got)
 	}
 	t.Logf("skipped dedup caught by Node stdout; clean ASan/UBSan/leaks; mutant %q; Node %q", got, want)
+}
+
+// Use the existing record harness observation path, avoiding a dependency on
+// c-portability's test-only portabilityRun helper.
+func jsonReplacerRun(t *testing.T, name string, arguments ...string) []byte {
+	t.Helper()
+	stdout, stderr, err := recordRun(name, arguments...)
+	if err != nil || stderr != "" {
+		t.Fatalf("%s: %v\n%s", name, err, stderr)
+	}
+	return []byte(stdout)
 }
