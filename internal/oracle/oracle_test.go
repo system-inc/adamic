@@ -761,7 +761,7 @@ func TestNativeAgreesWithNode(t *testing.T) {
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
 				// backend that carries the same check, and make sure the check really did fire.
-				if difference := disagreement(backend, native); difference != "" {
+				if difference := backendDisagreement(fixture.path, backend, native); difference != "" {
 					t.Errorf("%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
 						difference, backend.exitCode, backend.stdout, backend.stderr, native.exitCode, native.stdout, native.stderr)
 				}
