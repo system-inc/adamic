@@ -1,0 +1,55 @@
+[
+  {
+    "name": "update-mutant",
+    "exit": 0,
+    "seconds": 83.666,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-run",
+      "^TestCountsAreRecorded$",
+      "-args",
+      "-update-counts"
+    ],
+    "cache": "/tmp/M08u/cache/update-mutant"
+  },
+  {
+    "name": "pair-mutant",
+    "exit": 1,
+    "seconds": 112.215,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-run",
+      "^(TestCountsAreRecorded|TestStatementRegionsAreUsed)$"
+    ],
+    "cache": "/tmp/M08u/cache/pair-mutant"
+  },
+  {
+    "name": "pair-base",
+    "exit": 0,
+    "seconds": 84.404,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-run",
+      "^(TestCountsAreRecorded|TestStatementRegionsAreUsed)$"
+    ],
+    "cache": "/tmp/M08u/cache/pair-base"
+  }
+]
