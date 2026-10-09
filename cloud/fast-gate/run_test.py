@@ -1903,6 +1903,37 @@ class ReverseDependencies(unittest.TestCase):
         with open(path, "w") as handle:
             json.dump({"version": 1, "packages": packages}, handle)
 
+    def consumer(self):
+        # A tracked source in an undeclared package that launches processes, so it may run the compiler.
+        with open(os.path.join(self.tree, "ordinary", "source.go"), "w") as handle:
+            handle.write('package ordinary\n\nimport "os/exec"\n\nvar _ = exec.Command\n')
+        realRun(["git", "-C", self.tree, "add", "ordinary/source.go"], check=True)
+
+    def test_an_undeclared_consumer_the_change_touches_is_a_census_refusal(self):
+        # A red the change can fix, and still a ValueError for callers that catch that.
+        self.consumer()
+        with self.assertRaises(run.CensusRefusal) as caught:
+            self.gate.touched(["ordinary/source.go"])
+        self.assertIsInstance(caught.exception, ValueError)
+        self.assertIn("undeclared compiler consumers: ordinary/source.go", str(caught.exception))
+
+    def test_the_whole_gate_reds_an_undeclared_consumer_at_census_never_as_a_crash(self):
+        # #3rq7vga: main fc7252a6's whole gate recorded cd01cd09's undeclared consumer as 'the gate tool crashed'.
+        gate = self.gate
+        gate.arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, sha="b" * 40, weights=None, full=True, run_to_end=False, out=self.tree)
+        gate.lock, gate.started, gate.stopped, gate.failure, gate.processes = threading.Lock(), time.monotonic(), None, None, []
+        listing, packages = run.module + "/ordinary\n", gate.command.return_value
+        gate.command = mock.Mock(side_effect=lambda arguments, **_: packages if "-json" in " ".join(arguments) else types.SimpleNamespace(returncode=0, stdout=listing))
+        gate.git = lambda tree, *args: ("b" * 40 + " " + "a" * 40) if args[0] == "rev-list" else "ordinary/source.go\n"
+        gate.cover = mock.Mock()
+        gate.step = mock.Mock(side_effect=AssertionError("the build must not start after a census red"))
+        self.consumer()
+        gate.runFull()
+        self.assertEqual(gate.failure["step"], "census")
+        self.assertNotIn("Traceback", gate.failure["detail"])
+        self.assertIn("undeclared compiler consumers: ordinary/source.go", gate.failure["detail"])
+        self.assertFalse(gate.failure.get("tool_crash", False))
+
     def test_real_closure_then_one_test_edge(self):
         packages, unowned = self.gate.touched(["internal/load/load.go"])
         self.assertIn(run.module + "/ordinary", packages)
