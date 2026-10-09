@@ -1,0 +1,8 @@
+// Derived from moduleNameResolver.ts:3103, with parentheses terminating its chain.
+interface Package { readonly contents: { readonly text: string } }
+let current: Package | undefined = { contents: { text: 'present' } };
+function clear(): void { current = undefined; }
+if (current !== undefined) {
+	clear();
+	console.log((current?.contents).text);
+}

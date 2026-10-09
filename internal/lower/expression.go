@@ -205,7 +205,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
-	value, err := l.value(node)
+	value, handled, err := l.optionalChain(ast.SkipParentheses(node))
+	if !handled {
+		value, err = l.value(node)
+	}
+	if err == nil {
+		value, err = l.optionalChainConsumer(node, value)
+	}
 	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
@@ -431,6 +437,8 @@ func (l *lowering) kept(proven *checker.Type) (ir.Type, bool) {
 // typeArguments is a generic type's arguments, Map<K, V>'s K and V, through a Weak's narrowing
 // (Map<K, V> & WeakBrand), or nil for a type that has none.
 func (l *lowering) typeArguments(proven *checker.Type) []*checker.Type {
+	// Optional guards use the present collection's storage arguments.
+	proven = l.checker.GetNonNullableType(proven)
 	if target := l.weakTarget(proven); target != nil {
 		proven = target
 	}
@@ -646,6 +654,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, known, err := l.optionalCallable(node); known {
+			return value, err
+		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
@@ -1298,28 +1309,40 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
-	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
-		// never[] admits a zero-argument call in TypeScript. The erased slot does
-		// not retain a source signature to prove its required arguments or ABI.
-		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
-	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
 		return nil, err
 	}
-	if property, isProperty := closure.(ir.Property); isProperty {
-		// object.name(...) through an interface: the object may be a class's, whose methods aren't
-		// fields (ir.Property's Method).
+	if property, known := closure.(ir.Property); known {
 		property.Method = true
 		closure = property
+	}
+	return l.callClosureOn(node, closure)
+}
+
+// callClosureOn retains the source signature ABI with an already selected callee.
+func (l *lowering) callClosureOn(node *ast.Node, closure ir.Expression) (ir.Expression, error) {
+	calleeType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression))
+	signatures := l.checker.GetSignaturesOfType(calleeType, checker.SignatureKindCall)
+	if len(signatures) != 1 && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return nil, l.notYet(node, "a chain call without one represented callable signature")
+	}
+	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
 	if err != nil {
 		return nil, err
 	}
 	var returns ir.Type
-	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+	result := l.checker.GetTypeAtLocation(node)
+	if node.Flags&ast.NodeFlagsOptionalChain != 0 && len(signatures) == 1 {
+		// The optional expression widens the result after the call. The closure
+		// itself still uses its signature's original return ABI.
+		result = l.checker.GetReturnTypeOfSignature(signatures[0])
+	}
+	result = l.concrete(result)
+	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1327,7 +1350,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	if len(signatures) == 1 {
 		parameters := signatures[0].Parameters()
 		position := 0
 		expanded := false

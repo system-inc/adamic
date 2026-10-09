@@ -977,6 +977,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Throws() {
+			absent := "undefined"
+			if expression.Null {
+				absent = "null"
+			}
+			return "((value) => { if (value === " + absent + ") throw new TypeError(" + quote(strings.TrimPrefix(expression.Message, "TypeError: ")) + "); return value; })(" + e.value(expression.Value) + ")"
+		}
 		if expression.Null {
 			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 		}
@@ -1102,6 +1109,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Optional || expression.RequiredCallable {
+			return e.optionalMethodCall(expression)
+		}
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}

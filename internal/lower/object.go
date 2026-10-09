@@ -382,6 +382,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
 	}
+	if err := l.detachedCallableStorage(node); err != nil {
+		return nil, err
+	}
 	if err := l.erasedLiteralMethod(node); err != nil {
 		return nil, err
 	}

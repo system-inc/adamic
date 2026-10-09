@@ -2,12 +2,13 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // functionExpression lowers ordinary function expressions and switch declarations with the same
 // calling convention and counted captures as arrows. Ordinary
-// functions have their own dynamic this; until that convention exists, every use of it is refused.
+// functions keep their represented dynamic this separate from lexical captures.
 func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	if node.Body() == nil {
 		return nil, l.notYet(node, "a function without a body")
@@ -18,30 +19,62 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	if len(node.TypeParameters()) != 0 {
 		return nil, l.notYet(node, "a generic function expression")
 	}
+	var receiverType *checker.Type
 	for _, parameter := range node.Parameters() {
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
-			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
+			receiverType = l.checker.GetTypeAtLocation(parameter.Name())
 		}
 	}
-	var invalid error
 	var visit ast.Visitor
 	visit = func(inner *ast.Node) bool {
-		if invalid != nil {
-			return true
-		}
-		// An arrow inherits this; another ordinary function or method owns a different this.
 		if ast.IsFunctionLike(inner) && inner.Kind != ast.KindArrowFunction {
 			return false
 		}
-		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) {
-			invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method"}
-			return true
+		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) && receiverType == nil {
+			receiverType = l.checker.GetTypeAtLocation(inner)
 		}
 		return inner.ForEachChild(visit)
 	}
 	node.Body().ForEachChild(visit)
-	if invalid != nil {
-		return nil, invalid
+	if receiverType != nil {
+		at := node
+		for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
+			at = at.Parent
+		}
+		stored := at.Parent != nil && (at.Parent.Kind == ast.KindPropertyAssignment || at.Parent.Kind == ast.KindPropertyDeclaration)
+		for owner := at.Parent; owner != nil && !stored; owner = owner.Parent {
+			if owner.Kind == ast.KindGetAccessor {
+				stored = true
+				break
+			}
+			if ast.IsFunctionLike(owner) {
+				break
+			}
+		}
+		if !stored {
+			return nil, l.notYet(node, "a function expression with a this parameter outside represented member storage")
+		}
+		var ownerType *checker.Type
+		for owner := at.Parent; owner != nil; owner = owner.Parent {
+			if owner.Kind == ast.KindObjectLiteralExpression {
+				ownerType = l.checker.GetTypeAtLocation(owner)
+				break
+			}
+			if owner.Kind == ast.KindClassDeclaration && owner.Name() != nil {
+				ownerType = checker.Checker_getDeclaredTypeOfSymbol(l.checker, l.symbol(owner.Name()))
+				break
+			}
+			if ast.IsFunctionLike(owner) && owner.Kind != ast.KindGetAccessor {
+				break
+			}
+		}
+		if ownerType == nil || !l.iterationShapeFits(l.concrete(ownerType), receiverType) || l.nominalMismatch(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil || l.widened(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil {
+			return nil, &Refused{Where: l.program.Where(node), What: "a callable field whose receiver does not satisfy its this contract", Fix: "give the function its declared receiver or use a receiver-independent arrow"}
+		}
+
+		if held, known := l.representation(receiverType); !known || held != ir.Object {
+			return nil, l.notYet(node, "a function expression with an unrepresented dynamic receiver")
+		}
 	}
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "function_expression", Closure: true}
@@ -66,8 +99,14 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	l.closures = append(l.closures, index)
 	outerThis := l.this
-	l.this = -1
-	err := l.lowerFunction(index, node, -1)
+	self := -1
+	if receiverType != nil {
+		self = len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
+		l.noteLocal(self, receiverType, node)
+	}
+	l.this = self
+	err := l.lowerFunction(index, node, self)
 	l.this = outerThis
 	l.closures = l.closures[:len(l.closures)-1]
 	if err != nil {

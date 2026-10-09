@@ -1,0 +1,16 @@
+// Derived from checker.ts:8066 and :6910's optional cleanup/report callbacks.
+// A void view discards an owned reference, rather than changing its actual ABI.
+let calls = 0;
+function value(): string { calls += 1; return `value${calls}`; }
+function cleanup(callback: (() => void) | undefined): void { callback?.(); }
+cleanup(undefined);
+cleanup(value);
+interface Reporter { report?(): void }
+class Reporting {
+	report(): string { calls += 1; return `method${calls}`; }
+}
+function invoke(value: Reporter): void { value.report?.(); }
+invoke({});
+invoke(new Reporting());
+invoke({ report: (): string => { calls += 1; return `own${calls}`; } });
+console.log(`${calls}`);

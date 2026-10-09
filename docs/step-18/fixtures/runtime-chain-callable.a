@@ -1,0 +1,20 @@
+// Reduced from performance.ts:189's system?.cpuProfilingEnabled?.() and resolver call results.
+interface Value { readonly content: { readonly text: string } }
+let calls = 0;
+function invoke(callback: (() => Value) | undefined): string {
+	return callback?.().content.text ?? 'absent';
+}
+console.log(invoke(undefined));
+console.log(invoke((): Value => { calls += 1; return { content: { text: `value${calls}` } }; }));
+interface Host { readonly label: string; report?(word: string): string }
+class Reporter {
+	readonly label: string = `receiver${2}`;
+	report(word: string): string { return `${this.label}:${word}`; }
+}
+function report(host: Host | undefined): string {
+	return host?.report?.(`argument${calls}`) ?? 'absent';
+}
+console.log(report(undefined));
+console.log(report({ label: 'empty' }));
+console.log(report(new Reporter()));
+console.log(`${calls}`);

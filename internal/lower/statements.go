@@ -132,6 +132,18 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
 		}
+		if value, handled, err := l.optionalChain(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
+		if value, handled, err := l.optionalCallable(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}
