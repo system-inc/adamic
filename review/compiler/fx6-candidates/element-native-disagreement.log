@@ -1,0 +1,10 @@
+=== RUN   TestFX6NativeMutantWitness
+=== PAUSE TestFX6NativeMutantWitness
+=== CONT  TestFX6NativeMutantWitness
+    fx6_mutant_probe_test.go:12: source Node: exit=0 stdout="NaN\nfalse\n" stderr=""
+    fx6_mutant_probe_test.go:13: native: exit=0 stdout="9.3010704756687e-310\ntrue\n" stderr=""
+    fx6_mutant_probe_test.go:14: Native backend stdout = "9.3010704756687e-310\ntrue\n", source Node = "NaN\nfalse\n"
+--- FAIL: TestFX6NativeMutantWitness (0.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.224s
+FAIL

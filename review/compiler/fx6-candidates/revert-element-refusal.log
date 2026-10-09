@@ -1,0 +1,8 @@
+=== RUN   TestViewStringElementReadRefused
+=== PAUSE TestViewStringElementReadRefused
+=== CONT  TestViewStringElementReadRefused
+    view_element_reads_test.go:19: want located checked-view refusal and fix, got <nil>
+--- FAIL: TestViewStringElementReadRefused (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL

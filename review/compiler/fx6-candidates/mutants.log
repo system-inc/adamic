@@ -1,0 +1,30 @@
+revert-receiver exit 1
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== CONT  TestFX6P37
+    fx6_valid_test.go:29: JavaScript backend stdout = "3\n", source Node = "3\nnumber 5\n"
+--- FAIL: TestFX6P37 (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.134s
+FAIL
+
+revert-destructure exit 1
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P53
+    fx6_valid_test.go:44: JavaScript backend stdout = "", source Node = "n5\n"
+--- FAIL: TestFX6P53 (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.189s
+FAIL
+
+revert-element-refusal exit 1
+=== RUN   TestViewStringElementReadRefused
+=== PAUSE TestViewStringElementReadRefused
+=== CONT  TestViewStringElementReadRefused
+    view_element_reads_test.go:19: want located checked-view refusal and fix, got <nil>
+--- FAIL: TestViewStringElementReadRefused (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.054s
+FAIL
+

@@ -1,0 +1,74 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P38Number
+=== PAUSE TestFX6P38Number
+=== RUN   TestViewStringElementReadRefused
+=== PAUSE TestViewStringElementReadRefused
+=== RUN   TestViewLiteralTypedElementReadRefused
+=== PAUSE TestViewLiteralTypedElementReadRefused
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05Refused
+=== PAUSE TestViewElementP05Refused
+=== RUN   TestViewElementP06Refused
+=== PAUSE TestViewElementP06Refused
+=== RUN   TestViewElementP01Refused
+=== PAUSE TestViewElementP01Refused
+=== RUN   TestViewElementP07Refused
+=== PAUSE TestViewElementP07Refused
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== CONT  TestFX6P35
+=== CONT  TestViewElementFixAgreesWithNode
+=== CONT  TestFX6P53
+=== CONT  TestViewLiteralTypedElementReadRefused
+=== CONT  TestViewStringElementReadRefused
+--- PASS: TestViewStringElementReadRefused (0.09s)
+=== CONT  TestViewElementP01CorrectControl
+--- PASS: TestViewLiteralTypedElementReadRefused (0.10s)
+=== CONT  TestFX6P38Number
+--- PASS: TestFX6P53 (0.28s)
+=== CONT  TestViewElementP07CorrectControl
+=== CONT  TestViewElementP06CorrectControl
+--- PASS: TestViewElementFixAgreesWithNode (0.32s)
+--- PASS: TestFX6P35 (0.33s)
+=== CONT  TestViewElementP05CorrectControl
+--- PASS: TestViewElementP01CorrectControl (0.29s)
+=== CONT  TestViewElementP01Refused
+--- PASS: TestFX6P38Number (0.31s)
+=== CONT  TestViewElementP06Refused
+--- PASS: TestViewElementP06Refused (0.07s)
+=== CONT  TestViewElementP07Refused
+--- PASS: TestViewElementP07CorrectControl (0.22s)
+=== CONT  TestFX6P38
+--- PASS: TestViewElementP01Refused (0.16s)
+=== CONT  TestFX6P51
+--- PASS: TestViewElementP07Refused (0.09s)
+=== CONT  TestViewElementP05Refused
+--- PASS: TestViewElementP06CorrectControl (0.26s)
+=== CONT  TestFX6P37
+--- PASS: TestViewElementP05CorrectControl (0.29s)
+=== CONT  TestFX6P36
+--- PASS: TestViewElementP05Refused (0.07s)
+--- PASS: TestFX6P38 (0.25s)
+--- PASS: TestFX6P51 (0.23s)
+--- PASS: TestFX6P37 (0.21s)
+--- PASS: TestFX6P36 (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.814s
