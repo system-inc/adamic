@@ -38,10 +38,14 @@ class LandingTests(unittest.TestCase):
         self.write('other/b.go', 'package other\n')
         self.main = self.commit('main')
         git(self.repository, 'push', '-q', 'origin', 'HEAD:refs/heads/main')
+        # Developer tools' declared tools, which the lane's checks read.
+        self.write('cloud/fast-gate/tools.txt', 'go\tall\tgo version\n')
+        git(self.repository, 'push', '-q', 'origin', self.commit('tools') + ':refs/heads/devtools/fast-gate')
+        git(self.repository, 'checkout', '-q', '--detach', self.main)
         # The scripts under test, beside a merge-back that does nothing.
         self.scripts = root / 'scripts'
         self.scripts.mkdir()
-        for name in ('push-main.sh', 'landings.py'):
+        for name in ('push-main.sh', 'landings.py', 'lane-checks.py'):
             shutil.copy(directory / name, self.scripts / name)
         (self.scripts / 'merge-back.sh').write_text('#!/usr/bin/env bash\n')
         (self.scripts / 'merge-back.sh').chmod(0o755)
@@ -67,7 +71,8 @@ class LandingTests(unittest.TestCase):
         root = Path(self.tmp.name)
         return subprocess.run(['bash', str(self.scripts / 'push-main.sh')] + list(arguments), cwd=self.repository,
                               capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_TRAIN_STATE=str(root / 'train'),
-                                                                       ADAMIC_FAST_GATE_STATE=str(root / 'watch'), **identity))
+                                                                       ADAMIC_FAST_GATE_STATE=str(root / 'watch'),
+                                                                       ADAMIC_LANE_TREE=str(root / 'lane'), **identity))
 
     def main_now(self):
         git(self.repository, 'fetch', '-q', 'origin')
@@ -99,6 +104,11 @@ class LandingTests(unittest.TestCase):
         self.assertIn('Gate-minutes: 0', git(self.repository, 'log', '-1', '--format=%B', new))
         refused = self.push('--test-only', self.change(new, 'code/a.go', 'package code\n// x\n', 'code'), 'not a split')
         self.assertIn('not test-only', refused.stderr)
+        # The lane's checks refuse a test that shells out to a tool the gate doesn't declare, or isn't gofmt'd.
+        tool = self.change(new, 'code/tool_test.go', 'package code\n\nimport "os/exec"\n\nvar _ = exec.Command("timeout", "1")\n', 'a tool')
+        self.assertIn("runs timeout, which cloud/fast-gate/tools.txt doesn't declare", self.push('--test-only', tool, 'tool').stderr)
+        messy = self.change(new, 'code/messy_test.go', 'package code\nvar  x = 1\n', 'messy')
+        self.assertIn("code/messy_test.go isn't gofmt-formatted", self.push('--test-only', messy, 'messy').stderr)
 
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
         lower = self.change(self.main, 'code/a.go', 'package code\n// lower\n', 'lower')
