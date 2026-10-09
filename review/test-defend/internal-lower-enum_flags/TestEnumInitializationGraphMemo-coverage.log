@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T14:09:41.944645736Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T14:09:41.951975284Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo"}
+{"Time":"2026-10-09T14:09:41.952035793Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo","Output":"=== RUN   TestEnumInitializationGraphMemo\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952057144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo","Output":"=== PAUSE TestEnumInitializationGraphMemo\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952059428Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo"}
+{"Time":"2026-10-09T14:09:41.952062021Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo"}
+{"Time":"2026-10-09T14:09:41.952063684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo","Output":"=== CONT  TestEnumInitializationGraphMemo\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952065787Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12"}
+{"Time":"2026-10-09T14:09:41.952067369Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Output":"=== RUN   TestEnumInitializationGraphMemo/12\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952069613Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Output":"=== PAUSE TestEnumInitializationGraphMemo/12\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952071255Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12"}
+{"Time":"2026-10-09T14:09:41.952073288Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24"}
+{"Time":"2026-10-09T14:09:41.95207493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Output":"=== RUN   TestEnumInitializationGraphMemo/24\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952078145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Output":"=== PAUSE TestEnumInitializationGraphMemo/24\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.952079717Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24"}
+{"Time":"2026-10-09T14:09:41.952082692Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12"}
+{"Time":"2026-10-09T14:09:41.95208842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Output":"=== CONT  TestEnumInitializationGraphMemo/12\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.95209542Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24"}
+{"Time":"2026-10-09T14:09:41.952098435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Output":"=== CONT  TestEnumInitializationGraphMemo/24\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.993082973Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Output":"    enum_initialization_reach_test.go:53: depth 12: 13 function body expansions\n"}
+{"Time":"2026-10-09T14:09:41.993173917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Output":"--- PASS: TestEnumInitializationGraphMemo/12 (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.993319882Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/12","Elapsed":0.04}
+{"Time":"2026-10-09T14:09:41.993346361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Output":"    enum_initialization_reach_test.go:53: depth 24: 25 function body expansions\n"}
+{"Time":"2026-10-09T14:09:41.99336652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Output":"--- PASS: TestEnumInitializationGraphMemo/24 (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.993369925Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo/24","Elapsed":0.04}
+{"Time":"2026-10-09T14:09:41.993372129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo","Output":"--- PASS: TestEnumInitializationGraphMemo (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.993378688Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumInitializationGraphMemo","Elapsed":0}
+{"Time":"2026-10-09T14:09:41.993380521Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:41.996259046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 0.6% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:09:42.012360513Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.066s\tcoverage: 0.6% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:09:42.012416676Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.068}

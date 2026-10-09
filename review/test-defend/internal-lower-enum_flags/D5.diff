@@ -1,0 +1,11 @@
+--- a/internal/lower/library_for_in.go
++++ b/internal/lower/library_for_in.go
+@@ -69,7 +69,7 @@
+ 	node = ast.SkipParentheses(node)
+ 	// Enum objects have a complete fixed shape, including numeric reverse keys.
+ 	if l.enumObject(node) != nil {
+-		return true
++		return false
+ 	}
+ 	if node.Kind == ast.KindAsExpression {
+ 		return l.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
