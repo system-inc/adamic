@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T17:22:36.890074642Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:22:36.897352064Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:22:36.897464663Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== RUN   TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:36.897488038Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== PAUSE TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:36.897490332Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:22:36.897496071Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:22:36.897497813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== CONT  TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:36.928454557Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI\n"}
+{"Time":"2026-10-09T17:22:36.928538212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"--- PASS: TestRepresentationClockSourceCheckedTypes (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:36.928542208Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Elapsed":0.03}
+{"Time":"2026-10-09T17:22:36.928578393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:36.931638356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 0.2% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:36.945792388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.054s\tcoverage: 0.2% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:36.945825307Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.056}

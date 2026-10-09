@@ -1,0 +1,29 @@
+{"Time":"2026-10-09T17:26:30.351759956Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:26:30.358501521Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:26:30.358578808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== RUN   TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358628542Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== PAUSE TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358631146Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:26:30.358634011Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:26:30.358637486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== RUN   TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358642113Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== PAUSE TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358643976Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:26:30.358646259Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors"}
+{"Time":"2026-10-09T17:26:30.358651287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors","Output":"=== RUN   TestSuppressionDirectiveSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.35865356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors","Output":"=== PAUSE TestSuppressionDirectiveSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358655383Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors"}
+{"Time":"2026-10-09T17:26:30.358657536Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:26:30.358659098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== CONT  TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358661262Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors"}
+{"Time":"2026-10-09T17:26:30.358662784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors","Output":"=== CONT  TestSuppressionDirectiveSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.358707611Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:26:30.358709364Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== CONT  TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.416392282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI\n"}
+{"Time":"2026-10-09T17:26:30.416468637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"--- PASS: TestRepresentationClockSourceCheckedTypes (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.538143455Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Elapsed":0.06}
+{"Time":"2026-10-09T17:26:30.538218769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"--- PASS: TestRegExpNativeRefusals (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.568459456Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Elapsed":0.18}
+{"Time":"2026-10-09T17:26:30.568508509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors","Output":"--- PASS: TestSuppressionDirectiveSoundNeighbors (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.568560357Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestSuppressionDirectiveSoundNeighbors","Elapsed":0.21}
+{"Time":"2026-10-09T17:26:30.568564353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:26:30.571755103Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.220s\n"}
+{"Time":"2026-10-09T17:26:30.571796646Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.22}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D1",
+    "target": "TestRegExpNativeRefusals",
+    "file": "internal/regexp/native.go",
+    "old": "\t\t\tif i.min != nil && !i.min.IsUint64() || i.max != nil && !i.max.IsUint64() {\n\t\t\t\treturn fmt.Errorf(\"native regexp quantifier bounds above uint64 are not yet supported\")\n\t\t\t}\n",
+    "new": "",
+    "kind": "drop statement",
+    "reason": "Drop the counter-width refusal; huge quantifier counts truncate during Uint64 serialization.",
+    "line": 17
+  },
+  {
+    "id": "D2",
+    "target": "TestRepresentationClockSourceCheckedTypes",
+    "file": "internal/lower/expression.go",
+    "old": "substituted, isKnown := l.substitution[proven]\n\t\treturn substituted, isKnown",
+    "new": "substituted, _ := l.substitution[proven]\n\t\treturn substituted, true",
+    "kind": "change constant",
+    "reason": "Claim unresolved generic parameters have a known ABI even without a substitution; discard now-unused known binding.",
+    "line": 64
+  },
+  {
+    "id": "D3",
+    "target": "TestSuppressionDirectiveSoundNeighbors",
+    "file": "internal/lower/refusals.go",
+    "old": "func (l *lowering) refuse(module *ast.SourceFile) error {",
+    "new": "func (l *lowering) refuse(module *ast.SourceFile) error {\n\tif len(module.CommentDirectives) == 0 && strings.Contains(module.Text(), \"@ts-expect-error\") {\n\t\treturn &Refused{Where: l.program.FileName(module), What: \"suppression directive\", Fix: \"remove it and fix the type error\"}\n\t}",
+    "kind": "return early",
+    "reason": "Early reject the directive token lexically even when parser says prose/literals contain no directive. No input path/name selection.",
+    "line": 39
+  }
+]

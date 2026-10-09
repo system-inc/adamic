@@ -1,0 +1,12 @@
+--- a/internal/regexp/native.go
++++ b/internal/regexp/native.go
+@@ -14,9 +14,6 @@
+ 	var emit func(*Program, string) error
+ 	emit = func(p *Program, name string) error {
+ 		for index, i := range p.code {
+-			if i.min != nil && !i.min.IsUint64() || i.max != nil && !i.max.IsUint64() {
+-				return fmt.Errorf("native regexp quantifier bounds above uint64 are not yet supported")
+-			}
+ 			if i.look != nil {
+ 				if err := emit(i.look, fmt.Sprintf("%s_look_%d", name, index)); err != nil {
+ 					return err
