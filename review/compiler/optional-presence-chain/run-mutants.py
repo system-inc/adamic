@@ -5,6 +5,9 @@ import subprocess
 root = Path.cwd()
 out = root / 'review/compiler/optional-presence-chain'
 mutants = [
+ ('drop-bool-reservation', 'internal/lower/optional_fields.go', '(slotless(of) && of != ir.MaybeBoolean)', 'slotless(of)', './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a$', 'field write failed: flag'),
+ ('drop-string-retain', 'internal/native/emit_statements.go', 'keptValue = e.kept(value)', 'keptValue = value', './internal/oracle', 'TestOptionalFieldCheckedViewWrites', 'Sanitizer'),
+ ('cast-origin', 'internal/lower/optional_fields.go', 'return l.enumerationDataObject(node.AsAsExpression().Expression, depth+1)', 'return true', './internal/lower', 'TestOptionalDeletionRequiresPlainStorage', 'plain storage boundary'),
  ('plain-origin', 'internal/lower/optional_fields.go', 'if remove && !l.enumerationDataObject(receiver, 0) {', 'if false {', './internal/lower', 'TestOptionalDeletionRequiresPlainStorage', 'plain storage boundary'),
  ('hasown-origin', 'internal/lower/library_object.go', 'return l.exactObject(node, 0)', 'return true', './internal/lower', 'TestObjectUnprovenShapesStayNotYet', 'want NotYet'),
  ('binder-registration', 'internal/oracle/taste_stage3_test.go', '"stage3/fixtures/taste/17_binder_flow.a", true, false', '"stage3/fixtures/taste/17_binder_flow.a", false, false', './internal/oracle', 'TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow', 'want stage 0 to refuse'),

@@ -1,0 +1,9 @@
+interface Source { readonly kind: string }
+interface View { readonly kind: 'record'; slot?: number }
+const raw = { kind: 'record', slot: 'original' };
+const source: Source = raw;
+const view = source as View;
+console.log('writing');
+view.slot = 0;
+console.log('stored');
+console.log(raw.slot);

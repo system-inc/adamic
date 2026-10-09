@@ -25,6 +25,7 @@ func TestOptionalDeletionRequiresPlainStorage(t *testing.T) {
 	for _, source := range []string{
 		`class Source { slot?:number; } const source = new Source(); const alias:{slot?:number} = source; delete alias.slot;`,
 		`function remove(source:{slot?:number}):void { delete source.slot; } remove({});`,
+		`class Source { slot?:number; } const source = new Source(); const alias = source as {slot?:number}; delete alias.slot;`,
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet

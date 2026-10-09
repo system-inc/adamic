@@ -489,7 +489,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			break
 		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
+			write := "adamicViewWrite"
+			if statement.Class != 0 || !e.optionalViewFieldName(statement.Name) {
+				write = "adamicLegacyViewWrite"
+			}
+			e.line("%s(%s, %s, %s, %d);", write, e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
@@ -928,6 +932,13 @@ func (e *emitter) value(expression ir.Expression) string {
 					representation = int(ir.Union)
 				}
 				types = append(types, quote(field.Name)+": "+fmt.Sprint(representation))
+			}
+			for _, field := range expression.Missing {
+				representation := fmt.Sprint(field.Value.Type())
+				if spreadValue != "" {
+					representation = "(adamicFieldRepresentations.get(adamicSpreadSource)?.[" + quote(field.Name) + "] ?? " + representation + ")"
+				}
+				types = append(types, quote(field.Name)+": "+representation)
 			}
 			parentTypes := ""
 			if spreadValue != "" {

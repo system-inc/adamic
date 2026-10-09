@@ -11,7 +11,24 @@ const adamicNamespaceRead = (object, name, type) => { const value = object[name]
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
-const adamicViewWrite = (object, name, value, type) => { if (adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
+const adamicLegacyViewWrite = (object, name, value, type) => { if (adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
+const adamicViewWrite = (object, name, value, type) => {
+    if (![1,2,3,7,9,13].includes(type)) return adamicLegacyViewWrite(object, name, value, type);
+    const actual = adamicFieldRepresentations.get(object)?.[name] ?? 0;
+    const incoming = value === undefined ? 13 : typeof value === 'number' ? 1 : typeof value === 'boolean' ? 2 : 3;
+    const fits = actual === incoming && actual >= 1 && actual <= 3 || actual === 7 && [1,13].includes(incoming) || actual === 9 && [2,13].includes(incoming) || actual === 10 && [1,2,3,13].includes(incoming);
+    if (!fits) {
+        const names = {1:'number',2:'boolean',3:'string',7:'number | undefined',9:'boolean | undefined',10:'union',13:'undefined'};
+        panic('field write failed: ' + name + ' expected ' + (names[actual] || (actual === 0 ? 'missing storage' : 'unsupported representation')) + ', found ' + names[incoming]);
+    }
+    adamicWriteField(object, name, value);
+};
+const adamicOptionalViewField = (object, name, expression, type, expected, allowed) => {
+    const value = adamicReadField(object, name, expression, false, true, expected);
+    if (value === undefined) return value;
+    return adamicViewField(object, name, expression, type === 7 ? 1 : type === 9 ? 2 : type, expected, allowed);
+};
+
 const adamicUninitializedFields = (object, names) => { adamicFieldReadiness.set(object, new Set(names)); return object; };
 const adamicReadField = (object, name, expression, optional = false, allowAbsent = false, fieldView = false) => {
     if (optional && (object === undefined || object === null)) return undefined;

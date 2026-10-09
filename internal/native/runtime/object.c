@@ -393,3 +393,71 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 	}
 	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
 }
+
+// Optional presence is distinct from initialized storage and its live representation.
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+    adamic_view_union_value snapshot = adamic_object_view_union_snapshot(object, name, cache, expression, type, true);
+    if (snapshot.kind == adamic_view_union_undefined) {
+        if (wanted == 7) return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0})};
+        if (wanted == 9) return (adamic_value){.maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false, false})};
+        if (wanted == 3) return (adamic_value){.reference = NULL};
+    }
+    if (wanted == 7 && snapshot.kind == adamic_view_union_number) return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot.payload.number})};
+    if (wanted == 9 && snapshot.kind == adamic_view_union_boolean) return (adamic_value){.maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, snapshot.payload.boolean})};
+    if (wanted == 3 && snapshot.kind == adamic_view_union_string) return snapshot.payload;
+    return adamic_object_view(object, name, cache, wanted == 7 ? 1 : wanted == 9 ? 2 : wanted, type, expression);
+}
+
+static const char *view_storage_name(unsigned char type) {
+    switch (type) {
+    case 1: return "number";
+    case 2: return "boolean";
+    case 3: return "string";
+    case 7: return "number | undefined";
+    case 9: return "boolean | undefined";
+    case 10: return "union";
+    case 13: return "undefined";
+    default: return "unsupported representation";
+    }
+}
+
+// Validate the incoming value before touching the destination or publishing presence.
+// The source slot keeps its representation even through a wider checked alias.
+void adamic_object_view_store(adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_value value, unsigned char wanted) {
+    adamic_value *slot = adamic_object_optional_find(object, name, cache);
+    if (slot == NULL && cache->index < object->shape->count) slot = &object->slots[cache->index];
+    unsigned char actual = slot == NULL ? 0 : adamic_object_field_types(object)[cache->index];
+    if (slot != NULL && actual == 0) actual = (unsigned char)(object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[cache->index] : adamic_shape_type(object->shape, cache->index));
+    unsigned char incoming = wanted;
+    if (wanted == 7) {
+        adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
+        incoming = number.present ? 1 : 13;
+        value.number = number.number;
+    } else if (wanted == 9) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(value.maybe_boolean);
+        incoming = boolean.present ? 2 : 13;
+        value.boolean = boolean.boolean;
+    } else if (wanted == 3 && value.reference == NULL) incoming = 13;
+    bool fits = (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
+    if (!fits) {
+        const char *expected = slot == NULL ? "missing storage" : view_storage_name(actual);
+        const char *found = view_storage_name(incoming);
+        size_t capacity = strlen(name) + strlen(expected) + strlen(found) + 100;
+        char *message = malloc(capacity);
+        if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+        int length = snprintf(message, capacity, "field write failed: %s expected %s, found %s", name, expected, found);
+        adamic_panic(message, (size_t)length);
+    }
+    if (actual == 7) value.number = adamic_maybe_number_pack((adamic_maybe_number){incoming != 13, value.number});
+    if (actual == 9) value.maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){incoming != 13, value.boolean});
+    if (actual == 10) {
+        if (incoming == 1) value.reference = adamic_box_number(value.number);
+        else if (incoming == 2) value.reference = value.boolean ? &adamic_box_true : &adamic_box_false;
+        else if (incoming == 13) value.reference = NULL;
+    }
+    if (object->shape->references[cache->index]) adamic_release(slot->reference);
+    *slot = value;
+    adamic_object_field_types(object)[cache->index] = actual;
+    adamic_object_initialized(object)[cache->index] = 1;
+    adamic_object_publish(object, cache->index);
+}

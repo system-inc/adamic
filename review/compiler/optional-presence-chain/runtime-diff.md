@@ -48,3 +48,14 @@ peak live. Counts measure live values, not object bytes.
 The descriptor mutant reads dynamic types from static registration instead of the
 owned descriptor. A second reserving copy observes wrong types and exits 71 after
 releasing its allocations; both release and ASan/UBSan probes catch it.
+
+## Checked optional writes on V1
+
+These additional runtime hunks await runtime review.
+
+- adamic.h declares the checked optional read and write entry points.
+- object.c reads optional presence and readiness through the shared snapshot, normalizes scalar representations, and reports incompatible present values.
+- object.c names the destination storage type for write diagnostics.
+- object.c validates the incoming value before storing, preserves the physical slot representation, packs optional scalars or boxes union values, retains incoming references before releasing old ones, and publishes readiness and presence after a successful store.
+
+Exact hunks: step2-runtime.patch.

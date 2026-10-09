@@ -6,7 +6,7 @@
 === CONT  TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a
     oracle_test.go:763: want stage 0 to refuse with where and what, got <nil>
 --- FAIL: TestNativeAgreesWithNode (0.01s)
-    --- FAIL: TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a (0.04s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.055s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.057s
 FAIL

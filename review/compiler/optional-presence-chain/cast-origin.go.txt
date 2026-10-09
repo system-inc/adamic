@@ -210,7 +210,7 @@ func (l *lowering) enumerationDataObject(node *ast.Node, depth int) bool {
 	}
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindAsExpression {
-		return l.enumerationDataObject(node.AsAsExpression().Expression, depth+1)
+		return true
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {

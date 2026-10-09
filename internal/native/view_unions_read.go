@@ -18,6 +18,9 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	if contract.Kind != ir.ViewUnion && !contract.FixedTuple && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
 		return "", false
 	}
+	if property.Absent && (property.Of == ir.MaybeNumber || property.Of == ir.MaybeBoolean || property.Of == ir.String) {
+		return e.optionalViewField(property, e.value(property.Object)), true
+	}
 	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
 		panic("compiler bug: unavailable checked union read")
 	}

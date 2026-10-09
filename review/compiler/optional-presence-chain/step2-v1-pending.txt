@@ -1,0 +1,43 @@
+a774d31656
+    Carry only the optional-presence lane onto main. Conservatively require proven plain data origins for deletion and hasOwn. Checked-view optional writes await views-v1 integration. Validate the generator with the usual source-selected sanitized runtime through a scratch overlay; leave the stock driver ABI repair separate.
++    static const char *const names[] = {"pending", "slot", "ready"};
++        adamic_heap *pending = adamic_dynamic_property(&copy->heap, "pending");
++        printf("%d %d %d %d\n", adamic_has_property(&copy->heap, "slot"), adamic_object_initialized(copy)[0], adamic_has_property(&copy->heap, "pending"), pending == NULL);
++        adamic_release(pending);
++        printf("%d %d %d\n", adamic_has_property(&copy->heap, "slot"), adamic_object_initialized(copy)[0], adamic_has_property(&copy->heap, "pending"));
++        adamic_value *slot = adamic_object_write_field(copy, "pending", &cache);
++        adamic_heap *value = adamic_dynamic_property(&copy->heap, "pending");
++// This is pending admission, not a passing backend parity fixture.
++func TestOptionalFieldCheckedViewPending(t *testing.T) {
++	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_checked_view_pending.a"))
++		t.Fatalf("pending boundary changed: %v", err)
++	t.Skip("awaits views-v1: checked-view optional-write integration; v1 retains source-slot refusal, v2 selectors and v3 array hooks do not provide it")
++interface State { pending: number; slot?: number }
++const state: State = { pending: 1 };
++console.log(`${'slot' in before}|${before.pending}`);
++class Unready { pending!: number; slot?: number }
++console.log(String(after.pending));
+diff --git a/internal/oracle/testdata/optional_field_checked_view_pending.a b/internal/oracle/testdata/optional_field_checked_view_pending.a
++++ b/internal/oracle/testdata/optional_field_checked_view_pending.a
++// awaits views-v1: checked-view optional-write integration.
++		console.log(`${'slot' in value}|${'pending' in value}`);
++		if ('pending' in value) console.log(typeof value.pending);
++class Pending {
++	pending!: number;
++const pending = new Pending();
++inspect(pending);
++pending.pending = 0;
++inspect(pending);
++const ready: { pending: number; slot?: number } = { ...pending };
+fa35481dcb
+
+de2b28589f
+    Refresh pending view diagnostics and enable binder flow oracle
+    Main c293674e still refuses optional checked-field alias conversion after views-v1. Recognize that exact diagnostic and the pre-v1 target-slot refusal without claiming acceptance. Binder flow already records Compiles in stage3, but its oracle registration still expected NotYet. Enable native, JavaScript and WASI parity with Node and add its regenerated Linux counts. Restoring the stale registration fails the named oracle with a missing NotYet diagnostic.
+@@ -203,8 +203,10 @@ func TestOptionalFieldCheckedViewPending(t *testing.T) {
++	// Before views-v1 the target shape refuses the optional field. With views-v1,
+ 		t.Fatalf("pending boundary changed: %v", err)
+-	t.Skip("awaits views-v1: checked-view optional-write integration; v1 retains source-slot refusal, v2 selectors and v3 array hooks do not provide it")
++	t.Skip("checked-view optional-field conversion remains pending; landed views-v1 admits required scalar writes, not optional slots")
+80601e7268
+

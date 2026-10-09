@@ -1,0 +1,312 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (33.29s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	33.304s
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== PAUSE TestDefaultTaggedInterfaceAdmission
+=== RUN   TestOptionalDeletionRequiresPlainStorage
+=== PAUSE TestOptionalDeletionRequiresPlainStorage
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestOptionalDeletionRequiresPlainStorage
+=== CONT  TestClassStaticSideEffectMatchesNode
+=== CONT  TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_nullable_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_nullable_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.14s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+--- PASS: TestOptionalDeletionRequiresPlainStorage (0.39s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_nullable_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.01s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.14s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.14s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.11s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.18s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.21s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.11s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.17s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.09s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.10s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_nullable_target_read (0.10s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.09s)
+--- PASS: TestClassStaticSideEffectMatchesNode (0.66s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.715s
+=== RUN   TestOptionalFieldCopyState
+=== PAUSE TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldCheckedViewWrites
+=== PAUSE TestOptionalFieldCheckedViewWrites
+=== RUN   TestOptionalFieldCheckedViewMisfit
+=== PAUSE TestOptionalFieldCheckedViewMisfit
+=== RUN   TestOptionalFieldCheckedViewCatchesDroppedStore
+=== PAUSE TestOptionalFieldCheckedViewCatchesDroppedStore
+=== RUN   TestOptionalFieldCheckedViewCatchesMissingPublication
+=== PAUSE TestOptionalFieldCheckedViewCatchesMissingPublication
+=== RUN   TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== PAUSE TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== RUN   TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== PAUSE TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== RUN   TestOptionalFieldCheckedViewLiteral
+=== PAUSE TestOptionalFieldCheckedViewLiteral
+=== RUN   TestOptionalFieldCheckedViewEnumeration
+=== PAUSE TestOptionalFieldCheckedViewEnumeration
+=== RUN   TestOptionalFieldCheckedViewCatchesBooleanRead
+=== PAUSE TestOptionalFieldCheckedViewCatchesBooleanRead
+=== RUN   TestOptionalFieldWriteCatchesDroppedSlot
+=== PAUSE TestOptionalFieldWriteCatchesDroppedSlot
+=== RUN   TestOptionalFieldPresenceCatchesMutants
+=== PAUSE TestOptionalFieldPresenceCatchesMutants
+=== RUN   TestOptionalFieldConstructionCatchesDroppedReservation
+=== PAUSE TestOptionalFieldConstructionCatchesDroppedReservation
+=== RUN   TestOptionalFieldAliasCatchesStaticEnumeration
+=== PAUSE TestOptionalFieldAliasCatchesStaticEnumeration
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== CONT  TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldCopyState/baseline
+=== CONT  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== CONT  TestOptionalFieldCheckedViewCatchesMissingPublication
+=== CONT  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== CONT  TestOptionalFieldCheckedViewEnumeration
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingPublication
+    optional_field_view_test.go:167: native mutant caught, sanitize=false: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+    optional_field_view_test.go:174: native mutant caught, sanitize=false: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found nullish\n"
+=== NAME  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+    optional_field_view_test.go:180: native mutant caught, sanitize=false: exit 0 stdout "0:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewEnumeration (1.84s)
+=== CONT  TestOptionalFieldCheckedViewCatchesDroppedStore
+=== RUN   TestOptionalFieldCopyState/dynamic_types_from_wrong_place
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingPublication
+    optional_field_view_test.go:167: native mutant caught, sanitize=true: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    optional_field_view_test.go:167: JavaScript mutant caught: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+--- PASS: TestOptionalFieldCheckedViewCatchesMissingPublication (2.42s)
+=== CONT  TestOptionalFieldCheckedViewMisfit
+=== NAME  TestOptionalFieldCopyState/dynamic_types_from_wrong_place
+    optional_field_layout_test.go:119: caught by reserving-copy descriptor assertion, sanitize=false: 
+=== NAME  TestOptionalFieldCheckedViewCatchesDroppedStore
+    optional_field_view_test.go:104: Node catches omitted checked optional store and presence
+--- PASS: TestOptionalFieldCheckedViewCatchesDroppedStore (1.13s)
+=== CONT  TestOptionalFieldCheckedViewWrites
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+    optional_field_view_test.go:174: native mutant caught, sanitize=true: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found nullish\n"
+    optional_field_view_test.go:174: JavaScript mutant caught: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found number\n"
+--- PASS: TestOptionalFieldCheckedViewCatchesMissingWriteGuard (3.50s)
+=== CONT  TestOptionalFieldCheckedViewLiteral
+--- PASS: TestOptionalFieldCheckedViewMisfit (1.30s)
+=== CONT  TestOptionalFieldConstructionCatchesDroppedReservation
+=== NAME  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+    optional_field_view_test.go:180: native mutant caught, sanitize=true: exit 0 stdout "0:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+    optional_field_view_test.go:180: JavaScript mutant caught: exit 0 stdout "0:0:0\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewCatchesAbsentReadAsZero (3.91s)
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== PAUSE TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== PAUSE TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+=== PAUSE TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== CONT  TestOptionalFieldAliasCatchesStaticEnumeration
+=== NAME  TestOptionalFieldCopyState/dynamic_types_from_wrong_place
+    optional_field_layout_test.go:119: caught by reserving-copy descriptor assertion, sanitize=true: 
+=== RUN   TestOptionalFieldCopyState/drop_presence_on_checked_copy
+--- PASS: TestOptionalFieldCheckedViewWrites (1.86s)
+=== CONT  TestOptionalFieldWriteCatchesDroppedSlot
+=== NAME  TestOptionalFieldCopyState/drop_presence_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 0 0\n1 1\n"
+=== NAME  TestOptionalFieldAliasCatchesStaticEnumeration
+    optional_field_write_test.go:188: Node caught static enumeration, sanitize=false: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+    optional_field_write_test.go:188: Node caught static enumeration, sanitize=true: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+--- PASS: TestOptionalFieldAliasCatchesStaticEnumeration (2.19s)
+=== CONT  TestOptionalFieldPresenceCatchesMutants
+=== NAME  TestOptionalFieldWriteCatchesDroppedSlot
+    optional_field_write_test.go:54: Node caught dropped absent slot: missing-field stop, exit 70
+--- PASS: TestOptionalFieldWriteCatchesDroppedSlot (1.85s)
+=== CONT  TestOptionalFieldCheckedViewCatchesBooleanRead
+=== NAME  TestOptionalFieldCheckedViewLiteral
+    optional_field_view_test.go:225: omitted optional literal contract caught by pinned diagnostic in both backends
+--- PASS: TestOptionalFieldCheckedViewLiteral (3.33s)
+=== CONT  TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestOptionalFieldPresenceCatchesMutants/initially_present
+=== NAME  TestOptionalFieldCheckedViewCatchesBooleanRead
+    optional_field_view_test.go:255: native mutant caught, sanitize=false: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+=== NAME  TestOptionalFieldPresenceCatchesMutants/initially_present
+    optional_field_write_test.go:101: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+=== NAME  TestOptionalFieldCopyState/drop_presence_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0 1\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 0 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-type
+=== NAME  TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+=== NAME  TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+    optional_field_write_test.go:101: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove
+=== CONT  TestDefaultTaggedSourceViews/default-read-before-set
+=== NAME  TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove
+    optional_field_write_test.go:101: Node caught incorrect field presence or insertion order by stdout
+--- PASS: TestOptionalFieldPresenceCatchesMutants (5.07s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/initially_present (1.26s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order (1.41s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove (1.65s)
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+=== NAME  TestOptionalFieldCheckedViewCatchesBooleanRead
+    optional_field_view_test.go:255: native mutant caught, sanitize=true: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+    optional_field_view_test.go:255: JavaScript mutant caught: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewCatchesBooleanRead (5.11s)
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-boolean
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-write
+=== NAME  TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/drop_representation_on_checked_copy
+=== CONT  TestDefaultTaggedSourceViews/default-destructure
+=== NAME  TestOptionalFieldCopyState/drop_representation_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-string
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== NAME  TestOptionalFieldCopyState/drop_representation_on_checked_copy
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/overlap_presence_and_readiness
+--- PASS: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (2.14s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (1.61s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (2.11s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (1.45s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (1.81s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-write (1.70s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (1.80s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (1.98s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== NAME  TestOptionalFieldCopyState/overlap_presence_and_readiness
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 255 0\n3 1\ntypes 1 7 1\n0 255 0\n3 1\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== NAME  TestOptionalFieldCopyState/overlap_presence_and_readiness
+    optional_field_layout_test.go:132: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 0 1 0\ntypes 1 7 1\n0 255 0\n3 1\ntypes 1 7 1\n0 255 0\n3 1\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+--- PASS: TestOptionalFieldCopyState (17.88s)
+    --- PASS: TestOptionalFieldCopyState/baseline (2.05s)
+    --- PASS: TestOptionalFieldCopyState/dynamic_types_from_wrong_place (2.33s)
+    --- PASS: TestOptionalFieldCopyState/drop_presence_on_checked_copy (4.32s)
+    --- PASS: TestOptionalFieldCopyState/drop_readiness_on_checked_copy (4.10s)
+    --- PASS: TestOptionalFieldCopyState/drop_representation_on_checked_copy (2.28s)
+    --- PASS: TestOptionalFieldCopyState/overlap_presence_and_readiness (2.80s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== NAME  TestOptionalFieldConstructionCatchesDroppedReservation
+    optional_field_write_test.go:133: Node caught dropped spread reservation: missing-field stop, exit 70
+--- PASS: TestOptionalFieldConstructionCatchesDroppedReservation (21.80s)
+--- PASS: TestNativeAgreesWithNode (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a (1.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a (1.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a (1.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a (1.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a (1.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a (1.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a (11.63s)
+PASS
+gate cache: native hits=0 misses=35
+gate cache: node hits=0 misses=58
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	30.645s

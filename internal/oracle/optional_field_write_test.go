@@ -1,8 +1,6 @@
 package oracle
 
 import (
-	"errors"
-	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -189,25 +187,4 @@ static adamic_array *mutant_static_keys(const adamic_object *object) {
 		}
 		t.Logf("Node caught static enumeration, sanitize=%t: %q", sanitize, got.stdout)
 	}
-}
-
-// This is pending admission, not a passing backend parity fixture.
-// Not parallel: preserves the explicit pending V1 boundary during the first rebuild unit.
-func TestOptionalFieldCheckedViewPending(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_checked_view_pending.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	truth := onNode(t, path)
-	if truth.exitCode != 0 || string(truth.stdout) != "0\n" {
-		t.Fatalf("Node: %+v", truth)
-	}
-	_, err = lowered(t, path)
-	var notYet *lower.NotYet
-	// Before views-v1 the target shape refuses the optional field. With views-v1,
-	// the checked alias pass refuses its optional representation conversion earlier.
-	if !errors.As(err, &notYet) || (notYet.What != "checked view field slot of type number | undefined" && notYet.What != "a checked field alias requiring an optional, accessor, or representation conversion") {
-		t.Fatalf("pending boundary changed: %v", err)
-	}
-	t.Skip("awaits compiler/optional-presence-chain: checked-view optional-field conversion after V1")
 }

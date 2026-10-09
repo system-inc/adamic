@@ -47,7 +47,7 @@ func (l *lowering) optionalLiteralSlots(node *ast.Node, own []ir.Field) ([]ir.Fi
 			if len(members) > 1 {
 				of = l.declaredField(node, field.Name)
 			}
-			if of == 0 || slotless(of) || !(of.IsReference() || of == ir.MaybeNumber) {
+			if of == 0 || (slotless(of) && of != ir.MaybeBoolean) || !(of.IsReference() || of == ir.MaybeNumber || of == ir.MaybeBoolean) {
 				continue // Unsupported representations remain refused at their reads and writes.
 			}
 			missing = append(missing, ir.Field{Name: field.Name, Value: fit(ir.Undefined{}, of)})
@@ -209,6 +209,9 @@ func (l *lowering) enumerationDataObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindAsExpression {
+		return l.enumerationDataObject(node.AsAsExpression().Expression, depth+1)
+	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment && property.Kind != ast.KindSpreadAssignment {
