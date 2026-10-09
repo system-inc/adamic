@@ -1,0 +1,14 @@
+diff --git a/cmd/adamic-test262/run.go b/cmd/adamic-test262/run.go
+index 204b7932..b30ec8e6 100644
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -269,9 +269,6 @@ func (e *engine) attempt(test classified) result {
+ 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
+ 	}
+ 	cache := e.cache
+-	if dependentProgram(test.Program) {
+-		cache = nil
+-	}
+ 	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m", "16MiB")
+ 	if e.compiler != nil {
+ 		// The worker executes this runner, not the scratch copy of adamic used for fallback.

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:15:40.027859968Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T18:15:40.05016418Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T18:15:40.050266896Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== RUN   TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:40.050293955Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== PAUSE TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:40.050297187Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T18:15:40.050308903Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T18:15:40.050311369Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== CONT  TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:47.54077613Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"--- PASS: TestImportedInputsRunFresh (7.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:47.540949657Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Elapsed":7.49}
+{"Time":"2026-10-09T18:15:47.540991675Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:47.54100154Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"coverage: 13.9% of statements in ./cmd/adamic-test262\n"}
+{"Time":"2026-10-09T18:15:47.590724707Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t7.562s\tcoverage: 13.9% of statements in ./cmd/adamic-test262\n"}
+{"Time":"2026-10-09T18:15:47.590765186Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":7.563}

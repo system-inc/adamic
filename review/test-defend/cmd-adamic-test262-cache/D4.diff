@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-test262/run.go b/cmd/adamic-test262/run.go
+index 204b7932..55827156 100644
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -159,7 +159,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
+ 			indices = append(indices, index)
+ 		}
+ 	}
+-	jobs := e.jobs
++	jobs := 1
+ 	if jobs < 1 {
+ 		jobs = 1
+ 	}

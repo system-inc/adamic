@@ -1,0 +1,90 @@
+[
+  {
+    "test": "TestParallelCachedMatchesSerial",
+    "exit": 0,
+    "seconds": 19.023484408000513,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg",
+      "./cmd/adamic-test262",
+      "-coverprofile",
+      "review/test-defend/cmd-adamic-test262-cache/TestParallelCachedMatchesSerial.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestParallelCachedMatchesSerial$"
+    ]
+  },
+  {
+    "test": "TestCacheAtomicBytes",
+    "exit": 0,
+    "seconds": 2.416027685998415,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg",
+      "./cmd/adamic-test262",
+      "-coverprofile",
+      "review/test-defend/cmd-adamic-test262-cache/TestCacheAtomicBytes.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheAtomicBytes$"
+    ]
+  },
+  {
+    "test": "TestImportedInputsRunFresh",
+    "exit": 0,
+    "seconds": 10.063382137999724,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg",
+      "./cmd/adamic-test262",
+      "-coverprofile",
+      "review/test-defend/cmd-adamic-test262-cache/TestImportedInputsRunFresh.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestImportedInputsRunFresh$"
+    ]
+  },
+  {
+    "test": "TestCompilerCacheProgram",
+    "exit": 0,
+    "seconds": 2.645366288998048,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg",
+      "./cmd/adamic-test262",
+      "-coverprofile",
+      "review/test-defend/cmd-adamic-test262-cache/TestCompilerCacheProgram.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheProgram$"
+    ]
+  }
+]

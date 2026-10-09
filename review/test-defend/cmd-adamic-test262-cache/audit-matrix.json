@@ -1,0 +1,87 @@
+{
+  "M01": [
+    "TestCompilerCacheProgram"
+  ],
+  "M02": [
+    "TestCacheKeyDimensions",
+    "TestNodeCacheProgram"
+  ],
+  "M03": [
+    "TestNativeCacheGeneratedC",
+    "TestCacheKeyDimensions"
+  ],
+  "M04": [
+    "TestCacheKeyDimensions"
+  ],
+  "M05": [
+    "TestCacheBypass",
+    "TestParallelCachedMatchesSerial",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit",
+    "TestCacheAtomicBytes",
+    "TestWorkerLazyFallback",
+    "TestOrderedProgress",
+    "TestCompilerWorkerMatchesSubprocess"
+  ],
+  "M06": [
+    "TestCacheAtomicBytes"
+  ],
+  "M07": [
+    "TestCacheBypass",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit",
+    "TestCacheAtomicBytes"
+  ],
+  "M08": [
+    "TestCacheBypass",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit",
+    "TestCacheAtomicBytes"
+  ],
+  "M09": [
+    "TestCacheBypass",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit"
+  ],
+  "M10": [
+    "TestCacheBypass",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestEditCacheSeparation",
+    "TestLoweringSourceEdit",
+    "TestCacheAtomicBytes"
+  ],
+  "M11": [
+    "TestCompilerCacheProgram",
+    "TestImportedInputsRunFresh"
+  ],
+  "M12": [
+    "TestUnavailableCacheStillRuns"
+  ],
+  "M13": [
+    "TestCompilerCacheAcrossScratchDirectories"
+  ],
+  "M14": [
+    "TestCompilerWorkerTimeout"
+  ],
+  "M15": [
+    "TestCompilerWorkerTimeout"
+  ],
+  "M16": [
+    "TestCompilerWorkerMatchesSubprocess"
+  ],
+  "M17": [],
+  "M18": [
+    "TestOrderedProgress"
+  ],
+  "M19": [
+    "TestWorkerLazyFallback",
+    "TestOrderedProgress",
+    "TestMiniRunner",
+    "TestLargeCompilerOutputIsComplete"
+  ],
+  "M20": []
+}

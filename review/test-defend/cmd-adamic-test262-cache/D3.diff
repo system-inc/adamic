@@ -1,0 +1,14 @@
+diff --git a/cmd/adamic-test262/run.go b/cmd/adamic-test262/run.go
+index 204b7932..1995ae9b 100644
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -166,9 +166,6 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
+ 	if jobs > len(indices) {
+ 		jobs = len(indices)
+ 	}
+-	if jobs > 1 {
+-		sort.SliceStable(indices, func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) })
+-	}
+ 	queue := make(chan int)
+ 	var workers sync.WaitGroup
+ 	locals := make([]engine, jobs)

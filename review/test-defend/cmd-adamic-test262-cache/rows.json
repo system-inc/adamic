@@ -1,0 +1,54 @@
+[
+  {
+    "test": "TestParallelCachedMatchesSerial",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCacheAtomicBytes",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "cmd/adamic-test262/cache.go:35",
+        "change": "change stored stderr to empty",
+        "rows_failed": [
+          "TestCacheAtomicBytes",
+          "TestCompilerWorkerMatchesSubprocess",
+          "TestParallelCachedMatchesSerial"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "cmd/adamic-test262/run.go:169",
+        "change": "drop parallel scheduling sort",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "cmd/adamic-test262/run.go:162",
+        "change": "change worker-count option to one",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D2 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-defend/cmd-adamic-test262-cache/D2.log 2>&1; cache_test.go:175: round 0 differs:; ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D3 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-defend/cmd-adamic-test262-cache/D3.log 2>&1; whole package PASS; ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D4 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-defend/cmd-adamic-test262-cache/D4.log 2>&1; whole package PASS"
+  },
+  {
+    "test": "TestImportedInputsRunFresh",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCompilerCacheProgram",
+    "defense": "defended",
+    "unique_mutant": "D1 cmd/adamic-test262/run.go:272",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "cmd/adamic-test262/run.go:272",
+        "change": "drop dependent-program cache bypass",
+        "rows_failed": [
+          "TestImportedInputsRunFresh"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D1 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-defend/cmd-adamic-test262-cache/D1.log 2>&1; cache_test.go:280: mutable imported input served stale native observation: [exit 1 vs 0 exit 1 vs 0]"
+  }
+]
