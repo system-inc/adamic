@@ -336,7 +336,7 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
 		return err
 	}
-	flags := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, sourcePath)
+	flags := append(native.SourceFlags(source, options), "-I", filepath.Dir(library), "-o", output, sourcePath)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	if result, err := malformedEventsCommand(ctx, "clang", flags...).CombinedOutput(); err != nil {

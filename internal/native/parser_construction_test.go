@@ -140,7 +140,7 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 		if err != nil {
 			t.Fatal(err)
 		}
-		flags := Flags(options)
+		flags := SourceFlags(source, options)
 		library, err := cachedRuntime(files, flags, compiler, "parser construction mutant", directory)
 		if err != nil {
 			t.Fatal(err)

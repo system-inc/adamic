@@ -56,7 +56,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if program == "cohere-typeaware" {
 				library, err = splitTSGoRuntime(source, options)
 			} else {
-				library, err = RuntimeLibrary("", options)
+				library, err = RuntimeLibraryForSource("", source, options)
 			}
 			if err != nil {
 				t.Fatal(err)
@@ -65,7 +65,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if err := os.WriteFile(filename, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			args := sourceFlags(source, options)
+			args := SourceFlags(source, options)
 			if trace {
 				args = append(args, "-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"), "-ftime-trace-granularity=500")
 			}
@@ -97,7 +97,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			slow = true
 		}
 		loadAfter, _ := os.ReadFile("/proc/loadavg")
-		row := map[string]any{"program": program, "loop": loop, "round": round, "seconds": elapsed, "flags": Flags(options), "jobs": options.Jobs, "split": options.Split, "instrument": command, "load_before": strings.TrimSpace(string(loadBefore)), "load_after": strings.TrimSpace(string(loadAfter)), "build_flags": metadata, "cache": "runtime warm; checker warm for typeaware; unit cache enabled, cold for full, warm for one-line/warm; no program result cache"}
+		row := map[string]any{"program": program, "loop": loop, "round": round, "seconds": elapsed, "flags": SourceFlags(source, options), "jobs": options.Jobs, "split": options.Split, "instrument": command, "load_before": strings.TrimSpace(string(loadBefore)), "load_after": strings.TrimSpace(string(loadAfter)), "build_flags": metadata, "cache": "runtime warm; checker warm for typeaware; unit cache enabled, cold for full, warm for one-line/warm; no program result cache"}
 		if err := encoder.Encode(row); err != nil {
 			t.Fatal(err)
 		}
@@ -149,7 +149,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if program == "cohere-typeaware" {
 				_, err = splitTSGoRuntime(source, mode.options)
 			} else {
-				_, err = RuntimeLibrary("", mode.options)
+				_, err = RuntimeLibraryForSource("", source, mode.options)
 			}
 			if err != nil {
 				t.Fatal(err)
