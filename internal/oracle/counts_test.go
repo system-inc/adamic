@@ -209,6 +209,7 @@ func TestCountsAreRecorded(t *testing.T) {
 		return
 	}
 	rows = append(rows, interfaceCastCounts(t)...)
+	rows = append(rows, programRegionCountRows(t)...)
 	for _, count := range additionalFixtureCounts {
 		rows = append(rows, count(t)...)
 	}

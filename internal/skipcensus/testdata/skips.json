@@ -167,6 +167,20 @@
     ]
   },
   {
+    "file": "internal/lower/program_region_host_witness_test.go",
+    "test": "TestProgramRegionHost14MemberSites",
+    "id": "TestProgramRegionHost14MemberSites:6a073e1c0237cdcfda954183aa4be91a5c986f4059abbeda54ba5541bb341a39",
+    "line": 39,
+    "condition": "errors.As(err, &refused) && refused.What == \"the non-null assertion !\"",
+    "reads": [],
+    "callers": [
+      "TestProgramRegionHost14MemberSites"
+    ],
+    "message": "\"pending non-null assertion lowering: host fixture 14\"",
+    "class": "not-applicable",
+    "provides": "Expected refusal while non-null assertion lowering is pending; the witness resumes automatically when lowering succeeds."
+  },
+  {
     "file": "internal/lower/prototype_test.go",
     "test": "nodePrototypeMembers",
     "id": "TestInheritedLibraryReadsNeverLoadOwnFields,TestNullishPrototypeReadsAreRejectedByChecker:c7462b9a2227a7a13105687b1b5da770404c35e872a8a6f92c8fdc51eb949e59",
@@ -425,6 +439,70 @@
     "message": "\"darwin navigation.a: Node arm64 fused multiply-adds change the last bit (#myatdyv); checked by the Linux x64 oracle lane\"",
     "class": "not-applicable",
     "provides": "Only navigation.a on darwin: Node arm64 fused multiply-adds change the last bit (#myatdyv). The Linux x64 oracle lane is the gate of record."
+  },
+  {
+    "file": "internal/oracle/program_region_test.go",
+    "test": "programRegionLowered",
+    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:0eada7362516bd18ce410b2b5a9067d3d8da9e9c41299468011554b376fc9432",
+    "line": 29,
+    "condition": "errors.As(err, &refused)",
+    "reads": [],
+    "callers": [
+      "TestCountsAreRecorded",
+      "TestProgramRegionCapturedCell",
+      "TestProgramRegionConstructor",
+      "TestProgramRegionCountedMapperStorage",
+      "TestProgramRegionExtraMemberMutant",
+      "TestProgramRegionFieldOnlyAdoptionMutant",
+      "TestProgramRegionGraphParent",
+      "TestProgramRegionGraphRelations",
+      "TestProgramRegionGraphSymbols",
+      "TestProgramRegionHost14AgreesWithNode",
+      "TestProgramRegionMemberMapperStorage",
+      "TestProgramRegionMillion",
+      "TestProgramRegionMissingMemberMutant",
+      "TestProgramRegionOptionalStorage",
+      "TestProgramRegionOwnership",
+      "TestProgramRegionTscNodesAgreeWithNode",
+      "TestProgramRegionWeakParent",
+      "TestProgramRegionWeakRelations",
+      "TestProgramRegionWeakSymbols"
+    ],
+    "message": "\"pending non-null assertion lowering: host fixture 14\"",
+    "class": "not-applicable",
+    "provides": "Expected refusal while non-null assertion lowering is pending; the witness resumes automatically when lowering succeeds."
+  },
+  {
+    "file": "internal/oracle/program_region_test.go",
+    "test": "programRegionLowered",
+    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:0eada7362516bd18ce410b2b5a9067d3d8da9e9c41299468011554b376fc9432",
+    "line": 31,
+    "condition": "errors.As(err, &refused)",
+    "reads": [],
+    "callers": [
+      "TestCountsAreRecorded",
+      "TestProgramRegionCapturedCell",
+      "TestProgramRegionConstructor",
+      "TestProgramRegionCountedMapperStorage",
+      "TestProgramRegionExtraMemberMutant",
+      "TestProgramRegionFieldOnlyAdoptionMutant",
+      "TestProgramRegionGraphParent",
+      "TestProgramRegionGraphRelations",
+      "TestProgramRegionGraphSymbols",
+      "TestProgramRegionHost14AgreesWithNode",
+      "TestProgramRegionMemberMapperStorage",
+      "TestProgramRegionMillion",
+      "TestProgramRegionMissingMemberMutant",
+      "TestProgramRegionOptionalStorage",
+      "TestProgramRegionOwnership",
+      "TestProgramRegionTscNodesAgreeWithNode",
+      "TestProgramRegionWeakParent",
+      "TestProgramRegionWeakRelations",
+      "TestProgramRegionWeakSymbols"
+    ],
+    "message": "\"pending delete on optional fields: program_region/optional.a\"",
+    "class": "not-applicable",
+    "provides": "Expected refusal while delete on optional fields is pending; the witness resumes automatically when lowering succeeds."
   },
   {
     "file": "internal/oracle/regexp_cycle_test.go",
