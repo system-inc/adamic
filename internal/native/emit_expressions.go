@@ -479,7 +479,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair))
+		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s, %d, %d)", e.value(expression.Map), pair, expression.KeyType, expression.ValueType))
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}

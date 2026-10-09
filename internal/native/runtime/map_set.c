@@ -136,6 +136,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	if (part == 3) {
 		int shape = (collection_reference(key_type) ? 2 : 0) + (collection_reference(value_type) ? 1 : 0);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
+		pair->tuple = true;
 		pair->slots[0] = key;
 		pair->slots[1] = value;
 		adamic_object_field_types(pair)[0] = (unsigned char)key_type;
@@ -193,6 +194,9 @@ static adamic_value sequence_next(adamic_closure *self, adamic_value *arguments)
 		adamic_value element = ((adamic_array *)source)->elements[position];
 		if (part == 3) {
 			adamic_object *pair = adamic_object_new(&pair_shapes[collection_reference(type) ? 1 : 0]);
+			pair->tuple = true;
+			adamic_object_field_types(pair)[0] = 1;
+			adamic_object_field_types(pair)[1] = (unsigned char)type;
 			pair->slots[0].number = (double)position;
 			pair->slots[1] = element;
 			if (collection_reference(type)) { adamic_retain(element.reference); }

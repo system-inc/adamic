@@ -779,7 +779,7 @@ bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_valu
 void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
-adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
+adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair, int key_type, int value_type);
 
 // adamic_array_join is array.join(separator), each element written as String() would.
 enum adamic_join {

@@ -1,0 +1,11 @@
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: readonly [string, number]; }
+function printPair(pair: [string, number]): void {
+ const raw = {kind: 'Holder' as const, value: pair};
+ const base: Root = raw;
+ const view = base as View;
+ console.log(`${view.value[0]}:${view.value[1]}`);
+}
+const map = new Map<string, number>([['first', 1], ['second', 2]]);
+for (const pair of map.entries()) printPair(pair);
+for (const pair of [...map]) printPair(pair);
