@@ -13,6 +13,7 @@ import (
 )
 
 // Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
+// Not parallel: artifacts write to the shared ADAMIC_LINT_PROFILE_DIR directory.
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_LINT_PROFILE_DIR")
 	if directory == "" {
