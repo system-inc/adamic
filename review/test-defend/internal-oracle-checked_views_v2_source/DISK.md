@@ -1,0 +1,1 @@
+First df: /tmp 8.8G total, 265M used, 8.6G free; /workspace 32G total, 17G used, 14G free. Removed only prior-unit /tmp/defend-stack and /tmp/adamic-gate, then recreated world-traversable TMPDIR. Second df: /tmp 238M used and 8.6G free; /workspace unchanged. 15G cannot fit in the /tmp mount. No disk failure.

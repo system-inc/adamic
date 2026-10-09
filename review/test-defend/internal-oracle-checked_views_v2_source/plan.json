@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "file_line": "internal/lower/locals.go:14",
+    "menu": "change a constant",
+    "before": "What: \"var\"",
+    "after": "What: \"let\"",
+    "purpose": "Wrong forbidden construct name for non-block-scoped declarations; full diagnostic pin versus unrelated array metadata refusal."
+  },
+  {
+    "id": "D2",
+    "file_line": "internal/lower/locals.go:14",
+    "menu": "change a constant",
+    "before": "Fix: \"use const or let\"",
+    "after": "Fix: \"use var\"",
+    "purpose": "Incorrect repair for a refused var declaration."
+  },
+  {
+    "id": "D3",
+    "file_line": "internal/lower/optional_widening.go:196",
+    "menu": "change a constant",
+    "before": "on the source type",
+    "after": "on the target type",
+    "purpose": "Incorrect repair direction for absent optional source fields in imported Error views."
+  }
+]
