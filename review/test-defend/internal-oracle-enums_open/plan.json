@@ -1,0 +1,111 @@
+{
+  "rows": [
+    "TestNumericEnumNeverPathsPinned",
+    "TestNumericEnumNeverPinned",
+    "TestStage3EnumBoundaries",
+    "TestStage3EnumSparseArrayBoundary",
+    "TestEnumNameEnumerationMutant",
+    "TestEnumSemanticMutants",
+    "TestEnumCleanupMutant",
+    "TestFallthroughMutants",
+    "TestFieldReadinessRepresentation",
+    "TestFreshWriteProbesStayRefused",
+    "TestFunctionValueBoundaryBoxing",
+    "TestImportCycleRuntimeCalls",
+    "TestImportCycleLoadTimeReads",
+    "TestImportedNonliteralConstCaseIsNotYet",
+    "TestInputAgreesWithNode",
+    "TestEnumInitializationNode",
+    "TestEnumInitializationUnknownPinned",
+    "TestModuleNamespaceReadsMatchNode",
+    "TestModuleNamespaceReadinessMutants",
+    "TestModuleNamespaceLiveBindingMutant",
+    "TestNestedSiblingCycleMutantIsCaught",
+    "TestNestedCycleRefusal",
+    "TestStage3EnumFallthrough",
+    "TestTypedArrayWriteStopIsPinned"
+  ],
+  "general_selector": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$",
+  "variants": [
+    [
+      "D1",
+      [
+        [
+          "internal/lower/fresh.go",
+          "return \"the write at \" +",
+          "return \"the assignment at \" +"
+        ]
+      ]
+    ],
+    [
+      "D2",
+      [
+        [
+          "internal/native/runtime/array.c",
+          "is outside an array of length",
+          "is beyond an array of length"
+        ]
+      ]
+    ],
+    [
+      "D3",
+      [
+        [
+          "internal/javascript/javascript.go",
+          "is outside an array of length",
+          "is beyond an array of length"
+        ]
+      ]
+    ],
+    [
+      "D4",
+      [
+        [
+          "internal/native/runtime/array.c",
+          "is outside an array of length",
+          "is beyond an array of length"
+        ],
+        [
+          "internal/native/runtime/typed_array.c",
+          "is outside an array of length",
+          "is beyond an array of length"
+        ],
+        [
+          "internal/javascript/javascript.go",
+          "is outside an array of length",
+          "is beyond an array of length"
+        ]
+      ]
+    ],
+    [
+      "D5",
+      [
+        [
+          "internal/lower/expression.go",
+          "ast.KindMinusToken:            ir.Subtract,",
+          "ast.KindMinusToken:            ir.Remainder,"
+        ]
+      ]
+    ],
+    [
+      "D6",
+      [
+        [
+          "internal/native/emit_expressions.go",
+          "return fmt.Sprintf(\"(%s %s %s)\", left, cOperators[operator], right)",
+          "return fmt.Sprintf(\"(%s %s %s)\", right, cOperators[operator], left)"
+        ]
+      ]
+    ],
+    [
+      "D7",
+      [
+        [
+          "internal/native/emit_branches.go",
+          "e.line(\"if (%s) {\", unwrap(condition))",
+          "e.line(\"if (!(%s)) {\", unwrap(condition))"
+        ]
+      ]
+    ]
+  ]
+}

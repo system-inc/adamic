@@ -1,0 +1,154 @@
+[
+  {
+    "id": "clean",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 36.10225636799805,
+    "exit": 0
+  },
+  {
+    "id": "D1",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 35.19943332399998,
+    "exit": 0
+  },
+  {
+    "id": "D2",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 51.192060896999465,
+    "exit": 0
+  },
+  {
+    "id": "D3",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 35.81434652099779,
+    "exit": 0
+  },
+  {
+    "id": "D4",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 52.133316908999404,
+    "exit": 0
+  },
+  {
+    "id": "D5",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 35.65546999999788,
+    "exit": 1
+  },
+  {
+    "id": "D6",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 33.864012949001335,
+    "exit": 1
+  },
+  {
+    "id": "D7",
+    "label": "new-tests",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsAgreeWithNode|TestReviewProgramsRefuse|TestReviewProgramsNoLooseFiles|TestReviewProgramsSelfTest)$"
+    ],
+    "wall_seconds": 34.68028233000223,
+    "exit": 1
+  }
+]

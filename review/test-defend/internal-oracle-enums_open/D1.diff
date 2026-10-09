@@ -1,0 +1,11 @@
+--- a/internal/lower/fresh.go
++++ b/internal/lower/fresh.go
+@@ -66,7 +66,7 @@
+ 	if write.Site == 0 {
+ 		return "a write in " + f.l.functionName(write.Function)
+ 	}
+-	return "the write at " + f.l.program.Where(f.l.writeSites[write.Site-1].node)
++	return "the assignment at " + f.l.program.Where(f.l.writeSites[write.Site-1].node)
+ }
+ 
+ // functionName is an IR function's name, or the top level's.

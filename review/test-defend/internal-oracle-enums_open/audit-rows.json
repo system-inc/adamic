@@ -1,0 +1,587 @@
+[
+  {
+    "test": "TestNumericEnumNeverPathsPinned",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_open_test.go:19",
+    "seconds": 0.195,
+    "oracle": "Self-pinned before/lookup stdout, numeric-enum panic stderr and exit 70; native and JavaScript must match the full triple.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: enums_open_test.go:39: native: exit codes differ; {stdout:[] stderr:[] exitCode:0}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverPinned"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.088,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; enums_open_test.go:39: native: exit codes differ; {stdout:[] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestNumericEnumNeverPinned",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_open_test.go:46",
+    "seconds": 0.088,
+    "oracle": "Self-pinned Adamic panic triple; separately runs source on Node and checks its successful stdout.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: enums_open_test.go:60: native: exit codes differ; exit 0, stdout \"\", stderr \"\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStage3EnumSparseArrayBoundary"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.098,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; enums_open_test.go:60: native: exit codes differ; exit 0, stdout \"\", stderr \"\""
+  },
+  {
+    "test": "TestStage3EnumBoundaries",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_stage3_test.go:38",
+    "seconds": 0.087,
+    "oracle": "TypeScript-Go checker errors must have TS2532; Adamic refusal must have invariant-mutable. Error class plus substring only, not full diagnostic location.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: enums_stage3_test.go:62: want boundary invariant-mutable, got /workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read;",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFreshWriteProbesStayRefused"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.678,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M3 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M3.log 2>&1; enums_stage3_test.go:62: want boundary invariant-mutable, got /workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read;",
+    "probe_scope": "Lower subcase only; two checker-error subcases did not reach Lower and were not entry-probed."
+  },
+  {
+    "test": "TestStage3EnumSparseArrayBoundary",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_stage3_test.go:68",
+    "seconds": 0.098,
+    "oracle": "Self-pinned native and JavaScript array-bounds panic triple. Node side checks only successful exit, not its stdout.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: enums_stage3_test.go:82: native: exit codes differ; {stdout:[] stderr:[] exitCode:0}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverPinned"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.088,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; enums_stage3_test.go:82: native: exit codes differ; {stdout:[] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestEnumNameEnumerationMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_stage3_test.go:92",
+    "seconds": 0.089,
+    "oracle": "Actual Node source stdout comparison must detect built-in enum-field order swap.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: enums_stage3_test.go:134: want Node stdout catch, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/W1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestFieldReadinessRepresentation)$' > review/test-audit/internal-oracle-enums_open/W1.log 2>&1; enums_stage3_test.go:134: want Node stdout catch, got \"\"",
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestEnumSemanticMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_test.go:26",
+    "seconds": 0.878,
+    "oracle": "Actual Node source stdout comparison must detect six built-in semantic mutants after clean native exits.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: fallthrough_test.go:83: Node \"1: one two \\n2: two \\n3: three default four \\n4: four \\n5: default four \\n6 undefined\\n1132\\n\"; native exit 70 stderr \"adamic: panic: compiler bug: a function ended without returning\\n\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/W1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestFieldReadinessRepresentation)$' > review/test-audit/internal-oracle-enums_open/W1.log 2>&1; fallthrough_test.go:83: Node \"1: one two \\n2: two \\n3: three default four \\n4: four \\n5: default four \\n6 undefined\\n1132\\n\"; native exit 70 stderr \"adamic: panic: compiler bug: a function ended without returning\\n\"",
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestEnumCleanupMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/enums_test.go:115",
+    "seconds": 0.451,
+    "oracle": "LeakSanitizer must detect omitted cleanup, while actual Node stdout remains unchanged.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: enums_test.go:148: enum cleanup mutant not caught: exit 0, stderr",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumCleanupMutant"
+    ],
+    "evidence": "ADAMIC_MUTANT=W2 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/W2 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestEnumCleanupMutant$' > review/test-audit/internal-oracle-enums_open/W2.log 2>&1; enums_test.go:148: enum cleanup mutant not caught: exit 0, stderr",
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestFallthroughMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/fallthrough_test.go:22",
+    "seconds": 0.128,
+    "oracle": "Actual Node stdout comparisons for isolated cases and continue-as-break; self-pinned compiler missing-return panic for the third subcase.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: fallthrough_test.go:83: Node \"1: one two \\n2: two \\n3: three default four \\n4: four \\n5: default four \\n6 undefined\\n1132\\n\"; native exit 70 stderr \"adamic: panic: compiler bug: a function ended without returning\\n\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/W1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestFieldReadinessRepresentation)$' > review/test-audit/internal-oracle-enums_open/W1.log 2>&1; fallthrough_test.go:83: Node \"1: one two \\n2: two \\n3: three default four \\n4: four \\n5: default four \\n6 undefined\\n1132\\n\"; native exit 70 stderr \"adamic: panic: compiler bug: a function ended without returning\\n\"",
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestFieldReadinessRepresentation",
+    "package": "internal/oracle",
+    "file": "internal/oracle/field_readiness_test.go:9",
+    "seconds": 0.532,
+    "oracle": "Self-pinned readiness panic and written zero; built-in removed-readiness mutant must disagree. No external authority.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: field_readiness_test.go:41: dropping readiness check escaped pinned assertion",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/W1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestFieldReadinessRepresentation)$' > review/test-audit/internal-oracle-enums_open/W1.log 2>&1; field_readiness_test.go:41: dropping readiness check escaped pinned assertion",
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestFreshWriteProbesStayRefused",
+    "package": "internal/oracle",
+    "file": "internal/oracle/fresh_test.go:19",
+    "seconds": 0.678,
+    "oracle": "Self-pinned marked cycle-write site and adamic/cycle-capable label. Node and leak checks run only if lowering accepts a probe. M3 catches removal of the label, not acceptance of a cycle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: fresh_test.go:53: refused, but not naming the marked write (\"the write at /workspace/adamic/internal/oracle/testdata/fresh_refused/ctor_wrapped.a:17:\"):",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStage3EnumBoundaries"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.087,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M3 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M3.log 2>&1; fresh_test.go:53: refused, but not naming the marked write (\"the write at /workspace/adamic/internal/oracle/testdata/fresh_refused/ctor_wrapped.a:17:\"):"
+  },
+  {
+    "test": "TestFunctionValueBoundaryBoxing",
+    "package": "internal/oracle",
+    "file": "internal/oracle/function_values_test.go:29",
+    "seconds": 0.05,
+    "oracle": "Self-pinned successful lowering, four callable arguments and boxed union return shapes. M2 fails during Lower with NotYet, before the structural assertions; those individual assertions remain unproven.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: function_values_test.go:37: /workspace/adamic/internal/oracle/testdata/function_values_boundary.a:16:16: stage 0 can't lower a BinaryExpression with a union of differently held members and a value yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M2 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M2.log 2>&1; function_values_test.go:37: /workspace/adamic/internal/oracle/testdata/function_values_boundary.a:16:16: stage 0 can't lower a BinaryExpression with a union of differently held members and a value yet"
+  },
+  {
+    "test": "TestImportCycleRuntimeCalls",
+    "package": "internal/oracle",
+    "file": "internal/oracle/import_cycles_test.go:26",
+    "seconds": 0.167,
+    "oracle": "Actual independent Node runner invokes exports after module bodies; compares full result triples to native, released native and generated JavaScript, plus leak checks.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: import_cycles_test.go:73: stdout differs",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverPinned"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.088,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; import_cycles_test.go:73: stdout differs"
+  },
+  {
+    "test": "TestImportCycleLoadTimeReads",
+    "package": "internal/oracle",
+    "file": "internal/oracle/import_cycles_test.go:83",
+    "seconds": 0.417,
+    "oracle": "Actual Node source stdout, stderr and exit comparisons, with fixture preconditions for initialization errors.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: import_cycles_test.go:117: exit codes differ",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverPinned"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.088,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; import_cycles_test.go:117: exit codes differ"
+  },
+  {
+    "test": "TestImportedNonliteralConstCaseIsNotYet",
+    "package": "internal/oracle",
+    "file": "internal/oracle/imported_const_case_test.go:21",
+    "seconds": 0.144,
+    "oracle": "Actual Node source succeeds with pinned stdout; Adamic NotYet type, path, position and full wording are self-pinned.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: imported_const_case_test.go:35: got /workspace/adamic/internal/oracle/testdata/imported_const_cases/nonliteral.a:3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) now; want /workspace/adamic/internal/oracle/testdata/imported_const_cases/nonliteral.a:3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M4 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M4.log 2>&1; imported_const_case_test.go:35: got /workspace/adamic/internal/oracle/testdata/imported_const_cases/nonliteral.a:3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) now; want /workspace/adamic/internal/oracle/testdata/imported_const_cases/nonliteral.a:3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) yet"
+  },
+  {
+    "test": "TestInputAgreesWithNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/input_test.go:106",
+    "seconds": 0.428,
+    "oracle": "Actual Node source triples plus written file names, bytes and permissions; native and JavaScript must agree, with explicit permission-denial checks and leak checks.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: input_test.go:169: stdout differs",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverPinned"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": 0.088,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestFallthroughMutants",
+      "TestFieldReadinessRepresentation",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleRuntimeCalls",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$' > review/test-audit/internal-oracle-enums_open/M1.log 2>&1; input_test.go:169: stdout differs"
+  }
+]

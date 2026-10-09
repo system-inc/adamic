@@ -1,0 +1,109 @@
+[
+  {
+    "test": "TestStage3EnumSparseArrayBoundary",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNumericEnumNeverPinned",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/array.c:407",
+        "change": "is outside an array of length -> is beyond an array of length",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestStage3EnumSparseArrayBoundary"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/javascript/javascript.go:91",
+        "change": "is outside an array of length -> is beyond an array of length",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestStage3EnumSparseArrayBoundary",
+          "TestTypedArrayWriteStopIsPinned"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/runtime/array.c:407, internal/native/runtime/typed_array.c:101, internal/javascript/javascript.go:91",
+        "change": "is outside an array of length -> is beyond an array of length; is outside an array of length -> is beyond an array of length; is outside an array of length -> is beyond an array of length",
+        "rows_failed": [
+          "TestStage3EnumSparseArrayBoundary",
+          "TestTypedArrayWriteStopIsPinned"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-oracle-enums_open/run.py; D2-matrix.log: enums_stage3_test.go:82: native: stderr differs; {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 105 110 100 101 120 32 49 32 105 115 32 98 101 121 111 110 100 32 97 110 32 97 114 114 97 121 32 111 102 32 108 101 110 103 116 104 32 48 10] exitCode:70}",
+    "bounded": true
+  },
+  {
+    "test": "TestFreshWriteProbesStayRefused",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestStage3EnumBoundaries",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/fresh.go:69",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/fresh.go:69",
+        "change": "return \"the write at \" + -> return \"the assignment at \" +",
+        "rows_failed": [
+          "TestFreshWriteProbesStayRefused"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-oracle-enums_open/run.py; D1-matrix.log: fresh_test.go:53: refused, but not naming the marked write (\"the write at /workspace/adamic/internal/oracle/testdata/fresh_refused/another_view.a:15:\"):",
+    "bounded": true
+  },
+  {
+    "test": "TestImportCycleRuntimeCalls",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNumericEnumNeverPinned",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/expression.go:784",
+        "change": "ast.KindMinusToken:            ir.Subtract, -> ast.KindMinusToken:            ir.Remainder,",
+        "rows_failed": [
+          "TestImportCycleRuntimeCalls",
+          "TestNestedSiblingCycleMutantIsCaught",
+          "TestReviewProgramsAgreeWithNode"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/native/emit_expressions.go:754",
+        "change": "return fmt.Sprintf(\"(%s %s %s)\", left, cOperators[operator], right) -> return fmt.Sprintf(\"(%s %s %s)\", right, cOperators[operator], left)",
+        "rows_failed": [
+          "TestEnumCleanupMutant",
+          "TestImportCycleRuntimeCalls",
+          "TestInputAgreesWithNode",
+          "TestNativeAgreesWithNode",
+          "TestNestedSiblingCycleMutantIsCaught",
+          "TestReviewProgramsAgreeWithNode",
+          "TestStage3EnumFallthrough"
+        ]
+      },
+      {
+        "mutant": "D7",
+        "file_line": "internal/native/emit_branches.go:104",
+        "change": "e.line(\"if (%s) {\", unwrap(condition)) -> e.line(\"if (!(%s)) {\", unwrap(condition))",
+        "rows_failed": [
+          "TestImportCycleRuntimeCalls",
+          "TestInputAgreesWithNode",
+          "TestNestedSiblingCycleMutantIsCaught",
+          "TestReviewProgramsAgreeWithNode"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-oracle-enums_open/run.py; D5-matrix.log: import_cycles_test.go:73: stdout differs",
+    "bounded": true
+  }
+]
