@@ -1,0 +1,21 @@
+--- FAIL: TestClosureTargetsBoundOnlyProvenValues (0.00s)
+    call_targets_test.go:65: ir.CallClosure: {[2] false}
+panic: runtime error: index out of range [2] with length 2 [recovered, repanicked]
+
+goroutine 27 [running]:
+testing.tRunner.func1.2({0x1cdd870, 0x82fb6f60270})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cdd870?, 0x82fb6f60270?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).ClosureMayThrow(0x82fb6cedb38, {0x1d132b8?, 0x82fb6c814a0?})
+	/workspace/adamic/internal/ir/call_targets.go:111 +0xec
+github.com/system-inc/adamic/internal/ir_test.TestClosureTargetsBoundOnlyProvenValues(0x82fb6f17d48)
+	/workspace/adamic/internal/ir/call_targets_test.go:67 +0x6b0
+testing.tRunner(0x82fb6f17d48, 0x1d22bf8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/ir	0.011s
+FAIL

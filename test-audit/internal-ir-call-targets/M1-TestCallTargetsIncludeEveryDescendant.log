@@ -1,0 +1,8 @@
+--- FAIL: TestCallTargetsIncludeEveryDescendant (0.03s)
+    call_targets_test.go:36: missing Child override 9 in [3]
+    call_targets_test.go:36: missing Grandchild override 12 in [3]
+    call_targets_test.go:36: missing Sibling override 15 in [3]
+    call_targets_test.go:40: want four implementations, got [3]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.037s
+FAIL

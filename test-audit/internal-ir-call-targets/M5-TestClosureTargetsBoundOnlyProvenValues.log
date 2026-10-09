@@ -1,0 +1,8 @@
+--- FAIL: TestClosureTargetsBoundOnlyProvenValues (0.00s)
+    call_targets_test.go:78: ir.Read: Unknown failed to include throwing function
+    call_targets_test.go:78: ir.Property: Unknown failed to include throwing function
+    call_targets_test.go:78: ir.Call: Unknown failed to include throwing function
+    call_targets_test.go:78: ir.Conditional: Unknown failed to include throwing function
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.009s
+FAIL

@@ -1,0 +1,40 @@
+--- FAIL: TestCallTargetsIncludeEveryDescendant (0.03s)
+panic: runtime error: index out of range [17] with length 17 [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x1cdd870, 0x32d0295021e0})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cdd870?, 0x32d0295021e0?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/ir.(*Program).CallMayThrow(0x32d029a3e180, {0x10, {0x32d029dc28c0, 0x1, 0x1}, {0x0, 0x0, 0x0}, {0x0, 0x0}, ...})
+	/workspace/adamic/internal/ir/call_targets.go:30 +0x106
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut.func1({0x1cf9928?, 0x32d029d32100?})
+	/workspace/adamic/internal/lower/exceptions.go:192 +0x42e
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cf9928?, 0x32d029d32100?, 0x32d029dc28e0?}, 0x32d02a1b3928)
+	/workspace/adamic/internal/lower/exceptions.go:356 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c676f0?, 0x32d029dc28e0?, 0x1c67758?}, 0x32d02a1b3928)
+	/workspace/adamic/internal/lower/exceptions.go:344 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c996a8?, 0x32d029dc28e0?, 0x32d02a114e58?}, 0x32d02a1b3928)
+	/workspace/adamic/internal/lower/exceptions.go:361 +0x172
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c67758?, 0x32d029a68820?, 0x7f6300206a20?}, 0x32d02a1b3928)
+	/workspace/adamic/internal/lower/exceptions.go:344 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1bbff78?, 0x32d02a115020?, 0x4894c5?}, 0x32d02a1b3928)
+	/workspace/adamic/internal/lower/exceptions.go:348 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1bbff78?, 0x32d02a115020?}, 0x3?)
+	/workspace/adamic/internal/lower/exceptions.go:332 +0x67
+github.com/system-inc/adamic/internal/lower.(*lowering).throwsOut(0x32d029d05000, {0x32d029a68810?, 0xf?, 0x32d029580540?})
+	/workspace/adamic/internal/lower/exceptions.go:179 +0x5f
+github.com/system-inc/adamic/internal/lower.(*lowering).exceptions(0x32d029d05000)
+	/workspace/adamic/internal/lower/exceptions.go:160 +0x267
+github.com/system-inc/adamic/internal/lower.Lower({0x1d17e80?, 0x1e07180?}, 0x32d0296beed0)
+	/workspace/adamic/internal/lower/lower.go:74 +0x889
+github.com/system-inc/adamic/internal/ir_test.TestCallTargetsIncludeEveryDescendant(0x32d029856fc8)
+	/workspace/adamic/internal/ir/call_targets_test.go:20 +0xc8
+testing.tRunner(0x32d029856fc8, 0x1d22bf0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/ir	0.040s
+FAIL
