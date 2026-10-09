@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 			}
 			command := exec.CommandContext(ctx, binary, args...)
 			if mode == "deep" {
-				command = exec.CommandContext(ctx, "bash", "-c", "ulimit -s 512; exec \"$1\" deep walk", "fx7", binary)
+				command = exec.CommandContext(ctx, "sh", "-c", "ulimit -s 512; exec \"$1\" deep walk", "fx7", binary)
 			}
 			var out, errout bytes.Buffer
 			command.Stdout = &out
