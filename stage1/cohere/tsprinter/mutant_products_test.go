@@ -77,7 +77,7 @@ func mutantOracleProduct(t *testing.T, index int) (string, string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		inputs := expressionInputFiles(t, root+"/cohere")
+		inputs := expressionInputFiles(t, root+"/cohere", root+"/internal/childguard")
 		for _, file := range []string{"mutants_test.go", "mutant_oracle_test.go", "mutant_units_test.go", "mutant_products_test.go", "helpers_test.go", "doc_test.go", "shards_test.go", "testdata/doc_side_test.go", "testdata/expressions_side_test.go", "testdata/statements_side_test.go", "testdata/notyet.json", "expressions_test.go", "expression_units_test.go"} {
 			inputs = append(inputs, root+"/stage1/cohere/tsprinter/"+file)
 		}
