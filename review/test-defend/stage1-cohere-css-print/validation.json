@@ -1,0 +1,44 @@
+{
+  "D1": "standalone Go source overlay: go vet exit 0",
+  "D2_D3_D4": [
+    {
+      "mutant": "D2",
+      "command": [
+        "/tmp/css-defense/adamic",
+        "build",
+        "/tmp/css-defense/standalone/D2/css/print_main.ts",
+        "-o",
+        "/tmp/css-defense/standalone/D2/printer"
+      ],
+      "seconds": 20.80690389299707,
+      "exit": 0
+    },
+    {
+      "mutant": "D3",
+      "command": [
+        "/tmp/css-defense/adamic",
+        "build",
+        "/tmp/css-defense/standalone/D3/css/print_main.ts",
+        "-o",
+        "/tmp/css-defense/standalone/D3/printer"
+      ],
+      "seconds": 19.29159852900193,
+      "exit": 0
+    },
+    {
+      "mutant": "D4",
+      "command": [
+        "/tmp/css-defense/adamic",
+        "build",
+        "/tmp/css-defense/standalone/D4/css/print_main.ts",
+        "-o",
+        "/tmp/css-defense/standalone/D4/printer"
+      ],
+      "seconds": 20.407324268002412,
+      "exit": 0
+    }
+  ],
+  "D8": "standalone literal runtime mutation: TestCSSProfileArtifacts passed all three native clang builds, 85.931s",
+  "restored_baseline": "TestOptionalBooleanPrinterMatchesGo passed 27.502s",
+  "production_restored": true
+}

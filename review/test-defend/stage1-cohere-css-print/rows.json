@@ -1,0 +1,84 @@
+[
+  {
+    "test": "TestOptionalBooleanPrinterMatchesGo",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCSSProfileSnapshotsAgree",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/css/print.ts:41",
+        "change": "n.data().booleans.get('namespace') ? '' : -> n.data().booleans.get('namespace') ? '*' :",
+        "rows_failed": [
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestCSSProfileSnapshotsAgree"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/css/print.ts:146",
+        "change": "/\\s*!\\s*important/i, ' !important' -> /\\s*!\\s*important/i, ' !default'",
+        "rows_failed": [
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestCSSProfileSnapshotsAgree"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/css/print.ts:146",
+        "change": "/\\s*!default/i, ' !default' -> /\\s*!default/i, ' !global'",
+        "rows_failed": [
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestCSSProfileSnapshotsAgree"
+        ]
+      }
+    ],
+    "evidence": "printf D4 > /tmp/css-defense/selector; ADAMIC_BUILD_CACHE_DIR=/tmp/css-defense/cache/D4 ADAMIC_CSS_PROFILE_SNAPSHOTS=/tmp/css-defense/profile-switched timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^(TestOptionalBooleanPrinterMatchesGo|TestCSSProfileSnapshotsAgree|TestCSSPrinterBoundaryProofs|TestClosedPrinterRegexGap)$'; print_test.go:317: Node: 0  line 12, byte 9: \"\\\"$x: 1 !global;\\\\na {\\\\n  b: $x !important;\\\\n}\\\\n\\\"\", Go cohere \"\\\"$x: 1 !default;\\\\na {\\\\n  b: $x !important;\\\\n}\\\\n\\\"\"",
+    "bounded": true,
+    "scope_note": "Whole package exceeded 90 seconds. See matrix.json and counted-callers.txt. Other executions are unknown."
+  },
+  {
+    "test": "TestCSSProfileArtifacts",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/native.go:110",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/native.go:110",
+        "change": "func Build(source string, output string, options Options) error { -> func Build(source string, output string, options Options) error {\n\tif options.Count { return fmt.Errorf(\"native: counted builds unavailable\") }",
+        "rows_failed": [
+          "TestCSSProfileArtifacts"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_DEFENSE_MUTANT=D1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-defense/cache/D1 ADAMIC_CSS_PROFILE_DIR=/tmp/css-defense/profile-D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^(TestCSSProfileArtifacts|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode|TestClosedPrinterRegexGap)$'; profile_test.go:102: native: counted builds unavailable",
+    "bounded": true,
+    "scope_note": "Whole package exceeded 90 seconds. See matrix.json and counted-callers.txt. Other executions are unknown."
+  },
+  {
+    "test": "TestCSSProfileSnapshotsAgree",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestCSSPrinterThroughput",
+    "defense": "defended",
+    "unique_mutant": "D8 internal/native/runtime/count.c:24",
+    "attempts": [
+      {
+        "mutant": "D8",
+        "file_line": "internal/native/runtime/count.c:24",
+        "change": "write(2, line, (size_t)length) -> write(1, line, (size_t)length)",
+        "rows_failed": [
+          "TestCSSProfileSnapshotsAgree"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/css-defense/cache/D8 ADAMIC_CSS_PROFILE_SNAPSHOTS=/tmp/css-defense/profile-D8 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^TestCSSProfileSnapshotsAgree$'; profile_test.go:157: /tmp/css-defense/profile-D8 counted default: line 48033, byte 1: \"adamic: counts: allocations 67161048 frees 67161048 retains 99435269 releases 139565937 peak 309964 regions 0\", Go cohere \"\"",
+    "bounded": true,
+    "scope_note": "Whole package exceeded 90 seconds. See matrix.json and counted-callers.txt. Other executions are unknown."
+  }
+]

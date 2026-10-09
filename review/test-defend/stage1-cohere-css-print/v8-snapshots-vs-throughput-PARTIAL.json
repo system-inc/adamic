@@ -1,0 +1,733 @@
+{
+  "limitations": "Throughput timed out. These are observed differences, not proven exclusive coverage. TS offsets, not Go lines.",
+  "snapshot_only_observed": [
+    {
+      "file": "css/print_main.ts",
+      "function": "",
+      "start": 1955,
+      "end": 1982,
+      "count": 38162
+    },
+    {
+      "file": "css/print_main.ts",
+      "function": "",
+      "start": 1983,
+      "end": 2003,
+      "count": 9870
+    },
+    {
+      "file": "css/print_main.ts",
+      "function": "",
+      "start": 2074,
+      "end": 2148,
+      "count": 9870
+    },
+    {
+      "file": "css/print.ts",
+      "function": "sequence",
+      "start": 2621,
+      "end": 2658,
+      "count": 17486
+    },
+    {
+      "file": "css/print.ts",
+      "function": "print",
+      "start": 5624,
+      "end": 5628,
+      "count": 7334
+    },
+    {
+      "file": "css/print.ts",
+      "function": "child",
+      "start": 3077,
+      "end": 3145,
+      "count": 24
+    },
+    {
+      "file": "css/print.ts",
+      "function": "child",
+      "start": 3145,
+      "end": 3202,
+      "count": 55744
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36055,
+      "end": 36069,
+      "count": 38086
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36069,
+      "end": 36194,
+      "count": 9946
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36234,
+      "end": 36410,
+      "count": 52
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36297,
+      "end": 36305,
+      "count": 26
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36306,
+      "end": 36313,
+      "count": 26
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36410,
+      "end": 36804,
+      "count": 9894
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36804,
+      "end": 37002,
+      "count": 24
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36899,
+      "end": 36907,
+      "count": 12
+    },
+    {
+      "file": "css/print.ts",
+      "function": "format",
+      "start": 36908,
+      "end": 36915,
+      "count": 12
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "frontMatter",
+      "start": 901,
+      "end": 927,
+      "count": 4
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 4057,
+      "end": 4063,
+      "count": 234622
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 4063,
+      "end": 4272,
+      "count": 48558
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 5679,
+      "end": 5782,
+      "count": 14
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 5782,
+      "end": 5968,
+      "count": 36
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 5968,
+      "end": 5990,
+      "count": 176
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 8508,
+      "end": 8596,
+      "count": 2
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "nestedCSS",
+      "start": 8596,
+      "end": 8630,
+      "count": 52
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "compose",
+      "start": 11522,
+      "end": 11644,
+      "count": 12
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "compose",
+      "start": 11644,
+      "end": 11681,
+      "count": 38002
+    },
+    {
+      "file": "css/compose.ts",
+      "function": "compose",
+      "start": 12032,
+      "end": 12176,
+      "count": 86
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "lastPosition",
+      "start": 632,
+      "end": 648,
+      "count": 60
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 4918,
+      "end": 5055,
+      "count": 36
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 5055,
+      "end": 5230,
+      "count": 370
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 5090,
+      "end": 5120,
+      "count": 340
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 5122,
+      "end": 5171,
+      "count": 200
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 5171,
+      "end": 5230,
+      "count": 170
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "colon",
+      "start": 5284,
+      "end": 5308,
+      "count": 982
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5405,
+      "end": 5436,
+      "count": 982
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5436,
+      "end": 5560,
+      "count": 170
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5560,
+      "end": 5803,
+      "count": 444
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5673,
+      "end": 5793,
+      "count": 322
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5733,
+      "end": 5779,
+      "count": 152
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5803,
+      "end": 5887,
+      "count": 170
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5887,
+      "end": 5902,
+      "count": 140
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "missedSemicolon",
+      "start": 5903,
+      "end": 5916,
+      "count": 30
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 6557,
+      "end": 6683,
+      "count": 190
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 6683,
+      "end": 6714,
+      "count": 1488
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 6714,
+      "end": 6862,
+      "count": 25962
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 7199,
+      "end": 7337,
+      "count": 25962
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 7572,
+      "end": 7664,
+      "count": 1196
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 7674,
+      "end": 7824,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 7982,
+      "end": 8059,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 8264,
+      "end": 8431,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 9901,
+      "end": 9966,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 10116,
+      "end": 10138,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "decl",
+      "start": 10271,
+      "end": 10393,
+      "count": 24766
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "end",
+      "start": 11777,
+      "end": 11872,
+      "count": 14680
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "end",
+      "start": 11872,
+      "end": 11982,
+      "count": 1308
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 12882,
+      "end": 13010,
+      "count": 12
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 13010,
+      "end": 13063,
+      "count": 148
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 13444,
+      "end": 13535,
+      "count": 148
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 13760,
+      "end": 13789,
+      "count": 148
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 13947,
+      "end": 14069,
+      "count": 148
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 15491,
+      "end": 15578,
+      "count": 148
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 15578,
+      "end": 15631,
+      "count": 12
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "nestedRule",
+      "start": 15631,
+      "end": 15666,
+      "count": 142
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "emptyRule",
+      "start": 16866,
+      "end": 17069,
+      "count": 832
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 18200,
+      "end": 18279,
+      "count": 9054
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 18279,
+      "end": 18508,
+      "count": 17726
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 18508,
+      "end": 18628,
+      "count": 244
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 18628,
+      "end": 18779,
+      "count": 17482
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 19242,
+      "end": 19282,
+      "count": 106184
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 20299,
+      "end": 20390,
+      "count": 16794
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "atrule",
+      "start": 20866,
+      "end": 20885,
+      "count": 16794
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "other",
+      "start": 21828,
+      "end": 21934,
+      "count": 16952
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "other",
+      "start": 21934,
+      "end": 21979,
+      "count": 2152
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "other",
+      "start": 22738,
+      "end": 22917,
+      "count": 6608
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "other",
+      "start": 22917,
+      "end": 22934,
+      "count": 29736
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "other",
+      "start": 22934,
+      "end": 22942,
+      "count": 27770
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "parse",
+      "start": 24147,
+      "end": 24226,
+      "count": 832
+    },
+    {
+      "file": "css/parser.ts",
+      "function": "parse",
+      "start": 24397,
+      "end": 24529,
+      "count": 5694
+    },
+    {
+      "file": "css/input.ts",
+      "function": "Input",
+      "start": 457,
+      "end": 480,
+      "count": 48162
+    },
+    {
+      "file": "css/input.ts",
+      "function": "error",
+      "start": 2601,
+      "end": 2833,
+      "count": 30118
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "interpolation",
+      "start": 1493,
+      "end": 1595,
+      "count": 12
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "interpolation",
+      "start": 1595,
+      "end": 1673,
+      "count": 15954
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "interpolation",
+      "start": 2248,
+      "end": 2274,
+      "count": 3078
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 4203,
+      "end": 4310,
+      "count": 254
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 4310,
+      "end": 4452,
+      "count": 3240
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 4556,
+      "end": 4591,
+      "count": 3240
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 4663,
+      "end": 4752,
+      "count": 3212
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 5513,
+      "end": 5619,
+      "count": 350
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 5619,
+      "end": 5708,
+      "count": 47638
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 6125,
+      "end": 6322,
+      "count": 9418
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 6475,
+      "end": 6573,
+      "count": 358
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 6573,
+      "end": 6703,
+      "count": 9022
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 6795,
+      "end": 6826,
+      "count": 9022
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 8494,
+      "end": 8585,
+      "count": 1046
+    },
+    {
+      "file": "css/tokenize.ts",
+      "function": "nextToken",
+      "start": 8585,
+      "end": 8649,
+      "count": 17822
+    },
+    {
+      "file": "css/convert.ts",
+      "function": "byteSlice",
+      "start": 9334,
+      "end": 9349,
+      "count": 4
+    },
+    {
+      "file": "css/convert.ts",
+      "function": "byteSlice",
+      "start": 9351,
+      "end": 9448,
+      "count": 4
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "groupNodes",
+      "start": 5503,
+      "end": 5577,
+      "count": 70
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "groupNodes",
+      "start": 5577,
+      "end": 5650,
+      "count": 12782
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "groupNodes",
+      "start": 6450,
+      "end": 6501,
+      "count": 48688
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "groupNodes",
+      "start": 6547,
+      "end": 6565,
+      "count": 48688
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "nestedValue",
+      "start": 6828,
+      "end": 6858,
+      "count": 788230
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "nestedValue",
+      "start": 7044,
+      "end": 7084,
+      "count": 49274
+    },
+    {
+      "file": "css/parse_value.ts",
+      "function": "nestedValue",
+      "start": 7090,
+      "end": 7091,
+      "count": 141086
+    }
+  ]
+}

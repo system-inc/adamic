@@ -1,0 +1,874 @@
+[
+  {
+    "file": "css/compose.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "Composed"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "blank"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "compose"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "copyTree"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "frontMatter"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "nestedCSS"
+  },
+  {
+    "file": "css/compose.ts",
+    "function": "rawText"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "byteSlice"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "fromCSS"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "fromMedia"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "fromSelector"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "fromValue"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "lineColumn"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "position"
+  },
+  {
+    "file": "css/convert.ts",
+    "function": "repeatText"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "Input"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "Position"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "byteOffset"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "error"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "position"
+  },
+  {
+    "file": "css/input.ts",
+    "function": "slice"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "calculateLoc"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "emptyChildLocs"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "emptyLocFromParent"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "end"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "fixWord"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "leadingColonAndWhitespace"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "lineColumnToIndex"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "locFromChildren"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "paramsOffset"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "raws"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "selectorOffset"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "selectorText"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "setRanges"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "source"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "start"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "stringOffset"
+  },
+  {
+    "file": "css/location.ts",
+    "function": "valueOffset"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "CssNode"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "RawValue"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "get"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "mark"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "raw"
+  },
+  {
+    "file": "css/nodes.ts",
+    "function": "set"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "commaGroup"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "flatten"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "groupNodes"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "nestedValue"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "parenGroup"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "parseSelector"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "parseValue"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "prefix"
+  },
+  {
+    "file": "css/parse_value.ts",
+    "function": "pushGroup"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "Parsed"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "Parser"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "Refused"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "atrule"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "colon"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "comment"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "decl"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "emptyRule"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "end"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "finish"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "freeSemicolon"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "init"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "lastPosition"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "missedSemicolon"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "nestedRule"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "node"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "other"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "parse"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "raw"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "rule"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "spacesEnd"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "spacesStart"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "tokenString"
+  },
+  {
+    "file": "css/parser.ts",
+    "function": "unknown"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "Printer"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "adjusted"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "append"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "atIndex"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "atRule"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "child"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "color"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "comma"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "declaration"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "flag"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "fontSize"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "format"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "list"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "namespace"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "parentheses"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "print"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "sequence"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "textOf"
+  },
+  {
+    "file": "css/print.ts",
+    "function": "trailing"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "DocNode"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "add"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "at"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "boundary"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "command"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "concat"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "dedent"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "emptyCommands"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "emptyParts"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "fill"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "fits"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "group"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "hard"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "ifBreak"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "indent"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "join"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "line"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "literal"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "print"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "propagate"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "removeLines"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "soft"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "stringWidth"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "suffix"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "text"
+  },
+  {
+    "file": "css/print_doc.ts",
+    "function": "width"
+  },
+  {
+    "file": "css/print_main.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/print_main.ts",
+    "function": "unescape"
+  },
+  {
+    "file": "css/print_main.ts",
+    "function": "unescapeLetter"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "Node"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "Path"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "ancestor"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "breakList"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "child"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "control"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "data"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "emptyBefore"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "end"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "hasNewline"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "icss"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "inlineLast"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "inlineValue"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "insideFunc"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "insideRule"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "key"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "last"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "line"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "list"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "lower"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "mapItem"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "maybeLower"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "nextEmpty"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "node"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "operator"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "pair"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "parenPair"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "parens"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "parent"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "placeholder"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "precedeSoft"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "raw"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "sibling"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "start"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "string"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "truth"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "type"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "up"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "valueWord"
+  },
+  {
+    "file": "css/print_utilities.ts",
+    "function": "word"
+  },
+  {
+    "file": "css/print_width_data.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "Token"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "Tokenizer"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "back"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "code"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "endOfFile"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "endOrStart"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "hex"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "indexOf"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "interpolation"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "nextToken"
+  },
+  {
+    "file": "css/tokenize.ts",
+    "function": "space"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "<module/anonymous>"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "<instance_members_initializer>"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "List"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "at"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "children"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "clear"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "ensure"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "list"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "literal"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "make"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "mark"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "maybe"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "number"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "object"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "remove"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "setBoolean"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "setList"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "setNumber"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "setObject"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "setString"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "string"
+  },
+  {
+    "file": "css/tree.ts",
+    "function": "type"
+  }
+]

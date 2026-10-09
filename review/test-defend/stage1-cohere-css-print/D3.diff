@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/print.ts
++++ b/stage1/cohere/css/print.ts
+@@ -143,7 +143,7 @@
+         let ending = d.text(';');
+         if(n.truth('nodes')) ending = d.concat([d.text(' {'), n.list('nodes').length > 0 ? d.indent(d.concat([d.soft(), this.sequence(path)])) : d.text(''), d.soft(), d.text('}')]);
+         else if(n.string('prop').startsWith('@prettier-placeholder') && !p.child('raws').truth('semicolon') && byteSlice(this.text, n.end() - 1, n.end()) !== ';') ending = d.text('');
+-        return d.concat([d.text(n.raw('before').replace(/[\s;]/g,'')), d.text(prop), d.text(trimmed.startsWith('//') ? ' ' : ''), d.text(trimmed), d.text(space), value, d.text(flag('important', /\s*!\s*important/i, ' !important')), d.text(flag('scssDefault', /\s*!default/i, ' !default')), d.text(flag('scssGlobal', /\s*!global/i, ' !global')), ending]);
++        return d.concat([d.text(n.raw('before').replace(/[\s;]/g,'')), d.text(prop), d.text(trimmed.startsWith('//') ? ' ' : ''), d.text(trimmed), d.text(space), value, d.text(flag('important', /\s*!\s*important/i, ' !default')), d.text(flag('scssDefault', /\s*!default/i, ' !default')), d.text(flag('scssGlobal', /\s*!global/i, ' !global')), ending]);
+     }
+     atRule(path: Path): number {
+         const n = path.node(); const p = path.up(1); const d = this.docs; const name = n.string('name'); const params = n.child('params'); const selector = n.child('selector');
