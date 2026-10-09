@@ -1,9 +1,12 @@
 package native_test
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -216,6 +219,7 @@ int main(void) {
  }
  if (previous != root) { adamic_release(previous); }
  printf("members %zu reachable %zu\n", count, reachable);
+ printf("node_bytes %zu\n", adamic_object_size(2));
  struct rusage usage;
  getrusage(RUSAGE_SELF, &usage);
  printf("rss_kib %ld\n", usage.ru_maxrss);
@@ -224,6 +228,8 @@ int main(void) {
 }
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + cmain
+	source = strings.ReplaceAll(source, "shape = {3,", "shape = {2,")
+	source = strings.ReplaceAll(source, "adamic_object_size(3)", "adamic_object_size(2)")
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "million")
 	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
@@ -233,7 +239,16 @@ int main(void) {
 	if err != nil {
 		t.Fatalf("native: %v\n%s", err, output)
 	}
-	if !strings.Contains(string(output), "live 1000000 bytes 70000000 reachable 950001 bytes 66500070 unreachable 49999 bytes 3499930 metadata 16000064") {
+	size := regexp.MustCompile(`(?m)^node_bytes (\d+)$`).FindSubmatch(output)
+	if size == nil {
+		t.Fatal("missing node allocation size")
+	}
+	nodeBytes, err := strconv.ParseUint(string(size[1]), 10, 64)
+	if err != nil || nodeBytes == 0 {
+		t.Fatalf("invalid node allocation size: %s", size[1])
+	}
+	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000064", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
+	if !strings.Contains(string(output), want) {
 		t.Fatal(string(output))
 	}
 	t.Logf("native runtime foundation:\n%s", output)

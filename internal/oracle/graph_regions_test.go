@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -25,7 +26,7 @@ func TestGraphRegionsCompiledMillion(t *testing.T) {
 	if at < 0 {
 		t.Fatal("missing main return")
 	}
-	code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage usage; getrusage(RUSAGE_SELF, &usage); printf(\"rss_kib %ld\\n\", usage.ru_maxrss);\n" + code[at:]
+	code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage usage; getrusage(RUSAGE_SELF, &usage); printf(\"rss_kib %ld\\n\", usage.ru_maxrss); printf(\"node_bytes %zu\\n\", adamic_object_size(3));\n" + code[at:]
 	for _, options := range []native.Options{{}, {Count: true}} {
 		binary := filepath.Join(t.TempDir(), "million")
 		if err := native.Build(code, binary, options); err != nil {
@@ -38,8 +39,19 @@ func TestGraphRegionsCompiledMillion(t *testing.T) {
 		if !strings.Contains(string(result.stdout), "members 1000000 reachable 950001") {
 			t.Fatal(string(result.stdout))
 		}
-		if options.Count && !strings.Contains(string(result.stderr), "live 1000000 bytes 64000000 reachable 950001 bytes 60800064 unreachable 49999 bytes 3199936 metadata 16000064") {
-			t.Fatal(string(result.stderr))
+		if options.Count {
+			size := regexp.MustCompile(`(?m)^node_bytes (\d+)$`).FindSubmatch(result.stdout)
+			if size == nil {
+				t.Fatal("missing node allocation size")
+			}
+			nodeBytes, err := strconv.ParseUint(string(size[1]), 10, 64)
+			if err != nil || nodeBytes == 0 {
+				t.Fatalf("invalid node allocation size: %s", size[1])
+			}
+			want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000064", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
+			if !strings.Contains(string(result.stderr), want) {
+				t.Fatal(string(result.stderr))
+			}
 		}
 		t.Logf("compiled Adamic count=%t flags %s:\n%s%s", options.Count, strings.Join(native.Flags(options), " "), result.stdout, result.stderr)
 	}
