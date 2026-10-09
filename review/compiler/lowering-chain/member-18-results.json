@@ -1,0 +1,70 @@
+{
+  "branch": "compiler/self-compare-main",
+  "source": "387c2826",
+  "tests": [
+    {
+      "test": "TestSelfCompareConstantMutant",
+      "result": "pass",
+      "seconds": 0.38,
+      "log": "member-18-tests.jsonl"
+    },
+    {
+      "test": "TestSelfCompareClosure",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-18-tests.jsonl"
+    },
+    {
+      "test": "TestSelfCompareArrayFill",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-18-tests.jsonl"
+    },
+    {
+      "test": "TestSelfCompareSweep",
+      "result": "pass",
+      "seconds": 0.77,
+      "log": "member-18-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/fixtures/self-compare/closure.a",
+        "after": [
+          "1",
+          "1",
+          "0",
+          "1",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/self-compare/array-fill.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/self-compare/sweep.a",
+        "after": [
+          "37",
+          "37",
+          "1",
+          "38",
+          "8",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1275
+  }
+}

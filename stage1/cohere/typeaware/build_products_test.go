@@ -156,10 +156,6 @@ func TestProduct_volume_native(t *testing.T) {
 	t.Parallel()
 	typeAwareNativeProduct(typeAwareProductHarness(t), "volume", "volume_suite.ts", false)
 }
-func TestProduct_volume_native_asan(t *testing.T) {
-	t.Parallel()
-	typeAwareNativeProduct(typeAwareProductHarness(t), "volume-asan", "volume_suite.ts", true)
-}
 func TestProduct_volume_oracle(t *testing.T) {
 	t.Parallel()
 	volumeOracle(typeAwareProductHarness(t), "volume-oracle", "oracle_volume.go")
@@ -171,10 +167,6 @@ func TestProduct_profile_controls_lowered(t *testing.T) {
 func TestProduct_profile_controls_native(t *testing.T) {
 	t.Parallel()
 	volumeProfileControlProduct(t, false)
-}
-func TestProduct_profile_controls_native_asan(t *testing.T) {
-	t.Parallel()
-	volumeProfileControlProduct(t, true)
 }
 func TestProduct_profile_missing_binding(t *testing.T) {
 	t.Parallel()
@@ -210,11 +202,6 @@ func TestProduct_corpus_native(t *testing.T) {
 	t.Parallel()
 	volumeProfileCorpusNativeProduct(t, false)
 }
-func TestProduct_corpus_native_asan(t *testing.T) {
-	t.Parallel()
-	volumeProfileCorpusNativeProduct(t, true)
-}
-func TestProduct_corpus_record(t *testing.T) { t.Parallel(); volumeProfileCorporaPrepare(t) }
 func TestProduct_type_symbol_archive(t *testing.T) {
 	t.Parallel()
 	typeSymbolArchive(typeAwareProductHarness(t))

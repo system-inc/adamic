@@ -1,0 +1,40 @@
+{
+  "added": [
+    {
+      "row": "stage3/fixtures/self-compare/closure.a",
+      "after": [
+        "1",
+        "1",
+        "0",
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/self-compare/array-fill.a",
+      "after": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/self-compare/sweep.a",
+      "after": [
+        "37",
+        "37",
+        "1",
+        "38",
+        "8",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 1275
+}
