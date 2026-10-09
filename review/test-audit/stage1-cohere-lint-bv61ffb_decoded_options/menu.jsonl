@@ -1,0 +1,27 @@
+{"id": "M1", "file": "stage1/cohere/lint/settings.ts", "line": 29, "old": "toLowerCase()", "new": "toUpperCase()", "kind": "production"}
+{"id": "M2", "file": "stage1/cohere/lint/settings.ts", "line": 70, "old": "return values[0] ?? fallback;", "new": "return values[1] ?? fallback;", "kind": "production"}
+{"id": "M3", "file": "stage1/cohere/lint/main.ts", "line": 33, "old": "    linter.run();", "new": "", "kind": "production"}
+{"id": "M4", "file": "internal/native/emit_branches.go", "line": 86, "old": "condition, whenTrue, whenNot)", "new": "condition, whenNot, whenTrue)", "kind": "production"}
+{"id": "P1", "file": "stage1/cohere/lint/main.ts", "line": 11, "old": "function run(row: string, countOnly: boolean): number {", "new": "function run(row: string, countOnly: boolean): number {\n    return 0;", "kind": "probe"}
+{"id": "P2", "file": "internal/native/emit.go", "line": 23, "old": "return cProgram(program, -1)", "new": "return \"\"", "kind": "probe"}
+{"id": "W1", "file": "stage1/cohere/lint/lint_test.go", "line": 87, "old": "len(commandDiagnostics(name, stderr.Bytes())) != 0", "new": "len(commandDiagnostics(name, stderr.Bytes())) < 0", "kind": "witness"}
+{"id": "W2", "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "line": 125, "old": "func decodedOptionsCheck(index int, got, want []byte) error {", "new": "func decodedOptionsCheck(index int, got, want []byte) error {\n\tif len(want) >= 0 { return nil }", "kind": "witness"}
+{"id": "W3", "file": "stage1/cohere/lint/compiler_stage1_split_test.go", "line": 13364, "old": "if diff := difference(got, want); diff != \"\" {", "new": "if diff := difference(got, want); diff == \"u106-never\" {", "kind": "witness"}
+{"id": "S1", "file": "stage1/cohere/lint/lint_test.go", "line": 65, "old": "if name == \"go\" {", "new": "if name != \"go\" {", "kind": "setup"}
+{"id": "S2", "file": "stage1/cohere/lint/compiler_stage1_split_test.go", "line": 34, "old": "const compilerAgreementSides = 5", "new": "const compilerAgreementSides = 6", "kind": "setup"}
+{"id": "S3", "file": "stage1/cohere/lint/complete_suggestion_isolated_shard_test.go", "line": 20, "old": "ADAMIC_COMPLETE_SUGGESTION_PLANT=0", "new": "ADAMIC_COMPLETE_SUGGESTION_PLANT=1", "kind": "setup"}
+{"id": "M1", "file": "stage1/cohere/lint/settings.ts", "line": 29, "old": "toLowerCase()", "new": "toUpperCase()", "kind": "production"}
+{"id": "M2", "file": "stage1/cohere/lint/settings.ts", "line": 70, "old": "return values[0] ?? fallback;", "new": "return values[1] ?? fallback;", "kind": "production"}
+{"id": "M3", "file": "stage1/cohere/lint/main.ts", "line": 33, "old": "    linter.run();", "new": "", "kind": "production"}
+{"id": "M4", "file": "internal/native/emit_branches.go", "line": 86, "old": "condition, whenTrue, whenNot)", "new": "condition, whenNot, whenTrue)", "kind": "production"}
+{"id": "P1", "file": "stage1/cohere/lint/main.ts", "line": 11, "old": "function run(row: string, countOnly: boolean): number {", "new": "function run(row: string, countOnly: boolean): number {\n    return 0;", "kind": "probe"}
+{"id": "P2", "file": "internal/native/emit.go", "line": 23, "old": "return cProgram(program, -1)", "new": "return \"\"", "kind": "probe"}
+{"id": "W1", "file": "stage1/cohere/lint/lint_test.go", "line": 87, "old": "len(commandDiagnostics(name, stderr.Bytes())) != 0", "new": "len(commandDiagnostics(name, stderr.Bytes())) < 0", "kind": "witness"}
+{"id": "W2", "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "line": 125, "old": "func decodedOptionsCheck(index int, got, want []byte) error {", "new": "func decodedOptionsCheck(index int, got, want []byte) error {\n\tif len(want) >= 0 { return nil }", "kind": "witness"}
+{"id": "W3", "file": "stage1/cohere/lint/compiler_stage1_split_test.go", "line": 13364, "old": "if diff := difference(got, want); diff != \"\" {", "new": "if diff := difference(got, want); diff == \"u106-never\" {", "kind": "witness"}
+{"id": "S1", "file": "stage1/cohere/lint/lint_test.go", "line": 65, "old": "if name == \"go\" {", "new": "if name != \"go\" {", "kind": "setup"}
+{"id": "S2", "file": "stage1/cohere/lint/compiler_stage1_split_test.go", "line": 34, "old": "const compilerAgreementSides = 5", "new": "const compilerAgreementSides = 6", "kind": "setup"}
+{"id": "S5", "file": "stage1/cohere/lint/compiler_stage1_split_test.go", "line": 183, "old": "if prepared.path == \"\" {", "new": "if prepared.path != \"\" {", "kind": "setup"}
+{"id": "S4", "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "line": 373, "old": "filepath.Join(output, \"lint.c\")", "new": "filepath.Join(output, \"missing/lint.c\")", "kind": "setup"}
+{"id": "S3", "file": "stage1/cohere/lint/complete_suggestion_isolated_shard_test.go", "line": 20, "old": "ADAMIC_COMPLETE_SUGGESTION_PLANT=0", "new": "ADAMIC_COMPLETE_SUGGESTION_PLANT=1", "kind": "setup"}
+{"id": "P1", "file": "stage1/cohere/lint/main.ts", "line": 11, "old": "function run(row: string, countOnly: boolean): number {", "new": "function run(row: string, countOnly: boolean): number {\n    if (row.length >= 0) return 0;", "kind": "probe"}

@@ -1,0 +1,300 @@
+internal/native/arguments_length.go:12: func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
+internal/native/arguments_length.go:30: func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {
+internal/native/arguments_length.go:63: func (e *emitter) callbackCall(callback string, expression ir.Expression, kind int, slots ...string) string {
+internal/native/arguments_length.go:71: func (e *emitter) closureComparator(sort ir.ArraySort) string {
+internal/native/arguments_length.go:92: func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) string {
+internal/native/arguments_length.go:110: func packedParameter(of ir.Type, packed, count string, index int) string {
+internal/native/arguments_length.go:118: func (e *emitter) restArray(packed, count string, start int, element ir.Type) string {
+internal/native/arguments_length.go:124: func (e *emitter) copyRest(result, packed, count string, start int, element ir.Type) {
+internal/native/arguments_length.go:135: func (e *emitter) spreadArguments(call ir.Call) []string {
+internal/native/arguments_length.go:170: func missingArgument(of ir.Type) string {
+internal/native/arguments_length.go:177: func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
+internal/native/arguments_length.go:186: func (e *emitter) packedArgumentSize(call ir.CallClosure) int {
+internal/native/borrow.go:29: func (e *emitter) value(expression ir.Expression) string {
+internal/native/borrow.go:54: func lendable(valueType ir.Type) bool {
+internal/native/borrow.go:66: func consumes(expression ir.Expression) bool {
+internal/native/borrow.go:79: func pure(expression ir.Expression) bool {
+internal/native/borrow.go:93: func pureKind(expression ir.Expression) bool {
+internal/native/borrow.go:108: func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
+internal/native/borrow.go:138: func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+internal/native/borrow.go:165: func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+internal/native/borrow.go:184: func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
+internal/native/borrow.go:241: func (e *emitter) borrowChain(expression ir.Expression) bool {
+internal/native/case_generate.go:48: func main() {
+internal/native/case_generate.go:93: func read(directory string, name string) ([]byte, error) {
+internal/native/case_generate.go:108: func point(field string) rune {
+internal/native/case_generate.go:116: func points(field string) []rune {
+internal/native/case_generate.go:125: func dataLines(contents []byte) [][]string {
+internal/native/case_generate.go:146: func simpleMappings(contents []byte) (map[rune]rune, map[rune]rune) {
+internal/native/case_generate.go:173: func specialCasing(contents []byte, upper map[rune]rune, lower map[rune]rune) ([]fullMapping, []fullMapping) {
+internal/native/case_generate.go:230: func property(contents []byte, name string) []span {
+internal/native/case_generate.go:272: func runs(mapping map[rune]rune) []run {
+internal/native/case_generate.go:305: func writeRanges(out *bytes.Buffer, name string, all []run) {
+internal/native/case_generate.go:313: func writeFull(out *bytes.Buffer, name string, all []fullMapping) {
+internal/native/case_generate.go:328: func writeSpans(out *bytes.Buffer, name string, all []span) {
+internal/native/census_optional_values.go:10: func closureArgument(of ir.Type, index int) string {
+internal/native/census_small.go:8: func (e *emitter) censusToBoolean(argument ir.Expression) string {
+internal/native/class_accessors.go:10: func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, class ir.Class) string {
+internal/native/class_accessors.go:99: func (e *emitter) accessorCall(call ir.Call) string {
+internal/native/class_errors.go:10: func (e *emitter) makeError(expression ir.MakeError) string {
+internal/native/class_features.go:5: func (e *emitter) publicClassShape(class ir.Class) string {
+internal/native/class_features.go:19: func (e *emitter) prepareClassShapes() {
+internal/native/class_inheritance.go:12: func (e *emitter) classDeclarations(builder *strings.Builder) {
+internal/native/class_inheritance.go:46: func (e *emitter) callCode(call ir.Call, arguments []string) string {
+internal/native/devirtualize.go:10: func (e *emitter) exactReceiverClass(value ir.Expression) int {
+internal/native/devirtualize.go:58: func (e *emitter) exactReceiverMethod(receiver ir.Expression, name string) (int, bool) {
+internal/native/element_borrow.go:24: func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
+internal/native/element_borrow.go:60: func borrowedArray(declare ir.Declare) int {
+internal/native/element_borrow.go:75: func borrowable(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
+internal/native/element_borrow.go:100: func assignedLocals(body []ir.Statement) map[int]bool {
+internal/native/element_borrow.go:117: func changingFunctions(program *ir.Program) map[int]bool {
+internal/native/element_borrow.go:133: func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bool {
+internal/native/element_borrow.go:156: func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expression) bool {
+internal/native/element_borrow.go:192: func (e *emitter) borrowElement(declare ir.Declare) {
+internal/native/element_borrow.go:252: func loopBorrowable(program *ir.Program, function int, loop ir.ForOf, assigned map[int]bool) bool {
+internal/native/element_borrow.go:262: func borrowableChain(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
+internal/native/emit.go:22: func C(program *ir.Program) string {
+internal/native/emit.go:26: func cProgram(program *ir.Program, handler int) string {
+internal/native/emit.go:153: func cBytes(value string) string {
+internal/native/emit.go:247: func (e *emitter) line(format string, arguments ...any) {
+internal/native/emit.go:253: func (e *emitter) temporary() string {
+internal/native/emit_arrays.go:15: func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
+internal/native/emit_arrays.go:128: func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
+internal/native/emit_arrays.go:173: func equality(element ir.Type) string {
+internal/native/emit_arrays.go:190: func joinKind(element ir.Type) string {
+internal/native/emit_arrays.go:204: func (e *emitter) comparator(sort ir.ArraySort) string {
+internal/native/emit_arrays.go:218: func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
+internal/native/emit_branches.go:13: func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
+internal/native/emit_branches.go:18: func (e *emitter) asideWith(emit func() string) (string, string, []string) {
+internal/native/emit_branches.go:34: func (e *emitter) logical(binary ir.Binary) string {
+internal/native/emit_branches.go:81: func (e *emitter) conditional(conditional ir.Conditional) string {
+internal/native/emit_branches.go:118: func unwrap(expression string) string {
+internal/native/emit_branches.go:139: func (e *emitter) coalesce(coalesce ir.Coalesce) string {
+internal/native/emit_expressions.go:13: func (e *emitter) evaluate(expression ir.Expression) string {
+internal/native/emit_expressions.go:732: func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string, right string) string {
+internal/native/emit_functions.go:10: func (e *emitter) functionName(function int) string {
+internal/native/emit_functions.go:14: func (e *emitter) signature(function int) string {
+internal/native/emit_functions.go:50: func (e *emitter) functionBody(function ir.Function) {
+internal/native/emit_functions.go:129: func (e *emitter) returnStatement(statement ir.Return) {
+internal/native/emit_functions.go:193: func (e *emitter) arguments(call ir.Call) []string {
+internal/native/emit_functions.go:292: func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
+internal/native/emit_locals.go:11: func (e *emitter) localName(local int) string {
+internal/native/emit_locals.go:20: func readyName(local int) string {
+internal/native/emit_locals.go:28: func (e *emitter) store(local int, value string, owned bool) {
+internal/native/emit_locals.go:63: func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
+internal/native/emit_locals.go:65: func (e *emitter) localReady(local int) string {
+internal/native/emit_locals.go:75: func (e *emitter) checkReadyRead(local int, expression string) {
+internal/native/emit_locals.go:89: func (e *emitter) read(read ir.Read) string {
+internal/native/emit_locals.go:138: func (e *emitter) declareLocal(local int, value string, owned bool) {
+internal/native/emit_locals.go:167: func (e *emitter) makeCell(local int, value string, owned bool) {
+internal/native/emit_locals.go:182: func (e *emitter) cellName(local int) string {
+internal/native/emit_locals.go:188: func (e *emitter) cellSlot(local int) string {
+internal/native/emit_locals.go:196: func (e *emitter) cellReference(local int) string {
+internal/native/emit_locals.go:212: func (e *emitter) allocateEnvironment(cells []int) {
+internal/native/emit_maps.go:11: func newMap(key ir.Type, referenceValues bool) string {
+internal/native/emit_maps.go:34: func (e *emitter) mapForEach(visit ir.MapForEach) string {
+internal/native/emit_numbers.go:17: func (e *emitter) numberFormat(format ir.NumberFormat) string {
+internal/native/emit_numbers.go:41: func (e *emitter) mathCall(call ir.MathCall) string {
+internal/native/emit_objects.go:18: func (e *emitter) fieldSlot(object string, name string, class int) string {
+internal/native/emit_objects.go:53: func (e *emitter) staticFieldName(name string) bool {
+internal/native/emit_objects.go:72: func (e *emitter) writeFieldSlot(object, name string, class int) string {
+internal/native/emit_objects.go:118: func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+internal/native/emit_objects.go:226: func (e *emitter) shape(fields []ir.Field) string {
+internal/native/emit_objects.go:237: func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
+internal/native/emit_objects.go:250: func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
+internal/native/emit_objects.go:256: func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+internal/native/emit_objects.go:324: func (e *emitter) dispatchable(function int) bool {
+internal/native/emit_objects.go:357: func (e *emitter) methodThunk(function int) string {
+internal/native/emit_objects.go:419: func (e *emitter) cache() string {
+internal/native/emit_objects.go:427: func (e *emitter) dynamicProperties() bool {
+internal/native/emit_objects.go:440: func (e *emitter) methodEntryType() string {
+internal/native/emit_objects.go:447: func (e *emitter) fieldTypesNeeded() bool {
+internal/native/emit_objects.go:461: func (e *emitter) fieldReadinessNeeded(name string) bool {
+internal/native/emit_objects.go:476: func fieldRepresentation(value ir.Expression) int {
+internal/native/emit_objects.go:487: func fieldInitialRepresentation(field ir.Field) int {
+internal/native/emit_ownership.go:12: func (e *emitter) releaseScopes(depth int) {
+internal/native/emit_ownership.go:28: func (e *emitter) hold(name string) {
+internal/native/emit_ownership.go:33: func (e *emitter) end() {
+internal/native/emit_ownership.go:45: func (e *emitter) releaseGlobals() {
+internal/native/emit_ownership.go:58: func (e *emitter) snapshot(valueType ir.Type, value string) string {
+internal/native/emit_ownership.go:66: func retained(value string) string {
+internal/native/emit_ownership.go:82: func (e *emitter) kept(value string) string {
+internal/native/emit_ownership.go:92: func (e *emitter) taken(value string) bool {
+internal/native/emit_ownership.go:102: func (e *emitter) own(valueType ir.Type, value string) string {
+internal/native/emit_ownership.go:110: func held(valueType ir.Type, value string) string {
+internal/native/emit_ownership.go:118: func borrowed(valueType ir.Type, value string) string {
+internal/native/emit_slots.go:11: func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
+internal/native/emit_slots.go:43: func (e *emitter) mapGetSlot(expression ir.MapGet) string {
+internal/native/emit_slots.go:53: func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
+internal/native/emit_statements.go:29: func (e *emitter) block(statements []ir.Statement, after func()) {
+internal/native/emit_statements.go:43: func (e *emitter) decide(condition ir.Expression) string {
+internal/native/emit_statements.go:55: func (e *emitter) statementAt(at *ir.Statement) {
+internal/native/emit_statements.go:64: func (e *emitter) statement(statement ir.Statement) {
+internal/native/emit_statements.go:352: func (e *emitter) nested(statements []ir.Statement, after func()) {
+internal/native/emit_statements.go:361: func (e *emitter) loop(statement ir.Loop) {
+internal/native/emit_statements.go:428: func (e *emitter) forOf(statement ir.ForOf) {
+internal/native/emit_statements.go:563: func (e *emitter) switchStatement(statement ir.Switch) {
+internal/native/emit_strings.go:14: func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
+internal/native/emit_strings.go:31: func (e *emitter) appendTo(local int, parts []ir.Expression) {
+internal/native/emit_strings.go:40: func (e *emitter) stringCall(call ir.StringCall) string {
+internal/native/emit_values.go:9: func cType(valueType ir.Type) string {
+internal/native/emit_values.go:38: func member(valueType ir.Type) string {
+internal/native/emit_values.go:52: func zero(valueType ir.Type) string {
+internal/native/emit_values.go:70: func cNumber(value float64) string {
+internal/native/emit_values.go:84: func absent(valueType ir.Type) string {
+internal/native/entries_records.go:8: func (e *emitter) recordLiteral(literal ir.ObjectLiteral) string {
+internal/native/entries_records.go:18: func (e *emitter) recordKey(name string) string {
+internal/native/entries_records.go:24: func (e *emitter) recordWrite(statement ir.SetProperty) {
+internal/native/entries_records.go:32: func (e *emitter) hasRecordStorage() bool {
+internal/native/exceptions.go:30: func (e *emitter) jumpThrown() {
+internal/native/exceptions.go:59: func (e *emitter) checkThrown(holds ...string) {
+internal/native/exceptions.go:86: func (e *emitter) closureThrown(holds ...string) {
+internal/native/exceptions.go:93: func (e *emitter) throwStatement(statement ir.Throw) {
+internal/native/exceptions.go:102: func (e *emitter) finallies(from int) {
+internal/native/exceptions.go:118: func (e *emitter) innerHandlers(depth int) int {
+internal/native/exceptions.go:137: func (e *emitter) tryStatement(statement ir.Try) {
+internal/native/fields.go:12: func (e *emitter) uniformFieldSlot(object, name string) string {
+internal/native/fields.go:28: func uniformFieldOffsets(program *ir.Program) map[string]int {
+internal/native/from.go:12: func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
+internal/native/labels.go:8: func (e *emitter) labeled(statement ir.Labeled) {
+internal/native/labels.go:21: func (e *emitter) linkLabels(names []string, iteration *loop) {
+internal/native/labels.go:32: func (e *emitter) labeledJump(name string, continued bool) {
+internal/native/library.go:28: func RuntimeLibrary(directory string, options Options) (string, error) {
+internal/native/library.go:32: func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
+internal/native/library.go:39: func sourceFlags(source string, options Options) []string {
+internal/native/library.go:46: func featureFlags(source string) []string {
+internal/native/library.go:56: func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
+internal/native/library.go:102: func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
+internal/native/library.go:121: func runtimeKey(files []runtimeFile, flags []string, compiler string, version string) string {
+internal/native/library.go:143: func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
+internal/native/library.go:212: func RuntimeLinkFlags(library string) []string {
+internal/native/library.go:219: func slicesContain(values []string, wanted string) bool {
+internal/native/library_array.go:8: func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
+internal/native/library_array.go:22: func (e *emitter) libraryArrayJoin(join ir.ArrayJoin) string {
+internal/native/library_json_stringify.go:9: func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
+internal/native/library_json_stringify.go:28: func (e *emitter) jsonSlot(expression ir.Expression) string {
+internal/native/library_json_stringify.go:39: func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
+internal/native/library_language.go:9: func (e *emitter) libraryLanguageValue(value ir.Expression) string {
+internal/native/library_language.go:21: func libraryIdentityIndex(name string) int {
+internal/native/library_map_set.go:9: func (e *emitter) collectionIterator(iterator ir.CollectionIterator) string {
+internal/native/library_math_number.go:10: func (e *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
+internal/native/library_math_number.go:23: func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
+internal/native/library_node_buffer.go:9: func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
+internal/native/library_node_fs_file.go:10: func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+internal/native/library_object.go:10: func (e *emitter) objectCall(call ir.ObjectCall) string {
+internal/native/library_regexp_replace.go:9: func regexReplacementKind(of ir.Type) int {
+internal/native/library_regexp_replace.go:27: func (e *emitter) regexReplacement(call ir.RegExpCall) string {
+internal/native/logical_assignment.go:8: func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
+internal/native/logical_assignment.go:117: func (e *emitter) assignLogicalResult(result string, from, to ir.Type, value string) {
+internal/native/maybe.go:11: func maybe(of ir.Type, value string) string {
+internal/native/maybe.go:20: func maybeSlot(element ir.Type, slot string) string {
+internal/native/maybe.go:33: func (e *emitter) maybeToString(value ir.Expression) string {
+internal/native/maybe.go:42: func pairEquality(operator ir.Operator, pair ir.Type, left string, right string) string {
+internal/native/native.go:26: func cString(value string) string {
+internal/native/native.go:78: func Flags(options Options) []string {
+internal/native/native.go:110: func Build(source string, output string, options Options) error {
+internal/native/normalize_generate.go:45: func main() {
+internal/native/normalize_generate.go:107: func read(directory string, name string) ([]byte, error) {
+internal/native/normalize_generate.go:122: func point(field string) rune {
+internal/native/normalize_generate.go:131: func dataLines(contents []byte) [][]string {
+internal/native/normalize_generate.go:160: func unicodeData(contents []byte) (map[rune]int, map[rune]decomposition) {
+internal/native/normalize_generate.go:198: func exclusions(contents []byte) map[rune]bool {
+internal/native/normalize_generate.go:220: func writeClasses(out *bytes.Buffer, classes map[rune]int) {
+internal/native/normalize_generate.go:247: func writeDecompositions(out *bytes.Buffer, decompositions map[rune]decomposition) {
+internal/native/regexp.go:9: func (e *emitter) regexCall(call ir.RegExpCall) string {
+internal/native/regexp.go:41: func (e *emitter) regexProperty(property ir.RegExpProperty) string {
+internal/native/region.go:43: func planRegions(program *ir.Program) *regionPlan {
+internal/native/region.go:101: func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
+internal/native/region.go:153: func (plan *regionPlan) freshValue(value ir.Expression) bool {
+internal/native/region.go:167: func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
+internal/native/region.go:250: func (plan *regionPlan) feedsRegion(statement ir.Statement) bool {
+internal/native/region.go:266: func eachOperandOfStatement(statement ir.Statement, visit func(ir.Expression)) {
+internal/native/region.go:299: func (e *emitter) regionVariants(function int) []bool {
+internal/native/region.go:307: func (e *emitter) regionFunctionName(function int) string {
+internal/native/region.go:313: func (e *emitter) regionFor(call ir.Call) string {
+internal/native/region.go:322: func (e *emitter) regionValue(value string) string {
+internal/native/region.go:334: func (e *emitter) handRegion(expression ir.Expression, region string) string {
+internal/native/region.go:347: func (e *emitter) regionStatement(at *ir.Statement) bool {
+internal/native/region.go:362: func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
+internal/native/region.go:382: func (plan *regionPlan) regionTarget(call ir.Call) int {
+internal/native/request.go:11: func WASI(program *ir.Program, handler int) (string, error) {
+internal/native/request.go:25: func (e *emitter) requestABI(handler int) string {
+internal/native/reuse.go:61: func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+internal/native/reuse.go:167: func (plan *reusePlan) reusable(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int) bool {
+internal/native/reuse.go:177: func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
+internal/native/reuse.go:203: func overwrites(program *ir.Program, instruction *flow.Instruction, local int) bool {
+internal/native/reuse.go:209: func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int) bool {
+internal/native/reuse.go:253: func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
+internal/native/reuse.go:308: func touches(program *ir.Program, function int, global int, seen map[int]bool) bool {
+internal/native/reuse.go:351: func variableRead(expression ir.Expression) (ir.Read, bool) {
+internal/native/reuse.go:362: func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
+internal/native/reuse.go:374: func (e *emitter) checkDefined(value string, message string) {
+internal/native/reuse.go:381: func isParameter(program *ir.Program, local int) bool {
+internal/native/reuse.go:396: func defines(instruction *flow.Instruction, local int) bool {
+internal/native/reuse.go:408: func evaluated(instruction *flow.Instruction) any {
+internal/native/reuse.go:419: func forEachInstruction(graph *flow.Function, visit func(*flow.Instruction)) {
+internal/native/reuse.go:428: func spreadsOf(node any) []ir.ObjectLiteral {
+internal/native/reuse.go:441: func readsOf(node any, local int) int {
+internal/native/reuse.go:453: func walk(node any, visit func(ir.Expression)) {
+internal/native/reuse.go:459: func walkStatement(node any, visit func(ir.Expression), statements func([]ir.Statement)) {
+internal/native/reuse.go:502: func walkExpressions(program *ir.Program, visit func(ir.Expression)) {
+internal/native/reuse.go:526: func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
+internal/native/reuse.go:581: func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
+internal/native/reuse.go:594: func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
+internal/native/reuse.go:616: func emptyFields(literal ir.ObjectLiteral) []ir.Field {
+internal/native/reuse.go:622: func (e *emitter) take(property ir.Property) (string, bool) {
+internal/native/reuse.go:645: func (e *emitter) handOver(argument ir.Expression) string {
+internal/native/reuse.go:663: func (e *emitter) handedOver(arguments []string) {
+internal/native/reuse.go:675: func arraysTaken(program *ir.Program, node any) []int {
+internal/native/reuse.go:701: func sameSlots(left, right ir.Type) bool {
+internal/native/reuse.go:707: func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+internal/native/reuse.go:742: func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+internal/native/reuse.go:774: func uniquelyHeld(value string) string {
+internal/native/reuse.go:780: func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool {
+internal/native/slots.go:13: func slotted(valueType ir.Type, value string) string {
+internal/native/slots.go:24: func unslotted(valueType ir.Type, member string) string {
+internal/native/switch_tests.go:10: func (e *emitter) switchTests(of ir.Type, held string, tests []ir.Expression) string {
+internal/native/target.go:10: func ValidateOptions(options Options) error {
+internal/native/target.go:37: func compilerName(options Options) string {
+internal/native/target.go:47: func archiverName(compiler string) string {
+internal/native/target.go:56: func WASILinkFlags(options Options) []string {
+internal/native/taste.go:9: func (e *emitter) toBoolean(of ir.Type, value string) string {
+internal/native/taste.go:41: func (e *emitter) logicalValue(expression ir.Logical) string {
+internal/native/taste.go:81: func logicalConverted(from, to ir.Type, value string) (string, bool) {
+internal/native/taste.go:101: func (e *emitter) effects(expression ir.Effects) string {
+internal/native/tsgo.go:15: func UsesTSGo(program *ir.Program) bool {
+internal/native/tsgo.go:29: func TSGoC(program *ir.Program) (string, error) {
+internal/native/tsgo.go:79: func BuildTSGo(source, output, archive string, options Options) error {
+internal/native/tsgo.go:129: func tsgoFlags(source string, options Options) []string {
+internal/native/typed_arrays.go:9: func typedArrayKind(kind ir.Type) string {
+internal/native/typed_arrays.go:22: func (e *emitter) typedArrayOffset(arguments []ir.Expression, index int) (string, string) {
+internal/native/typed_arrays.go:30: func (e *emitter) typedArrayValue(expression ir.Expression) string {
+internal/native/union.go:12: func converted(from ir.Type, to ir.Type, value string) (string, bool) {
+internal/native/union.go:35: func (e *emitter) box(value ir.Expression) string {
+internal/native/union.go:48: func (e *emitter) narrow(narrow ir.Narrow) string {
+internal/native/union.go:65: func (e *emitter) typeOf(observation ir.TypeOf) string {
+internal/native/union.go:88: func typeName(valueType ir.Type) string {
+internal/native/units.go:22: func cTokens(source string) ([]cToken, error) {
+internal/native/units.go:75: func identifierByte(c byte) bool {
+internal/native/units.go:86: func splitDeclarations(source string) ([]cDeclaration, error) {
+internal/native/units.go:178: func splitC(source string) (string, []compilationUnit, error) {
+internal/native/units.go:280: func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
+internal/native/units.go:284: func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {
+internal/native/units.go:366: func buildUnits(source, output string, options Options) error {
+internal/native/units.go:370: func buildUnitsWithLibrary(source, output string, options Options, library string, extraLinkFlags []string) error {
+internal/native/units_tsgo.go:14: func BuildSplitTSGo(source, output, archive string, options Options) error {
+internal/native/units_tsgo.go:32: func splitTSGoRuntime(source string, options Options) (string, error) {
+internal/native/view_fields.go:15: func (e *emitter) viewField(property ir.Property) string {
+internal/native/view_unions_callable_producers.go:9: func (e *emitter) unionCallableExpected(property ir.Property) string {
+internal/native/view_unions_callable_producers.go:31: func (e *emitter) unionCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
+internal/native/view_unions_callable_producers.go:60: func unionCallableProducerResult(result ir.Type) ir.Type {
+internal/native/view_unions_callable_producers.go:72: func (e *emitter) unionCallableProducers() []unionCallableProducer {
+internal/native/view_unions_callable_producers.go:93: func (e *emitter) unionClosureCodeIdentity(value string, index int) string {
+internal/native/view_unions_mixed.go:6: func (e *emitter) viewStringUndefined(property ir.Property) bool {
+internal/native/view_unions_read.go:8: func init() { checkedViewReadAdapter = readUnionView }
+internal/native/view_unions_read.go:12: func readUnionView(e *emitter, property ir.Property) (string, bool) {
+internal/native/view_unions_untagged.go:13: func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
+internal/native/view_unions_untagged.go:105: func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
+internal/native/view_unions_untagged.go:109: func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, fallback string) string {
+internal/native/view_unions_untagged.go:149: func (e *emitter) certifyUntaggedCallableRecorded(property ir.Property, value, recorded, expected string) {
+internal/native/view_unions_untagged.go:177: func (e *emitter) viewCallableProducerRow(index int, signature string) string {

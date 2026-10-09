@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:22:40.496025905Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:22:40.522259379Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup"}
+{"Time":"2026-10-09T12:22:40.522505851Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Output":"=== RUN   TestDecodedOptionsAndMutant_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:40.522638192Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Output":"=== PAUSE TestDecodedOptionsAndMutant_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:40.522641046Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup"}
+{"Time":"2026-10-09T12:22:40.522656059Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup"}
+{"Time":"2026-10-09T12:22:40.522659822Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Output":"=== CONT  TestDecodedOptionsAndMutant_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:51.175416913Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Output":"    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2: open /tmp/u106/cache/S4/.building-3bf5b24adfe0-2387858918/missing/lint.c: no such file or directory\n","OutputType":"error"}
+{"Time":"2026-10-09T12:22:51.17554929Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Output":"--- FAIL: TestDecodedOptionsAndMutant_Setup (10.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:51.175580095Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutant_Setup","Elapsed":10.65}
+{"Time":"2026-10-09T12:22:51.175673571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:51.180096634Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t10.682s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:51.180149164Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":10.684}

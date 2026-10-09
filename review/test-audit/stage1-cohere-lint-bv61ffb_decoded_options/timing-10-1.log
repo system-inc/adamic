@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:18:05.576492376Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:18:05.612424251Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard"}
+{"Time":"2026-10-09T12:18:05.612673205Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Output":"=== RUN   TestCompleteSuggestionSerialization_IsolatedShard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:05.61271635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Output":"=== PAUSE TestCompleteSuggestionSerialization_IsolatedShard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:05.612719736Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard"}
+{"Time":"2026-10-09T12:18:05.61272355Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard"}
+{"Time":"2026-10-09T12:18:05.612726099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Output":"=== CONT  TestCompleteSuggestionSerialization_IsolatedShard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:38.123288515Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Output":"    complete_suggestion_isolated_shard_test.go:31: isolated shard built its shared products and passed without Setup\n"}
+{"Time":"2026-10-09T12:18:38.127486734Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Output":"--- PASS: TestCompleteSuggestionSerialization_IsolatedShard (32.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:38.12754136Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompleteSuggestionSerialization_IsolatedShard","Elapsed":32.51}
+{"Time":"2026-10-09T12:18:38.127667377Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:38.129144657Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t32.552s\n"}
+{"Time":"2026-10-09T12:18:38.129376056Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":32.553}

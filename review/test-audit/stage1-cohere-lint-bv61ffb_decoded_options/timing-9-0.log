@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:17:11.862861563Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:17:11.897173303Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement"}
+{"Time":"2026-10-09T12:17:11.897376705Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Output":"=== RUN   TestCompilerAndStage1AgreePlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:11.897402802Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Output":"=== PAUSE TestCompilerAndStage1AgreePlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:11.897405855Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement"}
+{"Time":"2026-10-09T12:17:11.89740916Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement"}
+{"Time":"2026-10-09T12:17:11.897411513Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Output":"=== CONT  TestCompilerAndStage1AgreePlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:11.973773366Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Output":"    compiler_stage1_split_test.go:13392: planted fixed-output disagreement caught only by TestCompilerAndStage1Agree_6471\n"}
+{"Time":"2026-10-09T12:17:11.973854283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Output":"--- PASS: TestCompilerAndStage1AgreePlantedDisagreement (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:11.973928818Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1AgreePlantedDisagreement","Elapsed":0.08}
+{"Time":"2026-10-09T12:17:11.9739524Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:11.974915219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.111s\n"}
+{"Time":"2026-10-09T12:17:11.97498974Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.112}

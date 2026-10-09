@@ -1,0 +1,421 @@
+[
+  {
+    "test": "TestDecodedOptionsAndMutant family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go:49",
+    "seconds": 5.084,
+    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison; member 003 checks only Go count, members 004/005 witness built-in mutants, Union checks registration",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M4"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2"
+    ],
+    "last_proven_fail": "M4 bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDecodedOptionsAndMutant_000",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestDecodedOptionsAndMutantUnion",
+      "TestClosedComparatorGaps",
+      "TestCompilerAndStage1Agree_002",
+      "TestCompilerAndStage1Agree_007",
+      "TestCompilerAndStage1Agree_012"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; bv61ffb_decoded_options_test.go:54: ignored decoded-option mutant caught on mutant emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/lint-shared-588547747/catch.ts:1:26\", Go \"fixed\\ttry { work(); } catch(e) {}\\\\u000a\"",
+    "members": [
+      "TestDecodedOptionsAndMutant_000",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestDecodedOptionsAndMutantUnion"
+    ],
+    "timing_samples": [
+      4.918,
+      5.084,
+      5.619
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null,
+    "vacuous_subcases": [
+      "TestDecodedOptionsAndMutantUnion",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005"
+    ]
+  },
+  {
+    "test": "TestDecodedOptionsAndMutantPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go:141",
+    "seconds": 0.027,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2 bv61ffb_decoded_options_test.go:172: planted disagreement caught by shards []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDecodedOptionsAndMutantPlantedFailure"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestDecodedOptionsAndMutantPlantedFailure$ > W2.log; bv61ffb_decoded_options_test.go:172: planted disagreement caught by shards []",
+    "members": [
+      "TestDecodedOptionsAndMutantPlantedFailure"
+    ],
+    "timing_samples": [
+      0.027,
+      0.025,
+      0.062
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestDecodedOptionsAndMutant_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go:449",
+    "seconds": 4.895,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4 bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2: open /tmp/u106/cache/S4/.building-3bf5b24adfe0-2387858918/missing/lint.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDecodedOptionsAndMutant_Setup"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestDecodedOptionsAndMutant_Setup$ > S4.log; bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2: open /tmp/u106/cache/S4/.building-3bf5b24adfe0-2387858918/missing/lint.c: no such file or directory",
+    "members": [
+      "TestDecodedOptionsAndMutant_Setup"
+    ],
+    "timing_samples": [
+      5.114,
+      4.895,
+      4.631
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestClosedComparatorGaps",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/closed_gaps_test.go:17",
+    "seconds": 0.805,
+    "oracle": "Node executed live plus handwritten expected outputs 2, 1, 1; checked by clean baseline",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4 None",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDecodedOptionsAndMutant family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 5.084,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDecodedOptionsAndMutant_000",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestDecodedOptionsAndMutantUnion",
+      "TestClosedComparatorGaps",
+      "TestCompilerAndStage1Agree_002",
+      "TestCompilerAndStage1Agree_007",
+      "TestCompilerAndStage1Agree_012"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
+    "members": [
+      "TestClosedComparatorGaps"
+    ],
+    "timing_samples": [
+      1.542,
+      0.657,
+      0.805
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestCommandDiagnosticsDropOnlyModuleDownloads",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/command_test.go:12",
+    "seconds": 0.026,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1 command_test.go:27: one download: got \"go: downloading github.com/dlclark/regexp2 v1.11.5\\n\", want \"\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCommandDiagnosticsDropOnlyModuleDownloads"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCommandDiagnosticsDropOnlyModuleDownloads$ > S1.log; command_test.go:27: one download: got \"go: downloading github.com/dlclark/regexp2 v1.11.5\\n\", want \"\"",
+    "members": [
+      "TestCommandDiagnosticsDropOnlyModuleDownloads"
+    ],
+    "timing_samples": [
+      0.026,
+      0.024,
+      0.051
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/command_test.go:35",
+    "seconds": 0.171,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1 command_test.go:61: a download and a warning: execute passed, or failed without naming the stderr: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestExecuteFailsOnStderrOtherThanModuleDownloads"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestExecuteFailsOnStderrOtherThanModuleDownloads$ > W1.log; command_test.go:61: a download and a warning: execute passed, or failed without naming the stderr: <nil>",
+    "members": [
+      "TestExecuteFailsOnStderrOtherThanModuleDownloads"
+    ],
+    "timing_samples": [
+      0.193,
+      0.171,
+      0.128
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestCompilerAndStage1Agree_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/compiler_stage1_split_test.go:231",
+    "seconds": 0.195,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2 compiler_stage1_split_test.go:259: enumerated 6485, want 7782",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerAndStage1Agree_Setup"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCompilerAndStage1Agree_Setup$ > S2.log; compiler_stage1_split_test.go:259: enumerated 6485, want 7782",
+    "members": [
+      "TestCompilerAndStage1Agree_Setup"
+    ],
+    "timing_samples": [
+      0.201,
+      0.195,
+      0.181
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestProduct_CompilerAgreement family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/compiler_stage1_split_test.go:285",
+    "seconds": 22.409,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S5 compiler_stage1_split_test.go:287: product compiler-agreement-go-oracle failed preparation",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_CompilerAgreementGoOracle",
+      "TestProduct_CompilerAgreementSanitizedNative",
+      "TestProduct_CompilerAgreementReleaseNative"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_CompilerAgreementGoOracle$ > S5.log; compiler_stage1_split_test.go:287: product compiler-agreement-go-oracle failed preparation",
+    "members": [
+      "TestProduct_CompilerAgreementGoOracle",
+      "TestProduct_CompilerAgreementSanitizedNative",
+      "TestProduct_CompilerAgreementReleaseNative"
+    ],
+    "timing_samples": [
+      22.409,
+      0.857
+    ],
+    "timing_censored_runs": 1,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestCompilerAndStage1Agree family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/compiler_stage1_split_test.go:397",
+    "seconds": null,
+    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3 compiler_stage1_split_test.go:401: case 3 line 8: port \"fixed\\timport {\\\\u000d\\\\u000a    __String,\\\\u000d\\\\u000a    AccessorDeclaration,\\\\u000d\\\\u000a    addEmitHelpers,\\\\u000d\\\\u000a    addRange,\\\\u000d\\\\u000a    addSyntheticLeadingComment,\\\\u000d\\\\u000a    AllAccessorDeclarations,\\\\u000d\\\\u000a    append,\\\\u000d\\\\u000a    arrayIsEqualTo,\\\\u000d\\\\ [line continues in log]",
+    "verdict": "slow-worthy",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDecodedOptionsAndMutant_000",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestDecodedOptionsAndMutantUnion",
+      "TestClosedComparatorGaps",
+      "TestCompilerAndStage1Agree_002",
+      "TestCompilerAndStage1Agree_007",
+      "TestCompilerAndStage1Agree_012"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCompilerAndStage1Agree_(002|007|012)$ > M3.log; compiler_stage1_split_test.go:401: case 3 line 8: port \"fixed\\timport {\\\\u000d\\\\u000a    __String,\\\\u000d\\\\u000a    AccessorDeclaration,\\\\u000d\\\\u000a    addEmitHelpers,\\\\u000d\\\\u000a    addRange,\\\\u000d\\\\u000a    addSyntheticLeadingComment,\\\\u000d\\\\u000a    AllAccessorDeclarations,\\\\u000d\\\\u000a    append,\\\\u000d\\\\u000a    arrayIsEqualTo,\\\\u000d\\\\ [line continues in log]",
+    "members": {
+      "file": "groups.json",
+      "group": 8,
+      "count": 6485
+    },
+    "timing_samples": [],
+    "timing_censored_runs": 3,
+    "seconds_lower_bound": 90
+  },
+  {
+    "test": "TestCompilerAndStage1AgreePlantedDisagreement",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/compiler_stage1_split_test.go:13369",
+    "seconds": 0.112,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3 compiler_stage1_split_test.go:13382: planted disagreement not caught exactly once: === RUN   TestCompilerAndStage1Agree_6471",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerAndStage1AgreePlantedDisagreement"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCompilerAndStage1AgreePlantedDisagreement$ > W3.log; compiler_stage1_split_test.go:13382: planted disagreement not caught exactly once: === RUN   TestCompilerAndStage1Agree_6471",
+    "members": [
+      "TestCompilerAndStage1AgreePlantedDisagreement"
+    ],
+    "timing_samples": [
+      0.112,
+      0.105,
+      0.112
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  },
+  {
+    "test": "TestCompleteSuggestionSerialization_IsolatedShard",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/complete_suggestion_isolated_shard_test.go:12",
+    "seconds": 32.553,
+    "oracle": "Suite-authored construction or planted-failure expectations",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3 complete_suggestion_isolated_shard_test.go:26: isolated shard: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompleteSuggestionSerialization_IsolatedShard"
+    ],
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCompleteSuggestionSerialization_IsolatedShard$ > S3.log; complete_suggestion_isolated_shard_test.go:26: isolated shard: exit status 1",
+    "members": [
+      "TestCompleteSuggestionSerialization_IsolatedShard"
+    ],
+    "timing_samples": [
+      45.675,
+      32.553,
+      31.663
+    ],
+    "timing_censored_runs": 0,
+    "seconds_lower_bound": null
+  }
+]

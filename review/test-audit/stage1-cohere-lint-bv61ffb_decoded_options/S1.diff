@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint_test.go
++++ b/stage1/cohere/lint/lint_test.go
+@@ -62,7 +62,7 @@
+ // commandDiagnostics is the stderr that fails a command: all of it, less the go command's module
+ // downloads.
+ func commandDiagnostics(name string, stderr []byte) []byte {
+-	if name == "go" {
++	if name != "go" {
+ 		return moduleDownload.ReplaceAll(stderr, nil)
+ 	}
+ 	return stderr

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/compiler_stage1_split_test.go
++++ b/stage1/cohere/lint/compiler_stage1_split_test.go
+@@ -31,7 +31,7 @@
+ const compilerAgreementFixBuckets = 256
+ const compilerAgreementCheckerGroups = 16
+ const compilerAgreementCheckerKey = "compiler/src/compiler/checker.ts"
+-const compilerAgreementSides = 5
++const compilerAgreementSides = 6
+ const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups + 1) * compilerAgreementSides
+ 
+ // Stable file and rule keys, rather than corpus ordinals, keep growing corpora covered.

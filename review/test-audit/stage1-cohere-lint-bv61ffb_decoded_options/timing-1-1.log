@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:09:19.555978005Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:09:19.58065064Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure"}
+{"Time":"2026-10-09T12:09:19.580733012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Output":"=== RUN   TestDecodedOptionsAndMutantPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:19.580755319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Output":"=== PAUSE TestDecodedOptionsAndMutantPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:19.580757791Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure"}
+{"Time":"2026-10-09T12:09:19.580760273Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure"}
+{"Time":"2026-10-09T12:09:19.580761969Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Output":"=== CONT  TestDecodedOptionsAndMutantPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:19.580764187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Output":"    bv61ffb_decoded_options_test.go:173: planted case emitted JavaScript caught by exactly shard-001\n"}
+{"Time":"2026-10-09T12:09:19.580773796Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Output":"--- PASS: TestDecodedOptionsAndMutantPlantedFailure (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:19.580775856Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantPlantedFailure","Elapsed":0}
+{"Time":"2026-10-09T12:09:19.580786862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:19.58086791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.025s\n"}
+{"Time":"2026-10-09T12:09:19.580878503Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.025}

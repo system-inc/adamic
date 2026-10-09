@@ -1,0 +1,10 @@
+Code under test: Settings.load/read/list and lint driver run in the TypeScript port; C and emitter.conditional for closed compiler gaps. Oracles: live Go cohere and source Node. Go cohere and source-gap programs remain unchanged.
+Static function inventories are conservative supersets, not exact dynamic reachability.
+Fixed production menu before any mutant execution:
+M1 settings.ts Settings.load: toLowerCase -> toUpperCase (option/key change).
+M2 settings.ts Settings.read: values[0] -> values[1] (off by one).
+M3 main.ts run: drop linter.run() (drop statement).
+M4 internal/native/emit_branches.go emitter.conditional: swap whenTrue and whenNot arguments in direct ternary emission.
+P1 main.ts run: return 0 at entry, empty findings/output. Probe only.
+P2 internal/native C: return empty string at entry. Probe only, judged only on compiler-gap row.
+Witness/setup edits are separately identified and never production kills.

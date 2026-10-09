@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/settings.ts
++++ b/stage1/cohere/lint/settings.ts
+@@ -26,7 +26,7 @@
+         }
+         for(const property of parser.node(object).children) {
+             const children = parser.node(property).children;
+-            const name = parser.node(children[0] ?? panic('missing option key')).text.toLowerCase();
++            const name = parser.node(children[0] ?? panic('missing option key')).text.toUpperCase();
+             const value = children[1] ?? panic('missing option value');
+             if(parser.node(value).kind === 'NullKeyword') {
+                 continue;

@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T12:10:04.097343713Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:10:04.140166687Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads"}
+{"Time":"2026-10-09T12:10:04.14025076Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Output":"=== RUN   TestExecuteFailsOnStderrOtherThanModuleDownloads\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:04.266818154Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Output":"--- PASS: TestExecuteFailsOnStderrOtherThanModuleDownloads (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:04.266844307Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Elapsed":0.13}
+{"Time":"2026-10-09T12:10:04.267054677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:04.267875316Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.170s\n"}
+{"Time":"2026-10-09T12:10:04.267922114Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.171}

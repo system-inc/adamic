@@ -1,0 +1,11 @@
+--- a/internal/native/emit_branches.go
++++ b/internal/native/emit_branches.go
+@@ -83,7 +83,7 @@
+ 	trueText, whenTrue, trueOwned := e.aside(conditional.WhenTrue)
+ 	notText, whenNot, notOwned := e.aside(conditional.WhenNot)
+ 	if trueText == "" && notText == "" && len(trueOwned) == 0 && len(notOwned) == 0 {
+-		return fmt.Sprintf("(%s ? %s : %s)", condition, whenTrue, whenNot)
++		return fmt.Sprintf("(%s ? %s : %s)", condition, whenNot, whenTrue)
+ 	}
+ 	valueType := conditional.Type()
+ 	result := e.temporary()

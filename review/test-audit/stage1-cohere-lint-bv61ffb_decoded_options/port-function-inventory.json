@@ -1,0 +1,1542 @@
+[
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 6,
+    "name": "word"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 15,
+    "name": "space"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 31,
+    "name": "selfDirective"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 65,
+    "name": "validDecoration"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 76,
+    "name": "decorated"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 90,
+    "name": "matches"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 136,
+    "name": "quote"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 15,
+    "name": "lineStartsOf"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 33,
+    "name": "isFunctionKind"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 50,
+    "name": "isLiteralPartKind"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 64,
+    "name": "space"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 85,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 108,
+    "name": "node"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 111,
+    "name": "enabled"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 114,
+    "name": "start"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 120,
+    "name": "report"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 145,
+    "name": "reportNode"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 155,
+    "name": "reportRange"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 189,
+    "name": "edit"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 192,
+    "name": "line"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 213,
+    "name": "literalEnds"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 221,
+    "name": "literalSpans"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 230,
+    "name": "child"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 233,
+    "name": "parent"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 238,
+    "name": "kind"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 241,
+    "name": "functionLike"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 245,
+    "name": "has"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 253,
+    "name": "children"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 254,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 256,
+    "name": "scanAt"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 260,
+    "name": "scanStart"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 263,
+    "name": "scanEnd"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 266,
+    "name": "scanKind"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 269,
+    "name": "raw"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 274,
+    "name": "name"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 295,
+    "name": "memberName"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 300,
+    "name": "members"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 301,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 314,
+    "name": "arguments"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 318,
+    "name": "property"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 322,
+    "name": "questionDot"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 325,
+    "name": "initializer"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 330,
+    "name": "extendsClass"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 331,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 333,
+    "name": "comment"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 345,
+    "name": "unwrap"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 352,
+    "name": "literalType"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 371,
+    "name": "tokens"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 379,
+    "name": "signature"
+  },
+  {
+    "file": "stage1/cohere/lint/finding.ts",
+    "line": 18,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/all.ts",
+    "line": 11,
+    "name": "all"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "line": 2,
+    "name": "canBeginAt"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 6,
+    "name": "tokenStart"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 12,
+    "name": "isParameterListKind"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 32,
+    "name": "isBracedListKind"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "line": 52,
+    "name": "collectListInteriors"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/comment.ts",
+    "line": 10,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 11,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 15,
+    "name": "get"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 23,
+    "name": "forFile"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/main.ts",
+    "line": 9,
+    "name": "read"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/main.ts",
+    "line": 68,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "line": 2,
+    "name": "sortByPosition"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/main.ts",
+    "line": 6,
+    "name": "read"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/main.ts",
+    "line": 10,
+    "name": "text"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/main.ts",
+    "line": 12,
+    "name": "schemaText"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 9,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 15,
+    "name": "audit"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 32,
+    "name": "field"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 33,
+    "name": "limit"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 36,
+    "name": "reference"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 47,
+    "name": "validate"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 55,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 56,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 61,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 86,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "line": 106,
+    "name": "check"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 16,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 17,
+    "name": "node"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 18,
+    "name": "add"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 23,
+    "name": "skip"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 26,
+    "name": "string"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 48,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 61,
+    "name": "digit"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 65,
+    "name": "value"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 124,
+    "name": "parse"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 129,
+    "name": "field"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "line": 133,
+    "name": "equal"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 12,
+    "name": "template"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 18,
+    "name": "names"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 27,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 30,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "line": 32,
+    "name": "render"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 9,
+    "name": "matches"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 18,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 22,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 27,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 32,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "line": 58,
+    "name": "check"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 20,
+    "name": "compareFindings"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 23,
+    "name": "compareEdits"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 56,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 75,
+    "name": "run"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 83,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 106,
+    "name": "ancestry"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 112,
+    "name": "node"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 115,
+    "name": "walk"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 121,
+    "name": "fixed"
+  },
+  {
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "name": "run"
+  },
+  {
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 94,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 99,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 16,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/messages.ts",
+    "line": 2,
+    "name": "messageConsistencyNoConsole"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 30,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "line": 1,
+    "name": "description"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "line": 5,
+    "name": "suggestionDescription"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 60,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 17,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 2,
+    "name": "messageNoTypeAliasSuffix"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 7,
+    "name": "messageNoInterfaceSuffix"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 12,
+    "name": "messageNoConstEnumSuffix"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 25,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 39,
+    "name": "report"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 43,
+    "name": "constEnum"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 82,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 31,
+    "name": "awaitedLoop"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 72,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 7,
+    "name": "bitwiseOperator"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 42,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 45,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 75,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 16,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 6,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 9,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 29,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 22,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 5,
+    "name": "duplicateCases"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 22,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 25,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 34,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 6,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 9,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 44,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 11,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 14,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 17,
+    "name": "walk"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 53,
+    "name": "allowedLabel"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 61,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 12,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 31,
+    "name": "negated"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 42,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 19,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 3,
+    "name": "noOctalEscape"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 58,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 61,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 66,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/messages.ts",
+    "line": 2,
+    "name": "messageUnexpectedUnaryOp"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 29,
+    "name": "afterthought"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 70,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 12,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 71,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 12,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 18,
+    "name": "chain"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 41,
+    "name": "comma"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 50,
+    "name": "forSlot"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 107,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 11,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 17,
+    "name": "assignmentTarget"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 91,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 35,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 10,
+    "name": "after"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 17,
+    "name": "noUnexpectedMultiline"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 79,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 82,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 87,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 11,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 14,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 74,
+    "name": "precedence"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 197,
+    "name": "invert"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 221,
+    "name": "alwaysBoolean"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 232,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 2,
+    "name": "assignment"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 25,
+    "name": "destructuring"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 45,
+    "name": "writeOnly"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 73,
+    "name": "used"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 99,
+    "name": "noUnusedPrivateClassMembers"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 145,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 148,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 153,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 5,
+    "name": "forwarding"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 53,
+    "name": "noUselessConstructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 72,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 131,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 134,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 139,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/messages.ts",
+    "line": 2,
+    "name": "messageWarningComment"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 8,
+    "name": "isParameterListKind"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 28,
+    "name": "isBracedListKind"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 52,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 55,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 69,
+    "name": "commentAnchors"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 131,
+    "name": "reachableComments"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 185,
+    "name": "scanWarnings"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 248,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 17,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 5,
+    "name": "tokenStart"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 31,
+    "name": "tokenText"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 34,
+    "name": "triviaText"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 41,
+    "name": "concatenation"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 44,
+    "name": "string"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 47,
+    "name": "contains"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 54,
+    "name": "legacy"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 76,
+    "name": "escape"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 97,
+    "name": "curly"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 109,
+    "name": "build"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 142,
+    "name": "preferTemplate"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 203,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 206,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 211,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 10,
+    "name": "forwardRefUsesRef"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 115,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 118,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 123,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 4,
+    "name": "jsxNoCommentTextnodes"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 36,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 39,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 44,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 3,
+    "name": "noFindDomNode"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 35,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 38,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 43,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 3,
+    "name": "noIsMounted"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 36,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 39,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 44,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 2,
+    "name": "noRedundantShouldComponentUpdate"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 61,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 64,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 69,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 10,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 25,
+    "name": "containsYield"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 50,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 14,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 17,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 32,
+    "name": "method"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 56,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 104,
+    "name": "property"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 127,
+    "name": "report"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 130,
+    "name": "containsKind"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 133,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 136,
+    "name": "returnType"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 150,
+    "name": "parametersText"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 178,
+    "name": "delimiter"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 182,
+    "name": "signatureKey"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 188,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 9,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 12,
+    "name": "prepare"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 30,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 65,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 11,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 16,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 36,
+    "name": "enumSelf"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 66,
+    "name": "anonymous"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 78,
+    "name": "enumAllowed"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 125,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 8,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 13,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 29,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 7,
+    "name": "constructor"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 12,
+    "name": "visit"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 58,
+    "name": "create"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 9,
+    "name": "load"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 65,
+    "name": "read"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 72,
+    "name": "list"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1518,
+    "name": "foldPoint"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1617,
+    "name": "printable"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1637,
+    "name": "foldedRange"
+  }
+]
