@@ -449,6 +449,9 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 
 func TestMain(main *testing.M) {
 	status := main.Run()
+	if parallelScheduleDirectory.path != "" {
+		os.RemoveAll(parallelScheduleDirectory.path)
+	}
 	if gate.cache != nil {
 		for index, kind := range resultKinds {
 			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
