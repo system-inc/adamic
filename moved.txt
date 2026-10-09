@@ -1,0 +1,79 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/11_parenthesized_kind.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/13_flag_downcast.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/20_type_flag_mask.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/05_safe_load_read/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/cycles/06_import_order_mutant/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/05_writeFile.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/13_createDirectory.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/08_loop_state.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/12_decorator_descriptor.a
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/12_decorator_descriptor.a/native
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/any-value/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/any-value/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/any-value/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/binary-value-value/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/binary-value-value/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/binary-value-value/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/binary-value-value/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/function-without-body/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/function-without-body/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/function-without-body/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/function-without-body/main.a/stage0
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a/node
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/non-null-assertion/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/non-null-assertion/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/non-null-assertion/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/optional-boolean-field/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/optional-boolean-field/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/optional-boolean-field/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/optional-boolean-field/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/prefix-unary-value/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/prefix-unary-value/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/prefix-unary-value/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/prefix-unary-value/main.a/stage0
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a/node
+absent -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/type-predicate/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/type-predicate/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/type-predicate/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/type-predicate/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/value-condition/main.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/value-condition/main.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/value-condition/main.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/value-condition/main.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/17_binder_flow.a/native
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/12_decorator_descriptor.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/12_decorator_descriptor.a/native
+        fixtures_test.go:301: oracle native/sanitizer/leak hook failed: --- FAIL: TestStage3FixtureHook (0.07s)
+                stage3_hook_test.go:21: native: clang failed: exit status 1
+                    /var/folders/k9/gbh7vpqn2qdd4z81c1v1x23h0000gq/T/adamic-build-352134848/main.c:401:63: error: no member named 'index' in 'struct adamic_slot_cache'
+                      401 |         adamic_object_present(adamic_temporary_116, adamic_cache_120.index);
+                          |                                                     ~~~~~~~~~~~~~~~~ ^
+                    1 error generated.
+            FAIL
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/real/generic-optional-return/main.a:7:68: stage 0 can't lower an array of never yet}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/structural-method-statics/main.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/real/structural-method-statics/main.a:8:36: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet}
