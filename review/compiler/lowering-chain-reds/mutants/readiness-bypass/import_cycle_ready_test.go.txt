@@ -82,7 +82,7 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 				t.Error("proven base class read retained a TDZ check")
 			}
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(strings.ReplaceAll(native.C(program), "if (!adamic_ready_", "if (false && !adamic_ready_"), binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			generated := filepath.Join(directory, "generated.mjs")

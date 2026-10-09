@@ -1,0 +1,27 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+    import_cycle_ready_test.go:122: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value575455576/001/native: got "3\n", want "3\nadamic: panic: ReferenceError: Cannot access 'value' before initialization\n" (error exit status 1)
+    import_cycle_ready_test.go:122: expected exit 70, got exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+    import_cycle_ready_test.go:122: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksindirect_value1847915756/001/native: got "3\n", want "3\nadamic: panic: ReferenceError: Cannot access 'value' before initialization\n" (error exit status 1)
+    import_cycle_ready_test.go:122: expected exit 70, got exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+    import_cycle_ready_test.go:122: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_plain_class2250928666/001/native: got "3\n", want "3\nadamic: panic: ReferenceError: Cannot access 'Box' before initialization\n" (error exit status 1)
+    import_cycle_ready_test.go:122: expected exit 70, got exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+    import_cycle_ready_test.go:122: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_extends2376711699/001/native: got "3\n", want "3\nadamic: panic: ReferenceError: Cannot access 'Base' before initialization\n" (error exit status 1)
+    import_cycle_ready_test.go:122: expected exit 70, got exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (2.09s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_value (0.32s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.29s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.29s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.32s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.31s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.28s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.102s
+FAIL

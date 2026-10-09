@@ -1,0 +1,12 @@
+push-old-stop: caught, exit 1, 2.38s
+map-boundary-bypass: caught, exit 1, 8.03s
+sort-direct-reader: caught, exit 1, 8.64s
+static-direct-reader: caught, exit 1, 8.62s
+stale-allowlist: caught, exit 1, 5.75s
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/lowering-chain-reds/run-mutants.py", line 67, in <module>
+    overlay('css-part-omission', 'stage1/cohere/cssstrings/gaps_test.go',
+  File "/workspace/adamic/review/compiler/lowering-chain-reds/run-mutants.py", line 33, in overlay
+    assert result.returncode == 1 and all(text in output for text in required), (name, result.returncode, output[-2000:])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('css-part-omission', 1, '=== RUN   TestMultiPushPortMatchesGo\n=== PAUSE TestMultiPushPortMatchesGo\n=== CONT  TestMultiPushPortMatchesGo\n    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/format/css/testdata/prettier pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 247\n    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8\n    gaps_test.go:51: build cssstrings_Go_oracle da56469f1cdc miss 1.70\n    gaps_test.go:53: build cssstrings css-part-omission lowering and backends: lstat /workspace/adamic/review/compiler/lowering-chain-reds/mutants/css-part-omission/strings.ts: no such file or directory\n--- FAIL: TestMultiPushPortMatchesGo (1.81s)\nFAIL\nFAIL\tgithub.com/system-inc/adamic/stage1/cohere/cssstrings\t1.815s\nFAIL\n')

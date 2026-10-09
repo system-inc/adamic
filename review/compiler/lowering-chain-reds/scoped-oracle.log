@@ -1,0 +1,102 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+    oracle_test.go:771: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+    oracle_test.go:771: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a
+    oracle_test.go:615: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a
+    oracle_test.go:615: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+    oracle_test.go:601: gate cache native miss
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+    oracle_test.go:601: gate cache native miss
+    oracle_test.go:615: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a (0.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_map.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums.a (0.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a (10.37s)
+PASS
+gate cache: native hits=6 misses=14
+gate cache: node hits=1 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	10.411s
