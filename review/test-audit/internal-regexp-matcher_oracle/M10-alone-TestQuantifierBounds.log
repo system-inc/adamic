@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:22:06.443421612Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:06.445049165Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:06.445091778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== RUN   TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.445113039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== PAUSE TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.445115443Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:06.445117726Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:06.445120771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== CONT  TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.445127821Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"--- PASS: TestQuantifierBounds (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.445129884Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Elapsed":0}
+{"Time":"2026-10-09T11:22:06.445138247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.445297152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.002s\n"}
+{"Time":"2026-10-09T11:22:06.445317372Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.002}

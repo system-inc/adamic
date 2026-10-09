@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:22:02.123342299Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:02.125002696Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:02.125057417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== RUN   TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:02.125078979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== PAUSE TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:02.125081332Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:02.125083546Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:02.125085208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== CONT  TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:02.144157919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"--- PASS: TestSharedCanonicalize (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:02.144187663Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Elapsed":0.02}
+{"Time":"2026-10-09T11:22:02.14420568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:02.144438014Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.021s\n"}
+{"Time":"2026-10-09T11:22:02.144460897Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.021}

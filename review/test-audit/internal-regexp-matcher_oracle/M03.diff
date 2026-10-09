@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -382,7 +382,7 @@
+ 				match.Groups[name] = capture
+ 			}
+ 			if stateful {
+-				r.LastIndex = uint64(state.pos)
++				r.LastIndex = uint64(state.pos + 1)
+ 			}
+ 			return match, nil
+ 		}

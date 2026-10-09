@@ -1,0 +1,688 @@
+[
+  {
+    "label": "time-TestMatcherNodeControls-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$",
+    "env": {},
+    "wall_seconds": 0.223,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherNodeControls-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$",
+    "env": {},
+    "wall_seconds": 0.199,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherNodeControls-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$",
+    "env": {},
+    "wall_seconds": 0.2,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherRandomNode-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$",
+    "env": {},
+    "wall_seconds": 0.986,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherRandomNode-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$",
+    "env": {},
+    "wall_seconds": 0.929,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherRandomNode-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$",
+    "env": {},
+    "wall_seconds": 0.924,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherTest262Executions-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$",
+    "env": {},
+    "wall_seconds": 0.87,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherTest262Executions-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$",
+    "env": {},
+    "wall_seconds": 0.883,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherTest262Executions-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$",
+    "env": {},
+    "wall_seconds": 0.877,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimit-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$",
+    "env": {},
+    "wall_seconds": 0.152,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimit-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$",
+    "env": {},
+    "wall_seconds": 0.141,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimit-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$",
+    "env": {},
+    "wall_seconds": 0.145,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherCanonicalizeNode-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$",
+    "env": {},
+    "wall_seconds": 0.285,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherCanonicalizeNode-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$",
+    "env": {},
+    "wall_seconds": 0.287,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherCanonicalizeNode-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$",
+    "env": {},
+    "wall_seconds": 0.301,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherPropertyProviderStrings-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$",
+    "env": {},
+    "wall_seconds": 0.22,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherPropertyProviderStrings-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$",
+    "env": {},
+    "wall_seconds": 0.225,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherPropertyProviderStrings-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$",
+    "env": {},
+    "wall_seconds": 0.24,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherUTF16PatternsNode-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$",
+    "env": {},
+    "wall_seconds": 0.205,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherUTF16PatternsNode-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$",
+    "env": {},
+    "wall_seconds": 0.2,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherUTF16PatternsNode-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$",
+    "env": {},
+    "wall_seconds": 0.221,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherProviderSnapshot-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$",
+    "env": {},
+    "wall_seconds": 0.234,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherProviderSnapshot-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$",
+    "env": {},
+    "wall_seconds": 0.223,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherProviderSnapshot-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$",
+    "env": {},
+    "wall_seconds": 0.219,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimitBoundary-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$",
+    "env": {},
+    "wall_seconds": 0.169,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimitBoundary-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$",
+    "env": {},
+    "wall_seconds": 0.161,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherStepLimitBoundary-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$",
+    "env": {},
+    "wall_seconds": 0.164,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Mutants-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$",
+    "env": {},
+    "wall_seconds": 0.215,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Mutants-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$",
+    "env": {},
+    "wall_seconds": 0.221,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Mutants-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$",
+    "env": {},
+    "wall_seconds": 0.198,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Node-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$",
+    "env": {},
+    "wall_seconds": 0.197,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Node-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$",
+    "env": {},
+    "wall_seconds": 0.182,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6Node-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$",
+    "env": {},
+    "wall_seconds": 0.179,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6LoopsNode-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$",
+    "env": {},
+    "wall_seconds": 0.182,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6LoopsNode-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$",
+    "env": {},
+    "wall_seconds": 0.179,
+    "exit": 0
+  },
+  {
+    "label": "time-TestMatcherOct6LoopsNode-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$",
+    "env": {},
+    "wall_seconds": 0.183,
+    "exit": 0
+  },
+  {
+    "label": "time-TestNodeAgreement-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$",
+    "env": {},
+    "wall_seconds": 0.339,
+    "exit": 0
+  },
+  {
+    "label": "time-TestNodeAgreement-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$",
+    "env": {},
+    "wall_seconds": 0.322,
+    "exit": 0
+  },
+  {
+    "label": "time-TestNodeAgreement-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$",
+    "env": {},
+    "wall_seconds": 0.329,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParse-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestParse$",
+    "env": {},
+    "wall_seconds": 0.165,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParse-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestParse$",
+    "env": {},
+    "wall_seconds": 0.16,
+    "exit": 0
+  },
+  {
+    "label": "time-TestParse-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestParse$",
+    "env": {},
+    "wall_seconds": 0.169,
+    "exit": 0
+  },
+  {
+    "label": "time-TestFlags-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestFlags$",
+    "env": {},
+    "wall_seconds": 0.151,
+    "exit": 0
+  },
+  {
+    "label": "time-TestFlags-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestFlags$",
+    "env": {},
+    "wall_seconds": 0.146,
+    "exit": 0
+  },
+  {
+    "label": "time-TestFlags-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestFlags$",
+    "env": {},
+    "wall_seconds": 0.165,
+    "exit": 0
+  },
+  {
+    "label": "time-TestQuantifierBounds-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestQuantifierBounds$",
+    "env": {},
+    "wall_seconds": 0.165,
+    "exit": 0
+  },
+  {
+    "label": "time-TestQuantifierBounds-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestQuantifierBounds$",
+    "env": {},
+    "wall_seconds": 0.156,
+    "exit": 0
+  },
+  {
+    "label": "time-TestQuantifierBounds-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestQuantifierBounds$",
+    "env": {},
+    "wall_seconds": 0.165,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSharedCanonicalize-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestSharedCanonicalize$",
+    "env": {},
+    "wall_seconds": 0.171,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSharedCanonicalize-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestSharedCanonicalize$",
+    "env": {},
+    "wall_seconds": 0.17,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSharedCanonicalize-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestSharedCanonicalize$",
+    "env": {},
+    "wall_seconds": 0.16,
+    "exit": 0
+  },
+  {
+    "label": "vet-M01",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.098,
+    "exit": 0
+  },
+  {
+    "label": "vet-M02",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.1,
+    "exit": 0
+  },
+  {
+    "label": "vet-M03",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.093,
+    "exit": 0
+  },
+  {
+    "label": "vet-M04",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.104,
+    "exit": 0
+  },
+  {
+    "label": "vet-M05",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.098,
+    "exit": 0
+  },
+  {
+    "label": "vet-M06",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.104,
+    "exit": 0
+  },
+  {
+    "label": "vet-M07",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.098,
+    "exit": 0
+  },
+  {
+    "label": "vet-M08",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.104,
+    "exit": 0
+  },
+  {
+    "label": "vet-M09",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.102,
+    "exit": 0
+  },
+  {
+    "label": "vet-M10",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.101,
+    "exit": 0
+  },
+  {
+    "label": "vet-M11",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.099,
+    "exit": 0
+  },
+  {
+    "label": "vet-M12",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.102,
+    "exit": 0
+  },
+  {
+    "label": "vet-M13",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.103,
+    "exit": 0
+  },
+  {
+    "label": "vet-M14",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.099,
+    "exit": 0
+  },
+  {
+    "label": "vet-M15",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.094,
+    "exit": 0
+  },
+  {
+    "label": "vet-M16",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.113,
+    "exit": 0
+  },
+  {
+    "label": "vet-M17",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.1,
+    "exit": 0
+  },
+  {
+    "label": "vet-M18",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.094,
+    "exit": 0
+  },
+  {
+    "label": "switch-vet",
+    "command": "timeout 90 go vet ./internal/regexp/",
+    "env": {},
+    "wall_seconds": 0.082,
+    "exit": 1
+  },
+  {
+    "label": "M01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M01"
+    },
+    "wall_seconds": 0.068,
+    "exit": 1
+  },
+  {
+    "label": "M02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M02"
+    },
+    "wall_seconds": 0.067,
+    "exit": 1
+  },
+  {
+    "label": "M03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M03"
+    },
+    "wall_seconds": 0.072,
+    "exit": 1
+  },
+  {
+    "label": "M04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M04"
+    },
+    "wall_seconds": 0.074,
+    "exit": 1
+  },
+  {
+    "label": "M05",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M05"
+    },
+    "wall_seconds": 0.071,
+    "exit": 1
+  },
+  {
+    "label": "M06",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M06"
+    },
+    "wall_seconds": 0.074,
+    "exit": 1
+  },
+  {
+    "label": "M07",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M07"
+    },
+    "wall_seconds": 0.08,
+    "exit": 1
+  },
+  {
+    "label": "M08",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M08"
+    },
+    "wall_seconds": 0.081,
+    "exit": 1
+  },
+  {
+    "label": "M09",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M09"
+    },
+    "wall_seconds": 0.074,
+    "exit": 1
+  },
+  {
+    "label": "M10",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M10"
+    },
+    "wall_seconds": 0.068,
+    "exit": 1
+  },
+  {
+    "label": "M11",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M11"
+    },
+    "wall_seconds": 0.075,
+    "exit": 1
+  },
+  {
+    "label": "M12",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M12"
+    },
+    "wall_seconds": 0.067,
+    "exit": 1
+  },
+  {
+    "label": "M13",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M13"
+    },
+    "wall_seconds": 0.076,
+    "exit": 1
+  },
+  {
+    "label": "M14",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M14"
+    },
+    "wall_seconds": 0.068,
+    "exit": 1
+  },
+  {
+    "label": "M15",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M15"
+    },
+    "wall_seconds": 0.074,
+    "exit": 1
+  },
+  {
+    "label": "M16",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M16"
+    },
+    "wall_seconds": 0.076,
+    "exit": 1
+  },
+  {
+    "label": "M17",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M17"
+    },
+    "wall_seconds": 0.071,
+    "exit": 1
+  },
+  {
+    "label": "M18",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "env": {
+      "ADAMIC_MUTANT": "M18"
+    },
+    "wall_seconds": 0.078,
+    "exit": 1
+  },
+  {
+    "label": "PExec",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcher",
+    "env": {
+      "ADAMIC_MUTANT": "PExec"
+    },
+    "wall_seconds": 0.076,
+    "exit": 1
+  },
+  {
+    "label": "PRun",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$",
+    "env": {
+      "ADAMIC_MUTANT": "PRun"
+    },
+    "wall_seconds": 0.071,
+    "exit": 1
+  },
+  {
+    "label": "PParse",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$",
+    "env": {
+      "ADAMIC_MUTANT": "PParse"
+    },
+    "wall_seconds": 0.076,
+    "exit": 1
+  },
+  {
+    "label": "W01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$",
+    "env": {},
+    "wall_seconds": 0.412,
+    "exit": 1
+  }
+]

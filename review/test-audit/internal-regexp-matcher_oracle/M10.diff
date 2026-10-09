@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -586,7 +586,7 @@
+ 		if unicode && high(c) && pos+1 < len(input) && low(input[pos+1]) {
+ 			return utf16.DecodeRune(rune(c), rune(input[pos+1])), pos + 2, true
+ 		}
+-		return rune(c), pos + 1, true
++		return rune(c), pos + 2, true
+ 	}
+ 	if pos <= 0 {
+ 		return 0, pos, false

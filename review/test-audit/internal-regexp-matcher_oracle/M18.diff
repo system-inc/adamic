@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -386,7 +386,7 @@
+ 			}
+ 			return match, nil
+ 		}
+-		if p.anchored || p.flags.Sticky {
++		if p.anchored && p.flags.Sticky {
+ 			break
+ 		}
+ 		_, next, ok := readCharacter(input, position, 1, unicodeMode(p.flags))

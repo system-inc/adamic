@@ -1,0 +1,58 @@
+{"Time":"2026-10-09T11:22:58.276132373Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:58.278958659Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:22:58.279038047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== RUN   TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.27906739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== PAUSE TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279069664Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:22:58.279072177Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T11:22:58.279077886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== RUN   TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279082693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== PAUSE TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279084205Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T11:22:58.27908783Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T11:22:58.279089713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== RUN   TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.27909459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== PAUSE TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279096333Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T11:22:58.279098376Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T11:22:58.279099878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== RUN   TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279101891Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== PAUSE TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279103383Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T11:22:58.279105226Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:58.279106548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== RUN   TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279108591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== PAUSE TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279110083Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:58.279112577Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node"}
+{"Time":"2026-10-09T11:22:58.27911471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"=== RUN   TestMatcherOct6Node\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279127139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"=== PAUSE TestMatcherOct6Node\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279128871Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node"}
+{"Time":"2026-10-09T11:22:58.279130864Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:22:58.279132346Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== CONT  TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279204273Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode"}
+{"Time":"2026-10-09T11:22:58.279207057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"=== CONT  TestMatcherCanonicalizeNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.27923634Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node"}
+{"Time":"2026-10-09T11:22:58.279238473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"=== CONT  TestMatcherOct6Node\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279390388Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:58.279394424Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== CONT  TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.279612166Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions"}
+{"Time":"2026-10-09T11:22:58.27961482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"=== CONT  TestMatcherTest262Executions\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.314107805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"    oct6_oracle_test.go:57: execution totals: 30 cases, 30 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:58.314180693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Output":"--- PASS: TestMatcherOct6Node (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.31418518Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherOct6Node","Elapsed":0.03}
+{"Time":"2026-10-09T11:22:58.31420568Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode"}
+{"Time":"2026-10-09T11:22:58.314208754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"=== CONT  TestMatcherRandomNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.314578441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"    matcher_oracle_test.go:335: execution totals: 53 cases, 53 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:58.314597019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"--- PASS: TestMatcherUTF16PatternsNode (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.338929491Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Elapsed":0.04}
+{"Time":"2026-10-09T11:22:58.338971343Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"    matcher_oracle_test.go:181: execution totals: 94 cases, 94 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:58.338987206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"--- PASS: TestMatcherNodeControls (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:58.463496017Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Elapsed":0.06}
+{"Time":"2026-10-09T11:22:58.463542155Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"    matcher_oracle_test.go:282: execution totals: 5403 cases, 5403 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:58.463553652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Output":"--- PASS: TestMatcherCanonicalizeNode (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:59.129047608Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherCanonicalizeNode","Elapsed":0.18}
+{"Time":"2026-10-09T11:22:59.129097421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"    matcher_oracle_test.go:219: execution totals: 10000 cases, 10000 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:59.129108878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Output":"--- PASS: TestMatcherRandomNode (0.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:59.148862094Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherRandomNode","Elapsed":0.82}
+{"Time":"2026-10-09T11:22:59.148885329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"    matcher_oracle_test.go:240: execution totals: 127369 cases, 127369 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:59.148892509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Output":"--- PASS: TestMatcherTest262Executions (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:59.148895474Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherTest262Executions","Elapsed":0.87}
+{"Time":"2026-10-09T11:22:59.148897937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:59.158142641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.882s\n"}
+{"Time":"2026-10-09T11:22:59.158181699Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.882}

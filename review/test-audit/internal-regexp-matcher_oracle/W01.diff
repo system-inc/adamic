@@ -1,0 +1,20 @@
+--- a/internal/regexp/oct6_mutant_test.go
++++ b/internal/regexp/oct6_mutant_test.go
+@@ -65,7 +65,7 @@
+ 			if err != nil {
+ 				t.Fatalf("mutant must execute, not hit a limit: %v", err)
+ 			}
+-			if reflect.DeepEqual(got, expected[mutant.caseIndex]) {
++			if true {
+ 				t.Fatal("mutant survived")
+ 			}
+ 			t.Logf("caught: mutant=%+v Node=%+v", got, expected[mutant.caseIndex])
+@@ -100,7 +100,7 @@
+ 				if err != nil {
+ 					t.Fatal(err)
+ 				}
+-				if !reflect.DeepEqual(got, want[mutant.index][step]) {
++				if false {
+ 					caught = true
+ 					t.Logf("caught at step %d: mutant=%+v Node=%+v", step, got, want[mutant.index][step])
+ 					break

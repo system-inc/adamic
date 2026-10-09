@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -396,7 +396,7 @@
+ 		start = uint64(next)
+ 	}
+ 	if stateful {
+-		r.LastIndex = 0
++		r.LastIndex = 1
+ 	}
+ 	return nil, nil
+ }

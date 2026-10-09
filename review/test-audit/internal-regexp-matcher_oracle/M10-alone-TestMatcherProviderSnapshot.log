@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:22:04.957183729Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:04.958886975Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:22:04.958938451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== RUN   TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:04.95895759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== PAUSE TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:04.958961565Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:22:04.958963638Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:22:04.958965461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== CONT  TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.010260999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"    matcher_oracle_test.go:355: property provider snapshot got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 5]] LastIndex:0 Groups:map[]} error=\u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:05.010348208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"--- FAIL: TestMatcherProviderSnapshot (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.010352795Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Elapsed":0.05}
+{"Time":"2026-10-09T11:22:05.010391082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.010877031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.053s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.010893065Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.054}

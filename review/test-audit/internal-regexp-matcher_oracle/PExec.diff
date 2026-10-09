@@ -1,0 +1,16 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -322,6 +322,7 @@
+ 
+ // Exec accepts exact UTF-16, including lone surrogates. A zero StepLimit is unlimited.
+ func (r *RegExp) Exec(input []uint16) (*Match, error) {
++if auditProbe("PExec") {return nil,nil}
+ 	p := r.Program
+ 	start := uint64(0)
+ 	stateful := p.flags.Global || p.flags.Sticky
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

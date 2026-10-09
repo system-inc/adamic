@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:17:52.927254653Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:17:52.929146702Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-09T11:17:52.929189135Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== RUN   TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:52.92920589Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== PAUSE TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:52.929208233Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-09T11:17:52.929210316Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-09T11:17:52.929211948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== CONT  TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:52.929227622Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"--- PASS: TestParse (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:52.929231167Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Elapsed":0}
+{"Time":"2026-10-09T11:17:52.92923992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:52.92946962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.002s\n"}
+{"Time":"2026-10-09T11:17:52.929491923Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.002}

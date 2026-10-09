@@ -1,0 +1,3 @@
+# github.com/system-inc/adamic/internal/regexp
+# [github.com/system-inc/adamic/internal/regexp]
+vet: internal/regexp/sets.go:71:57: cannot use b[k].From - 1 (value of type rune) as bool value in argument to auditBool

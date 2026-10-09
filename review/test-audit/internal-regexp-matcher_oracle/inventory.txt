@@ -1,0 +1,104 @@
+CODE UNDER TEST: Adamic regexp Parse/ParseUTF16, compilation and RegExp.Exec/Program.run. ORACLES: live Node24, stored Node-generated test262 executions, self-written budget checks. Witness: Oct6 mutation checker.
+Reached functions: see functions.txt, positive coverage entries. Complete conservative package function inventory:
+internal/regexp/canonicalize.go:12: func canonicalize(c rune, f Flags) rune {
+internal/regexp/matcher.go:70: func Compile(pattern, flags string) (*Program, error) {
+internal/regexp/matcher.go:75: func CompileWithProperties(pattern, flags string, properties PropertyProvider) (*Program, error) {
+internal/regexp/matcher.go:84: func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
+internal/regexp/matcher.go:89: func CompileUTF16WithProperties(pattern []uint16, flags string, properties PropertyProvider) (*Program, error) {
+internal/regexp/matcher.go:96: func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error) {
+internal/regexp/matcher.go:139: func (c *compiler) emit(i instruction) int {
+internal/regexp/matcher.go:144: func (c *compiler) disjunction(d *Disjunction, f Flags, dir int) error {
+internal/regexp/matcher.go:191: func (c *compiler) node(n Node, f Flags, dir int) error {
+internal/regexp/matcher.go:299: func boolInt(b bool) int {
+internal/regexp/matcher.go:305: func unicodeMode(f Flags) bool { return f.Unicode || f.UnicodeSets }
+internal/regexp/matcher.go:306: func maxCharacter(f Flags) rune {
+internal/regexp/matcher.go:321: func (p *Program) New() *RegExp { return &RegExp{Program: p} }
+internal/regexp/matcher.go:324: func (r *RegExp) Exec(input []uint16) (*Match, error) {
+internal/regexp/matcher.go:405: func (r *RegExp) ExecString(input string) (*Match, error) { return r.Exec(utf16.Encode([]rune(input))) }
+internal/regexp/matcher.go:417: func (s machineState) clone() machineState {
+internal/regexp/matcher.go:425: func (b *executionBudget) step() error {
+internal/regexp/matcher.go:432: func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudget) (machineState, bool, error) {
+internal/regexp/matcher.go:578: func high(c uint16) bool { return c >= 0xd800 && c <= 0xdbff }
+internal/regexp/matcher.go:579: func low(c uint16) bool  { return c >= 0xdc00 && c <= 0xdfff }
+internal/regexp/matcher.go:580: func readCharacter(input []uint16, pos, dir int, unicode bool) (rune, int, bool) {
+internal/regexp/matcher.go:600: func lineTerminator(c rune) bool { return c == 10 || c == 13 || c == 0x2028 || c == 0x2029 }
+internal/regexp/native.go:12: func (p *Program) NativeDeclarations(name string) (string, error) {
+internal/regexp/native.go:155: func nativeFlags(f Flags) int {
+internal/regexp/native_search.go:10: func (p *Program) nativeFirstASCII() ([2]uint64, bool) {
+internal/regexp/native_search.go:68: func (p *Program) nativePrefix() []rune {
+internal/regexp/native_search.go:87: func (p *Program) nativeStraightLine(name string) string {
+internal/regexp/native_search.go:143: func (p *Program) nativeAnchored() bool {
+internal/regexp/native_search.go:161: func (p *Program) nativeStraightLineASCII(name string) string {
+internal/regexp/parser.go:18: func (e *SyntaxError) Error() string {
+internal/regexp/parser.go:23: func Parse(pattern, flags string) (*Pattern, error) {
+internal/regexp/parser.go:51: func ParseUTF16(pattern []uint16, flags string) (*Pattern, error) {
+internal/regexp/parser.go:54: func patternFromUTF16(pattern []uint16) string {
+internal/regexp/parser.go:72: func patternRune(source string) (rune, int) {
+internal/regexp/parser.go:80: func parseFlags(s string) (Flags, error) {
+internal/regexp/parser.go:127: func (p *parser) disjunction(stop byte) (*Disjunction, error) {
+internal/regexp/parser.go:143: func (p *parser) alternative(stop byte) (*Alternative, error) {
+internal/regexp/parser.go:170: func (p *parser) term() (Node, bool, error) {
+internal/regexp/parser.go:206: func (p *parser) group() (Node, bool, error) {
+internal/regexp/parser.go:260: func (p *parser) modifiers() (Flags, Flags, error) {
+internal/regexp/parser.go:295: func (p *parser) quantifier(atom Node) (Node, error) {
+internal/regexp/parser.go:333: func (p *parser) escape(inClass bool) (Node, bool, error) {
+internal/regexp/parser.go:460: func (p *parser) characterClass() (Node, error) {
+internal/regexp/parser.go:504: func (p *parser) finishClass(neg bool, expr ClassExpression) (Node, error) {
+internal/regexp/parser.go:513: func (p *parser) classSetOperand() (ClassExpression, error) {
+internal/regexp/parser.go:568: func (p *parser) classCharacter() (*Character, error) {
+internal/regexp/parser.go:595: func classMayContainStrings(expression ClassExpression) bool {
+internal/regexp/parser.go:628: func validateDuplicateNames(body *Disjunction) error {
+internal/regexp/parser.go:676: func (p *parser) literal() (Node, bool, error) {
+internal/regexp/parser.go:695: func (p *parser) char(start int, kind CharacterKind) (Node, bool, error) {
+internal/regexp/parser.go:698: func (p *parser) unicodeEscape(start int) (*Character, error) {
+internal/regexp/parser.go:733: func (p *parser) hexEscape(start, n int) (*Character, error) {
+internal/regexp/parser.go:744: func (p *parser) legacyOctal(start int) (Node, bool, error) {
+internal/regexp/parser.go:762: func (p *parser) groupName() (string, error) {
+internal/regexp/parser.go:778: func (p *parser) groupNameRune() (rune, error) {
+internal/regexp/parser.go:815: func isRegExpIdentifierStart(r rune) bool {
+internal/regexp/parser.go:819: func isRegExpIdentifierPart(r rune) bool {
+internal/regexp/parser.go:822: func (p *parser) decimal() (*big.Int, bool) {
+internal/regexp/parser.go:833: func (p *parser) hexNumber(end byte) (int, bool) {
+internal/regexp/parser.go:857: func (p *parser) done() bool { return p.pendingCharacter == nil && p.pos >= len(p.source) }
+internal/regexp/parser.go:858: func (p *parser) peek() byte {
+internal/regexp/parser.go:868: func (p *parser) take(c byte) bool {
+internal/regexp/parser.go:875: func (p *parser) match(s string) bool          { return strings.HasPrefix(p.source[p.pos:], s) }
+internal/regexp/parser.go:876: func (p *parser) fail(s string) error          { return p.failAt(p.pos, s) }
+internal/regexp/parser.go:877: func (p *parser) failAt(n int, s string) error { return &SyntaxError{Offset: n, Message: s} }
+internal/regexp/parser.go:878: func (p *parser) quantifierAhead() bool {
+internal/regexp/parser.go:901: func isIdentifierPart(c byte) bool {
+internal/regexp/parser.go:904: func countCaptures(s string) (int, bool) {
+internal/regexp/properties.go:12: func (UnicodeProperties) Lookup(expression string) (PropertySet, error) {
+internal/regexp/properties_standin.go:13: func (e *UnavailablePropertyError) Error() string {
+internal/regexp/properties_standin.go:22: func (GoProperties) Lookup(property string) (PropertySet, error) {
+internal/regexp/properties_standin.go:54: func goRanges(table *unicode.RangeTable) []RuneRange {
+internal/regexp/property.go:13: func validProperty(s string, unicodeSets bool) bool {
+internal/regexp/property.go:22: func set(words string) map[string]bool {
+internal/regexp/sets.go:27: func wordCharacter(c rune, f Flags) bool {
+internal/regexp/sets.go:39: func normalizeRanges(ranges []RuneRange) []RuneRange {
+internal/regexp/sets.go:61: func subtractRanges(a, b []RuneRange) []RuneRange {
+internal/regexp/sets.go:86: func intersectRanges(a, b []RuneRange) []RuneRange {
+internal/regexp/sets.go:102: func foldSet(set characterSet, f Flags) characterSet {
+internal/regexp/sets.go:140: func negateSet(set characterSet, f Flags) characterSet {
+internal/regexp/sets.go:147: func characterValue(c *Character) rune {
+internal/regexp/sets.go:164: func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, error) {
+internal/regexp/sets.go:211: func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet, error) {
+internal/regexp/sets.go:270: func combineSets(a, b characterSet, intersection bool) characterSet {
+internal/regexp/sets.go:291: func (s characterSet) contains(c rune) bool {
+internal/regexp/sets.go:295: func (s characterSet) match(input []uint16, pos, dir int, f Flags) []int {
+internal/regexp/sets.go:323: func abs(n int) int {
+internal/regexp/syntax.go:112: func (*Disjunction) regexpNode()            {}
+internal/regexp/syntax.go:113: func (*Character) regexpNode()              {}
+internal/regexp/syntax.go:114: func (*Assertion) regexpNode()              {}
+internal/regexp/syntax.go:115: func (*Dot) regexpNode()                    {}
+internal/regexp/syntax.go:116: func (*Quantifier) regexpNode()             {}
+internal/regexp/syntax.go:117: func (*Group) regexpNode()                  {}
+internal/regexp/syntax.go:118: func (*Backreference) regexpNode()          {}
+internal/regexp/syntax.go:119: func (*CharacterClass) regexpNode()         {}
+internal/regexp/syntax.go:120: func (*ClassNegation) classExpression()     {}
+internal/regexp/syntax.go:121: func (*ClassUnion) classExpression()        {}
+internal/regexp/syntax.go:122: func (*ClassIntersection) classExpression() {}
+internal/regexp/syntax.go:123: func (*ClassSubtraction) classExpression()  {}
+internal/regexp/syntax.go:124: func (*ClassRange) classExpression()        {}
+internal/regexp/syntax.go:125: func (*ClassCharacter) classExpression()    {}
+internal/regexp/syntax.go:126: func (*ClassString) classExpression()       {}

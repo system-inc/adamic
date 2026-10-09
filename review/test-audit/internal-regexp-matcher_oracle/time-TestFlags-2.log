@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:17:53.556345449Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:17:53.558122328Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:17:53.558178341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== RUN   TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:53.55819778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== PAUSE TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:53.558200043Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:17:53.558202336Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:17:53.558203828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== CONT  TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:53.558209397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"--- PASS: TestFlags (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:53.558213763Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Elapsed":0}
+{"Time":"2026-10-09T11:17:53.558223748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:53.558462426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.002s\n"}
+{"Time":"2026-10-09T11:17:53.558481104Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.002}

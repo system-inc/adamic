@@ -1,0 +1,16 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -21,6 +21,7 @@
+ 
+ // Parse parses pattern and flags according to ECMAScript 2025.
+ func Parse(pattern, flags string) (*Pattern, error) {
++if auditProbe("PParse") {return nil,nil}
+ 	f, err := parseFlags(flags)
+ 	if err != nil {
+ 		return nil, err
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

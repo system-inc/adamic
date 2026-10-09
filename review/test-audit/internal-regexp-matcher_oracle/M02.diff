@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -324,7 +324,7 @@
+ func (r *RegExp) Exec(input []uint16) (*Match, error) {
+ 	p := r.Program
+ 	start := uint64(0)
+-	stateful := p.flags.Global || p.flags.Sticky
++	stateful := p.flags.Global && p.flags.Sticky
+ 	if stateful {
+ 		start = r.LastIndex
+ 	}

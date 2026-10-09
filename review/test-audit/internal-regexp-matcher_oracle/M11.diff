@@ -1,0 +1,11 @@
+--- a/internal/regexp/canonicalize.go
++++ b/internal/regexp/canonicalize.go
+@@ -10,7 +10,7 @@
+ import "sort"
+ 
+ func canonicalize(c rune, f Flags) rune {
+-	if !f.IgnoreCase {
++	if f.IgnoreCase {
+ 		return c
+ 	}
+ 	table := legacyUppercase[:]

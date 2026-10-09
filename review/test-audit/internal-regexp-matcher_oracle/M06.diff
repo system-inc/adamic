@@ -1,0 +1,14 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -534,10 +534,7 @@
+ 			enter := func(state *machineState) {
+ 				state.pc++
+ 				state.repeats[i.x].start = state.pos
+-				for _, id := range i.clear {
+-					state.caps[2*id] = -1
+-					state.caps[2*id+1] = -1
+-				}
++
+ 			}
+ 			if canBody && canExit {
+ 				alternative := s.clone()

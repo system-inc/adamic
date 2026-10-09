@@ -1,0 +1,16 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -73,6 +73,7 @@
+ 
+ // CompileWithProperties supplies the Unicode data seam used by UCD tables.
+ func CompileWithProperties(pattern, flags string, properties PropertyProvider) (*Program, error) {
++if auditProbe("PCompileProperties") {return nil,nil}
+ 	tree, err := Parse(pattern, flags)
+ 	if err != nil {
+ 		return nil, err
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

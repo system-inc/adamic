@@ -1,0 +1,11 @@
+--- a/internal/regexp/sets.go
++++ b/internal/regexp/sets.go
+@@ -282,7 +282,7 @@
+ 				break
+ 			}
+ 		}
+-		if contains == intersection {
++		if contains != intersection {
+ 			result.strings = append(result.strings, s)
+ 		}
+ 	}

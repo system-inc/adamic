@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -494,7 +494,7 @@
+ 			if err != nil {
+ 				return s, false, err
+ 			}
+-			failed = ok == i.negative
++			failed = ok != i.negative
+ 			if ok && !i.negative {
+ 				s.caps = sub.caps
+ 			}

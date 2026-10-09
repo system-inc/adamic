@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -423,7 +423,7 @@
+ type executionBudget struct{ limit, steps uint64 }
+ 
+ func (b *executionBudget) step() error {
+-	if b.limit != 0 && b.steps >= b.limit {
++	if b.limit != 0 && b.steps > b.limit {
+ 		return ErrStepLimit
+ 	}
+ 	b.steps++

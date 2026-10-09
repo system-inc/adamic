@@ -1,0 +1,11 @@
+--- a/internal/regexp/sets.go
++++ b/internal/regexp/sets.go
+@@ -172,7 +172,7 @@
+ 		}
+ 		set = characterSet{ranges: normalizeRanges(slices.Clone(data.Ranges)), strings: slices.Clone(data.Strings)}
+ 		for index, text := range set.strings {
+-			set.strings[index] = slices.Clone(text)
++			set.strings[index] = text
+ 		}
+ 		if c.Raw[1] == 'P' {
+ 			if f.UnicodeSets {

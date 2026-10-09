@@ -1,0 +1,14 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -447,9 +447,9 @@
+ 			continue
+ 		case opSplit:
+ 			alternative := s.clone()
+-			alternative.pc = i.y
++			alternative.pc = i.x
+ 			stack = append(stack, alternative)
+-			s.pc = i.x
++			s.pc = i.y
+ 			continue
+ 		case opSave:
+ 			s.caps[i.x] = s.pos

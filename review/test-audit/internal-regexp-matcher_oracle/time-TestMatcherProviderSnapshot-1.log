@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:17:49.040128789Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:17:49.042190449Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:17:49.042277198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== RUN   TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.042307182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== PAUSE TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.042309786Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:17:49.042315905Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot"}
+{"Time":"2026-10-09T11:17:49.042317738Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"=== CONT  TestMatcherProviderSnapshot\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.09359723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Output":"--- PASS: TestMatcherProviderSnapshot (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.093654474Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherProviderSnapshot","Elapsed":0.05}
+{"Time":"2026-10-09T11:17:49.093674865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.094042259Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.053s\n"}
+{"Time":"2026-10-09T11:17:49.094066675Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.054}

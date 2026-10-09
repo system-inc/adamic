@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:17:40.724687638Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:17:40.726657203Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:17:40.726879211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== RUN   TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.726906622Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== PAUSE TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.726910077Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:17:40.726917979Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-09T11:17:40.726920823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== CONT  TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.759389175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"    matcher_oracle_test.go:181: execution totals: 94 cases, 94 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:17:40.759455413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"--- PASS: TestMatcherNodeControls (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.759465628Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Elapsed":0.03}
+{"Time":"2026-10-09T11:17:40.759484256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.760542301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.035s\n"}
+{"Time":"2026-10-09T11:17:40.760660756Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.036}

@@ -1,0 +1,92 @@
+[
+  {
+    "label": "time-family-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^(TestMatcherNodeControls|TestMatcherRandomNode|TestMatcherTest262Executions|TestMatcherCanonicalizeNode|TestMatcherUTF16PatternsNode|TestMatcherOct6Node)$",
+    "wall_seconds": 1.058,
+    "exit": 0
+  },
+  {
+    "label": "time-family-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^(TestMatcherNodeControls|TestMatcherRandomNode|TestMatcherTest262Executions|TestMatcherCanonicalizeNode|TestMatcherUTF16PatternsNode|TestMatcherOct6Node)$",
+    "wall_seconds": 1.056,
+    "exit": 0
+  },
+  {
+    "label": "time-family-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^(TestMatcherNodeControls|TestMatcherRandomNode|TestMatcherTest262Executions|TestMatcherCanonicalizeNode|TestMatcherUTF16PatternsNode|TestMatcherOct6Node)$",
+    "wall_seconds": 1.037,
+    "exit": 0
+  },
+  {
+    "label": "PCompile-TestMatcherNodeControls",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$",
+    "wall_seconds": 0.414,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherRandomNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$",
+    "wall_seconds": 0.597,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherTest262Executions",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$",
+    "wall_seconds": 0.949,
+    "exit": 0
+  },
+  {
+    "label": "PCompile-TestMatcherStepLimit",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$",
+    "wall_seconds": 0.16,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherCanonicalizeNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$",
+    "wall_seconds": 0.236,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherStepLimitBoundary",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$",
+    "wall_seconds": 0.164,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherOct6Node",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$",
+    "wall_seconds": 0.196,
+    "exit": 1
+  },
+  {
+    "label": "PCompile-TestMatcherOct6LoopsNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$",
+    "wall_seconds": 0.18,
+    "exit": 1
+  },
+  {
+    "label": "PCompileUTF16-TestMatcherUTF16PatternsNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$",
+    "wall_seconds": 0.395,
+    "exit": 1
+  },
+  {
+    "label": "PCompileProperties-TestMatcherPropertyProviderStrings",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$",
+    "wall_seconds": 0.456,
+    "exit": 1
+  },
+  {
+    "label": "PCompileProperties-TestMatcherProviderSnapshot",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$",
+    "wall_seconds": 0.212,
+    "exit": 1
+  },
+  {
+    "label": "restored-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run .",
+    "wall_seconds": 1.187,
+    "exit": 0
+  }
+]

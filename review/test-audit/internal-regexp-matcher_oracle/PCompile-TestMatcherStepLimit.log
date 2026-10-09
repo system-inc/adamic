@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T11:23:02.312922548Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:23:02.314749612Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit"}
+{"Time":"2026-10-09T11:23:02.314841197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"=== RUN   TestMatcherStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:23:02.314874767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"=== PAUSE TestMatcherStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:23:02.314877241Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit"}
+{"Time":"2026-10-09T11:23:02.314882899Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit"}
+{"Time":"2026-10-09T11:23:02.314886304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"=== CONT  TestMatcherStepLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:23:02.314894486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"--- FAIL: TestMatcherStepLimit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:23:02.316953162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T11:23:02.316968495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x19 pc=0x5d4a88]\n"}
+{"Time":"2026-10-09T11:23:02.316972651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\n"}
+{"Time":"2026-10-09T11:23:02.316999471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"goroutine 7 [running]:\n"}
+{"Time":"2026-10-09T11:23:02.317003396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"testing.tRunner.func1.2({0x802f70, 0x87b3a0})\n"}
+{"Time":"2026-10-09T11:23:02.3170061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T11:23:02.317008184Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T11:23:02.317010146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T11:23:02.317011989Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"panic({0x802f70?, 0x87b3a0?})\n"}
+{"Time":"2026-10-09T11:23:02.317015214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T11:23:02.317017187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"github.com/system-inc/adamic/internal/regexp.(*RegExp).Exec(0x3164ffd54e40?, {0x3164ffd00280?, 0x1f?, 0x2?})\n"}
+{"Time":"2026-10-09T11:23:02.317019981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic/internal/regexp/matcher.go:328 +0x28\n"}
+{"Time":"2026-10-09T11:23:02.317021994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"github.com/system-inc/adamic/internal/regexp.(*RegExp).ExecString(0x3164ffd54f38, {0x3164ffd54f00?, 0x0?})\n"}
+{"Time":"2026-10-09T11:23:02.31703272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic/internal/regexp/matcher.go:406 +0x4b\n"}
+{"Time":"2026-10-09T11:23:02.317038028Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"github.com/system-inc/adamic/internal/regexp.TestMatcherStepLimit(0x3164ffe5a248)\n"}
+{"Time":"2026-10-09T11:23:02.317040041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic/internal/regexp/matcher_oracle_test.go:250 +0xe6\n"}
+{"Time":"2026-10-09T11:23:02.317041923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"testing.tRunner(0x3164ffe5a248, 0x829b88)\n"}
+{"Time":"2026-10-09T11:23:02.317043926Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T11:23:02.317045639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T11:23:02.317047412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T11:23:02.317201089Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimit","Elapsed":0}
+{"Time":"2026-10-09T11:23:02.317221219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.004s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:23:02.317230853Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.004}

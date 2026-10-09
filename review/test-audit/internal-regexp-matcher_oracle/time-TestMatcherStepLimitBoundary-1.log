@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T11:17:49.704170658Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:17:49.705931048Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary"}
+{"Time":"2026-10-09T11:17:49.70598648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"=== RUN   TestMatcherStepLimitBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706247767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"=== PAUSE TestMatcherStepLimitBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706251282Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary"}
+{"Time":"2026-10-09T11:17:49.706253826Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary"}
+{"Time":"2026-10-09T11:17:49.706255638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"=== CONT  TestMatcherStepLimitBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706257872Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit"}
+{"Time":"2026-10-09T11:17:49.706260225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit","Output":"=== RUN   TestMatcherStepLimitBoundary/exactly-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706262969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit","Output":"=== PAUSE TestMatcherStepLimitBoundary/exactly-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706264672Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit"}
+{"Time":"2026-10-09T11:17:49.706266685Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit"}
+{"Time":"2026-10-09T11:17:49.706268317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit","Output":"=== RUN   TestMatcherStepLimitBoundary/one-step-past-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706272924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit","Output":"=== PAUSE TestMatcherStepLimitBoundary/one-step-past-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706274486Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit"}
+{"Time":"2026-10-09T11:17:49.706276549Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit"}
+{"Time":"2026-10-09T11:17:49.706278112Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit","Output":"=== CONT  TestMatcherStepLimitBoundary/exactly-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706284842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit","Output":"--- PASS: TestMatcherStepLimitBoundary/exactly-limit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706286975Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/exactly-limit","Elapsed":0}
+{"Time":"2026-10-09T11:17:49.706297951Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit"}
+{"Time":"2026-10-09T11:17:49.706300645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit","Output":"=== CONT  TestMatcherStepLimitBoundary/one-step-past-limit\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706308457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit","Output":"--- PASS: TestMatcherStepLimitBoundary/one-step-past-limit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.70631076Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary/one-step-past-limit","Elapsed":0}
+{"Time":"2026-10-09T11:17:49.706312653Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Output":"--- PASS: TestMatcherStepLimitBoundary (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706314195Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherStepLimitBoundary","Elapsed":0}
+{"Time":"2026-10-09T11:17:49.706316328Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:49.706546523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.002s\n"}
+{"Time":"2026-10-09T11:17:49.706565041Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.002}

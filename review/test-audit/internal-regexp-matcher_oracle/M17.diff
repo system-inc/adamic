@@ -1,0 +1,11 @@
+--- a/internal/regexp/sets.go
++++ b/internal/regexp/sets.go
+@@ -68,7 +68,7 @@
+ 		}
+ 		for k := j; k < len(b) && b[k].From <= r.To; k++ {
+ 			if b[k].From > start {
+-				out = append(out, RuneRange{start, b[k].From - 1})
++				out = append(out, RuneRange{start, b[k].From})
+ 			}
+ 			if b[k].To >= start {
+ 				start = b[k].To + 1

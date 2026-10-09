@@ -1,0 +1,11 @@
+--- a/internal/regexp/sets.go
++++ b/internal/regexp/sets.go
+@@ -290,7 +290,7 @@
+ }
+ func (s characterSet) contains(c rune) bool {
+ 	i := sort.Search(len(s.ranges), func(i int) bool { return s.ranges[i].To >= c })
+-	return i < len(s.ranges) && s.ranges[i].From <= c
++	return i < len(s.ranges) && s.ranges[i].From < c
+ }
+ func (s characterSet) match(input []uint16, pos, dir int, f Flags) []int {
+ 	var positions []int

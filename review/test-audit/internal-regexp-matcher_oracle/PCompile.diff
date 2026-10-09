@@ -1,0 +1,16 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -68,6 +68,7 @@
+ 
+ // Compile parses and compiles with the complete Unicode Character Database provider.
+ func Compile(pattern, flags string) (*Program, error) {
++if auditProbe("PCompile") {return nil,nil}
+ 	return CompileWithProperties(pattern, flags, UnicodeProperties{})
+ }
+ 
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

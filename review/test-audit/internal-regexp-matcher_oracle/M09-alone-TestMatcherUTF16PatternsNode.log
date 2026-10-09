@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:22:00.27241754Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:00.274314432Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:00.274427108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== RUN   TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.274450253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== PAUSE TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.274453337Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:00.274456292Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode"}
+{"Time":"2026-10-09T11:22:00.274458635Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"=== CONT  TestMatcherUTF16PatternsNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.301605864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"    matcher_oracle_test.go:335: DISAGREEMENT source=astral legacy identity quantifier pattern=\"\" flags=\"\" input=[55356 57101 57101] lastIndex=0 got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 3]] LastIndex:0 Groups:map[]}\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:00.301652472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"    matcher_oracle_test.go:335: execution totals: 53 cases, 53 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-09T11:22:00.301674595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Output":"--- FAIL: TestMatcherUTF16PatternsNode (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.301677179Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherUTF16PatternsNode","Elapsed":0.03}
+{"Time":"2026-10-09T11:22:00.301692341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.302019651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.029s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:00.302050717Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.03}

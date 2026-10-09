@@ -1,0 +1,16 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -82,6 +82,7 @@
+ 
+ // CompileUTF16 accepts an exact JavaScript pattern string, including surrogates.
+ func CompileUTF16(pattern []uint16, flags string) (*Program, error) {
++if auditProbe("PCompileUTF16") {return nil,nil}
+ 	return CompileUTF16WithProperties(pattern, flags, UnicodeProperties{})
+ }
+ 
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

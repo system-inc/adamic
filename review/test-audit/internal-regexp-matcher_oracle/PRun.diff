@@ -1,0 +1,16 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -430,6 +430,7 @@
+ 	return nil
+ }
+ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudget) (machineState, bool, error) {
++if auditProbe("PRun") {return machineState{},false,nil}
+ 	s := machineState{pos: pos, caps: slices.Clone(caps), repeats: make([]repeatRegister, p.repeats)}
+ 	var stack []machineState
+ 	one := big.NewInt(1)
+--- /dev/null
++++ b/internal/regexp/audit_probe.go
+@@ -0,0 +1,3 @@
++package regexp
++import "os"
++func auditProbe(id string) bool{return os.Getenv("ADAMIC_MUTANT")==id}

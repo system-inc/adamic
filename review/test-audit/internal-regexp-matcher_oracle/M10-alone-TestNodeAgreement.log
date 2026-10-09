@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:22:05.856543017Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:05.858653945Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement"}
+{"Time":"2026-10-09T11:22:05.858735666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"=== RUN   TestNodeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.858758039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"=== PAUSE TestNodeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:05.858760432Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement"}
+{"Time":"2026-10-09T11:22:05.858762946Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement"}
+{"Time":"2026-10-09T11:22:05.858764548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"=== CONT  TestNodeAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.028386804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"    oracle_test.go:81: agreement: 5746 test262 patterns and 630 generated cases\n"}
+{"Time":"2026-10-09T11:22:06.028466582Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Output":"--- PASS: TestNodeAgreement (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.028471199Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestNodeAgreement","Elapsed":0.17}
+{"Time":"2026-10-09T11:22:06.028488395Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:06.029091547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.172s\n"}
+{"Time":"2026-10-09T11:22:06.029114Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.173}

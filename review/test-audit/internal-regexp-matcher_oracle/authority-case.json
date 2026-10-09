@@ -1,0 +1,35 @@
+{
+  "pattern": "^\\d+$",
+  "flags": "",
+  "input": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+  ],
+  "lastIndex": 0,
+  "expected": {
+    "captures": [
+      [
+        0,
+        10
+      ]
+    ],
+    "lastIndex": 0,
+    "groups": null
+  },
+  "source": "test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js",
+  "patternUnits": [
+    94,
+    92,
+    100,
+    43,
+    36
+  ]
+}
