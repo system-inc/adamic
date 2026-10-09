@@ -322,7 +322,7 @@ func withEnvironment(base []string, overrides map[string]string) []string {
 type product struct {
 	name  string
 	files []productFile
-	// shape is the directory's full listing (directories, symlinks, exact modes), which a manifest can't carry.
+	// shape is the directory's full listing (directories, symlinks, files and their executable bit), which a manifest can't carry.
 	shape string
 	// content reads one file's bytes, for offsets when two modes differ.
 	content func(path string) ([]byte, error)
@@ -419,7 +419,7 @@ func compare(server *store, results map[string]*modeResult) bool {
 				}
 			}
 		}
-		// A directory's shape (empty directories, exact modes) can't travel through a manifest: a fetched product
+		// A directory's shape (empty directories, executable bits) can't travel through a manifest: a fetched product
 		// must still have the shape the built one had.
 		if cold, ok := products["cold"][key]; ok {
 			for _, mode := range []string{"warm", "warm-main"} {
@@ -516,7 +516,16 @@ func readDirectory(directory string) (product, error) {
 		if err != nil {
 			return err
 		}
-		shape = append(shape, fmt.Sprintf("%s %v", relative, info.Mode()))
+		// The kind and, for a file, whether it's executable: what the store keeps (store.go writes 0755 or 0644). The rest
+		// of a mode is the building user's umask (a gate box's 002 made 0775 where a fetch makes 0755, Oct 9 17:35Z).
+		kind := info.Mode().Type().String()
+		if info.Mode().IsRegular() {
+			kind = "-rw-r--r--"
+			if info.Mode()&0o111 != 0 {
+				kind = "-rwxr-xr-x"
+			}
+		}
+		shape = append(shape, relative+" "+kind)
 		if !info.Mode().IsRegular() {
 			return nil
 		}
