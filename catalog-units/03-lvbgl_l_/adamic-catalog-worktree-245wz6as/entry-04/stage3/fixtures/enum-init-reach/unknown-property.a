@@ -1,2 +1,0 @@
-const key: 'Zero' = 'Zero';
-const box={read:():number=>Pending[key]}; console.log('before'); console.log(String(box.read())); enum Pending {Zero} console.log('after');

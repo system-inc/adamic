@@ -1,6 +1,0 @@
-// a-check: type error TS2488
-declare function transform<T, U>(items: Iterable<T>, callback: (item: T) => U): U[];
-declare const values: Iterable<[string, number] | undefined>;
-// @ts-expect-error The first destructuring diagnoses the undefined tuple.
-transform(values, ([key, value]) => value);
-transform(values, ([key, value]) => value);

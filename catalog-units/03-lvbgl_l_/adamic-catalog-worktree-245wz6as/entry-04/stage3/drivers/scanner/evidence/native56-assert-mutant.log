@@ -1,5 +1,0 @@
---- /tmp/scanner-assert-original.log	2026-10-07 03:27:09.690336843 +0000
-+++ /tmp/scanner-assert-mutant.log	2026-10-07 03:32:19.630014048 +0000
-@@ -1 +1 @@
--Debug Failure. False expression: 'reScanQuestionToken' should only be called on a '??'
-+MUTANT: assertion failed to throw

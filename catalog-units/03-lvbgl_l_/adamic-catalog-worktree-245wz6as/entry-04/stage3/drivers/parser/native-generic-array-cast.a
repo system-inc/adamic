@@ -1,7 +1,0 @@
-// a-check: refused a cast the runtime can't check
-// From TypeScript 6.0.3, src/compiler/core.ts:355
-// sameMap's changed-prefix array view, reduced to the failing cast.
-function prefix<T, U>(array: readonly T[], i: number): U[] {
-    return array.slice(0, i) as unknown[] as U[];
-}
-console.log(`${prefix<number, number>([1, 2], 1).length}`);

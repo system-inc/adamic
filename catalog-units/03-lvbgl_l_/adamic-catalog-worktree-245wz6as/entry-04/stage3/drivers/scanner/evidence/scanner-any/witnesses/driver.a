@@ -1,4 +1,0 @@
-const callback = (arg0: string | number | undefined): void => { console.log('ok'); };
-callback('text');
-callback(2);
-callback(undefined);

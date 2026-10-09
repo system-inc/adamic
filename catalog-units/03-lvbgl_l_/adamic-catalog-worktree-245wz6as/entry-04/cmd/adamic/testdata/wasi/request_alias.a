@@ -1,3 +1,0 @@
-import { handleRequest as serve } from './request.a';
-
-export { serve as handleRequest };

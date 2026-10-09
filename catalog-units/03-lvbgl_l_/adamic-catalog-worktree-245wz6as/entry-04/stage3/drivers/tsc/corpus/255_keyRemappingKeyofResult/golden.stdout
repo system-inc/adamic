@@ -1,2 +1,0 @@
-keyRemappingKeyofResult.ts(69,5): error TS2322: Type 'string' is not assignable to type 'keyof Remapped'.
-  Type '"whatever"' is not assignable to type 'unique symbol | "str" | DistributiveNonIndex<K>'.

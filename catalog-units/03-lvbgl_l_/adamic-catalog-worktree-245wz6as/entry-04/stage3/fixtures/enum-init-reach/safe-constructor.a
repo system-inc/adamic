@@ -1,1 +1,0 @@
-class Box {readonly value:number=7;} const box=new Box(); enum Pending {Zero} console.log(`${box.value}:${Pending.Zero}`);

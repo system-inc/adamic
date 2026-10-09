@@ -1,3 +1,0 @@
-/workspace/adamic/stage3/drivers/tsc-entry/probes/03-present-undefined-field.a:4:7: error TS2375: Type '{ outSignature: undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'outSignature' are incompatible.
-    Type 'undefined' is not assignable to type 'EmitSignature'.

@@ -1,3 +1,0 @@
-// a-check: type error TS2322
-import { outside } from "../outside.a";
-export function entry(): number { return outside(); }

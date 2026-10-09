@@ -1,3 +1,0 @@
-PASS 300 exact upstream git mv renames; original bytes, upstream bytes and every existing manifest pin unchanged
-PASS 51 existing headers unchanged; exactly 17 host first-line additions; host audits/status and all goldens unchanged
-PASS a-check scans 375 .a inputs and zero corpus files; Python harness sources compile

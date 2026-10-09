@@ -1,0 +1,653 @@
+{
+  "sha": "b05fa5c95de53396fdf38acb62f71d889e5e9d6c",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "b05fa5c95de53396fdf38acb62f71d889e5e9d6c",
+  "base_name": "main",
+  "tools_sha": "d593d67b390227d313e9bfcb49ae26903683c6b6",
+  "machine": {
+    "hostname": "Home",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 11.5,
+      "cores": 64
+    },
+    "first_failure": {
+      "load_1m": 12.1,
+      "cores": 64
+    },
+    "end": {
+      "load_1m": 9.5,
+      "cores": 64
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "packages": "all",
+  "package_list": [
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/internal/unicodeproperties",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/bridge/tsgo",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/cmd/adamic-test262",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/stage1/cohere/selector",
+    "github.com/system-inc/adamic/cmd/adamic-gate",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "github.com/system-inc/adamic/cmd/adamic-meter",
+    "github.com/system-inc/adamic/internal/regexp",
+    "github.com/system-inc/adamic/internal/load",
+    "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "github.com/system-inc/adamic/cmd/adamic-stage1-progress",
+    "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "github.com/system-inc/adamic/bench/regex",
+    "github.com/system-inc/adamic/bench",
+    "github.com/system-inc/adamic/bridge/tsgo/archive",
+    "github.com/system-inc/adamic/bridge/tsgo/cost",
+    "github.com/system-inc/adamic/bridge/tsgo/oracle",
+    "github.com/system-inc/adamic/bridge/tsgo/spec",
+    "github.com/system-inc/adamic/cmd/adamic-reduce",
+    "github.com/system-inc/adamic/cmd/adamic",
+    "github.com/system-inc/adamic/internal/javascript",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/cloud",
+    "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "github.com/system-inc/adamic/cmd/lint-registry",
+    "github.com/system-inc/adamic/cmd/lint-shards",
+    "github.com/system-inc/adamic/internal/buildcache",
+    "github.com/system-inc/adamic/internal/childguard",
+    "github.com/system-inc/adamic/internal/corpusfiles",
+    "github.com/system-inc/adamic/internal/gatesample",
+    "github.com/system-inc/adamic/internal/native/testbuildcache",
+    "github.com/system-inc/adamic/internal/testguard",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/inventory",
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "github.com/system-inc/adamic/stage1/cohere/lint/registry",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/lint/shards",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/home/ahra/full-gate/tools + /home/ahra/full-gate/tree",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  },
+  "selected_compiler_drivers": [],
+  "direct_packages": [],
+  "reads": [],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "parallelism": {
+    "cpus": 64,
+    "packages_at_once": 16,
+    "gomaxprocs_each": 4
+  },
+  "catalog_units": [
+    {
+      "name": "01 shared-slice-append",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "1",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "failed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/00-ddhwtctq",
+      "exit": -9,
+      "ok": false,
+      "caught": false,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/00-ddhwtctq/catalog.log",
+      "wall_seconds": 0.032448,
+      "over_budget": false
+    },
+    {
+      "name": "02 liveness-throw",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "2",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/01-uc59bjf6",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "02 liveness-throw: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/01-uc59bjf6/catalog.log",
+      "wall_seconds": 81.124588,
+      "over_budget": true
+    },
+    {
+      "name": "03 defined-lent",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "3",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/02-t_qwd3mc",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "03 defined-lent: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/02-t_qwd3mc/catalog.log",
+      "wall_seconds": 79.996446,
+      "over_budget": true
+    },
+    {
+      "name": "04 borrowed-array-move",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "4",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/03-lvbgl_l_",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "04 borrowed-array-move: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/03-lvbgl_l_/catalog.log",
+      "wall_seconds": 81.062317,
+      "over_budget": true
+    },
+    {
+      "name": "05 spread-method-reuse",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "5",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/04-lyy9fo39",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "05 spread-method-reuse: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/04-lyy9fo39/catalog.log",
+      "wall_seconds": 82.410967,
+      "over_budget": true
+    },
+    {
+      "name": "06 constructor-capture-region",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "6",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/05-gyehuww_",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "06 constructor-capture-region: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/05-gyehuww_/catalog.log",
+      "wall_seconds": 81.918435,
+      "over_budget": true
+    },
+    {
+      "name": "07 borrowed-element-reads",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "7",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/06-_evwe9o6",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "07 borrowed-element-reads: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/06-_evwe9o6/catalog.log",
+      "wall_seconds": 81.858083,
+      "over_budget": true
+    },
+    {
+      "name": "08 narrowed-number-field",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "8",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/07-n32o8z9b",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "08 narrowed-number-field: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/07-n32o8z9b/catalog.log",
+      "wall_seconds": 80.298925,
+      "over_budget": true
+    },
+    {
+      "name": "09 literal-undefined-field",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "9",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/08-pvgs7u0n",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "09 literal-undefined-field: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/08-pvgs7u0n/catalog.log",
+      "wall_seconds": 81.872007,
+      "over_budget": true
+    },
+    {
+      "name": "10 override-representation",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "10",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/09-lp3k2v3c",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/09-lp3k2v3c/catalog.log",
+      "wall_seconds": 0.125276,
+      "over_budget": false
+    },
+    {
+      "name": "11 refuse-definite-assignment",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "11",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/10-kyssm6x5",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "11 refuse-definite-assignment: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/10-kyssm6x5/catalog.log",
+      "wall_seconds": 87.330171,
+      "over_budget": true
+    },
+    {
+      "name": "12 refuse-suppression-directives",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "12",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/11-f28c7_oc",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "12 refuse-suppression-directives: applies-and-fails-as-recorded"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/11-f28c7_oc/catalog.log",
+      "wall_seconds": 88.586455,
+      "over_budget": true
+    },
+    {
+      "name": "13 typeof-null",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "13",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/12-1gw6a8xc",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/12-1gw6a8xc/catalog.log",
+      "wall_seconds": 0.134773,
+      "over_budget": false
+    },
+    {
+      "name": "14 constructor-arrow-this",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "14",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/13-xgcv2wbp",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/13-xgcv2wbp/catalog.log",
+      "wall_seconds": 0.122037,
+      "over_budget": false
+    },
+    {
+      "name": "15 class-instance-key",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "15",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/14-39ukuj_h",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/14-39ukuj_h/catalog.log",
+      "wall_seconds": 0.118472,
+      "over_budget": false
+    },
+    {
+      "name": "16 proven-guards-relations",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "16",
+        "--jobs",
+        "1",
+        "b05fa5c95de53396fdf38acb62f71d889e5e9d6c"
+      ],
+      "status": "passed",
+      "scratch": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/15-bj2hgdd5",
+      "exit": 0,
+      "ok": true,
+      "caught": false,
+      "stale": false,
+      "skipped": true,
+      "verdicts": [
+        "16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)"
+      ],
+      "log": "/home/ahra/full-gate/out/b05fa5c95de5-20261009T023802Z/catalog-units/15-bj2hgdd5/catalog.log",
+      "wall_seconds": 0.11738,
+      "over_budget": false
+    }
+  ],
+  "catalog_unit_count": 16,
+  "catalog_unit_budget_seconds": 30,
+  "stage3_exits": {
+    "stage3-lane": 1,
+    "stage3-apply-tests": 1,
+    "stage3-lane-tests": 0
+  },
+  "catalog_slowest_unit_seconds": 88.586455,
+  "catalog": {
+    "exit": 1,
+    "caught": 10,
+    "stale": [],
+    "uncaught": [
+      "01 shared-slice-append"
+    ]
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "deferred_whole_results": {
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262": "missing",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees": "missing",
+    "github.com/system-inc/adamic/internal/native TestWASI": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree": "missing"
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Home",
+    "cpus": 64,
+    "load": [
+      9.5,
+      13.7,
+      15.2
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 100.8,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "build": 10.2,
+    "tests": 0.0,
+    "vet": 0.0,
+    "stage3": 17.7,
+    "catalog": 88.609,
+    "census": 0.3
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "wasi",
+    "detail": "Traceback (most recent call last):\n  File \"/home/ahra/full-gate/tools/cloud/fast-gate/run.py\", line 1002, in body\n    target(*arguments)\n  File \"/home/ahra/full-gate/tools/cloud/fast-gate/run.py\", line 859, in wasiSplit\n    names = self.selectedUnits(\"wasi\", wasiFixtures(self.arguments.tree))\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ahra/full-gate/tools/cloud/fast-gate/run.py\", line 2074, in wasiFixtures\n    raise ValueError(\"cannot enumerate TestWASI fixtures\")\nValueError: cannot enumerate TestWASI fixtures\n",
+    "after_seconds": 11.9,
+    "under_load": false,
+    "tool_crash": true
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "wasi",
+    "stage3",
+    "catalog",
+    "determinism",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "build": 0,
+    "tests": -9,
+    "vet": -9,
+    "determinism": -9,
+    "stage3": 1,
+    "catalog": 1,
+    "census": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

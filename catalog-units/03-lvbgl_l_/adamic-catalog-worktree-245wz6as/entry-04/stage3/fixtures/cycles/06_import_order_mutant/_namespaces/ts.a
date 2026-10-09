@@ -1,6 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:4
-// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:11
-// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:15
-// Census reason: an import cycle
-export * from '../core.a';
-export * from '../utilities.a';

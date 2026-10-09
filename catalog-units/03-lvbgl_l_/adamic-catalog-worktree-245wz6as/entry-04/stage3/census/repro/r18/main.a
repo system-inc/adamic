@@ -1,2 +1,0 @@
-// a-check: type error TS2724
-import { Diagnostics } from "../support.a"; console.log(String(Diagnostics));

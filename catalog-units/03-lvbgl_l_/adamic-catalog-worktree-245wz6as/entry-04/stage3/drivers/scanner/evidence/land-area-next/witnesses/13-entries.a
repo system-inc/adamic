@@ -1,2 +1,0 @@
-function count(value: { x: number }): number { return Object.entries(value).length; }
-console.log(String(count({ x: 1 })));

@@ -1,8 +1,0 @@
-=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis
-=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis
-=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis
-    namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: <nil>
---- FAIL: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.04s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.056s
-FAIL

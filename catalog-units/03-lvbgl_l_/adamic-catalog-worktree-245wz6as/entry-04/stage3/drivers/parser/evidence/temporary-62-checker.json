@@ -1,8 +1,0 @@
-{
-  "diagnostics": [
-    "/tmp/parser-temporary-driver-slice/src/compiler/core.ts:379:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.",
-    "/tmp/parser-temporary-driver-slice/src/compiler/tracing.ts:340:38: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView\u003cArrayBufferLike\u003e'.\n  Type 'undefined' is not assignable to type 'string | ArrayBufferView\u003cArrayBufferLike\u003e'."
-  ],
-  "entry": "/tmp/parser-temporary-driver-slice/parser-host-control.a",
-  "outcome": "Checker"
-}

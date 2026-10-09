@@ -1,1 +1,0 @@
-function value():number{return 7;} function helper():number{return value();} console.log(String(helper())); enum Pending {Zero} console.log(String(Pending.Zero));

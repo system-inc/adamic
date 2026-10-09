@@ -1,4 +1,0 @@
-// Debug.fail uses Error as a value to discover V8 stack capture support.
-if ((Error as any).captureStackTrace) {
-    console.log('captureStackTrace available');
-}

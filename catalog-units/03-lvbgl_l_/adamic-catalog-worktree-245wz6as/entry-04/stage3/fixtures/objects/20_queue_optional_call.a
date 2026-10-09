@@ -1,8 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/core.ts:1569
-// Census reason: a call through ?. (an optional call)
-function createQueue<T>(items?: readonly T[]): (T | undefined)[] {
-    const elements: (T | undefined)[] = items?.slice() ?? [];
-    return elements;
-}
-console.log(createQueue<string | undefined>(["scanner", "parser"]).join(","));
-console.log(`${createQueue<string>().length}`);

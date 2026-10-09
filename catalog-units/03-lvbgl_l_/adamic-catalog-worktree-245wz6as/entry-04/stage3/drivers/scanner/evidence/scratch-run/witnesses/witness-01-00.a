@@ -1,3 +1,0 @@
-// a-check: checked
-export namespace Debug { export function fail(): never { throw new Error("failure"); } }
-console.log("ok");

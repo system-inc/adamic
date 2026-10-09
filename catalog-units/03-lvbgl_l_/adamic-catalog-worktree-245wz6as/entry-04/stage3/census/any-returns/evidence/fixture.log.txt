@@ -1,2 +1,0 @@
-PASS: own -> tsc (body number, 5 bytes), JSON.parse -> lib.d.ts (16 bytes), require -> Node typings (20 bytes); one boundary each, total 41
-CAUGHT lib-to-tsc mutant by declaration provenance assertion: three-callee declaration provenance: {'own': 'tsc', 'JSON.parse': 'tsc', 'require': 'Node typings'}

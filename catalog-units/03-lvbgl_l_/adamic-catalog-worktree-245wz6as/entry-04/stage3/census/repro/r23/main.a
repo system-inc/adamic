@@ -1,2 +1,0 @@
-// a-check: refused a namespace
-namespace Values { export const count = 1; } console.log(String(Values.count));

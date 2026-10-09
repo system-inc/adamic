@@ -1,9 +1,0 @@
-export interface Node { readonly kind: 'identifier' | 'number' | 'string' | 'binary'; readonly pos: number; }
-export interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; }
-export interface NumberNode extends Node { readonly kind: 'number'; readonly value: number; }
-export interface StringNode extends Node { readonly kind: 'string'; readonly text: string; }
-export interface BinaryNode extends Node { readonly kind: 'binary'; readonly left: number; readonly right: number; }
-export function identifier(name: string): Identifier { return { kind: 'identifier', pos: 0, name }; }
-export function numberNode(value: number): NumberNode { const raw = { kind: 'number' as const, pos: 1, value, name: 'other'.repeat(2) }; return raw; }
-export function stringNode(text: string): StringNode { return { kind: 'string', pos: 2, text }; }
-export function binaryNode(left: number, right: number): BinaryNode { return { kind: 'binary', pos: 3, left, right }; }

@@ -1,2 +1,0 @@
-// a-check: type error TS2412
-interface Slot { value?: number; } const slot: Slot = {}; slot.value = undefined;

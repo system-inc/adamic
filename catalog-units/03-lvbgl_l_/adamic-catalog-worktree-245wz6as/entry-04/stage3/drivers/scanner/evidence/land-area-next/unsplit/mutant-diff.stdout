@@ -1,9 +1,0 @@
---- /workspace/scratch/native3-next-unsplit-ready/comparison-control.stdout	2026-10-08 13:13:35.731626411 +0000
-+++ /workspace/scratch/native3-next-unsplit-ready/node-end-mutant.stdout	2026-10-08 13:13:36.007623121 +0000
-@@ -1,5 +1,5 @@
- pass	true	"/workspace/scratch/native3-full/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
--ExportKeyword	0	70	76	1	"export"	"export"
-+ExportKeyword	0	70	77	1	"export"	"export"
- AsteriskToken	76	77	78	0	"*"	"export"
- FromKeyword	78	79	83	0	"from"	"from"
- StringLiteral	83	84	108	0	"\"../moduleSpecifiers.js\""	"../moduleSpecifiers.js"

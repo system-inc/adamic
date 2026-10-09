@@ -1,2 +1,0 @@
-// a-check: type error TS7031
-function read({count}) { return count; } console.log(String(read({count: 1})));

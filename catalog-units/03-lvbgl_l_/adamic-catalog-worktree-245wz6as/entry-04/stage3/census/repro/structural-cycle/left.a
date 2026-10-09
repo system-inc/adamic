@@ -1,2 +1,0 @@
-import {right} from './right.a';
-export function left(): number { return right(); }

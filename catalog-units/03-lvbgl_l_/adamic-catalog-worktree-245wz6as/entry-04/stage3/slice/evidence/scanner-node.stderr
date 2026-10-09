@@ -1,7 +1,0 @@
-TypeError: Cannot read properties of undefined (reading 'attachFlowNodeDebugInfo')
-    at createFlowNode (file:///workspace/scratch/scanner-slice-whole6/src/compiler/binder.ts:180:18)
-    at createBinder (file:///workspace/scratch/scanner-slice-whole6/src/compiler/binder.ts:230:27)
-    at file:///workspace/scratch/scanner-slice-whole6/src/compiler/binder.ts:182:32
-    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
-    at async node:internal/modules/esm/loader:643:26
-    at async file:///workspace/adamic/stage3/drivers/scanner/node.mjs:39:44

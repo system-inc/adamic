@@ -1,2 +1,0 @@
-const key: 'Zero' = 'Zero';
-function read():number{return Pending[key];} function invoke(action:()=>number):number{return action();} let action=():number=>7; action=read; enum Pending {Zero} console.log(String(invoke(action)));

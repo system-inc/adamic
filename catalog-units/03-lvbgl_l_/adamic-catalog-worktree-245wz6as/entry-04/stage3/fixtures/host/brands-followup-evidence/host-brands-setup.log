@@ -1,9 +1,0 @@
-v24.19.0
-setup: node ready (0.026s)
-go version go1.27.1 linux/amd64
-setup: go ready (0.031s)
-error: expected submodule path 'cohere' not to be a symbolic link
-setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.009s
-setup: markdown dependencies ready (0.106s)
-clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.366s)

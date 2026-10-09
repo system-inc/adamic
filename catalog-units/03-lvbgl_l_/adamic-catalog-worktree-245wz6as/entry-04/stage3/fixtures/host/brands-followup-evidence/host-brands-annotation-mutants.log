@@ -1,4 +1,0 @@
-caught actual full-audit mutant: 08_getDirectories.a __pathBrand: void -> __pathBrand: undefined
-caught actual full-audit mutant: 25_readDirectory.a isArray(value: unknown) -> isArray(value: any)
-confirmed final re-extracted Node bytes: 08_getDirectories.a
-confirmed final re-extracted Node bytes: 25_readDirectory.a

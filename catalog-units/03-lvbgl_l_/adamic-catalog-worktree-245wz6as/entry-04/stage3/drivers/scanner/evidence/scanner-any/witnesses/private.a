@@ -1,4 +1,0 @@
-function report(arg0: string | number | undefined): void { console.log('ok'); }
-report('text');
-report(2);
-report(undefined);

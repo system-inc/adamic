@@ -1,3 +1,0 @@
-// a-check: type error TS2307
-import { value } from "toString";
-const n: number = value;

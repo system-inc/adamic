@@ -1,2 +1,0 @@
-const callback = (value: string | number): string => `${value}`;
-console.log(callback(1));

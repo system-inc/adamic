@@ -1,3 +1,0 @@
-stage3/drivers/tsc-entry/probes/04-optional-path-argument.a:4:8: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.
-  Type 'undefined' is not assignable to type 'Path'.
-    Type 'undefined' is not assignable to type 'string'.

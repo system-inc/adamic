@@ -1,6 +1,0 @@
-=== RUN   TestLibraryRegexOffsetRequiresNoCaptures
-    library_regex_callback_shape_test.go:16: want capture-free producer stop, got <nil>
---- FAIL: TestLibraryRegexOffsetRequiresNoCaptures (0.05s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.057s
-FAIL

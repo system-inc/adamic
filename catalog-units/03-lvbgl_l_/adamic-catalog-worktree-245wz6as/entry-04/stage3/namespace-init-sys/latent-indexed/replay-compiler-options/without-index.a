@@ -1,7 +1,0 @@
-interface CompilerOptions {
-    target?: number;
-}
-function observe(options: CompilerOptions): number {
-    return options.target ?? 0;
-}
-console.log(`${observe({ target: 1 })}`);

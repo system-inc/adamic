@@ -1,6 +1,0 @@
-adamic: native: clang failed: exit status 1
-/tmp/adamic-gate/adamic-build-996107750/main.c:7943:9: error: incompatible pointer types returning 'adamic_object *' (aka 'struct adamic_object *') from a function with result type 'adamic_string *' (aka 'struct adamic_string *') [-Werror,-Wincompatible-pointer-types]
- 7943 |         return adamic_temporary_11;
-      |                ^~~~~~~~~~~~~~~~~~~
-1 error generated.
-

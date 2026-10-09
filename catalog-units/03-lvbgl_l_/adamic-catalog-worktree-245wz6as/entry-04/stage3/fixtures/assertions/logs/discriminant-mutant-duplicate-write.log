@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage3/fixtures/assertions/discriminant-report.py", line 46, in <module>
-    assert len(r['writes'])==len({(w['file'],w['start'],w['property'],w['form']) for w in r['writes']}), 'duplicate write event'
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: duplicate write event

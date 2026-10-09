@@ -1,6 +1,0 @@
-const key: 'Zero' = 'Zero';
-class Base { readonly value: number = Pending[key]; }
-class Box extends Base {}
-const box = new Box();
-enum Pending { Zero }
-console.log(String(box.value));

@@ -1,8 +1,0 @@
-=== RUN   TestOrderedProgress
-=== PAUSE TestOrderedProgress
-=== CONT  TestOrderedProgress
-    cache_test.go:233: ordered progress: " 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=49\n 51/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\n", want " 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\n"
---- FAIL: TestOrderedProgress (5.87s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	5.913s
-FAIL

@@ -1,5 +1,0 @@
-const key: 'Zero' = 'Zero'; // Construction executes instance field initializers.
-class Box {readonly value:number=Pending[key];}
-const box=new Box();
-enum Pending {Zero}
-console.log(String(box.value));

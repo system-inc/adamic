@@ -1,6 +1,0 @@
-=== RUN   TestOriginalCycleLedger
-    import_cycle_ledger_test.go:59: public rule produced no findings on the pinned firing source
---- FAIL: TestOriginalCycleLedger (0.29s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.308s
-FAIL

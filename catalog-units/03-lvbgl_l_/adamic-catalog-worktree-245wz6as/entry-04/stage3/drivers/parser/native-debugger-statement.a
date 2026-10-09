@@ -1,4 +1,0 @@
-// a-check: refused debugger
-// From TypeScript 6.0.3, Debug.fail (body reduced after debugger).
-function fail(): never { debugger; throw new Error("Debug Failure."); }
-console.log("fail declaration loaded");

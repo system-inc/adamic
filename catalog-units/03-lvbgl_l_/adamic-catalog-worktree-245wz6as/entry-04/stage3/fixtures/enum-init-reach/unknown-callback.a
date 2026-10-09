@@ -1,2 +1,0 @@
-const key: 'Zero' = 'Zero';
-function read():number{return Pending[key];} let action=():number=>7; action=read; console.log('before'); console.log([1].map(action).join(',')); enum Pending {Zero} console.log('after');

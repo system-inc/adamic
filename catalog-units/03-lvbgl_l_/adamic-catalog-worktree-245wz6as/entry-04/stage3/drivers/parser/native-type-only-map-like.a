@@ -1,6 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/corePublic.ts:13
-// Type-only generic index signature; no record value is constructed or read.
-export interface MapLike<T> {
-    [index: string]: T;
-}
-console.log('type-only');

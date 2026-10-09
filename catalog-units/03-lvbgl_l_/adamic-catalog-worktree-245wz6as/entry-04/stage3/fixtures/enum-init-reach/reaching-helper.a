@@ -1,5 +1,0 @@
-const key: 'Zero' = 'Zero'; // A helper does not hide the pending read.
-function read():number{return Pending[key];}
-function helper():number{return read();}
-console.log(String(helper()));
-enum Pending {Zero}
