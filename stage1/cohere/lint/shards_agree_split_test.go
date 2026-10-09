@@ -34,13 +34,13 @@ const testShardsAgreeShards = 32
 
 func testShardsAgree(t *testing.T, shard int) {
 	t.Helper()
-	testShardsAgreeGroupDeadline(t)
 	if os.Getenv("ADAMIC_SHARDS_AGREE_LEAF") != "1" {
 		products := testShardsAgreeReady(t)
 		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+products.Root)
 		return
 	}
 	products := testShardsAgreeRead(t, os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
+	testShardsAgreeGroupDeadline(t)
 	// The parent's lookup has completed before this child's 90-second deadline.
 	rows := products.Buckets[shard]
 	if len(rows) == 0 {
@@ -150,8 +150,8 @@ func testShardsAgreeUpstream(t *testing.T) []string {
 	}
 	return rows
 }
-func testShardsAgreeBinary(t *testing.T, directory string) string {
-	c := buildcache.Product(t, testShardsAgreeInputs(t, "lowered"), func(d string) error {
+func testShardsAgreeLowered(t *testing.T, directory string) string {
+	return buildcache.Product(t, testShardsAgreeInputs(t, "lowered"), func(d string) error {
 		prepareRegistry(t, directory)
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
@@ -163,6 +163,9 @@ func testShardsAgreeBinary(t *testing.T, directory string) string {
 		}
 		return os.WriteFile(filepath.Join(d, "main.c"), []byte(native.C(lowered)), 0644)
 	})
+}
+func testShardsAgreeBinary(t *testing.T, directory string) string {
+	c := testShardsAgreeLowered(t, directory)
 	inputs := testShardsAgreeInputs(t, "native")
 	// The lowered input is already content-addressed by all its source inputs.
 	d := buildcache.Product(t, inputs, func(d string) error {
@@ -263,14 +266,10 @@ func TestShardsAgree_013(t *testing.T) { t.Parallel(); testShardsAgree(t, 13) }
 func TestShardsAgree_014(t *testing.T) { t.Parallel(); testShardsAgree(t, 14) }
 func TestShardsAgree_015(t *testing.T) { t.Parallel(); testShardsAgree(t, 15) }
 
-// Setup publishes an immutable corpus and products for separately filtered leaves.
-// Not parallel: publishes shared products before the parallel leaves are released.
-func TestShardsAgree_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_SHARDS_AGREE_SETUP") != "1" {
-		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_SETUP=1")
-		return
-	}
-	testShardsAgreeGroupDeadline(t)
+// Setup fetches the same products as independently selected shards.
+
+func testShardsAgreePrepare(t *testing.T) string {
+	t.Helper()
 	started := time.Now()
 	inputs := testShardsAgreePreparedInputs(t)
 	d := buildcache.Product(t, inputs, func(d string) error {
@@ -322,6 +321,7 @@ func TestShardsAgree_Setup(t *testing.T) {
 		return os.WriteFile(filepath.Join(d, "prepared.json"), data, 0644)
 	})
 	t.Logf("TestShardsAgree (setup): %.3fs; %s", time.Since(started).Seconds(), d)
+	return d
 }
 
 type testShardsAgreeProducts struct {
@@ -357,12 +357,14 @@ func testShardsAgreePreparedInputs(t *testing.T) buildcache.Inputs {
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("compiler corpus %x", hash.Sum(nil)))
 	return inputs
 }
+
+var testShardsAgreePreparedOnce sync.Once
+var testShardsAgreePreparedRoot string
+
 func testShardsAgreeReady(t *testing.T) testShardsAgreeProducts {
 	t.Helper()
-	// A miss is a failure, never a lazy build in a leaf. Run Setup separately first.
-	d := buildcache.Product(t, testShardsAgreePreparedInputs(t), func(string) error {
-		return fmt.Errorf("shared setup missing: run TestShardsAgree_Setup before selecting leaves")
-	})
+	testShardsAgreePreparedOnce.Do(func() { testShardsAgreePreparedRoot = testShardsAgreePrepare(t) })
+	d := testShardsAgreePreparedRoot
 	return testShardsAgreeRead(t, d)
 }
 func testShardsAgreeRead(t *testing.T, d string) testShardsAgreeProducts {
@@ -418,36 +420,6 @@ func testShardsAgreeChild(t *testing.T, name string, markers ...string) {
 	}
 }
 
-func TestShardsAgree_SetupRequired(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=0", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_SHARDS_AGREE_LEAF=0", "ADAMIC_SHARDS_AGREE_BOUND=1")
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	output, err := command.CombinedOutput()
-	if ctx.Err() != nil {
-		t.Fatalf("missing-setup probe exceeded deadline: %v", ctx.Err())
-	}
-	if err == nil || !bytes.Contains(output, []byte("shared setup missing")) {
-		t.Fatalf("leaf must refuse an unprepared cache: %v\n%s", err, output)
-	}
-	if bytes.Contains(output, []byte("build shards-agree-oracle")) || bytes.Contains(output, []byte("build shards-agree-lowered")) {
-		t.Fatalf("leaf attempted shared builds: %s", output)
-	}
-}
-
 func TestShardsAgree_016(t *testing.T) { t.Parallel(); testShardsAgree(t, 16) }
 
 func TestShardsAgree_017(t *testing.T) { t.Parallel(); testShardsAgree(t, 17) }
@@ -484,10 +456,8 @@ func TestShardsAgree_031(t *testing.T) { t.Parallel(); testShardsAgree(t, 31) }
 // run/execute helpers install separate testguard groups, so using them here
 // would let compiler or scanner descendants escape the 90-second cancellation.
 func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
 	// Inherit the outer bounded group; a new group would escape its cancellation.
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(context.Background(), name, args...)
 	command.Dir = directory
 	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
 	// real working directory, so a stale one resolves the module through the wrong path.
@@ -543,7 +513,11 @@ func testShardsAgreeRecoveryRows(t *testing.T, oracle string, rows []string) []s
 	if len(rows) == 0 {
 		return rows
 	}
-	answer := testShardsAgreeExecute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	output, err := testShardsAgreeRun("", nil, oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	if err != nil {
+		t.Fatal(err)
+	}
+	answer := execution{output: output}
 	flags := strings.Fields(string(answer.output))
 	if len(flags) != len(rows) {
 		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))

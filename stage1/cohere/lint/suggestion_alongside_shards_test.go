@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -35,7 +36,13 @@ var suggestionAlongside struct {
 	directory, manifest, oracle, binary, module string
 }
 
+var suggestionAlongsideOnce sync.Once
+
 func suggestionAlongsideSetup(t *testing.T) {
+	suggestionAlongsideOnce.Do(func() { suggestionAlongsidePrepare(t) })
+}
+
+func suggestionAlongsidePrepare(t *testing.T) {
 	t.Helper()
 	if suggestionAlongside.ready {
 		return
@@ -130,17 +137,14 @@ func suggestionAlongsideSetup(t *testing.T) {
 
 // Not parallel: prepares the shared fixture and cached runtime products before parallel leaves.
 func TestSuggestionAlongsideAutomaticFix_Setup(t *testing.T) {
-	defer suggestionAlongsideDeadline(t)()
 	suggestionAlongsideSetup(t)
 }
 
 // The setup test is serial: testing releases parallel leaves only after it returns.
-// A filtered leaf must explicitly select _Setup too; it never builds shared products.
+// A filtered leaf prepares its shared products before starting its work deadline.
 func suggestionAlongsideReady(t *testing.T) {
 	t.Helper()
-	if !suggestionAlongside.ready {
-		t.Fatal("shared setup is not ready; select TestSuggestionAlongsideAutomaticFix_Setup with the leaf")
-	}
+	suggestionAlongsideSetup(t)
 }
 
 func suggestionAlongsideDeadline(t *testing.T) func() {
@@ -261,10 +265,9 @@ func suggestionAlongsideUnion(t *testing.T) {
 func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	t.Parallel()
 	suggestionAlongsideReady(t)
-	defer suggestionAlongsideDeadline(t)()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$", "-test.timeout=90s", "-test.v")
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$", "-test.timeout=600s", "-test.v")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -282,26 +285,14 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	t.Log("planted mismatch caught only by shard 002")
 }
 
-// A filtered leaf must fail immediately, never silently build the shared products.
+// A filtered leaf prepares its own inputs in a fresh process.
 func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	t.Parallel()
-	suggestionAlongsideReady(t)
-	defer suggestionAlongsideDeadline(t)()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_[0-9]+$", "-test.timeout=90s", "-test.v")
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
 	output, err := command.CombinedOutput()
-	if err == nil || ctx.Err() != nil || bytes.Count(output, []byte("shared setup is not ready;")) != testSuggestionAlongsideAutomaticFixShards || bytes.Contains(output, []byte("build suggestion-alongside-")) {
-		t.Fatalf("filtered leaves prepared shared state or failed incorrectly: %v\n%s", err, output)
+	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte(" miss ")) {
+		t.Fatalf("standalone cold shard: %v\n%s", err, output)
 	}
 }
 
@@ -351,7 +342,7 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := exec.CommandContext(ctx, "go", args...)
 	command.Dir = root

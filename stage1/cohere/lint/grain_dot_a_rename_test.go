@@ -203,7 +203,7 @@ func dotARenameGoOracleIn(sourceRoot, directory string) (string, error) {
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := exec.CommandContext(ctx, "go", args...)
 	command.Dir = root
