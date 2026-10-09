@@ -1,5 +1,5 @@
 Built step 1 of optional-presence-chain toward roadmap step 17 on after-chain 2391c655, retaining the chain presence layout.
-Commits: b215cedb, 4d505a5c, 5f277ebb, 84f194fc; final corrections and evidence follow these on the delivery branch.
+Commits: b215cedb, 4d505a5c, 5f277ebb, 84f194fc, 75810381; the final evidence commit follows on the delivery branch.
 Commands: compiler build and vet pass; seven lane fixtures, three stage3 entries, counts updates, frontend checks, and focused controls pass, with logs here.
 Mutants: 15 lane/catalog/admission/registration mutants caught, plus readiness and initializer regression mutants; each catcher is listed below.
 Not covered: step 2 checked-view optional writes, full fuzz sweep, full packages/gate, WASI, Darwin, and performance; runtime clearance remains pending.
@@ -24,7 +24,7 @@ All test output went directly to log files. Every test invocation uses -count=1 
 | --- | --- |
 | timeout 180 go build ./cmd/adamic | exit 0, build-final.log |
 | timeout 180 go vet ./internal/lower ./internal/native ./internal/oracle | exit 0, vet.log |
-| go test ./internal/oracle -run 'TestOptionalField\|TestLiteralOptionalOracleCatchesMutant\|TestNativeAgreesWithNode/internal/oracle/testdata/optional_field' -count=1 -v -timeout 90s | final oracle-final.log, seven semantic fixtures and built-in mutants |
+| go test ./internal/oracle -run 'TestOptionalField\|TestLiteralOptionalOracleCatchesMutant\|TestNativeAgreesWithNode/internal/oracle/testdata/optional_field' -count=1 -v -timeout 90s | 23.142s, oracle-final.log, seven semantic fixtures and built-in mutants |
 | go test ./internal/oracle -run '^TestOptionalFieldCopyState$' -count=1 -v -timeout 90s | 3.131s, copy-state.log |
 | go test ./internal/lower ./internal/native ./internal/oracle -run 'TestUnknownReflectionRefusals\|TestUnknownAbsentSpreadPresence\|TestObject\|TestOptionalDeletion\|TestOptionalAssign\|TestUniformFieldsMatchNode\|TestRuntimeFieldLayoutsAreIncluded\|TestRegexProgramsKeepCheckedFieldReads\|TestOptionalWriteReservedSlotMatchesNode\|TestReadinessMutants\|TestUninitializedIsNotNullishMutant\|TestLazyInitializerIsNotEagerMutant' -count=1 -v -timeout 90s | lower 1.935s, native 1.815s, oracle 2.458s; controls.log; the old lazy-initializer name matches no current test |
 | go test ./internal/oracle -run 'TestNonliteralInitializerCannotSkipCheck\|TestImportCycle' -count=1 -v -timeout 90s | 2.663s, initializer-cycles.log; current renamed initializer control and both import-cycle controls |
@@ -62,3 +62,7 @@ The source commits' mutants were rerun as follows. Native generated-code and sta
 New or changed lane top-level test durations from the green run: dropped-slot 0.48s, presence 1.23s, spread-reservation 0.66s, static-enumeration 0.60s, copy-state 3.12s, literal-optional mutant below 1s, reserved-slot native control 1.36s, hasOwn interface 0.23s, hidden-key admission 0.48s, deletion admission 0.40s, absent-spread admission 0.19s. All their test leaves are below 60s. The pending view boundary was checked then skipped in 0.20s; it is not semantic coverage.
 
 Automatic approval review rejected an attempted weakening of the unknown-read fixture and pending-view annotation. That attempt was not executed. The safe resolution retained all unknown assertions and implemented the numeric readiness/tag path, which passed Node parity. The first-unit checked-view skip remains as inherited from the source commits.
+
+The final combined counts selection was TestCountsAreRecorded/fixtures/(internal|stage3)/(oracle|fixtures)/(testdata|taste)/(optional_field|optional_after_call|optional_indexing|library_object|literal_optional|e4eec87_u0[12]|write_order|construction|taste_optional_join|17_binder_flow|24_proportional_conditions), with -count=1 -timeout 90s -args -update-counts. It passed in 39.939s, measured 205 rows including existing registered additional counters, and every measured row matched the preserved final union. Evidence: counts-final.log.
+
+Integration lane output: lane checks 12.3 s: gofmt and tools on 267 Go files, t.Parallel on 20 test packages; vet skipped, over 10 s. The separate changed-package vet passed. Evidence: lane-checks.log. The existing pending-view skip was normalized to the required awaits branch: reason syntax without changing its boundary assertions or skip behavior; view-boundary.log records the 0.200s check. Nine changed .a files passed frontend aCheck acceptance.

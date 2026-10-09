@@ -1,0 +1,79 @@
+=== RUN   TestLiteralOptionalOracleCatchesMutant
+=== PAUSE TestLiteralOptionalOracleCatchesMutant
+=== RUN   TestOptionalFieldCopyState
+=== PAUSE TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldWriteCatchesDroppedSlot
+=== PAUSE TestOptionalFieldWriteCatchesDroppedSlot
+=== RUN   TestOptionalFieldPresenceCatchesMutants
+=== PAUSE TestOptionalFieldPresenceCatchesMutants
+=== RUN   TestOptionalFieldConstructionCatchesDroppedReservation
+=== PAUSE TestOptionalFieldConstructionCatchesDroppedReservation
+=== RUN   TestOptionalFieldAliasCatchesStaticEnumeration
+=== PAUSE TestOptionalFieldAliasCatchesStaticEnumeration
+=== RUN   TestOptionalFieldCheckedViewPending
+    optional_field_write_test.go:211: checked-view optional-field conversion remains pending; landed views-v1 admits required scalar writes, not optional slots
+--- SKIP: TestOptionalFieldCheckedViewPending (0.17s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestLiteralOptionalOracleCatchesMutant
+=== CONT  TestOptionalFieldConstructionCatchesDroppedReservation
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestOptionalFieldAliasCatchesStaticEnumeration
+=== CONT  TestOptionalFieldWriteCatchesDroppedSlot
+--- PASS: TestNativeAgreesWithNode (0.11s)
+=== CONT  TestOptionalFieldPresenceCatchesMutants
+=== RUN   TestOptionalFieldPresenceCatchesMutants/initially_present
+=== NAME  TestOptionalFieldAliasCatchesStaticEnumeration
+    optional_field_write_test.go:190: Node caught static enumeration, sanitize=false: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+=== NAME  TestOptionalFieldWriteCatchesDroppedSlot
+    optional_field_write_test.go:56: Node caught dropped absent slot: missing-field stop, exit 70
+--- PASS: TestOptionalFieldWriteCatchesDroppedSlot (0.45s)
+=== CONT  TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldCopyState/baseline
+=== NAME  TestOptionalFieldConstructionCatchesDroppedReservation
+    optional_field_write_test.go:135: Node caught dropped spread reservation: missing-field stop, exit 70
+--- PASS: TestOptionalFieldConstructionCatchesDroppedReservation (0.58s)
+=== NAME  TestOptionalFieldAliasCatchesStaticEnumeration
+    optional_field_write_test.go:190: Node caught static enumeration, sanitize=true: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+--- PASS: TestOptionalFieldAliasCatchesStaticEnumeration (0.64s)
+=== NAME  TestOptionalFieldPresenceCatchesMutants/initially_present
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+=== NAME  TestLiteralOptionalOracleCatchesMutant
+    literal_optional_test.go:79: Node caught restored required-field lookup: missing-field panic, exit 70
+--- PASS: TestLiteralOptionalOracleCatchesMutant (0.81s)
+=== NAME  TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+--- PASS: TestOptionalFieldPresenceCatchesMutants (1.07s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/initially_present (0.32s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order (0.28s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove (0.24s)
+=== RUN   TestOptionalFieldCopyState/drop_presence_on_checked_copy
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3226108455/main.c:58:4: error: expected expression
+           58 |                         else adamic_object_publish(object, index);
+              |                         ^
+        1 error generated.
+        
+=== RUN   TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+    optional_field_layout_test.go:115: caught by state assertions, sanitize=false: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+    optional_field_layout_test.go:115: caught by state assertions, sanitize=true: "types 1 7 1\n0 0 1 1\ntypes 1 7 1\n0 1 1 0\ntypes 1 7 1\n0 0 0\n1 1\ntypes 1 7 1\n0 1 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/drop_representation_on_checked_copy
+    optional_field_layout_test.go:115: caught by state assertions, sanitize=false: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+    optional_field_layout_test.go:115: caught by state assertions, sanitize=true: "types 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 1 1\ntypes 0 0 0\n0 0 0\n1 1\ntypes 0 0 0\n0 0 0\n1 1\n"
+=== RUN   TestOptionalFieldCopyState/overlap_presence_and_readiness
+    optional_field_layout_test.go:106: probe must finish without diagnostics: -1 
+--- FAIL: TestOptionalFieldCopyState (2.36s)
+    --- PASS: TestOptionalFieldCopyState/baseline (0.78s)
+    --- FAIL: TestOptionalFieldCopyState/drop_presence_on_checked_copy (0.06s)
+    --- PASS: TestOptionalFieldCopyState/drop_readiness_on_checked_copy (0.71s)
+    --- PASS: TestOptionalFieldCopyState/drop_representation_on_checked_copy (0.66s)
+    --- FAIL: TestOptionalFieldCopyState/overlap_presence_and_readiness (0.15s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.003s
+FAIL

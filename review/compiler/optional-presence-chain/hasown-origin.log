@@ -1,0 +1,33 @@
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== RUN   TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== CONT  TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== NAME  TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+    library_object_test.go:53: got <nil>, want NotYet
+=== CONT  TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+--- FAIL: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- FAIL: TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value'); (0.08s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.09s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.10s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first'); (0.10s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.11s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first'); (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.138s
+FAIL
