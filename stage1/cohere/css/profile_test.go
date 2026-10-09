@@ -14,6 +14,7 @@ import (
 )
 
 // Opt-in immutable artifacts let profiling and comparison share the same source.
+// Not parallel: writes artifacts and binaries in the fixed ADAMIC_CSS_PROFILE_DIR directory.
 func TestCSSProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_CSS_PROFILE_DIR")
 	if directory == "" {
@@ -129,6 +130,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	t.Logf("saved %d shared inputs and %d profile inputs, %d output units", len(shared), len(sample), totalUnits)
 }
 
+// Not parallel: askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
 func TestCSSProfileSnapshotsAgree(t *testing.T) {
 	asked := os.Getenv("ADAMIC_CSS_PROFILE_SNAPSHOTS")
 	if asked == "" {

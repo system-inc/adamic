@@ -236,6 +236,7 @@ func TestLexerMutants(t *testing.T) {
 		{"cached NUL becomes space", "units.push(String.fromCodePoint(code))", "units.push(String.fromCodePoint(code === 0 ? 32 : code))"},
 		{"numeric whitespace excludes space", "return unit === -1 || unit === 32 || unit === 10 || unit === 13 || unit === 9;", "return unit === -1 || unit === 31 || unit === 10 || unit === 13 || unit === 9;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "lex_main.ts"} {

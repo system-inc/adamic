@@ -15,6 +15,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -36,6 +37,8 @@ var emittedMismatchProducts struct {
 func emittedMismatchSetup(t *testing.T) {
 	t.Helper()
 	emittedMismatchProducts.Do(func() {
+		deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript shared setup exceeded 90s") })
+		defer deadline.Stop()
 		// The subprocess receives immutable products; it never builds them again.
 		if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
 			emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
@@ -48,19 +51,6 @@ func emittedMismatchSetup(t *testing.T) {
 			}
 			return
 		}
-		oracleDirectory, err := os.MkdirTemp(sharedDirectory, "emitted-mismatch-oracle-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		type oracleResult struct {
-			path string
-			err  error
-		}
-		oracleDone := make(chan oracleResult, 1)
-		go func() {
-			path, err := goOracleIn(packageDirectory, oracleDirectory)
-			oracleDone <- oracleResult{path, err}
-		}()
 		files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
 		for _, path := range portFiles(t) {
 			files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
@@ -99,6 +89,16 @@ func emittedMismatchSetup(t *testing.T) {
 			}
 		}
 		files = production
+		oracleFiles := append(append([]string(nil), files...), "stage1/cohere/lint/testdata/oracle.go", "cohere/internal", "cohere/go.mod", "cohere/go.sum")
+		oracleProduct := buildcache.Product(t, buildcache.Inputs{
+			Name: "emitted-mismatch-oracle", Files: oracleFiles,
+			Flags:     []string{"overlay", "package=" + packageDirectory},
+			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")},
+		}, func(out string) error {
+			_, err := goOracleIn(packageDirectory, out)
+			return err
+		})
+		emittedMismatchProducts.oracle = filepath.Join(oracleProduct, "oracle")
 		lowered := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-lowered", Files: files, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}, func(out string) error {
 			if _, err := registry.Generate(packageDirectory); err != nil {
 				return err
@@ -127,12 +127,6 @@ func emittedMismatchSetup(t *testing.T) {
 		})
 		emittedMismatchProducts.binary = filepath.Join(product, "scanner")
 		emittedMismatchProducts.module = filepath.Join(lowered, "lint.mjs")
-		// main has no buildcache.GoBuild yet: preserve the existing Go overlay build.
-		oracle := <-oracleDone
-		if oracle.err != nil {
-			t.Fatal(oracle.err)
-		}
-		emittedMismatchProducts.oracle = oracle.path
 	})
 	if emittedMismatchProducts.oracle == "" {
 		t.Fatal("emitted mismatch setup did not complete")
@@ -204,11 +198,24 @@ func emittedMismatchUnion(t *testing.T) {
 
 func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 	t.Parallel()
+	// Setup owns every build. The mutant child receives already built products.
+	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
+		emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
+		emittedMismatchProducts.binary = os.Getenv("ADAMIC_MISMATCH_NATIVE")
+		emittedMismatchProducts.module = os.Getenv("ADAMIC_MISMATCH_MODULE")
+	}
+	for _, product := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {
+		if product == "" {
+			t.Fatal("shared setup is not ready: include TestEmittedJavaScriptMismatch_Setup in the test filter")
+		}
+		if _, err := os.Stat(product); err != nil {
+			t.Fatal(err)
+		}
+	}
 	started := time.Now()
 	// A hard deadline applies even when this leaf is selected alone.
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript shard exceeded 90s") })
 	defer deadline.Stop()
-	emittedMismatchSetup(t)
 	emittedMismatchUnion(t)
 	for _, key := range emittedMismatchCases(t) {
 		if emittedMismatchAssignment(key) != 0 {
@@ -231,7 +238,17 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 			t.Fatal("emitted JavaScript mutant survived")
 		}
 		compareWithJavaScript(t, emittedMismatchProducts.oracle, emittedMismatchProducts.binary, packageDirectory, path, module)
-		command := exec.Command(os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch_000$", "-test.timeout=90s", "-test.v")
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch_000$", "-test.timeout=90s", "-test.v")
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+		command.Cancel = func() error {
+			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if err == syscall.ESRCH {
+				return os.ErrProcessDone
+			}
+			return err
+		}
 		command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1", "ADAMIC_MISMATCH_ORACLE="+emittedMismatchProducts.oracle, "ADAMIC_MISMATCH_NATIVE="+emittedMismatchProducts.binary, "ADAMIC_MISMATCH_MODULE="+module)
 		log, err := os.Create(filepath.Join(t.TempDir(), "mismatch.log"))
 		if err != nil {
@@ -239,6 +256,11 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 		}
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
+		contextError := ctx.Err()
+		cancel()
+		if contextError != nil {
+			t.Fatalf("P0: mutant child cooked at 90s: %v", contextError)
+		}
 		if err := log.Close(); err != nil {
 			t.Fatal(err)
 		}

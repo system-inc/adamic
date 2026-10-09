@@ -104,6 +104,7 @@ func TestUnistMutants(t *testing.T) {
 		{"point column shifted", "new UnistPoint(line, column, offset)", "new UnistPoint(line, column + 1, offset)"},
 		{"document end marker lost", "this.node(result).documentEndMarker = data.end >= 0;", "this.node(result).documentEndMarker = false;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			entries, err := filepath.Glob("*.ts")

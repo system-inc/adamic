@@ -8,15 +8,17 @@ import (
 	"time"
 )
 
-// Prepare products once before the parallel comparison leaf.
-// Not parallel: initializes the shared emitted-mismatch products before comparison leaves.
-// Not parallel: prepares shared emitted-mismatch products before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
+	t.Parallel()
+	emittedMismatchUnion(t)
+}
+
+// Not parallel: prepares shared emittedMismatchProducts before parallel shards resume.
+func TestEmittedJavaScriptMismatch_Setup(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
 	defer deadline.Stop()
 	emittedMismatchSetup(t)
-	emittedMismatchUnion(t)
 	elapsed := time.Since(started)
 	t.Logf("TestEmittedJavaScriptMismatch (setup): %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
 	if elapsed >= 60*time.Second {
@@ -41,24 +43,19 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
-// Not parallel: initializes the shared serialization products before comparison leaves.
-// Not parallel: initializes shared suggestion-serialization fixtures and products.
 func TestCompleteSuggestionSerialization(t *testing.T) {
+	t.Parallel()
 	completeSuggestionUnion(t)
-	completeSuggestionSetup(t)
 }
 
-// Not parallel: initializes the shared automatic-fix products before comparison leaves.
-// Not parallel: initializes shared suggestion and automatic-fix fixtures and products.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
-	suggestionAlongsideSetup(t)
+	t.Parallel()
 	suggestionAlongsideUnion(t)
 }
 
-// Not parallel: initializes the shared witness script-kind products before comparison leaves.
-// Not parallel: initializes shared witness-script-kind state before its parallel shards.
 func TestWitnessScriptKind(t *testing.T) {
-	witnessScriptKindSetup(t)
+	t.Parallel()
+	witnessScriptKindRequireReady(t)
 	witnessScriptKindUnion(t)
-	t.Logf("TestWitnessScriptKind (setup): %s", strings.Join(witnessScriptKindState.keys, ", "))
+	t.Logf("TestWitnessScriptKind (union): %s", strings.Join(witnessScriptKindState.Keys, ", "))
 }

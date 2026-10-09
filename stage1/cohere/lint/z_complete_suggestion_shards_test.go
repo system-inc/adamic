@@ -3,13 +3,14 @@ package lint
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
+	"sync/atomic"
 	"syscall"
 	"testing"
 	"time"
@@ -19,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testCompleteSuggestionSerializationShards = 6
@@ -68,122 +70,129 @@ type completeSuggestionProducts struct {
 	want                                                          []byte
 }
 
-var completeSuggestionOnce sync.Once
+var completeSuggestionProductsReady atomic.Bool
 var completeSuggestionProductsValue completeSuggestionProducts
 
-func completeSuggestionSetup(t *testing.T) *completeSuggestionProducts {
-	t.Helper()
-	completeSuggestionOnce.Do(func() {
-		started := time.Now()
-		defer func() { t.Logf("TestCompleteSuggestionSerialization (setup): %.3fs", time.Since(started).Seconds()) }()
-		p := &completeSuggestionProductsValue
-		directory, err := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
+// Not parallel: publishes shared serialization products before parallel leaves.
+func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
+	completeSuggestionProductsReady.Store(false)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: complete suggestion setup exceeded 90s") })
+	defer deadline.Stop()
+	started := time.Now()
+	defer func() {
+		elapsed := time.Since(started)
+		t.Logf("TestCompleteSuggestionSerialization_Setup: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 60*time.Second)
+	}()
+	p := &completeSuggestionProductsValue
+	files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
+	for _, file := range portFiles(t) {
+		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
+	}
+	files = append(files, "stage1/cohere/lint/testdata/serialization", "stage1/cohere/lint/testdata/oracle.go")
+	toolchain := []string{runtime.Version(), buildcache.Tool("clang", "--version")}
+
+	directory, err := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.directory = copyPort(t, directory, "", "")
+	for _, name := range []string{"rule.a", "oracle.go"} {
+		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
 		if err != nil {
 			t.Fatal(err)
 		}
-		p.directory = copyPort(t, directory, "", "")
-		for _, name := range []string{"rule.a", "oracle.go"} {
-			data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
+		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err = os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
+		t.Fatal(err)
+	}
+	completeSuggestionOnlyRule(t, directory)
+	source := filepath.Join(directory, "suggestions.ts")
+	if err = os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	p.path = filepath.Join(directory, "manifest.txt")
+	if err = os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	oracleProduct := buildcache.Product(t, buildcache.Inputs{Name: "complete-suggestion-go-oracle", Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1"}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
+	p.oracle = filepath.Join(oracleProduct, "oracle")
+	p.want = completeSuggestionExecute(ctx, t, "", p.oracle, "--manifest", p.path).output
+	mutantDirectory, err := os.MkdirTemp(sharedDirectory, "complete-mutant-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.mutant = copyPort(t, mutantDirectory, "", "")
+	for _, name := range []string{"rule.a", "oracle.go"} {
+		data, err := os.ReadFile(filepath.Join(directory, "rules/no-debugger", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if name == "rule.a" {
+			from := []byte("start + 1, start + 2, ''")
+			if bytes.Count(data, from) != 1 {
+				t.Fatal("suggestion mutant anchor changed")
+			}
+			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
+		}
+		if err = os.WriteFile(filepath.Join(mutantDirectory, "rules/no-debugger", name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err = os.Remove(filepath.Join(mutantDirectory, "rules/no-debugger/rule.ts")); err != nil {
+		t.Fatal(err)
+	}
+	completeSuggestionOnlyRule(t, mutantDirectory)
+	for _, side := range []struct {
+		dir    string
+		mutant bool
+	}{{directory, false}, {mutantDirectory, true}} {
+		product := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("complete-suggestion-lowered-%t", side.mutant), Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "second-edit-end+3=" + fmt.Sprint(side.mutant)}, Toolchain: toolchain}, func(out string) error {
+			prepareRegistry(t, side.dir)
+			program, err := load.Load([]string{filepath.Join(side.dir, "main.ts")})
 			if err != nil {
-				t.Fatal(err)
+				return err
 			}
-			if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
-				t.Fatal(err)
-			}
-		}
-		if err = os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-			t.Fatal(err)
-		}
-		completeSuggestionOnlyRule(t, directory)
-		source := filepath.Join(directory, "suggestions.ts")
-		if err = os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-			t.Fatal(err)
-		}
-		p.path = filepath.Join(directory, "manifest.txt")
-		if err = os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-			t.Fatal(err)
-		}
-		oracleDirectory, err := os.MkdirTemp(sharedDirectory, "complete-oracle-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		p.oracle, err = goOracleIn(directory, oracleDirectory)
-		if err != nil {
-			t.Fatal(err)
-		}
-		p.want = execute(t, "", p.oracle, "--manifest", p.path).output
-		mutantDirectory, err := os.MkdirTemp(sharedDirectory, "complete-mutant-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		p.mutant = copyPort(t, mutantDirectory, "", "")
-		for _, name := range []string{"rule.a", "oracle.go"} {
-			data, err := os.ReadFile(filepath.Join(directory, "rules/no-debugger", name))
+			lowered, err := lower.Lower(ctx, program)
 			if err != nil {
-				t.Fatal(err)
+				return err
 			}
-			if name == "rule.a" {
-				from := []byte("start + 1, start + 2, ''")
-				if bytes.Count(data, from) != 1 {
-					t.Fatal("suggestion mutant anchor changed")
-				}
-				data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
+			if err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+				return err
 			}
-			if err = os.WriteFile(filepath.Join(mutantDirectory, "rules/no-debugger", name), data, 0644); err != nil {
-				t.Fatal(err)
-			}
-		}
-		if err = os.Remove(filepath.Join(mutantDirectory, "rules/no-debugger/rule.ts")); err != nil {
-			t.Fatal(err)
-		}
-		completeSuggestionOnlyRule(t, mutantDirectory)
-		files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
-		for _, file := range portFiles(t) {
-			files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
-		}
-		files = append(files, "stage1/cohere/lint/testdata/serialization")
-		toolchain := []string{runtime.Version(), buildcache.Tool("clang", "--version")}
-		for _, side := range []struct {
-			dir    string
-			mutant bool
-		}{{directory, false}, {mutantDirectory, true}} {
-			product := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("complete-suggestion-lowered-%t", side.mutant), Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "second-edit-end+3=" + fmt.Sprint(side.mutant)}, Toolchain: toolchain}, func(out string) error {
-				prepareRegistry(t, side.dir)
-				program, err := load.Load([]string{filepath.Join(side.dir, "main.ts")})
+			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+		})
+		if side.mutant {
+			p.mutantModule = filepath.Join(product, "lint.mjs")
+		} else {
+			p.module = filepath.Join(product, "lint.mjs")
+			nativeProduct := buildcache.Product(t, buildcache.Inputs{Name: "complete-suggestion-native", Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: toolchain}, func(out string) error {
+				data, err := os.ReadFile(filepath.Join(product, "lint.c"))
 				if err != nil {
 					return err
 				}
-				lowered, err := lower.Lower(context.Background(), program)
-				if err != nil {
-					return err
-				}
-				if err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-					return err
-				}
-				return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+				return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
 			})
-			if side.mutant {
-				p.mutantModule = filepath.Join(product, "lint.mjs")
-			} else {
-				p.module = filepath.Join(product, "lint.mjs")
-				nativeProduct := buildcache.Product(t, buildcache.Inputs{Name: "complete-suggestion-native", Files: files, Flags: []string{packageDirectory, "serialization-only-no-debugger-v1", "sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: toolchain}, func(out string) error {
-					data, err := os.ReadFile(filepath.Join(product, "lint.c"))
-					if err != nil {
-						return err
-					}
-					return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
-				})
-				p.binary = filepath.Join(nativeProduct, "scanner")
-			}
+			p.binary = filepath.Join(nativeProduct, "scanner")
 		}
-	})
-	return &completeSuggestionProductsValue
+	}
+	if time.Since(started) >= 60*time.Second {
+		t.Fatal("cooked: serialization setup exceeds 60s budget")
+	}
+	completeSuggestionProductsReady.Store(true)
 }
 
 func completeSuggestionShard(t *testing.T, shard int) {
 	t.Helper()
-	// Setup precedes Parallel, so an individually selected leaf also has all products.
-	p := completeSuggestionSetup(t)
+	p := completeSuggestionReady(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	deadline := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("P0: serialization shard %03d exceeded 90s", shard)) })
+	defer deadline.Stop()
 	started := time.Now()
 	defer func() {
 		elapsed := time.Since(started)
@@ -203,15 +212,15 @@ func completeSuggestionShard(t *testing.T, shard int) {
 	var got []byte
 	switch shard {
 	case 1:
-		got = node(t, p.directory, p.path, false).output
+		got = completeSuggestionNode(ctx, t, filepath.Join(p.directory, "main.ts"), p.path).output
 	case 2:
-		got = runJavaScript(t, p.module, p.path, false).output
+		got = completeSuggestionNode(ctx, t, p.module, p.path).output
 	case 3:
-		got = execute(t, "", p.binary, "--manifest", p.path).output
+		got = completeSuggestionExecute(ctx, t, "", p.binary, "--manifest", p.path).output
 	case 4:
-		got = node(t, p.mutant, p.path, false).output
+		got = completeSuggestionNode(ctx, t, filepath.Join(p.mutant, "main.ts"), p.path).output
 	case 5:
-		got = runJavaScript(t, p.mutantModule, p.path, false).output
+		got = completeSuggestionNode(ctx, t, p.mutantModule, p.path).output
 	}
 	if shard >= 4 {
 		if bytes.Equal(got, p.want) {
@@ -261,19 +270,10 @@ func TestCompleteSuggestionSerialization_005(t *testing.T) {
 // Exercise the real leaves: one altered comparison fails precisely its owner.
 func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
+	completeSuggestionReady(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_[0-9]{3}$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if err == syscall.ESRCH {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_(Setup|[0-9]{3})$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 	var output bytes.Buffer
 	command.Stdout, command.Stderr = &output, &output
@@ -310,4 +310,133 @@ func completeSuggestionOnlyRule(t *testing.T, directory string) {
 		}
 	}
 	prepareRegistry(t, directory)
+}
+
+// A leaf never initializes shared products or starts its case deadline while
+// acquiring a setup lock. Filtered runs must explicitly include the Setup test.
+func completeSuggestionReady(t *testing.T) *completeSuggestionProducts {
+	t.Helper()
+	if !completeSuggestionProductsReady.Load() {
+		t.Fatal("include TestCompleteSuggestionSerialization_Setup in -run; shards never build shared products")
+	}
+	return &completeSuggestionProductsValue
+}
+func completeSuggestionCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+func completeSuggestionExecute(ctx context.Context, t *testing.T, directory, name string, args ...string) execution {
+	t.Helper()
+	command := completeSuggestionCommand(ctx, name, args...)
+	command.Dir = directory
+	output, err := os.CreateTemp(t.TempDir(), "complete-stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	if command.Process != nil {
+		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, time.Since(started)}
+}
+func completeSuggestionNode(ctx context.Context, t *testing.T, module, path string) execution {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return completeSuggestionExecute(ctx, t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path)
+}
+func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory string) error {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		return err
+	}
+	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
+	if err != nil {
+		return err
+	}
+	descriptors, err := registry.Generate(sourceRoot)
+	if err != nil {
+		return err
+	}
+	replacements := map[string]string{}
+	var virtualFiles []string
+	var failure error
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		absolute, err := filepath.Abs(source)
+		if err != nil {
+			failure = err
+			return
+		}
+		replacements[virtual] = absolute
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	add("oracle", side)
+	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
+	for _, d := range descriptors {
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
+	}
+	if failure != nil {
+		return failure
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+	if err != nil {
+		return err
+	}
+	path := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		return err
+	}
+	binary := filepath.Join(directory, "oracle")
+	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	command := completeSuggestionCommand(ctx, "go", args...)
+	command.Dir = root
+	var output, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &output, &stderr
+	err = command.Run()
+	if command.Process != nil {
+		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	if err != nil || stderr.Len() != 0 {
+		return fmt.Errorf("Go oracle build: %v\n%s\n%s", err, &output, &stderr)
+	}
+	return nil
+}
+
+func TestCompleteSuggestionSerialization_RequiresSetup(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_005$", "-test.timeout=90s", "-test.v")
+	output, err := command.CombinedOutput()
+	if command.Process != nil {
+		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	if err == nil || !bytes.Contains(output, []byte("shards never build shared products")) {
+		t.Fatalf("leaf without setup: %v\n%s", err, output)
+	}
+	t.Log("isolated leaf refused immediately without building shared products")
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"go/ast"
 	goparser "go/parser"
 	"go/token"
@@ -22,15 +23,14 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
 )
 
-// Each build has its inputs beside its closure. Until internal/buildcache is
-// available on this base, the existing harness shares it within the run. This
-// helper never creates a persistent package cache.
+// Each build has its inputs beside its closure. Non-Go products and the
+// completed setup use internal/buildcache; overlay Go builds are shared within
+// the setup child because buildcache refuses overlay builds.
 type jsxProductInputs struct {
 	Name      string
 	Files     []string
@@ -38,8 +38,8 @@ type jsxProductInputs struct {
 	Toolchain string
 }
 
-// Include source dependencies as files, not just the entry point. A future
-// content-keyed Product must invalidate when an imported source or tool changes.
+// Include source dependencies as files, not just the entry point, so products
+// invalidate when an imported source or tool changes.
 func jsxInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	files := map[string]bool{}
@@ -133,7 +133,7 @@ func jsxStableCaseKeys(t *testing.T, paths []string) map[string]string {
 	for _, path := range paths {
 		selected[path] = true
 	}
-	rows := upstream(t)
+	rows := jsxUpstream(t)
 	requiredRules := map[string]bool{}
 	for _, row := range rows {
 		fields := strings.Split(row, "\t")
@@ -338,6 +338,7 @@ func jsxCheckTree(t *testing.T, side string, got, want []byte) {
 }
 
 func TestJsxLintTreesShardCoverage(t *testing.T) {
+	t.Parallel()
 	paths := make([]string, 8*testJsxLintTreesShards+3)
 	for i := range paths {
 		paths[i] = fmt.Sprintf("case-%03d.tsx", i)
@@ -470,42 +471,155 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	return filepath.Join(built, "native")
 }
 
-var jsxTreeState struct {
-	sync.Mutex
-	shards                            [][]string
-	oracle, binary, directory, runner string
+// Setup owns all capture, build, and inventory work. Shards only fetch this
+// immutable product; on a cold cache run TestJsxLintTrees_Setup first. With
+// ADAMIC_BUILD_CACHE=off select setup and shards in the same test process.
+type jsxTreeBundle struct {
+	Paths  []string
+	Shards [][]string
 }
 
-// Capture ordinals are not identities. Stable keys hash the repository-relative
-// upstream file and the fixture's source/mode, so corpus additions cannot move
-// existing cases. The union is always checked against the live enumeration.
-func jsxPrepareTrees(t *testing.T, products bool) ([][]string, string, string, string, string) {
-	t.Helper()
-	jsxTreeState.Lock()
-	defer jsxTreeState.Unlock()
-	if jsxTreeState.shards == nil {
-		paths := jsxTreeSources(t)
-		shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
-		if err != nil {
-			t.Fatal(err)
+var jsxReadyDirectory string
+var jsxSetupContext = context.Background()
+
+func jsxSetupInputs() buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "jsx-tree-setup-v1",
+		Files:     []string{"cohere", "stage1/cohere/lint", "stage1/typescript/parser", "internal", "oracle", "go.mod", "go.work"},
+		Flags:     []string{"whole", "jsx-recovery", "sanitize=address,undefined", "shards=16", "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CC=" + os.Getenv("CC"), "CGO_CFLAGS=" + os.Getenv("CGO_CFLAGS"), "CGO_LDFLAGS=" + os.Getenv("CGO_LDFLAGS")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
+	}
+}
+
+// Not parallel: publishes the shared read-only setup before parallel leaves start.
+func TestJsxLintTrees_Setup(t *testing.T) {
+	if os.Getenv("ADAMIC_JSX_SETUP_CHILD") == "1" {
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		jsxSetupContext = ctx
+		directory := buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
+			paths := jsxTreeSources(t)
+			shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
+			if err != nil {
+				return err
+			}
+			root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+			side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
+			oracle := jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
+			parserDirectory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
+			binary := jsxTreeNative(t, filepath.Join(parserDirectory, "main.ts"), true)
+			copied := map[string]string{}
+			for _, path := range paths {
+				components := strings.Split(filepath.ToSlash(path), "/")
+				relative := ""
+				for i, component := range components {
+					if strings.HasPrefix(component, "case-") {
+						relative = filepath.Join(append([]string{"cases"}, components[i:]...)...)
+						break
+					}
+				}
+				if relative == "" {
+					return fmt.Errorf("case has no capture directory: %s", path)
+				}
+				target := filepath.Join(directory, relative)
+				if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+					return err
+				}
+				data, err := os.ReadFile(path)
+				if err != nil {
+					return err
+				}
+				if err := os.WriteFile(target, data, 0444); err != nil {
+					return err
+				}
+				copied[path] = relative
+			}
+			bundle := jsxTreeBundle{Shards: make([][]string, len(shards))}
+			for _, path := range paths {
+				bundle.Paths = append(bundle.Paths, copied[path])
+			}
+			for i, cases := range shards {
+				for _, path := range cases {
+					bundle.Shards[i] = append(bundle.Shards[i], copied[path])
+				}
+			}
+			for name, source := range map[string]string{"parser-oracle": oracle, "native": binary} {
+				data, err := os.ReadFile(source)
+				if err != nil {
+					return err
+				}
+				if err := os.WriteFile(filepath.Join(directory, name), data, 0555); err != nil {
+					return err
+				}
+			}
+			data, err := json.Marshal(bundle)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
+		})
+		if result := os.Getenv("ADAMIC_JSX_SETUP_RESULT"); result != "" {
+			if err := os.WriteFile(result, []byte(directory), 0600); err != nil {
+				t.Fatal(err)
+			}
 		}
-		jsxTreeState.shards = shards
-		t.Logf("live union: %d cases in %d shards", len(paths), len(shards))
+		return
 	}
-	if products && jsxTreeState.binary == "" {
-		root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-		side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-		jsxTreeState.oracle = jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
-		jsxTreeState.directory, _ = filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
-		jsxTreeState.runner, _ = filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-		jsxTreeState.binary = jsxTreeNative(t, filepath.Join(jsxTreeState.directory, "main.ts"), true)
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
 	}
-	return jsxTreeState.shards, jsxTreeState.oracle, jsxTreeState.binary, jsxTreeState.directory, jsxTreeState.runner
+	result := filepath.Join(t.TempDir(), "setup-result")
+	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_Setup$", "-test.v", "-test.timeout=90s")
+	command.Env = append(os.Environ(), "ADAMIC_JSX_SETUP_CHILD=1", "ADAMIC_JSX_SETUP_RESULT="+result)
+	output, err := command.CombinedOutput()
+	t.Logf("shared setup child:\n%s", output)
+	if err != nil {
+		t.Fatalf("shared setup did not complete within its 90-second bound: %v", err)
+	}
+	data, err := os.ReadFile(result)
+	if err != nil {
+		t.Fatal(err)
+	}
+	jsxReadyDirectory = string(data)
+	// In cache-off mode the child Product directory is disposable, but it must
+	// remain alive until this process's parallel tests finish.
+	t.Logf("shared setup ready")
+}
+
+func jsxFetchTrees(t *testing.T) (jsxTreeBundle, string) {
+	t.Helper()
+	directory := jsxReadyDirectory
+	if directory == "" {
+		directory = buildcache.Product(t, jsxSetupInputs(), func(string) error {
+			return fmt.Errorf("shared JSX setup is absent; run TestJsxLintTrees_Setup before selecting a shard; shards never build setup")
+		})
+	}
+	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var bundle jsxTreeBundle
+	if err := json.Unmarshal(data, &bundle); err != nil {
+		t.Fatal(err)
+	}
+	if err := jsxValidateUnion(bundle.Paths, bundle.Shards); err != nil {
+		t.Fatal(err)
+	}
+	for i, path := range bundle.Paths {
+		bundle.Paths[i] = filepath.Join(directory, path)
+	}
+	for i, cases := range bundle.Shards {
+		for j, path := range cases {
+			bundle.Shards[i][j] = filepath.Join(directory, path)
+		}
+	}
+	return bundle, directory
 }
 
 func jsxTreeSources(t *testing.T) []string {
 	t.Helper()
-	rows := upstream(t)
+	rows := jsxUpstream(t)
 	all := make([]string, len(rows))
 	for i, row := range rows {
 		all[i] = strings.Split(row, "\t")[0]
@@ -564,12 +678,13 @@ func TestJsxLintTreesUnion(t *testing.T) {
 			t.Fatalf("missing top-level shard %s", name)
 		}
 	}
-	shards, _, _, _, _ := jsxPrepareTrees(t, false)
+	bundle, _ := jsxFetchTrees(t)
+	shards := bundle.Shards
 	var paths []string
 	for _, cases := range shards {
 		paths = append(paths, cases...)
 	}
-	if err := jsxValidateUnion(jsxTreeSources(t), shards); err != nil {
+	if err := jsxValidateUnion(bundle.Paths, shards); err != nil {
 		t.Fatal(err)
 	}
 	t.Logf("live union: %d cases", len(paths))
@@ -577,7 +692,6 @@ func TestJsxLintTreesUnion(t *testing.T) {
 
 func jsxRunTreeShard(t *testing.T, i int) {
 	t.Helper()
-	t.Parallel()
 	if os.Getenv("ADAMIC_JSX_SHARD_CHILD") == "1" {
 		paths := make([]string, testJsxLintTreesShards)
 		for j := range paths {
@@ -604,30 +718,39 @@ func jsxRunTreeShard(t *testing.T, i int) {
 	if !selected(i) {
 		return
 	}
-	shards, oracle, binary, directory, runner := jsxPrepareTrees(t, true)
-	cases := shards[i]
+	bundle, products := jsxFetchTrees(t)
+	oracle, binary := filepath.Join(products, "parser-oracle"), filepath.Join(products, "native")
+	directory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
+	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	cases := bundle.Shards[i]
 	if len(cases) == 0 {
 		return
 	}
 	started := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	path := manifest(t, cases)
-	want := execute(t, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
-	node := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
+	want := jsxCaseExecute(t, ctx, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
+	node := jsxCaseExecute(t, ctx, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
 	jsxCheckTree(t, "Node", node.output, want.output)
-	got := execute(t, "", binary, "--manifest", path, "--whole")
+	got := jsxCaseExecute(t, ctx, "", binary, "--manifest", path, "--whole")
 	if os.Getenv("ADAMIC_JSX_TREE_DISAGREEMENT") == "1" && i == 3 {
 		got.output = jsxPlantDisagreement(got.output)
 	}
 	jsxCheckTree(t, "native", got.output, want.output)
+	if time.Since(started) > 60*time.Second {
+		t.Fatalf("cooked: shard-%03d exceeded its 60-second case budget", i)
+	}
 	t.Logf("%d cases, logic wall %s, %d identical whole-tree bytes", len(cases), time.Since(started), len(want.output))
 }
 
 func TestJsxLintTreesShardDisagreement(t *testing.T) {
+	t.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=75s")
+	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=90s")
 	command.Env = append(os.Environ(), "ADAMIC_JSX_SHARD_CHILD=1")
 	output, err := command.CombinedOutput()
 	if err == nil {
@@ -650,7 +773,12 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 // This uses Go's context deadline and needs no external timeout executable.
 func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	return jsxContextCommand(t, jsxSetupContext, name, args...)
+}
+
+func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -663,4 +791,232 @@ func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	}
 	command.WaitDelay = 2 * time.Second
 	return command
+}
+
+func jsxCaseExecute(t *testing.T, ctx context.Context, directory, name string, args ...string) execution {
+	t.Helper()
+	command := jsxContextCommand(t, ctx, name, args...)
+	command.Dir = directory
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: case deadline exceeded: %s %v", name, args)
+	}
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, time.Since(started)}
+}
+
+func jsxUpstream(t *testing.T) []string {
+	t.Helper()
+	value := shared("jsx-setup-upstream", func(value *sharedValue) {
+		directory, err := os.MkdirTemp(sharedDirectory, "jsx-upstream-")
+		if err != nil {
+			value.err = err
+			return
+		}
+		value.rows, value.err = jsxCaptureUpstream(".", directory)
+	})
+	if value.err != nil {
+		t.Fatal(value.err)
+	}
+	return append([]string(nil), value.rows...)
+}
+
+func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
+	ctx, cancel := context.WithTimeout(jsxSetupContext, 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, name, args...)
+	command.Dir = directory
+	command.Env = append(os.Environ(), environment...)
+	if directory != "" {
+		command.Env = append(command.Env, "PWD="+directory)
+	}
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 2 * time.Second
+	output, err := os.CreateTemp(sharedDirectory, "jsx-capture-stdout-")
+	if err != nil {
+		return nil, err
+	}
+	defer os.Remove(output.Name())
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	if err := command.Run(); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	return os.ReadFile(output.Name())
+}
+
+// Capture uses the package's complete upstream protocol, with an owned runner
+// so all spawned Go compilers inherit the setup context and group cancellation.
+func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		return nil, err
+	}
+	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
+	data, err := os.ReadFile(harness)
+	if err != nil {
+		return nil, err
+	}
+	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
+	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
+	if strings.Count(string(data), original) != 1 {
+		return nil, fmt.Errorf("capture overlay anchor changed")
+	}
+	side := filepath.Join(directory, "rule_testing.go")
+	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
+		return nil, err
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		return nil, err
+	}
+	capture := filepath.Join(directory, "capture")
+	environment := []string{"COHERE_DOCS_CAPTURE=" + capture}
+	descriptors, err := registry.Generate(sourceRoot)
+	if err != nil {
+		return nil, err
+	}
+	discovered := map[string]bool{}
+	packages := map[string][]string{}
+	for _, d := range descriptors {
+		discovered[d.Name] = true
+		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	}
+	var names []string
+	for name := range packages {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		if _, err := jsxCaptureRun(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=90s"); err != nil {
+			return nil, err
+		}
+	}
+	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if err != nil {
+		return nil, err
+	}
+	type record struct {
+		Rule, File, Source, Outcome, FixedSource string
+		Options                                  json.RawMessage
+	}
+	unique := map[string]record{}
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return nil, err
+		}
+		for _, line := range bytes.Split(data, []byte("\n")) {
+			if len(line) == 0 {
+				continue
+			}
+			var row record
+			if err := json.Unmarshal(line, &row); err != nil {
+				return nil, err
+			}
+			if !discovered[row.Rule] {
+				continue
+			}
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
+			unique[key] = row
+		}
+	}
+	var keys []string
+	for key := range unique {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var rows []string
+	for i, key := range keys {
+		row := unique[key]
+		// The case keeps its file name's directories, not only its base name: a rule that judges a
+		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
+		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+		if name == "." || name == "" || strings.HasPrefix(name, "..") {
+			name = filepath.Base(name)
+		}
+		if name == "." || name == "" || name == ".." {
+			name = "source.ts"
+		}
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		path := filepath.Join(caseDirectory, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			return nil, err
+		}
+		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+			return nil, err
+		}
+		var legacy struct {
+			Mode, Null      string
+			AllowEmptyCatch bool
+		}
+		if len(row.Options) > 0 && row.Options[0] == '{' {
+			if err := json.Unmarshal(row.Options, &legacy); err != nil {
+				return nil, err
+			}
+		}
+		mode := ""
+		if row.Rule == "@typescript-eslint/method-signature-style" {
+			switch row.Source {
+			case "type T = { m: => void };":
+				mode = "recovery"
+			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
+				mode = "unsupported-recovery"
+			}
+		}
+		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
+			mode = "recovery"
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
+	}
+	if len(rows) < 150 {
+		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
+	}
+	return rows, nil
+}
+
+// A standalone shard with no prepared product must refuse promptly, never
+// silently take responsibility for the shared capture and compiler work.
+func TestJsxLintTreesSetupIsolation(t *testing.T) {
+	t.Parallel()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_000$", "-test.v", "-test.timeout=90s")
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=", "ADAMIC_JSX_SETUP_CHILD=")
+	output, err := command.CombinedOutput()
+	if err == nil || !bytes.Contains(output, []byte("shards never build setup")) {
+		t.Fatalf("cold shard did not refuse setup: %v\n%s", err, output)
+	}
+	for _, build := range []string{"build jsx-parser cold wall", "build jsx-membership cold wall", "build jsx-tree-lowered", "build jsx-tree-native"} {
+		if bytes.Contains(output, []byte(build)) {
+			t.Fatalf("shard built shared input %s:\n%s", build, output)
+		}
+	}
 }
