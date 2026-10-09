@@ -5,7 +5,19 @@ const crypto = require('node:crypto');
 const ts = require('typescript');
 if (ts.version !== '6.0.3') throw new Error(`expected TypeScript 6.0.3, got ${ts.version}`);
 const root = path.resolve(process.argv[2]);
-const rows = fs.readFileSync(process.argv[3], 'utf8').trim().split('\n').map(JSON.parse);
+let rows = fs.readFileSync(process.argv[3], 'utf8').trim().split('\n').map(JSON.parse);
+if (process.env.LATENT_STOCK_ALL_FILES === '1') {
+    const inventory = [];
+    function collect(directory) {
+        for (const entry of fs.readdirSync(directory, {withFileTypes: true})) {
+            const filename = path.join(directory, entry.name);
+            if (entry.isDirectory()) collect(filename);
+            else if (/\.(ts|a)$/.test(filename)) inventory.push({file: filename});
+        }
+    }
+    collect(root);
+    rows = [{}, ...inventory.sort((a,b) => a.file.localeCompare(b.file))];
+}
 const files = [];
 const syntaxKinds = {};
 for (const [name, code] of Object.entries(ts.SyntaxKind)) {

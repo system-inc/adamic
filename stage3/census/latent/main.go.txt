@@ -60,6 +60,7 @@ func main() {
 		if err := encoder.Encode(record); err != nil {
 			panic(err)
 		}
+		if err := output.Sync(); err != nil { panic(err) }
 		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
 	})
 

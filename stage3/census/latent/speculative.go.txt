@@ -291,6 +291,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	boundaries := map[latentBoundaryKey]*ast.Node{}
 	nodes := map[string]*ast.Node{}
 	for _, file := range program.Files() {
+		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
 		latentFindings = nil
 		latentSpec = &latentSpeculation{attempted: map[*ast.Node]bool{}, failed: failed, nodes: nodes, active: map[*ast.Node]bool{}, visited: map[*ast.Node]bool{}, bodies: map[*ast.Node]bool{}, boundaries: boundaries, sites: sites}
 		var catalogue ast.Visitor
@@ -364,6 +365,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	// boundary before or after the boundary's own file is attempted.
 	for _, record := range records {
 		record.FailedBoundaries = boundaryInventory[record.File]
+		if os.Getenv("LATENT_ONLY_FILE") != "" { record.ProjectFailedBoundaries = boundaryInventory }
 		seen := map[string]bool{}
 		findings := record.Findings
 		record.Findings = []LatentFinding{}

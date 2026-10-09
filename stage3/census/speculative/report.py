@@ -33,6 +33,11 @@ all_kinds = Counter()
 boundaries_by_file = defaultdict(set)
 kind_codes = {name: int(code) for code,names in stock["syntax_kinds"].items() for name in names}
 for row in rows[1:]:
+    for filename, inventory in row.get('project_failed_boundaries', {}).items():
+        for boundary in inventory:
+            kind = boundary['kind'].removeprefix('Kind')
+            assert kind in kind_codes, boundary
+            boundaries_by_file[filename].add((boundary['start'], boundary['end'], kind_codes[kind]))
     for boundary in row.get('failed_boundaries', []):
         kind = boundary['kind'].removeprefix('Kind')
         assert kind in kind_codes, boundary
@@ -81,16 +86,17 @@ for row in rows[1:]:
         counts[finding['kind']][depth] += 1
         reasons[(finding['kind'], finding['root_kind'])][depth] += 1
     files.append(dict(file=relative,sha256=witness['sha256'],**coverage))
-missing = [{"file":str(p.relative_to(root)),"bytes":p.stat().st_size,"reason":"non-TypeScript input; no lowering sites"}
-           for p in sorted(root.rglob('*')) if p.is_file() and str(p.relative_to(root)) not in stock_files]
+missing = [{"file":str(p.relative_to(root)),"bytes":p.stat().st_size,"reason":"per-file measurement incomplete; see stream inventory" if p.suffix in (".ts", ".a") else "non-TypeScript input; no lowering sites"}
+           for p in sorted(root.rglob('*')) if p.is_file() and str(p.relative_to(root)) not in {f['file'] for f in files}]
 total_bytes = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
 examined_bytes = sum(f['source_bytes'] for f in files)
 typescript_bytes = sum(p.stat().st_size for p in root.rglob('*') if p.is_file() and p.suffix in ('.ts','.a'))
 ranking = sorted(reasons, key=lambda key: (-sum(reasons[key].values()),key))[:20]
-result = dict(base='a5630a90d05abe85670ba1e00bff3643a2742e53',
-              mapper_fix='69501280a81259fb512edbb8dd0e52c6eb0d88c8',
+result = dict(base=rows[0].get('compiler_base', 'historical census base a5630a90'),
+              mapper_fix=rows[0].get('mapper_fix', 'historical mapper merge 69501280'),
               upstream='050880ce59e30b356b686bd3144efe24f875ebc8',
               observation_kinds=dict(all_kinds),
+              stream_inventory=rows[0].get('stream_inventory'),
               counts={kind:[counts[kind][d] for d in range(5)] for kind in counts},
               top20=[dict(kind=kind,root_kind=reason,counts=[reasons[(kind,reason)][d] for d in range(5)]) for kind,reason in ranking],
               source_bytes=total_bytes,examined_bytes=examined_bytes,
@@ -103,7 +109,7 @@ result = dict(base='a5630a90d05abe85670ba1e00bff3643a2742e53',
 output.mkdir(parents=True,exist_ok=True)
 (output/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n')
 text = '''Built a census-only speculative continuation overlay with typed placeholders and failure depth.
-Base: `a5630a90`, merging `69501280` into `ed6e2975`; census changes stay inside its overlay.
+The compiler base and mapper equivalence are recorded in RESULT.json; census changes stay inside its overlay.
 Measured TypeScript 6.0.3 on the pinned adapted compiler corpus; tables below are observations.
 Nested depth control, no-stubs baseline, depth mutant and output isolation checks are recorded in evidence.
 Coverage means speculative AST examination; native semantics and successful compilation are outside this census.
@@ -119,9 +125,9 @@ for kind,reason in ranking:
     text += f'| {kind} | {html.escape(reason, quote=False).replace(chr(124), "&#124;").replace(chr(10), "<br>")} | '+ ' | '.join(f'{v:,}' for v in values+[sum(values)])+' |\n'
 text += f'\nExamined **{examined_bytes:,} / {typescript_bytes:,} TypeScript source bytes ({100*examined_bytes/typescript_bytes:.6f}%)**, in {len(files)} files. '
 text += f'Including non-TypeScript inputs, that is **{examined_bytes:,} / {total_bytes:,} bytes ({100*examined_bytes/total_bytes:.6f}%)**. '
-text += 'Every AST child in every measured TypeScript file was visited, including checker-rejected bodies. '
+text += 'Every AST child in every completed TypeScript file was visited, including checker-rejected bodies. '
 text += 'Comments and whitespace are included in those parsed source bytes. Structural and type syntax is examined by traversal and the refusal scanner; it is not passed to a value lowerer.\n\n'
-text += 'Unexamined non-TypeScript inputs:\n\n'
+text += 'Unexamined inputs:\n\n'
 for item in missing:
     text += f'- `{item["file"]}`: {item["bytes"]:,} bytes; {item["reason"]}.\n'
 text += f'\nStock TypeScript independently matched the ancestry depth of {depth_matches:,} findings at their actual source AST identities, including dependency attempts; {depth_unmatched:,} site spans had no exact stock AST match; {depth_without_source:,} findings had no compiler-source AST identity. '

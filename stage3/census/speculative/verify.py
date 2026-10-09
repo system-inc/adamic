@@ -31,13 +31,21 @@ def verify(artifact):
     observed = {str(Path(row['file']).relative_to(root)):row['speculative_coverage'] for row in rows[1:]}
     actual = {f['file']:f for f in artifact['files']}
     expected_sources = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.suffix in ('.ts','.a')}
-    assert set(actual)==set(observed)==expected_sources
+    stream = rows[0].get('stream_inventory')
+    covered = expected_sources
+    if stream:
+        covered = {item['file'] for item in stream['completed']}
+        incomplete = {item['file'] for item in stream['incomplete']}
+        assert not covered & incomplete and covered | incomplete == expected_sources
+        assert {item['file'] for item in stream['inputs']['files']} == expected_sources
+    assert set(actual)==set(observed)==covered
     assert all(f['unvisited_nodes']==0 and f['visited_nodes']>=f['total_nodes'] for f in actual.values())
-    examined = sum((root/name).stat().st_size for name in expected_sources)
+    examined = sum((root/name).stat().st_size for name in covered)
+    typescript = sum((root/name).stat().st_size for name in expected_sources)
     total = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
     assert artifact['examined_bytes']==examined and artifact['source_bytes']==total
     assert artifact['examined_share']==examined/total
-    assert artifact['typescript_source_bytes']==examined and artifact['typescript_examined_share']==1.0
+    assert artifact['typescript_source_bytes']==typescript and artifact['typescript_examined_share']==examined/typescript
     return len(unique)
 
 
