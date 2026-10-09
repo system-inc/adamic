@@ -160,3 +160,43 @@ func TestManifestMismatch(t *testing.T) {
 		t.Fatal("blob mismatch admitted", o)
 	}
 }
+
+func TestNewlyRefusedIsInformational(t *testing.T) {
+	t.Parallel()
+	dir, sha, refusing, accepting := commandFixture(t)
+	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", accepting, "--head-binary", refusing, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	var r report
+	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
+		t.Fatal(err, o.Stderr)
+	}
+	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "newly-refused" {
+		t.Fatalf("new refusal failed gate: %+v %s", r, o.Stderr)
+	}
+}
+func TestEmptyCorpus(t *testing.T) {
+	t.Parallel()
+	dir, sha, base, head := commandFixture(t)
+	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
+	data, err := json.Marshal(m)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
+		t.Fatal(err)
+	}
+	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	var r report
+	if err = json.Unmarshal([]byte(o.Stdout), &r); err != nil {
+		t.Fatal(err, o.Stderr)
+	}
+	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 1 || len(r.Programs) != 0 {
+		t.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
+	}
+}
+func TestCompilerTimeoutIsError(t *testing.T) {
+	t.Parallel()
+	o := execute(t.TempDir(), 100*time.Millisecond, "sh", "-c", "while :; do :; done")
+	if o.Error != "timeout" || compileClass(o) != "error" {
+		t.Fatalf("timeout became refusal: %+v", o)
+	}
+}

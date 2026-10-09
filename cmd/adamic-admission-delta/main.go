@@ -326,7 +326,7 @@ func run(args []string) error {
 			if e := os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); e != nil {
 				return e
 			}
-			javascript = execute(headTree, *limit, "node", jsPath)
+			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
 		}
 		jsCompile.Stdout = ""
 		record.JavaScriptCompile = &jsCompile
