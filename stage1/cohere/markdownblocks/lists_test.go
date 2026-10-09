@@ -18,24 +18,29 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	listLayoutSetup(t)
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownTableLayout(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -68,16 +73,19 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownStructureLayout(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)

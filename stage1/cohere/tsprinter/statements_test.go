@@ -58,7 +58,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	}
 	// Go builds stay caller-owned until GoBuild lands; do not hand-key them.
 	oracleDir := statementOracleBuild(t, func(dir string) error {
-		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+directory+"/overlay.json", "./internal/format/javascript")
+		command := statementCommand(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+directory+"/overlay.json", "./internal/format/javascript")
 		command.Dir = root + "/cohere"
 		output, err := combinedOutput(command)
 		if err != nil {
@@ -83,7 +83,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 			return err
 		}
-		command := bounded(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
+		command := statementCommand(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 		output, err := combinedOutput(command)
@@ -233,7 +233,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 				Files: oracle.files, Flags: flags,
 				Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
 			}, func(dir string) error {
-				result := executeOne(t, nil, "node", oracle.script, oracle.library, shard.specs)
+				result := statementExecute(t, nil, "node", oracle.script, oracle.library, shard.specs)
 				if result.exitCode != 0 || len(result.stderr) != 0 {
 					return fmt.Errorf("%s oracle exit %d: %s", oracle.name, result.exitCode, result.stderr)
 				}
@@ -257,16 +257,16 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 					t.Fatal(err)
 				}
 			}
-			compare("Node", onNode(t, port, "--cases", shard.text, "80"))
-			compare("native", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
-			compare("backend", onNode(t, backend, "--cases", shard.text, "80"))
+			compare("Node", statementOnNode(t, port, "--cases", shard.text, "80"))
+			compare("native", statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, "--cases", shard.text, "80"))
+			compare("backend", statementOnNode(t, backend, "--cases", shard.text, "80"))
 			for _, side := range []struct {
 				name   string
 				result run
 			}{
-				{"Node gaps", onNode(t, port, "--cases", gapPath, "80")},
-				{"native gaps", execute(t, nil, binary, "--cases", gapPath, "80")},
-				{"backend gaps", onNode(t, backend, "--cases", gapPath, "80")},
+				{"Node gaps", statementOnNode(t, port, "--cases", gapPath, "80")},
+				{"native gaps", statementExecute(t, nil, binary, "--cases", gapPath, "80")},
+				{"backend gaps", statementOnNode(t, backend, "--cases", gapPath, "80")},
 			} {
 				if err := statementDisagreement(side.name, side.result, gapWant, nil); err != nil {
 					t.Fatal(err)
@@ -277,7 +277,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 			}
 			statementPrinterLibrary(t, "npm Prettier", run{stdout: oracleAnswers[number][0]}, shard.specs, false)
 			statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[number][1]}, shard.specs, true)
-			compare("release", execute(t, nil, release, "--cases", shard.text, "80"))
+			compare("release", statementExecute(t, nil, release, "--cases", shard.text, "80"))
 			t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
 		}()
 	}
