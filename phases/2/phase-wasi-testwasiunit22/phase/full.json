@@ -1,0 +1,131 @@
+{
+  "sha": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "base_name": "main",
+  "tools_sha": "2da18a3f5c0816db5f8ef8dcd28a553d743520f4",
+  "machine": {
+    "hostname": "207aba8e8340",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 0.0,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 0.4,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "TestWASIUnit22",
+  "wasi_units": [
+    {
+      "name": "TestWASIUnit22",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-json",
+        "-timeout",
+        "3h",
+        "-p",
+        "1",
+        "-parallel",
+        "1",
+        "-skip",
+        "^TestProduct_",
+        "-run",
+        "^TestWASIUnit22$",
+        "./internal/native"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/loom-units/loom-unit-2105717936/workspace/loom-out/phase/wasi-units/00-5a_rccgf",
+      "exit": 0,
+      "ok": true,
+      "test": "TestWASIUnit22",
+      "unexpected": [],
+      "passed": true,
+      "wall_seconds": 32.463163,
+      "over_budget": true
+    }
+  ],
+  "wasi_unit_count": 1,
+  "wasi_unit_budget_seconds": 30,
+  "wasi_slowest_unit_seconds": 32.463163,
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "207aba8e8340",
+    "cpus": 5,
+    "load": [
+      0.4,
+      0.1,
+      0.6
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit22",
+      "seconds": 16.54,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit22/internal/oracle/testdata/stack_overflow.a",
+      "seconds": 0.28,
+      "action": "pass",
+      "product": false
+    }
+  ],
+  "wall_seconds": 32.5,
+  "steps_seconds": {
+    "wasi": 32.464
+  },
+  "pass": 2,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "wasi"
+  ],
+  "stages_exit": {
+    "wasi": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

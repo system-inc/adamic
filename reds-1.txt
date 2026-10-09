@@ -1,0 +1,33 @@
+run adamic-gate-pilot-again-20261009T121544-a9aa0ea3: void, 751 tests in 90 units, 6 failed, 5 units broken, 6 killed over budget
+BROKEN product-41: no results (exited true, last output "loom-pilot: checkout of a467d1a1571c43e0f01fc4efcb43890280e4a1ac failed")
+BROKEN tests-119: killed in its opening, before any test began: Loom's fault (last output "fatal: Failed to recurse into submodule path 'cohere'")
+BROKEN tests-227: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-375: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-940: killed in its opening, before any test began: Loom's fault (last output "fatal: Failed to recurse into submodule path 'cohere'")
+PRODUCT OVER 60 S product-41 github.com/system-inc/adamic/stage1/cohere/cssnumbers TestProduct_CSSNumbersFastNative: 122 s
+PRODUCT OVER 60 S product-64 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceCatchNative: 88 s
+PRODUCT OVER 60 S product-109 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_UnattachedDecoratorNative: 73 s
+PRODUCT OVER 60 S product-192 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_WitnessScriptKindGoOracle: 113 s
+PRODUCT OVER 60 S product-420 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_enum_types_native: 241 s
+PRODUCT OVER 60 S product-459 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant002Lowered: 183 s
+KILLED tests-883 github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_103: over budget, P0
+KILLED tests-883 github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_104: over budget, P0
+KILLED tests-883 github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_Setup: over budget, P0
+KILLED tests-883 github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_105: over budget, P0
+KILLED tests-1074: over budget, P0
+KILLED tests-1143: over budget, P0
+KILLED tests-1146: over budget, P0
+KILLED tests-1165: over budget, P0
+KILLED tests-1166: over budget, P0
+FAIL tests-883 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_103; github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_104; github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_Setup; github.com/system-inc/adamic/stage1/cohere/css TestThePortParsesAsGoCohereDoes_105
+FAIL tests-1074 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-1143 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-1146 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-1165 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-1166 (killed at 90 s, over budget)
+    last output "Terminated"

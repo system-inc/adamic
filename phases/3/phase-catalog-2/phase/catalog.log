@@ -1,0 +1,9 @@
+02 liveness-throw wall=381.188s
+target a467d1a1571c43e0f01fc4efcb43890280e4a1ac
+logs /tmp/loom-units/loom-unit-2129001165/workspace/loom-out/phase/catalog-units/00-qowtobjl/adamic-catalog-logs-ni1trwqf
+build flags: commit=a467d1a1571c43e0f01fc4efcb43890280e4a1ac; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+02 liveness-throw: applies-and-fails-as-recorded
+02 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+02 wall=381.122s setup=12.387s check=367.140s cleanup=0.411s load=0.37 1.14 0.90 1/186 27970 -> 1.00 1.02 0.93 1/191 29024
+total wall=381.145s load=0.37 1.14 0.90 1/185 27961 -> 1.00 1.02 0.93 1/190 29024
