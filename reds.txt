@@ -1,0 +1,17 @@
+run adamic-verify-20261009T134751-e8dea0aa: red, 11023 tests in 25 units, 1 failed, 0 units broken, 0 killed over budget
+AGAIN tests-03: from run adamic-verify-again-20261009T141751-90fde44d
+AGAIN tests-04: from run adamic-verify-again-20261009T141500-43f52b5e
+AGAIN tests-24: from run adamic-verify-again-20261009T141500-43f52b5e
+AGAIN tests-26: from run adamic-verify-again-20261009T141751-90fde44d
+AGAIN tests-28: from run adamic-verify-again-20261009T141500-43f52b5e
+AGAIN tests-33: from run adamic-verify-again-20261009T141500-43f52b5e
+AGAIN tests-28-r2: from run adamic-verify-again-20261009T141500-43f52b5e
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity (tests-06)
+    upstream_parity_split_test.go:104: full corpus: 3890 cases before gate sampling
+    upstream_parity_split_test.go:104: corpus repository: 2796 tracked JSON files; checked against Git HEAD
+    upstream_parity_split_test.go:104: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    upstream_parity_split_test.go:104: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    upstream_parity_split_test.go:104: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    upstream_parity_split_test.go:104: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    upstream_parity_split_test.go:104: TestUpstreamRepositoryCorpusParity: ADAMIC_GATE_CHANGED: open /tmp/loom-select/c310d512108360c770918556eaf460cbadf22633/changed-paths.txt: no such file or directory
+    upstream_parity_split_test.go:119: shared setup: 0.837s
