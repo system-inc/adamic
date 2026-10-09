@@ -1,0 +1,5 @@
+remote: upstream connect error or disconnect/reset before headers. reset reason: remote refused stream reset
+fatal: unable to access 'https://github.com/system-inc/adamic.git/': The requested URL returned error: 503
+loom-build: tree e3265701d3094d9a5246790b66de96f0fb99007a setup 18 s
+loom-build: go build ./... passed
+loom-build: go vet ./... passed
