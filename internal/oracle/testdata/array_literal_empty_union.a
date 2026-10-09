@@ -1,0 +1,10 @@
+const cases: (number[] | string[])[] = [[], [1], ['text'.repeat(2)]];
+for(const values of cases) {
+    console.log(`${values.length}`);
+}
+function length(values: number[] | readonly string[]): number {
+    return values.length;
+}
+console.log(`${length([])} ${length([1])} ${length(['text'.repeat(2)])}`);
+const optional: number[] | undefined = [];
+console.log(`${optional.length}`);

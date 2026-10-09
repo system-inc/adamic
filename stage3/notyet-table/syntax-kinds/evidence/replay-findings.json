@@ -1,0 +1,81 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 115367,
+      "body_end": 116267,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindBlockScopedDeclaration",
+      "parent": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:189:13",
+      "reason": "assigning an element of a value",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:189:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet",
+      "start": 5243,
+      "end": 5314
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:190:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:190:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 5314,
+      "end": 5356
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/adamic-syntax-adapted/src/compiler/binder.ts:2437:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:298:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/adamic-syntax-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 11588,
+      "end": 11905
+    }
+  ]
+}
