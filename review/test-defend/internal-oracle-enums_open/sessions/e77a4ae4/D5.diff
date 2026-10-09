@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -781,7 +781,7 @@
+ 
+ var arithmetic = map[ast.Kind]ir.Operator{
+ 	ast.KindPlusToken:             ir.Add,
+-	ast.KindMinusToken:            ir.Subtract,
++	ast.KindMinusToken:            ir.Remainder,
+ 	ast.KindAsteriskToken:         ir.Multiply,
+ 	ast.KindSlashToken:            ir.Divide,
+ 	ast.KindPercentToken:          ir.Remainder,

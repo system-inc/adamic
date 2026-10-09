@@ -1,0 +1,1 @@
+This session starts from e77a4ae41f473c149aee910c51b73637686a804a. Its report, seven diffs, raw logs, coverage, and matrix are under [sessions/e77a4ae4](sessions/e77a4ae4/REPORT.md). Earlier evidence at this directory root is retained unchanged.

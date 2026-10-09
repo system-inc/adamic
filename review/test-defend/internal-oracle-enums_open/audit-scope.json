@@ -1,0 +1,21 @@
+{
+  "tests": [
+    "TestNumericEnumNeverPathsPinned",
+    "TestNumericEnumNeverPinned",
+    "TestStage3EnumBoundaries",
+    "TestStage3EnumSparseArrayBoundary",
+    "TestEnumNameEnumerationMutant",
+    "TestEnumSemanticMutants",
+    "TestEnumCleanupMutant",
+    "TestFallthroughMutants",
+    "TestFieldReadinessRepresentation",
+    "TestFreshWriteProbesStayRefused",
+    "TestFunctionValueBoundaryBoxing",
+    "TestImportCycleRuntimeCalls",
+    "TestImportCycleLoadTimeReads",
+    "TestImportedNonliteralConstCaseIsNotYet",
+    "TestInputAgreesWithNode"
+  ],
+  "base": "859dee825a4ef89f5c4ecc0f00e6620ac75c4994",
+  "nproc": 5
+}

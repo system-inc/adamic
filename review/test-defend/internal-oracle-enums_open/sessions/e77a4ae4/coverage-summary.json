@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestStage3EnumSparseArrayBoundary",
+    "compared_with": "TestNumericEnumNeverPinned",
+    "exclusive_blocks": 893
+  },
+  {
+    "test": "TestFreshWriteProbesStayRefused",
+    "compared_with": "TestStage3EnumBoundaries",
+    "exclusive_blocks": 2297
+  },
+  {
+    "test": "TestImportCycleRuntimeCalls",
+    "compared_with": "TestNumericEnumNeverPinned",
+    "exclusive_blocks": 103
+  }
+]

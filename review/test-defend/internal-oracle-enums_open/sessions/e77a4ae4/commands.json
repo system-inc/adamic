@@ -1,0 +1,411 @@
+[
+  {
+    "id": "clean",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 11.786044669999683,
+    "exit": 0
+  },
+  {
+    "id": "clean",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.51757088299928,
+    "exit": 0
+  },
+  {
+    "id": "D1",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 5.647739667001588,
+    "exit": 0
+  },
+  {
+    "id": "D1",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 16.411513037000987,
+    "exit": 1
+  },
+  {
+    "id": "D1",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.4238963700008753,
+    "exit": 0
+  },
+  {
+    "id": "D2",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 1.215312003998406,
+    "exit": 0
+  },
+  {
+    "id": "D2",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 28.915252589999,
+    "exit": 1
+  },
+  {
+    "id": "D2",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.4219772970027407,
+    "exit": 1
+  },
+  {
+    "id": "D3",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 0.5138303690000612,
+    "exit": 0
+  },
+  {
+    "id": "D3",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 15.308834360999754,
+    "exit": 1
+  },
+  {
+    "id": "D3",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.2873696189999464,
+    "exit": 1
+  },
+  {
+    "id": "D4",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 0.5829337469986058,
+    "exit": 0
+  },
+  {
+    "id": "D4",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 14.332845593999082,
+    "exit": 1
+  },
+  {
+    "id": "D4",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.2909175399981905,
+    "exit": 0
+  },
+  {
+    "id": "D5",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 5.435786822003138,
+    "exit": 0
+  },
+  {
+    "id": "D5",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 15.030407951999223,
+    "exit": 1
+  },
+  {
+    "id": "D5",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.2579421009977523,
+    "exit": 0
+  },
+  {
+    "id": "D6",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 1.1274599420030427,
+    "exit": 0
+  },
+  {
+    "id": "D6",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 15.372376047002035,
+    "exit": 1
+  },
+  {
+    "id": "D6",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.3144584270012274,
+    "exit": 1
+  },
+  {
+    "id": "D7",
+    "label": "vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/",
+      "./internal/native/",
+      "./internal/javascript/"
+    ],
+    "wall_seconds": 1.2241866440017475,
+    "exit": 0
+  },
+  {
+    "id": "D7",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode|TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestModuleNamespaceReadsMatchNode|TestModuleNamespaceReadinessMutants|TestModuleNamespaceLiveBindingMutant|TestNestedSiblingCycleMutantIsCaught|TestNestedCycleRefusal|TestStage3EnumFallthrough|TestTypedArrayWriteStopIsPinned)$"
+    ],
+    "wall_seconds": 15.360996187002456,
+    "exit": 1
+  },
+  {
+    "id": "D7",
+    "label": "general",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(enums_open.*|import_cycles|write_after_shrink.a|writes_past_end.a|typed_arrays_stop.a)$"
+    ],
+    "wall_seconds": 3.3122922840011597,
+    "exit": 0
+  }
+]
