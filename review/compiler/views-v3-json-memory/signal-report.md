@@ -65,3 +65,9 @@ python3 /tmp/v3-json-measure/followup-memory.py
 The temporary capture leaf passed in 19.12 seconds; it is not committed as a Go test. The capture addition is preserved as signal-capture.patch, and there is no compilable Go under this unit's review directory. All commands' outputs were redirected to retained logs. The reproduction scripts record the complete native commands, output hashes, signals, peaks and OOM counters. No whole package suite, new language file or full gate was run. Counts.md has zero changed rows. The installed toolchain, five visible cores, four-core quota and 16 GiB limit are unchanged from the preceding reports.
 
 Only evidence is committed to compiler/views-v3-json-memory. No compiler/views-v3 update is made: the other worker's current-main merge is left to its owner. Integration lane checks are run on the committed evidence tip before the own-branch push.
+
+Committed-tip lane output:
+
+```text
+lane checks 2.2 s: gofmt and tools on 57 Go files, t.Parallel on 7 test packages; no t.Parallel analyzer on this tree; vet 7 packages
+```
