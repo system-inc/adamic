@@ -116,6 +116,8 @@ class PoolRecordTests(unittest.TestCase):
         baseRecord = dict(self.record(base), units=[{'id': 'p/TestA', 'input_sha256': 'h1', 'verdict': 'passed'},
                                                     {'id': 'p/TestSlow', 'input_sha256': 'h2', 'verdict': 'killed'}])
         self.publishBox(base, record=baseRecord, status='red: %s full gate\n' % base)
+        # The fix: a commit on top of the base (commit() alone could rewrite b.txt with what it already holds).
+        (self.repository / 'fix.txt').write_text('split\n')
         sha = self.commit(spotChecked=False)
         ref = 'gate-logs/%s/20261009T000000Z/full-main' % base[:12]
         rerun = dict(self.record(sha), rerun_of=ref, units=[{'id': 'p/TestA', 'input_sha256': 'h1', 'verdict': 'kept'},
