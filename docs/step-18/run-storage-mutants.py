@@ -15,6 +15,10 @@ add('receiver-lost', native,
     'call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))',
     'call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, "NULL", packed, count, e.packedArgumentSize(expression))',
     'TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a')
+add('nullish-slot-tags-rejected', 'internal/native/optional_calls.go',
+    'if (type == %d || type == %d) return NULL;',
+    'if (false && (type == %d || type == %d)) return NULL;',
+    'TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a')
 add('field-reselected', js, 'const fn = %s;', 'let fn = %s;',
     'TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a')
 # Re-read after argument effects instead of invoking the selection made before them.

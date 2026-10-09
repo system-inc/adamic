@@ -38,6 +38,7 @@ func goCST(t *testing.T, cases string) []byte {
 	return run(t, "", nil, goBinary, cases)
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestCSTMatchesGo(t *testing.T) {
 	cases, files, count := lexCases(t)
 	expected := goCST(t, cases)
@@ -88,6 +89,7 @@ func TestCSTMatchesGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d CST answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestCSTMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goCST(t, cases)
@@ -100,6 +102,7 @@ func TestCSTMutants(t *testing.T) {
 		{"source offset advanced", "return this.make(this.type, this.offset, this.indent, this.source, true);", "return this.make(this.type, this.offset + 1, this.indent, this.source, true);"},
 		{"line start shifted", "this.lineStarts.push(this.offset + source.length);", "this.lineStarts.push(this.offset + source.length - 1);"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "cst_main.ts"} {

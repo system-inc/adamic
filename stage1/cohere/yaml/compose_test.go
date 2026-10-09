@@ -101,6 +101,7 @@ func composeCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-compose-* diagnostic files.
 func TestComposeMatchGo(t *testing.T) {
 	cases, files, count := composeCases(t)
 	expected := goCompose(t, cases)
@@ -150,6 +151,7 @@ func TestComposeMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d compose answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestComposeMutants(t *testing.T) {
 	cases, _, _ := composeCases(t)
 	expected := goCompose(t, cases)
@@ -162,6 +164,7 @@ func TestComposeMutants(t *testing.T) {
 		{"block mapping pair lost", "this.node(result).items.push(this.pair(key, value, index, itemIndex));", "this.node(result).items.push(this.pair(key, -1, index, itemIndex));"},
 		{"implicit key limit skipped", "properties.start < this.parser.get(valueProps.found).offset - 1024", "properties.start < this.parser.get(valueProps.found).offset - 999999"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			entries, err := filepath.Glob("*.ts")

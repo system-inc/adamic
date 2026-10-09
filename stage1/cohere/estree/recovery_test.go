@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -26,11 +27,13 @@ func recoveredGrammar() []string {
 		"class C { static { await(x); class D { x=await(x); } } }",
 	}
 }
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredGrammar(t *testing.T) {
 	list := manifest(t, recoveredGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
+	binary, script := recoveryBuild(t, main, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
 		if diff := firstDifference(want, got); diff != "" {
 			t.Fatal(name + ": " + diff)
@@ -38,27 +41,40 @@ func TestRecoveredGrammar(t *testing.T) {
 	}
 	t.Logf("%d recovered grammar cases, %d identical bytes in all three port builds", len(recoveredGrammar()), len(want))
 }
-func TestRecoveryMutants(t *testing.T) {
-	list := manifest(t, recoveredGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	for _, item := range []struct{ name, file, from, to string }{
-		{"first-accessibility", "modifiers.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
-		{"empty-type-list-range", "typeLists.ts", "arena.node(result).set('params', listValue([]));", "arena.node(result).end -= 1; arena.node(result).set('params', listValue([]));"},
-		{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if diff := firstDifference(want, got); diff == "" {
-					t.Fatal(name + " mutant survived")
-				} else {
-					t.Log(name + ": " + diff)
-				}
-			}
-		})
-	}
+
+const testRecoveryMutantsShards = 3
+
+var recoveryMutations = []struct{ name, file, from, to string }{
+	{"first-accessibility", "modifiers.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
+	{"empty-type-list-range", "typeLists.ts", "arena.node(result).set('params', listValue([]));", "arena.node(result).end -= 1; arena.node(result).set('params', listValue([]));"},
+	{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
 }
+
+func recoveryMutantCases() []recoveryCase {
+	var cases []recoveryCase
+	// Interleave mutants so partition i%3 assigns one complete corpus per mutant.
+	for i, source := range recoveredGrammar() {
+		for _, m := range recoveryMutations {
+			cases = append(cases, recoveryCase{fmt.Sprintf("%s/%03d", m.name, i), source})
+		}
+	}
+	return cases
+}
+
+// ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
+// Each mutant retains the entire grammar corpus on both Node and sanitized native.
+func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
+	// Compatibility enumeration only; execution lives in the top-level shards.
+	checkRecoveryMutantUnion(t)
+}
+
+func TestRecoveryMutantsShardSurvivor(t *testing.T) {
+	t.Parallel()
+	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
+}
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveryLibraryGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
@@ -66,7 +82,7 @@ func TestRecoveryLibraryGaps(t *testing.T) {
 	}
 	for _, source := range []string{"f<>();", "class C<> {}"} {
 		list := manifest(t, []string{source})
-		execute(t, "", goOracle(t), "--manifest", list)
+		recoveryAnswer(t, goOracle(t), list, "--manifest")
 		code := `import {pathToFileURL} from 'node:url';const lib=await import(pathToFileURL(process.argv[1]+'/node_modules/@typescript-eslint/typescript-estree/dist/index.js').href);try{lib.parse(process.argv[2],{warnOnUnsupportedTypeScriptVersion:false});console.log('accepted')}catch(e){console.log('refused')}`
 		if got := string(execute(t, "", "node", "--input-type=module", "-e", code, library, source)); got != "refused\n" {
 			t.Fatalf("library gap changed for %q: %s", source, got)

@@ -73,6 +73,8 @@ func goProps(t *testing.T, cases string) []byte {
 	}
 	return expected
 }
+
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-props-* diagnostic files.
 func TestPropsMatchGo(t *testing.T) {
 	cases, files, count := lexCases(t)
 	expected := goProps(t, cases)
@@ -122,6 +124,7 @@ func TestPropsMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d props answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestPropsMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goProps(t, cases)
@@ -134,6 +137,7 @@ func TestPropsMutants(t *testing.T) {
 		{"anchor separation unchecked", "requireSpace = true;", "requireSpace = false;"},
 		{"tab indentation accepted", "tab = index;", "tab = -1;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "props.ts", "propsResolver.ts", "scalarResolution.ts", "composeError.ts", "props_main.ts"} {

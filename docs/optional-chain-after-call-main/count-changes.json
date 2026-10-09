@@ -1,0 +1,283 @@
+[
+  {
+    "fixture": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "before": [
+      "19",
+      "19",
+      "28",
+      "69",
+      "16",
+      "0"
+    ],
+    "after": [
+      "33",
+      "33",
+      "66",
+      "69",
+      "16",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_reads.a",
+    "before": [
+      "5",
+      "5",
+      "3",
+      "7",
+      "4",
+      "0"
+    ],
+    "after": [
+      "6",
+      "5",
+      "6",
+      "9",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_methods.a",
+    "before": [
+      "3",
+      "3",
+      "3",
+      "6",
+      "3",
+      "0"
+    ],
+    "after": [
+      "4",
+      "3",
+      "6",
+      "8",
+      "3",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_fields.a",
+    "before": [
+      "4",
+      "3",
+      "4",
+      "6",
+      "4",
+      "0"
+    ],
+    "after": [
+      "5",
+      "3",
+      "7",
+      "8",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_narrowed.a",
+    "before": [
+      "7",
+      "5",
+      "6",
+      "8",
+      "5",
+      "0"
+    ],
+    "after": [
+      "8",
+      "5",
+      "9",
+      "10",
+      "5",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_null_narrowed.a",
+    "before": [
+      "4",
+      "4",
+      "8",
+      "5",
+      "3",
+      "0"
+    ],
+    "after": [
+      "5",
+      "4",
+      "11",
+      "7",
+      "3",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/element_access_presence.a",
+    "before": [
+      "4",
+      "3",
+      "5",
+      "7",
+      "4",
+      "0"
+    ],
+    "after": [
+      "5",
+      "3",
+      "8",
+      "10",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/047cb0d_n_element_plain.a",
+    "before": [
+      "4",
+      "3",
+      "5",
+      "8",
+      "4",
+      "0"
+    ],
+    "after": [
+      "5",
+      "3",
+      "8",
+      "10",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/047cb0d_n_element.a",
+    "before": [
+      "4",
+      "3",
+      "6",
+      "8",
+      "4",
+      "0"
+    ],
+    "after": [
+      "5",
+      "3",
+      "9",
+      "10",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/047cb0d_n_element_method.a",
+    "before": [
+      "4",
+      "3",
+      "6",
+      "9",
+      "4",
+      "0"
+    ],
+    "after": [
+      "5",
+      "3",
+      "9",
+      "11",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+    "before": [
+      "1",
+      "1",
+      "1",
+      "2",
+      "1",
+      "0"
+    ],
+    "after": [
+      "2",
+      "1",
+      "4",
+      "4",
+      "1",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_79.a",
+    "before": null,
+    "after": [
+      "4",
+      "4",
+      "6",
+      "10",
+      "4",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_193.a",
+    "before": null,
+    "after": [
+      "3",
+      "3",
+      "6",
+      "9",
+      "3",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_variants.a",
+    "before": null,
+    "after": [
+      "11",
+      "11",
+      "10",
+      "21",
+      "3",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_required.a",
+    "before": null,
+    "after": [
+      "3",
+      "3",
+      "5",
+      "7",
+      "2",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_propagation.a",
+    "before": null,
+    "after": [
+      "18",
+      "18",
+      "13",
+      "20",
+      "7",
+      "0"
+    ]
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+    "before": null,
+    "after": [
+      "3",
+      "3",
+      "1",
+      "6",
+      "2",
+      "0"
+    ]
+  }
+]

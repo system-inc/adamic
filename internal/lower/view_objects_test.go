@@ -7,6 +7,7 @@ import (
 )
 
 func TestViewObjectContractsAreAvailableToEraser(t *testing.T) {
+	t.Parallel()
 	program, err := lowerSource(t, `interface Base {readonly kind:'box'|'other'}
  interface Box extends Base {readonly kind:'box';readonly child:{readonly ready:boolean}}
  function visit(node:Base):boolean {return (node as Box).child.ready}
@@ -40,6 +41,7 @@ func TestViewObjectContractsAreAvailableToEraser(t *testing.T) {
 }
 
 func TestViewObjectWritesNeedSourceCertificate(t *testing.T) {
+	t.Parallel()
 	for _, assignment := range []string{
 		`view.child={ready:true};`,
 		`({child:view.child}={child:{ready:true}});`,

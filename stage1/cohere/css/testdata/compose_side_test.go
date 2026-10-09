@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/cohere/internal/format/css/postcss"
 )
 
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicCompositionCases(t *testing.T) {
 	var request struct{ Cases, Answers string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")

@@ -1,0 +1,111 @@
+{
+  "cpuQuota": 4,
+  "nproc": 5,
+  "tests": [
+    {
+      "test": "TestJSONStringifyShorthandWrongBindingMutant",
+      "seconds": 14,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCall193",
+      "seconds": 14.39,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallPropagation",
+      "seconds": 14.39,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCall79",
+      "seconds": 14.45,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallComputed",
+      "seconds": 0.82,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallRequired",
+      "seconds": 0.8,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallVariants",
+      "seconds": 1.01,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestJSONStringifyShorthand",
+      "seconds": 0.69,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestCallSpreadEvaluatedTwiceMutant",
+      "seconds": 6.6,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestCallSpreadArray",
+      "seconds": 25.89,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallFlowEdges",
+      "seconds": 0.03,
+      "log": "/tmp/storage-stack-members.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedMethod",
+      "seconds": 0.27,
+      "log": "/tmp/storage-stack-step18-final.jsonl"
+    },
+    {
+      "test": "TestStep18StorageTypeLie",
+      "seconds": 0.56,
+      "log": "/tmp/storage-stack-step18-final.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "seconds": 0.03,
+      "log": "/tmp/storage-stack-step18-final.jsonl"
+    },
+    {
+      "test": "TestStep18CallableReceiverContract",
+      "seconds": 0.1,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestStep18UnknownDetachedCallable",
+      "seconds": 0.13,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries",
+      "seconds": 0,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedCallableOrigins",
+      "seconds": 0.18,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalMethodPaths",
+      "seconds": 0.58,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestOptionalAfterCallFlowEdges",
+      "seconds": 0.03,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    },
+    {
+      "test": "TestCallTargetReaders",
+      "seconds": 11.8,
+      "log": "/tmp/storage-stack-scoped.jsonl"
+    }
+  ]
+}

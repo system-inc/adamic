@@ -478,11 +478,11 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
+			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, viewFieldRepresentation(statement.Value))
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -874,7 +874,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(e.program.CheckedFields) != 0 {
 			types := []string{}
 			for _, field := range expression.Fields {
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
 			}
 			parentTypes := ""
 			if spreadValue != "" {
@@ -977,6 +977,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Throws() {
+			absent := "undefined"
+			if expression.Null {
+				absent = "null"
+			}
+			return "((value) => { if (value === " + absent + ") throw new TypeError(" + quote(strings.TrimPrefix(expression.Message, "TypeError: ")) + "); return value; })(" + e.value(expression.Value) + ")"
+		}
 		if expression.Null {
 			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 		}

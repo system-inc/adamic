@@ -29,16 +29,10 @@ export function parent(text: string): void {
 export function sibling(): void { var other: number = value; }
 ''')
         (cls.source / 'dependency.a').write_text('export const value: number = 7;\n')
-        cls.overlay = cls.scratch / 'overlay'
-        cls.run_logged(['python3', 'stage3/census/latent/make_overlay.py',
-                        str(cls.repository), str(cls.overlay)], 'overlay')
-        cls.census = cls.scratch / 'census'
-        cls.replay = cls.scratch / 'replay'
-        for name, package in [('census', 'tool'), ('replay', 'replay/worker')]:
-            cls.run_logged(['go', 'build', '-buildvcs=false',
-                            '-overlay=' + str(cls.overlay / 'overlay.json'),
-                            '-o', str(cls.scratch / name),
-                            './stage3/census/latent/' + package], 'build-' + name)
+        products = json.loads(subprocess.check_output(
+            ['python3', 'stage3/meter/build-probes.py'], cwd=cls.repository, text=True))
+        cls.census = Path(products['latent'])
+        cls.replay = Path(products['replay'])
         output = cls.scratch / 'full.jsonl'
         cls.run_logged([str(cls.census), str(cls.source), str(output)], 'full',
                        {'LATENT_FULL': '1', 'LATENT_ASSERT_NO_OUTPUT': '1'})

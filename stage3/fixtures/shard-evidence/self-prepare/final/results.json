@@ -1,0 +1,141 @@
+[
+  {
+    "unit": "clean-empty-store",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/..."
+    ],
+    "seconds": 18.956,
+    "exit": 0
+  },
+  {
+    "unit": "deleted-product-manifest-retained",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/..."
+    ],
+    "seconds": 18.467,
+    "exit": 0
+  },
+  {
+    "unit": "warm-product",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/..."
+    ],
+    "seconds": 15.915,
+    "exit": 0
+  },
+  {
+    "unit": "corrupt-product",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/..."
+    ],
+    "seconds": 2.427,
+    "exit": 1
+  },
+  {
+    "unit": "preparation-unit",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestPrepareFixtureOracleHook$",
+      "-test.count=1",
+      "-test.v"
+    ],
+    "seconds": 3.028,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-0",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 4.897,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-1",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 5.156,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-2",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 4.696,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-3",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 4.569,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-4",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 5.334,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-5",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 4.689,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-6",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 5.604,
+    "exit": 0
+  },
+  {
+    "unit": "cold-shard-7",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4"
+    ],
+    "seconds": 5.556,
+    "exit": 0
+  }
+]

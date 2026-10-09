@@ -29,6 +29,7 @@ static adamic_closure *adamic_optional_callee(const adamic_object *object, const
 			cache->index = index;
 			unsigned char type = adamic_object_field_types(object)[index];
             const adamic_value *slot = &object->slots[index];
+            if (type == %d || type == %d) return NULL;
             if (type == 8) {
                 const adamic_heap *heap = slot->reference;
                 if (heap == NULL || heap->kind == adamic_kind_closure) return adamic_retain(slot->reference);
@@ -48,7 +49,7 @@ static adamic_closure *adamic_optional_callee(const adamic_object *object, const
 		}
 	}
 	return NULL;
-}`, e.methodEntryType())
+}`, e.methodEntryType(), ir.NullRepresentation, ir.UndefinedRepresentation)
 	if !slices.Contains(e.declarations, code) {
 		e.declarations = append(e.declarations, code)
 	}

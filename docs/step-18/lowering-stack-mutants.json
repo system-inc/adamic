@@ -1,0 +1,194 @@
+{
+  "storage": [
+    {
+      "name": "receiver-lost",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "/workspace/scratch/storage-stack-mutants/receiver-lost/test.log"
+    },
+    {
+      "name": "nullish-slot-tags-rejected",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+      "log": "/workspace/scratch/storage-stack-mutants/nullish-slot-tags-rejected/test.log"
+    },
+    {
+      "name": "field-reselected",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "/workspace/scratch/storage-stack-mutants/field-reselected/test.log"
+    },
+    {
+      "name": "arguments-before-guard",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "/workspace/scratch/storage-stack-mutants/arguments-before-guard/test.log"
+    },
+    {
+      "name": "noncallable-no-loud-stop",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.ts",
+      "log": "/workspace/scratch/storage-stack-mutants/noncallable-no-loud-stop/test.log"
+    },
+    {
+      "name": "noncallable-stop-before-arguments",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.ts",
+      "log": "/workspace/scratch/storage-stack-mutants/noncallable-stop-before-arguments/test.log"
+    },
+    {
+      "name": "adamic-noncallable-admitted",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.a",
+      "log": "/workspace/scratch/storage-stack-mutants/adamic-noncallable-admitted/test.log"
+    },
+    {
+      "name": "nullish-chain-arguments",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+      "log": "/workspace/scratch/storage-stack-mutants/nullish-chain-arguments/test.log"
+    },
+    {
+      "name": "getter-twice",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a",
+      "log": "/workspace/scratch/storage-stack-mutants/getter-twice/test.log"
+    },
+    {
+      "name": "getter-throw-delayed",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter-throw.a",
+      "log": "/workspace/scratch/storage-stack-mutants/getter-throw-delayed/test.log"
+    },
+    {
+      "name": "receiver-contract-erased",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18CallableReceiverContract",
+      "log": "/workspace/scratch/storage-stack-mutants/receiver-contract-erased/test.log"
+    },
+    {
+      "name": "unknown-detached-admitted",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18UnknownDetachedCallable",
+      "log": "/workspace/scratch/storage-stack-mutants/unknown-detached-admitted/test.log"
+    },
+    {
+      "name": "detached-getter-origin-erased",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18DetachedCallableOrigins",
+      "log": "/workspace/scratch/storage-stack-mutants/detached-getter-origin-erased/test.log"
+    },
+    {
+      "name": "detached-silently-bound",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18DetachedMethod",
+      "log": "/workspace/scratch/storage-stack-mutants/detached-silently-bound/test.log"
+    }
+  ],
+  "optionalAfterCall": [
+    {
+      "mutant": "check-optional-receiver",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-lnsyt216/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCall79$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ]
+    },
+    {
+      "mutant": "javascript-required-panic",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-l_8asz8l/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallRequired$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ]
+    },
+    {
+      "mutant": "native-required-panic",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-o9wa0eg_/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallRequired$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ]
+    },
+    {
+      "mutant": "drop-flow-throw-edge",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-phoihrct/overlay.json",
+        "./internal/flow",
+        "-run",
+        "^TestOptionalAfterCallFlowEdges$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ]
+    },
+    {
+      "mutant": "drop-required-propagation",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-32aa4pfg/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallPropagation$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ]
+    }
+  ]
+}
