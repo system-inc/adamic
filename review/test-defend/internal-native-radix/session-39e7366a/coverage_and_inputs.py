@@ -1,5 +1,5 @@
 import pathlib,json,subprocess,gzip,re
-p=pathlib.Path('review/test-defend/internal-native-radix');scope=json.loads((p/'scope.json').read_text())
+p=pathlib.Path('review/test-defend/internal-native-radix/session-39e7366a');scope=json.loads((p/'scope.json').read_text())
 def covered(label):
  out=set()
  for s in (p/'coverage'/(label+'.out')).read_text().splitlines()[1:]:

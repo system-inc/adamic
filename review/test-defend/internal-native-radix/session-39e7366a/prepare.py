@@ -1,5 +1,5 @@
 import pathlib,re,json,subprocess,time,gzip
-p=pathlib.Path('review/test-defend/internal-native-radix');(p/'coverage').mkdir(exist_ok=True)
+p=pathlib.Path('review/test-defend/internal-native-radix/session-39e7366a');(p/'coverage').mkdir(exist_ok=True)
 root='origin/test-audit/internal-native-radix:review/test-audit/internal-native-radix/'
 audit=json.loads(subprocess.check_output(['git','show',root+'rows.json']));selected=[r for r in audit if r['test'] in ['TestRegExpBytecodeTest262','TestRegExpBytecodeRandomNode family']];(p/'audit-rows.json').write_text(json.dumps(selected,indent=2))
 alltests=[s for s in (p/'logs/list.log').read_text().splitlines() if s.startswith('Test')]

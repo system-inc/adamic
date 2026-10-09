@@ -1,5 +1,5 @@
 import pathlib,json,subprocess,time,os,difflib
-p=pathlib.Path('review/test-defend/internal-native-radix');(p/'diffs').mkdir(exist_ok=True);scope=json.loads((p/'scope.json').read_text())
+p=pathlib.Path('review/test-defend/internal-native-radix/session-39e7366a');(p/'diffs').mkdir(exist_ok=True);scope=json.loads((p/'scope.json').read_text())
 plan=[('D01','internal/regexp/matcher.go','{0x2028, 0x2029}','{0x2029, 0x2029}','TestRegExpBytecodeTest262','Off by one: stop excluding U+2028 from dot without dotAll.'),('D02','internal/native/runtime/regexp.c','i->unbounded || reg.count < i->maximum','i->unbounded || i->maximum == 0 || reg.count < i->maximum','TestRegExpBytecodeRandomNode family','Flip repeat-body condition: interpret closed maximum zero as unbounded.')]
 items=[]
 for ident,file,old,new,target,change in plan:

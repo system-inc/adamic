@@ -1,5 +1,5 @@
 import pathlib,json,subprocess,time,os
-p=pathlib.Path('review/test-defend/internal-native-radix');scope=json.loads((p/'scope.json').read_text());results=[]
+p=pathlib.Path('review/test-defend/internal-native-radix/session-39e7366a');scope=json.loads((p/'scope.json').read_text());results=[]
 for item in json.loads((p/'mutant-plan.json').read_text()):
  ident=item['mutant'];f=pathlib.Path(item['file']);original=f.read_text();assert original==subprocess.check_output(['git','show',scope['base']+':'+str(f)],text=True)
  try:

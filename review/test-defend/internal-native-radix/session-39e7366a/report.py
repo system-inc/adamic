@@ -1,5 +1,5 @@
 import pathlib,json,subprocess,gzip,hashlib
-p=pathlib.Path('review/test-defend/internal-native-radix');scope=json.loads((p/'scope.json').read_text());matrix=json.loads((p/'matrix.json').read_text());added=json.loads((p/'added-test-matrix.json').read_text());coverage=json.loads((p/'coverage-runs.json').read_text());rows=[];passlists=[]
+p=pathlib.Path('review/test-defend/internal-native-radix/session-39e7366a');scope=json.loads((p/'scope.json').read_text());matrix=json.loads((p/'matrix.json').read_text());added=json.loads((p/'added-test-matrix.json').read_text());coverage=json.loads((p/'coverage-runs.json').read_text());rows=[];passlists=[]
 assert len(matrix)==2 and all(r['exit']==0 for r in added)
 for m in matrix:
  assert m['rows_failed']==[m['target']]
