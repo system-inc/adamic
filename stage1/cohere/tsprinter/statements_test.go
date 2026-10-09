@@ -122,7 +122,11 @@ const testStatementsAgainstGoAndPrettierShards = 16
 // unset runs all shards. The mixed live repository/pinned TypeScript corpus uses
 // a fixed 16 shards and SHA-256(relative path, file/mode-local index) modulo 16.
 // Build products are prepared once and shared by leaves.
-func TestStatementsAgainstGoAndPrettier(t *testing.T) {
+func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
+	t.Helper()
+	if !statementShardSelection(t)(shardNumber) {
+		return
+	}
 	setup := time.Now()
 	cpu := statementCPU()
 	t.Cleanup(func() { t.Logf("CPU including builds: %.3fs", statementCPU()-cpu) })
@@ -208,7 +212,7 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 	embedded, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	backend := filepath.Join(loweredDir, "program.mjs")
-	selected := statementShardSelection(t)
+	selected := func(number int) bool { return number == shardNumber }
 	libraryHash := statementDirectoryHash(t, library)
 	oracleAnswers := make([][2][]byte, len(shards))
 	for number, shard := range shards {
@@ -247,8 +251,7 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 		if !selected(number) {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
+		func() {
 			compare := func(name string, result run) {
 				if err := statementDisagreement(name, result, shard.want, shard.labels); err != nil {
 					t.Fatal(err)
@@ -276,6 +279,6 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 			statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[number][1]}, shard.specs, true)
 			compare("release", execute(t, nil, release, "--cases", shard.text, "80"))
 			t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
-		})
+		}()
 	}
 }

@@ -475,51 +475,55 @@ func TestStatementsShardDisagreement(t *testing.T) {
 	if target < 0 {
 		t.Fatal("planted case absent")
 	}
-	if os.Getenv("ADAMIC_STATEMENTS_SHARD_PROOF") != "1" {
-		binary, err := os.Executable()
-		if err != nil {
-			t.Fatal(err)
-		}
-		result := executeOne(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsShardDisagreement$", "-test.v", "-test.parallel=4", "-test.timeout=30s")
-		name := fmt.Sprintf("TestStatementsShardDisagreement/shard-%03d", target)
-		if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), "--- FAIL: TestStatementsShardDisagreement/shard-") != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+name) || !strings.Contains(string(result.stdout), "planted case 17") {
-			t.Fatalf("expected exactly %s to catch planted disagreement: exit %d stdout %s stderr %s", name, result.exitCode, result.stdout, result.stderr)
-		}
-		t.Logf("planted case %d caught by exactly %s", plantedID, name)
-		return
+	binary, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
 	}
+	result := executeOne(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsAgainstGoAndPrettier_[0-9]{3}$", "-test.v", "-test.parallel=4", "-test.timeout=75s")
+	name := fmt.Sprintf("TestStatementsAgainstGoAndPrettier_%03d", target)
+	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), "--- FAIL: TestStatementsAgainstGoAndPrettier_") != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+name) || !strings.Contains(string(result.stdout), "planted case 17") {
+		t.Fatalf("expected exactly %s to catch planted disagreement: exit %d stdout %s stderr %s", name, result.exitCode, result.stdout, result.stderr)
+	}
+	t.Logf("planted case %d caught by exactly %s", plantedID, name)
+	return
+}
+
+func statementRunShardProof(t *testing.T, number int) {
+	t.Helper()
+	const count, plantedID = 256, 17
+	partition, err := statementPartition(statementProofKeys(count))
+	if err != nil {
+		t.Fatal(err)
+	}
+	ids := partition[number]
+
 	port, _ := filepath.Abs("statementsMain.ts")
-	for number, ids := range partition {
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
-			var input, want strings.Builder
-			var labels []string
-			local := -1
-			for position, id := range ids {
-				fmt.Fprintf(&input, ">const x=%d;\n", id)
-				fmt.Fprintf(&want, "ok\tconst x = %d;\\n\n", id)
-				labels = append(labels, fmt.Sprintf("planted case %d", id))
-				if id == plantedID {
-					local = position
-				}
-			}
-			path := filepath.Join(t.TempDir(), "proof.txt")
-			if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
-				t.Fatal(err)
-			}
-			result := onNode(t, port, "--cases", path, "80")
-			if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
-				t.Fatal(err)
-			}
-			if local >= 0 {
-				rows := strings.Split(string(result.stdout), "\n")
-				rows[local] = "ok\tplanted disagreement"
-				result.stdout = []byte(strings.Join(rows, "\n"))
-			}
-			if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
-				t.Fatal(err)
-			}
-		})
+	var input, want strings.Builder
+	var labels []string
+	local := -1
+	for position, id := range ids {
+		fmt.Fprintf(&input, ">const x=%d;\n", id)
+		fmt.Fprintf(&want, "ok\tconst x = %d;\\n\n", id)
+		labels = append(labels, fmt.Sprintf("planted case %d", id))
+		if id == plantedID {
+			local = position
+		}
+	}
+	path := filepath.Join(t.TempDir(), "proof.txt")
+	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result := onNode(t, port, "--cases", path, "80")
+	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
+		t.Fatal(err)
+	}
+	if local >= 0 {
+		rows := strings.Split(string(result.stdout), "\n")
+		rows[local] = "ok\tplanted disagreement"
+		result.stdout = []byte(strings.Join(rows, "\n"))
+	}
+	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
+		t.Fatal(err)
 	}
 }
 
@@ -607,3 +611,5 @@ func statementPrinterLibrary(t *testing.T, name string, result run, specs string
 	}
 	t.Logf("%s: %d cases; %d exact upstream text differences, %d exact parser refusals, all other bytes match Go", name, len(cases), differences, refusals)
 }
+
+func statementShardProofEnabled() bool { return os.Getenv("ADAMIC_STATEMENTS_SHARD_PROOF") == "1" }
