@@ -135,6 +135,12 @@ func jsonUpstreamTopShard(t *testing.T, target int) {
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
+	if !portMatchesShared.ready {
+		t.Fatal("shared setup was not selected")
+	}
+	deadline := portMatchesDeadline(t.Name())
+	defer deadline.Stop()
+
 	cases, shards := jsonTopCorpus(t)
 	if len(shards) != testUpstreamRepositoryCorpusParityShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testUpstreamRepositoryCorpusParityShards)
