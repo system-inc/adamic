@@ -14,15 +14,20 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
+excluded.update({'coverage_error_call.a', 'coverage_error_construct.a', 'coverage_error_mutated.a', 'coverage_error_optional.a', 'coverage_error_view_return.a', 'coverage_regexp_call.a', 'coverage_regexp_literal.a', 'coverage_regexp_new.a', 'coverage_regexp_view.a', 'coverage_view_array.a', 'coverage_view_boolean.a', 'coverage_view_closure.a', 'coverage_view_number.a', 'coverage_view_string.a', 'error_spread.a', 'error_spread_view.a'})
 # Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in {'new_expression_class_cache_capture_notyet.a'}
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
-for package in ['flow', 'fresh']:
+import argparse
+arguments = argparse.ArgumentParser()
+arguments.add_argument('--package', choices=['flow', 'fresh'])
+selected = arguments.parse_args().package
+for package in ([selected] if selected else ['flow', 'fresh']):
     paths = []
     for pattern in patterns:
         # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
@@ -69,5 +74,8 @@ for package in ['flow', 'fresh']:
     # Written through gofmt, so the generated file is as gofmt -l expects it.
     formatted = subprocess.run(['gofmt'], input=text, capture_output=True, text=True, check=True).stdout
     (root / 'internal' / package / 'corpus_units_test.go').write_text(formatted)
+if selected:
+    previous = json.loads((root/'review/test-split-flow/units.json').read_text())
+    manifest += [row for row in previous if row['package'] != selected]
 (root/'review/test-split-flow/units.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Generated', len(manifest), 'program units')
