@@ -1,0 +1,20 @@
+{
+  "TestCensusRestMutableElements": {
+    "compared_with": "TestAMutableLocationSeenWiderIsRefused",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/lower/class.go:602.3,603.1",
+      "github.com/system-inc/adamic/internal/lower/class.go:606.4,606.12",
+      "github.com/system-inc/adamic/internal/lower/invariance.go:625.4,625.46",
+      "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:16.3,17.1",
+      "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:66.3,69.43",
+      "github.com/system-inc/adamic/internal/lower/optional_widening.go:30.3,31.1"
+    ]
+  },
+  "TestCensusBooleanDeadBranch": {
+    "compared_with": "rest",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/lower/census_small.go:380.3,380.62",
+      "github.com/system-inc/adamic/internal/lower/census_small.go:383.3,383.18"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/census_small.go b/internal/lower/census_small.go
+index fbc43f25..ac2d1f1b 100644
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -380,7 +380,7 @@ func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left,
+ 		if left.Type() != ir.Boolean || right.Type() != ir.Boolean {
+ 			return nil, false
+ 		}
+-		of = ir.Boolean
++		return ir.Binary{Operator: ir.Add, Left: left, Right: right}, true
+ 	}
+ 	lowered := ir.And
+ 	if operator == ast.KindBarBarToken {
