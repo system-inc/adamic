@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
     environment->cells[1].value.number = 42;
     environment = adamic_program_adopt_owned(environment,
         sizeof *environment + environment->count * sizeof environment->cells[0]);
-    assert(environment->cells[0].owner == environment);
+    assert(environment->cells[0].owner == &environment->heap);
     assert(environment->cells[0].ready && environment->cells[1].value.number == 42);
 
     adamic_map *map = adamic_map_new(false, true);

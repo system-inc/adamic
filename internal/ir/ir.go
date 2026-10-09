@@ -104,7 +104,7 @@ type NonNullCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
-	Graph bool
+	Graph         bool
 	ProgramRegion bool
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
@@ -130,7 +130,7 @@ type Accessor struct {
 // Function is a function declaration.
 type Function struct {
 	// GraphClosure joins its environment instead of counting captured graph cells.
-	GraphClosure bool
+	GraphClosure  bool
 	ProgramRegion bool
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
@@ -273,7 +273,7 @@ func (t Type) IsReference() bool {
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
 	// GraphCell selects graph ownership for its capture cell or shared environment.
-	GraphCell bool
+	GraphCell     bool
 	ProgramRegion bool
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
@@ -725,7 +725,7 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Array         Expression
 		Others        []Expression
@@ -771,7 +771,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		GraphTypes   []int
+		GraphTypes    []int
 		ProgramRegion bool
 		CallbackType  int
 		Array         Expression
@@ -786,7 +786,7 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		GraphTypes   []int
+		GraphTypes    []int
 		ProgramRegion bool
 		CallbackType  int
 		Method        string
@@ -807,7 +807,7 @@ type (
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Array         Expression
 		Arguments     []Expression
@@ -825,7 +825,7 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Key, Value    Type
 		Entries       [][2]Expression
@@ -837,13 +837,13 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Map           Expression
 		Key           Type
 	}
 	MapValues struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Map           Expression
 		Value         Type
@@ -892,7 +892,7 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Element       Type
 		Values        Expression
@@ -910,7 +910,7 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		GraphTypes []int
+		GraphTypes    []int
 		ProgramRegion bool
 		Set           Expression
 		Element       Type

@@ -106,7 +106,9 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 	}
 	if discovery || plan != nil {
 		for _, function := range lowering.result.Functions {
-			if function.Async { return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"} }
+			if function.Async {
+				return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+			}
 		}
 	}
 	if err := lowering.findCycles(modules); err != nil {
@@ -126,12 +128,12 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 type lowering struct {
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
-	programPlan       *programMembership
-	programDiscovery  bool
-	programCandidates map[*checker.Type]*ast.Node
-	program           *load.Program
-	checker           *checker.Checker
-	result            *ir.Program
+	programPlan             *programMembership
+	programDiscovery        bool
+	programCandidates       map[*checker.Type]*ast.Node
+	program                 *load.Program
+	checker                 *checker.Checker
+	result                  *ir.Program
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
