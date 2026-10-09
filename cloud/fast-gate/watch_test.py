@@ -1795,6 +1795,9 @@ class WatchTests(unittest.TestCase):
         # The same refresh then reads every ready step for the queue's step order.
         w.wait(lambda: (w.state / 'step-globs').exists() and (w.state / 'step-globs').read_text() ==
                '0 codex/first\n0 cloud/land-area-next*\n1 codex/later\n')
+        # The refresh ends with the waves read, after step-globs lands: wait for it (one at start, one at 1300), so the
+        # snapshot below holds the whole refresh and the check proves no further one runs inside the five minutes.
+        w.wait(lambda: w.read('task-calls').count('tasks waterfall system_adamic --json\n') == 2)
         calls = w.read('task-calls')
         time.sleep(.15)
         self.assertEqual(w.read('task-calls'), calls)
