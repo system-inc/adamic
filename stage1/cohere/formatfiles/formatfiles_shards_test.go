@@ -471,6 +471,7 @@ func formatfilesAskedCases(t *testing.T) (string, string) {
 
 func formatfilesCohereSide(t *testing.T, request map[string]any) {
 	t.Helper()
+	product, packageDirectory := formatfilesOracle(t)
 	directory := t.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
 	encoded, err := json.Marshal(request)
@@ -480,6 +481,18 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
+	command := formatfilesCommand(t, product, "-test.run=^TestAdamicPortCases$", "-test.timeout=0")
+	command.Dir = packageDirectory
+	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
+	if output, err := combinedOutput(command); err != nil {
+		t.Fatalf("cohere's side: %v\n%s", err, output)
+	}
+}
+
+// Both build-phase units and shard preparation use this exact oracle recipe.
+func formatfilesOracle(t *testing.T) (string, string) {
+	t.Helper()
+	directory := t.TempDir()
 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)
@@ -512,12 +525,7 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 		}
 		return nil
 	})
-	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=0")
-	command.Dir = packageDirectory
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
-	}
+	return filepath.Join(product, "oracle"), packageDirectory
 }
 
 // Setup children carry no deadline; the gate bounds the whole unit.
