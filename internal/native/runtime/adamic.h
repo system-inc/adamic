@@ -392,9 +392,20 @@ typedef struct adamic_region_block adamic_region_block;
 typedef struct adamic_region {
 	adamic_region_block *blocks;
 	size_t count;
+	bool holds_outside;
 } adamic_region;
-#define ADAMIC_REGION {NULL, 0}
+#define ADAMIC_REGION {NULL, 0, false}
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+// filled_in is only for a literal that fills every slot without a throwing operation or
+// publication between allocation and completion. Constructors use the zeroed allocator above.
+adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape);
+// Literal stores report a counted child; same-region values and constants need no cleanup.
+static inline void adamic_region_hold(adamic_region *region, const void *value) {
+	if (value != NULL && ((const adamic_heap *)value)->references != 0) {
+		region->holds_outside = true;
+	}
+}
+bool adamic_region_contains(const adamic_region *region, const void *value);
 void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
@@ -975,6 +986,8 @@ adamic_weak *adamic_weak_of(void *target);
 void *adamic_weak_target(const adamic_weak *handle);
 void *adamic_weak_target_present(const adamic_weak *handle);
 void adamic_weak_forget(void *target);
+// One table check for a whole region, including a region with no outside children.
+void adamic_weak_forget_region(const adamic_region *region);
 void adamic_weak_dropped(adamic_weak *handle);
 // adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
 // nothing else can reach, and a Weak reaches without counting.

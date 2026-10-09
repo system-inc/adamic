@@ -1,0 +1,33 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo	479.019s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.226s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+?   	github.com/system-inc/adamic/cloud/reports/decode-ascii	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic	41.571s
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	5.403s
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.322s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	96.357s
+ok  	github.com/system-inc/adamic/internal/flow	165.814s
+ok  	github.com/system-inc/adamic/internal/fresh	70.681s
+ok  	github.com/system-inc/adamic/internal/fuzz	13.727s
+ok  	github.com/system-inc/adamic/internal/ir	2.551s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.812s
+ok  	github.com/system-inc/adamic/internal/lower	50.494s
+ok  	github.com/system-inc/adamic/internal/native	648.782s
+ok  	github.com/system-inc/adamic/internal/oracle	281.914s
+ok  	github.com/system-inc/adamic/internal/regexp	8.819s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	930.561s
+ok  	github.com/system-inc/adamic/stage1/cohere/css	861.563s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	35.746s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	9.253s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	21.055s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	28.981s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	42.074s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	836.109s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1016.285s

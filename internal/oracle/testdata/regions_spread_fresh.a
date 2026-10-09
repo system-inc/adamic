@@ -1,0 +1,31 @@
+// A function returning a spread is not fresh: its result is a heap copy, not a value made in a
+// region. Handed straight to a parameter that flows nowhere, it must still be let go of.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+}
+
+function build(depth: number): Node {
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1) };
+}
+
+function relabel(node: Node, label: string): Node {
+	return { ...node, label: `${label}!` };
+}
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + node.label.length;
+}
+
+const base = build(2);
+let total = 0;
+for (let round = 0; round < 3; round++) {
+	total += count(relabel(base, `r${round}`));
+}
+console.log(`${total} ${base.label}`);

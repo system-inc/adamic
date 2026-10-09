@@ -78,7 +78,7 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
 	}
 	e.line("if (!%s) {", e.localReady(local))
-	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 }

@@ -1,0 +1,12 @@
+// The same spread through an object view an Error is seen as: copy can't tell an Error from a plain
+// object with the same fields, so a spread of any Shown is not yet while the program makes an Error.
+interface Shown {
+	readonly name?: string;
+	readonly message?: string;
+}
+function copied(value: Shown): string {
+	const copy: Shown = { ...value };
+	return `${copy.name ?? 'no name'} ${copy.message ?? 'no message'}`;
+}
+console.log(copied({ name: `plain`, message: `fields ${1}` }));
+console.log(copied(new Error(`bad ${2}`)));

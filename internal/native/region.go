@@ -30,6 +30,9 @@ type regionPlan struct {
 	// fresh are the functions that take a region.
 	fresh map[int]bool
 
+	// referenceWrites is conservative: an operation/callee may write a reference after allocation.
+	referenceWrites map[int]bool
+
 	// flows says, per function and parameter position, whether that parameter escapes (true) or
 	// flows nowhere (false). A position not in it escapes.
 	escapes map[int]map[int]bool
@@ -41,7 +44,7 @@ type regionPlan struct {
 }
 
 func planRegions(program *ir.Program) *regionPlan {
-	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {
@@ -74,6 +77,17 @@ func planRegions(program *ir.Program) *regionPlan {
 		for index := range plan.fresh {
 			if !plan.returnsFresh(program, index) {
 				delete(plan.fresh, index)
+				changed = true
+			}
+		}
+	}
+	// A nonescaping consumer may still replace a regional object's reference field. It has no
+	// hidden region argument, so force cleanup before calling any consumer that may do that.
+	for changed := true; changed; {
+		changed = false
+		for index, function := range program.Functions {
+			if !plan.referenceWrites[index] && plan.writesReferences(function.Body) {
+				plan.referenceWrites[index] = true
 				changed = true
 			}
 		}
@@ -350,6 +364,9 @@ func (e *emitter) regionStatement(at *ir.Statement) bool {
 	}
 	region := e.temporary()
 	e.line("adamic_region %s = ADAMIC_REGION;", region)
+	if e.regions.writesReferences([]ir.Statement{*at}) {
+		e.line("%s.holds_outside = true;", region)
+	}
 	outer := e.statementRegion
 	e.statementRegion = region
 	e.statement(*at)
@@ -385,4 +402,37 @@ func (plan *regionPlan) regionTarget(call ir.Call) int {
 		return -1
 	}
 	return targets[0]
+}
+
+// writesReferences is deliberately broader than a parameter-specific mutation summary. Reads and
+// plain literals are safe; reference stores, opaque operations (callbacks included), and calls
+// that transitively contain either require cleanup. Newly added operations fall back to cleanup.
+func (plan *regionPlan) writesReferences(body []ir.Statement) bool {
+	writes := false
+	var statements func([]ir.Statement)
+	statements = func(list []ir.Statement) {
+		for _, statement := range list {
+			if store, ok := statement.(ir.SetProperty); ok && store.Value.Type().IsReference() {
+				writes = true
+			}
+			walkStatement(statement, func(expression ir.Expression) {
+				switch expression := expression.(type) {
+				case ir.Call:
+					targets := plan.program.CallTargets(expression)
+					if len(targets) == 0 {
+						writes = true
+					}
+					for _, target := range targets {
+						writes = writes || plan.referenceWrites[target]
+					}
+				case ir.ObjectLiteral, ir.MakeClosure:
+					// These allocate new values; their operands are visited separately.
+				default:
+					writes = writes || !pureKind(expression)
+				}
+			}, statements)
+		}
+	}
+	statements(body)
+	return writes
 }

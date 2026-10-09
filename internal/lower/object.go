@@ -32,6 +32,16 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if spread.Type() != ir.Object {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
+			// An Error's name and message aren't own enumerable fields in JavaScript, so a spread
+			// copies neither, where natively they're ordinary fields (runtime/exceptions.c). Refused
+			// as Object.keys, hasOwn and toString on an Error are, directly and through a view.
+			source := property.AsSpreadAssignment().Expression
+			if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source)), "Error") {
+				return nil, l.notYet(property, "spreading an Error (its name and message aren't own enumerable fields)")
+			}
+			if reason := l.prototypeHazard(source, ""); reason != "" {
+				return nil, l.notYet(property, "spreading through an object view ("+reason+")")
+			}
 			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))

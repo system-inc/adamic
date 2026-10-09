@@ -265,6 +265,7 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:tsan_test.h`
 - `runtime-file:tsgo.c`
 - `runtime-file:tsgo_runtime.h`
+- `runtime-file:typed_array.c`
 - `runtime-file:union.c`
 - `runtime-file:utf8.c`
 - `runtime-file:weak.c`

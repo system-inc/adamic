@@ -44,6 +44,8 @@ Adamic is a language for the new minds, the ones who will write the world's code
 3. **Stage 2.** The Adamic compiler, rewritten in Adamic, compiling itself.
 4. **Stage 3.** The TypeScript compiler's own original source, written in TypeScript, compiled natively by Adamic. The language's compiler comes home.
 
+Native shipped builds use ThinLTO. [Native build flags](docs/native-builds.md) names the semantic link options, unchanged test lanes and opt-in release oracle.
+
 ## Where It Starts
 
 `dedication/` is the first thing here and the smallest program we could make that runs natively on a Mac. It prints one line. Everything after it is built on the same ground it is: Unix, B, C, grep, UTF-8 and Go.

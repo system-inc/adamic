@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "command": "taskset -c 3 /workspace/scratch/release-lto/go-parse --manifest /workspace/scratch/release-lto/compiler.txt --count",
+      "mean": 0.191493026,
+      "stddev": null,
+      "median": 0.191493026,
+      "user": 0.15537399999999998,
+      "system": 0.035040999999999996,
+      "min": 0.191493026,
+      "max": 0.191493026,
+      "times": [
+        0.191493026
+      ],
+      "exit_codes": [
+        0
+      ]
+    }
+  ]
+}
