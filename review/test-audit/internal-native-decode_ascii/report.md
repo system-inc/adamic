@@ -304,3 +304,5 @@ No test or oracle was changed. The receiver assignment row passes its own empty-
 No package-wide or repository-wide uniqueness is claimed. Central replay must settle that. No PR was opened and main was not pushed. Baseline, timing, matrix, probe, compile and replay-check logs are retained with the standalone diffs.
 
 Matrix and probe wall total: 268.418s. Timing runs: 246.555 binary seconds. Individual compile times and inactive build phases are in driver.log and inactive logs.
+
+Isolated panic reruns add 3.363s to the reported matrix/probe wall total. Standalone mutant compilation checks took 4.568s across both validation passes; probe compilation checks took 1.420s. Production sources are restored and final go vet passed.
