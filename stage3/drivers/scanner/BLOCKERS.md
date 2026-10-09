@@ -1,3 +1,44 @@
+## October 8: scanner-owned any sites removed
+
+Permanent adaptation 42 types the private diagnostic payload as string | number
+and keyword storage as Map<string, KeywordSyntaxKind>. The own driver callback
+uses string | number | undefined. The three preceding landing-base observations
+10, 12 and 14 are gone at their respective discovery checkpoints. Restoring
+each original annotation/inference reproduces its exact any diagnostic.
+
+The real native scanner still stops at corePublic.ts:9:5 in split 0 and 1.
+Discovery controls now reach string/number concatenation, untyped entry-pair
+lowering after the MapLike placeholder, and union JSON.stringify in the driver.
+These are compiler work; the map observation remains placeholder-dependent.
+All Node comparisons retain 509,014 skipped-trivia tokens and the full coverage
+dump. No native scanner binary or runtime timing is available.
+
+See [adaptation 42](../../adapt/42-scanner-any/REPORT.md) for main/42 lane and
+public declaration proof, and [native checkpoints](evidence/scanner-any/REPLAY.md).
+
+## October 8: landing compiler measured alone after 44 combined-merge conflicts
+
+Fresh scratch uses cloud/land-area-next 28285421, containing compiler area-next
+337aa466. Merging combined records/library 2648ad33 conflicted in exactly 44
+paths, captured before abort, with no hand resolutions. Measurement uses the
+landing branch alone. Compiler build passed in 185.816s; setup took 63.387s,
+nproc=5. Installing its pinned @types/node prerequisite enabled the real runs.
+
+Both native scanner modes stop at corePublic.ts:9:5, MapLike's index signature.
+Past discovery placeholders, Debug's mutable namespace export and Error-as-any
+cast also stop the build. An independent typed capture control finishes on Node
+but refuses node:globals.ErrorConstructor.captureStackTrace on this base.
+Both complete Node dumps match the full-tree reference, and both exactly-one-byte
+Node mutants are caught. No native scanner binary or timing exists.
+
+Fifteen distinct witnessed failures are retained: fourteen lowering stops and
+one clang pointer-return error, discovered after a never-return placeholder.
+The latter also reproduces independently in a three-line Node-success program.
+Repeated signature diagnostics and induced unreachable-code checker errors are
+excluded; placeholder-dependent observations are explicitly qualified.
+
+[Exact conflicts, ordered stops, witnesses and controls](evidence/land-area-next/REPORT.md).
+
 ## October 8: combined records-library merge closes MapLike admission
 
 Fresh scratch dbd7a7c8 cleanly merges current main 6998ebc2 and combined branch

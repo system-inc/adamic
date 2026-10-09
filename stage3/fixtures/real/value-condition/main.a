@@ -1,0 +1,8 @@
+// a-check: checked
+// From src/compiler/utilities.ts:10157 (TypeScript 6.0.3, main adaptations).
+
+function numberOfDirectorySeparators(str: string) {
+    const match = str.match(/\//g);
+    return match ? match.length : 0;
+}
+console.log(`${numberOfDirectorySeparators('/a/b/')}:${numberOfDirectorySeparators('plain')}`);
