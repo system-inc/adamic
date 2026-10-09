@@ -353,6 +353,33 @@ class LandingTests(unittest.TestCase):
         fresh, freshRecord = candidate('fresh', [known, ('code', 'TestNew')])
         refused = self.push('--fast-gate', freshRecord, '--main-reds', main, fresh, 'fresh')
         self.assertIn('new reds against main: code TestNew', refused.stderr)
+        # A red ruled main's while its fix is in flight counts as main's by that exact name, and the landing names it.
+        now = self.main_now()
+        ruled = self.change(now, 'other/c.go', 'package other\n\n// ruled\n', 'ruled')
+        ruledRecord = self.publish(ruled, 'ruled', {'sha': ruled, 'base': now, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': 2, 'pass': 10,
+                                   'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                   'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                   'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                   'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[known, ('code', 'TestRuled')])
+        self.assertIn('new reds against main: code TestRuled', self.push('--fast-gate', ruledRecord, '--main-reds', main, ruled, 'ruled').stderr)
+        self.assertIn('new reds against main: code TestNew', self.push('--fast-gate', freshRecord, '--main-reds', main, '--infra-red', 'code TestRuled=#t4b9j71', fresh, 'fresh').stderr)
+        landed = self.assertLanded(self.push('--fast-gate', ruledRecord, '--main-reds', main, '--infra-red', 'code TestRuled=#t4b9j71 timing kill', ruled, 'ruled'),
+                                   now, ruled)
+        self.assertIn("ruled infra, not the candidate's: code TestRuled=#t4b9j71 timing kill", git(self.repository, 'log', '-1', '--format=%B', landed))
+        # Alone, without a main record: only the ruled name is excused.
+        now = self.main_now()
+        alone = self.change(now, 'other/d.go', 'package other\n\n// alone\n', 'alone')
+        def aloneRecord(name, failing):
+            return self.publish(alone, name, {'sha': alone, 'base': now, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': len(failing), 'pass': 10,
+                                'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=failing)
+        twoReds = aloneRecord('two', [('code', 'TestRuled'), ('code', 'TestOther')])
+        self.assertIn('reds not ruled infra: code TestOther', self.push('--fast-gate', twoReds, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'two').stderr)
+        oneRed = aloneRecord('one', [('code', 'TestRuled')])
+        # Its one red is excused, so it reaches the pause rule, which main's red record here still holds.
+        self.assertIn('landings are paused', self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr)
 
 
 if __name__ == '__main__':

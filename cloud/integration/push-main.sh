@@ -45,6 +45,7 @@ deletion=no
 extraTrailers=""
 notReaders=()
 markdownCorpus=""
+ruledReds=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
@@ -62,6 +63,12 @@ while [ "$#" -gt 0 ]; do
 	# main too. Those reds are named in the landing and stay owned on main's red list; one red main doesn't
 	# have refuses it, by name. It never lands a red main doesn't already carry.
 	--main-reds) mainReds=${2#origin/}; shift 2 ;;
+	# --infra-red "<package> <Test>=<ruling>", repeatable: a red @system_adamic has ruled infrastructure on every
+	# candidate (Oct 9 03:34: typeaware TestVolumeAgreementAndMutants, green on main run alone, killed by its own 90 s
+	# per-command limit under pool load; #t4b9j71 splits it). By that exact name only, it isn't the candidate's red, alone
+	# or beside --main-reds, and the landing names the ruling. Check the candidate's log shows the ruled cause (the kill
+	# line) before passing it: the same test failing another way is the candidate's.
+	--infra-red) ruledReds+=("$2"); shift 2 ;;
 	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
 	# --test-only <sha> "<branches>": a change that touches only tests goes to main with no gate in front of it;
 	# Loom's next whole-suite run of main is its check (Kirk, Oct 8). The merged diff must be tests only.
@@ -241,13 +248,13 @@ json.dump(first, open(path, "w"))
 		fi
 		fastGate="${fastGate} + ${also}"
 	done
-	if [ -n "$mainReds" ]; then
-		if ! git fetch -q origin "+refs/heads/${mainReds}:refs/remotes/origin/${mainReds}" 2>/dev/null; then
+	if [ -n "$mainReds" ] || [ "${#ruledReds[@]}" -gt 0 ]; then
+		if [ -n "$mainReds" ] && ! git fetch -q origin "+refs/heads/${mainReds}:refs/remotes/origin/${mainReds}" 2>/dev/null; then
 			echo "refused: no gate log ${mainReds} on origin" >&2
 			exit 1
 		fi
 		# The candidate's failing top-level tests, from every record it lands on, against main's.
-		known=$(python3 - "$fastJSON" "origin/${fastGate%% + *}" "origin/${mainReds}" ${alsoGates[@]+"${alsoGates[@]/#/origin/}"} 2>&1 <<'MAINREDS'
+		known=$(RULED_REDS="$(printf '%s\n' ${ruledReds[@]+"${ruledReds[@]}"} | sed 's/=.*//')" python3 - "$fastJSON" "origin/${fastGate%% + *}" "origin/${mainReds}" ${alsoGates[@]+"${alsoGates[@]/#/origin/}"} 2>&1 <<'MAINREDS'
 import gzip, json, subprocess, sys
 path, mainRef, records = sys.argv[1], sys.argv[3], [sys.argv[2]] + sys.argv[4:]
 def failing(ref):
@@ -268,13 +275,20 @@ def failing(ref):
         if event.get("Action") == "fail" and event.get("Test") and "/" not in event["Test"]:
             names.add(event["Package"].split("/adamic/")[-1] + " " + event["Test"])
     return names
-mainStatus = subprocess.run(["git", "show", mainRef + ":status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
-mainFull = json.loads(subprocess.run(["git", "show", mainRef + ":full.json"], capture_output=True, text=True).stdout or "{}")
-onMain = failing(mainRef)
-if not mainStatus.startswith(("green", "red")) or mainFull.get("finished") is not True or onMain is None:
-    sys.exit("main's record %s isn't a finished whole gate with a test record (%s)" % (mainRef, mainStatus[:60]))
-if subprocess.run(["git", "merge-base", "--is-ancestor", mainFull.get("sha", ""), "origin/main"]).returncode != 0:
-    sys.exit("main's record gated %s, which isn't on main" % mainFull.get("sha"))
+import os
+ruled = {line.strip() for line in os.environ.get("RULED_REDS", "").splitlines() if line.strip()}
+if mainRef == "origin/":
+    # --infra-red alone: no main record; only the ruled names are excused.
+    onMain = set()
+else:
+    mainStatus = subprocess.run(["git", "show", mainRef + ":status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
+    mainFull = json.loads(subprocess.run(["git", "show", mainRef + ":full.json"], capture_output=True, text=True).stdout or "{}")
+    onMain = failing(mainRef)
+    if not mainStatus.startswith(("green", "red")) or mainFull.get("finished") is not True or onMain is None:
+        sys.exit("main's record %s isn't a finished whole gate with a test record (%s)" % (mainRef, mainStatus[:60]))
+    if subprocess.run(["git", "merge-base", "--is-ancestor", mainFull.get("sha", ""), "origin/main"]).returncode != 0:
+        sys.exit("main's record gated %s, which isn't on main" % mainFull.get("sha"))
+onMain |= ruled
 ours = set()
 for ref in records:
     names = failing(ref)
@@ -283,7 +297,7 @@ for ref in records:
     ours |= names or set()
 new = sorted(ours - onMain)
 if new:
-    sys.exit("new reds against main: " + "; ".join(new[:8]))
+    sys.exit(("new reds against main: " if mainRef != "origin/" else "reds not ruled infra: ") + "; ".join(new[:8]))
 fast = json.load(open(path))
 expected = len(ours)
 if (fast.get("fail") or 0) > expected:
@@ -295,9 +309,10 @@ fast["stages_exit"] = {stage: (0 if stage == "tests" else code) for stage, code 
 json.dump(fast, open(path, "w"))
 print(len(ours))
 MAINREDS
-) || { echo "refused: --main-reds ${mainReds}: ${known}" >&2; exit 1; }
-		statusLine="green: ${sha} with ${known} reds main already has (${mainReds})"
-		branches="${branches}; lands with ${known} reds main already has (${mainReds}), owned on main's red list"
+) || { echo "refused: ${mainReds:+--main-reds ${mainReds}}${mainReds:---infra-red}: ${known}" >&2; exit 1; }
+		statusLine="green: ${sha} with ${known} reds main already has or ruled infra (${mainReds:-no main record})"
+		[ -z "$mainReds" ] || branches="${branches}; lands with ${known} reds main already has or ruled infra (${mainReds}), owned on main's red list"
+		[ "${#ruledReds[@]}" -eq 0 ] || branches="${branches}; ruled infra, not the candidate's: $(printf '%s; ' "${ruledReds[@]}" | sed 's/; $//')"
 	fi
 	if ! verdict=$(GATE_KIND="$gateKind" RERUN_MERGE="$(dirname "${BASH_SOURCE[0]}")/rerun_merge.py" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
 import json, os, subprocess, sys
