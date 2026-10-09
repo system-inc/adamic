@@ -1071,14 +1071,16 @@ while true; do
     fi
   fi
   # Staged box tools get their canary: main's tip on the canary box, ahead of the queue, one at a time, never in a storm
-  # (the storm's own probe runs the good tools), and not again for tools a red already held (#k1n98kx).
+  # (the storm's own probe runs the good tools), and not again for tools a red already held (#k1n98kx). With the
+  # canary box held whole (the star's second box, Oct 9 10:30Z), any box's slot: one run of main's tip risks less than
+  # staged tools waiting out a complete gate.
   if staging && [ ! -f "${state}/storm" ] && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ] &&
      ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null; then
     now=$(date -u +%s)
     last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
     if [ "$((now - last))" -ge 600 ]; then
       free=$(freeSlots) draining=$(drainingBoxes)
-      read -r box canarySlot <<< "$(usableSlots canary/main | awk -v canary="$(cat "${state}/canary-box")" '$1 != canary {next} $2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
+      read -r box canarySlot <<< "$(usableSlots canary/main | awk -v canary="$(cat "${state}/canary-box")" '$1 == "pool" {next} {rank = ($1 == canary ? 0 : 2) + ($2 == "S" ? 0 : 1)} best == "" || rank < bestRank {best = $1 " " $2; bestRank = rank} END {print best}')"
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")

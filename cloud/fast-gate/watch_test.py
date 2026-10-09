@@ -959,6 +959,20 @@ class WatchTests(unittest.TestCase):
         w.put('canary', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
 
+    def test_a_stage_canary_takes_another_box_when_the_canary_box_has_no_slot(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\n')
+        self.addCleanup(w.close)
+        (w.state / 'queue').write_text('')
+        w.wait(lambda: 'canary/main ' in w.read('starts'))
+        self.assertTrue(w.read('starts').strip().endswith(' box1'), w.read('starts'))
+        w.put('initial', 'void')
+        w.wait(lambda: 'stage canary void' in w.read('output'))
+        # box1's only slot is taken now: the next canary goes to box0.
+        (w.state / 'slots').write_text('box0 S\nbox0 S\n')
+        w.put('clock', '1600')
+        w.wait(lambda: w.read('starts').count('canary/main ') == 2)
+        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'), w.read('starts'))
+
     def test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
         # Oct 8 22:16Z to Oct 9 02:10Z: every box-side push restarted promotion, and nothing promoted for four hours.
         w = self.staged()
