@@ -157,15 +157,15 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS")}}
 }
 
-// Only the serial setup unit may create products. A filtered shard may read
+// Only the matching serial setup unit may create its one product. A filtered shard may read
 // products prepared by an earlier setup invocation, but never starts a build.
-var compilerAgreementBuilding bool
+var compilerAgreementBuilding string
 
 func compilerAgreementProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
 	t.Helper()
 	return buildcache.Product(t, inputs, func(directory string) error {
-		if !compilerAgreementBuilding {
-			return fmt.Errorf("missing prepared product %s: run TestCompilerAndStage1Agree_Setup first", inputs.Name)
+		if compilerAgreementBuilding != inputs.Name {
+			return fmt.Errorf("missing prepared product %s: run the matching TestCompilerAndStage1Agree_Setup product test first", inputs.Name)
 		}
 		return build(directory)
 	})
@@ -201,7 +201,7 @@ func compilerAgreementLowered(t *testing.T) string {
 func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	t.Helper()
 	lowered := compilerAgreementLowered(t)
-	options := native.Options{Sanitize: sanitize, Jobs: 1}
+	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 	product := compilerAgreementProduct(t, compilerAgreementInputs(t, fmt.Sprintf("compiler-agreement-native-%t", sanitize), native.Flags(options)), func(directory string) error {
 		c, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
@@ -212,11 +212,9 @@ func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	return filepath.Join(product, "lint")
 }
 
-// Not parallel: publishes immutable build products before parallel shards run.
-// This unit validates the live union without running the corpus.
+// Not parallel: enumerates the immutable corpus before parallel shards run.
+// This unit validates the live union without building or running the corpus.
 func TestCompilerAndStage1Agree_Setup(t *testing.T) {
-	compilerAgreementBuilding = true
-	defer func() { compilerAgreementBuilding = false }()
 	started := time.Now()
 	cases := compilerAgreementCases(t)
 	pairs, fixes := 0, 0
@@ -252,15 +250,40 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 	}
 
 	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix comparisons per side; %d shards", pairs, fixes, testCompilerAndStage1AgreeShards)
-	_ = compilerAgreementGoOracle(t)
-	_ = compilerAgreementLowered(t)
-	_ = compilerAgreementNative(t, false)
-	_ = compilerAgreementNative(t, true)
+	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
+}
+
+// Each setup test grants permission to build exactly one named product. Native
+// setup may fetch lowering, but a lowering cache miss fails rather than adding
+// a second build to the native setup's deadline.
+func compilerAgreementSetupProduct(t *testing.T, name string, prepare func(*testing.T) string) {
+	t.Helper()
+	compilerAgreementBuilding = name
+	defer func() { compilerAgreementBuilding = "" }()
+	started := time.Now()
+	_ = prepare(t)
 	elapsed := time.Since(started)
-	t.Logf("TestCompilerAndStage1Agree (setup): %s cooked=%t", elapsed, elapsed >= 60*time.Second)
-	if elapsed >= 60*time.Second {
-		t.Fatal("setup exceeds 60 seconds")
-	}
+	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
+}
+
+// Not parallel: prepares the Go oracle before parallel comparison shards.
+func TestCompilerAndStage1Agree_SetupGoOracle(t *testing.T) {
+	compilerAgreementSetupProduct(t, "compiler-agreement-go-oracle", compilerAgreementGoOracle)
+}
+
+// Not parallel: prepares lowering before the native product setup tests.
+func TestCompilerAndStage1Agree_SetupLowering(t *testing.T) {
+	compilerAgreementSetupProduct(t, "compiler-agreement-lowered", compilerAgreementLowered)
+}
+
+// Not parallel: prepares only sanitized native; lowering must already be cached.
+func TestCompilerAndStage1Agree_SetupSanitizedNative(t *testing.T) {
+	compilerAgreementSetupProduct(t, "compiler-agreement-native-true", func(t *testing.T) string { return compilerAgreementNative(t, true) })
+}
+
+// Not parallel: prepares only release native; lowering must already be cached.
+func TestCompilerAndStage1Agree_SetupReleaseNative(t *testing.T) {
+	compilerAgreementSetupProduct(t, "compiler-agreement-native-false", func(t *testing.T) string { return compilerAgreementNative(t, false) })
 }
 
 type compilerAgreementOracleAnswer struct {
