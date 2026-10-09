@@ -35,9 +35,7 @@ func TestRecoveryMutantsUnion(t *testing.T) { t.Parallel(); checkRecoveryMutantU
 
 func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 	t.Parallel()
-	for _, mutation := range recoveryMutations {
-		recoveryMutantPrepared(t, mutation.name)
-	}
+	// The planted verdict path uses synthetic bytes; it requires no build products.
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)

@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
 	"strings"
@@ -125,9 +124,15 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 	sources := recoveredGrammar()
 	cases := recoveryMutantLiveSlices(t, sources)[shard]
 	products := map[string]string{}
-	for _, m := range recoveryMutations {
-		if recoveryMutantOwner(m.name) == shard {
-			products[m.name] = recoveryMutantPrepared(t, m.name)
+	var want []byte
+	if os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR") == "" {
+		for _, m := range recoveryMutations {
+			if recoveryMutantOwner(m.name) == shard {
+				products[m.name] = recoveryMutantPrepared(t, m.name)
+			}
+		}
+		if len(cases) != 0 {
+			want = recoveryMutantAnswer(t)
 		}
 	}
 	// Preparation is outside the shard work budget; Loom bounds the whole unit.
@@ -169,10 +174,6 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 		main := mutantPort(t, m.file, m.from, m.to)
 		product := products[m.name]
 		binary := filepath.Join(product, "port")
-		want, err := os.ReadFile(filepath.Join(product, "answer"))
-		if err != nil {
-			t.Fatal(err)
-		}
 		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list), "native": recoveryMutantExecute(t, ctx, binary, "--manifest", list)} {
 			if failure := recoveryComparison(want, got, true); failure != "" {
 				t.Fatal(m.name + " " + name + ": " + failure)
@@ -202,45 +203,66 @@ func recoveryMutantPrepared(t *testing.T, name string) string {
 	return product.directory
 }
 
+func recoveryMutantMutation(t *testing.T, name string) threePortMutation {
+	t.Helper()
+	for _, mutation := range recoveryMutations {
+		if mutation.name == name {
+			return threePortMutation{name: "recovery-" + name, file: mutation.file, from: mutation.from, to: mutation.to}
+		}
+	}
+	t.Fatalf("unknown recovery mutant %q", name)
+	return threePortMutation{}
+}
+
 func buildRecoveryMutantProduct(t *testing.T, name string) string {
 	t.Helper()
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := recoveryCacheInputs(t, main)
-	inputs.Name = "estree-recovery-mutant-prepared-" + name
-	inputs.Files = append(inputs.Files, "stage1/cohere/estree/recovery_mutants_preparation_test.go", "stage1/cohere/estree/recovery_mutants_split_test.go", "stage1/cohere/estree/recovery_test.go", "stage1/cohere/estree/testdata/oracle.go", "cohere/internal/format", "oracle")
-	inputs.Flags = append(inputs.Flags, "sanitized", "full-recovered-grammar")
-	for _, m := range recoveryMutations {
-		if m.name == name {
-			inputs.Flags = append(inputs.Flags, m.file, m.from, m.to)
-		}
-	}
-	inputs.Flags = append(inputs.Flags, recoveredGrammar()...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION"))
+	return filepath.Dir(threePortNativeProduct(t, recoveryMutantMutation(t, name)))
+}
 
-	return buildcache.Product(t, inputs, func(directory string) error {
-		setup := beginRecoverySetup(t)
+var recoveryMutantAnswerPrepared struct {
+	once   sync.Once
+	answer []byte
+}
+
+func recoveryMutantAnswer(t *testing.T) []byte {
+	t.Helper()
+	recoveryMutantAnswerPrepared.once.Do(func() {
 		list := manifest(t, recoveredGrammar())
-		want := recoveryAnswer(t, recoveryOracle(t, setup), list, "--manifest")
-		for _, mutation := range recoveryMutations {
-			if mutation.name != name {
-				continue
-			}
-			main := mutantPort(t, mutation.file, mutation.from, mutation.to)
-			binary, _ := recoveryPort(t, setup, main)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
-			}
-			if err = os.WriteFile(filepath.Join(directory, "port"), data, 0755); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(directory, "answer"), want, 0644)
-		}
-		return fmt.Errorf("unknown recovery mutant %q", name)
+		recoveryMutantAnswerPrepared.answer = recoveryAnswer(t, scalarEdgeOracle(t), list, "--manifest")
 	})
+	if len(recoveryMutantAnswerPrepared.answer) == 0 {
+		t.Fatal("recovery answer preparation failed")
+	}
+	return recoveryMutantAnswerPrepared.answer
+}
+
+func TestProduct_RecoveryMutantsAnswer(t *testing.T) {
+	t.Parallel()
+	recoveryMutantAnswer(t)
+}
+func TestProduct_RecoveryMutantsLowered0(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, recoveryMutantMutation(t, recoveryMutations[0].name))
+}
+func TestProduct_RecoveryMutantsNative0(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, recoveryMutantMutation(t, recoveryMutations[0].name))
+}
+func TestProduct_RecoveryMutantsLowered1(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, recoveryMutantMutation(t, recoveryMutations[1].name))
+}
+func TestProduct_RecoveryMutantsNative1(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, recoveryMutantMutation(t, recoveryMutations[1].name))
+}
+func TestProduct_RecoveryMutantsLowered2(t *testing.T) {
+	t.Parallel()
+	threePortLoweredProduct(t, recoveryMutantMutation(t, recoveryMutations[2].name))
+}
+func TestProduct_RecoveryMutantsNative2(t *testing.T) {
+	t.Parallel()
+	threePortNativeProduct(t, recoveryMutantMutation(t, recoveryMutations[2].name))
 }
 
 func recoveryMutantExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
