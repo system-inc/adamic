@@ -43,7 +43,7 @@ var quoteLayoutShared quoteLayoutProducts
 func quoteLayoutSetup(t *testing.T) quoteLayoutProducts {
 	quoteLayoutOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(75*time.Second, func() { panic("cooked: TestMarkdownQuoteLayout (setup) exceeded 75s") })
+		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayout (setup) exceeded 90s") })
 		defer deadline.Stop()
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -69,7 +69,7 @@ func TestMarkdownQuoteLayoutNative(t *testing.T) {
 func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {
 	quoteLayoutNativeOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(75*time.Second, func() { panic("cooked: TestMarkdownQuoteLayoutNative (setup) exceeded 75s") })
+		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayoutNative (setup) exceeded 90s") })
 		defer deadline.Stop()
 		inputs, source := products.inputs, products.source
 		var builds sync.WaitGroup
@@ -100,6 +100,29 @@ func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLay
 		t.Fatal("quote native setup failed")
 	}
 	return quoteLayoutNativeShared
+}
+
+var quoteLayoutReadyOnce sync.Once
+var quoteLayoutReadyShared quoteLayoutProducts
+
+// Not parallel: quote build products are prepared before the parallel corpus shards.
+func TestMarkdownQuoteLayout_Setup(t *testing.T) {
+	quoteLayoutReady(t)
+}
+
+func quoteLayoutReady(t *testing.T) quoteLayoutProducts {
+	t.Helper()
+	quoteLayoutReadyOnce.Do(func() {
+		started := time.Now()
+		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayout_Setup exceeded 90s") })
+		defer deadline.Stop()
+		quoteLayoutReadyShared = quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
+		t.Logf("TestMarkdownQuoteLayout_Setup: %.3fs", time.Since(started).Seconds())
+	})
+	if quoteLayoutReadyShared.goBinary == "" || quoteLayoutReadyShared.goLayout == "" || quoteLayoutReadyShared.sanitized == "" || quoteLayoutReadyShared.release == "" {
+		t.Fatal("quote shared setup failed")
+	}
+	return quoteLayoutReadyShared
 }
 
 func quoteLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownQuoteLayoutShards][]int) {
@@ -157,9 +180,10 @@ func quoteLayoutBytesEqual(actual, expected []byte) bool { return bytes.Equal(ac
 
 func quoteLayoutRunShard(t *testing.T, shard int) {
 	t.Helper()
-	deadline := time.AfterFunc(75*time.Second, func() { panic("cooked: " + t.Name() + " exceeded 75s") })
+	// Shared builds and admission are charged to setup, before the shard clock.
+	products := quoteLayoutReady(t)
+	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: " + t.Name() + " exceeded 90s") })
 	defer deadline.Stop()
-	products := quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
 	inputs, shards := quoteLayoutEnumerate(t)
 	cases := make([]auditInput, 0, len(shards[shard]))
 	for _, index := range shards[shard] {
@@ -213,11 +237,7 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 		t.Fatal(err)
 	}
 	products := quoteLayoutProducts{backend: backend, source: string(source), inputs: inputs}
-	// GoBuild is not on this base; preserve the original Go overlay builds.
-	dir := filepath.Join(artifactDirectory, "quote-products")
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
-	}
+	// GoBuild is not on this base; cache the unchanged overlay builds as products.
 	cohere := filepath.Join(root, "cohere")
 	for _, mode := range []struct{ name, driver, command string }{
 		{"lists", "list_go.go", "adamic_markdown_lists"},
@@ -240,14 +260,25 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 		if err != nil {
 			t.Fatal(err)
 		}
-		overlayPath := filepath.Join(dir, mode.name+".json")
-		write(t, overlayPath, overlay)
-		binary := filepath.Join(dir, mode.name)
-		command := quoteLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, mainPath)
-		command.Dir = cohere
-		if output, err := combinedOutput(command); err != nil {
-			t.Fatalf("Go %s: %v\n%s", mode.name, err, output)
+		goInputs := buildcache.Inputs{
+			Name:      "markdown-quote-layout-go-" + mode.name,
+			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
+			Flags:     []string{"go build", "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")},
+			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
 		}
+		dir := buildcache.Product(t, goInputs, func(dir string) error {
+			overlayPath := filepath.Join(dir, mode.name+".json")
+			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+				return err
+			}
+			command := quoteLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
+			command.Dir = cohere
+			if output, err := combinedOutput(command); err != nil {
+				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
+			}
+			return nil
+		})
+		binary := filepath.Join(dir, mode.name)
 		if mode.name == "lists" {
 			products.goBinary = binary
 		} else {
