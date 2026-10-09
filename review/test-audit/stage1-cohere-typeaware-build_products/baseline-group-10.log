@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T13:11:39.973579328Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:11:39.985312507Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native"}
+{"Time":"2026-10-09T13:11:39.985547435Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"=== RUN   TestProduct_type_symbol_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:39.985587136Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"=== PAUSE TestProduct_type_symbol_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:39.985589941Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native"}
+{"Time":"2026-10-09T13:11:39.985596034Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native"}
+{"Time":"2026-10-09T13:11:39.985598076Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"=== CONT  TestProduct_type_symbol_native\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:43.451078546Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"    volume_type_symbol_test.go:192: build typeaware_six_type-symbol-checker d4ebfed40a41 hit 0.08\n"}
+{"Time":"2026-10-09T13:12:40.673863191Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"typeSymbol-build volume-type-symbol-native cold=56.823332s\n"}
+{"Time":"2026-10-09T13:12:40.676397712Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"    volume_type_symbol_test.go:202: build typeaware-volume-type-symbol-native 34d864fe92af miss 56.83\n"}
+{"Time":"2026-10-09T13:12:40.677021829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Output":"--- PASS: TestProduct_type_symbol_native (60.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:40.677265182Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_native","Elapsed":60.69}
+{"Time":"2026-10-09T13:12:40.67742315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:40.685943579Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t60.711s\n"}
+{"Time":"2026-10-09T13:12:40.686081738Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":60.713}

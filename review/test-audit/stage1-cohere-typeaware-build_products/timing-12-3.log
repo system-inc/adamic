@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T13:16:11.996681397Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:16:12.013984356Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:16:12.014185195Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== RUN   TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.014249444Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== PAUSE TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:12.014252894Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:16:12.014348131Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:16:12.014351001Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== CONT  TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:13.226369327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"    volume_type_symbol_test.go:62: build typeaware_six_type-symbol-oracle-build 85cade732e53 hit 0.08\n"}
+{"Time":"2026-10-09T13:16:13.226769885Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"    volume_type_symbol_test.go:211: build volume-type-symbol-fixtures 646951ff62aa hit 0.00\n"}
+{"Time":"2026-10-09T13:16:13.419528766Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"    volume_type_symbol_test.go:263: build volume-type-symbol-oracle-output 6b9cb19d56e0 hit 0.00\n"}
+{"Time":"2026-10-09T13:16:13.419647681Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"--- PASS: TestProduct_type_symbol_truth (1.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:13.419653708Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Elapsed":1.41}
+{"Time":"2026-10-09T13:16:13.41969806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:13.425788171Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t1.428s\n"}
+{"Time":"2026-10-09T13:16:13.425852834Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":1.429}

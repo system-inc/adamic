@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:20:36.927334821Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:20:36.93913576Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:20:36.939296618Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== RUN   TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:36.93954606Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== PAUSE TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:36.939550576Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:20:36.939633556Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth"}
+{"Time":"2026-10-09T13:20:36.939638673Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"=== CONT  TestProduct_type_symbol_truth\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:38.141864454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"    volume_type_symbol_test.go:62: build typeaware_six_type-symbol-oracle-build 85cade732e53 hit 0.10\n"}
+{"Time":"2026-10-09T13:20:38.141934184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"    volume_type_symbol_test.go:217: build volume-type-symbol-fixtures 646951ff62aa hit 0.00\n"}
+{"Time":"2026-10-09T13:20:38.142152602Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Output":"--- PASS: TestProduct_type_symbol_truth (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:38.142173609Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_truth","Elapsed":1.2}
+{"Time":"2026-10-09T13:20:38.142211403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:38.145459831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t1.217s\n"}
+{"Time":"2026-10-09T13:20:38.145547493Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":1.218}

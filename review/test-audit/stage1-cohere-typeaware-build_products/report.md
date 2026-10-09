@@ -697,7 +697,7 @@ All 35 declarations passed their own empty-answer construction probes; nproc=5; 
 
 | ID | origin file:line | Change | Failed grouped rows |
 |---|---|---|---|
-| M1 | stage1/cohere/typeaware/six_builds_test.go:323 | `path := filepath.Join(dir, product.File)` to `path := filepath.Join(dir, product.File + ".missing")` |  |
+| M1 supplemental | stage1/cohere/typeaware/six_builds_test.go:323 | `path := filepath.Join(dir, product.File)` to `path := filepath.Join(dir, product.File + ".missing")` |  |
 | M2 | stage1/cohere/typeaware/typeaware_test.go:245 | `data, err := os.ReadFile(binary)` to `data, err := os.ReadFile(binary + ".missing")` | TestProduct native family |
 | M3 | stage1/cohere/typeaware/volume_profile_Controls_test.go:201 | `return filepath.Join(directory, "volume.c")` to `return filepath.Join(directory, "missing.c")` | TestProduct_profile_controls_native, TestProduct_corpus_native |
 | M4 | stage1/cohere/typeaware/volume_type_symbol_test.go:233 | `manifest := filepath.Join(directory, "controls.manifest")` to `manifest := filepath.Join(directory, "missing.manifest")` | TestProduct_type_symbol_fixtures, TestProduct_type_symbol_truth |
@@ -734,4 +734,4 @@ Costs and limits: {
   "builds": "Per-phase build timings are in build-phases.json. Command wall includes Go test compilation; row medians use the test binary package Elapsed line. Costs overlap parallel child phases and are not additive."
 }
 
-The session began around 12:58 UTC and evidence preparation finished around 13:24 UTC. No bootstrap was needed. Per-phase build durations are saved rather than inferred from Go command wall time. All requested names, timing runs, probe runs and four bounded construction matrices are covered. Production semantic mutants, unrelated package rows, repo-wide uniqueness, and eight ordinary constructor verdicts remain uncovered. There were no requested-row skips. Scratch source was restored; only evidence is committed. No main push or pull request.
+The session began around 12:58 UTC and evidence preparation finished around 13:28 UTC. No bootstrap was needed. Per-phase build durations are saved rather than inferred from Go command wall time. All requested names, timing runs, probe runs and four bounded construction matrices are covered. Production semantic mutants, unrelated package rows, repo-wide uniqueness, and eight ordinary constructor verdicts remain uncovered. There were no requested-row skips. Scratch source was restored; only evidence is committed. No main push or pull request.

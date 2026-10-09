@@ -1,0 +1,44 @@
+{"Time":"2026-10-09T13:19:54.961817839Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:19:54.978567912Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered"}
+{"Time":"2026-10-09T13:19:54.978720077Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered","Output":"=== RUN   TestProduct_six_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978847648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered","Output":"=== PAUSE TestProduct_six_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978851041Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered"}
+{"Time":"2026-10-09T13:19:54.978854464Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered"}
+{"Time":"2026-10-09T13:19:54.978858764Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered","Output":"=== RUN   TestProduct_typeaware_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978861522Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered","Output":"=== PAUSE TestProduct_typeaware_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978863197Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered"}
+{"Time":"2026-10-09T13:19:54.978867814Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.978869746Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered","Output":"=== RUN   TestProduct_facts_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978872316Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered","Output":"=== PAUSE TestProduct_facts_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978874244Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.978876372Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.978878151Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered","Output":"=== RUN   TestProduct_query_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.97888029Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered","Output":"=== PAUSE TestProduct_query_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978882121Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.978884012Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered"}
+{"Time":"2026-10-09T13:19:54.978885943Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered","Output":"=== RUN   TestProduct_volume_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978888173Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered","Output":"=== PAUSE TestProduct_volume_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978889962Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered"}
+{"Time":"2026-10-09T13:19:54.978892022Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered"}
+{"Time":"2026-10-09T13:19:54.97890112Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered","Output":"=== CONT  TestProduct_six_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.978905827Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.978907493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered","Output":"=== CONT  TestProduct_query_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.98254838Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered","Output":"--- PASS: TestProduct_six_lowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982581933Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_six_lowered","Elapsed":0}
+{"Time":"2026-10-09T13:19:54.982602013Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered"}
+{"Time":"2026-10-09T13:19:54.982604139Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered","Output":"=== CONT  TestProduct_typeaware_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982624558Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered"}
+{"Time":"2026-10-09T13:19:54.982626908Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered","Output":"=== CONT  TestProduct_facts_cost_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982630726Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered","Output":"--- PASS: TestProduct_typeaware_lowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982633888Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_typeaware_lowered","Elapsed":0}
+{"Time":"2026-10-09T13:19:54.982635879Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered"}
+{"Time":"2026-10-09T13:19:54.982638144Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered","Output":"=== CONT  TestProduct_volume_lowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982641059Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered","Output":"--- PASS: TestProduct_query_cost_lowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982644853Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_query_cost_lowered","Elapsed":0}
+{"Time":"2026-10-09T13:19:54.982646957Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered","Output":"--- PASS: TestProduct_volume_lowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982649305Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_volume_lowered","Elapsed":0}
+{"Time":"2026-10-09T13:19:54.982651274Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered","Output":"--- PASS: TestProduct_facts_cost_lowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982653223Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_facts_cost_lowered","Elapsed":0}
+{"Time":"2026-10-09T13:19:54.982654862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:19:54.982745493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.020s\n"}
+{"Time":"2026-10-09T13:19:54.98275735Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.021}

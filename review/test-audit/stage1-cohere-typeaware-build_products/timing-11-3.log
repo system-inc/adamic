@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:16:08.89352171Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:16:08.906997315Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures"}
+{"Time":"2026-10-09T13:16:08.907087466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Output":"=== RUN   TestProduct_type_symbol_fixtures\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:08.907111987Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Output":"=== PAUSE TestProduct_type_symbol_fixtures\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:08.907114587Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures"}
+{"Time":"2026-10-09T13:16:08.907142222Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures"}
+{"Time":"2026-10-09T13:16:08.907144895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Output":"=== CONT  TestProduct_type_symbol_fixtures\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:08.907752833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Output":"    volume_type_symbol_test.go:211: build volume-type-symbol-fixtures 646951ff62aa hit 0.00\n"}
+{"Time":"2026-10-09T13:16:08.907925282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Output":"--- PASS: TestProduct_type_symbol_fixtures (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:08.907946415Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_type_symbol_fixtures","Elapsed":0}
+{"Time":"2026-10-09T13:16:08.907962899Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:16:08.908187533Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.014s\n"}
+{"Time":"2026-10-09T13:16:08.908210389Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.015}

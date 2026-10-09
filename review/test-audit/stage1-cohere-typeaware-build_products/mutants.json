@@ -18,7 +18,12 @@
       "TestProduct_typeaware_oracle",
       "TestProduct_volume_oracle"
     ],
-    "failed_rows": []
+    "failed_rows": [
+      "TestProduct sixBuildProduct family",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_native",
+      "TestProduct_type_symbol_truth"
+    ]
   },
   {
     "id": "M2",

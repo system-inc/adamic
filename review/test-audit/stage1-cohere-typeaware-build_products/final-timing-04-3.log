@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:23:32.804407095Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:23:32.820870725Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding"}
+{"Time":"2026-10-09T13:23:32.820984204Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Output":"=== RUN   TestProduct_profile_missing_binding\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:32.821017091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Output":"=== PAUSE TestProduct_profile_missing_binding\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:32.82102107Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding"}
+{"Time":"2026-10-09T13:23:32.821028995Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding"}
+{"Time":"2026-10-09T13:23:32.821032114Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Output":"=== CONT  TestProduct_profile_missing_binding\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:36.301470162Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Output":"    volume_profile_Controls_test.go:172: build typeaware_volume_missing-binding_namedScopes_wrong 595b951d5a98 hit 0.25\n"}
+{"Time":"2026-10-09T13:23:36.304312668Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Output":"--- PASS: TestProduct_profile_missing_binding (3.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:36.304351084Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestProduct_profile_missing_binding","Elapsed":3.48}
+{"Time":"2026-10-09T13:23:36.304377538Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:36.304640398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t3.500s\n"}
+{"Time":"2026-10-09T13:23:36.304745572Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":3.5}

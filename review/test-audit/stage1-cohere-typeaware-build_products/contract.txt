@@ -1,3 +1,5 @@
 CODE UNDER TEST: suite product construction and publication, as reached by the 35 product declarations. Construction mutations use the setup-check exception. No production oracle or test body mutation.
 ORACLE: self-written successful-builder and explicit artifact existence/read contracts. No semantic comparison by these declarations.
 Menu frozen before mutant runs. Empty entry returns are probes only.
+
+M1 validator mutation was excluded; replacement path mutation is supplemental and supports no verdict. M2-M4 retain the pre-run fixed menu.
