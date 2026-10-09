@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,json,time,os,re,difflib
-root=Path('/workspace/adamic');p=root/'review/test-defend/stage1-cohere-markdownblocks-array_growth_gap';pkg='./stage1/cohere/markdownblocks/'
+root=Path('/workspace/adamic');p=Path(__file__).resolve().parent;pkg='./stage1/cohere/markdownblocks/'
 def cov(name):
  d={}
  for s in (p/(name+'.cover')).read_text().splitlines()[1:]:
