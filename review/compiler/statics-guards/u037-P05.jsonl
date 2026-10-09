@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:48.655039765Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:48.662306431Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:48.66237348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== RUN   TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.66241409Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== PAUSE TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.662416624Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:48.662418737Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:48.662420439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== CONT  TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.693711599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"    namespaces_factory_test.go:42: NamespaceVar bindings = map[], want factoryCreateNodeArray and factoryCreateNumericLiteral once each\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:48.693926757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"--- FAIL: TestParserFactoryBindingHoisting (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.693932676Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Elapsed":0.03}
+{"Time":"2026-10-09T10:58:48.693952385Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.694028057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.039s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:48.694037161Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.039}

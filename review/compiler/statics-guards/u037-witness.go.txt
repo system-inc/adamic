@@ -1,0 +1,11 @@
+package lower
+import("context";"path/filepath";"testing";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/ir")
+func TestAuditSurvivorObservation(t *testing.T){
+path,err:=filepath.Abs("../oracle/testdata/namespaces_parser_factory.a");if err!=nil{t.Fatal(err)}
+program,err:=load.Load([]string{path});if err!=nil{t.Fatal(err)}
+file:=program.Files()[0];checker,release:=program.Checker(context.Background(),file);defer release()
+l:=&lowering{program:program,checker:checker,result:&ir.Program{},this:-1,functionIndex:-1}
+if err:=l.declareModule(file.Statements.Nodes);err!=nil{t.Fatal(err)}
+count:=0;for _,local:=range l.result.Locals{if local.NamespaceVar{count++}}
+t.Logf("OBSERVATION NamespaceVar bindings=%d",count)
+}

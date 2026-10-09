@@ -1,0 +1,10 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -456,6 +456,7 @@
+ }
+ 
+ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
++	if true { return nil, nil }
+ 	hoisted := []ir.Statement{}
+ 	seen := map[int]bool{}
+ 	for _, statement := range namespaceStatements(node) {
