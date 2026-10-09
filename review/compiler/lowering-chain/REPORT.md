@@ -32,3 +32,9 @@ Small reproducer: internal/oracle/testdata/047cb0d_n_arrayindex.a, preserved byt
 Following the explicit chain stop rule, the member-2 merge is aborted. The temporary test assertions are restored. The green compiler is identical to member-1's committed prefix. No exception merge commit exists. Members 3 through 9 are not attempted: generic-body-relations 2cc109e5, generics-scout-main 48391dcf, iteration-main 518eca83, namespace-value 26ccff9c, compiler/checked-any 57ea02f8, project-references-main e2aa3750 and refusal-rulings-main 8799f518. The checked-any and two added branch SHAs were verified by fetch/ls-remote.
 
 The final evidence-only commit preserves this report, raw test events, the failed once-only count log and prefix verification. Integration lane checks are run on that committed tip before pushing. No new Go test is authored; the attempted two test edits are absent from the delivery. Full repository packages/gate, WASI and stopped members' later validation are not claimed run.
+
+
+## Additional queued members
+
+Member 10: compiler/assignment-proofs-main a6f05066, a plain merge with the source's six fixture count rows.
+Member 11: no branch merge. Apply only 4e973695's internal/native/tsgo.go diff using git show 4e973695 -- internal/native/tsgo.go | git apply -3, then compare against the current main build path and focused typeaware tests and measure seconds before/after. Skip if that reuse no longer applies. These members follow member 9 and are not attempted because the chain stopped at member 2. No typeaware patch, applicability finding or timing improvement is claimed.
