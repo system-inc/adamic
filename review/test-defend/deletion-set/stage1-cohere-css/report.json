@@ -1,0 +1,231 @@
+{
+  "package": "stage1/cohere/css",
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "skipped": [
+    "TestCSSPrinterBoundaryProofs",
+    "TestCSSPrinterThroughput",
+    "TestOptionalBooleanPrinterMatchesGo",
+    "TestSharedSliceAppendAgreesWithNode"
+  ],
+  "mutants": [
+    {
+      "mutant": "audit-M1-1",
+      "file_line": "stage1/cohere/css/print.ts:12",
+      "branch": "test-audit/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterBoundaryProofs",
+        "TestCSSPrinterThroughput",
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ],
+      "witness_failures": [
+        "TestComposedMemoryChecksCanFail"
+      ]
+    },
+    {
+      "mutant": "audit-M2-2",
+      "file_line": "stage1/cohere/css/print_doc.ts:103",
+      "branch": "test-audit/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterThroughput"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "audit-M3-3",
+      "file_line": "stage1/cohere/mediaquery/index.ts:33",
+      "branch": "test-audit/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterThroughput"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "audit-M4-4",
+      "file_line": "internal/native/runtime/string_append.c:86",
+      "branch": "test-audit/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterThroughput",
+        "TestOptionalBooleanPrinterMatchesGo",
+        "TestSharedSliceAppendAgreesWithNode"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ],
+      "witness_failures": [
+        "TestComposedMemoryChecksCanFail"
+      ]
+    },
+    {
+      "mutant": "defend-D1-5",
+      "file_line": "internal/native/runtime/string_share.c:61",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestSharedSliceAppendAgreesWithNode"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-D2-6",
+      "file_line": "internal/native/runtime/string_append.c:90",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestOptionalBooleanPrinterMatchesGo",
+        "TestSharedSliceAppendAgreesWithNode"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestThePortParsesAsGoCohereDoes_332",
+        "TestThePortParsesAsGoCohereDoes_333",
+        "TestThePortParsesAsGoCohereDoes_334",
+        "TestThePortParsesAsGoCohereDoes_335",
+        "TestThePortParsesAsGoCohereDoes_387"
+      ]
+    },
+    {
+      "mutant": "defend-D3-7",
+      "file_line": "internal/native/runtime/string_append.c:77",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ],
+      "witness_failures": [
+        "TestComposedMemoryChecksCanFail"
+      ]
+    },
+    {
+      "mutant": "defend-D2-8",
+      "file_line": "stage1/cohere/css/print_doc.ts:103",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterThroughput"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-D3-9",
+      "file_line": "stage1/cohere/css/print.ts:143",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterBoundaryProofs",
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ],
+      "witness_failures": [
+        "TestComposedMemoryChecksCanFail"
+      ]
+    },
+    {
+      "mutant": "defend-D2-10",
+      "file_line": "stage1/cohere/css/print.ts:41",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-D3-11",
+      "file_line": "stage1/cohere/css/print.ts:146",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-D4-12",
+      "file_line": "stage1/cohere/css/print.ts:146",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestOptionalBooleanPrinterMatchesGo"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-B1-13",
+      "file_line": "stage1/cohere/css/input.ts:20",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterBoundaryProofs"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-B2-14",
+      "file_line": "stage1/cohere/css/parser.ts:88",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterBoundaryProofs"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    },
+    {
+      "mutant": "defend-B3-15",
+      "file_line": "stage1/cohere/css/print.ts:269",
+      "branch": "test-defend/stage1-cohere-css-print",
+      "candidates_failed": [
+        "TestCSSPrinterBoundaryProofs"
+      ],
+      "stale": false,
+      "still_caught_by": [
+        "TestCSSPrinterOptimizedMatchesGo"
+      ]
+    }
+  ],
+  "keep": [],
+  "deletable": [
+    "TestCSSPrinterBoundaryProofs",
+    "TestCSSPrinterThroughput",
+    "TestOptionalBooleanPrinterMatchesGo",
+    "TestSharedSliceAppendAgreesWithNode"
+  ],
+  "notes": {
+    "scope": "Includes all 12 eligible M/D diffs plus three conservatively included B-prefixed production diffs from the same defender evidence.",
+    "early_stop": "Runs with a clean non-witness catch stop there; later outcomes are unknown. Witness-only failures do not count."
+  },
+  "timing": {
+    "baseline_wall_seconds": 718.758,
+    "replay_wall_seconds": 2983.698,
+    "replay_min_seconds": 147.09,
+    "replay_max_seconds": 272.129
+  }
+}

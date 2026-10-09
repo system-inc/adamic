@@ -1,0 +1,48 @@
+{
+  "id": "defend-B2-14",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-B2-14 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-B2-14.log 2>&1",
+  "wall_seconds": 205.533,
+  "exit": -15,
+  "stopped_after_clean_catch": true,
+  "failed": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "witness_failures": [],
+  "panicking_tests": [],
+  "passed": [
+    "TestClosedEmptyArrayUnionGap",
+    "TestClosedOptionalBooleanConditionGap",
+    "TestClosedParserRegexGap",
+    "TestComposedMemoryChecksCanFail",
+    "TestCompositionMatchesGo",
+    "TestTheCanonicalRangeChecksCanFail"
+  ],
+  "skipped": [
+    "TestCSSThroughput"
+  ],
+  "completed_green": false,
+  "failing_lines": [
+    "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+    "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+    "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+    "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+    "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.8707998s, 62044 stylesheets/s; 49900 parsed, 95790 children",
+    "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.331276574s",
+    "optimized_test.go:29: line 34, byte 31: \"error {\\\"column\\\":1,\\\"endColumn\\\":3,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word a\\\"}\", Go cohere \"error {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":1,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word a\\\"}\""
+  ],
+  "still_caught_by": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/css/",
+    "-skip",
+    "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+  ]
+}

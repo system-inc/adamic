@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -74,7 +74,7 @@
+ 		}
+ 		result = grown(length, capacity);
+ 		if (length > 0) {
+-			memcpy((char *)result->bytes, string->bytes, length);
++			memcpy((char *)result->bytes, string->bytes, length - 1);
+ 		}
+ 	}
+ 	// A part that is the string itself is read from its own bytes, untouched, since that append

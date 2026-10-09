@@ -1,0 +1,48 @@
+{
+  "id": "defend-D2-8",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D2-8 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D2-8.log 2>&1",
+  "wall_seconds": 197.623,
+  "exit": -15,
+  "stopped_after_clean_catch": true,
+  "failed": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "witness_failures": [],
+  "panicking_tests": [],
+  "passed": [
+    "TestClosedEmptyArrayUnionGap",
+    "TestClosedOptionalBooleanConditionGap",
+    "TestClosedParserRegexGap",
+    "TestComposedMemoryChecksCanFail",
+    "TestCompositionMatchesGo",
+    "TestTheCanonicalRangeChecksCanFail"
+  ],
+  "skipped": [
+    "TestCSSThroughput"
+  ],
+  "completed_green": false,
+  "failing_lines": [
+    "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+    "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+    "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+    "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+    "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.803404924s, 85667 stylesheets/s; 49900 parsed, 95790 children",
+    "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.210848912s",
+    "optimized_test.go:29: line 234, byte 206: \"rgin: var(--a-long-custom-property-name)\\\\n    var(--another-long-custom-property) var(--yet-another-long-property)\\\\n    var(--and-the-last-one-here);\\\\n}\\\\n\\\"\", Go cohere \"rgin: var(--a-long-custom-property-name) var(--another-long-custom-property)\\\\n    var(--yet-another-long-property) var(--and-the-last-one-here);\\\\n}\\\\n\\\"\""
+  ],
+  "still_caught_by": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/css/",
+    "-skip",
+    "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+  ]
+}

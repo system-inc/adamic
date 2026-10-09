@@ -1,0 +1,1413 @@
+[
+  {
+    "mutant": "audit-M1-1",
+    "original_id": "M1",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M1.diff",
+    "file_line": "stage1/cohere/css/print.ts:12",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs",
+      "TestCSSPrinterThroughput",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "audit-M1-1",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/audit-M1-1 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/audit-M1-1.log 2>&1",
+        "wall_seconds": 147.09,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo",
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "witness_failures": [
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "memory_checks_test.go:25: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 2 inputs, 2 formatted, elapsed 852.406\u00b5s",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 9: \"\\\"a {\\\\n   color: red;\\\\n   margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 9: \"\\\"a {\\\\n   color: red;\\\\n   margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 9: \"\\\"a {\\\\n   color: red;\\\\n   margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.869792944s, 83685 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.203428345s",
+          "optimized_test.go:29: line 2, byte 12: \"\\\"rules:\\\\n   selectors,\\\\n   declarations,\\\\n   empty rules,\\\\n   semicolons;\\\\n\\\"\", Go cohere \"\\\"rules:\\\\n  selectors,\\\\n  declarations,\\\\n  empty rules,\\\\n  semicolons;\\\\n\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "completed_green": false
+  },
+  {
+    "mutant": "audit-M2-2",
+    "original_id": "M2",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M2.diff",
+    "file_line": "stage1/cohere/css/print_doc.ts:103",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "audit-M2-2",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/audit-M2-2 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/audit-M2-2.log 2>&1",
+        "wall_seconds": 210.61,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.250513382s, 73884 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.232957705s",
+          "optimized_test.go:29: line 234, byte 206: \"rgin: var(--a-long-custom-property-name)\\\\n    var(--another-long-custom-property) var(--yet-another-long-property)\\\\n    var(--and-the-last-one-here);\\\\n}\\\\n\\\"\", Go cohere \"rgin: var(--a-long-custom-property-name) var(--another-long-custom-property)\\\\n    var(--yet-another-long-property) var(--and-the-last-one-here);\\\\n}\\\\n\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "audit-M3-3",
+    "original_id": "M3",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M3.diff",
+    "file_line": "stage1/cohere/mediaquery/index.ts:33",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree",
+      "TestClosedPrinterRegexGap"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "audit-M3-3",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/audit-M3-3 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/audit-M3-3.log 2>&1",
+        "wall_seconds": 195.788,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.03432464s, 79148 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.34772595s",
+          "optimized_test.go:29: line 66, byte 31: \"\\\"@media screen and (min-width:100px) , print and (orientation:LANDSCAPE) {\\\\n  a {\\\\n    x: y;\\\\n  }\\\\n}\\\\n@media (min-width:640PX) and (max-width:1023.50p\", Go cohere \"\\\"@media screen and (min-width: 100px), print and (orientation: LANDSCAPE) {\\\\n  a {\\\\n    x: y;\\\\n  }\\\\n}\\\\n@media (min-width: 640px) and (max-width: 1023.\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "audit-M4-4",
+    "original_id": "M4",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M4.diff",
+    "file_line": "internal/native/runtime/string_append.c:86",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "audit-M4-4",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/audit-M4-4 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/audit-M4-4.log 2>&1",
+        "wall_seconds": 163.38,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo",
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "witness_failures": [
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "memory_checks_test.go:25: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 2 inputs, 2 formatted, elapsed 734.901\u00b5s",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.7394296s, 87668 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.188635895s",
+          "optimized_test.go:26: optimized default: 70 adamic: panic: missing CSS byte offset"
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D1-5",
+    "original_id": "D1",
+    "file": "review/test-defend/stage1-cohere-css-print/D1.diff",
+    "file_line": "internal/native/runtime/string_share.c:61",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestCSSPrinterAgreesWithGo_012",
+      "TestCSSPrinterAgreesWithGo_013",
+      "TestCSSPrinterAgreesWithGo_014",
+      "TestCSSPrinterAgreesWithGo_015",
+      "TestCSSPrinterAgreesWithGo_032",
+      "TestCSSPrinterAgreesWithGo_033",
+      "TestCSSPrinterAgreesWithGo_034",
+      "TestCSSPrinterAgreesWithGo_035",
+      "TestCSSPrinterAgreesWithGo_036",
+      "TestCSSPrinterAgreesWithGo_037",
+      "TestCSSPrinterAgreesWithGo_038",
+      "TestCSSPrinterAgreesWithGo_039",
+      "TestCSSPrinterAgreesWithGo_040",
+      "TestCSSPrinterAgreesWithGo_041",
+      "TestCSSPrinterAgreesWithGo_042",
+      "TestCSSPrinterAgreesWithGo_043",
+      "TestCSSPrinterAgreesWithGo_044",
+      "TestCSSPrinterAgreesWithGo_045",
+      "TestCSSPrinterAgreesWithGo_046",
+      "TestCSSPrinterAgreesWithGo_047",
+      "TestCSSPrinterAgreesWithGo_048",
+      "TestCSSPrinterAgreesWithGo_049",
+      "TestCSSPrinterAgreesWithGo_050",
+      "TestCSSPrinterAgreesWithGo_051",
+      "TestCSSPrinterAgreesWithGo_052",
+      "TestCSSPrinterAgreesWithGo_053",
+      "TestCSSPrinterAgreesWithGo_054",
+      "TestCSSPrinterAgreesWithGo_055",
+      "TestCSSPrinterAgreesWithGo_056",
+      "TestCSSPrinterAgreesWithGo_057",
+      "TestCSSPrinterAgreesWithGo_058",
+      "TestCSSPrinterAgreesWithGo_059",
+      "TestCSSPrinterAgreesWithGo_060",
+      "TestCSSPrinterAgreesWithGo_061",
+      "TestCSSPrinterAgreesWithGo_062",
+      "TestCSSPrinterAgreesWithGo_063",
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015",
+      "TestThePortParsesAsGoCohereDoes_000",
+      "TestThePortParsesAsGoCohereDoes_002",
+      "TestThePortParsesAsGoCohereDoes_003",
+      "TestThePortParsesAsGoCohereDoes_007",
+      "TestThePortParsesAsGoCohereDoes_012",
+      "TestThePortParsesAsGoCohereDoes_014",
+      "TestThePortParsesAsGoCohereDoes_015",
+      "TestThePortParsesAsGoCohereDoes_020",
+      "TestThePortParsesAsGoCohereDoes_021",
+      "TestThePortParsesAsGoCohereDoes_023",
+      "TestThePortParsesAsGoCohereDoes_031",
+      "TestThePortParsesAsGoCohereDoes_033",
+      "TestThePortParsesAsGoCohereDoes_034",
+      "TestThePortParsesAsGoCohereDoes_038",
+      "TestThePortParsesAsGoCohereDoes_040",
+      "TestThePortParsesAsGoCohereDoes_041",
+      "TestThePortParsesAsGoCohereDoes_045",
+      "TestThePortParsesAsGoCohereDoes_046",
+      "TestThePortParsesAsGoCohereDoes_049",
+      "TestThePortParsesAsGoCohereDoes_061",
+      "TestThePortParsesAsGoCohereDoes_062",
+      "TestThePortParsesAsGoCohereDoes_068",
+      "TestThePortParsesAsGoCohereDoes_069",
+      "TestThePortParsesAsGoCohereDoes_071",
+      "TestThePortParsesAsGoCohereDoes_072",
+      "TestThePortParsesAsGoCohereDoes_073",
+      "TestThePortParsesAsGoCohereDoes_075",
+      "TestThePortParsesAsGoCohereDoes_076",
+      "TestThePortParsesAsGoCohereDoes_077",
+      "TestThePortParsesAsGoCohereDoes_080",
+      "TestThePortParsesAsGoCohereDoes_084",
+      "TestThePortParsesAsGoCohereDoes_088",
+      "TestThePortParsesAsGoCohereDoes_094",
+      "TestThePortParsesAsGoCohereDoes_097",
+      "TestThePortParsesAsGoCohereDoes_102",
+      "TestThePortParsesAsGoCohereDoes_103",
+      "TestThePortParsesAsGoCohereDoes_106",
+      "TestThePortParsesAsGoCohereDoes_108",
+      "TestThePortParsesAsGoCohereDoes_110",
+      "TestThePortParsesAsGoCohereDoes_112",
+      "TestThePortParsesAsGoCohereDoes_113",
+      "TestThePortParsesAsGoCohereDoes_116",
+      "TestThePortParsesAsGoCohereDoes_124",
+      "TestThePortParsesAsGoCohereDoes_126",
+      "TestThePortParsesAsGoCohereDoes_128",
+      "TestThePortParsesAsGoCohereDoes_130",
+      "TestThePortParsesAsGoCohereDoes_133",
+      "TestThePortParsesAsGoCohereDoes_142",
+      "TestThePortParsesAsGoCohereDoes_143",
+      "TestThePortParsesAsGoCohereDoes_144",
+      "TestThePortParsesAsGoCohereDoes_145",
+      "TestThePortParsesAsGoCohereDoes_148",
+      "TestThePortParsesAsGoCohereDoes_150",
+      "TestThePortParsesAsGoCohereDoes_152",
+      "TestThePortParsesAsGoCohereDoes_155",
+      "TestThePortParsesAsGoCohereDoes_156",
+      "TestThePortParsesAsGoCohereDoes_157",
+      "TestThePortParsesAsGoCohereDoes_169",
+      "TestThePortParsesAsGoCohereDoes_170",
+      "TestThePortParsesAsGoCohereDoes_173",
+      "TestThePortParsesAsGoCohereDoes_176",
+      "TestThePortParsesAsGoCohereDoes_177",
+      "TestThePortParsesAsGoCohereDoes_178",
+      "TestThePortParsesAsGoCohereDoes_179",
+      "TestThePortParsesAsGoCohereDoes_180",
+      "TestThePortParsesAsGoCohereDoes_181",
+      "TestThePortParsesAsGoCohereDoes_184",
+      "TestThePortParsesAsGoCohereDoes_185",
+      "TestThePortParsesAsGoCohereDoes_188",
+      "TestThePortParsesAsGoCohereDoes_192",
+      "TestThePortParsesAsGoCohereDoes_194",
+      "TestThePortParsesAsGoCohereDoes_195",
+      "TestThePortParsesAsGoCohereDoes_199",
+      "TestThePortParsesAsGoCohereDoes_201",
+      "TestThePortParsesAsGoCohereDoes_207",
+      "TestThePortParsesAsGoCohereDoes_208",
+      "TestThePortParsesAsGoCohereDoes_210",
+      "TestThePortParsesAsGoCohereDoes_211",
+      "TestThePortParsesAsGoCohereDoes_213",
+      "TestThePortParsesAsGoCohereDoes_214",
+      "TestThePortParsesAsGoCohereDoes_215",
+      "TestThePortParsesAsGoCohereDoes_216",
+      "TestThePortParsesAsGoCohereDoes_217",
+      "TestThePortParsesAsGoCohereDoes_219",
+      "TestThePortParsesAsGoCohereDoes_221",
+      "TestThePortParsesAsGoCohereDoes_222",
+      "TestThePortParsesAsGoCohereDoes_223",
+      "TestThePortParsesAsGoCohereDoes_225",
+      "TestThePortParsesAsGoCohereDoes_227",
+      "TestThePortParsesAsGoCohereDoes_228",
+      "TestThePortParsesAsGoCohereDoes_230",
+      "TestThePortParsesAsGoCohereDoes_233",
+      "TestThePortParsesAsGoCohereDoes_234",
+      "TestThePortParsesAsGoCohereDoes_237",
+      "TestThePortParsesAsGoCohereDoes_240",
+      "TestThePortParsesAsGoCohereDoes_242",
+      "TestThePortParsesAsGoCohereDoes_250",
+      "TestThePortParsesAsGoCohereDoes_251",
+      "TestThePortParsesAsGoCohereDoes_254",
+      "TestThePortParsesAsGoCohereDoes_257",
+      "TestThePortParsesAsGoCohereDoes_258",
+      "TestThePortParsesAsGoCohereDoes_259",
+      "TestThePortParsesAsGoCohereDoes_260",
+      "TestThePortParsesAsGoCohereDoes_261",
+      "TestThePortParsesAsGoCohereDoes_262",
+      "TestThePortParsesAsGoCohereDoes_264",
+      "TestThePortParsesAsGoCohereDoes_265",
+      "TestThePortParsesAsGoCohereDoes_267",
+      "TestThePortParsesAsGoCohereDoes_268",
+      "TestThePortParsesAsGoCohereDoes_270",
+      "TestThePortParsesAsGoCohereDoes_273",
+      "TestThePortParsesAsGoCohereDoes_274",
+      "TestThePortParsesAsGoCohereDoes_276",
+      "TestThePortParsesAsGoCohereDoes_277",
+      "TestThePortParsesAsGoCohereDoes_278",
+      "TestThePortParsesAsGoCohereDoes_283",
+      "TestThePortParsesAsGoCohereDoes_285",
+      "TestThePortParsesAsGoCohereDoes_287",
+      "TestThePortParsesAsGoCohereDoes_288",
+      "TestThePortParsesAsGoCohereDoes_291",
+      "TestThePortParsesAsGoCohereDoes_299",
+      "TestThePortParsesAsGoCohereDoes_300",
+      "TestThePortParsesAsGoCohereDoes_302",
+      "TestThePortParsesAsGoCohereDoes_304",
+      "TestThePortParsesAsGoCohereDoes_308",
+      "TestThePortParsesAsGoCohereDoes_309",
+      "TestThePortParsesAsGoCohereDoes_312",
+      "TestThePortParsesAsGoCohereDoes_315",
+      "TestThePortParsesAsGoCohereDoes_316",
+      "TestThePortParsesAsGoCohereDoes_319",
+      "TestThePortParsesAsGoCohereDoes_320",
+      "TestThePortParsesAsGoCohereDoes_323",
+      "TestThePortParsesAsGoCohereDoes_325",
+      "TestThePortParsesAsGoCohereDoes_326",
+      "TestThePortParsesAsGoCohereDoes_330",
+      "TestThePortParsesAsGoCohereDoes_333",
+      "TestThePortParsesAsGoCohereDoes_334",
+      "TestThePortParsesAsGoCohereDoes_335",
+      "TestThePortParsesAsGoCohereDoes_337",
+      "TestThePortParsesAsGoCohereDoes_338",
+      "TestThePortParsesAsGoCohereDoes_339",
+      "TestThePortParsesAsGoCohereDoes_341",
+      "TestThePortParsesAsGoCohereDoes_346",
+      "TestThePortParsesAsGoCohereDoes_347",
+      "TestThePortParsesAsGoCohereDoes_350",
+      "TestThePortParsesAsGoCohereDoes_353",
+      "TestThePortParsesAsGoCohereDoes_358",
+      "TestThePortParsesAsGoCohereDoes_360",
+      "TestThePortParsesAsGoCohereDoes_363",
+      "TestThePortParsesAsGoCohereDoes_369",
+      "TestThePortParsesAsGoCohereDoes_370",
+      "TestThePortParsesAsGoCohereDoes_376",
+      "TestThePortParsesAsGoCohereDoes_378",
+      "TestThePortParsesAsGoCohereDoes_379",
+      "TestThePortParsesAsGoCohereDoes_381",
+      "TestThePortParsesAsGoCohereDoes_384",
+      "TestThePortParsesAsGoCohereDoes_385"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D1-5",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D1-5 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D1-5.log 2>&1",
+        "wall_seconds": 205.873,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.81631443s, 85275 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.78637618s",
+          "optimized_test.go:26: optimized default: 70 adamic: panic: RangeError: Invalid code point 4249596"
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D2-6",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/D2.diff",
+    "file_line": "internal/native/runtime/string_append.c:90",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestThePortParsesAsGoCohereDoes_073"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D2-6",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D2-6 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D2-6.log 2>&1",
+        "wall_seconds": 272.129,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestThePortParsesAsGoCohereDoes_332",
+          "TestThePortParsesAsGoCohereDoes_333",
+          "TestThePortParsesAsGoCohereDoes_334",
+          "TestThePortParsesAsGoCohereDoes_335",
+          "TestThePortParsesAsGoCohereDoes_387"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestCSSParserOptimizedMatchesNode",
+          "TestCSSPrinterOptimizedMatchesGo",
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestClosedPrinterRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestCompositionMatchesGo_Setup",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSProfileArtifacts",
+          "TestCSSProfileSnapshotsAgree",
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "top_level_shards_test.go:1625: build css_Go_parser_oracle cf0cd65617d2 miss 3.85",
+          "parser_shards_test.go:632: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.904471582s, 82686 stylesheets/s; 49900 parsed, 95790 children",
+          "top_level_shards_test.go:1626: build css_Go_parser_oracle_answers 58012f145d9c miss 3.80",
+          "css_test.go:154: union: 24016 live cases x 4 original checks = 96064 unique case IDs across 388 shards",
+          "setup_products_test.go:29: build css_parser_lowering_and_backends 9eebc5207fff miss 2.09",
+          "css_test.go:161: build css_parser_sanitized 39c1710f1019 miss 3.11",
+          "setup_products_test.go:29: build css_mutant-0_lowering_and_backends 838fee055da0 miss 2.58",
+          "css_test.go:161: build css_mutant-0_sanitized 50465a865812 miss 3.35",
+          "setup_products_test.go:29: build css_mutant-1_lowering_and_backends 82e98b96bef7 miss 2.01",
+          "css_test.go:161: build css_mutant-1_sanitized 0c6c6b4efd28 miss 3.42",
+          "setup_products_test.go:29: build css_mutant-2_lowering_and_backends e7b9eac923b7 miss 2.15",
+          "css_test.go:161: build css_mutant-2_sanitized 8d006fefba4d miss 3.28",
+          "css_test.go:174: setup before shards 30.379506s, including cached build products",
+          "top_level_shards_test.go:1613: selected 388/388 shards, ADAMIC_TEST_SHARD=\"\"",
+          "top_level_shards_test.go:1405: selected 388/388 shards, ADAMIC_TEST_SHARD=\"\"",
+          "css_test.go:184: shard-387: agreement, 63 stable case IDs, mutant -1",
+          "top_level_shards_test.go:1401: selected 388/388 shards, ADAMIC_TEST_SHARD=\"\"",
+          "top_level_shards_test.go:1397: selected 388/388 shards, ADAMIC_TEST_SHARD=\"\"",
+          "css_test.go:184: shard-335: agreement, 60 stable case IDs, mutant -1",
+          "top_level_shards_test.go:1393: selected 388/388 shards, ADAMIC_TEST_SHARD=\"\"",
+          "css_test.go:184: shard-332: agreement, 61 stable case IDs, mutant -1",
+          "css_test.go:184: shard-334: agreement, 60 stable case IDs, mutant -1",
+          "css_test.go:184: shard-333: agreement, 64 stable case IDs, mutant -1",
+          "css_test.go:202: leaks: exit 1",
+          "css_test.go:204: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory",
+          "css_test.go:202: leaks: exit 1",
+          "css_test.go:204: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory",
+          "css_test.go:202: leaks: exit 1",
+          "css_test.go:204: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory",
+          "css_test.go:202: leaks: exit 1",
+          "css_test.go:204: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory",
+          "css_test.go:202: leaks: exit 1",
+          "css_test.go:204: set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory"
+        ],
+        "still_caught_by": [
+          "TestThePortParsesAsGoCohereDoes_332",
+          "TestThePortParsesAsGoCohereDoes_333",
+          "TestThePortParsesAsGoCohereDoes_334",
+          "TestThePortParsesAsGoCohereDoes_335",
+          "TestThePortParsesAsGoCohereDoes_387"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestThePortParsesAsGoCohereDoes_332",
+      "TestThePortParsesAsGoCohereDoes_333",
+      "TestThePortParsesAsGoCohereDoes_334",
+      "TestThePortParsesAsGoCohereDoes_335",
+      "TestThePortParsesAsGoCohereDoes_387"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D3-7",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/D3.diff",
+    "file_line": "internal/native/runtime/string_append.c:77",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestThePortParsesAsGoCohereDoes_073"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D3-7",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D3-7 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D3-7.log 2>&1",
+        "wall_seconds": 180.031,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo",
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "witness_failures": [
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "memory_checks_test.go:25: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 2 inputs, 2 formatted, elapsed 699.098\u00b5s",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 2: \"\\\"\\\\u0001\\\\u0001\\\\u0000\\\\n\\\\u0001\\\\u0000color\\\\u0000 red;\\\\n\\\\u0001\\\\u0000margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 2: \"\\\"\\\\u0001\\\\u0001\\\\u0000\\\\n\\\\u0001\\\\u0000color\\\\u0000 red;\\\\n\\\\u0001\\\\u0000margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 2: \"\\\"\\\\u0000\\\\u0000\\\\u0000\\\\n\\\\u0000\\\\u0000color\\\\u0000 red;\\\\n\\\\u0000\\\\u0000margin: 0.5px;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.913802889s, 82421 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.446796001s",
+          "optimized_test.go:26: optimized default: -1"
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D2-8",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/D2.diff",
+    "file_line": "stage1/cohere/css/print_doc.ts:103",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D2-8",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D2-8 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D2-8.log 2>&1",
+        "wall_seconds": 197.623,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.803404924s, 85667 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.210848912s",
+          "optimized_test.go:29: line 234, byte 206: \"rgin: var(--a-long-custom-property-name)\\\\n    var(--another-long-custom-property) var(--yet-another-long-property)\\\\n    var(--and-the-last-one-here);\\\\n}\\\\n\\\"\", Go cohere \"rgin: var(--a-long-custom-property-name) var(--another-long-custom-property)\\\\n    var(--yet-another-long-property) var(--and-the-last-one-here);\\\\n}\\\\n\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D3-9",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/D3.diff",
+    "file_line": "stage1/cohere/css/print.ts:143",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D3-9",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D3-9 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D3-9.log 2>&1",
+        "wall_seconds": 155.306,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo",
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "witness_failures": [
+          "TestComposedMemoryChecksCanFail"
+        ],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "memory_checks_test.go:25: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 2 inputs, 2 formatted, elapsed 2.104015ms",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 19: \"\\\"a {\\\\n  color: red:\\\\n  margin: 0.5px:\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 19: \"\\\"a {\\\\n  color: red:\\\\n  margin: 0.5px:\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 19: \"\\\"a {\\\\n  color: red:\\\\n  margin: 0.5px:\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.705380535s, 88771 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.339604094s",
+          "optimized_test.go:29: line 2, byte 69: \"larations,\\\\n  empty rules,\\\\n  semicolons:\\\\n\\\"\", Go cohere \"larations,\\\\n  empty rules,\\\\n  semicolons;\\\\n\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [
+      "TestComposedMemoryChecksCanFail"
+    ],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D2-10",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D2.diff",
+    "file_line": "stage1/cohere/css/print.ts:41",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D2-10",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D2-10 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D2-10.log 2>&1",
+        "wall_seconds": 203.428,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.049799643s, 78746 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.16608818s",
+          "optimized_test.go:29: line 8926, byte 6905: \"elector(svg|a) {\\\\n}\\\\n@supports selector(*|B) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(\\\\n  .a,\\\\n  .b,\\\\n  :not(asdasld\", Go cohere \"elector(svg|a) {\\\\n}\\\\n@supports selector(|B) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(|*) {\\\\n}\\\\n@supports selector(\\\\n  .a,\\\\n  .b,\\\\n  :not(asdasldas\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D3-11",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D3.diff",
+    "file_line": "stage1/cohere/css/print.ts:146",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D3-11",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D3-11 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D3-11.log 2>&1",
+        "wall_seconds": 200.279,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.804777415s, 85625 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.335053051s",
+          "optimized_test.go:29: line 258, byte 21: \"\\\"a {\\\\n  color: red !default;\\\\n  margin: 0 !default;\\\\n  padding: 0 !default;\\\\n  top: 0 !default;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red !important;\\\\n  margin: 0 !important;\\\\n  padding: 0 !important;\\\\n  top: 0 !important;\\\\n}\\\\n\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-D4-12",
+    "original_id": "D4",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D4.diff",
+    "file_line": "stage1/cohere/css/print.ts:146",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "runs": [
+      {
+        "id": "defend-D4-12",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D4-12 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D4-12.log 2>&1",
+        "wall_seconds": 227.596,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.069913445s, 78230 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.31155546s",
+          "optimized_test.go:29: line 622, byte 21: \"\\\"$a: 1px;\\\\n$b: 2px !global;\\\\n$c: red !global;\\\\n$d: 3px !global  !global;\\\\na {\\\\n  $e: 1 !global;\\\\n  width: $a + $b;\\\\n  height: $a * 2;\\\\n  mar\", Go cohere \"\\\"$a: 1px;\\\\n$b: 2px !default;\\\\n$c: red !global;\\\\n$d: 3px !default  !global;\\\\na {\\\\n  $e: 1 !default;\\\\n  width: $a + $b;\\\\n  height: $a * 2;\\\\n  \""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-B1-13",
+    "original_id": "B1",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B1.diff",
+    "file_line": "stage1/cohere/css/input.ts:20",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills.",
+    "runs": [
+      {
+        "id": "defend-B1-13",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-B1-13 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-B1-13.log 2>&1",
+        "wall_seconds": 209.827,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.00182821s, 80005 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.287511051s",
+          "optimized_test.go:29: line 546, byte 1: \"error {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":3,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown \", Go cohere \"\\\"\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-B2-14",
+    "original_id": "B2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B2.diff",
+    "file_line": "stage1/cohere/css/parser.ts:88",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills.",
+    "runs": [
+      {
+        "id": "defend-B2-14",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-B2-14 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-B2-14.log 2>&1",
+        "wall_seconds": 205.533,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.8707998s, 62044 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.331276574s",
+          "optimized_test.go:29: line 34, byte 31: \"error {\\\"column\\\":1,\\\"endColumn\\\":3,\\\"endLine\\\":1,\\\"endOffset\\\":2,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word a\\\"}\", Go cohere \"error {\\\"column\\\":1,\\\"endColumn\\\":2,\\\"endLine\\\":1,\\\"endOffset\\\":1,\\\"line\\\":1,\\\"name\\\":\\\"CssSyntaxError\\\",\\\"offset\\\":0,\\\"reason\\\":\\\"Unknown word a\\\"}\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  },
+  {
+    "mutant": "defend-B3-15",
+    "original_id": "B3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B3.diff",
+    "file_line": "stage1/cohere/css/print.ts:269",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills.",
+    "runs": [
+      {
+        "id": "defend-B3-15",
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-B3-15 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-B3-15.log 2>&1",
+        "wall_seconds": 209.205,
+        "exit": -15,
+        "stopped_after_clean_catch": true,
+        "failed": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "passed": [
+          "TestClosedEmptyArrayUnionGap",
+          "TestClosedOptionalBooleanConditionGap",
+          "TestClosedParserRegexGap",
+          "TestComposedMemoryChecksCanFail",
+          "TestCompositionMatchesGo",
+          "TestTheCanonicalRangeChecksCanFail"
+        ],
+        "skipped": [
+          "TestCSSThroughput"
+        ],
+        "completed_green": false,
+        "failing_lines": [
+          "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+          "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+          "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+          "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+          "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.386408493s, 70919 stylesheets/s; 49900 parsed, 95790 children",
+          "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+          "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.323737414s",
+          "optimized_test.go:29: line 2398, byte 1: \"\\\"---\\\\ntitle: x\\\\n---\\\\n\\\\na {\\\\n  b: c;\\\\n}\\\\n\\\"\", Go cohere \"error \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\""
+        ],
+        "still_caught_by": [
+          "TestCSSPrinterOptimizedMatchesGo"
+        ],
+        "argv": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/css/",
+          "-skip",
+          "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+        ]
+      }
+    ],
+    "still_caught_by": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "completed_green": false
+  }
+]

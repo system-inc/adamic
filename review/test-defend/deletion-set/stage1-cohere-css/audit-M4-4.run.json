@@ -1,0 +1,55 @@
+{
+  "id": "audit-M4-4",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/audit-M4-4 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/audit-M4-4.log 2>&1",
+  "wall_seconds": 163.38,
+  "exit": -15,
+  "stopped_after_clean_catch": true,
+  "failed": [
+    "TestCSSPrinterOptimizedMatchesGo",
+    "TestComposedMemoryChecksCanFail"
+  ],
+  "witness_failures": [
+    "TestComposedMemoryChecksCanFail"
+  ],
+  "panicking_tests": [],
+  "passed": [
+    "TestClosedEmptyArrayUnionGap",
+    "TestClosedOptionalBooleanConditionGap",
+    "TestClosedParserRegexGap",
+    "TestCompositionMatchesGo",
+    "TestTheCanonicalRangeChecksCanFail"
+  ],
+  "skipped": [
+    "TestCSSThroughput"
+  ],
+  "completed_green": false,
+  "failing_lines": [
+    "memory_checks_test.go:25: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 2 inputs, 2 formatted, elapsed 734.901\u00b5s",
+    "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+    "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+    "memory_checks_test.go:68: ordinary output must survive: 0  line 2, byte 1: \"error \\\"css: Unexpected PostCSS node type: \\\\\\\"\\\\\\\".\\\"\", Go cohere \"\\\"a {\\\\n  color: red;\\\\n  margin: 0.5px;\\\\n}\\\\n\\\"\"",
+    "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+    "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+    "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+    "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+    "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.7394296s, 87668 stylesheets/s; 49900 parsed, 95790 children",
+    "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.188635895s",
+    "optimized_test.go:26: optimized default: 70 adamic: panic: missing CSS byte offset"
+  ],
+  "still_caught_by": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/css/",
+    "-skip",
+    "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+  ]
+}

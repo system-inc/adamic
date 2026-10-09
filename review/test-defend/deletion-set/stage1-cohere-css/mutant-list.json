@@ -1,0 +1,490 @@
+[
+  {
+    "mutant": "audit-M1-1",
+    "original_id": "M1",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M1.diff",
+    "file_line": "stage1/cohere/css/print.ts:12",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs",
+      "TestCSSPrinterThroughput",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "audit-M2-2",
+    "original_id": "M2",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M2.diff",
+    "file_line": "stage1/cohere/css/print_doc.ts:103",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "audit-M3-3",
+    "original_id": "M3",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M3.diff",
+    "file_line": "stage1/cohere/mediaquery/index.ts:33",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree",
+      "TestClosedPrinterRegexGap"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "audit-M4-4",
+    "original_id": "M4",
+    "file": "review/test-audit/stage1-cohere-css-print/diffs/M4.diff",
+    "file_line": "internal/native/runtime/string_append.c:86",
+    "branch": "test-audit/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-audit/stage1-cohere-css-print/matrix-runs.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D1-5",
+    "original_id": "D1",
+    "file": "review/test-defend/stage1-cohere-css-print/D1.diff",
+    "file_line": "internal/native/runtime/string_share.c:61",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestCSSPrinterAgreesWithGo_012",
+      "TestCSSPrinterAgreesWithGo_013",
+      "TestCSSPrinterAgreesWithGo_014",
+      "TestCSSPrinterAgreesWithGo_015",
+      "TestCSSPrinterAgreesWithGo_032",
+      "TestCSSPrinterAgreesWithGo_033",
+      "TestCSSPrinterAgreesWithGo_034",
+      "TestCSSPrinterAgreesWithGo_035",
+      "TestCSSPrinterAgreesWithGo_036",
+      "TestCSSPrinterAgreesWithGo_037",
+      "TestCSSPrinterAgreesWithGo_038",
+      "TestCSSPrinterAgreesWithGo_039",
+      "TestCSSPrinterAgreesWithGo_040",
+      "TestCSSPrinterAgreesWithGo_041",
+      "TestCSSPrinterAgreesWithGo_042",
+      "TestCSSPrinterAgreesWithGo_043",
+      "TestCSSPrinterAgreesWithGo_044",
+      "TestCSSPrinterAgreesWithGo_045",
+      "TestCSSPrinterAgreesWithGo_046",
+      "TestCSSPrinterAgreesWithGo_047",
+      "TestCSSPrinterAgreesWithGo_048",
+      "TestCSSPrinterAgreesWithGo_049",
+      "TestCSSPrinterAgreesWithGo_050",
+      "TestCSSPrinterAgreesWithGo_051",
+      "TestCSSPrinterAgreesWithGo_052",
+      "TestCSSPrinterAgreesWithGo_053",
+      "TestCSSPrinterAgreesWithGo_054",
+      "TestCSSPrinterAgreesWithGo_055",
+      "TestCSSPrinterAgreesWithGo_056",
+      "TestCSSPrinterAgreesWithGo_057",
+      "TestCSSPrinterAgreesWithGo_058",
+      "TestCSSPrinterAgreesWithGo_059",
+      "TestCSSPrinterAgreesWithGo_060",
+      "TestCSSPrinterAgreesWithGo_061",
+      "TestCSSPrinterAgreesWithGo_062",
+      "TestCSSPrinterAgreesWithGo_063",
+      "TestCompositionMatchesGo_000",
+      "TestCompositionMatchesGo_001",
+      "TestCompositionMatchesGo_002",
+      "TestCompositionMatchesGo_003",
+      "TestCompositionMatchesGo_004",
+      "TestCompositionMatchesGo_005",
+      "TestCompositionMatchesGo_006",
+      "TestCompositionMatchesGo_007",
+      "TestCompositionMatchesGo_008",
+      "TestCompositionMatchesGo_009",
+      "TestCompositionMatchesGo_010",
+      "TestCompositionMatchesGo_011",
+      "TestCompositionMatchesGo_012",
+      "TestCompositionMatchesGo_013",
+      "TestCompositionMatchesGo_014",
+      "TestCompositionMatchesGo_015",
+      "TestThePortParsesAsGoCohereDoes_000",
+      "TestThePortParsesAsGoCohereDoes_002",
+      "TestThePortParsesAsGoCohereDoes_003",
+      "TestThePortParsesAsGoCohereDoes_007",
+      "TestThePortParsesAsGoCohereDoes_012",
+      "TestThePortParsesAsGoCohereDoes_014",
+      "TestThePortParsesAsGoCohereDoes_015",
+      "TestThePortParsesAsGoCohereDoes_020",
+      "TestThePortParsesAsGoCohereDoes_021",
+      "TestThePortParsesAsGoCohereDoes_023",
+      "TestThePortParsesAsGoCohereDoes_031",
+      "TestThePortParsesAsGoCohereDoes_033",
+      "TestThePortParsesAsGoCohereDoes_034",
+      "TestThePortParsesAsGoCohereDoes_038",
+      "TestThePortParsesAsGoCohereDoes_040",
+      "TestThePortParsesAsGoCohereDoes_041",
+      "TestThePortParsesAsGoCohereDoes_045",
+      "TestThePortParsesAsGoCohereDoes_046",
+      "TestThePortParsesAsGoCohereDoes_049",
+      "TestThePortParsesAsGoCohereDoes_061",
+      "TestThePortParsesAsGoCohereDoes_062",
+      "TestThePortParsesAsGoCohereDoes_068",
+      "TestThePortParsesAsGoCohereDoes_069",
+      "TestThePortParsesAsGoCohereDoes_071",
+      "TestThePortParsesAsGoCohereDoes_072",
+      "TestThePortParsesAsGoCohereDoes_073",
+      "TestThePortParsesAsGoCohereDoes_075",
+      "TestThePortParsesAsGoCohereDoes_076",
+      "TestThePortParsesAsGoCohereDoes_077",
+      "TestThePortParsesAsGoCohereDoes_080",
+      "TestThePortParsesAsGoCohereDoes_084",
+      "TestThePortParsesAsGoCohereDoes_088",
+      "TestThePortParsesAsGoCohereDoes_094",
+      "TestThePortParsesAsGoCohereDoes_097",
+      "TestThePortParsesAsGoCohereDoes_102",
+      "TestThePortParsesAsGoCohereDoes_103",
+      "TestThePortParsesAsGoCohereDoes_106",
+      "TestThePortParsesAsGoCohereDoes_108",
+      "TestThePortParsesAsGoCohereDoes_110",
+      "TestThePortParsesAsGoCohereDoes_112",
+      "TestThePortParsesAsGoCohereDoes_113",
+      "TestThePortParsesAsGoCohereDoes_116",
+      "TestThePortParsesAsGoCohereDoes_124",
+      "TestThePortParsesAsGoCohereDoes_126",
+      "TestThePortParsesAsGoCohereDoes_128",
+      "TestThePortParsesAsGoCohereDoes_130",
+      "TestThePortParsesAsGoCohereDoes_133",
+      "TestThePortParsesAsGoCohereDoes_142",
+      "TestThePortParsesAsGoCohereDoes_143",
+      "TestThePortParsesAsGoCohereDoes_144",
+      "TestThePortParsesAsGoCohereDoes_145",
+      "TestThePortParsesAsGoCohereDoes_148",
+      "TestThePortParsesAsGoCohereDoes_150",
+      "TestThePortParsesAsGoCohereDoes_152",
+      "TestThePortParsesAsGoCohereDoes_155",
+      "TestThePortParsesAsGoCohereDoes_156",
+      "TestThePortParsesAsGoCohereDoes_157",
+      "TestThePortParsesAsGoCohereDoes_169",
+      "TestThePortParsesAsGoCohereDoes_170",
+      "TestThePortParsesAsGoCohereDoes_173",
+      "TestThePortParsesAsGoCohereDoes_176",
+      "TestThePortParsesAsGoCohereDoes_177",
+      "TestThePortParsesAsGoCohereDoes_178",
+      "TestThePortParsesAsGoCohereDoes_179",
+      "TestThePortParsesAsGoCohereDoes_180",
+      "TestThePortParsesAsGoCohereDoes_181",
+      "TestThePortParsesAsGoCohereDoes_184",
+      "TestThePortParsesAsGoCohereDoes_185",
+      "TestThePortParsesAsGoCohereDoes_188",
+      "TestThePortParsesAsGoCohereDoes_192",
+      "TestThePortParsesAsGoCohereDoes_194",
+      "TestThePortParsesAsGoCohereDoes_195",
+      "TestThePortParsesAsGoCohereDoes_199",
+      "TestThePortParsesAsGoCohereDoes_201",
+      "TestThePortParsesAsGoCohereDoes_207",
+      "TestThePortParsesAsGoCohereDoes_208",
+      "TestThePortParsesAsGoCohereDoes_210",
+      "TestThePortParsesAsGoCohereDoes_211",
+      "TestThePortParsesAsGoCohereDoes_213",
+      "TestThePortParsesAsGoCohereDoes_214",
+      "TestThePortParsesAsGoCohereDoes_215",
+      "TestThePortParsesAsGoCohereDoes_216",
+      "TestThePortParsesAsGoCohereDoes_217",
+      "TestThePortParsesAsGoCohereDoes_219",
+      "TestThePortParsesAsGoCohereDoes_221",
+      "TestThePortParsesAsGoCohereDoes_222",
+      "TestThePortParsesAsGoCohereDoes_223",
+      "TestThePortParsesAsGoCohereDoes_225",
+      "TestThePortParsesAsGoCohereDoes_227",
+      "TestThePortParsesAsGoCohereDoes_228",
+      "TestThePortParsesAsGoCohereDoes_230",
+      "TestThePortParsesAsGoCohereDoes_233",
+      "TestThePortParsesAsGoCohereDoes_234",
+      "TestThePortParsesAsGoCohereDoes_237",
+      "TestThePortParsesAsGoCohereDoes_240",
+      "TestThePortParsesAsGoCohereDoes_242",
+      "TestThePortParsesAsGoCohereDoes_250",
+      "TestThePortParsesAsGoCohereDoes_251",
+      "TestThePortParsesAsGoCohereDoes_254",
+      "TestThePortParsesAsGoCohereDoes_257",
+      "TestThePortParsesAsGoCohereDoes_258",
+      "TestThePortParsesAsGoCohereDoes_259",
+      "TestThePortParsesAsGoCohereDoes_260",
+      "TestThePortParsesAsGoCohereDoes_261",
+      "TestThePortParsesAsGoCohereDoes_262",
+      "TestThePortParsesAsGoCohereDoes_264",
+      "TestThePortParsesAsGoCohereDoes_265",
+      "TestThePortParsesAsGoCohereDoes_267",
+      "TestThePortParsesAsGoCohereDoes_268",
+      "TestThePortParsesAsGoCohereDoes_270",
+      "TestThePortParsesAsGoCohereDoes_273",
+      "TestThePortParsesAsGoCohereDoes_274",
+      "TestThePortParsesAsGoCohereDoes_276",
+      "TestThePortParsesAsGoCohereDoes_277",
+      "TestThePortParsesAsGoCohereDoes_278",
+      "TestThePortParsesAsGoCohereDoes_283",
+      "TestThePortParsesAsGoCohereDoes_285",
+      "TestThePortParsesAsGoCohereDoes_287",
+      "TestThePortParsesAsGoCohereDoes_288",
+      "TestThePortParsesAsGoCohereDoes_291",
+      "TestThePortParsesAsGoCohereDoes_299",
+      "TestThePortParsesAsGoCohereDoes_300",
+      "TestThePortParsesAsGoCohereDoes_302",
+      "TestThePortParsesAsGoCohereDoes_304",
+      "TestThePortParsesAsGoCohereDoes_308",
+      "TestThePortParsesAsGoCohereDoes_309",
+      "TestThePortParsesAsGoCohereDoes_312",
+      "TestThePortParsesAsGoCohereDoes_315",
+      "TestThePortParsesAsGoCohereDoes_316",
+      "TestThePortParsesAsGoCohereDoes_319",
+      "TestThePortParsesAsGoCohereDoes_320",
+      "TestThePortParsesAsGoCohereDoes_323",
+      "TestThePortParsesAsGoCohereDoes_325",
+      "TestThePortParsesAsGoCohereDoes_326",
+      "TestThePortParsesAsGoCohereDoes_330",
+      "TestThePortParsesAsGoCohereDoes_333",
+      "TestThePortParsesAsGoCohereDoes_334",
+      "TestThePortParsesAsGoCohereDoes_335",
+      "TestThePortParsesAsGoCohereDoes_337",
+      "TestThePortParsesAsGoCohereDoes_338",
+      "TestThePortParsesAsGoCohereDoes_339",
+      "TestThePortParsesAsGoCohereDoes_341",
+      "TestThePortParsesAsGoCohereDoes_346",
+      "TestThePortParsesAsGoCohereDoes_347",
+      "TestThePortParsesAsGoCohereDoes_350",
+      "TestThePortParsesAsGoCohereDoes_353",
+      "TestThePortParsesAsGoCohereDoes_358",
+      "TestThePortParsesAsGoCohereDoes_360",
+      "TestThePortParsesAsGoCohereDoes_363",
+      "TestThePortParsesAsGoCohereDoes_369",
+      "TestThePortParsesAsGoCohereDoes_370",
+      "TestThePortParsesAsGoCohereDoes_376",
+      "TestThePortParsesAsGoCohereDoes_378",
+      "TestThePortParsesAsGoCohereDoes_379",
+      "TestThePortParsesAsGoCohereDoes_381",
+      "TestThePortParsesAsGoCohereDoes_384",
+      "TestThePortParsesAsGoCohereDoes_385"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D2-6",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/D2.diff",
+    "file_line": "internal/native/runtime/string_append.c:90",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "other_rows_failed": [
+      "TestThePortParsesAsGoCohereDoes_073"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D3-7",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/D3.diff",
+    "file_line": "internal/native/runtime/string_append.c:77",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestThePortParsesAsGoCohereDoes_073"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D2-8",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/D2.diff",
+    "file_line": "stage1/cohere/css/print_doc.ts:103",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D3-9",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/D3.diff",
+    "file_line": "stage1/cohere/css/print.ts:143",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D2-10",
+    "original_id": "D2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D2.diff",
+    "file_line": "stage1/cohere/css/print.ts:41",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D3-11",
+    "original_id": "D3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D3.diff",
+    "file_line": "stage1/cohere/css/print.ts:146",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-D4-12",
+    "original_id": "D4",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9/D4.diff",
+    "file_line": "stage1/cohere/css/print.ts:146",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": ""
+  },
+  {
+    "mutant": "defend-B1-13",
+    "original_id": "B1",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B1.diff",
+    "file_line": "stage1/cohere/css/input.ts:20",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills."
+  },
+  {
+    "mutant": "defend-B2-14",
+    "original_id": "B2",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B2.diff",
+    "file_line": "stage1/cohere/css/parser.ts:88",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills."
+  },
+  {
+    "mutant": "defend-B3-15",
+    "original_id": "B3",
+    "file": "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/B3.diff",
+    "file_line": "stage1/cohere/css/print.ts:269",
+    "branch": "test-defend/stage1-cohere-css-print",
+    "candidates_failed": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "other_rows_failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "metadata": [
+      "review/test-defend/stage1-cohere-css-print/session-955e3eb9-20261009-1553/matrix.json"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "scope_note": "Supplemental: production diffs named B rather than D, included conservatively because they have recorded candidate kills."
+  }
+]

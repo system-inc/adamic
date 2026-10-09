@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/css/input.ts b/stage1/cohere/css/input.ts
+index b0d8a56d..d2ec3785 100644
+--- a/stage1/cohere/css/input.ts
++++ b/stage1/cohere/css/input.ts
+@@ -17,7 +17,7 @@ export class Input {
+     readonly byteOffsets: number[] = [];
+     readonly lines: number[] = [0];
+     constructor(text: string, stripBOM: boolean = true) {
+-        this.css = stripBOM && (text[0] === '\ufeff' || text[0] === '\ufffe') ? text.slice(1) : text;
++        this.css = stripBOM && (text[0] === '\uffff' || text[0] === '\ufffe') ? text.slice(1) : text;
+         let bytes = 0;
+         for(const character of this.css) {
+             this.byteOffsets.push(bytes);

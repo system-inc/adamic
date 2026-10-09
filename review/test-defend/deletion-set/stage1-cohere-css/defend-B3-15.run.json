@@ -1,0 +1,48 @@
+{
+  "id": "defend-B3-15",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-B3-15 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-B3-15.log 2>&1",
+  "wall_seconds": 209.205,
+  "exit": -15,
+  "stopped_after_clean_catch": true,
+  "failed": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "witness_failures": [],
+  "panicking_tests": [],
+  "passed": [
+    "TestClosedEmptyArrayUnionGap",
+    "TestClosedOptionalBooleanConditionGap",
+    "TestClosedParserRegexGap",
+    "TestComposedMemoryChecksCanFail",
+    "TestCompositionMatchesGo",
+    "TestTheCanonicalRangeChecksCanFail"
+  ],
+  "skipped": [
+    "TestCSSThroughput"
+  ],
+  "completed_green": false,
+  "failing_lines": [
+    "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+    "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+    "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+    "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+    "adamic_port_side_test.go:269: Go: 240160 stylesheets in 3.386408493s, 70919 stylesheets/s; 49900 parsed, 95790 children",
+    "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.323737414s",
+    "optimized_test.go:29: line 2398, byte 1: \"\\\"---\\\\ntitle: x\\\\n---\\\\n\\\\na {\\\\n  b: c;\\\\n}\\\\n\\\"\", Go cohere \"error \\\"css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach\\\"\""
+  ],
+  "still_caught_by": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/css/",
+    "-skip",
+    "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+  ]
+}

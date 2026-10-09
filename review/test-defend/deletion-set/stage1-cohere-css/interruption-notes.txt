@@ -1,0 +1,1 @@
+The workspace connection interrupted the supplemental supervisor during B3. Its Go child was stopped, the partial log was preserved as defend-B3-15.interrupted.log, the diff reversed, and B3 rerun with a freshly recreated cache. The interrupted run has no verdict. Native child panic messages in M4 and D1 are clean enclosing-test failures, not Go-package aborts.

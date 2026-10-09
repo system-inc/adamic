@@ -1,0 +1,83 @@
+{
+  "D1": {
+    "passed": [
+      "TestClosedPrinterRegexGap",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "failed": [
+      "TestCSSProfileArtifacts"
+    ],
+    "errors": [
+      "profile_test.go:102: native: counted builds unavailable"
+    ],
+    "seconds": 70.433,
+    "skipped": []
+  },
+  "D2": {
+    "passed": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "failed": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "errors": [
+      "print_test.go:317: Node: 0  line 8, byte 2: \"\\\"*|a {\\\\n  b: c;\\\\n}\\\\n\\\"\", Go cohere \"\\\"|a {\\\\n  b: c;\\\\n}\\\\n\\\"\"",
+      "profile_test.go:148: snapshot Node default: line 8926, byte 6905: \"elector(svg|a) {\\\\n}\\\\n@supports selector(*|B) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(\\\\n  .a,\\\\n  .b,\\\\n  :not(asdasld\", Go cohere \"elector(svg|a) {\\\\n}\\\\n@supports selector(|B) {\\\\n}\\\\n@supports selector(*|*) {\\\\n}\\\\n@supports selector(|*) {\\\\n}\\\\n@supports selector(\\\\n  .a,\\\\n  .b,\\\\n  :not(asdasldas\""
+    ],
+    "seconds": 44.646,
+    "skipped": []
+  },
+  "D3": {
+    "passed": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "failed": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "errors": [
+      "print_test.go:317: Node: 0  line 4, byte 15: \"\\\"a {\\\\n  b: c !default;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  b: c !important;\\\\n}\\\\n\\\"\"",
+      "profile_test.go:148: snapshot Node default: line 258, byte 21: \"\\\"a {\\\\n  color: red !default;\\\\n  margin: 0 !default;\\\\n  padding: 0 !default;\\\\n  top: 0 !default;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red !important;\\\\n  margin: 0 !important;\\\\n  padding: 0 !important;\\\\n  top: 0 !important;\\\\n}\\\\n\\\"\""
+    ],
+    "seconds": 42.471,
+    "skipped": []
+  },
+  "D4": {
+    "passed": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "failed": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "errors": [
+      "print_test.go:317: Node: 0  line 12, byte 9: \"\\\"$x: 1 !global;\\\\na {\\\\n  b: $x !important;\\\\n}\\\\n\\\"\", Go cohere \"\\\"$x: 1 !default;\\\\na {\\\\n  b: $x !important;\\\\n}\\\\n\\\"\"",
+      "profile_test.go:148: snapshot Node default: line 622, byte 21: \"\\\"$a: 1px;\\\\n$b: 2px !global;\\\\n$c: red !global;\\\\n$d: 3px !global  !global;\\\\na {\\\\n  $e: 1 !global;\\\\n  width: $a + $b;\\\\n  height: $a * 2;\\\\n  mar\", Go cohere \"\\\"$a: 1px;\\\\n$b: 2px !default;\\\\n$c: red !global;\\\\n$d: 3px !default  !global;\\\\na {\\\\n  $e: 1 !default;\\\\n  width: $a + $b;\\\\n  height: $a * 2;\\\\n  \""
+    ],
+    "seconds": 39.087,
+    "skipped": []
+  },
+  "D8": {
+    "passed": [
+      "TestCSSProfileArtifacts",
+      "TestClosedPrinterRegexGap",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "failed": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "errors": [
+      "profile_test.go:157: /tmp/css-defense/profile-D8 counted default: line 48033, byte 1: \"adamic: counts: allocations 67161048 frees 67161048 retains 99435269 releases 139565937 peak 309964 regions 0\", Go cohere \"\""
+    ],
+    "seconds": 29.754,
+    "skipped": [
+      "TestCSSPrinterBoundaryProofs"
+    ]
+  }
+}

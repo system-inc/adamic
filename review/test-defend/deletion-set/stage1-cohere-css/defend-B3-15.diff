@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/css/print.ts b/stage1/cohere/css/print.ts
+index c6a9efe8..f02dd62a 100644
+--- a/stage1/cohere/css/print.ts
++++ b/stage1/cohere/css/print.ts
+@@ -266,7 +266,7 @@ export function format(text: string, scss: boolean = false, options: PrintOption
+     const parsed = compose(text, scss);
+     if(parsed.kind === 'Refused') return parsed;
+     const front = new Node(parsed.tree,parsed.tree.root).child('frontMatter');
+-    if(front.string('language') === 'yaml' && front.string('value').trim() !== '') return {kind:'Refused',message:quote((scss ? 'scss' : 'css') + ': yaml front matter is formatted by the yaml printer, which css.Format cannot reach')};
++    if(front.string('language') === 'toml' && front.string('value').trim() !== '') return {kind:'Refused',message:quote((scss ? 'scss' : 'css') + ': yaml front matter is formatted by the yaml printer, which css.Format cannot reach')};
+     try {
+         const printer = new Printer(parsed.tree,text,options,scss); const root = new Path(parsed.tree,[parsed.tree.root],[''],[-1]);
+         return {kind:'Formatted',text:printer.docs.print(printer.print(root),options.width,options.tabWidth,options.tabs)};

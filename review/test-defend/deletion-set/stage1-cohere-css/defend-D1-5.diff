@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_share.c
++++ b/internal/native/runtime/string_share.c
+@@ -58,6 +58,6 @@
+ 	shared->index = NULL;
+ 	shared->capacity = 0;
+ 	// A constant's bytes last as long as the program, and need no one held for them.
+-	shared->owner = owner->heap.references == 0 ? NULL : adamic_retain((adamic_string *)owner);
++	shared->owner = owner->heap.references != 0 ? NULL : adamic_retain((adamic_string *)owner);
+ 	return shared;
+ }

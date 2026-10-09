@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/css/parser.ts b/stage1/cohere/css/parser.ts
+index 606464a2..49842793 100644
+--- a/stage1/cohere/css/parser.ts
++++ b/stage1/cohere/css/parser.ts
+@@ -85,7 +85,7 @@ export class Parser {
+     }
+     unknown(tokens: readonly Token[]): void {
+         const first = tokens[0] ?? panic('missing unknown token');
+-        throw new Error(this.input.error(`Unknown word ${first.value}`, first.start, first.start + first.value.length));
++        throw new Error(this.input.error(`Unknown word ${first.value}`, first.start, first.start + first.value.length + 1));
+     }
+     raw(node: CssNode, prop: string, tokens: readonly Token[], customProperty: boolean = false): void {
+         let value = '';

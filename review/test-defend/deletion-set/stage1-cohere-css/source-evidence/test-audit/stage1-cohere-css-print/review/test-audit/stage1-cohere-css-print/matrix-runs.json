@@ -1,0 +1,588 @@
+[
+  {
+    "id": "",
+    "label": "profile-build",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileArtifacts$",
+    "pattern": "^TestCSSProfileArtifacts$",
+    "wall": 57.6775164604187,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/clean-profile-build.log",
+    "outcomes": {
+      "TestCSSProfileArtifacts": "pass"
+    },
+    "ran": [
+      "TestCSSProfileArtifacts"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "",
+    "label": "fast-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "pattern": "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "wall": 36.19940757751465,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/clean-fast-baseline.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass",
+      "TestOptionalBooleanPrinterMatchesGo": "pass",
+      "TestSharedSliceAppendAgreesWithNode": "pass",
+      "TestCSSPrinterBoundaryProofs": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "",
+    "label": "caller-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterAgreesWithGo_0(0[0-9]|1[0-5])$",
+    "pattern": "^TestCSSPrinterAgreesWithGo_0(0[0-9]|1[0-5])$",
+    "wall": 92.12597727775574,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/clean-caller-baseline.log",
+    "outcomes": {
+      "TestCSSPrinterAgreesWithGo_012": "pass",
+      "TestCSSPrinterAgreesWithGo_014": "pass",
+      "TestCSSPrinterAgreesWithGo_010": "pass",
+      "TestCSSPrinterAgreesWithGo_009": "pass",
+      "TestCSSPrinterAgreesWithGo_011": "pass",
+      "TestCSSPrinterAgreesWithGo_008": "pass",
+      "TestCSSPrinterAgreesWithGo_000": "pass",
+      "TestCSSPrinterAgreesWithGo_015": "pass",
+      "TestCSSPrinterAgreesWithGo_004": "pass"
+    },
+    "ran": [
+      "TestCSSPrinterAgreesWithGo_000",
+      "TestCSSPrinterAgreesWithGo_001",
+      "TestCSSPrinterAgreesWithGo_002",
+      "TestCSSPrinterAgreesWithGo_003",
+      "TestCSSPrinterAgreesWithGo_004",
+      "TestCSSPrinterAgreesWithGo_005",
+      "TestCSSPrinterAgreesWithGo_006",
+      "TestCSSPrinterAgreesWithGo_007",
+      "TestCSSPrinterAgreesWithGo_008",
+      "TestCSSPrinterAgreesWithGo_009",
+      "TestCSSPrinterAgreesWithGo_010",
+      "TestCSSPrinterAgreesWithGo_011",
+      "TestCSSPrinterAgreesWithGo_012",
+      "TestCSSPrinterAgreesWithGo_013",
+      "TestCSSPrinterAgreesWithGo_014",
+      "TestCSSPrinterAgreesWithGo_015"
+    ],
+    "panic": true,
+    "over_budget": true
+  },
+  {
+    "id": "",
+    "label": "snapshot-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 76.92786812782288,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/clean-snapshot-baseline.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "pass"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "fast",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "pattern": "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "wall": 94.57199454307556,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-fast.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "panic": true,
+    "over_budget": true
+  },
+  {
+    "id": "M1",
+    "label": "throughput",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$",
+    "pattern": "^TestCSSPrinterThroughput$",
+    "wall": 76.68961334228516,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-throughput.log",
+    "outcomes": {
+      "TestCSSPrinterThroughput": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterThroughput"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "snapshots",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 10.560742616653442,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-snapshots.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "fail"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M2",
+    "label": "fast",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "pattern": "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "wall": 30.67396116256714,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/M2-fast.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass",
+      "TestOptionalBooleanPrinterMatchesGo": "pass",
+      "TestSharedSliceAppendAgreesWithNode": "pass",
+      "TestCSSPrinterBoundaryProofs": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M2",
+    "label": "throughput",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$",
+    "pattern": "^TestCSSPrinterThroughput$",
+    "wall": 41.75753998756409,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M2-throughput.log",
+    "outcomes": {
+      "TestCSSPrinterThroughput": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterThroughput"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M2",
+    "label": "snapshots",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 11.242470264434814,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M2-snapshots.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "fail"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M3",
+    "label": "fast",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "pattern": "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "wall": 30.701530694961548,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M3-fast.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "fail",
+      "TestOptionalBooleanPrinterMatchesGo": "pass",
+      "TestSharedSliceAppendAgreesWithNode": "pass",
+      "TestCSSPrinterBoundaryProofs": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M3",
+    "label": "throughput",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$",
+    "pattern": "^TestCSSPrinterThroughput$",
+    "wall": 41.90070176124573,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M3-throughput.log",
+    "outcomes": {
+      "TestCSSPrinterThroughput": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterThroughput"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M3",
+    "label": "snapshots",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 11.209242343902588,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M3-snapshots.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "fail"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M4",
+    "label": "fast",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "pattern": "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode)$",
+    "wall": 31.11958599090576,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M4-fast.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass",
+      "TestOptionalBooleanPrinterMatchesGo": "fail",
+      "TestSharedSliceAppendAgreesWithNode": "fail",
+      "TestCSSPrinterBoundaryProofs": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap",
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M4",
+    "label": "throughput",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$",
+    "pattern": "^TestCSSPrinterThroughput$",
+    "wall": 33.05420637130737,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M4-throughput.log",
+    "outcomes": {
+      "TestCSSPrinterThroughput": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterThroughput"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M4",
+    "label": "snapshots",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 11.447725534439087,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M4-snapshots.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "fail"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P1",
+    "label": "probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^Test(CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo)$",
+    "pattern": "^Test(CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo)$",
+    "wall": 30.706982851028442,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/P1-probe.log",
+    "outcomes": {
+      "TestOptionalBooleanPrinterMatchesGo": "fail",
+      "TestCSSPrinterBoundaryProofs": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterBoundaryProofs",
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P1",
+    "label": "throughput-probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterThroughput$",
+    "pattern": "^TestCSSPrinterThroughput$",
+    "wall": 34.06633234024048,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/P1-throughput-probe.log",
+    "outcomes": {
+      "TestCSSPrinterThroughput": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterThroughput"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P1",
+    "label": "snapshot-probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileSnapshotsAgree$",
+    "pattern": "^TestCSSProfileSnapshotsAgree$",
+    "wall": 7.687458038330078,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/P1-snapshot-probe.log",
+    "outcomes": {
+      "TestCSSProfileSnapshotsAgree": "fail"
+    },
+    "ran": [
+      "TestCSSProfileSnapshotsAgree"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P2",
+    "label": "probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestClosedPrinterRegexGap$",
+    "pattern": "^TestClosedPrinterRegexGap$",
+    "wall": 3.0611181259155273,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/P2-probe.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P3",
+    "label": "probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestSharedSliceAppendAgreesWithNode$",
+    "pattern": "^TestSharedSliceAppendAgreesWithNode$",
+    "wall": 2.5611629486083984,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/P3-probe.log",
+    "outcomes": {
+      "TestSharedSliceAppendAgreesWithNode": "fail"
+    },
+    "ran": [
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "P4",
+    "label": "probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestClosedPrinterRegexGap$",
+    "pattern": "^TestClosedPrinterRegexGap$",
+    "wall": 3.128958225250244,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/P4-probe.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "fail"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "W1",
+    "label": "construction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterShardingCatchesDisagreement$",
+    "pattern": "^TestCSSPrinterShardingCatchesDisagreement$",
+    "wall": 6.994537830352783,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/W1-construction.log",
+    "outcomes": {
+      "TestCSSPrinterShardingCatchesDisagreement": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterShardingCatchesDisagreement"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "S4",
+    "label": "construction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterShardingCatchesDisagreement$",
+    "pattern": "^TestCSSPrinterShardingCatchesDisagreement$",
+    "wall": 7.153956651687622,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/S4-construction.log",
+    "outcomes": {
+      "TestCSSPrinterShardingCatchesDisagreement": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterShardingCatchesDisagreement"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "S1",
+    "label": "construction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$",
+    "pattern": "^TestProduct_CSSPrinter(SanitizedAndLowered|SemicolonMutant|IndentMutant|WidthMutant)$",
+    "wall": 23.735531091690063,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/S1-construction.log",
+    "outcomes": {
+      "TestProduct_CSSPrinterIndentMutant": "pass",
+      "TestProduct_CSSPrinterSanitizedAndLowered": "pass",
+      "TestProduct_CSSPrinterWidthMutant": "pass",
+      "TestProduct_CSSPrinterSemicolonMutant": "pass"
+    },
+    "ran": [
+      "TestProduct_CSSPrinterSanitizedAndLowered",
+      "TestProduct_CSSPrinterSemicolonMutant",
+      "TestProduct_CSSPrinterIndentMutant",
+      "TestProduct_CSSPrinterWidthMutant"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "S2",
+    "label": "construction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSPrinter(ParserOracle|Oracle)$",
+    "pattern": "^TestProduct_CSSPrinter(ParserOracle|Oracle)$",
+    "wall": 3.2500171661376953,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/S2-construction.log",
+    "outcomes": {
+      "TestProduct_CSSPrinterParserOracle": "pass",
+      "TestProduct_CSSPrinterOracle": "pass"
+    },
+    "ran": [
+      "TestProduct_CSSPrinterParserOracle",
+      "TestProduct_CSSPrinterOracle"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "S3",
+    "label": "construction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSProfileArtifacts$",
+    "pattern": "^TestCSSProfileArtifacts$",
+    "wall": 49.43778443336487,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/S3-construction.log",
+    "outcomes": {
+      "TestCSSProfileArtifacts": "pass"
+    },
+    "ran": [
+      "TestCSSProfileArtifacts"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "rerun-TestClosedPrinterRegexGap",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestClosedPrinterRegexGap$",
+    "pattern": "^TestClosedPrinterRegexGap$",
+    "wall": 3.5268137454986572,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-rerun-TestClosedPrinterRegexGap.log",
+    "outcomes": {
+      "TestClosedPrinterRegexGap": "pass"
+    },
+    "ran": [
+      "TestClosedPrinterRegexGap"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "rerun-TestCSSPrinterBoundaryProofs",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterBoundaryProofs$",
+    "pattern": "^TestCSSPrinterBoundaryProofs$",
+    "wall": 3.445749282836914,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-rerun-TestCSSPrinterBoundaryProofs.log",
+    "outcomes": {
+      "TestCSSPrinterBoundaryProofs": "fail"
+    },
+    "ran": [
+      "TestCSSPrinterBoundaryProofs"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "rerun-TestOptionalBooleanPrinterMatchesGo",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestOptionalBooleanPrinterMatchesGo$",
+    "pattern": "^TestOptionalBooleanPrinterMatchesGo$",
+    "wall": 29.41885805130005,
+    "code": 1,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-rerun-TestOptionalBooleanPrinterMatchesGo.log",
+    "outcomes": {
+      "TestOptionalBooleanPrinterMatchesGo": "fail"
+    },
+    "ran": [
+      "TestOptionalBooleanPrinterMatchesGo"
+    ],
+    "panic": false,
+    "over_budget": false
+  },
+  {
+    "id": "M1",
+    "label": "rerun-TestSharedSliceAppendAgreesWithNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestSharedSliceAppendAgreesWithNode$",
+    "pattern": "^TestSharedSliceAppendAgreesWithNode$",
+    "wall": 2.5641822814941406,
+    "code": 0,
+    "log": "review/test-audit/stage1-cohere-css-print/M1-rerun-TestSharedSliceAppendAgreesWithNode.log",
+    "outcomes": {
+      "TestSharedSliceAppendAgreesWithNode": "pass"
+    },
+    "ran": [
+      "TestSharedSliceAppendAgreesWithNode"
+    ],
+    "panic": false,
+    "over_budget": false
+  }
+]

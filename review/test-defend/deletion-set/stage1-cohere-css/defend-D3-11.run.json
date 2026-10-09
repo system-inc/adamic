@@ -1,0 +1,48 @@
+{
+  "id": "defend-D3-11",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/css-delete/cache/defend-D3-11 go test -json -count=1 -timeout 30m ./stage1/cohere/css/ -skip '^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)' > /tmp/css-delete/defend-D3-11.log 2>&1",
+  "wall_seconds": 200.279,
+  "exit": -15,
+  "stopped_after_clean_catch": true,
+  "failed": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "witness_failures": [],
+  "panicking_tests": [],
+  "passed": [
+    "TestClosedEmptyArrayUnionGap",
+    "TestClosedOptionalBooleanConditionGap",
+    "TestClosedParserRegexGap",
+    "TestComposedMemoryChecksCanFail",
+    "TestCompositionMatchesGo",
+    "TestTheCanonicalRangeChecksCanFail"
+  ],
+  "skipped": [
+    "TestCSSThroughput"
+  ],
+  "completed_green": false,
+  "failing_lines": [
+    "optimized_test.go:15: Go oracle: === RUN   TestAdamicPortCases",
+    "adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES",
+    "adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]",
+    "adamic_port_side_test.go:251: 24016 cases, 4990 parsed",
+    "adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.804777415s, 85625 stylesheets/s; 49900 parsed, 95790 children",
+    "optimized_test.go:23: === RUN   TestAdamicPrinterCases",
+    "adamic_print_side_test.go:92: printed stylesheets: 24016 inputs, 4935 formatted, elapsed 1.335053051s",
+    "optimized_test.go:29: line 258, byte 21: \"\\\"a {\\\\n  color: red !default;\\\\n  margin: 0 !default;\\\\n  padding: 0 !default;\\\\n  top: 0 !default;\\\\n}\\\\n\\\"\", Go cohere \"\\\"a {\\\\n  color: red !important;\\\\n  margin: 0 !important;\\\\n  padding: 0 !important;\\\\n  top: 0 !important;\\\\n}\\\\n\\\"\""
+  ],
+  "still_caught_by": [
+    "TestCSSPrinterOptimizedMatchesGo"
+  ],
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/css/",
+    "-skip",
+    "^(TestCSSPrinterBoundaryProofs|TestCSSPrinterThroughput|TestOptionalBooleanPrinterMatchesGo|TestSharedSliceAppendAgreesWithNode)($|_|/)"
+  ]
+}

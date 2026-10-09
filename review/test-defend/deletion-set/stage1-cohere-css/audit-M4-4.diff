@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -83,7 +83,7 @@
+ 	for (size_t index = 0; index < count; index++) {
+ 		written = adamic_string_put((char *)result->bytes, written, parts[index]);
+ 	}
+-	result->length = written;
++
+ 	// A non-ASCII part clears the ASCII fact even when the original allocation is reused.
+ 	result->units = units + 1;
+ 	if (result != string) {
