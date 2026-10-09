@@ -1528,11 +1528,21 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
+	contract, _, err := l.arraySearchContract(node, signatures[0], ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns})
 	if err != nil {
 		return nil, true, err
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: callbackType}, true, nil
+	visit := contract.(ir.ArrayVisit)
+	first := element
+	if visit.SearchFirst != 0 {
+		first = visit.SearchFirst
+	}
+	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{first, ir.Number, ir.Array})
+	if err != nil {
+		return nil, true, err
+	}
+	visit.Callback, visit.CallbackType = callback, callbackType
+	return visit, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
