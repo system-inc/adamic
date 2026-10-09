@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/properties_standin.go b/internal/regexp/properties_standin.go
+index 22df4692..3aee0e7a 100644
+--- a/internal/regexp/properties_standin.go
++++ b/internal/regexp/properties_standin.go
+@@ -47,7 +47,7 @@ func (GoProperties) Lookup(property string) (PropertySet, error) {
+ 		}
+ 	}
+ 	if table == nil {
+-		return PropertySet{}, &UnavailablePropertyError{property, unicode.Version}
++		return PropertySet{}, nil
+ 	}
+ 	return PropertySet{Ranges: normalizeRanges(goRanges(table))}, nil
+ }

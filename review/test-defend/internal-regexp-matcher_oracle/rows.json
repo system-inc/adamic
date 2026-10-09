@@ -1,0 +1,81 @@
+[
+  {
+    "test": "TestMatcherStepLimit",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherExecution family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/regexp/matcher.go:419",
+        "change": "step: drop repeat-register snapshot",
+        "rows_failed": [
+          "TestMatcherOct6Node",
+          "TestMatcherRandomNode"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/regexp/matcher.go:485",
+        "change": "step: change end-assertion equality bound",
+        "rows_failed": [
+          "TestMatcherNodeControls",
+          "TestMatcherOct6Mutants",
+          "TestMatcherOct6Node",
+          "TestMatcherRandomNode",
+          "TestMatcherStepLimit",
+          "TestMatcherTest262Executions"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/regexp/matcher.go:340",
+        "change": "step cost: drop complete prefix and first-character search fast path",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D3.log 2>&1: row passed; ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D4.log 2>&1: matcher_oracle_test.go:252: catastrophic backtracking returned <nil>; ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D5.log 2>&1: row passed"
+  },
+  {
+    "test": "TestMatcherPropertyProviderStrings",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/regexp/properties_standin.go:50",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/regexp/properties_standin.go:50",
+        "change": "provider: drop unavailable-property error",
+        "rows_failed": [
+          "TestMatcherPropertyProviderStrings"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D1.log 2>&1: matcher_oracle_test.go:314: missing property silently compiled: <nil>"
+  },
+  {
+    "test": "TestMatcherOct6LoopsNode",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/regexp/matcher.go:334",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/regexp/matcher.go:334",
+        "change": "loops: change Unicode mode option, omit v surrogate rewind",
+        "rows_failed": [
+          "TestMatcherOct6LoopsNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D2.log 2>&1: oct6_oracle_test.go:159: step 0 pattern=\"(?:)\" flags=\"gv\": matcher={Captures:[[1 1]] LastIndex:1 Groups:map[]} Node={Captures:[[0 0]] LastIndex:0 Groups:map[]}"
+  }
+]

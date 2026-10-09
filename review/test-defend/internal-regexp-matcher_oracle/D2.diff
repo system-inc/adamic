@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/matcher.go b/internal/regexp/matcher.go
+index 4b238f66..85c0198e 100644
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -331,7 +331,7 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
+ 	budget := executionBudget{limit: r.StepLimit}
+ 	for start <= uint64(len(input)) {
+ 		position := int(start)
+-		if unicodeMode(p.flags) && position > 0 && position < len(input) && high(input[position-1]) && low(input[position]) {
++		if p.flags.Unicode && position > 0 && position < len(input) && high(input[position-1]) && low(input[position]) {
+ 			position--
+ 		}
+ 		if p.anchored && position != 0 {

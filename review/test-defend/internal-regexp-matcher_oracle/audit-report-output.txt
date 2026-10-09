@@ -1,0 +1,399 @@
+[
+  {
+    "test": "TestMatcherExecution family",
+    "package": "internal/regexp",
+    "file": "internal/regexp/matcher_oracle_test.go:145; internal/regexp/matcher_oracle_test.go:183; internal/regexp/matcher_oracle_test.go:221; internal/regexp/matcher_oracle_test.go:258; internal/regexp/matcher_oracle_test.go:318; internal/regexp/oct6_oracle_test.go:55",
+    "seconds": 0.885,
+    "oracle": "Node24 executes patterns and compares capture spans, named spans and lastIndex; test262 member uses stored Node24 output at test262 7ab7fafa, one capture [0,10] checked against live Node in authority-check.log",
+    "oracle_kind": [
+      "external-run",
+      "external-authority"
+    ],
+    "kills": [
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M13",
+      "M14",
+      "M15",
+      "M16",
+      "M17",
+      "M18"
+    ],
+    "unique_kills": [
+      "M05",
+      "M06",
+      "M08",
+      "M16",
+      "M17"
+    ],
+    "last_proven_fail": "M17 matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[^[\\\\q{ab|a}]&&[a]]\" flags=\"v\" input=[97 98 99] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PCompile",
+      "PCompileUTF16"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M17.log 2>&1: matcher_oracle_test.go:181: DISAGREEMENT source=control pattern=\"[^[\\\\q{ab|a}]&&[a]]\" flags=\"v\" input=[97 98 99] lastIndex=0 got={Captures:[[0 1]] LastIndex:0 Groups:map[]} node={Captures:[[1 2]] LastIndex:0 Groups:map[]}",
+    "members": [
+      "TestMatcherNodeControls",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherOct6Node"
+    ],
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  },
+  {
+    "test": "TestMatcherStepLimit",
+    "package": "internal/regexp",
+    "file": "internal/regexp/matcher_oracle_test.go:242",
+    "seconds": 0.002,
+    "oracle": "Self-written ErrStepLimit sentinel expectation; does not check a successful answer",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14 matcher_oracle_test.go:252: catastrophic backtracking returned <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherStepLimitBoundary"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PCompile"
+    ],
+    "subsumer_seconds": 0.002,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M14.log 2>&1: matcher_oracle_test.go:252: catastrophic backtracking returned <nil>",
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  },
+  {
+    "test": "TestMatcherPropertyProviderStrings",
+    "package": "internal/regexp",
+    "file": "internal/regexp/matcher_oracle_test.go:290",
+    "seconds": 0.073,
+    "oracle": "Node24 executes patterns and compares capture spans, named spans and lastIndex; self-written requirement that Go stand-in ASCII property returns UnavailablePropertyError",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M07",
+      "M10",
+      "M13",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15 matcher_oracle_test.go:314: missing property silently compiled: regexp: u and v flags are mutually exclusive at byte 0",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherExecution family"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PCompileProperties"
+    ],
+    "subsumer_seconds": 0.885,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M15.log 2>&1: matcher_oracle_test.go:314: missing property silently compiled: regexp: u and v flags are mutually exclusive at byte 0",
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  },
+  {
+    "test": "TestMatcherProviderSnapshot",
+    "package": "internal/regexp",
+    "file": "internal/regexp/matcher_oracle_test.go:341",
+    "seconds": 0.054,
+    "oracle": "Node24 executes patterns and compares capture spans, named spans and lastIndex after caller-owned provider string storage is changed",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M10",
+      "M12"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12 matcher_oracle_test.go:355: property provider snapshot got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 5]] LastIndex:0 Groups:map[]} error=<nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PCompileProperties"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M12.log 2>&1: matcher_oracle_test.go:355: property provider snapshot got={Captures:[] LastIndex:0 Groups:map[]} node={Captures:[[0 5]] LastIndex:0 Groups:map[]} error=<nil>",
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  },
+  {
+    "test": "TestMatcherStepLimitBoundary",
+    "package": "internal/regexp",
+    "file": "internal/regexp/matcher_step_limit_test.go:8",
+    "seconds": 0.002,
+    "oracle": "Self-written ErrStepLimit sentinel expectation; exact three-instruction budget, matched flag, step count and [0,2] capture",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M10",
+      "M11",
+      "M14"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M01 matcher_step_limit_test.go:31: limit 2: matched=true error=<nil>; want ErrStepLimit before accept",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PRun",
+      "PCompile"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M01.log 2>&1: matcher_step_limit_test.go:31: limit 2: matched=true error=<nil>; want ErrStepLimit before accept",
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09.",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestMatcherOct6Mutants",
+    "package": "internal/regexp",
+    "file": "internal/regexp/oct6_mutant_test.go:10",
+    "seconds": 0.057,
+    "oracle": "Node24 controls and mutant results; weakened result comparisons must make built-in mutants survive",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 oct6_mutant_test.go:69: mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$: oct6_mutant_test.go:69: mutant survived",
+    "bounded_reason": null
+  },
+  {
+    "test": "TestMatcherOct6LoopsNode",
+    "package": "internal/regexp",
+    "file": "internal/regexp/oct6_oracle_test.go:135",
+    "seconds": 0.03,
+    "oracle": "Node24 executes patterns and compares capture spans, named spans and lastIndex",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M02",
+      "M03",
+      "M04",
+      "M07",
+      "M09",
+      "M10",
+      "M11",
+      "M14",
+      "M15",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18 oct6_oracle_test.go:159: step 2 pattern=\"(a)|(b)\" flags=\"y\": matcher={Captures:[[3 4] [3 4] []] LastIndex:4 Groups:map[]} Node={Captures:[] LastIndex:0 Groups:map[]}",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherExecution family"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PExec",
+      "PCompile"
+    ],
+    "subsumer_seconds": 0.885,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M18.log 2>&1: oct6_oracle_test.go:159: step 2 pattern=\"(a)|(b)\" flags=\"y\": matcher={Captures:[[3 4] [3 4] []] LastIndex:4 Groups:map[]} Node={Captures:[] LastIndex:0 Groups:map[]}",
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  },
+  {
+    "test": "TestNodeAgreement",
+    "package": "internal/regexp",
+    "file": "internal/regexp/oracle_test.go:23",
+    "seconds": 0.175,
+    "oracle": "Live Node RegExp constructor acceptance compared with Parse error presence; checks syntax acceptance, not execution output",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15 oracle_test.go:79: 3794 disagreements among 5746 test262 and 630 generated cases:",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlags"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "PParse"
+    ],
+    "subsumer_seconds": 0.002,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherExecution family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > M15.log 2>&1: oracle_test.go:79: 3794 disagreements among 5746 test262 and 630 generated cases:",
+    "vacuous_subcases": [
+      "Node-accepted patterns pass the empty Parse probe because this oracle checks only error presence; Node-rejected patterns fail it."
+    ],
+    "bounded_reason": "M09 exceeded 90s; isolated caller reruns retain TestMatcherTest262Executions unknown. Sixteen mutants completed whole-package runs; M10 panicked and was resolved by isolated runs of all 17 tests. No uniqueness claim rests on M09."
+  }
+]
+| ID | Origin file:line | Change | Failing rows |
+|---|---|---|---|
+| M01 | internal/regexp/matcher.go:426 | b.steps >= b.limit → b.steps > b.limit | TestMatcherStepLimitBoundary |
+| M02 | internal/regexp/matcher.go:327 | stateful := p.flags.Global || p.flags.Sticky → stateful := p.flags.Global && p.flags.Sticky | TestMatcherExecution family, TestMatcherOct6LoopsNode |
+| M03 | internal/regexp/matcher.go:385 | r.LastIndex = uint64(state.pos) → r.LastIndex = uint64(state.pos + 1) | TestMatcherExecution family, TestMatcherOct6LoopsNode |
+| M04 | internal/regexp/matcher.go:399 | r.LastIndex = 0 → r.LastIndex = 1 | TestMatcherExecution family, TestMatcherOct6LoopsNode |
+| M05 | internal/regexp/matcher.go:450 | alternative.pc = i.y 			stack = append(stack, alternative) 			s.pc = i.x → alternative.pc = i.x 			stack = append(stack, alternative) 			s.pc = i.y | TestMatcherExecution family |
+| M06 | internal/regexp/matcher.go:537 | for _, id := range i.clear { 					state.caps[2*id] = -1 					state.caps[2*id+1] = -1 				} → drop whole loop | TestMatcherExecution family |
+| M07 | internal/regexp/matcher.go:497 | failed = ok == i.negative → failed = ok != i.negative | TestMatcherExecution family, TestMatcherOct6LoopsNode, TestMatcherPropertyProviderStrings |
+| M08 | internal/regexp/matcher.go:218 | if !f.DotAll { → if f.DotAll { | TestMatcherExecution family |
+| M09 | internal/regexp/matcher.go:544 | if i.greedy { → if !i.greedy { | TestMatcherExecution family, TestMatcherOct6LoopsNode |
+| M10 | internal/regexp/matcher.go:589 | return rune(c), pos + 1, true → return rune(c), pos + 2, true | TestMatcherExecution family, TestMatcherOct6LoopsNode, TestMatcherPropertyProviderStrings, TestMatcherProviderSnapshot, TestMatcherStepLimitBoundary |
+| M11 | internal/regexp/canonicalize.go:13 | if !f.IgnoreCase { → if f.IgnoreCase { | TestMatcherExecution family, TestMatcherOct6LoopsNode, TestMatcherStepLimit, TestMatcherStepLimitBoundary |
+| M12 | internal/regexp/sets.go:175 | set.strings[index] = slices.Clone(text) → set.strings[index] = text | TestMatcherProviderSnapshot |
+| M13 | internal/regexp/sets.go:285 | contains == intersection → contains != intersection | TestMatcherExecution family, TestMatcherPropertyProviderStrings |
+| M14 | internal/regexp/sets.go:293 | return i < len(s.ranges) && s.ranges[i].From <= c → return i < len(s.ranges) && s.ranges[i].From < c | TestMatcherExecution family, TestMatcherOct6LoopsNode, TestMatcherPropertyProviderStrings, TestMatcherStepLimit, TestMatcherStepLimitBoundary |
+| M15 | internal/regexp/parser.go:110 | if f.Unicode && f.UnicodeSets { → if f.Unicode && !f.UnicodeSets { | TestFlags, TestMatcherExecution family, TestMatcherOct6LoopsNode, TestMatcherPropertyProviderStrings, TestNodeAgreement, TestParse |
+| M16 | internal/regexp/parser.go:752 | limit = 2 → limit = 3 | TestMatcherExecution family |
+| M17 | internal/regexp/sets.go:71 | b[k].From - 1 → b[k].From | TestMatcherExecution family |
+| M18 | internal/regexp/matcher.go:389 | if p.anchored || p.flags.Sticky { → if p.anchored && p.flags.Sticky { | TestMatcherExecution family, TestMatcherOct6LoopsNode |

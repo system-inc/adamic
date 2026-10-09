@@ -1,0 +1,31 @@
+diff --git a/internal/regexp/matcher.go b/internal/regexp/matcher.go
+index 4b238f66..c657351a 100644
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -337,26 +337,6 @@ func (r *RegExp) Exec(input []uint16) (*Match, error) {
+ 		if p.anchored && position != 0 {
+ 			break
+ 		}
+-		if !p.anchored && !p.flags.Sticky {
+-			for position < len(input) {
+-				c := input[position]
+-				possible := !p.filterFirst || c >= 128 || p.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0
+-				prefix := len(p.prefix) == 0
+-				if len(p.prefix) > 0 && position+len(p.prefix) <= len(input) {
+-					prefix = true
+-					for j, c := range p.prefix {
+-						if input[position+j] != uint16(c) {
+-							prefix = false
+-							break
+-						}
+-					}
+-				}
+-				if possible && prefix {
+-					break
+-				}
+-				_, position, _ = readCharacter(input, position, 1, unicodeMode(p.flags))
+-			}
+-		}
+ 		caps := make([]int, 2*(p.captures+1))
+ 		for i := range caps {
+ 			caps[i] = -1

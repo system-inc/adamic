@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/matcher.go b/internal/regexp/matcher.go
+index 4b238f66..8bad5e0d 100644
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -482,7 +482,7 @@ func (p *Program) run(input []uint16, pos int, caps []int, budget *executionBudg
+ 			case Start:
+ 				failed = !(s.pos == 0 || i.flags.Multiline && before)
+ 			case End:
+-				failed = !(s.pos == len(input) || i.flags.Multiline && after)
++				failed = !(s.pos <= len(input) || i.flags.Multiline && after)
+ 			default:
+ 				left, _, l := readCharacter(input, s.pos, -1, unicodeMode(i.flags))
+ 				right, _, r := readCharacter(input, s.pos, 1, unicodeMode(i.flags))

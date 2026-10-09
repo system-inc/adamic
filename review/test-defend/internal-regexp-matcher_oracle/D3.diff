@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/matcher.go b/internal/regexp/matcher.go
+index 4b238f66..84b62138 100644
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -416,7 +416,7 @@ type machineState struct {
+ 
+ func (s machineState) clone() machineState {
+ 	s.caps = slices.Clone(s.caps)
+-	s.repeats = slices.Clone(s.repeats)
++
+ 	return s
+ }
+ 

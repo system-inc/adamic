@@ -1,0 +1,161 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/regexp/properties_standin.go:50",
+    "change": "provider: drop unavailable-property error",
+    "old": "return PropertySet{}, &UnavailablePropertyError{property, unicode.Version}",
+    "new": "return PropertySet{}, nil",
+    "rows_failed": [
+      "TestMatcherPropertyProviderStrings"
+    ],
+    "rows_passed": [
+      "TestFlags",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 1,
+    "wall": 2.286016613001266,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D1.log 2>&1"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/regexp/matcher.go:334",
+    "change": "loops: change Unicode mode option, omit v surrogate rewind",
+    "old": "if unicodeMode(p.flags) && position > 0",
+    "new": "if p.flags.Unicode && position > 0",
+    "rows_failed": [
+      "TestMatcherOct6LoopsNode"
+    ],
+    "rows_passed": [
+      "TestFlags",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 1,
+    "wall": 1.7655643389989564,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D2.log 2>&1"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/regexp/matcher.go:419",
+    "change": "step: drop repeat-register snapshot",
+    "old": "s.repeats = slices.Clone(s.repeats)",
+    "new": "",
+    "rows_failed": [
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode"
+    ],
+    "rows_passed": [
+      "TestFlags",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 1,
+    "wall": 5.883459161999781,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D3.log 2>&1"
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/regexp/matcher.go:485",
+    "change": "step: change end-assertion equality bound",
+    "old": "failed = !(s.pos == len(input) || i.flags.Multiline && after)",
+    "new": "failed = !(s.pos <= len(input) || i.flags.Multiline && after)",
+    "rows_failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimit",
+      "TestMatcherTest262Executions"
+    ],
+    "rows_passed": [
+      "TestFlags",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 1,
+    "wall": 2.460324068000773,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D4.log 2>&1"
+  },
+  {
+    "mutant": "D5",
+    "file_line": "internal/regexp/matcher.go:340",
+    "change": "step cost: drop complete prefix and first-character search fast path",
+    "old": "\t\tif !p.anchored && !p.flags.Sticky {\n\t\t\tfor position < len(input) {\n\t\t\t\tc := input[position]\n\t\t\t\tpossible := !p.filterFirst || c >= 128 || p.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0\n\t\t\t\tprefix := len(p.prefix) == 0\n\t\t\t\tif len(p.prefix) > 0 && position+len(p.prefix) <= len(input) {\n\t\t\t\t\tprefix = true\n\t\t\t\t\tfor j, c := range p.prefix {\n\t\t\t\t\t\tif input[position+j] != uint16(c) {\n\t\t\t\t\t\t\tprefix = false\n\t\t\t\t\t\t\tbreak\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif possible && prefix {\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\t_, position, _ = readCharacter(input, position, 1, unicodeMode(p.flags))\n\t\t\t}\n\t\t}\n",
+    "new": "",
+    "rows_failed": [],
+    "rows_passed": [
+      "TestFlags",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherRandomNode",
+      "TestMatcherStepLimit",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherTest262Executions",
+      "TestMatcherUTF16PatternsNode",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestUnicodeDecimalEscape"
+    ],
+    "exit": 0,
+    "wall": 1.5462932650007133,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/regexp-defense/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D5.log 2>&1"
+  }
+]
