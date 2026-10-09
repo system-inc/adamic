@@ -181,6 +181,7 @@ if not dryRun and os.path.exists(requests):
             removeLine(requests, line)
 chain = []
 trainHeads = remoteHeads("cloud/land-train-*")
+belowRed = False
 for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1):
     # A source is a branch, or branch@trailer: the newest commit on that branch whose message carries
     # "Train-slice: <slug>", so slices built stacked on one rehearsal branch each become their own car.
@@ -306,7 +307,8 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
     # gate would spend Home on a verdict nobody waits for; it gets one once a fixed build replaces it.
     if not dryRun:
         os.makedirs(os.path.dirname(requests), exist_ok=True)
-        if newestLog(candidate, "fast")[1].startswith("red") or newestLog(candidate, "full-main")[1].startswith("red"):
+        if belowRed or newestLog(candidate, "fast")[1].startswith("red") or newestLog(candidate, "full-main")[1].startswith("red"):
+            belowRed = True  # every slice above stacks on this tree, so none of them can land either
             removeLine(requests, candidate)
         else:
             appendOnce(requests, candidate)
