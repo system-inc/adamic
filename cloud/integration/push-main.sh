@@ -662,7 +662,8 @@ for main in mains:
     for name in sorted(logs.get(main[:12], []), reverse=True):
         subprocess.run(["git", "fetch", "-q", "origin", f"+refs/heads/{name}:refs/remotes/origin/{name}"], check=True)
         status = subprocess.run(["git", "show", f"origin/{name}:status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
-        if status.startswith("running") or not status:
+        # A void is Loom saying the run broke before a verdict, not a verdict on main: read past it like a running one.
+        if status.startswith(("running", "void")) or not status:
             continue
         if status.startswith("green"):
             print(f"green {name}")

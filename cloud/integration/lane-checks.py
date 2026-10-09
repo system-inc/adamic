@@ -96,6 +96,10 @@ if aFiles:
     exemptions = [line.split()[1] for line in run("git", "show", f"{toolsRef}:cloud/fast-gate/executors.txt").stdout.splitlines()
                   if line.startswith("a-check-exempt") and len(line.split()) >= 2]
     aChecked = [path for path in aFiles if not owned(path) and not any(fnmatch.fnmatchcase(path, glob) for glob in exemptions)]
+    # A tree with no stage 0 to run (a scratch repository) can't be a-checked here; say so instead of refusing.
+    if aChecked and not run("git", "cat-file", "-e", f"{tree}:cmd/adamic").returncode == 0:
+        notes.append(f"no cmd/adamic in this tree to a-check {len(aChecked)} .a files")
+        aChecked = []
 
 # The analyzer, a-check and vet need the tree on disk: the lane's own worktree, moved to this commit.
 testPackages = sorted({"./" + os.path.dirname(path) for path in goFiles if path.endswith("_test.go")})

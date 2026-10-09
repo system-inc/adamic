@@ -347,14 +347,14 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None, outputs=None, rawEvents=None):
+    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None, outputs=None, rawEvents=None, status=None, stamp='20261009T000000Z'):
         # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
-        tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
+        tree = Path(self.tmp.name) / ('record-' + name + sha[:6] + stamp)
         tree.mkdir()
         (tree / (kind + '.json')).write_text(json.dumps(record))
         for extraName, extraText in (extra or {}).items():
             (tree / extraName).write_text(extraText)
-        (tree / 'status.txt').write_text('%s: %s %s gate\n' % ('red' if failing else 'green', sha, kind))
+        (tree / 'status.txt').write_text(status + '\n' if status else '%s: %s %s gate\n' % ('red' if failing else 'green', sha, kind))
         if jsonOnly:
             # A box's fast record: no test.jsonl.gz, the failing tests named in its json.
             record = dict(record, failed_tests=['github.com/system-inc/adamic/%s %s' % pair for pair in failing])
@@ -366,12 +366,12 @@ class LandingTests(unittest.TestCase):
             events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
             events += list(rawEvents or [])
             (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
-        index = str(Path(self.tmp.name) / ('index-' + name))
+        index = str(Path(self.tmp.name) / ('index-' + name + stamp))
         environment = dict(os.environ, GIT_INDEX_FILE=index, **identity)
         gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
         subprocess.run(['git', '--git-dir', gitDirectory, '--work-tree', str(tree), 'add', '-A', '.'], env=environment, check=True)
         treeSha = subprocess.run(['git', '--git-dir', gitDirectory, 'write-tree'], env=environment, check=True, capture_output=True, text=True).stdout.strip()
-        reference = 'gate-logs/%s/20261009T000000Z/%s' % (sha[:12], 'full-main' if name == 'main' else name)
+        reference = 'gate-logs/%s/%s/%s' % (sha[:12], stamp, 'full-main' if name == 'main' else name)
         git(self.repository, 'push', '-q', 'origin', '%s:refs/heads/%s' % (git(self.repository, 'commit-tree', treeSha, '-m', 'record'), reference))
         return reference
 
@@ -481,6 +481,13 @@ class LandingTests(unittest.TestCase):
                                  outputs={('code', 'TestRuled'): ['    shards_test.go:256: build prepared: shared setup missing: run TestRuled_Setup before selecting leaves (setup deadline exceeded)\n']})
         self.assertIn("unknown, not excused: code TestRuled didn't run its check",
                       self.push('--fast-gate', dependent, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'dependent').stderr)
+        # A void whole gate on main is no verdict, so the pause rule reads past it to main's red (Oct 9 15:0xZ: a void
+        # pool gate paused every landing as if it were red).
+        self.publish(self.main, 'main', {'sha': self.main, 'finished': True}, kind='full', status='void: %s pool gate (Loom broke)' % self.main, stamp='20261009T010000Z')
+        paused = self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr
+        self.assertIn('landings are paused', paused)
+        self.assertIn('20261009T000000Z/full-main', paused)
+        self.assertNotIn('20261009T010000Z', paused)
         # Its one red is excused, so it reaches the pause rule, which main's red record here still holds.
         self.assertIn('landings are paused', self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr)
 
