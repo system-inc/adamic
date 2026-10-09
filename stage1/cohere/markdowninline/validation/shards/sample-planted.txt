@@ -1,5 +1,0 @@
-port_test.go:182: gate-sample: TestMarkdownInline 43/1353 files, stride 32, offset 5
-shards_test.go:337: counted union: 90155 cases, each id exactly once; 1287 shards
-shards_test.go:460: planted mutant caught exactly once: TestMarkdownInline/shard-1247 disagreement: case 114627 mode w byte 25368 lengths 27898/27894
-pass TestMarkdownInline/shard-1247 0.31s
-pass TestMarkdownInline 6.5s
