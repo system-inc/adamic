@@ -25,7 +25,8 @@ rows=[]
 for name,file,oracle,kind,wid in configs:
  prefix='warm-timing-' if name in ['TestNodeTableIsLinkOnlyFamily','TestOwnedWitnesses'] else 'timing-'
  ts=[R.get(prefix+name+'-'+str(i)) for i in [1,2,3]]
- seconds=statistics.median(r['binary_seconds'] for r in ts) if all(r and r['binary_seconds'] is not None and r['exit']==0 for r in ts) else None
+ printed=[next((float(m[1]) for e in events(r['label']) if (m:=re.match(r'ok\s+\S+\s+([0-9.]+)s',e.get('Output','')))),None) if r else None for r in ts]
+ seconds=statistics.median(printed) if all(x is not None for x in printed) else None
  kills=[m['id'] for m in matrix if name in m['failed_rows'] and (m['id'].startswith('W') if wid else m['id'].startswith('M'))]
  unique=[m['id'] for m in matrix if m['id'].startswith('M') and m['failed_rows']==[name]] if not wid else []
  if wid:verdict='witness' if wid in kills else 'cannot-judge'

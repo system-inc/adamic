@@ -31,7 +31,7 @@
     "test": "TestDecorationOptionMutant",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/lint_test.go",
-    "seconds": 8.143,
+    "seconds": 8.142,
     "oracle": "Go cohere findings; negative decoration-mutant agreement assertion",
     "oracle_kind": "external-run",
     "kills": [
@@ -59,7 +59,7 @@
     "test": "TestCountGuardMutant",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/lint_test.go",
-    "seconds": 12.711,
+    "seconds": 12.71,
     "oracle": "Go cohere ordinary output and count; negative count-only agreement assertion",
     "oracle_kind": "external-run",
     "kills": [
@@ -140,7 +140,7 @@
     "test": "TestNodeTableIsLinkOnly",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 1.475,
+    "seconds": 1.474,
     "oracle": "Self-authored corpus census and hash-shard union",
     "oracle_kind": "self",
     "kills": [],
@@ -164,7 +164,7 @@
     "test": "TestNodeTableIsLinkOnlyFamily",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 3.146,
+    "seconds": 3.144,
     "oracle": "Same native port with plain versus junk-row option, no outside authority",
     "oracle_kind": "self",
     "kills": [],
@@ -188,7 +188,7 @@
     "test": "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 0.232,
+    "seconds": 0.231,
     "oracle": "Self-authored synthetic union corruption and disagreement",
     "oracle_kind": "self",
     "kills": [
@@ -240,7 +240,7 @@
     "test": "TestOwnedWitnesses",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/owned_witness_units_test.go",
-    "seconds": 7.231,
+    "seconds": 7.23,
     "oracle": "Go cohere findings against Node, emitted JavaScript and native; self census checks",
     "oracle_kind": "external-run",
     "kills": [

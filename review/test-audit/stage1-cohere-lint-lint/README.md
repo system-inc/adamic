@@ -38,7 +38,7 @@ Sources restored after green bounded controls; evidence is under this directory.
     "test": "TestDecorationOptionMutant",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/lint_test.go",
-    "seconds": 8.143,
+    "seconds": 8.142,
     "oracle": "Go cohere findings; negative decoration-mutant agreement assertion",
     "oracle_kind": "external-run",
     "kills": [
@@ -66,7 +66,7 @@ Sources restored after green bounded controls; evidence is under this directory.
     "test": "TestCountGuardMutant",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/lint_test.go",
-    "seconds": 12.711,
+    "seconds": 12.71,
     "oracle": "Go cohere ordinary output and count; negative count-only agreement assertion",
     "oracle_kind": "external-run",
     "kills": [
@@ -141,13 +141,13 @@ Sources restored after green bounded controls; evidence is under this directory.
       "TestOwnedWitnessesPlantedDisagreement",
       "TestMutants"
     ],
-    "evidence": "ADAMIC_U110_WITNESS=W4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutants$/^nexus\\-abbreviated\\-identifier_whole\\-word_finding_suppressed$ > W4-Mutants-bounded.log 2>&1; lint_test.go:745: nexus-abbreviated-identifier whole-word finding suppressed mutant survived on Node"
+    "evidence": "ADAMIC_U110_WITNESS=W4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutants$/^nexus\-abbreviated\-identifier_whole\-word_finding_suppressed$ > W4-Mutants-bounded.log 2>&1; lint_test.go:745: nexus-abbreviated-identifier whole-word finding suppressed mutant survived on Node"
   },
   {
     "test": "TestNodeTableIsLinkOnly",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 1.475,
+    "seconds": 1.474,
     "oracle": "Self-authored corpus census and hash-shard union",
     "oracle_kind": "self",
     "kills": [],
@@ -171,7 +171,7 @@ Sources restored after green bounded controls; evidence is under this directory.
     "test": "TestNodeTableIsLinkOnlyFamily",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 3.146,
+    "seconds": 3.144,
     "oracle": "Same native port with plain versus junk-row option, no outside authority",
     "oracle_kind": "self",
     "kills": [],
@@ -195,7 +195,7 @@ Sources restored after green bounded controls; evidence is under this directory.
     "test": "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/node_table_split_test.go",
-    "seconds": 0.232,
+    "seconds": 0.231,
     "oracle": "Self-authored synthetic union corruption and disagreement",
     "oracle_kind": "self",
     "kills": [
@@ -247,7 +247,7 @@ Sources restored after green bounded controls; evidence is under this directory.
     "test": "TestOwnedWitnesses",
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/owned_witness_units_test.go",
-    "seconds": 7.231,
+    "seconds": 7.23,
     "oracle": "Go cohere findings against Node, emitted JavaScript and native; self census checks",
     "oracle_kind": "external-run",
     "kills": [
@@ -327,7 +327,7 @@ No supplied test moved or vanished. The brief says eleven rows but its general g
 
 The whole-package clean baseline was cooked at 90.004 wall seconds, without any recorded failed test. A narrowed slice baseline was also cooked at 90.005, after passing LegacyMutants and node-table corpus setup. The next, seven-row bounded baseline passed in 20.317 wall / 18.021 binary seconds. Native families were separately established green after caching completed cold build stages. This was narrowing after over-budget runs, not auditing on a red baseline. Package-wide and repository-wide uniqueness remain unknown. Sacred and untrue are explicitly bounded conclusions over the production rows listed above. Three production mutants were used, below the suggested approximately-three-per-row target, because cold product preparation consumed the budget; no claim of broad mutation adequacy follows from this small set.
 
-Cold binary preparation matters: initial node-table timing reached C emission 72.88 seconds and native build 9.01 seconds after 5.02 seconds of lowering, then the outer wall cutoff stopped completion. Initial owned-witness preparation logged 81.83 seconds of lowering/backends, then exceeded the wall budget. Warm median native-family times are therefore reported separately from the cold costs. Switched-source controls likewise first exceeded 90 seconds, then passed using the completed cached stages. No cooked run is a mutant kill. Every step was stopped by the 90-second wall controller; the overall session exceeded the approximate 20-minute budget and took about 28 minutes.
+Cold binary preparation matters: initial node-table timing reached C emission 72.88 seconds and native build 9.01 seconds after 5.02 seconds of lowering, then the outer wall cutoff stopped completion. Initial owned-witness preparation logged 81.83 seconds of lowering/backends, then exceeded the wall budget. Warm median native-family times are therefore reported separately from the cold costs. Switched-source controls likewise first exceeded 90 seconds, then passed using the completed cached stages. No cooked run is a mutant kill. Every step was stopped by the 90-second wall controller; the overall session exceeded the approximate 20-minute budget and took about 30 minutes.
 
 Full TestMutants timing exceeded 90 seconds, so no three-run median was produced. Repeating an unchanged cooked row twice more would add three minutes without giving a completed median. Its full weakened-check run with -failfast also exceeded 90 seconds because already queued parallel children kept running. W4-Mutants-bounded.log is the completed rerun of one failing leaf using the shared comparison: nexus-abbreviated-identifier_whole-word_finding_suppressed. W4 proves that shared comparison can be rejected; later full-row guards and native-canary behavior are unknown. W4-stop.json records that the attempted earlier stop found no remaining process after the wall cutoff.
 
