@@ -1,0 +1,101 @@
+[
+  {
+    "test": "TestPortStallControl family",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/estree/sourceStatements.ts:776",
+        "change": "while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') { -> while(this.parser.kind() !== 'EndOfFile' && !['CloseBraceToken', 'CloseParenToken'].includes(this.parser.kind())) {",
+        "rows_failed": [
+          "TestPortStallControl_000"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPortStallControl(_000|Union|PlantedSurvivor)|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$'; stalls_test.go:163: stall control must hit deadline, got exit status 70",
+    "reason": "D1 uniquely fails this family in the completed bounded matrix: 72 other top-level functions passed. The complete 245-function package baseline timed out, so package-wide uniqueness remains unknown. The assertion is proven capable of failure; preserve this candidate pending wider replay.",
+    "bounded": true,
+    "members": [
+      "TestPortStallControl_000",
+      "TestPortStallControlUnion"
+    ]
+  },
+  {
+    "test": "TestSyntaxMutants_001 family",
+    "members": [
+      "TestSyntaxMutants_001",
+      "TestSyntaxMutants_002"
+    ],
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "untrue",
+    "subsumed_by": "TestSyntaxMutantsUnion",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/estree/sourceBinary.ts:12",
+        "change": "    return false; ->     return true;",
+        "rows_failed": [
+          "TestSyntaxMutantsUnion",
+          "TestSyntaxMutants_001"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/estree/sourceBinary.ts:5",
+        "change": ": 99; -> : 0;",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/estree/sourceReferences.ts:83",
+        "change": "return 'invalid reference directive syntax'; -> return '';",
+        "rows_failed": [
+          "TestSyntaxRefusals"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestBoundedPortParser(_[0-9]{3}|Union|PlantedDisagreement)|TestPortStallControlUnion|TestPortStallControlPlantedSurvivor|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$'; syntax_mutants_self_setup_test.go:238: node [...] exit status 70; syntax_mutants_self_setup_test.go:332: unexpected failure: exit status 1",
+    "reason": "Three production attempts: D2 fails shard 001 and its union; D3 changes behavior on the saved probe but the family passes; D4 is caught by TestSyntaxRefusals while the family passes. D2 demonstrates a failed control precondition, not strength of the acceptance comparison."
+  },
+  {
+    "test": "TestSyntaxMutantsUnion",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/estree/sourceBinary.ts:12",
+        "change": "    return false; ->     return true;",
+        "rows_failed": [
+          "TestSyntaxMutantsUnion",
+          "TestSyntaxMutants_001"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/estree/sourceBinary.ts:5",
+        "change": ": 99; -> : 0;",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/estree/sourceReferences.ts:83",
+        "change": "return 'invalid reference directive syntax'; -> return '';",
+        "rows_failed": [
+          "TestSyntaxRefusals"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestBoundedPortParser(_[0-9]{3}|Union|PlantedDisagreement)|TestPortStallControlUnion|TestPortStallControlPlantedSurvivor|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$'; syntax_mutants_self_setup_test.go:332: unexpected failure: exit status 1",
+    "reason": "The production attempts touch shared child preconditions. The union-specific case/runner and planted-failure checks are Go test harness functions. This brief forbids changing them; no meaningful permitted mutant isolates those checks."
+  }
+]

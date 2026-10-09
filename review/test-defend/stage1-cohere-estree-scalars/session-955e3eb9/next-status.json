@@ -1,0 +1,65 @@
+[
+  {
+    "id": "D2",
+    "phase": "prepare",
+    "exit": 0,
+    "wall": 42.511861539001984,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestProduct_SyntaxMutantsSetup_00[012]$"
+  },
+  {
+    "id": "D2",
+    "phase": "matrix",
+    "exit": 1,
+    "wall": 77.39086604100157,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestBoundedPortParser(_[0-9]{3}|Union|PlantedDisagreement)|TestPortStallControlUnion|TestPortStallControlPlantedSurvivor|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$"
+  },
+  {
+    "id": "D2",
+    "phase": "refusals",
+    "exit": 0,
+    "wall": 68.3751059809947,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestSyntaxRefusals$"
+  },
+  {
+    "id": "D3",
+    "phase": "prepare",
+    "exit": 0,
+    "wall": 43.640126729005715,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestProduct_SyntaxMutantsSetup_00[012]$"
+  },
+  {
+    "id": "D3",
+    "phase": "matrix",
+    "exit": 0,
+    "wall": 79.71462450700346,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestBoundedPortParser(_[0-9]{3}|Union|PlantedDisagreement)|TestPortStallControlUnion|TestPortStallControlPlantedSurvivor|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$"
+  },
+  {
+    "id": "D3",
+    "phase": "refusals",
+    "exit": 0,
+    "wall": 69.21365262799372,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestSyntaxRefusals$"
+  },
+  {
+    "id": "D4",
+    "phase": "prepare",
+    "exit": 0,
+    "wall": 77.66544902600435,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestProduct_SyntaxMutantsSetup_00[012]$"
+  },
+  {
+    "id": "D4",
+    "phase": "matrix",
+    "exit": 0,
+    "wall": 87.1670115779998,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestBoundedPortParser(_[0-9]{3}|Union|PlantedDisagreement)|TestPortStallControlUnion|TestPortStallControlPlantedSurvivor|TestSyntaxMutants_00[012]|TestSyntaxMutantsUnion)$"
+  },
+  {
+    "id": "D4",
+    "phase": "refusals",
+    "exit": 1,
+    "wall": 72.7809411039998,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree-scalars/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestSyntaxRefusals$"
+  }
+]

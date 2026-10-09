@@ -1,0 +1,43 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/estree/sourceStatements.ts",
+    "line": 776,
+    "menu": "change option",
+    "from": "while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {",
+    "to": "while(this.parser.kind() !== 'EndOfFile' && !['CloseBraceToken', 'CloseParenToken'].includes(this.parser.kind())) {",
+    "target": "TestPortStallControl family",
+    "reason": "class recovery stops at a closing parenthesis; the guard-disabled clone no longer spins, without changing valid class parsing",
+    "occurrence": 1
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/estree/sourceBinary.ts",
+    "line": 12,
+    "menu": "change constant",
+    "from": "    return false;",
+    "to": "    return true;",
+    "target": "TestSyntaxMutants_001 family",
+    "reason": "the disabled precedence branch can no longer force a false binding result"
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/estree/sourceBinary.ts",
+    "line": 5,
+    "menu": "change constant",
+    "from": ": 99;",
+    "to": ": 0;",
+    "target": "TestSyntaxMutants_001 family",
+    "reason": "change the default assertion rank boundary, which the old audit did not touch"
+  },
+  {
+    "id": "D4",
+    "file": "stage1/cohere/estree/sourceReferences.ts",
+    "line": 83,
+    "menu": "change constant",
+    "from": "return 'invalid reference directive syntax';",
+    "to": "return '';",
+    "target": "TestSyntaxMutants_001 family",
+    "reason": "remove the malformed pragma refusal result, rather than disabling its consumer as the built-in mutant does"
+  }
+]

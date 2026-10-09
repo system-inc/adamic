@@ -1,0 +1,9 @@
+--- a/stage1/cohere/estree/sourceBinary.ts
++++ b/stage1/cohere/estree/sourceBinary.ts
+@@ -9,5 +9,5 @@
+     if(nextRank > lastRank || (nextRank === lastRank && operator === 'AsteriskAsteriskToken')) {
+         return true;
+     }
+-    return false;
++    return true;
+ }

@@ -1,0 +1,10 @@
+{
+  "syntax_exclusive_vs_union": [],
+  "union_exclusive_vs_children": [],
+  "limitations": [
+    "Go profiles contain no statements because CUT is TypeScript",
+    "Stall control kills Node, so V8 coverage does not flush",
+    "This is V8 source coverage, not native C coverage",
+    "Rest-of-package coverage was not completed; uniqueness is bounded"
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/sourceReferences.ts
++++ b/stage1/cohere/estree/sourceReferences.ts
+@@ -80,7 +80,7 @@
+             }
+         }
+         else if(!attributes.has('lib') && !attributes.has('path')) {
+-            return 'invalid reference directive syntax';
++            return '';
+         }
+     }
+     return '';

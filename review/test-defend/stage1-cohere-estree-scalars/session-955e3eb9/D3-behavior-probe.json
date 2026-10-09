@@ -1,0 +1,28 @@
+[
+  {
+    "variant": "origin",
+    "command": [
+      "/workspace/adamic-tools/bin/node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/defend-estree-scalars-tmp/origin-port/main.ts",
+      "/tmp/defend-estree-scalars-tmp/assertion-probe.ts"
+    ],
+    "exit": 0,
+    "stdout": "0 Program 0 16 0 0 0 0 16 0\n0 .body list 1\n1 ExpressionStatement 0 15 0 1 14 0 14 1\n1 .directive null\n1 .expression node\n2 BinaryExpression 0 14 0 0 0 0 14 0\n2 .operator string *\n2 .left node\n3 TSAsExpression 0 11 0 0 0 0 11 0\n3 .expression node\n4 Literal 0 1 0 0 0 0 1 0\n4 .raw string 1\n4 .value number 1\n3 .typeAnnotation node\n4 TSNumberKeyword 5 11 0 0 0 5 11 0\n2 .right node\n3 Literal 13 14 0 0 0 13 14 0\n3 .raw string 2\n3 .value number 2\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped 1 as number *2;\\u000a\n",
+    "stderr": ""
+  },
+  {
+    "variant": "D3",
+    "command": [
+      "/workspace/adamic-tools/bin/node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/defend-estree-scalars-tmp/D3-port/main.ts",
+      "/tmp/defend-estree-scalars-tmp/assertion-probe.ts"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: ESTree parser diagnostic 1005 at 12: ';' expected.\n"
+  }
+]

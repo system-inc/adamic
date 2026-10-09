@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/sourceStatements.ts
++++ b/stage1/cohere/estree/sourceStatements.ts
+@@ -773,7 +773,7 @@
+             children.push(this.heritageClause(false));
+         }
+         this.parser.expect('OpenBraceToken');
+-        while(this.parser.kind() !== 'EndOfFile' && this.parser.kind() !== 'CloseBraceToken') {
++        while(this.parser.kind() !== 'EndOfFile' && !['CloseBraceToken', 'CloseParenToken'].includes(this.parser.kind())) {
+             const start = this.parser.scanner.fullStart;
+             if(this.parser.kind() === 'SemicolonToken') {
+                 this.parser.next();
