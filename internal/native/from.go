@@ -15,6 +15,7 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	count, index := e.temporary(), e.temporary()
 	e.line("size_t %s = adamic_array_from_length(%s);", count, length)
 	made := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s, %t)", count, from.Element.IsReference()))
+	e.adoptProgram(made, "sizeof *"+made, from.ProgramRegion)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	// Undefined as the first parameter holds it: a null reference, or a packed word.
 	undefined := "{.reference = NULL}"

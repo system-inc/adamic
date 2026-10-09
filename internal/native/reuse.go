@@ -524,6 +524,9 @@ type taking struct {
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
+	if e.programObjectMember(literal) {
+		return "", false
+	}
 	read, ok := variableRead(literal.Spread)
 	if !ok || !e.reuse.spreads[e.at][read.Local] {
 		return "", false
@@ -532,7 +535,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := fmt.Sprintf("(%s && !%s->frozen)", uniquelyHeld(source), source)
+	held := fmt.Sprintf("(%s && !%s->frozen)", e.programUnique(source), source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
@@ -555,7 +558,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		slot := e.temporary()
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-		e.line("adamic_object_present(%s, %s.index);", object, cache)
+		e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
 		}
@@ -729,13 +732,16 @@ func sameSlots(left, right ir.Type) bool {
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
 func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+	if expression.ProgramRegion {
+		return "", false
+	}
 	read, ok := variableRead(expression.Array)
 	if !ok || !e.reuse.arrays[e.at][read.Local] {
 		return "", false
 	}
 	source := e.variable(expression.Array, read)
 	unique := e.temporary()
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
+	e.line("bool %s = %s;", unique, e.programUnique(source))
 	callback := e.value(expression.Callback)
 	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
@@ -764,6 +770,9 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 // when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
 // new array, as any literal.
 func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+	if literal.ProgramRegion {
+		return "", false
+	}
 	if len(literal.Spread) == 0 || !literal.Spread[0] {
 		return "", false
 	}
@@ -773,7 +782,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	}
 	source := e.variable(literal.Elements[0], read)
 	unique := e.temporary()
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
+	e.line("bool %s = %s;", unique, e.programUnique(source))
 	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
 	e.line("if (!%s) {", unique)
 	e.line("\tadamic_array_append(%s, %s);", array, source)

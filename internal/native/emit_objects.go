@@ -105,6 +105,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			}
 		}
 		object := e.own(ir.Object, copy)
+		e.adoptProgramObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -114,7 +115,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_present(%s, %s.index);", object, cache)
+			e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 			if e.fieldTypesNeeded() {
 				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
 			}
@@ -151,6 +152,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
+	e.adoptProgramObject(object, literal)
 	if len(literal.Fields)+len(literal.Missing) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}

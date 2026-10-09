@@ -180,6 +180,7 @@ func (e *emitter) makeCell(local int, value string, owned bool) {
 	}
 	cell := e.cellName(local)
 	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	e.adoptProgram(cell, "sizeof *"+cell, declared.ProgramRegion)
 	e.hold(cell)
 }
 
@@ -219,6 +220,11 @@ func (e *emitter) allocateEnvironment(cells []int) {
 	}
 	environment := e.temporary()
 	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+	member := false
+	for _, local := range cells {
+		member = member || e.program.Locals[local].ProgramRegion
+	}
+	e.adoptProgram(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), member)
 	e.hold(environment)
 	for position, local := range cells {
 		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
