@@ -91,7 +91,7 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
     }
     plain_match_path current = {id, reference ? value->payload.reference : NULL, path};
     path = &current;
-    if (depth > 128) { return false; }
+    ADAMIC_CHECK_STACK();
     if (id == 0 || id > count) { return false; }
     const adamic_view_untagged_contract *contract = &contracts[id - 1];
     if (value->kind == adamic_view_union_undefined && contract->undefined) { return true; }

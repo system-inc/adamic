@@ -431,8 +431,10 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
+	declared := l.checker.GetTypeAtLocation(target)
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
+		declared = l.checker.GetTypeOfSymbol(field)
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
@@ -445,7 +447,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, DeclaredType: l.checker.TypeToString(declared), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // absentOptionalWrite refuses a write to an optional own field of a plain object when some literal left

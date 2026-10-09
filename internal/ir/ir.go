@@ -1189,7 +1189,8 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
+		DeclaredType  string // printed declared field type for checked-write diagnostics
+		Record        bool   // write into counted own-key storage
 		Uninitialized bool
 		Object        Expression
 		Name          string

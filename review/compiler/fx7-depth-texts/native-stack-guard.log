@@ -1,0 +1,8 @@
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== CONT  TestFX7ViewCycleAndStackGuard
+    fx7_view_runtime_test.go:59: guard: <nil> ""
+--- FAIL: TestFX7ViewCycleAndStackGuard (3.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	3.076s
+FAIL
