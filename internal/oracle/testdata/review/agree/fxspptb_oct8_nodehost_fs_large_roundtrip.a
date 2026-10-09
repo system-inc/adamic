@@ -1,0 +1,24 @@
+import { Buffer } from 'node:buffer';
+import { mkdtempSync, rmSync, readFileSync, writeFileSync, openSync, closeSync, readSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    for (const size of [0, 1, 4095, 4096, 4097, 8192, 8193, 20000]) {
+        const path = root + '/data';
+        const values: number[] = [];
+        for (let index = 0; index < size; index++) { values.push(index * 13); }
+        const source = Buffer.from(values);
+        writeFileSync(path, source);
+        const first = readFileSync(path);
+        const text = first.toString('base64');
+        first[0] = 99;
+        const second = Buffer.from(text, 'base64');
+        console.log(`${size} ${source.toString('hex') === second.toString('hex')} ${first.length} ${second.length}`);
+        const fd = openSync(path, 'r');
+        try {
+            const target = Buffer.from([255,255,255,255,255,255,255]);
+            console.log(`tail ${readSync(fd, target, 1, 5, Math.max(0, size - 2))} ${target.toString('hex')}`);
+            console.log(`remaining ${readFileSync(fd).length}`);
+        } finally { closeSync(fd); }
+    }
+} finally { rmSync(root, {recursive:true, force:true}); }

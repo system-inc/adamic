@@ -1,0 +1,9 @@
+// A Map holding match-or-null: a missing key reads undefined, a stored miss reads null.
+const seen = new Map<string, RegExpExecArray | null>();
+seen.set('miss', /z/.exec('abc'));
+console.log(`absent: undefined=${seen.get('absent') === undefined} null=${seen.get('absent') === null}`);
+console.log(`miss: undefined=${seen.get('miss') === undefined} null=${seen.get('miss') === null}`);
+const found: (RegExpExecArray | null)[] = [];
+found.push(/z/.exec('abc'));
+console.log(`past end: undefined=${found[3] === undefined} null=${found[3] === null}`);
+console.log(`stored: undefined=${found[0] === undefined} null=${found[0] === null}`);

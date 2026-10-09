@@ -1,0 +1,8 @@
+const map = new Map<string, number>([['a', 1]]);
+const iterator = map.entries();
+console.log(`${iterator.hasOwnProperty('next')} ${iterator.propertyIsEnumerable('next')}`);
+const result = iterator.next();
+console.log(`${result.hasOwnProperty('done')} ${result.hasOwnProperty('value')}`);
+const set = new Set<number>([1]);
+const values = set.values();
+console.log(`${values.hasOwnProperty('next')} ${values.hasOwnProperty('iterator')} ${values.hasOwnProperty('part')}`);

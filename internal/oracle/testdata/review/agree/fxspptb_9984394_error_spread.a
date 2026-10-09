@@ -1,0 +1,12 @@
+interface Shown {
+	readonly name?: string;
+	readonly message?: string;
+}
+try {
+	throw new Error(`bad ${1}`);
+} catch (error) {
+	if (error instanceof Error) {
+		const copy: Shown = { ...error };
+		console.log(`${copy.name ?? 'no name'} ${copy.message ?? 'no message'}`);
+	}
+}

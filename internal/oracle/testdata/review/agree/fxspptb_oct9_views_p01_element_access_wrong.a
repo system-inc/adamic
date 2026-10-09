@@ -1,0 +1,7 @@
+// A wrong view read through a string-literal element access instead of a dot.
+interface Holder { readonly kind: 'Holder'; readonly text: string; }
+const raw = { kind: 'Holder' as const, text: 7 };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+const text = view['text'];
+console.log(`${text.length}`);

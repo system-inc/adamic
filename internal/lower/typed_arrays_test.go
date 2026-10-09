@@ -4,8 +4,6 @@ import (
 	"errors"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestTypedArraysLower(t *testing.T) {
@@ -64,28 +62,18 @@ func TestTypedArrayViewsCannotChangeRepresentation(t *testing.T) {
 
 func TestTypedArrayFromArray(t *testing.T) {
 	t.Parallel()
-	p := lowersAndAgreesWithNode(t, `const values = new Uint8Array([1, 2]);
+	// Only native shows FromArray selecting the array-copy constructor rather than the length constructor.
+	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([1, 2]);
 console.log(values.length.toString());
 for (const value of values) { console.log(value.toString()); }
 `)
-	// JavaScript behavior cannot observe FromArray's native constructor dispatch:
-	// the JavaScript backend passes Source directly and ignores this IR flag.
-	constructor := p.Main[0].(ir.Declare).Value.(ir.TypedArrayNew)
-	if !constructor.FromArray {
-		t.Fatal("array source lost native array constructor dispatch")
-	}
 }
 
 func TestTypedArrayFromEmptyArray(t *testing.T) {
 	t.Parallel()
-	p := lowersAndAgreesWithNode(t, `const values = new Uint8Array([]);
+	// Only native shows FromArray selecting the empty-array constructor rather than the length constructor.
+	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([]);
 console.log(values.length.toString());
 for (const value of values) { console.log(value.toString()); }
 `)
-	// JavaScript behavior cannot observe FromArray's native constructor dispatch:
-	// the JavaScript backend passes Source directly and ignores this IR flag.
-	constructor := p.Main[0].(ir.Declare).Value.(ir.TypedArrayNew)
-	if !constructor.FromArray {
-		t.Fatal("empty array source lost native array constructor dispatch")
-	}
 }
