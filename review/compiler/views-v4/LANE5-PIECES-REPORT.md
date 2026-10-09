@@ -1,5 +1,5 @@
 Restored lane 5 destructured-field metadata and mixed aggregate contextual boxing.
-Commits: cc946802a (destructuring); see git log for Restore mixed aggregate callable field boxing.
+Commits: cc946802a (destructuring); 8ccfb015c (mixed aggregate boxing).
 Tests: TestV4 19.803s; TestV4Mixed 0.995s; focused lower 6.915s, native 27.424s, JavaScript 2.436s; TestCallTargetReaders 24.025s.
 Mutants: adapter bypass and mixed producer-domain omission caught in native and JavaScript against Node with ASan/UBSan/LSan; reverting diagnostic capacity caught by ASan heap-buffer-overflow.
 Remaining: higher-order producer checking, Set receiver integration and rank-165 readonly control; stopped after two separately pushed aggregate fragments.
@@ -16,8 +16,10 @@ Runtime-callback blame follow-up: carry source call sites on callback-bearing IR
 
 Setup: go build 44.416s; total 45.268s; nproc 5, cgroup quota 4 CPUs. Every test command used -count=1 -timeout 90s and an outer timeout 90.
 
-Second fragment validation: mixed scalar/object fields retain their contextual boxed representation; a legitimate union producer returns Node's 2, while a producer requiring Payload exits 70 when called with the string member. Removing that producer-domain check returns Node's 7 in both backends without sanitizer or leak failures. The long type-name diagnostic exits 70 without reading past its buffer; reverting to the old capacity fails TestV4MixedLongFieldDiagnostic under ASan. New mixed leaves: boxing 0.68s, argument 0.99s, long diagnostic 0.57s (see raw log for exact per-run times).
+Second fragment validation: mixed scalar/object fields retain their contextual boxed representation; a legitimate union producer returns Node's 2, while a producer requiring Payload exits 70 when called with the string member. Removing that producer-domain check returns Node's 7 in both backends without sanitizer or leak failures. The long type-name diagnostic exits 70 without reading past its buffer; reverting to the old capacity fails TestV4MixedLongFieldDiagnostic under ASan. New mixed leaves: boxing 0.61s, argument 0.99s, long diagnostic 0.60s.
 
 Final commands: source /workspace/adamic-tools/env.sh; timeout 90 go test ./internal/oracle -run TestV4 -count=1 -timeout 90s -v; timeout 90 go test ./internal/oracle -run TestV4Mixed -count=1 -timeout 90s -v; timeout 90 go test ./internal/lower ./internal/native ./internal/javascript -run 'View|Unknown' -count=1 -timeout 90s; timeout 90 go test ./internal/ir -run TestCallTargetReaders -count=1 -timeout 90s. Output went directly to review logs. An initial diagnostic fixture had an excess-property checker error, corrected by binding the raw object before passing it to Base; the corrected suite is green. No whole native package run, no aggregate sweep or additional production census was run.
 
 First lane checks: 3.6s, gofmt/tools on 141 Go files, t.Parallel on eight test packages, vet eight packages. First push fast-forwarded compiler/views-v4 from 5acb88b0b to cc946802a. No registered fixture rows were added; before and after counts rows are unchanged for both commits.
+
+Second lane checks: 3.6s, gofmt/tools on 142 Go files, t.Parallel on eight test packages, vet eight packages. Final raw leaf timings corrected from mixed.log in this evidence-only follow-up commit.
