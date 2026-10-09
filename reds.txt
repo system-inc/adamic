@@ -1,0 +1,84 @@
+run adamic-verify-20261009T130455-369cbd2e: void, 25532 tests in 91 units, 15 failed, 3 units broken, 0 killed over budget
+AGAIN tests-00: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-03: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-04: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-10: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-16: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-18: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-25: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-26: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-31: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-00-r1: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-06-r1: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-07-r1: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-11-r1: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-11-r4: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-11-r11: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-23-r3: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T133230-0389dbd1
+AGAIN tests-25-r2: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r2: from run adamic-verify-again-20261009T133230-0389dbd1
+AGAIN tests-28-r5: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r6: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r7: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T133230-0389dbd1
+AGAIN tests-28-r13: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r14: from run adamic-verify-again-20261009T133230-0389dbd1
+AGAIN tests-28-r15: from run adamic-verify-again-20261009T132027-a51bd657
+AGAIN tests-28-r16: from run adamic-verify-again-20261009T132027-a51bd657
+BROKEN tests-23-r4: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-28-r10: no results (exited false, last output "loom-pilot: 4ebe39d132e0 slot ? cpus ? tree 7fddff4b6e6310489e74a6a3b7f2630599407e15 setup 3 s, 2 packages at a time")
+BROKEN tests-28-r14: no results (exited false, last output "loom-pilot: 2e8dfda02617 slot ? cpus ? tree 7fddff4b6e6310489e74a6a3b7f2630599407e15 setup 2 s, 2 packages at a time")
+FAIL github.com/system-inc/adamic/internal/flow TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_alias_cast_refused.a (tests-25)
+    corpus_coverage_test.go:131: ../oracle/testdata/hidden_boundary_alias_cast_refused.a: Lower: /tmp/adamic/internal/oracle/testdata/hidden_boundary_alias_cast_refused.a:5:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+FAIL github.com/system-inc/adamic/internal/flow TestFlowCorpusRemainder/../oracle/testdata/hidden_boundary_optional_array_mutation_refused.a (tests-25)
+    corpus_coverage_test.go:131: ../oracle/testdata/hidden_boundary_optional_array_mutation_refused.a: Lower: /tmp/adamic/internal/oracle/testdata/hidden_boundary_optional_array_mutation_refused.a:2:43: Adamic 0.1 refuses instantiating a generic function makes a value of type 7 written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-26)
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:212:23; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:255:49; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:274:47; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:313:46; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:325:46; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_004 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesCycles/cycles/05_safe_load_read/main.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet}
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesCycles/cycles/06_import_order_mutant/main.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet}
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion (tests-28-r11)
+    engine_shards_test.go:265: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_000 (tests-28-r11)
+    engine_shards_test.go:289: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_001 (tests-28-r11)
+    engine_shards_test.go:290: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_002 (tests-28-r11)
+    engine_shards_test.go:291: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_003 (tests-28-r11)
+    engine_shards_test.go:292: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004 (tests-28-r11)
+    engine_shards_test.go:293: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_005 (tests-28-r11)
+    engine_shards_test.go:294: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_006 (tests-28-r11)
+    engine_shards_test.go:295: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_007 (tests-28-r11)
+    engine_shards_test.go:296: shared inventory build or union validation did not complete
+BROKEN tests-23-r4 on 3 placements, workers: 837d04dc9a01, 26dfdf63b742, 25a03c8da5da
+BROKEN tests-28-r10 on 3 placements, workers: 25a03c8da5da, 1d9bdfcbd92c, 4ebe39d132e0
+BROKEN tests-28-r14 on 3 placements, workers: 25a03c8da5da, 42cfa37b3403, 2e8dfda02617
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestOwnedWitnesses (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 2 of: TestSixRuleAgreementAndMutants (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0, requested 1 of: TestMutants (tests-03)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestDecodedOptionsAndMutant, TestDotARename (tests-05)
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0, requested 2 of: TestTSCCorpusAgreement (tests-11)
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0, requested 1 of: TestStatementsAgainstGoAndPrettier (tests-14)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestProfileCompilation (tests-17)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestJsxLintTrees (tests-18)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestRulesAgree (tests-19)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestFactoryHooks (tests-22)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestNodeTableIsLinkOnly, TestShardsAgree (tests-24)
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0, requested 2 of: TestExpressionsAgainstGoAndPrettier (tests-24)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestTypeAwareAgreementAndMutants (tests-25)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestCompilerAndStage1Agree (tests-32)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestShadowIndexMissingBinding (tests-32)
