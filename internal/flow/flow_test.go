@@ -55,6 +55,10 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
+		case "oct8_nodehost_fs_large_roundtrip.a":
+			// data-heavy; flow tracing prints every element at every mutation
+			// The small roundtrip fixture keeps the same flow constructs.
+			return true
 		case "class_features_accessors.a":
 			// TestScout22AccessorSpreadRefusal pins the throwing accessor-spread gap.
 			return true

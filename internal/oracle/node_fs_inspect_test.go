@@ -11,7 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var nodeHostCoverageFixtures = []string{"fs_numeric_error", "fs_error_preview", "fs_path_preview", "fs_zero_read", "fs_fd_ownership", "host_directory", "fs_large_roundtrip"}
+var nodeHostCoverageFixtures = []string{"fs_numeric_error", "fs_error_preview", "fs_path_preview", "fs_zero_read", "fs_fd_ownership", "host_directory", "fs_large_roundtrip", "fs_small_roundtrip"}
 
 func nodeHostCoveragePath(name string) string {
 	return "internal/oracle/testdata/oct8_nodehost_" + name + ".a"
