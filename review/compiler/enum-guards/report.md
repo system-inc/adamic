@@ -1,5 +1,5 @@
 Built: result assertions in all seven enum acceptance tests, plus a Node comparison of member values and the last reverse alias, task #5w441z8.
-Commit: tests and replay evidence in bbf1476dfacddb5e3b0750e04ada0425378d12ce, on main 0942c5169d0ea736d9dfaa19881af1ad8adad162.
+Commits: tests bbf1476dfacddb5e3b0750e04ada0425378d12ce; evidence f3ad4fbbcc73e777773eee22b959cc83f9149921; current main merged in 60fa8bb3672956d097be66f3c81e4cab6eb43b54.
 Commands and outputs: eight focused lowering leaves and the existing enums.a oracle pass after restoration; lane checks, including go vet, pass.
 Mutants: M01, M02, M04, M14, M15, M16 and each of the seven individual empty-answer probes fail named assertions.
 Not covered: other audit mutants, stage1 ports, whole packages, or the full gate.
@@ -62,3 +62,5 @@ timeout 150s bash -o pipefail -c 'git show origin/cloud/merge-tree:cloud/integra
 ```
 
 Output: `lane checks 1.3 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages`. The same required checks are repeated after the evidence commit before pushing. Delivery contains only test files and review evidence; mutant files are .diff, and no Go source lives under review.
+
+Current main advanced to 68db8ddd145281a62655452496bdc32ef848bdf3 during final checks. It was merged normally in 60fa8bb3672956d097be66f3c81e4cab6eb43b54. The same eight focused tests and the same uncached oracle were rerun and passed, in 0.907 s and 0.694 s total respectively; the largest lowering leaf was 0.75 s. Lane output was `lane checks 1.0 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages`. The final-main evidence is in `current-main-guards.log`, `current-main-oracle.log`, and `current-main-lane.log`. Main's additional changes were confined to meter tests and their testdata.
