@@ -78,6 +78,14 @@ esac
         (self.root / 'full-running').write_text(other + '\n')
         self.assertEqual(len(self.check()), 2, 'a whole gate of another commit is not the star\'s turn')
 
+    def test_a_whole_gate_the_loops_run_is_a_live_turn_by_its_record(self):
+        (self.root / 'seen').write_text('cloud/land-train-1-views-slice1 %s\n' % star)
+        (self.root / 'watch.log').write_text('22:21:39 done cloud/land-train-1-views-slice1: red: %s fast gate, first failure at tests\n' % star)
+        (self.root / 'whole-gates').write_text('%s running %d\n' % (star, self.now - 300))
+        self.assertEqual(self.check(), [])
+        (self.root / 'whole-gates').write_text('')
+        self.assertEqual(len(self.check()), 2)
+
     def test_a_red_with_no_newer_push_pages_and_a_push_rearms(self):
         # Case two (Oct 8, 20:29Z): the star's first red sat until a tick read the log.
         (self.root / 'seen').write_text('cloud/land-views-slice1 %s\ncodex/other %s\n' % (star, other))

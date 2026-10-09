@@ -129,6 +129,12 @@ def runningTurn(globs):
     for sha in fullRuns():
         if sha in tips:
             return 'running full-main %s %s' % (tips[sha], sha[:12])
+    # The loops' own whole gates carry no sha on their command line: their published record says running
+    # (@system_adamic, Oct 9 00:14Z: V1 paged quiet while its whole gate ran). A superseded candidate's record is
+    # history, even one a stop left reading running.
+    for sha, branch in tips.items():
+        if not superseded(branch, sha) and wholeGate(sha)[0] == 'running':
+            return 'running whole gate %s %s' % (branch, sha[:12])
     return None
 
 
