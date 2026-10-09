@@ -1,0 +1,12 @@
+{
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "member": "c-portability-main",
+  "source": "ebad12cf143890e9972b7cfda4dfdf0c4b106484",
+  "new_rows": [
+    "| internal/oracle/testdata/long_unicode_literals.a | 32 | 32 | 17 | 51 | 5 | 0 |"
+  ],
+  "existing_rows_changed": 0,
+  "row_moves": 0,
+  "removed_rows": 0,
+  "cause": "New long Unicode fixture; the compiler change contains no counting operations. All existing measured rows remain byte-identical."
+}
