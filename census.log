@@ -1,0 +1,42 @@
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit12
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit35
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit01
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit00
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit02
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit03
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit04
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit07
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit06
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit08
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit05
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit09
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit11
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit10
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit13
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit14
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit16
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit15
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit17
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit18
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit19
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit20
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit21
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit22
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit23
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit24
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit25
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit27
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit26
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit28
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit32
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit30
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit29
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit31
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit34
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit33
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestNormalizeLongMeasurements	TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+skips=39 required-input=0 unknown=36 pending=0
+gate skipped 0 required-input tests; 36 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1
