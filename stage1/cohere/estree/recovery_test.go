@@ -30,9 +30,9 @@ func recoveredGrammar() []string {
 }
 func TestRecoveredGrammar(t *testing.T) {
 	list := manifest(t, recoveredGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
+	binary, script := recoveryBuild(t, main, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
 		if diff := firstDifference(want, got); diff != "" {
 			t.Fatal(name + ": " + diff)
@@ -70,7 +70,7 @@ func TestRecoveryMutants(t *testing.T) {
 		t.Fatal("mutant/shard enumeration changed")
 	}
 	list := manifest(t, recoveredGrammar())
-	want := execute(t, "", recoveryOracle(t, setup), "--manifest", list)
+	want := recoveryAnswer(t, recoveryOracle(t, setup), list, "--manifest")
 	type product struct{ main, binary string }
 	products := make([]product, len(recoveryMutations))
 	for i, item := range recoveryMutations {
@@ -104,7 +104,7 @@ func TestRecoveryLibraryGaps(t *testing.T) {
 	}
 	for _, source := range []string{"f<>();", "class C<> {}"} {
 		list := manifest(t, []string{source})
-		execute(t, "", goOracle(t), "--manifest", list)
+		recoveryAnswer(t, goOracle(t), list, "--manifest")
 		code := `import {pathToFileURL} from 'node:url';const lib=await import(pathToFileURL(process.argv[1]+'/node_modules/@typescript-eslint/typescript-estree/dist/index.js').href);try{lib.parse(process.argv[2],{warnOnUnsupportedTypeScriptVersion:false});console.log('accepted')}catch(e){console.log('refused')}`
 		if got := string(execute(t, "", "node", "--input-type=module", "-e", code, library, source)); got != "refused\n" {
 			t.Fatalf("library gap changed for %q: %s", source, got)

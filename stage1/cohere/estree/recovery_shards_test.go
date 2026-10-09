@@ -2,6 +2,7 @@ package estree
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -14,46 +15,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
-
-// There is no package build cache. Until internal/buildcache lands, each product
-// is built once by the parent and supplied to all its parallel shards. These
-// descriptors accompany callbacks writing all build products into dir.
-type recoveryInputs struct {
-	Name         string
-	Files, Flags []string
-	Toolchain    string
-}
-
-func recoveryFiles(t *testing.T, roots ...string) []string {
-	t.Helper()
-	var files []string
-	for _, root := range roots {
-		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.Name() == ".git" {
-				if entry.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if !entry.IsDir() {
-				files = append(files, path)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	return files
-}
 
 type recoverySetup struct {
 	start  time.Time
@@ -70,18 +37,42 @@ func (s *recoverySetup) report(t *testing.T) {
 	wall := time.Since(s.start)
 	t.Logf("setup wall=%.6fs builds=%.6fs without-builds=%.6fs", wall.Seconds(), s.builds.Seconds(), (wall - s.builds).Seconds())
 }
-func recoveryProduct(t *testing.T, s *recoverySetup, in recoveryInputs, build func(string) error) string {
+func recoveryProduct(t *testing.T, s *recoverySetup, in buildcache.Inputs, build func(string) error) string {
+	t.Helper()
+	start := time.Now()
+	dir := buildcache.Product(t, in, func(dir string) error {
+		cold := time.Now()
+		err := build(dir)
+		t.Logf("BUILD %s cold wall=%.6fs", in.Name, time.Since(cold).Seconds())
+		return err
+	})
+	s.builds += time.Since(start)
+	return dir
+}
+
+// Overlay Go builds stay local until an oracle without an overlay can use GoBuild.
+// Their inputs are not hand-listed as a Product key.
+func recoveryLocalGoBuild(t *testing.T, s *recoverySetup, build func(string) error) string {
 	t.Helper()
 	dir := t.TempDir()
 	start := time.Now()
 	err := build(dir)
 	elapsed := time.Since(start)
 	s.builds += elapsed
-	t.Logf("BUILD %s cold wall=%.6fs files=%d flags=%q toolchain=%q", in.Name, elapsed.Seconds(), len(in.Files), in.Flags, in.Toolchain)
+	t.Logf("BUILD Go oracle cold wall=%.6fs", elapsed.Seconds())
 	if err != nil {
 		t.Fatal(err)
 	}
 	return dir
+}
+func recoveryBuild(t *testing.T, path string, sanitize bool) (string, string) {
+	t.Helper()
+	if !sanitize {
+		t.Fatal("recovery native products require sanitizers")
+	}
+	setup := beginRecoverySetup(t)
+	defer setup.report(t)
+	return recoveryPort(t, setup, path)
 }
 func recoveryOracle(t *testing.T, s *recoverySetup) string {
 	t.Helper()
@@ -91,8 +82,7 @@ func recoveryOracle(t *testing.T, s *recoverySetup) string {
 		t.Fatal(err)
 	}
 	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	inputs := recoveryInputs{Name: "Go oracle", Files: recoveryFiles(t, source, filepath.Join(repo, "cohere"), filepath.Join(repo, "go.mod")), Flags: []string{"go build", "overlay"}, Toolchain: runtime.Version()}
-	dir := recoveryProduct(t, s, inputs, func(dir string) error {
+	dir := recoveryLocalGoBuild(t, s, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
 		if err != nil {
 			return err
@@ -116,11 +106,7 @@ func recoveryOracle(t *testing.T, s *recoverySetup) string {
 }
 func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) {
 	t.Helper()
-	files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := recoveryInputs{Name: "lowered program and emitted JS", Files: recoveryFiles(t, append(files, filepath.Join(root(t), "stage1/typescript"), filepath.Join(root(t), "internal"), filepath.Join(root(t), "cohere"))...), Flags: []string{"lower", "native.C", "javascript.JavaScript"}, Toolchain: runtime.Version()}
+	inputs := recoveryCacheInputs(t, path)
 	lowered := recoveryProduct(t, s, inputs, func(dir string) error {
 		program, err := load.Load([]string{path})
 		if err != nil {
@@ -135,18 +121,17 @@ func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) 
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
-	version, err := exec.Command("clang", "--version").Output()
+	code, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs = recoveryInputs{Name: "sanitized native", Files: recoveryFiles(t, filepath.Join(lowered, "port.c"), filepath.Join(root(t), "internal/native/runtime"), filepath.Join(root(t), "internal/native/native.go")), Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: string(version)}
-	binary := recoveryProduct(t, s, inputs, func(dir string) error {
-		code, err := os.ReadFile(filepath.Join(lowered, "port.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(code), filepath.Join(dir, "port"), native.Options{Sanitize: true})
-	})
+	inputs = buildcache.Inputs{
+		Name:      "estree-sanitized-native",
+		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
+		Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
+	}
+	binary := recoveryProduct(t, s, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, string(code)) })
 	return filepath.Join(binary, "port"), filepath.Join(lowered, "port.mjs")
 }
 
