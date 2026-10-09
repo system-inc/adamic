@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$"
+  ],
+  "seconds": 12.72118371200122,
+  "exit_code": 1,
+  "go_reported_test_seconds": 0.466,
+  "load_before": "1.00 1.90 3.50 2/508 252590",
+  "load_after": "1.00 1.85 3.46 1/505 252665"
+}

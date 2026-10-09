@@ -1,0 +1,9 @@
+14 constructor-arrow-this wall=0.068s
+target beb1be1b6c34eaecdbac5a82d5cc9aa0c352b82f
+logs /tmp/loom-units/loom-unit-1536997856/workspace/loom-out/phase/catalog-units/00-okru8qa4/adamic-catalog-logs-7pq52xyb
+build flags: commit=beb1be1b6c34eaecdbac5a82d5cc9aa0c352b82f; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)
+14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+14 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=1.72 1.88 1.95 1/520 219928 -> 1.72 1.88 1.95 1/520 219928
+total wall=0.020s load=1.72 1.88 1.95 1/519 219919 -> 1.72 1.88 1.95 1/519 219928
