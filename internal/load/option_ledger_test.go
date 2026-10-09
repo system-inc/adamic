@@ -26,11 +26,11 @@ const wrong: number = 'wrong';`)
 	if program != nil || !errors.As(err, &rejected) {
 		t.Fatalf("rejected census exposed a compilable program: %v", err)
 	}
-	if len(report.Rows) != 4 || report.Counts[OptionCheckScheduled] != 3 || report.Counts[OptionRemainingError] != 1 {
+	if len(report.Rows) != 4 || report.Counts[OptionCheckScheduled] != 4 || report.Counts[OptionRemainingError] != 0 {
 		t.Fatalf("incomplete census: %+v; %v", report, err)
 	}
-	if report.Rows["D017"].State != OptionRemainingError || !strings.Contains(report.Rows["D017"].Reason, "5bb775ca") {
-		t.Fatalf("missing optional dependency lost: %+v", report.Rows["D017"])
+	if report.Rows["D017"].State != OptionCheckScheduled || report.Rows["D017"].Kind != "optional-presence" {
+		t.Fatalf("optional presence contract lost: %+v", report.Rows["D017"])
 	}
 	if len(report.OrdinaryErrors) != 1 || !strings.Contains(report.OrdinaryErrors[0], "Type 'string' is not assignable") {
 		t.Fatalf("ordinary error was attributed or suppressed: %+v", report.OrdinaryErrors)

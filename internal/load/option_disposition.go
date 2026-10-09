@@ -24,12 +24,13 @@ func (p *Program) scheduleOptionSite(site OptionSite) OptionDisposition {
 		row.Kind = "indexed-presence"
 	case len(site.Options) == 1 && site.Options[0] == "useUnknownInCatchVariables":
 		row.Kind = "caught-type"
+	case p.acceptOptionalWrite(site), p.acceptOptionalRelation(site), p.acceptOptionalLiteral(site), p.acceptOptionalView(site), p.acceptOptionalDefined(site), p.acceptOptionalNested(site):
+		row.Kind = "optional-presence"
 	default:
 		row.State = OptionRemainingError
 		row.Reason = "no use-site guard contract supports this diagnostic: " + site.Message
 		if len(site.Options) == 1 && site.Options[0] == "exactOptionalPropertyTypes" {
 			row.Kind = "optional-presence"
-			row.Reason = "missing own-presence representation: 5bb775ca and alias fixes through 7e7464e6; " + site.Message
 		}
 	}
 	return row
