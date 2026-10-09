@@ -66,3 +66,12 @@ fixtures; no numerical value changes. New Node interaction leaves take 0.77s
 and 0.76s. The split clean, duplicate, and skipped-declaration union leaves take
 4.76s, 4.72s, and 4.87s. Main movement after the initial branch point is merged
 before delivery; it contains only other workers' test changes.
+
+Integration lane command:
+
+```
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+```
+
+Output: lane checks 2.1 s: gofmt and tools on 10 Go files, t.Parallel on 2 test
+packages; vet 2 packages. Exit 0.
