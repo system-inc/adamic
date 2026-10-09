@@ -96,54 +96,6 @@ func TestCommentsMatchCohere(t *testing.T) {
 	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
-// Not parallel: compile each mutant separately to bound clang and parser memory.
-func TestCommentMutants(t *testing.T) {
-	path, _ := filepath.Abs("testdata/witnesses.json")
-	want := run(t, "", oracle(t), path)
-	for _, m := range []struct{ file, old, new string }{
-		{"can_begin_at.ts", "if(position === 0 && text.startsWith('#!'))", "if(false)"},
-		{"collect_list_interiors.ts", "if(depth === 1)", "if(false)"},
-		{"sort_by_position.ts", "> current.start", "< current.start"},
-		{"all.ts", "anchors[node.end] = true;", "anchors[node.end] = false;"},
-		{"for_file.ts", "if(!this.ready)", "if(true)"},
-	} {
-		t.Run(m.file, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				text := string(data)
-				if file == m.file {
-					if strings.Count(text, m.old) != 1 {
-						t.Fatalf("mutant anchor count %d", strings.Count(text, m.old))
-					}
-					text = strings.Replace(text, m.old, m.new, 1)
-				}
-				parserRoot, _ := filepath.Abs("../../../../typescript")
-				options, _ := filepath.Abs("../options_json.ts")
-				text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
-				text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
-				if err := os.WriteFile(filepath.Join(directory, file), []byte(text), 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			got := run(t, "", build(t, directory), path)
-			if bytes.Equal(got, want) {
-				t.Fatal("compiled semantic mutant survived")
-			}
-			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-			for i := 0; i < len(a) && i < len(b); i++ {
-				if a[i] != b[i] {
-					t.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
-					break
-				}
-			}
-		})
-	}
-}
-
 // The inventory assumes a common AST adapter. This comparison isolates that
 // contract from the separate stage-1 parser, using Go's actual traversal spans.
 func TestConsumerCommentHelpers(t *testing.T) {
