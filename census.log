@@ -1,0 +1,202 @@
+pending	github.com/system-inc/adamic/internal/oracle	TestEntriesAcceptance	TestEntriesAcceptance:extra	awaits codex/step12-entries-fixtures
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestCorpusNativeRefusals	TestCorpusNativeRefusals:extra	The estree corpus audit lane: needs the completed frozen corpus that audit produces, not provisioned by the gate.
+measurement	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterThroughput	TestPrinterThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleChecker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionChecker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleParser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionParser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleTypes
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionTypes
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleUtilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionUtilities
+measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestPerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/cmd/adamic-test262	TestCompilerStartupMeasurement	TestCompilerStartupMeasurement:c4a4cc95e992b9399ab2a21ae7e3a1caca9c71a5d9b0b7f5d48200073d19ce03	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+pending	github.com/system-inc/adamic/internal/lower	TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];	skip message	awaits compiler/views-v3
+measurement	github.com/system-inc/adamic/internal/native	TestNormalizeLongMeasurements	TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestRepositoryAgreement	TestRepositoryAgreement:extra	The estree corpus audit lane: runs against a completed Go/Node corpus audit directory (ADAMIC_ESTREE_CORPUS) produced by that audit, not provisioned by the gate, like the GCC and release-flags lanes.
+measurement	github.com/system-inc/adamic/stage1/cohere/estree	TestThroughput	TestThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+pending	github.com/system-inc/adamic/internal/oracle	TestCheckedViewObjectPrimitiveSource/comment-boolean	skip message	awaits compiler/views-v3
+pending	github.com/system-inc/adamic/internal/oracle	TestCheckedViewObjectPrimitiveSource/comment-flags-wrong	skip message	awaits compiler/views-v3
+pending	github.com/system-inc/adamic/internal/oracle	TestCheckedViewObjectPrimitiveSource/comment-good	skip message	awaits compiler/views-v3
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/logical_and_reference_refused/logical_and_reference_null.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/fields.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/jsdoc.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/numeric_record.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/template.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/sorted.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/paths.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/nodearray.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/presence_refused/optional_field_write.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_uint16_notyet.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_uint16.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/stage3/fixtures/taste/17_binder_flow.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintReleaseAndThroughput	TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
+measurement	github.com/system-inc/adamic/stage1/cohere/selector	TestSelectorThroughput	TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestWholePerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterThroughput	TestCSSPrinterThroughput:2de9a123130d9a85700e28f402ef09dab1a7ec570d865b0f14c3cf7e04f5bef1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestThroughput	TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/stage3/fixtures	TestTransformedNodeRunnerGuardHook	TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2	Dormant subprocess entry point, not an independent verification check. TestTransformedNodeRunnerGuard supplies ADAMIC_RUNNER_GUARD_REPOSITORY for each positive and negative runner-shape probe; without a request this hook is not applicable.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileArtifacts	TestCSSProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/lower	TestOptionalWideningCensus	TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e	Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSThroughput	TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapshotsAgree	TestCSSProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestProduct_GraphQLPrinterRelease
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_047cb0d_f_maybe.a	awaits #b75jjs3
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_047cb0d_f_maybe_ref.a	awaits #b75jjs3
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a	skip message	awaits library/area-on-next-2
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_047cb0d_n_try.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4ddd17f_long_name.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4ddd17f_opt_3.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4ddd17f_weak_single_narrowed.a	awaits #z1vjxxd
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4ddd17f_weak_union_narrowed.a	awaits #63pvx2b
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_pad_fill.a	skip message	awaits codex/library-string-generic
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_pad_fill_call.a	skip message	awaits codex/library-string-generic
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_receiver.a	skip message	awaits codex/library-string-generic
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_receiver_charat.a	skip message	awaits codex/library-string-generic
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_receiver_number.a	skip message	awaits codex/library-string-generic
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_4e1649c_generic_template.a	skip message	awaits library/area-on-next-2
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_57f2d04_find_last_shrinks.a	awaits #b75jjs3
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_57f2d04_find_last_shrinks2.a	awaits #b75jjs3
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_class_escapes.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_class_octal.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_class_string_duplicates.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_long_backtrack.a	skip message	awaits library/area-on-next-2
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_null_undefined_inline.a	awaits #eep1m5z
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_quadratic_exec.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_quadratic_matchall.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_quadratic_test.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_structural_method.a	skip message	awaits codex/regex-structural-groups
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_8e67677_structural_optional.a	skip message	awaits codex/regex-structural-groups
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_903f25b_groups_proto.a	skip message	awaits codex/regex-structural-groups
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_903f25b_groups_proto2.a	skip message	awaits codex/regex-structural-groups
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_903f25b_iterator_tag.a	skip message	awaits codex/library-findlast-iterator-tag
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_903f25b_private_mangled.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_93122fa_t_t5.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_93122fa_t_v1.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_93122fa_t_v2.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_93122fa_t_v5.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_defined_in_try.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_error_spread.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_lib_codepoint.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_each.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_find.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_map.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_reduce.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_some.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_narrowed_sort.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_uncaught_name.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_view_method.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_9984394_view_method_parameter.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_a34388d_cyc_iface.a	awaits #7g4qv2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_a34388d_cyc_iterable.a	awaits #7g4qv2b
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_bdb950b_gap_nul.a	skip message	awaits library/area-on-next-2
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_classfeat_maybe_setter.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_classfeat_method_view.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_classfeat_static_virtual.a	awaits #eep1m5z
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d7054e9_this_arrow.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d7054e9_this_arrow_number.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d96d304_try_finally_concat.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d96d304_try_pad.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d96d304_try_repeat.a	awaits #cxr5x2v
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_d96d304_try_stack.a	awaits #z1vjxxd
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_iterators_derived_symbol.a	awaits #63pvx2b
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_iterators_override_source.a	awaits #63pvx2b
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct8_nodehost_fs_error_preview.a	skip message	awaits library/area-on-next-2
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct8_nodehost_fs_numeric_error.a	skip message	awaits library/area-on-next-2
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a	awaits #8ng1j76
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a	awaits #8ng1j76
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p01_maybe_boolean_spread.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p14_callable_union_no_view.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p17_callable_call_first_half.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p18_cast_kind_no_field_types.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p20_callable_member_call_good.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p23_tuple_from_map_entries.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p24_tuple_from_object_entries.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p26_callable_or_undefined.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p32_fs_rm_force_undefined.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p33_map_in_union.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p34_typed_array_in_union.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p35_class_in_union.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p61_method_value_producer.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p67_static_class_union_member.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p69_deep_recursive_union.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_70.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p72_tuple_count_mismatch.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a	awaits #aecx10a
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a	awaits #aecx10a
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q01_findlast_union_number.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q02_findlast_inferred.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q03_findlast_undefined_target.a	skip message	awaits compiler/fx5-every-refusal
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q04_optional_call_container.a	awaits #8ng1j76
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q17_union_literal_all_numbers_some.a	skip message	awaits compiler/fx5-literal-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q18_every_mixed_literal.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q19_union_literal_index.a	skip message	awaits compiler/fx5-literal-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q20_every_pass_to_function.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q21_every_readonly_built.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q22_every_inferred_built.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q31_every_class_union.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q32_every_negated_return.a	skip message	awaits compiler/fx5-every-refusal
+pending	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_predicates_q38_property_every.a	skip message	awaits compiler/fx5-every-refusal
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p09_tuple_destructure_wrong.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p32_boxed_slot_string_good.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p33_boxed_slot_union_member.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_maybe_number.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_string_undefined.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p53_callable_union_destructure_good.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p59_union_member_method_shorthand.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p62_union_member_arrow_inferred.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p68_object_view_over_tuple.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p70_length_view_over_tuple.a	awaits #1fk58py
+pending-task	github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a	awaits #1fk58py
+unknown	github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSParserDarwinLeaks
+unknown	github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterDarwinLeaks
+skips=199 required-input=0 unknown=23 pending=134
+gate skipped 0 required-input tests; 23 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1
