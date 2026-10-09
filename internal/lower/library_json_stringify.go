@@ -71,6 +71,22 @@ func jsonScalar(s *ir.JSONSchema) bool {
 // through an object type is refused: that type can hide additional fields or a toJSON method.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
+	if n.Kind == ast.KindShorthandPropertyAssignment {
+		// A shorthand name denotes the value binding, not the literal's property symbol.
+		symbol := l.checker.GetShorthandAssignmentValueSymbol(n)
+		if symbol == nil {
+			return nil, nil, l.notYet(n, "JSON.stringify shorthand without a value binding")
+		}
+		if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		schema, err := l.jsonType(n, l.checker.GetTypeOfSymbol(symbol), 0)
+		if err != nil {
+			return nil, nil, err
+		}
+		value, err := l.shorthand(n)
+		return value, schema, err
+	}
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
@@ -111,8 +127,8 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			}
 		} else {
 			for _, f := range n.AsObjectLiteralExpression().Properties.Nodes {
-				if f.Kind != ast.KindPropertyAssignment {
-					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods")
+				if f.Kind != ast.KindPropertyAssignment && f.Kind != ast.KindShorthandPropertyAssignment {
+					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread or methods")
 				}
 				key := f.Name()
 				if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
@@ -129,7 +145,11 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 						return nil, nil, l.notYet(key, "JSON.stringify a numeric key outside the array-index range (spell it as a string)")
 					}
 				}
-				if err := add(name, f.AsPropertyAssignment().Initializer); err != nil {
+				value := f
+				if f.Kind == ast.KindPropertyAssignment {
+					value = f.AsPropertyAssignment().Initializer
+				}
+				if err := add(name, value); err != nil {
 					return nil, nil, err
 				}
 			}

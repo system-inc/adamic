@@ -1,0 +1,19 @@
+const status = 1;
+const other = 99;
+console.log(`${other}`);
+console.log(JSON.stringify({ status }) ?? '');
+function report(status: number): void {
+    const name = 'inner';
+    console.log(JSON.stringify({ status, name, explicit: status }) ?? '');
+}
+report(7);
+function accept(value: { name: string }): string { return value.name; }
+const name = 'outer';
+console.log(accept({ name }));
+{
+    const name = 'shadow';
+    console.log(accept({ name }));
+    console.log(JSON.stringify({ name, nested: { name } }) ?? '');
+}
+const items: readonly string[] = ['a', 'b'];
+console.log(JSON.stringify({ items }) ?? '');
