@@ -1,0 +1,17 @@
+from pathlib import Path
+import subprocess
+
+root = Path.cwd()
+evidence = root / 'review/compiler/agree-native'
+source = root / 'internal/lower/regexp.go'
+original = source.read_bytes()
+try:
+    subprocess.run(['git', 'apply', str(evidence / 'regex-M20.patch')], check=True)
+    with (evidence / 'regex-M20.log').open('w') as log:
+        result = subprocess.run(['timeout', '120', 'go', 'test', './internal/lower', '-run', '^TestRegExpUnicodeClassSourceAgreesWithNode$', '-count=1', '-timeout', '90s', '-v'], stdout=log, stderr=subprocess.STDOUT)
+    output = (evidence / 'regex-M20.log').read_text()
+    assert result.returncode == 1 and 'Native backend stdout' in output, (result.returncode, output)
+    assert 'Native build:' not in output, output
+    print('u043 M20: Unicode row caught wrong native stdout through shared helper')
+finally:
+    source.write_bytes(original)

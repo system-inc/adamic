@@ -3,17 +3,21 @@ package lower
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 type agreementTesting interface {
@@ -38,6 +42,81 @@ func lowersAndAgreesWithNode(t *testing.T, source string) *ir.Program {
 func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Program {
 	t.Helper()
 	return agreeSource(t, source, exit, nil)
+}
+
+// lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
+// source and JavaScript agreement. Each opting-in row names what only native shows.
+func lowersAndAgreesWithNodeNative(t *testing.T, source string) *ir.Program {
+	t.Helper()
+	return agreeSourceNative(t, source, nil)
+}
+
+// The mutation seam changes only C, after JavaScript agreement, so planted native
+// answers prove this leg independently of the JavaScript comparison.
+func agreeSourceNative(t agreementTesting, source string, mutate func(string) string) *ir.Program {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	program := agreeEntry(t, path, nil, 0, nil, nil)
+	want := runAgreementNode(t, path)
+	code := native.C(program)
+	if mutate != nil {
+		code = mutate(code)
+	}
+	got := runAgreementNative(t, code)
+	compareNativeAgreement(t, got, want)
+	return program
+}
+
+func runAgreementNative(t agreementTesting, code string) nodeObservation {
+	t.Helper()
+	options := native.Options{}
+	flags := append(native.Flags(options), fmt.Sprintf("C=%x", sha256.Sum256([]byte(code))),
+		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	// The shared build-product cache hashes C contents, runtime and build code,
+	// native flags and toolchain. A hit runs the binary without invoking clang.
+	directory, err := buildcache.Get(buildcache.Inputs{
+		Name:      "lower agreement native",
+		Files:     []string{"internal/native"},
+		Flags:     flags,
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+	}, func(directory string) error {
+		return native.Build(code, filepath.Join(directory, "native"), options)
+	})
+	if err != nil {
+		t.Fatalf("Native build: %v", err)
+	}
+	binary := filepath.Join(directory, "native")
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary)
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err = command.Run()
+	exit := 0
+	if ctx.Err() != nil {
+		t.Fatalf("Native %s: %v", binary, ctx.Err())
+	}
+	if err != nil {
+		failure, ok := err.(*exec.ExitError)
+		if !ok {
+			t.Fatalf("Native %s: %v", binary, err)
+		}
+		exit = failure.ExitCode()
+	}
+	return nodeObservation{stdout.Bytes(), stderr.Bytes(), exit}
+}
+
+func compareNativeAgreement(t agreementTesting, got, want nodeObservation) {
+	t.Helper()
+	if !bytes.Equal(got.stdout, want.stdout) {
+		t.Fatalf("Native backend stdout = %q, source Node = %q", got.stdout, want.stdout)
+	}
+	if got.code != want.code {
+		t.Fatalf("Native backend exit = %d, source Node = %d; stderr %q", got.code, want.code, got.stderr)
+	}
 }
 
 // The per-call mutation seam lets proving tests plant bad lowered output without
@@ -214,4 +293,46 @@ func TestAgreementStaticInitializerWitness(t *testing.T) {
 func TestAgreementParseIntRadixWitness(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNode(t, "console.log(['10', '10', '10'].map(Number.parseInt).join(','));")
+}
+
+func recordNativeAgreementFailure(t *testing.T, source string, mutate func(string) string) string {
+	t.Helper()
+	recorder := &agreementRecorder{T: t}
+	func() {
+		defer func() {
+			if value := recover(); value != nil {
+				if _, ok := value.(agreementRecordedFailure); !ok {
+					panic(value)
+				}
+			}
+		}()
+		agreeSourceNative(recorder, source, mutate)
+	}()
+	return recorder.message
+}
+
+func TestNativeAgreementRejectsWrongOutput(t *testing.T) {
+	t.Parallel()
+	// Only native shows the planted C string; JavaScript still prints computed.
+	message := recordNativeAgreementFailure(t, "console.log('computed');", func(code string) string {
+		return strings.ReplaceAll(code, "computed", "wrong")
+	})
+	if !strings.Contains(message, "Native backend stdout") {
+		t.Fatalf("planted native output was not caught by stdout comparison: %q", message)
+	}
+}
+
+func TestNativeAgreementRejectsWrongExit(t *testing.T) {
+	t.Parallel()
+	// Only native shows the planted exit status after printing the correct answer.
+	message := recordNativeAgreementFailure(t, "console.log('computed');", func(code string) string {
+		index := strings.LastIndex(code, "return 0;")
+		if index < 0 {
+			t.Fatal("native main has no successful exit to mutate")
+		}
+		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1)
+	})
+	if !strings.Contains(message, "Native backend exit = 7, source Node = 0") {
+		t.Fatalf("planted native exit was not caught by exit comparison: %q", message)
+	}
 }
