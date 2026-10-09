@@ -1,0 +1,910 @@
+{
+  "report": {
+    "package": "internal/unicodeproperties",
+    "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+    "skipped": [
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestNodeStringProperties"
+    ],
+    "mutants": [
+      {
+        "mutant": "M11",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:3022",
+        "branch": "test-audit/internal-unicodeproperties-canonicalize",
+        "candidates_failed": [
+          "TestCanonicalizeUnicodeNodeRange family"
+        ],
+        "still_caught_by": [
+          "TestEquivalentsAreClosed",
+          "TestUnicodeNodeShardCoverage"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "M05",
+        "file_line": "internal/unicodeproperties/unicodeproperties.go:175",
+        "branch": "test-audit/internal-unicodeproperties-node",
+        "candidates_failed": [
+          "TestNodeStringProperties"
+        ],
+        "still_caught_by": [
+          "TestKnownMembership",
+          "TestRejectedNames",
+          "TestStringPropertyCensus"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "M13",
+        "file_line": "internal/unicodeproperties/tables.go:25712",
+        "branch": "test-audit/internal-unicodeproperties-node",
+        "candidates_failed": [
+          "TestNodeStringProperties"
+        ],
+        "still_caught_by": [
+          "TestKnownMembership",
+          "TestStringPropertyCensus"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:22",
+        "branch": "test-defend/internal-unicodeproperties-canonicalize",
+        "candidates_failed": [
+          "TestCanonicalizeUnicodeNodeRange family"
+        ],
+        "still_caught_by": [
+          "TestUnicodeNodeShardCoverage"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:23",
+        "branch": "test-defend/internal-unicodeproperties-canonicalize",
+        "candidates_failed": [
+          "TestCanonicalizeUnicodeNodeRange family"
+        ],
+        "still_caught_by": [
+          "TestUnicodeNodeShardCoverage"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/unicodeproperties/canonicalize_tables.go:24",
+        "branch": "test-defend/internal-unicodeproperties-canonicalize",
+        "candidates_failed": [
+          "TestCanonicalizeUnicodeNodeRange family"
+        ],
+        "still_caught_by": [
+          "TestUnicodeNodeShardCoverage"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D1",
+        "file_line": "internal/unicodeproperties/tables.go:25713",
+        "branch": "test-defend/internal-unicodeproperties-node",
+        "candidates_failed": [
+          "TestNodeStringProperties"
+        ],
+        "still_caught_by": [
+          "TestStringPropertyCensus"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/unicodeproperties/tables.go:27119",
+        "branch": "test-defend/internal-unicodeproperties-node",
+        "candidates_failed": [
+          "TestNodeStringProperties"
+        ],
+        "still_caught_by": [
+          "TestStringPropertyCensus"
+        ],
+        "stale": false
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/unicodeproperties/tables.go:28061",
+        "branch": "test-defend/internal-unicodeproperties-node",
+        "candidates_failed": [
+          "TestNodeStringProperties"
+        ],
+        "still_caught_by": [
+          "TestStringPropertyCensus"
+        ],
+        "stale": false
+      }
+    ],
+    "keep": [],
+    "deletable": [
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestNodeStringProperties"
+    ]
+  },
+  "baseline": {
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./internal/unicodeproperties/",
+      "-skip",
+      "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+    ],
+    "cache": "/tmp/deletion-unicode/cache/baseline",
+    "gate_uncached": 1,
+    "exit": 0,
+    "wall_seconds": 30.58507197599829,
+    "failed": [],
+    "witness_failures": [],
+    "panics": [],
+    "nonwitness_failed": [],
+    "completed": true,
+    "passed": [
+      "TestBinaryAliases",
+      "TestCanonicalizeExamples",
+      "TestCanonicalizeLegacyNode",
+      "TestEquivalentsAreClosed",
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestSetBoundaries",
+      "TestStringPropertyCensus",
+      "TestUnicodeNodeBatchOrderAndLimit",
+      "TestUnicodeNodeShardCoverage",
+      "TestUnicodeNodeShardPlantedFailure",
+      "TestUnicodeNodeStridePlantedFailure",
+      "TestVersionMatchesNode"
+    ],
+    "failure_lines": []
+  },
+  "replays": [
+    {
+      "mutant": "M11",
+      "file_line": "internal/unicodeproperties/canonicalize_tables.go:3022",
+      "branch": "test-audit/internal-unicodeproperties-canonicalize",
+      "diff": "review/test-audit/internal-unicodeproperties-canonicalize/diffs/M11.diff",
+      "local_diff": "test-audit__internal-unicodeproperties-canonicalize__M11.diff",
+      "candidates_failed": [
+        "TestCanonicalizeUnicodeNodeRange family"
+      ],
+      "other_rows_failed": [
+        "TestEquivalentsAreClosed"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-audit__internal-unicodeproperties-canonicalize__M11",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.37322112000038,
+          "failed": [
+            "TestEquivalentsAreClosed",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "witness_failures": [
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestEquivalentsAreClosed",
+            "TestUnicodeNodeShardCoverage"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestStringPropertyCensus",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "canonicalize_test.go:119: U+0041 missing from U+0042 U+0061",
+            "shards_test.go:160: pre-split scan inputs changed: 2565695a8350f5f5c9ffa9d2c4100bce113f712e9376101aeb44839a37ec7e12",
+            "shards_test.go:256: plant failed more than its own shard and owning top-level function: === RUN   TestCanonicalizeUnicodeNodeRange0"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestEquivalentsAreClosed",
+        "TestUnicodeNodeShardCoverage"
+      ],
+      "panicking_tests": [],
+      "witness_failures": [
+        "TestUnicodeNodeShardPlantedFailure"
+      ]
+    },
+    {
+      "mutant": "M05",
+      "file_line": "internal/unicodeproperties/unicodeproperties.go:175",
+      "branch": "test-audit/internal-unicodeproperties-node",
+      "diff": "review/test-audit/internal-unicodeproperties-node/diffs/M05.diff",
+      "local_diff": "test-audit__internal-unicodeproperties-node__M05.diff",
+      "candidates_failed": [
+        "TestNodeStringProperties"
+      ],
+      "other_rows_failed": [
+        "TestKnownMembership",
+        "TestRejectedNames",
+        "TestStringPropertyCensus"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-audit__internal-unicodeproperties-node__M05",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.791351895000844,
+          "failed": [
+            "TestKnownMembership",
+            "TestRejectedNames",
+            "TestStringPropertyCensus"
+          ],
+          "witness_failures": [],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestKnownMembership",
+            "TestRejectedNames",
+            "TestStringPropertyCensus"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestNodeAgrees",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "alias_test.go:408: Basic_Emoji watch: ok false",
+            "alias_test.go:412: keycap: ok false sequences 0",
+            "alias_test.go:316: Lookup RGI_Emoji_ZWJ_Sequence: ok false kind 0 len 0",
+            "alias_test.go:319: RGI_Emoji_ZWJ_Sequence does not contain its first sequence",
+            "alias_test.go:316: Lookup RGI_Emoji: ok false kind 0 len 0",
+            "alias_test.go:319: RGI_Emoji does not contain its first sequence",
+            "alias_test.go:316: Lookup Basic_Emoji: ok false kind 0 len 0",
+            "alias_test.go:319: Basic_Emoji does not contain its first sequence",
+            "alias_test.go:316: Lookup Emoji_Keycap_Sequence: ok false kind 0 len 0",
+            "alias_test.go:319: Emoji_Keycap_Sequence does not contain its first sequence",
+            "alias_test.go:316: Lookup RGI_Emoji_Modifier_Sequence: ok false kind 0 len 0",
+            "alias_test.go:319: RGI_Emoji_Modifier_Sequence does not contain its first sequence",
+            "alias_test.go:316: Lookup RGI_Emoji_Flag_Sequence: ok false kind 0 len 0",
+            "alias_test.go:319: RGI_Emoji_Flag_Sequence does not contain its first sequence",
+            "alias_test.go:316: Lookup RGI_Emoji_Tag_Sequence: ok false kind 0 len 0",
+            "alias_test.go:319: RGI_Emoji_Tag_Sequence does not contain its first sequence",
+            "alias_test.go:262: accepted \"RGI_Emoji\" without the v flag",
+            "alias_test.go:262: accepted \"Basic_Emoji\" without the v flag",
+            "alias_test.go:266: \\p{RGI_Emoji} rejected with the v flag",
+            "alias_test.go:272: \\p{Basic_Emoji} accepted without the v flag"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestKnownMembership",
+        "TestRejectedNames",
+        "TestStringPropertyCensus"
+      ],
+      "panicking_tests": [],
+      "witness_failures": []
+    },
+    {
+      "mutant": "M13",
+      "file_line": "internal/unicodeproperties/tables.go:25712",
+      "branch": "test-audit/internal-unicodeproperties-node",
+      "diff": "review/test-audit/internal-unicodeproperties-node/diffs/M13.diff",
+      "local_diff": "test-audit__internal-unicodeproperties-node__M13.diff",
+      "candidates_failed": [
+        "TestNodeStringProperties"
+      ],
+      "other_rows_failed": [
+        "TestKnownMembership",
+        "TestStringPropertyCensus"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-audit__internal-unicodeproperties-node__M13",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.87731285100017,
+          "failed": [
+            "TestKnownMembership",
+            "TestStringPropertyCensus"
+          ],
+          "witness_failures": [],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestKnownMembership",
+            "TestStringPropertyCensus"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "alias_test.go:312: Basic_Emoji: 1400 sequences, sha256 68bff7ec006a10f2de4cf08376a38d87dbbf273ef92652de160a7517e8034bb7",
+            "alias_test.go:408: Basic_Emoji watch: ok true"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestKnownMembership",
+        "TestStringPropertyCensus"
+      ],
+      "panicking_tests": [],
+      "witness_failures": []
+    },
+    {
+      "mutant": "D2",
+      "file_line": "internal/unicodeproperties/canonicalize_tables.go:22",
+      "branch": "test-defend/internal-unicodeproperties-canonicalize",
+      "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D2.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D2.diff",
+      "candidates_failed": [
+        "TestCanonicalizeUnicodeNodeRange family"
+      ],
+      "other_rows_failed": [
+        "TestUnicodeNodeShardCoverage",
+        "TestUnicodeNodeShardPlantedFailure"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-canonicalize__D2",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.550424074001057,
+          "failed": [
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "witness_failures": [
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestUnicodeNodeShardCoverage"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestStringPropertyCensus",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "shards_test.go:160: pre-split scan inputs changed: 31e42d60851129412154b1bc85979050531af73ffe0a09255e640ed6648370ed",
+            "shards_test.go:256: plant failed more than its own shard and owning top-level function: === RUN   TestCanonicalizeUnicodeNodeRange0"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestUnicodeNodeShardCoverage"
+      ],
+      "panicking_tests": [],
+      "witness_failures": [
+        "TestUnicodeNodeShardPlantedFailure"
+      ]
+    },
+    {
+      "mutant": "D3",
+      "file_line": "internal/unicodeproperties/canonicalize_tables.go:23",
+      "branch": "test-defend/internal-unicodeproperties-canonicalize",
+      "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D3.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D3.diff",
+      "candidates_failed": [
+        "TestCanonicalizeUnicodeNodeRange family"
+      ],
+      "other_rows_failed": [
+        "TestUnicodeNodeShardCoverage",
+        "TestUnicodeNodeShardPlantedFailure"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-canonicalize__D3",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.57042700600141,
+          "failed": [
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "witness_failures": [
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestUnicodeNodeShardCoverage"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestStringPropertyCensus",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "shards_test.go:160: pre-split scan inputs changed: b8e57dce4f0013dce21097460ac9165659b97784e9bf83a8bcdceedf0d30a94b",
+            "shards_test.go:256: plant failed more than its own shard and owning top-level function: === RUN   TestCanonicalizeUnicodeNodeRange0"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestUnicodeNodeShardCoverage"
+      ],
+      "panicking_tests": [],
+      "witness_failures": [
+        "TestUnicodeNodeShardPlantedFailure"
+      ]
+    },
+    {
+      "mutant": "D4",
+      "file_line": "internal/unicodeproperties/canonicalize_tables.go:24",
+      "branch": "test-defend/internal-unicodeproperties-canonicalize",
+      "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D4.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D4.diff",
+      "candidates_failed": [
+        "TestCanonicalizeUnicodeNodeRange family"
+      ],
+      "other_rows_failed": [
+        "TestUnicodeNodeShardCoverage",
+        "TestUnicodeNodeShardPlantedFailure"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-canonicalize__D4",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.235417388001224,
+          "failed": [
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "witness_failures": [
+            "TestUnicodeNodeShardPlantedFailure"
+          ],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestUnicodeNodeShardCoverage"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestStringPropertyCensus",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "shards_test.go:160: pre-split scan inputs changed: 3efd438173ed542a3252395510ca3c606ad2689d3b2f27abc50134f7e2239d6c",
+            "shards_test.go:256: plant failed more than its own shard and owning top-level function: === RUN   TestCanonicalizeUnicodeNodeRange0"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestUnicodeNodeShardCoverage"
+      ],
+      "panicking_tests": [],
+      "witness_failures": [
+        "TestUnicodeNodeShardPlantedFailure"
+      ]
+    },
+    {
+      "mutant": "D1",
+      "file_line": "internal/unicodeproperties/tables.go:25713",
+      "branch": "test-defend/internal-unicodeproperties-node",
+      "diff": "review/test-defend/internal-unicodeproperties-node/D1.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-node__D1.diff",
+      "candidates_failed": [
+        "TestNodeStringProperties"
+      ],
+      "other_rows_failed": [
+        "TestStringPropertyCensus"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-node__D1",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.499204589999863,
+          "failed": [
+            "TestStringPropertyCensus"
+          ],
+          "witness_failures": [],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestStringPropertyCensus"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "alias_test.go:312: Basic_Emoji: 1400 sequences, sha256 8ba79f8e5e80fde1d5956084191f34c0465f86d25d6fe608bf96dc1bbf21ae64"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestStringPropertyCensus"
+      ],
+      "panicking_tests": [],
+      "witness_failures": []
+    },
+    {
+      "mutant": "D2",
+      "file_line": "internal/unicodeproperties/tables.go:27119",
+      "branch": "test-defend/internal-unicodeproperties-node",
+      "diff": "review/test-defend/internal-unicodeproperties-node/D2.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-node__D2.diff",
+      "candidates_failed": [
+        "TestNodeStringProperties"
+      ],
+      "other_rows_failed": [
+        "TestStringPropertyCensus"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-node__D2",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.936619472999155,
+          "failed": [
+            "TestStringPropertyCensus"
+          ],
+          "witness_failures": [],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestStringPropertyCensus"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "alias_test.go:312: Emoji_Keycap_Sequence: 12 sequences, sha256 02fadcd99b88336877ce200b09a5e668ea9f2b2b2b567c644a5561da59ad9f4b"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestStringPropertyCensus"
+      ],
+      "panicking_tests": [],
+      "witness_failures": []
+    },
+    {
+      "mutant": "D3",
+      "file_line": "internal/unicodeproperties/tables.go:28061",
+      "branch": "test-defend/internal-unicodeproperties-node",
+      "diff": "review/test-defend/internal-unicodeproperties-node/D3.diff",
+      "local_diff": "test-defend__internal-unicodeproperties-node__D3.diff",
+      "candidates_failed": [
+        "TestNodeStringProperties"
+      ],
+      "other_rows_failed": [
+        "TestStringPropertyCensus"
+      ],
+      "stale": false,
+      "apply_check": "",
+      "runs": [
+        {
+          "command": [
+            "go",
+            "test",
+            "-json",
+            "-count=1",
+            "-timeout",
+            "30m",
+            "./internal/unicodeproperties/",
+            "-skip",
+            "^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/)"
+          ],
+          "cache": "/tmp/deletion-unicode/cache/test-defend__internal-unicodeproperties-node__D3",
+          "gate_uncached": 1,
+          "exit": 1,
+          "wall_seconds": 30.6838496570017,
+          "failed": [
+            "TestStringPropertyCensus"
+          ],
+          "witness_failures": [],
+          "panics": [],
+          "nonwitness_failed": [
+            "TestStringPropertyCensus"
+          ],
+          "completed": true,
+          "passed": [
+            "TestBinaryAliases",
+            "TestCanonicalizeExamples",
+            "TestCanonicalizeLegacyNode",
+            "TestEquivalentsAreClosed",
+            "TestGeneralCategoryAliases",
+            "TestKnownMembership",
+            "TestNodeAgrees",
+            "TestRejectedNames",
+            "TestScriptAliasSet",
+            "TestSetBoundaries",
+            "TestUnicodeNodeBatchOrderAndLimit",
+            "TestUnicodeNodeShardCoverage",
+            "TestUnicodeNodeShardPlantedFailure",
+            "TestUnicodeNodeStridePlantedFailure",
+            "TestVersionMatchesNode"
+          ],
+          "failure_lines": [
+            "alias_test.go:312: RGI_Emoji_Tag_Sequence: 3 sequences, sha256 6a37791d28548b24ebdd9bc44ef337540e8981a26c979a4a715535e0f309531d"
+          ]
+        }
+      ],
+      "still_caught_by": [
+        "TestStringPropertyCensus"
+      ],
+      "panicking_tests": [],
+      "witness_failures": []
+    }
+  ],
+  "notes": [
+    "The requested matrix-selector.txt ref does not exist; it is a file on the canonicalize defender branch and was read there.",
+    "The supplied skip regex does not exclude numeric family wrappers. Used ^(TestCanonicalizeUnicodeNodeRange[0-9]*|TestNodeStringProperties)($|_|/) to exclude all 34 wrappers and the Node string row.",
+    "Initial /tmp free 8.7 GB, /workspace free 18 GB. Removed only earlier /tmp/defend-census. /tmp total 8.8 GB cannot meet 15 GB free. No disk failures.",
+    "Warm env.sh worked; setup skipped. Detached current main with cohere pinned at 7945d102a6c18dd36adf9114a758ce646e8b2359.",
+    "All replays ran to completion with ADAMIC_GATE_UNCACHED=1, 30m binary timeout, and a distinct fresh ADAMIC_BUILD_CACHE_DIR. No panics, build failures, or timeouts occurred.",
+    "TestUnicodeNodeShardPlantedFailure is a witness and is never counted as a catcher. TestUnicodeNodeShardCoverage catches production table mutations through its direct input-digest assertion, before its construction self-checks.",
+    "Witness subprocesses execute their own range fixtures; their parent failures do not restore the skipped candidate rows as catchers.",
+    "Deletable means no gathered mutant lost its final ordinary catcher, not proof of universal redundancy. No test deletion or rewrite was made."
+  ],
+  "total_run_wall_seconds": 306.1029000300041,
+  "source_commits": {
+    "test-audit/internal-unicodeproperties-canonicalize": "2072428efa23a55c83855805738d4aac88944b0b",
+    "test-audit/internal-unicodeproperties-node": "440d1da255d92197f3ad877c5c6d0da597b8b08c",
+    "test-defend/internal-unicodeproperties-canonicalize": "8dc02f34d6c9b2b6f6fa1c41a74b2441b637473f",
+    "test-defend/internal-unicodeproperties-node": "42e365ec75167b351412b6164b38e016ea596b2f"
+  },
+  "package_test_inventory": [
+    "TestBinaryAliases",
+    "TestGeneralCategoryAliases",
+    "TestScriptAliasSet",
+    "TestRejectedNames",
+    "TestStringPropertyCensus",
+    "TestSetBoundaries",
+    "TestKnownMembership",
+    "TestCanonicalizeExamples",
+    "TestEquivalentsAreClosed",
+    "TestCanonicalizeLegacyNode",
+    "TestCanonicalizeUnicodeNodeRange0",
+    "TestCanonicalizeUnicodeNodeRange1",
+    "TestCanonicalizeUnicodeNodeRange2",
+    "TestCanonicalizeUnicodeNodeRange3",
+    "TestCanonicalizeUnicodeNodeRange4",
+    "TestCanonicalizeUnicodeNodeRange5",
+    "TestCanonicalizeUnicodeNodeRange6",
+    "TestCanonicalizeUnicodeNodeRange7",
+    "TestCanonicalizeUnicodeNodeRange8",
+    "TestCanonicalizeUnicodeNodeRange9",
+    "TestCanonicalizeUnicodeNodeRange10",
+    "TestCanonicalizeUnicodeNodeRange11",
+    "TestCanonicalizeUnicodeNodeRange12",
+    "TestCanonicalizeUnicodeNodeRange13",
+    "TestCanonicalizeUnicodeNodeRange14",
+    "TestCanonicalizeUnicodeNodeRange15",
+    "TestCanonicalizeUnicodeNodeRange16",
+    "TestCanonicalizeUnicodeNodeRange17",
+    "TestCanonicalizeUnicodeNodeRange18",
+    "TestCanonicalizeUnicodeNodeRange19",
+    "TestCanonicalizeUnicodeNodeRange20",
+    "TestCanonicalizeUnicodeNodeRange21",
+    "TestCanonicalizeUnicodeNodeRange22",
+    "TestCanonicalizeUnicodeNodeRange23",
+    "TestCanonicalizeUnicodeNodeRange24",
+    "TestCanonicalizeUnicodeNodeRange25",
+    "TestCanonicalizeUnicodeNodeRange26",
+    "TestCanonicalizeUnicodeNodeRange27",
+    "TestCanonicalizeUnicodeNodeRange28",
+    "TestCanonicalizeUnicodeNodeRange29",
+    "TestCanonicalizeUnicodeNodeRange30",
+    "TestCanonicalizeUnicodeNodeRange31",
+    "TestCanonicalizeUnicodeNodeRange32",
+    "TestCanonicalizeUnicodeNodeRange33",
+    "TestUnicodeNodeBatchOrderAndLimit",
+    "TestVersionMatchesNode",
+    "TestNodeAgrees",
+    "TestNodeStringProperties",
+    "TestUnicodeNodeShardCoverage",
+    "TestUnicodeNodeShardPlantedFailure",
+    "TestUnicodeNodeStridePlantedFailure",
+    "ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.002s"
+  ]
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "mutant": "M11",
+    "file_line": "internal/unicodeproperties/canonicalize_tables.go:3019",
+    "branch": "test-audit/internal-unicodeproperties-canonicalize",
+    "diff": "review/test-audit/internal-unicodeproperties-canonicalize/diffs/M11.diff",
+    "local_diff": "test-audit__internal-unicodeproperties-canonicalize__M11.diff",
+    "candidates_failed": [
+      "TestCanonicalizeUnicodeNodeRange family"
+    ],
+    "other_rows_failed": [
+      "TestEquivalentsAreClosed"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M05",
+    "file_line": "internal/unicodeproperties/unicodeproperties.go:172",
+    "branch": "test-audit/internal-unicodeproperties-node",
+    "diff": "review/test-audit/internal-unicodeproperties-node/diffs/M05.diff",
+    "local_diff": "test-audit__internal-unicodeproperties-node__M05.diff",
+    "candidates_failed": [
+      "TestNodeStringProperties"
+    ],
+    "other_rows_failed": [
+      "TestKnownMembership",
+      "TestRejectedNames",
+      "TestStringPropertyCensus"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M13",
+    "file_line": "internal/unicodeproperties/tables.go:25709",
+    "branch": "test-audit/internal-unicodeproperties-node",
+    "diff": "review/test-audit/internal-unicodeproperties-node/diffs/M13.diff",
+    "local_diff": "test-audit__internal-unicodeproperties-node__M13.diff",
+    "candidates_failed": [
+      "TestNodeStringProperties"
+    ],
+    "other_rows_failed": [
+      "TestKnownMembership",
+      "TestStringPropertyCensus"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/unicodeproperties/canonicalize_tables.go:19",
+    "branch": "test-defend/internal-unicodeproperties-canonicalize",
+    "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D2.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D2.diff",
+    "candidates_failed": [
+      "TestCanonicalizeUnicodeNodeRange family"
+    ],
+    "other_rows_failed": [
+      "TestUnicodeNodeShardCoverage",
+      "TestUnicodeNodeShardPlantedFailure"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/unicodeproperties/canonicalize_tables.go:20",
+    "branch": "test-defend/internal-unicodeproperties-canonicalize",
+    "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D3.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D3.diff",
+    "candidates_failed": [
+      "TestCanonicalizeUnicodeNodeRange family"
+    ],
+    "other_rows_failed": [
+      "TestUnicodeNodeShardCoverage",
+      "TestUnicodeNodeShardPlantedFailure"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/unicodeproperties/canonicalize_tables.go:21",
+    "branch": "test-defend/internal-unicodeproperties-canonicalize",
+    "diff": "review/test-defend/internal-unicodeproperties-canonicalize/D4.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-canonicalize__D4.diff",
+    "candidates_failed": [
+      "TestCanonicalizeUnicodeNodeRange family"
+    ],
+    "other_rows_failed": [
+      "TestUnicodeNodeShardCoverage",
+      "TestUnicodeNodeShardPlantedFailure"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D1",
+    "file_line": "internal/unicodeproperties/tables.go:25710",
+    "branch": "test-defend/internal-unicodeproperties-node",
+    "diff": "review/test-defend/internal-unicodeproperties-node/D1.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-node__D1.diff",
+    "candidates_failed": [
+      "TestNodeStringProperties"
+    ],
+    "other_rows_failed": [
+      "TestStringPropertyCensus"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/unicodeproperties/tables.go:27116",
+    "branch": "test-defend/internal-unicodeproperties-node",
+    "diff": "review/test-defend/internal-unicodeproperties-node/D2.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-node__D2.diff",
+    "candidates_failed": [
+      "TestNodeStringProperties"
+    ],
+    "other_rows_failed": [
+      "TestStringPropertyCensus"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/unicodeproperties/tables.go:28058",
+    "branch": "test-defend/internal-unicodeproperties-node",
+    "diff": "review/test-defend/internal-unicodeproperties-node/D3.diff",
+    "local_diff": "test-defend__internal-unicodeproperties-node__D3.diff",
+    "candidates_failed": [
+      "TestNodeStringProperties"
+    ],
+    "other_rows_failed": [
+      "TestStringPropertyCensus"
+    ],
+    "stale": false,
+    "apply_check": ""
+  }
+]
