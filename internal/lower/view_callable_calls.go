@@ -75,11 +75,15 @@ func (l *lowering) viewCallableCallContract(node *ast.Node, signatures []*checke
 	if len(signatures) == 0 {
 		signatures = l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)), checker.SignatureKindCall)
 	}
+	return l.viewCallableInvocationContract(node, l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), signatures)
+}
+
+func (l *lowering) viewCallableInvocationContract(node *ast.Node, target *checker.Type, signatures []*checker.Signature) ir.ViewContractID {
 	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 || signatures[0].HasRestParameter() {
 		return 0
 	}
 	s := signatures[0]
-	c := ir.ViewContract{Kind: ir.ViewCallable, Name: l.checker.TypeToString(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression))}
+	c := ir.ViewContract{Kind: ir.ViewCallable, Name: l.checker.TypeToString(target)}
 	for _, p := range s.Parameters() {
 		id := l.viewCallableValueContract(node, l.checker.GetTypeOfSymbol(p))
 		if id == 0 {

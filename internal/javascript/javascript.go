@@ -51,7 +51,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(fieldReadinessRuntime)
-	builder.WriteString(strings.TrimSuffix(viewCallablesRuntime, viewCallableShapeRuntime))
+	builder.WriteString(viewCallablesRuntime)
 	if ir.HasArrayViews(program) {
 		builder.WriteString(viewArraysRuntime + viewArrayElementsRuntime + viewArrayOperationsRuntime + viewArrayJoinRuntime)
 	}

@@ -434,6 +434,11 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// Escaping callable reads retain their value-level invocation contract.
+		// This is demand metadata, never a producer certificate.
+		ViewEscape         bool
+		ViewEscapeAdamic   bool
+		ViewEscapeContract ViewContractID
 		ViewContract       ViewContractID
 		ViewTypeID         int
 		ViewReceiverTypeID int

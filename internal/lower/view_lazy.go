@@ -199,6 +199,19 @@ func (l *lowering) checkLazyViewReads() error {
 			if !program.CheckedFields[read.Name] {
 				return true
 			}
+			if read.ViewEscape {
+				reaches := graph.ReachingAllocations(read.Object)
+				demanded := unknown || reaches.Unknown
+				for _, site := range reaches.Sites {
+					demanded = demanded || viewed[site]
+				}
+				if demanded {
+					if err := checkViewCallableEscape(graph, read, reaches); err != nil {
+						refused = err
+						return false
+					}
+				}
+			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
 

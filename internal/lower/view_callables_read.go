@@ -56,6 +56,7 @@ func (l *lowering) prepareViewCallableProperty(node *ast.Node, declared *checker
 	if property.Of != ir.Closure && (property.Of != ir.Union || !l.runtimeViewCallableShape(declared)) {
 		return
 	}
+	l.prepareViewCallableEscape(node, declared, property)
 	if l.viewCallableMarkerType(declared) {
 		property.ViewContract = l.viewCallableMarkerContract(l.checker.GetNonNullableType(declared))
 		return

@@ -1,0 +1,16 @@
+=== RUN   TestV4EscapeResultRefusal
+=== PAUSE TestV4EscapeResultRefusal
+=== CONT  TestV4EscapeResultRefusal
+    checked_views_v4_escape_test.go:64: gate cache node hit
+    checked_views_v4_escape_test.go:64: gate cache node miss
+    checked_views_v4_escape_test.go:64: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:64: guard mutant admitted in javascript: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:64: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:64: escaping read refusal with path and fix: <nil>
+--- FAIL: TestV4EscapeResultRefusal (0.45s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.461s
+FAIL
