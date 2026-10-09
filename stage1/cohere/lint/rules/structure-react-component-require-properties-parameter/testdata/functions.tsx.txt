@@ -1,0 +1,8 @@
+export function Button(props: { label: string }) { return <button>{props.label}</button>; }
+const Arrow = (props: unknown) => <div />;
+const Expression = function(props: unknown) { return <></>; };
+function render(props: unknown) { return <span />; }
+function clean(properties: unknown) { return <div />; }
+function destructured({ label }: { label: string }) { return <div>{label}</div>; }
+function second(properties: unknown, props: unknown) { return <div />; }
+function empty() { return <div />; }

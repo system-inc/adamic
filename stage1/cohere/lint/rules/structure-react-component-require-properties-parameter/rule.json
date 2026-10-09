@@ -1,0 +1,15 @@
+{
+  "name": "structure/react-component-require-properties-parameter",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureReactComponentRequirePropertiesParameter",
+  "upstreamPackage": "structure",
+  "upstreamTest": "Test"
+}

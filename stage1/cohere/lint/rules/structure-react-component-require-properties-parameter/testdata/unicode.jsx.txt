@@ -1,0 +1,3 @@
+// 😀 prefix shifts byte positions
+function Café(/* name */ props) { return <div>{props.label}</div>; }
+const expression = function(props) { React.useEffect(); return props.label; };

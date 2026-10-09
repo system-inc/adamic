@@ -1,0 +1,80 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Loaded by the documented Go overlay so the rule owns every changed file.
+func TestPropertiesParameterSelected(t *testing.T) {
+	t.Parallel()
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	const name = "structure/react-component-require-properties-parameter"
+	var rows []string
+	for _, row := range upstream(t) {
+		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && fields[1] == name {
+			rows = append(rows, row)
+		}
+	}
+	if len(rows) < 13 {
+		t.Fatalf("upstream capture lost cases: %d", len(rows))
+	}
+	t.Logf("upstream cases: %d", len(rows))
+	for _, descriptor := range prepareRegistry(t, directory) {
+		if descriptor.Name != name {
+			continue
+		}
+		witnesses := ownedWitnessRows(t, directory, descriptor)
+		for _, row := range witnesses {
+			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{row}), "--count")
+			if string(answer.output) == "0\n" {
+				t.Fatalf("silent witness: %s", row)
+			}
+			rows = append(rows, row, strings.SplitN(row, "\t", 2)[0]+"\tall")
+		}
+		seen := map[string]bool{}
+		for _, row := range generated(t) {
+			path := strings.SplitN(row, "\t", 2)[0]
+			if !seen[path] {
+				rows = append(rows, path+"\t"+name)
+				seen[path] = true
+			}
+		}
+		t.Logf("witnesses: %d; inherited sources: %d", len(witnesses), len(seen))
+		compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, recoveryRows(t, oracle, rows)))
+		var change struct{ Name, From, To string }
+		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err = json.Unmarshal(data, &change); err != nil {
+			t.Fatal(err)
+		}
+		path := manifest(t, witnesses)
+		want := execute(t, "", oracle, "--manifest", path).output
+		changed := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, descriptor.Module))
+		native := buildMutantPort(t, changed)
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"Node", node(t, changed, path, false)},
+			{"emitted JavaScript", emittedNode(t, changed, path, false)},
+			{"sanitized native", execute(t, "", native, "--manifest", path)},
+		} {
+			if bytes.Equal(side.run.output, want) {
+				t.Fatalf("mutant survived on %s", side.name)
+			}
+			t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+		}
+	}
+}

@@ -1,0 +1,5 @@
+{
+  "name": "parameter rename suggestion retains abbreviation",
+  "from": "this.context.edit(name, 'properties')",
+  "to": "this.context.edit(name, 'props')"
+}

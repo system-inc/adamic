@@ -1,0 +1,8 @@
+function Direct(props: unknown) { useState(); return props; }
+function Namespaced(props: unknown) { React.useEffect(() => {}, []); return props; }
+function Optional(props: unknown) { React?.useEffect(); return props; }
+function Other(props: unknown) { OtherReact.useState(); return props; }
+function Computed(props: unknown) { React['useState'](); return props; }
+function Wrapped(props: unknown) { (useState)(); return props; }
+function Lowercase(props: unknown) { useeffect(); return props; }
+function Unicode(props: unknown) { useÉtat(); return props; }

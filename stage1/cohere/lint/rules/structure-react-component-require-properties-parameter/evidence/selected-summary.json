@@ -1,0 +1,24 @@
+{
+  "exit": 0,
+  "wall": 975.0437014190002,
+  "counts": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips": [],
+  "nproc": "5",
+  "load_before": "0.65 0.34 0.60 2/137 3358",
+  "load_after": "1.31 1.45 1.38 1/138 5293",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=30m",
+    "-overlay=/tmp/s13-properties-parameter-overlay.json",
+    "-run",
+    "^TestPropertiesParameterSelected$",
+    "./stage1/cohere/lint"
+  ]
+}

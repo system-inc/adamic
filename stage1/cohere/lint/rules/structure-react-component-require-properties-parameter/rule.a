@@ -1,0 +1,96 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { noEdits } from '../../context.ts';
+import { Suggestion } from '../../suggestions.a';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { parameterNodes } from '../../helpers/slot03/batch3/parameter_nodes.a';
+import { hasJsxOrReactHookCalls } from '../../helpers/slot04_wave20/has_jsx_or_react_hook_calls.a';
+import type { SearchNode } from '../../helpers/slot04_wave20/search_for_jsx_or_hook.a';
+import { isHookCall } from '../../helpers/react/react_is_hook_call.a';
+import { isHookName } from '../../helpers/react/react_is_hook_name.a';
+import { isNamespacedMember } from '../../helpers/react/namespaced_member.a';
+import { project } from '../../helpers/react/projection.a';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { usePropertiesNotProps, renameToProperties } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly reactFile: boolean;
+    nodes: HelperNode[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.reactFile = structureFileContext(context.parser.path).isReactFile;
+    }
+    prepare(root: number): void {
+        if(root < 0 || !this.reactFile) {
+            return;
+        }
+        this.nodes = project(this.context.parser.nodes);
+        for(let index = 0; index < this.nodes.length; index++) {
+            if(this.context.kind(index) === 'PropertyAccessExpression') {
+                // Optional access has a question-dot token before its name.
+                const node = this.nodes[index] ?? panic('missing projected access');
+                this.nodes[index] = { ...node, name: this.context.property(index) };
+            }
+        }
+    }
+    searchNode(index: number): SearchNode {
+        if(index < 0) {
+            return { present: false, jsx: false, call: false, isSwitchStatement: false, children: [] };
+        }
+        const kind = this.context.kind(index);
+        return {
+            present: true,
+            jsx: ['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'].includes(kind),
+            call: kind === 'CallExpression',
+            isSwitchStatement: kind === 'SwitchStatement',
+            children: this.context.node(index).children,
+        };
+    }
+    hook(index: number): boolean {
+        const expression = this.context.node(index).children[0] ?? -1;
+        return isHookCall(
+            { expression: expression < 0 ? undefined : expression },
+            (node: number): boolean => this.context.kind(node) === 'Identifier',
+            (node: number): boolean => this.context.kind(node) === 'PropertyAccessExpression',
+            (node: number): string => this.context.node(node).text,
+            isHookName,
+            (node: number, matches: (name: string) => boolean): boolean =>
+                isNamespacedMember(this.nodes, node, matches),
+        );
+    }
+    visit(index: number): void {
+        if(!this.reactFile) {
+            return;
+        }
+        const children = this.context.children(index, 'Parameter');
+        const parameters = parameterNodes(children.length > 0, children);
+        if(parameters.length === 0) {
+            return;
+        }
+        if(
+            !hasJsxOrReactHookCalls(
+                index,
+                (node: number): SearchNode => this.searchNode(node),
+                (node: number): boolean => this.hook(node),
+            )
+        ) {
+            return;
+        }
+        const name = this.context.name(parameters[0] ?? panic('missing first parameter'));
+        if(this.context.kind(name) !== 'Identifier' || this.context.node(name).text !== 'props') {
+            return;
+        }
+        this.context.reportNode(
+            name,
+            'structure/react-component-require-properties-parameter',
+            'usePropertiesNotProps',
+            usePropertiesNotProps,
+            noEdits,
+            [new Suggestion('renameToProperties', renameToProperties, [this.context.edit(name, 'properties')])],
+        );
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

@@ -1,0 +1,50 @@
+{
+  "exit": 1,
+  "wall": 1843.694060156,
+  "counts": {
+    "pass": 18,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips": [],
+  "nproc": "5",
+  "load_before": "0.86 1.33 1.34 2/140 5303",
+  "load_after": "1.41 1.21 1.27 1/138 66121",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=30m",
+    "./stage1/cohere/lint"
+  ],
+  "package_failed": true,
+  "unfinished": [
+    "TestCheckerBridgeRefusalPending",
+    "TestCheckerCacheSourceByte",
+    "TestCheckerHashes",
+    "TestCheckerNoProgramCoverage",
+    "TestCheckerReplayEntryControl",
+    "TestCommandDiagnosticsDropOnlyModuleDownloads",
+    "TestCompilerAndStage1Agree",
+    "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+    "TestCompleteSuggestionSerialization",
+    "TestCountGuardMutant",
+    "TestDecorationOptionMutant",
+    "TestDotARename",
+    "TestEmittedJavaScriptMismatch",
+    "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+    "TestJsxLintTrees",
+    "TestLegacyMutants",
+    "TestMutants",
+    "TestNestedConstructorGap",
+    "TestNodeTableIsLinkOnly",
+    "TestOptionAndComparatorGaps",
+    "TestProfileArtifacts",
+    "TestRulesAgree",
+    "TestShardsAgree",
+    "TestSuggestionAlongsideAutomaticFix",
+    "TestWitnessScriptKind"
+  ],
+  "note": "18 completed test/subtest passes; zero test fail events; package failed on its 30-minute timeout during TestProfileArtifacts. Unfinished tests are not skips."
+}

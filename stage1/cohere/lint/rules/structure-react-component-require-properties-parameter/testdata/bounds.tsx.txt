@@ -1,0 +1,4 @@
+function Conditional(props: unknown) { if (flag) { return <div />; } return null; }
+function SwitchOnly(props: unknown) { switch (flag) { case true: return <div />; } return null; }
+function Nested(props: unknown) { function inner() { return <div />; } return null; }
+function Deep(props: unknown) { return (((((((((((((((((((((((((<div />))))))))))))))))))))))))); }
