@@ -22,3 +22,4 @@ ar	all	command -v ar
 taskset	linux	command -v taskset
 timeout	linux	timeout --version | grep -q coreutils
 bun	optional	true
+wasmtime	optional	true
