@@ -1,0 +1,314 @@
+[
+  {
+    "test": "TestNamespaceLimitsStayLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:10",
+    "seconds": 0.851,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M10",
+      "M13",
+      "E1"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:39: got <nil>, want NotYet computed enum",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceLimitsStayLoud$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceLimitsStayLoud.log 2>&1; namespaces_test.go:39: got <nil>, want NotYet computed enum"
+  },
+  {
+    "test": "TestNamespaceReceiverRefusal",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:45",
+    "seconds": 0.074,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "E1"
+    ],
+    "unique_kills": [
+      "M17"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:50: got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceReceiverRefusal$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceReceiverRefusal.log 2>&1; namespaces_test.go:50: got <nil>"
+  },
+  {
+    "test": "TestNamespaceTypesErase",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:54",
+    "seconds": 0.076,
+    "oracle": "handwritten absence of N and Inner bindings in lowered IR",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "E1"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "E1 panic: runtime error: invalid memory address or nil pointer dereference; /workspace/adamic/internal/lower/namespaces_test.go:60 +0x6f",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceTypesErase$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceTypesErase.log 2>&1; panic: runtime error: invalid memory address or nil pointer dereference; /workspace/adamic/internal/lower/namespaces_test.go:60 +0x6f"
+  },
+  {
+    "test": "TestTracingNamespaceEscapeStaysNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:67",
+    "seconds": 0.096,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "E1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "E1 namespaces_test.go:76: got <nil>, want the explicit missing runtime-container reason",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestNamespaceLimitsStayLoud"
+    ],
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestTracingNamespaceEscapeStaysNotYet$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestTracingNamespaceEscapeStaysNotYet.log 2>&1; namespaces_test.go:76: got <nil>, want the explicit missing runtime-container reason",
+    "verdict_reason": "Timing-aware overlapping interpretation: Limits catches all kills but its 0.851s median is 8.86 times the 0.096s median here. The literal brief leaves this case uncovered."
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:80",
+    "seconds": 0.15,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M06",
+      "E1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "E1 namespaces_test.go:102: got <nil>, want NotYet merged with a runtime value",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceLimitsStayLoud"
+    ],
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestDebugNamespaceMergedCapabilities$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestDebugNamespaceMergedCapabilities.log 2>&1; namespaces_test.go:102: got <nil>, want NotYet merged with a runtime value"
+  },
+  {
+    "test": "TestNamespaceReturnedAssignmentLimits",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:108",
+    "seconds": 0.116,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M16",
+      "E1"
+    ],
+    "unique_kills": [
+      "M16"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceReturnedAssignmentLimits$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceReturnedAssignmentLimits.log 2>&1; namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary"
+  },
+  {
+    "test": "TestNamespaceInitializationReachability",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:122",
+    "seconds": 0.157,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M10",
+      "M12",
+      "M13",
+      "E1"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceInitializationReachability$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceInitializationReachability.log 2>&1; namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+  },
+  {
+    "test": "TestNamespaceClosedCallGraphEdges",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:139",
+    "seconds": 0.273,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M10",
+      "M11",
+      "M13",
+      "E1"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:151: got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceClosedCallGraphEdges$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestNamespaceClosedCallGraphEdges.log 2>&1; namespaces_test.go:151: got <nil>"
+  },
+  {
+    "test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_test.go:156",
+    "seconds": 0.144,
+    "oracle": "handwritten lowering diagnostics",
+    "oracle_kind": "self",
+    "kills": [
+      "M18",
+      "E1"
+    ],
+    "unique_kills": [
+      "M18"
+    ],
+    "last_proven_fail": "E1 namespaces_test.go:161: got <nil>, want invariant mutable view refused",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 16,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "evidence": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestEmptyNeverMapCannotGainWritableInhabitants$\" -count=1 -timeout 90s ./internal/lower/ > E1-bounded-alone-TestEmptyNeverMapCannotGainWritableInhabitants.log 2>&1; namespaces_test.go:161: got <nil>, want invariant mutable view refused"
+  }
+]

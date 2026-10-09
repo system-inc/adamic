@@ -1,0 +1,36 @@
+{
+  "command": "ADAMIC_MUTANT=M16 ADAMIC_NATIVE_SPLIT=u038-M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 6.257768965999276,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReturnedAssignmentLimits"
+  ],
+  "passed": [
+    "TestNamespaceTypesErase",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceReceiverRefusal",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceReturnedAssignmentLimits": [
+      "namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.616
+}

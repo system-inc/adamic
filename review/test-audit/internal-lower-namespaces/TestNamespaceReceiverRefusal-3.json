@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceReceiverRefusal$\" -count=1 -timeout 90s ./internal/lower/", "wall": 3.085589529999197, "seconds": 0.067, "exit": 0}

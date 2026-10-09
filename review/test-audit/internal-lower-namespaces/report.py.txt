@@ -1,0 +1,49 @@
+import json,pathlib,re,statistics,subprocess,difflib,shutil,gzip
+r=pathlib.Path('/workspace/adamic');d=r/'review/test-audit/internal-lower-namespaces';o=pathlib.Path('/tmp/u038');rows=json.load(open(o/'rows.json'));ms=json.load(open(d/'mutants.json'));observed={}
+for m in ms:
+ id=m['id']
+ if id=='M01':obs=json.load(open(o/'M01-matrix.json'))
+ elif id=='E1':
+  singles=[json.load(open(o/(id+'-bounded-alone-'+t+'.json'))) for t in rows]
+  obs={'command':'individual E1 reruns after panic','failed':sum((s['failed'] for s in singles),[]),'passed':sum((s['passed'] for s in singles),[]),'lines':{}}
+ else:obs=json.load(open(o/(id+'-bounded.json')))
+ observed[id]=obs;m['failed_rows']=[t for t in rows if t in obs['failed']];m['scope']='whole package' if id=='M01' else 'nine-row bounded slice';m['standalone_vet']=json.load(open(o/(id+'-vet.json')));assert m['standalone_vet']['exit']==0
+json.dump(ms,open(d/'mutants.json','w'),indent=2)
+seconds={t:statistics.median(json.load(open(o/(t+'-'+str(i)+'.json')))['seconds'] for i in [1,2,3]) for t in rows};report=[]
+source=(r/'internal/lower/namespaces_test.go').read_text()
+for t in rows:
+ kills=[m['id'] for m in ms if t in m['failed_rows']];unique=[m['id'] for m in ms if m['failed_rows']==[t] and m['id']!='E1'];s=json.load(open(o/('E1-bounded-alone-'+t+'.json')))
+ line=next(iter(s['lines'].get(t,[])),None)
+ if not line:
+  for x in (o/('E1-bounded-alone-'+t+'.log')).read_text().splitlines():
+   try:e=json.loads(x)
+   except:continue
+   if 'namespaces_test.go:60 ' in e.get('Output',''):line='panic: runtime error: invalid memory address or nil pointer dereference; '+e['Output'].strip();break
+ fline=source[:source.index('func '+t+'(')].count('\n')+1
+ row=dict(test=t,package='internal/lower',file='internal/lower/namespaces_test.go:'+str(fline),seconds=seconds[t],oracle='handwritten lowering diagnostics' if t!='TestNamespaceTypesErase' else 'handwritten absence of N and Inner bindings in lowered IR',oracle_kind='self',kills=kills,unique_kills=unique,last_proven_fail='E1 '+line,verdict='sacred' if unique else 'overlapping',subsumed_by=None,mutants_in_matrix=16,vacuous=t in s['passed'],bounded=True,matrix_rows=rows,evidence=s['command']+' > E1-bounded-alone-'+t+'.log 2>&1; '+line)
+ if not unique:
+  eligible=[u for u in rows if u!=t and set(kills)<=set(m['id'] for m in ms if u in m['failed_rows']) and seconds[u]<=1.2*seconds[t]]
+  if eligible:row['verdict']='subsumed';row['subsumed_by']=min(eligible,key=lambda u:seconds[u])
+  else:
+   row['subsumed_by']=list(dict.fromkeys(u for id in kills for u in observed[id]['failed'] if u in rows and u!=t))
+   if t=='TestTracingNamespaceEscapeStaysNotYet':row['subsumed_by']=['TestNamespaceLimitsStayLoud'];row['verdict_reason']='Timing-aware overlapping interpretation: Limits catches all kills but its 0.851s median is 8.86 times the 0.096s median here. The literal brief leaves this case uncovered.'
+   if t=='TestDebugNamespaceMergedCapabilities':row['subsumed_by']=['TestNamespaceReturnedAssignmentLimits','TestNamespaceLimitsStayLoud']
+ report.append(row)
+json.dump(report,open(d/'report.json','w'),indent=2)
+# Preserve actual switched source, then restore exactly the starting production bytes.
+patch=subprocess.check_output(['git','diff','--','internal/lower'],cwd=r,text=True);p=r/'internal/lower/audit_u038.go';patch+=''.join(difflib.unified_diff([],p.read_text().splitlines(True),fromfile='/dev/null',tofile='b/internal/lower/audit_u038.go'));(d/'switched-production.patch').write_text(patch)
+for name in ['namespaces.go','namespaces_call_graph.go','namespace_receiver_scope.go','namespaces_returns.go','invariance.go','lower.go']:(r/'internal/lower'/name).write_text((o/(name+'.original')).read_text())
+p.unlink()
+with open(o/'apply-final.log','w') as log:
+ for p in d.glob('*.diff'):subprocess.run(['git','apply','--check',str(p)],cwd=r,stdout=log,stderr=subprocess.STDOUT,check=True)
+for p in o.glob('*.json'):shutil.copy2(p,d/p.name)
+for p in o.glob('*.log'):
+ with gzip.open(d/(p.name+'.gz'),'wb') as f:f.write(p.read_bytes())
+for name in ['rows.json','functions-all.txt','functions-reached.txt','coverage.out','plant.py','matrix.py','bounded.py','vet.py','preflight.py','report.py']:
+ shutil.copy2(o/name,d/(name+'.txt' if name.endswith('.py') else name))
+# Preserve final derived report rather than any temporary report copy.
+json.dump(report,open(d/'report.json','w'),indent=2)
+metadata={'unit':'u038','origin_main':subprocess.check_output(['git','rev-parse','origin/main'],cwd=r,text=True).strip(),'nproc':5,'setup_seconds':0,'tools_seconds':json.load(open(o/'tools.json'))['seconds'],'npm_ci_seconds':json.load(open(o/'npm-ci.json'))['seconds'],'baseline':json.load(open(o/'baseline.json')),'switch_build_seconds':json.load(open(o/'switch-build.json'))['wall'],'probe_build_seconds':json.load(open(o/'probe-build.json'))['seconds'],'baseline_measurements':{t:[json.load(open(o/(t+'-'+str(i)+'.json')))['seconds'] for i in [1,2,3]] for t in rows},'bounded_matrix_wall_seconds':sum(json.load(open(p))['wall'] for p in o.glob('*-bounded.json')),'empty_probe_isolated_wall_seconds':sum(json.load(open(p))['wall'] for p in o.glob('E1-bounded-alone-*.json')),'final_standalone_vet_seconds':sum(m['standalone_vet']['seconds'] for m in ms),'survivors':['M14','M15'],'witness_rows':[]}
+json.dump(metadata,open(d/'metadata.json','w'),indent=2)
+for row in report:print(row['test'],row['seconds'],row['kills'],row['unique_kills'],row['verdict'],row['subsumed_by'])
+print(metadata)

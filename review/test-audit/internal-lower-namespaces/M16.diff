@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_returns.go
++++ b/internal/lower/namespaces_returns.go
+@@ -19,7 +19,7 @@
+ 		return nil, false, nil
+ 	}
+ 	of := l.result.Locals[local].Type
+-	if of != ir.Number && of != ir.Boolean {
++	if false && of != ir.Number && of != ir.Boolean {
+ 		return nil, true, l.notYet(expression, "a returned namespace assignment with reference or optional storage; only scalar singleton assignment is proven")
+ 	}
+ 	statements, err := l.assignment(expression)

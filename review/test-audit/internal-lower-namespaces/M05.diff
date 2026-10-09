@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -208,7 +208,7 @@
+ 			}
+ 		}
+ 	}
+-	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
++	if false && l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
+ 		parent := node.Parent
+ 		if l.namespaceMergedFunction(node) {
+ 			if l.callableNamespaceUse(node) {

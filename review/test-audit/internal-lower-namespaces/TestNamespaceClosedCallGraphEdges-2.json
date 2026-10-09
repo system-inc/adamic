@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceClosedCallGraphEdges$\" -count=1 -timeout 90s ./internal/lower/", "wall": 3.395161738000752, "seconds": 0.264, "exit": 0}

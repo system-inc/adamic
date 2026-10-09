@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M14",
+    "case": "ready-bits",
+    "changes": [
+      [
+        ".product.main[0].Value.Value",
+        false,
+        true
+      ]
+    ],
+    "command": "ADAMIC_MUTANT=M14 ADAMIC_NATIVE_SPLIT=u038-M14 /tmp/u038/probe > probe-M14.log 2>&1"
+  },
+  {
+    "id": "M15",
+    "case": "ready-bits",
+    "changes": [
+      [
+        ".product.main[2].Value.Value",
+        true,
+        false
+      ]
+    ],
+    "command": "ADAMIC_MUTANT=M15 ADAMIC_NATIVE_SPLIT=u038-M15 /tmp/u038/probe > probe-M15.log 2>&1"
+  }
+]

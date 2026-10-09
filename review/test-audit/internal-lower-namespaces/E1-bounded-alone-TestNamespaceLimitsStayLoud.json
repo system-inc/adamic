@@ -1,0 +1,39 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceLimitsStayLoud$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 3.5390396610000607,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "lines": {
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet computed enum",
+      "namespaces_test.go:39: got <nil>, want NotYet merged enum",
+      "namespaces_test.go:39: got <nil>, want NotYet enum before",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet reopened namespace",
+      "namespaces_test.go:39: got <nil>, want NotYet callable namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet merged with a runtime value",
+      "namespaces_test.go:39: got <nil>, want NotYet destructuring inside a namespace",
+      "namespaces_test.go:39: got <nil>, want NotYet destructuring inside a namespace",
+      "namespaces_test.go:39: got <nil>, want NotYet destructuring inside a namespace",
+      "namespaces_test.go:39: got <nil>, want NotYet destructuring inside a namespace",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet replacing a namespace export",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before runtime initialization",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before",
+      "namespaces_test.go:39: got <nil>, want NotYet var inside namespace control flow",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before",
+      "namespaces_test.go:39: got <nil>, want NotYet explicit namespace-function",
+      "namespaces_test.go:39: got <nil>, want NotYet ambient namespace"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.003
+}

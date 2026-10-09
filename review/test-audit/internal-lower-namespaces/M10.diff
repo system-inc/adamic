@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -22,7 +22,7 @@
+ }
+ 
+ func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
+-	return g.discover(function).reaches
++	return map[*ast.Node]*ast.Node{}
+ }
+ 
+ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {

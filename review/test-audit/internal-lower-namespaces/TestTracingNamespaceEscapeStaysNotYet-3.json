@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestTracingNamespaceEscapeStaysNotYet$\" -count=1 -timeout 90s ./internal/lower/", "wall": 3.0390763559989864, "seconds": 0.079, "exit": 0}

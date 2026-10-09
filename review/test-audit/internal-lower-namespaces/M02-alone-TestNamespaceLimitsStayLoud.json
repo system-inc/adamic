@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestNamespaceLimitsStayLoud$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 39.36194363699906,
+  "exit": 0,
+  "failed": [],
+  "passed": [
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "lines": {},
+  "panic": false,
+  "seconds": 3.95
+}

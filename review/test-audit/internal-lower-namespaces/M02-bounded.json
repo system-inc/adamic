@@ -1,0 +1,39 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 3.9122623029998067,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "passed": [
+    "TestNamespaceTypesErase",
+    "TestNamespaceReceiverRefusal",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceReturnedAssignmentLimits": [
+      "namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary"
+    ],
+    "TestDebugNamespaceMergedCapabilities": [
+      "namespaces_test.go:96: /tmp/adamic-gate/TestDebugNamespaceMergedCapabilitiesdebug_log.a2943593671/001/main.a:11:16: stage 0 can't lower a namespace member without a lowered binding yet"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.232
+}

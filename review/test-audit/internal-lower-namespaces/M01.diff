@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -33,7 +33,7 @@
+ 			return true
+ 		}
+ 	}
+-	return false
++	return true
+ }
+ 
+ // Flatten scoped declarations, never names: the checker's symbols retain every namespace and

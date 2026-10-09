@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestDebugNamespaceMergedCapabilities$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 7.409947538999404,
+  "exit": 1,
+  "failed": [
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "passed": [],
+  "ran": [
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "lines": {
+    "TestDebugNamespaceMergedCapabilities": [
+      "namespaces_test.go:96: /tmp/adamic-gate/TestDebugNamespaceMergedCapabilitiesdebug_log.a1464316784/001/main.a:11:16: stage 0 can't lower a namespace member without a lowered binding yet"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.407
+}

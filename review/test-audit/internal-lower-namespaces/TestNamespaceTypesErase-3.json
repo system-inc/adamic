@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceTypesErase$\" -count=1 -timeout 90s ./internal/lower/", "wall": 2.6324565209997672, "seconds": 0.076, "exit": 0}

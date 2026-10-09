@@ -1,0 +1,20 @@
+import subprocess,time,json,pathlib,re,os,signal
+out=pathlib.Path('/tmp/u038'); root='/workspace/adamic'
+rows=['TestNamespaceLimitsStayLoud','TestNamespaceReceiverRefusal','TestNamespaceTypesErase','TestTracingNamespaceEscapeStaysNotYet','TestDebugNamespaceMergedCapabilities','TestNamespaceReturnedAssignmentLimits','TestNamespaceInitializationReachability','TestNamespaceClosedCallGraphEdges','TestEmptyNeverMapCannotGainWritableInhabitants']
+listing=(out/'list.log').read_text().splitlines();assert all(t in listing for t in rows)
+json.dump(rows,open(out/'rows.json','w'))
+for t in rows:
+ for n in range(1,4):
+  cmd='source /workspace/adamic-tools/env.sh; go test -json -run "^'+t+'$" -count=1 -timeout 90s ./internal/lower/'
+  s=time.monotonic()
+  with open(out/(t+'-'+str(n)+'.log'),'w') as f:p=subprocess.run(['bash','-c',cmd],cwd=root,stdout=f,stderr=subprocess.STDOUT,timeout=90)
+  lines=(out/(t+'-'+str(n)+'.log')).read_text(); events=[json.loads(x) for x in lines.splitlines() if x.startswith('{')];answer=next((re.search(r'\t([0-9.]+)s',e.get('Output','')).group(1) for e in events if re.search(r'\t([0-9.]+)s',e.get('Output',''))),None)
+  json.dump({'command':cmd,'wall':time.monotonic()-s,'seconds':float(answer) if answer else None,'exit':p.returncode},open(out/(t+'-'+str(n)+'.json'),'w'));print(t,n,answer,p.returncode,flush=True)
+  if p.returncode:raise SystemExit('red isolated baseline')
+regex='^('+'|'.join(rows)+')$'
+s=time.monotonic();cmd='source /workspace/adamic-tools/env.sh; go test -json -count=1 -timeout 90s -coverprofile=/tmp/u038/coverage.out ./internal/lower/ -run "'+regex+'"'
+with open(out/'coverage.log','w') as f:p=subprocess.run(['bash','-c',cmd],cwd=root,stdout=f,stderr=subprocess.STDOUT,timeout=90)
+json.dump({'command':cmd,'seconds':time.monotonic()-s,'exit':p.returncode},open(out/'coverage.json','w'))
+with open(out/'functions-all.txt','w') as f:subprocess.run(['bash','-c','source /workspace/adamic-tools/env.sh; go tool cover -func=/tmp/u038/coverage.out'],cwd=root,stdout=f,check=True)
+(out/'functions-reached.txt').write_text('\n'.join(l for l in (out/'functions-all.txt').read_text().splitlines() if not l.endswith('0.0%') and 'total:' not in l)+'\n')
+print('COVERAGE',p.returncode,time.monotonic()-s,flush=True)

@@ -1,0 +1,31 @@
+{
+  "command": "ADAMIC_MUTANT=M15 ADAMIC_NATIVE_SPLIT=u038-M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 7.9059390269994765,
+  "exit": 0,
+  "failed": [],
+  "passed": [
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {},
+  "panic": false,
+  "seconds": 1.586
+}

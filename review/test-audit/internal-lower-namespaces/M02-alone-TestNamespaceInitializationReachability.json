@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestNamespaceInitializationReachability$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 5.0896548079999775,
+  "exit": 0,
+  "failed": [],
+  "passed": [
+    "TestNamespaceInitializationReachability"
+  ],
+  "ran": [
+    "TestNamespaceInitializationReachability"
+  ],
+  "lines": {},
+  "panic": false,
+  "seconds": 0.156
+}

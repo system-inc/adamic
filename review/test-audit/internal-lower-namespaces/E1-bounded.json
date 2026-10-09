@@ -1,0 +1,52 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 3.041635204999693,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceReceiverRefusal",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceTypesErase"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceReturnedAssignmentLimits": [
+      "namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary"
+    ],
+    "TestNamespaceClosedCallGraphEdges": [
+      "namespaces_test.go:151: got <nil>"
+    ],
+    "TestNamespaceInitializationReachability": [
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+    ],
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet computed enum",
+      "namespaces_test.go:39: got <nil>, want NotYet merged enum"
+    ],
+    "TestEmptyNeverMapCannotGainWritableInhabitants": [
+      "namespaces_test.go:161: got <nil>, want invariant mutable view refused"
+    ],
+    "TestNamespaceReceiverRefusal": [
+      "namespaces_test.go:50: got <nil>"
+    ],
+    "TestTracingNamespaceEscapeStaysNotYet": [
+      "namespaces_test.go:76: got <nil>, want the explicit missing runtime-container reason"
+    ]
+  },
+  "panic": true,
+  "seconds": 0.435
+}

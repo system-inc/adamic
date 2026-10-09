@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -189,7 +189,7 @@
+ 			case ast.KindVariableStatement:
+ 				list := member.AsVariableStatement().DeclarationList
+ 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
+-					if !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {
++					if false && !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {
+ 						return l.notYet(variable, "destructuring inside a namespace; use plain singleton bindings")
+ 					}
+ 				}

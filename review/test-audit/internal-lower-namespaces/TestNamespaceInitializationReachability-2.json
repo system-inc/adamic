@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceInitializationReachability$\" -count=1 -timeout 90s ./internal/lower/", "wall": 2.574923365000359, "seconds": 0.135, "exit": 0}

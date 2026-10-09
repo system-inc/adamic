@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestNamespaceReturnedAssignmentLimits$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 15.710768007000297,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReturnedAssignmentLimits"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceReturnedAssignmentLimits"
+  ],
+  "lines": {
+    "TestNamespaceReturnedAssignmentLimits": [
+      "namespaces_test.go:117: got <nil>, want the scalar returned-assignment boundary"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.185
+}

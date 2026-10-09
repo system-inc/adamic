@@ -1,0 +1,45 @@
+{
+  "command": "ADAMIC_MUTANT=M10 ADAMIC_NATIVE_SPLIT=u038-M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 9.344284320999577,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "passed": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceTypesErase",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceReceiverRefusal",
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceClosedCallGraphEdges": [
+      "namespaces_test.go:151: got <nil>"
+    ],
+    "TestNamespaceInitializationReachability": [
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+    ],
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet enum before",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before runtime initialization"
+    ]
+  },
+  "panic": false,
+  "seconds": 5.253
+}

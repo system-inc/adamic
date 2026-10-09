@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -159,7 +159,7 @@
+ 				}
+ 				continue
+ 			}
+-			return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
++			return nil
+ 		}
+ 		for _, member := range namespaceStatements(node) {
+ 			if l.namespaceMergedFunction(node.Name()) && ast.HasSyntacticModifier(member, ast.ModifierFlagsExport) {

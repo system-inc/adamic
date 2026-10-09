@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceClosedCallGraphEdges$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.4786916410012054,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceClosedCallGraphEdges"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceClosedCallGraphEdges"
+  ],
+  "lines": {
+    "TestNamespaceClosedCallGraphEdges": [
+      "namespaces_test.go:151: got <nil>"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.076
+}

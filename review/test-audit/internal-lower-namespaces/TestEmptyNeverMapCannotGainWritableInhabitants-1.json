@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestEmptyNeverMapCannotGainWritableInhabitants$\" -count=1 -timeout 90s ./internal/lower/", "wall": 4.597770176998893, "seconds": 0.144, "exit": 0}

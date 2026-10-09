@@ -1,0 +1,36 @@
+{
+  "command": "ADAMIC_MUTANT=M12 ADAMIC_NATIVE_SPLIT=u038-M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 5.552732394999111,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceInitializationReachability"
+  ],
+  "passed": [
+    "TestNamespaceReceiverRefusal",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceTypesErase",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceInitializationReachability": [
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.672
+}

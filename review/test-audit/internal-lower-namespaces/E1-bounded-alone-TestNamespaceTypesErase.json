@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceTypesErase$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.9317994249995536,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceTypesErase"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceTypesErase"
+  ],
+  "lines": {},
+  "panic": true,
+  "seconds": 0.1
+}

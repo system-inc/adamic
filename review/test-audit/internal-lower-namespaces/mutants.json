@@ -1,0 +1,335 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/namespaces.go",
+    "line": 36,
+    "old": "\treturn false\n}\n\n// Flatten",
+    "new": "\treturn true\n}\n\n// Flatten",
+    "menu": "change constant",
+    "mode": "runtimefinal",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceTypesErase"
+    ],
+    "scope": "whole package",
+    "standalone_vet": {
+      "id": "M01",
+      "command": "go vet ./internal/lower/",
+      "seconds": 0.8261952930006373,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/namespaces.go",
+    "line": 43,
+    "old": "for _, statement := range statements {",
+    "new": "for _, statement := range statements[:max(0, len(statements)-1)] {",
+    "menu": "off-by-one bound",
+    "mode": "range",
+    "anchor": null,
+    "failed_rows": [
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M02",
+      "command": "go vet ./internal/lower/",
+      "seconds": 18.584426045999862,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/namespaces.go",
+    "line": 211,
+    "old": "if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {",
+    "new": "if false && l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {",
+    "menu": "flip condition",
+    "mode": "condition",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestTracingNamespaceEscapeStaysNotYet"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M05",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.0315057690004323,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/namespaces.go",
+    "line": 162,
+    "old": "return l.notYet(node, \"a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module\")",
+    "new": "return nil",
+    "menu": "return early",
+    "mode": "block",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestDebugNamespaceMergedCapabilities"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M06",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.0503027739996469,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/namespaces.go",
+    "line": 192,
+    "old": "if !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {",
+    "new": "if false && !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {",
+    "menu": "flip condition",
+    "mode": "condition",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M07",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.2073220149995905,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/namespaces.go",
+    "line": 245,
+    "old": "func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {",
+    "new": "func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {\n\tif true { return nil }",
+    "menu": "return early",
+    "mode": "entry",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M08",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.0872691329986992,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 25,
+    "old": "return g.discover(function).reaches",
+    "new": "return map[*ast.Node]*ast.Node{}",
+    "menu": "return early",
+    "mode": "block",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M10",
+      "command": "go vet ./internal/lower/",
+      "seconds": 0.9856650639994768,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/namespaces.go",
+    "line": 317,
+    "old": "for _, argument := range node.Arguments() {\n\t\t\t\tif target := l.namespaceCallable(argument); target != nil {\n\t\t\t\t\tif err := checkCall(target); err != nil {\n\t\t\t\t\t\treturn err\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}",
+    "new": "",
+    "menu": "drop whole loop",
+    "mode": "drop",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceClosedCallGraphEdges"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M11",
+      "command": "go vet ./internal/lower/",
+      "seconds": 0.9955553380004858,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 133,
+    "old": "for _, edge := range member.edges {\n\t\t\t\tfor declaration, read := range edge.reaches {\n\t\t\t\t\treaches[declaration] = read\n\t\t\t\t}\n\t\t\t}",
+    "new": "",
+    "menu": "drop whole loop",
+    "mode": "drop",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceInitializationReachability"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M12",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.2159039840007608,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/namespaces.go",
+    "line": 344,
+    "old": "func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {",
+    "new": "func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {\n\tif true { return nil }",
+    "menu": "return early",
+    "mode": "entry",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M13",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.0486711369994737,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/namespaces.go",
+    "line": 400,
+    "old": "l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})",
+    "new": "l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: true}})",
+    "menu": "change constant",
+    "mode": "block",
+    "anchor": null,
+    "failed_rows": [],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M14",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.2051113320012519,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/namespaces.go",
+    "line": 502,
+    "old": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})",
+    "new": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})",
+    "menu": "change constant",
+    "mode": "block",
+    "anchor": null,
+    "failed_rows": [],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M15",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.0380267330001516,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/namespaces_returns.go",
+    "line": 22,
+    "old": "if of != ir.Number && of != ir.Boolean {",
+    "new": "if false && of != ir.Number && of != ir.Boolean {",
+    "menu": "flip condition",
+    "mode": "condition",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceReturnedAssignmentLimits"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M16",
+      "command": "go vet ./internal/lower/",
+      "seconds": 0.9421097489994281,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/namespace_receiver_scope.go",
+    "line": 16,
+    "old": "if node.Kind == ast.KindThisKeyword {",
+    "new": "if node.Kind == ast.KindNullKeyword {",
+    "menu": "change constant",
+    "mode": "receiverkind",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceReceiverRefusal"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M17",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.5175174830001197,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/invariance.go",
+    "line": 229,
+    "old": "if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {",
+    "new": "if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(source, target)) {",
+    "menu": "swap arguments",
+    "mode": "swap",
+    "anchor": null,
+    "failed_rows": [
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "M18",
+      "command": "go vet ./internal/lower/",
+      "seconds": 1.298774761000459,
+      "exit": 0
+    }
+  },
+  {
+    "id": "E1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }",
+    "menu": "empty-answer probe",
+    "mode": "entry",
+    "anchor": null,
+    "failed_rows": [
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceTypesErase",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestNamespaceReturnedAssignmentLimits",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ],
+    "scope": "nine-row bounded slice",
+    "standalone_vet": {
+      "id": "E1",
+      "command": "go vet ./internal/lower/",
+      "seconds": 2.3547832000003837,
+      "exit": 0
+    }
+  }
+]

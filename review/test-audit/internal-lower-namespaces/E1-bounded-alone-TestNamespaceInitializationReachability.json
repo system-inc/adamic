@@ -1,0 +1,21 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceInitializationReachability$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 3.2419595190003747,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceInitializationReachability"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceInitializationReachability"
+  ],
+  "lines": {
+    "TestNamespaceInitializationReachability": [
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.141
+}

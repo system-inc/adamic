@@ -1,0 +1,219 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 877ae171..7105d12d 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -226,7 +226,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
+ 	}
+ 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+ 		source, target := fromArguments[index], toArguments[index]
+-		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
++		if mutable && (!l.enumAssignable(target, source) || (!auditU038("M18") && !l.checker.IsTypeAssignableTo(target, source)) || (auditU038("M18") && !l.checker.IsTypeAssignableTo(source, target))) {
+ 			return &widening{source: source, target: target}
+ 		}
+ 		if found := l.widened(source, target, visited); found != nil {
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..b265861a 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditU038("E1") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/namespace_receiver_scope.go b/internal/lower/namespace_receiver_scope.go
+index dcf34b70..461d0a94 100644
+--- a/internal/lower/namespace_receiver_scope.go
++++ b/internal/lower/namespace_receiver_scope.go
+@@ -13,7 +13,7 @@ func namespaceOwnThis(declaration *ast.Node) bool {
+ 		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction {
+ 			return false
+ 		}
+-		if node.Kind == ast.KindThisKeyword {
++		if (!auditU038("M17") && node.Kind == ast.KindThisKeyword) || (auditU038("M17") && node.Kind == ast.KindNullKeyword) {
+ 			return true
+ 		}
+ 		return node.ForEachChild(visit)
+diff --git a/internal/lower/namespaces.go b/internal/lower/namespaces.go
+index b34c6b8d..092689f6 100644
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -33,14 +33,14 @@ func namespaceRuntime(declaration *ast.Node) bool {
+ 			return true
+ 		}
+ 	}
+-	return false
++	return auditU038("M01")
+ }
+ 
+ // Flatten scoped declarations, never names: the checker's symbols retain every namespace and
+ // private binding's identity. The qualified-only subset cannot observe a namespace object.
+ func namespaceDeclarations(statements []*ast.Node) []*ast.Node {
+ 	result := []*ast.Node{}
+-	for _, statement := range statements {
++	for _, statement := range auditU038Statements(statements) {
+ 		if statement.Kind == ast.KindModuleDeclaration {
+ 			result = append(result, namespaceDeclarations(namespaceStatements(statement))...)
+ 		} else {
+@@ -159,7 +159,11 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
+ 				}
+ 				continue
+ 			}
+-			return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
++			if auditU038("M06") {
++				return nil
++			} else {
++				return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
++			}
+ 		}
+ 		for _, member := range namespaceStatements(node) {
+ 			if l.namespaceMergedFunction(node.Name()) && ast.HasSyntacticModifier(member, ast.ModifierFlagsExport) {
+@@ -189,7 +193,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
+ 			case ast.KindVariableStatement:
+ 				list := member.AsVariableStatement().DeclarationList
+ 				for _, variable := range list.AsVariableDeclarationList().Declarations.Nodes {
+-					if !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {
++					if !auditU038("M07") && !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {
+ 						return l.notYet(variable, "destructuring inside a namespace; use plain singleton bindings")
+ 					}
+ 				}
+@@ -208,7 +212,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
+ 			}
+ 		}
+ 	}
+-	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
++	if !auditU038("M05") && l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
+ 		parent := node.Parent
+ 		if l.namespaceMergedFunction(node) {
+ 			if l.callableNamespaceUse(node) {
+@@ -243,6 +247,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
+ // Follow statically known callees before executing a module statement. An unresolved
+ // edge keeps namespace reads checked at runtime; it is never proof of no effects.
+ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
++	if auditU038("M08") {
++		return nil
++	}
+ 	initialized := map[*ast.Node]bool{}
+ 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+ 	checkCall := func(target *ast.Node) error {
+@@ -314,10 +321,12 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+ 			}
+ 			// Library operations may invoke callbacks. A known callback participates in
+ 			// the same graph; unknown values retain checks in their eventual bodies.
+-			for _, argument := range node.Arguments() {
+-				if target := l.namespaceCallable(argument); target != nil {
+-					if err := checkCall(target); err != nil {
+-						return err
++			if !auditU038("M11") {
++				for _, argument := range node.Arguments() {
++					if target := l.namespaceCallable(argument); target != nil {
++						if err := checkCall(target); err != nil {
++							return err
++						}
+ 					}
+ 				}
+ 			}
+@@ -342,6 +351,9 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+ // Mutable aliases, parameters and virtual methods are unresolved edges. Only
+ // direct functions and immutable initializer chains identify a single body.
+ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
++	if auditU038("M13") {
++		return nil
++	}
+ 	seen := map[*ast.Symbol]bool{}
+ 	for callee != nil {
+ 		callee = ast.SkipParentheses(callee)
+@@ -397,7 +409,11 @@ func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int {
+ 	local := len(l.result.Locals)
+ 	l.locals[symbol] = local
+ 	l.result.Locals = append(l.result.Locals, ir.Local{Name: declaration.Name().Text(), Type: ir.Boolean, Global: true, Function: -1})
+-	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})
++	if auditU038("M14") {
++		l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: true}})
++	} else {
++		l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})
++	}
+ 	return local
+ }
+ 
+@@ -499,7 +515,11 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
+ 		return nil, err
+ 	}
+ 	if namespaceRuntime(node) {
+-		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
++		if auditU038("M15") {
++			body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})
++		} else {
++			body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
++		}
+ 	}
+ 	return append(hoisted, body...), nil
+ }
+diff --git a/internal/lower/namespaces_call_graph.go b/internal/lower/namespaces_call_graph.go
+index 3a316015..064dbe83 100644
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -22,7 +22,11 @@ type namespaceCallNode struct {
+ }
+ 
+ func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
+-	return g.discover(function).reaches
++	if auditU038("M10") {
++		return map[*ast.Node]*ast.Node{}
++	} else {
++		return g.discover(function).reaches
++	}
+ }
+ 
+ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+@@ -130,9 +134,11 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+ 			for declaration, read := range member.reads {
+ 				reaches[declaration] = read
+ 			}
+-			for _, edge := range member.edges {
+-				for declaration, read := range edge.reaches {
+-					reaches[declaration] = read
++			if !auditU038("M12") {
++				for _, edge := range member.edges {
++					for declaration, read := range edge.reaches {
++						reaches[declaration] = read
++					}
+ 				}
+ 			}
+ 		}
+diff --git a/internal/lower/namespaces_returns.go b/internal/lower/namespaces_returns.go
+index 818198fd..9a794a87 100644
+--- a/internal/lower/namespaces_returns.go
++++ b/internal/lower/namespaces_returns.go
+@@ -19,7 +19,7 @@ func (l *lowering) namespaceReturnAssignment(expression *ast.Node) ([]ir.Stateme
+ 		return nil, false, nil
+ 	}
+ 	of := l.result.Locals[local].Type
+-	if of != ir.Number && of != ir.Boolean {
++	if !auditU038("M16") && of != ir.Number && of != ir.Boolean {
+ 		return nil, true, l.notYet(expression, "a returned namespace assignment with reference or optional storage; only scalar singleton assignment is proven")
+ 	}
+ 	statements, err := l.assignment(expression)
+--- /dev/null
++++ b/internal/lower/audit_u038.go
+@@ -0,0 +1,16 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"os"
++)
++
++var auditU038Selector = os.Getenv("ADAMIC_MUTANT")
++
++func auditU038(id string) bool { return auditU038Selector == id }
++func auditU038Statements(statements []*ast.Node) []*ast.Node {
++	if auditU038("M02") {
++		return statements[:max(0, len(statements)-1)]
++	}
++	return statements
++}

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -40,7 +40,7 @@
+ // private binding's identity. The qualified-only subset cannot observe a namespace object.
+ func namespaceDeclarations(statements []*ast.Node) []*ast.Node {
+ 	result := []*ast.Node{}
+-	for _, statement := range statements {
++	for _, statement := range statements[:max(0, len(statements)-1)] {
+ 		if statement.Kind == ast.KindModuleDeclaration {
+ 			result = append(result, namespaceDeclarations(namespaceStatements(statement))...)
+ 		} else {

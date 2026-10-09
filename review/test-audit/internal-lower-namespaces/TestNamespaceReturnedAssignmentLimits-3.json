@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceReturnedAssignmentLimits$\" -count=1 -timeout 90s ./internal/lower/", "wall": 2.4754304319994844, "seconds": 0.108, "exit": 0}

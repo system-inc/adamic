@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestEmptyNeverMapCannotGainWritableInhabitants$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 3.1468944839998585,
+  "exit": 0,
+  "failed": [],
+  "passed": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "ran": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {},
+  "panic": false,
+  "seconds": 0.072
+}

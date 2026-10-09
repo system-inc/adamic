@@ -1,0 +1,69 @@
+from pathlib import Path
+import json,difflib,subprocess
+r=Path('/workspace/adamic');d=r/'review/test-audit/internal-lower-namespaces';o=Path('/tmp/u038')
+files=['namespaces.go','namespaces_call_graph.go','namespace_receiver_scope.go','namespaces_returns.go','invariance.go','lower.go'];base={f:(o/(f+'.original')).read_text() for f in files}
+for f,s in base.items():(o/(f+'.original')).write_text(s)
+ms=[]
+def add(id,f,old,new,menu,mode='block',anchor=None):
+ assert base[f].count(old)==1,(id,base[f].count(old))
+ ms.append(dict(id=id,file='internal/lower/'+f,line=base[f][:base[f].index(old)].count('\n')+1,old=old,new=new,menu=menu,mode=mode,anchor=anchor))
+# Fixed declarations. No mutant results have been observed.
+add('M01','namespaces.go','\treturn false\n}\n\n// Flatten','\treturn true\n}\n\n// Flatten','change constant','runtimefinal')
+add('M02','namespaces.go','for _, statement := range statements {','for _, statement := range statements[:max(0, len(statements)-1)] {','off-by-one bound','range')
+add('M03','namespaces.go','func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {','func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {\n\tif true { return nil }','return early','entry')
+add('M04','namespaces.go','if namespaceOwnThis(member) {','if false && namespaceOwnThis(member) {','flip condition','condition')
+add('M05','namespaces.go','if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {','if false && l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {','flip condition','condition')
+add('M06','namespaces.go','return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")','return nil','return early')
+add('M07','namespaces.go','if !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {','if false && !ast.IsIdentifier(variable.Name()) && (list.Flags&ast.NodeFlagsBlockScoped != 0 || !namespaceObjectBindings(variable.Name())) {','flip condition','condition')
+add('M08','namespaces.go','func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {','func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {\n\tif true { return nil }','return early','entry')
+add('M09','namespaces_call_graph.go','node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })','','drop statement','drop')
+add('M10','namespaces_call_graph.go','return g.discover(function).reaches','return map[*ast.Node]*ast.Node{}','return early')
+callback='''for _, argument := range node.Arguments() {
+				if target := l.namespaceCallable(argument); target != nil {
+					if err := checkCall(target); err != nil {
+						return err
+					}
+				}
+			}'''
+add('M11','namespaces.go',callback,'','drop whole loop','drop')
+prop='''for _, edge := range member.edges {
+				for declaration, read := range edge.reaches {
+					reaches[declaration] = read
+				}
+			}'''
+add('M12','namespaces_call_graph.go',prop,'','drop whole loop','drop')
+add('M13','namespaces.go','func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {','func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {\n\tif true { return nil }','return early','entry')
+add('M14','namespaces.go','l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: false}})','l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: local, Value: ir.BooleanConstant{Value: true}})','change constant')
+add('M15','namespaces.go','body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})','body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})','change constant')
+add('M16','namespaces_returns.go','if of != ir.Number && of != ir.Boolean {','if false && of != ir.Number && of != ir.Boolean {','flip condition','condition')
+add('M17','namespace_receiver_scope.go','if node.Kind == ast.KindThisKeyword {','if node.Kind == ast.KindNullKeyword {','change constant','receiverkind')
+add('M18','invariance.go','if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {','if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(source, target)) {','swap arguments','swap')
+add('M19','namespaces.go','func namespaceRuntime(declaration *ast.Node) bool {','func namespaceRuntime(declaration *ast.Node) bool {\n\tif true { return false }','return early','entry')
+add('E1','lower.go','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }','empty-answer probe','entry')
+ms=[m for m in ms if m['id'] not in ['M03','M04','M09','M19']]
+for id in ['M03','M04','M09','M19']:
+ (d/(id+'.diff')).unlink()
+# Standalone patches have no selector, no harness edit, and all derive from original source.
+for m in ms:
+ f=m['file'].split('/')[-1];s=base[f];a=s.replace(m['old'],m['new']);(d/(m['id']+'.diff')).write_text(''.join(difflib.unified_diff(s.splitlines(True),a.splitlines(True),fromfile='a/'+m['file'],tofile='b/'+m['file'])))
+json.dump(ms,open(d/'mutants.json','w'),indent=2)
+# Switched source implements those fixed patches.
+for m in ms:
+ f=m['file'].split('/')[-1];old,new,id,mode=m['old'],m['new'],m['id'],m['mode'];test='auditU038("'+id+'")'
+ if mode=='block':s='if '+test+' { '+new+' } else { '+old+' }'
+ elif mode=='entry':s=old+'\n\tif '+test+' { '+new[len(old):].strip().removeprefix('if true {').removesuffix('}').strip()+' }'
+ elif mode=='drop':s='if !'+test+' { '+old+' }'
+ elif mode=='condition':s=old.replace('if ','if !'+test+' && ',1)
+ elif mode=='runtimefinal':s='\treturn auditU038("M01")\n}\n\n// Flatten'
+ elif mode=='range':s='for _, statement := range auditU038Statements(statements) {'
+ elif mode=='receiverkind':s='if (!'+test+' && node.Kind == ast.KindThisKeyword) || ('+test+' && node.Kind == ast.KindNullKeyword) {'
+ elif mode=='swap':s='if mutable && (!l.enumAssignable(target, source) || (!'+test+' && !l.checker.IsTypeAssignableTo(target, source)) || ('+test+' && !l.checker.IsTypeAssignableTo(source, target))) {'
+ base[f]=base[f].replace(old,s,1)
+for f,s in base.items():(r/'internal/lower'/f).write_text(s)
+(r/'internal/lower/audit_u038.go').write_text('''package lower
+import("os";"github.com/microsoft/TypeScript/tsc/shim/ast")
+var auditU038Selector=os.Getenv("ADAMIC_MUTANT")
+func auditU038(id string) bool {return auditU038Selector==id}
+func auditU038Statements(statements []*ast.Node) []*ast.Node {if auditU038("M02"){return statements[:max(0,len(statements)-1)]};return statements}
+''')
+print('Fixed 16 mutants, planted production switch; no failures checked yet.')

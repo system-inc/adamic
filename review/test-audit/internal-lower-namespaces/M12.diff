@@ -1,0 +1,15 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -130,11 +130,7 @@
+ 			for declaration, read := range member.reads {
+ 				reaches[declaration] = read
+ 			}
+-			for _, edge := range member.edges {
+-				for declaration, read := range edge.reaches {
+-					reaches[declaration] = read
+-				}
+-			}
++			
+ 		}
+ 		for _, member := range component {
+ 			member.reaches = reaches

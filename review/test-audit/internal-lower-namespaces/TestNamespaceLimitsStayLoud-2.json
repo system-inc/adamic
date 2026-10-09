@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestNamespaceLimitsStayLoud$\" -count=1 -timeout 90s ./internal/lower/", "wall": 3.4870105760001024, "seconds": 0.878, "exit": 0}

@@ -1,0 +1,36 @@
+{
+  "command": "ADAMIC_MUTANT=M07 ADAMIC_NATIVE_SPLIT=u038-M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 29.631491636000646,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "passed": [
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceInitializationReachability"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet destructuring inside a namespace"
+    ]
+  },
+  "panic": false,
+  "seconds": 8.284
+}

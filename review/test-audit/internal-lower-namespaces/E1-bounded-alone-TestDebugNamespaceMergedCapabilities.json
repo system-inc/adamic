@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestDebugNamespaceMergedCapabilities$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.677115941998636,
+  "exit": 1,
+  "failed": [
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "passed": [],
+  "ran": [
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "lines": {
+    "TestDebugNamespaceMergedCapabilities": [
+      "namespaces_test.go:102: got <nil>, want NotYet merged with a runtime value"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.133
+}

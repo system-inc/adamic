@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestEmptyNeverMapCannotGainWritableInhabitants$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.584287134000988,
+  "exit": 1,
+  "failed": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "passed": [],
+  "ran": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestEmptyNeverMapCannotGainWritableInhabitants": [
+      "namespaces_test.go:161: got <nil>, want invariant mutable view refused"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.064
+}

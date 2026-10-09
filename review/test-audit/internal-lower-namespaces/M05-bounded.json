@@ -1,0 +1,43 @@
+{
+  "command": "ADAMIC_MUTANT=M05 ADAMIC_NATIVE_SPLIT=u038-M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 13.947393434998958,
+  "exit": 1,
+  "failed": [
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "passed": [
+    "TestNamespaceTypesErase",
+    "TestNamespaceReceiverRefusal",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceClosedCallGraphEdges"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestTracingNamespaceEscapeStaysNotYet": [
+      "namespaces_test.go:76: got <nil>, want the explicit missing runtime-container reason"
+    ],
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace object",
+      "namespaces_test.go:39: got /tmp/adamic-gate/TestNamespaceLimitsStayLoudreflection3822311320/001/main.a:1:45: stage 0 can't lower Object.keys on a non-object yet, want NotYet namespace object",
+      "namespaces_test.go:39: got <nil>, want NotYet callable namespace object",
+      "namespaces_test.go:39: got /tmp/adamic-gate/TestNamespaceLimitsStayLoudcomputed_member1360803796/001/main.a:1:48: stage 0 can't lower an ElementAccessExpression yet, want NotYet namespace object"
+    ]
+  },
+  "panic": false,
+  "seconds": 9.668
+}

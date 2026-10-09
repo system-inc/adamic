@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; go test -json -run \"^TestDebugNamespaceMergedCapabilities$\" -count=1 -timeout 90s ./internal/lower/", "wall": 2.577514279000752, "seconds": 0.195, "exit": 0}

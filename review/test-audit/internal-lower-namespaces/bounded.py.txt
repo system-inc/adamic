@@ -1,0 +1,28 @@
+import subprocess,time,json,pathlib,os,signal,re
+root='/workspace/adamic';out=pathlib.Path('/tmp/u038');dest=pathlib.Path(root+'/review/test-audit/internal-lower-namespaces');rows=json.load(open(out/'rows.json'));ms=json.load(open(dest/'mutants.json'))
+def run(label,command):
+ start=time.monotonic();log=out/(label+'.log')
+ with open(log,'w') as f:
+  p=subprocess.Popen(['bash','-c','source /workspace/adamic-tools/env.sh; '+command],cwd=root,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
+  try:code=p.wait(timeout=90)
+  except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait();code=124
+ result={'command':command,'wall':time.monotonic()-start,'exit':code,'failed':[],'passed':[],'ran':[],'lines':{},'panic':False,'seconds':None}
+ for l in log.read_text().splitlines():
+  try:e=json.loads(l)
+  except:continue
+  t=e.get('Test','');top=t.split('/')[0];text=e.get('Output','')
+  if e['Action']=='run' and t and '/' not in t:result['ran'].append(t)
+  if e['Action'] in ['pass','fail'] and t and '/' not in t:result['passed' if e['Action']=='pass' else 'failed'].append(t)
+  if 'panic:' in text:result['panic']=True
+  if re.search(r'\w+_test.go:\d+:',text):result['lines'].setdefault(top,[]).append(text.strip())
+  if not t and re.search(r'\t([0-9.]+)s',text):result['seconds']=float(re.search(r'\t([0-9.]+)s',text).group(1))
+ json.dump(result,open(out/(label+'.json'),'w'),indent=2)
+ print(label,round(result['wall'],3),code,'fail',len(result['failed']),'pass',len(result['passed']),'panic',result['panic'],flush=True)
+ return result
+for m in ms:
+ id=m['id'];prefix='ADAMIC_MUTANT='+id+' ADAMIC_NATIVE_SPLIT=u038-'+id+' '
+ if id=='M01':continue
+ regex='^('+'|'.join(rows)+')$'
+ r=run(id+'-bounded',prefix+'timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run "'+regex+'"')
+ if r['panic'] or r['exit']==124:
+  for t in rows:run(id+'-bounded-alone-'+t,prefix+'timeout 120 go test -json -run "^'+t+'$" -count=1 -timeout 90s ./internal/lower/')

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespace_receiver_scope.go
++++ b/internal/lower/namespace_receiver_scope.go
+@@ -13,7 +13,7 @@
+ 		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction {
+ 			return false
+ 		}
+-		if node.Kind == ast.KindThisKeyword {
++		if node.Kind == ast.KindNullKeyword {
+ 			return true
+ 		}
+ 		return node.ForEachChild(visit)

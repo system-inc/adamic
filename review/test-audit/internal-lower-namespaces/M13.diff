@@ -1,0 +1,10 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -342,6 +342,7 @@
+ // Mutable aliases, parameters and virtual methods are unresolved edges. Only
+ // direct functions and immutable initializer chains identify a single body.
+ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
++	if true { return nil }
+ 	seen := map[*ast.Symbol]bool{}
+ 	for callee != nil {
+ 		callee = ast.SkipParentheses(callee)

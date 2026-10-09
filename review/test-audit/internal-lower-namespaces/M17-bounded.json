@@ -1,0 +1,36 @@
+{
+  "command": "ADAMIC_MUTANT=M17 ADAMIC_NATIVE_SPLIT=u038-M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 3.8517467319998104,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReceiverRefusal"
+  ],
+  "passed": [
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceTypesErase",
+    "TestNamespaceInitializationReachability",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceReceiverRefusal": [
+      "namespaces_test.go:50: got /tmp/adamic-gate/TestNamespaceReceiverRefusal28143232/001/main.a:1:35: stage 0 can't lower an explicit namespace-function this parameter; pass state explicitly yet"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.266
+}

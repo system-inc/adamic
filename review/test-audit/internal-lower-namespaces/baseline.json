@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .", "seconds": 52.11720394800068, "exit": 0}

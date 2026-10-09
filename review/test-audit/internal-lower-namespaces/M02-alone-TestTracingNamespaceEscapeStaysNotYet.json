@@ -1,0 +1,15 @@
+{
+  "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u038-M02 timeout 120 go test -json -run \"^TestTracingNamespaceEscapeStaysNotYet$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 4.2425277330003155,
+  "exit": 0,
+  "failed": [],
+  "passed": [
+    "TestTracingNamespaceEscapeStaysNotYet"
+  ],
+  "ran": [
+    "TestTracingNamespaceEscapeStaysNotYet"
+  ],
+  "lines": {},
+  "panic": false,
+  "seconds": 0.288
+}

@@ -1,0 +1,70 @@
+{
+  "unit": "u038",
+  "origin_main": "1f34d0d300301faebc94d397adee1a090923d2c7",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "tools_seconds": 0.06451214799926674,
+  "npm_ci_seconds": 1.2760143029991013,
+  "baseline": {
+    "command": "source /workspace/adamic-tools/env.sh; timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 52.11720394800068,
+    "exit": 0
+  },
+  "switch_build_seconds": 14.03533702599998,
+  "probe_build_seconds": 21.319040612001118,
+  "baseline_measurements": {
+    "TestNamespaceLimitsStayLoud": [
+      0.839,
+      0.878,
+      0.851
+    ],
+    "TestNamespaceReceiverRefusal": [
+      0.075,
+      0.074,
+      0.067
+    ],
+    "TestNamespaceTypesErase": [
+      0.082,
+      0.066,
+      0.076
+    ],
+    "TestTracingNamespaceEscapeStaysNotYet": [
+      0.155,
+      0.096,
+      0.079
+    ],
+    "TestDebugNamespaceMergedCapabilities": [
+      0.15,
+      0.195,
+      0.102
+    ],
+    "TestNamespaceReturnedAssignmentLimits": [
+      0.116,
+      0.117,
+      0.108
+    ],
+    "TestNamespaceInitializationReachability": [
+      0.157,
+      0.135,
+      0.281
+    ],
+    "TestNamespaceClosedCallGraphEdges": [
+      0.273,
+      0.264,
+      0.447
+    ],
+    "TestEmptyNeverMapCannotGainWritableInhabitants": [
+      0.144,
+      0.192,
+      0.074
+    ]
+  },
+  "bounded_matrix_wall_seconds": 152.89212604499335,
+  "empty_probe_isolated_wall_seconds": 25.386902142001418,
+  "final_standalone_vet_seconds": 36.38913981100086,
+  "survivors": [
+    "M14",
+    "M15"
+  ],
+  "witness_rows": []
+}

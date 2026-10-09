@@ -1,0 +1,47 @@
+{
+  "command": "ADAMIC_MUTANT=M08 ADAMIC_NATIVE_SPLIT=u038-M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 12.208749253999486,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceClosedCallGraphEdges",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "passed": [
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceTypesErase",
+    "TestNamespaceReceiverRefusal",
+    "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestDebugNamespaceMergedCapabilities"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestNamespaceClosedCallGraphEdges": [
+      "namespaces_test.go:151: got <nil>"
+    ],
+    "TestNamespaceInitializationReachability": [
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>",
+      "namespaces_test.go:133: reaching call lost its initialization refusal: <nil>"
+    ],
+    "TestNamespaceLimitsStayLoud": [
+      "namespaces_test.go:39: got <nil>, want NotYet enum before",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before runtime initialization",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before",
+      "namespaces_test.go:39: got <nil>, want NotYet namespace read before"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.857
+}

@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestTracingNamespaceEscapeStaysNotYet$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.5769217170000047,
+  "exit": 1,
+  "failed": [
+    "TestTracingNamespaceEscapeStaysNotYet"
+  ],
+  "passed": [],
+  "ran": [
+    "TestTracingNamespaceEscapeStaysNotYet"
+  ],
+  "lines": {
+    "TestTracingNamespaceEscapeStaysNotYet": [
+      "namespaces_test.go:76: got <nil>, want the explicit missing runtime-container reason"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.064
+}

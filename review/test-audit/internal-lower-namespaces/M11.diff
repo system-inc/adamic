@@ -1,0 +1,17 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -314,13 +314,7 @@
+ 			}
+ 			// Library operations may invoke callbacks. A known callback participates in
+ 			// the same graph; unknown values retain checks in their eventual bodies.
+-			for _, argument := range node.Arguments() {
+-				if target := l.namespaceCallable(argument); target != nil {
+-					if err := checkCall(target); err != nil {
+-						return err
+-					}
+-				}
+-			}
++			
+ 		}
+ 		var found error
+ 		node.ForEachChild(func(child *ast.Node) bool { found = visit(child); return found != nil })

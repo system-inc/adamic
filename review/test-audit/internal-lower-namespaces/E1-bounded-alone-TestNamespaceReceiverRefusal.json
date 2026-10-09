@@ -1,0 +1,19 @@
+{
+  "command": "ADAMIC_MUTANT=E1 ADAMIC_NATIVE_SPLIT=u038-E1 timeout 120 go test -json -run \"^TestNamespaceReceiverRefusal$\" -count=1 -timeout 90s ./internal/lower/",
+  "wall": 2.7286711460001243,
+  "exit": 1,
+  "failed": [
+    "TestNamespaceReceiverRefusal"
+  ],
+  "passed": [],
+  "ran": [
+    "TestNamespaceReceiverRefusal"
+  ],
+  "lines": {
+    "TestNamespaceReceiverRefusal": [
+      "namespaces_test.go:50: got <nil>"
+    ]
+  },
+  "panic": false,
+  "seconds": 0.067
+}

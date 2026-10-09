@@ -1,0 +1,36 @@
+{
+  "command": "ADAMIC_MUTANT=M18 ADAMIC_NATIVE_SPLIT=u038-M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"^(TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants)$\"",
+  "wall": 3.930007717999615,
+  "exit": 1,
+  "failed": [
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "passed": [
+    "TestNamespaceTypesErase",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceReceiverRefusal",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceLimitsStayLoud"
+  ],
+  "ran": [
+    "TestNamespaceLimitsStayLoud",
+    "TestNamespaceReceiverRefusal",
+    "TestNamespaceTypesErase",
+    "TestTracingNamespaceEscapeStaysNotYet",
+    "TestDebugNamespaceMergedCapabilities",
+    "TestNamespaceReturnedAssignmentLimits",
+    "TestNamespaceInitializationReachability",
+    "TestNamespaceClosedCallGraphEdges",
+    "TestEmptyNeverMapCannotGainWritableInhabitants"
+  ],
+  "lines": {
+    "TestEmptyNeverMapCannotGainWritableInhabitants": [
+      "namespaces_test.go:161: got <nil>, want invariant mutable view refused"
+    ]
+  },
+  "panic": false,
+  "seconds": 1.322
+}
