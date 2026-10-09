@@ -1,0 +1,8 @@
+interface Visible { readonly visible: number; }
+const source: { visible: number; [key: string]: number | string } = { visible: 1 };
+const alias = source;
+alias['late'] = 'wrong';
+const view: Visible = source;
+console.log('before entries');
+const entries: [string, number][] = Object.entries(view);
+console.log('completed');

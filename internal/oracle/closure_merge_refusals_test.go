@@ -39,10 +39,8 @@ func TestClosureMergeRefusals(t *testing.T) {
 			}
 			_, err := lowered(t, absolute)
 			var refused *lower.Refused
-			var notYet *lower.NotYet
-			temporary := strings.Contains(path, "21_truthy_loops")
-			if temporary && !errors.As(err, &notYet) || !temporary && !errors.As(err, &refused) {
-				t.Fatalf("want pinned refusal (temporary=%v), got %v", temporary, err)
+			if !errors.As(err, &refused) {
+				t.Fatalf("want pinned refusal, got %v", err)
 			}
 			expected, readErr := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if readErr != nil {

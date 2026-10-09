@@ -13,7 +13,6 @@ import (
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	for _, gap := range []struct{ path, stdout, refusal string }{
 		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
-		{"gaps/4_empty_array_union.ts", "0\n", "an array of never"},
 		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
@@ -40,6 +39,28 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 		})
 	}
 }
+
+// Gap 4 closed on the area-stack slice: an empty array literal assigned into an optional
+// number[] slot lowers, so the composition's explicitly typed local is no longer required.
+func TestClosedEmptyArrayUnionGap(t *testing.T) {
+	path, _ := filepath.Abs("gaps/4_empty_array_union.ts")
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"native", nativeRun}, {"Node", onNode(t, path)}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "0\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
 func TestClosedParserRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/1_regex_and_value_tree.ts")
 	program := lowered(t, path)
