@@ -296,6 +296,18 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			}
 		}
 	}
+	// Forwarded nested callbacks retain their parent frame through a path outside
+	// the direct environment ownership proof. Keep that capture cycle refused.
+	for _, closure := range f.l.closureRecords {
+		function := f.l.result.Functions[closure.function]
+		if function.GraphClosure && function.ForwardedNestedParent != 0 {
+			return &Refused{
+				Where: f.l.program.Where(closure.node),
+				What:  "a nested callback retains a cyclic parent environment through a forwarded frame",
+				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> (adamic/cycle-capable)",
+			}
+		}
+	}
 	for _, instance := range f.l.instances {
 		for _, local := range instance.thisLocals {
 			types := append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...)
