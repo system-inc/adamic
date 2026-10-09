@@ -1,0 +1,64 @@
+error: docs/runtime-statics.md: No such file or directory
+error: patch failed: internal/native/emit_arrays.go:20
+error: internal/native/emit_arrays.go: patch does not apply
+error: patch failed: internal/native/emit_expressions.go:288
+error: internal/native/emit_expressions.go: patch does not apply
+error: patch failed: internal/native/emit_objects.go:227
+error: internal/native/emit_objects.go: patch does not apply
+error: patch failed: internal/native/emit_statements.go:165
+error: internal/native/emit_statements.go: patch does not apply
+error: patch failed: internal/native/fields_test.go:155
+error: internal/native/fields_test.go: patch does not apply
+error: patch failed: internal/native/from.go:14
+error: internal/native/from.go: patch does not apply
+error: internal/native/graph_regions_test.go: No such file or directory
+error: internal/native/parallel.go: No such file or directory
+error: internal/native/parallel_compiler_test.go: No such file or directory
+error: patch failed: internal/native/regexp_test.go:275
+error: internal/native/regexp_test.go: patch does not apply
+error: internal/native/region_end_test.go: No such file or directory
+error: patch failed: internal/native/reuse.go:696
+error: internal/native/reuse.go: patch does not apply
+error: patch failed: internal/native/runtime/adamic.h:226
+error: internal/native/runtime/adamic.h: patch does not apply
+error: patch failed: internal/native/runtime/array.c:180
+error: internal/native/runtime/array.c: patch does not apply
+error: internal/native/runtime/async_host_impl.h: No such file or directory
+error: patch failed: internal/native/runtime/class_features.c:42
+error: internal/native/runtime/class_features.c: patch does not apply
+error: patch failed: internal/native/runtime/directory.c:23
+error: internal/native/runtime/directory.c: patch does not apply
+error: patch failed: internal/native/runtime/exceptions.c:12
+error: internal/native/runtime/exceptions.c: patch does not apply
+error: patch failed: internal/native/runtime/input.c:186
+error: internal/native/runtime/input.c: patch does not apply
+error: patch failed: internal/native/runtime/library_language.c:27
+error: internal/native/runtime/library_language.c: patch does not apply
+error: patch failed: internal/native/runtime/library_object.c:97
+error: internal/native/runtime/library_object.c: patch does not apply
+error: patch failed: internal/native/runtime/map_set.c:48
+error: internal/native/runtime/map_set.c: patch does not apply
+error: internal/native/runtime/parallel.c: No such file or directory
+error: patch failed: internal/native/runtime/record.c:11
+error: internal/native/runtime/record.c: patch does not apply
+error: patch failed: internal/native/runtime/regexp.c:407
+error: internal/native/runtime/regexp.c: patch does not apply
+error: patch failed: internal/native/runtime/tsgo.c:94
+error: internal/native/runtime/tsgo.c: patch does not apply
+error: patch failed: internal/native/runtime/union.c:4
+error: internal/native/runtime/union.c: patch does not apply
+error: patch failed: internal/native/runtime_profile_test.go:29
+error: internal/native/runtime_profile_test.go: patch does not apply
+error: patch failed: internal/native/testdata/map_hash.c:30
+error: internal/native/testdata/map_hash.c: patch does not apply
+error: internal/native/testdata/parallel/cache_pairs.c: No such file or directory
+error: internal/native/testdata/parallel/lifecycle.c: No such file or directory
+error: internal/native/testdata/parallel/map.c: No such file or directory
+error: internal/native/testdata/parallel/memory.c: No such file or directory
+error: internal/native/testdata/runtime-statics/field_cache.c: No such file or directory
+error: internal/native/testdata/runtime-statics/heap_weak.c: No such file or directory
+error: internal/native/testdata/runtime-statics/json.c: No such file or directory
+error: internal/oracle/concurrency_test.go: No such file or directory
+error: internal/oracle/parallel_test.go: No such file or directory
+error: patch failed: internal/regexp/native.go:126
+error: internal/regexp/native.go: patch does not apply
