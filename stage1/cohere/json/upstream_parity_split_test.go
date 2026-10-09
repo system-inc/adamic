@@ -1,9 +1,11 @@
 package json
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -11,8 +13,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -30,11 +34,77 @@ var upstreamParityReports struct {
 }
 
 var upstreamParitySetup struct {
-	once   sync.Once
+	ready  bool
 	cases  []textCase
 	shards [][]textCase
 	known  map[string]string
 	oracle string
+}
+
+const upstreamParityBudget = 90 * time.Second
+
+func upstreamParityDeadline(t *testing.T) (context.Context, func()) {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), upstreamParityBudget)
+	timer := time.AfterFunc(upstreamParityBudget, func() {
+		cancel()
+		fmt.Fprintf(os.Stderr, "%s exceeded its 90s deadline\n", t.Name())
+		os.Exit(124)
+	})
+	return ctx, func() { timer.Stop(); cancel() }
+}
+
+func upstreamParityCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
+// An exact leaf selector must not charge shared work to that leaf. If setup is
+// not selected, run only its top-level test first; M.Run then starts the original
+// selection with a fresh package timeout. Full selections include the serial
+// setup test naturally, before Go resumes any parallel test.
+func upstreamParityTestRuns(m *testing.M) int {
+	if !flag.Parsed() {
+		flag.Parse()
+	}
+	if flag.Lookup("test.list").Value.String() != "" {
+		return m.Run()
+	}
+	original := flag.Lookup("test.run").Value.String()
+	selection, err := regexp.Compile(original)
+	if err != nil {
+		return m.Run()
+	}
+	setupName := "TestUpstreamRepositoryCorpusParity_Setup"
+	if selection.MatchString(setupName) {
+		return m.Run()
+	}
+	selected := selection.MatchString("TestUpstreamRepositoryCorpusParity")
+	for i := 0; i < testUpstreamRepositoryCorpusParitySplitShards; i++ {
+		selected = selected || selection.MatchString(fmt.Sprintf("TestUpstreamRepositoryCorpusParity_%03d", i))
+	}
+	if !selected {
+		return m.Run()
+	}
+	skipped := flag.Lookup("test.skip").Value.String()
+	_ = flag.Set("test.run", "^"+setupName+"$")
+	_ = flag.Set("test.skip", "")
+	code := m.Run()
+	_ = flag.Set("test.run", original)
+	_ = flag.Set("test.skip", skipped)
+	if code != 0 {
+		return code
+	}
+	return m.Run()
 }
 
 func upstreamParityOrdinal(id string) int {
@@ -65,7 +135,7 @@ func upstreamParityUnion(cases []textCase, shards [][]textCase) error {
 	return nil
 }
 
-func upstreamParityPrepare(t *testing.T) {
+func upstreamParityPrepare(t *testing.T, ctx context.Context) {
 	t.Helper()
 	if err := gatesample.Validate(); err != nil {
 		t.Fatal(err)
@@ -73,92 +143,91 @@ func upstreamParityPrepare(t *testing.T) {
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
-	upstreamParitySetup.once.Do(func() {
-		started := time.Now()
-		defer func() { t.Logf("TestUpstreamRepositoryCorpusParity (setup): %.3fs", time.Since(started).Seconds()) }()
-		tree, err := parser.ParseFile(token.NewFileSet(), "upstream_parity_split_test.go", nil, 0)
+	started := time.Now()
+	defer func() { t.Logf("shared setup: %.3fs", time.Since(started).Seconds()) }()
+	tree, err := parser.ParseFile(token.NewFileSet(), "upstream_parity_split_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	enumerated := map[string]bool{}
+	for _, decl := range tree.Decls {
+		if f, ok := decl.(*ast.FuncDecl); ok && regexp.MustCompile(`^TestUpstreamRepositoryCorpusParity_[0-9]{3}$`).MatchString(f.Name.Name) {
+			enumerated[f.Name.Name] = true
+		}
+	}
+	if len(enumerated) != testUpstreamRepositoryCorpusParitySplitShards {
+		t.Fatalf("enumerated %d tests, declared %d", len(enumerated), testUpstreamRepositoryCorpusParitySplitShards)
+	}
+	for i := 0; i < testUpstreamRepositoryCorpusParitySplitShards; i++ {
+		if !enumerated[fmt.Sprintf("TestUpstreamRepositoryCorpusParity_%03d", i)] {
+			t.Fatalf("missing shard %03d", i)
+		}
+	}
+	cases := sampledCorpusCases(t, 8)
+	shards := make([][]textCase, testUpstreamRepositoryCorpusParitySplitShards)
+	for _, item := range cases {
+		ordinal := upstreamParityOrdinal(item.Name)
+		shards[ordinal] = append(shards[ordinal], item)
+	}
+	if err := upstreamParityUnion(cases, shards); err != nil {
+		t.Fatal(err)
+	}
+	encoded, err := os.ReadFile("known-upstream-differences.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lines := strings.Split(strings.TrimSuffix(string(encoded), "\n"), "\n")
+	if len(lines) != 27 {
+		t.Fatalf("known report has %d lines, want 27", len(lines))
+	}
+	known := map[string]string{}
+	for i := 0; i < len(lines); i += 3 {
+		if _, exists := known[lines[i]]; exists {
+			t.Fatalf("duplicate known difference %s", lines[i])
+		}
+		known[lines[i]] = strings.Join(lines[i:i+3], "\n") + "\n"
+	}
+	ids := map[string]bool{}
+	for _, item := range cases {
+		ids[item.Name] = true
+	}
+	for id := range known {
+		if !ids[id] {
+			t.Fatalf("known difference missing: %s", id)
+		}
+	}
+	cohere, err := filepath.Abs("../../../cohere")
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/cohere_side_test.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	flags := []string{"go test -c ./internal/format/javascript", "overlay=cohere_side_test.go"}
+	for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOWORK", "GOENV"} {
+		flags = append(flags, name+"="+os.Getenv(name))
+	}
+	product := buildcache.Product(t, buildcache.Inputs{Name: "json upstream parity audit oracle", Files: []string{"cohere", "stage1/cohere/json/testdata/cohere_side_test.go"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
+		overlay := filepath.Join(dir, "overlay.json")
+		encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
 		if err != nil {
-			t.Fatal(err)
+			return err
 		}
-		enumerated := map[string]bool{}
-		for _, decl := range tree.Decls {
-			if f, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestUpstreamRepositoryCorpusParity_") {
-				enumerated[f.Name.Name] = true
-			}
+		if err := os.WriteFile(overlay, encoded, 0644); err != nil {
+			return err
 		}
-		if len(enumerated) != testUpstreamRepositoryCorpusParitySplitShards {
-			t.Fatalf("enumerated %d tests, declared %d", len(enumerated), testUpstreamRepositoryCorpusParitySplitShards)
-		}
-		for i := 0; i < testUpstreamRepositoryCorpusParitySplitShards; i++ {
-			if !enumerated[fmt.Sprintf("TestUpstreamRepositoryCorpusParity_%03d", i)] {
-				t.Fatalf("missing shard %03d", i)
-			}
-		}
-		cases := sampledCorpusCases(t, 8)
-		shards := make([][]textCase, testUpstreamRepositoryCorpusParitySplitShards)
-		for _, item := range cases {
-			ordinal := upstreamParityOrdinal(item.Name)
-			shards[ordinal] = append(shards[ordinal], item)
-		}
-		if err := upstreamParityUnion(cases, shards); err != nil {
-			t.Fatal(err)
-		}
-		encoded, err := os.ReadFile("known-upstream-differences.txt")
+		command := upstreamParityCommand(ctx, "go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), "./internal/format/javascript")
+		command.Dir = cohere
+		output, err := childguard.CombinedOutput(command, jsonGuard)
 		if err != nil {
-			t.Fatal(err)
+			return fmt.Errorf("Go oracle build: %w\n%s", err, output)
 		}
-		lines := strings.Split(strings.TrimSuffix(string(encoded), "\n"), "\n")
-		if len(lines) != 27 {
-			t.Fatalf("known report has %d lines, want 27", len(lines))
-		}
-		known := map[string]string{}
-		for i := 0; i < len(lines); i += 3 {
-			if _, exists := known[lines[i]]; exists {
-				t.Fatalf("duplicate known difference %s", lines[i])
-			}
-			known[lines[i]] = strings.Join(lines[i:i+3], "\n") + "\n"
-		}
-		ids := map[string]bool{}
-		for _, item := range cases {
-			ids[item.Name] = true
-		}
-		for id := range known {
-			if !ids[id] {
-				t.Fatalf("known difference missing: %s", id)
-			}
-		}
-		cohere, err := filepath.Abs("../../../cohere")
-		if err != nil {
-			t.Fatal(err)
-		}
-		side, err := filepath.Abs("testdata/cohere_side_test.go")
-		if err != nil {
-			t.Fatal(err)
-		}
-		flags := []string{"go test -c ./internal/format/javascript", "overlay=cohere_side_test.go"}
-		for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOWORK", "GOENV"} {
-			flags = append(flags, name+"="+os.Getenv(name))
-		}
-		product := buildcache.Product(t, buildcache.Inputs{Name: "json upstream parity audit oracle", Files: []string{"cohere", "stage1/cohere/json/testdata/cohere_side_test.go"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
-			overlay := filepath.Join(dir, "overlay.json")
-			encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(overlay, encoded, 0644); err != nil {
-				return err
-			}
-			command := exec.Command("go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), "./internal/format/javascript")
-			command.Dir = cohere
-			output, err := childguard.CombinedOutput(command, jsonGuard)
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
-			}
-			return nil
-		})
-		upstreamParitySetup.cases, upstreamParitySetup.shards, upstreamParitySetup.known, upstreamParitySetup.oracle = cases, shards, known, filepath.Join(product, "oracle")
-		t.Logf("exact union: %d cases; all nine known differences assigned exactly once", len(cases))
+		return nil
 	})
+	upstreamParitySetup.cases, upstreamParitySetup.shards, upstreamParitySetup.known, upstreamParitySetup.oracle = cases, shards, known, filepath.Join(product, "oracle")
+	t.Logf("exact union: %d cases; all nine known differences assigned exactly once", len(cases))
+	upstreamParitySetup.ready = true
 }
 
 func upstreamParityBlock(id string, left, right answer) string {
@@ -177,7 +246,14 @@ func upstreamParityBlockCheck(shard, id, got, want string) error {
 
 func upstreamParityRun(t *testing.T, ordinal int) {
 	t.Helper()
-	upstreamParityPrepare(t)
+	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
+		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
+	}
+	if !upstreamParitySetup.ready {
+		t.Fatal("shared setup was not run before this leaf")
+	}
+	ctx, finish := upstreamParityDeadline(t)
+	defer finish()
 	cases := upstreamParitySetup.shards[ordinal]
 	dir := t.TempDir()
 	casesPath := filepath.Join(dir, "cases.json")
@@ -197,13 +273,13 @@ func upstreamParityRun(t *testing.T, ordinal int) {
 		return result
 	}
 	goPath := filepath.Join(dir, "go.json")
-	command := bounded(t, upstreamParitySetup.oracle, "-test.v", "-test.run=^TestAdamicJSONAudit$")
+	command := upstreamParityCommand(ctx, upstreamParitySetup.oracle, "-test.v", "-test.run=^TestAdamicJSONAudit$")
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
 	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 		t.Fatalf("Go cohere: %v\n%s", err, output)
 	}
 	prettierPath := filepath.Join(dir, "prettier.json")
-	command = bounded(t, "node", "--stack-size=4096", "testdata/library.mjs", os.Getenv("ADAMIC_JSON_PRETTIER"), casesPath, prettierPath)
+	command = upstreamParityCommand(ctx, "node", "--stack-size=4096", "testdata/library.mjs", os.Getenv("ADAMIC_JSON_PRETTIER"), casesPath, prettierPath)
 	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 		t.Fatalf("Prettier: %v\n%s", err, output)
 	}
@@ -241,9 +317,25 @@ func upstreamParityRun(t *testing.T, ordinal int) {
 	t.Logf("shard %03d: %d cases", ordinal, len(cases))
 }
 
+// Not parallel: initializes immutable shared corpus and oracle before parallel leaves resume.
+func TestUpstreamRepositoryCorpusParity_Setup(t *testing.T) {
+	if upstreamParitySetup.ready {
+		t.Log("shared setup already ready")
+		return
+	}
+	ctx, finish := upstreamParityDeadline(t)
+	defer finish()
+	upstreamParityPrepare(t, ctx)
+}
+
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	t.Parallel()
-	upstreamParityPrepare(t)
+	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
+		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
+	}
+	if !upstreamParitySetup.ready {
+		t.Fatal("shared setup was not run")
+	}
 }
 
 func TestUpstreamRepositoryCorpusParityShardProof(t *testing.T) {
