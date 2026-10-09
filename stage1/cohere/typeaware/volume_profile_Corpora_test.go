@@ -2,8 +2,10 @@ package typeaware
 
 import (
 	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"io/fs"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,10 +15,12 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
-// Each range has independent plain and sanitized leaves. Compiler roots are
-// deliberately fine grained: checker.ts costs much more than a typical root.
+// Repository cases use 32 stable hash buckets per mode, with room for growth.
+// Compiler ranges are fixed by corpusfiles.TypeScriptCommit, not repository HEAD.
+// Both assignments have separate plain and sanitized leaves.
 const testVolumeProfileCorporaShards = 2 * (32 + 77)
 
 func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize bool) string {
@@ -58,8 +62,15 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		}
 	}
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
-		builder := &harness{t: h.t, repository: h.repository, directory: directory}
-		builder.build(stage0, "volume", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, sanitize)
+		args := []string{"build", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), "-o", filepath.Join(directory, "volume"), "--tsgo", archive}
+		if sanitize {
+			args = append(args, "--sanitize")
+		}
+		command := exec.Command(stage0, args...)
+		command.Dir = h.repository
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("%s: %w\n%s", name, err, output)
+		}
 		return nil
 	})
 	return filepath.Join(directory, "volume")
@@ -99,23 +110,75 @@ func TestVolumeProfileCorpora(t *testing.T) {
 				}
 			}
 		}
-		for i := 0; i < corpus.ranges; i++ {
-			part := paths[len(paths)*i/corpus.ranges : len(paths)*(i+1)/corpus.ranges]
-			for _, sanitize := range []bool{false, true} {
-				shards = append(shards, shard{corpus.name, corpus.config, part, sanitize, corpus.manifest != ""})
+		resolve := func(path string) string {
+			if !filepath.IsAbs(path) {
+				path = filepath.Join(filepath.Dir(corpus.config), path)
+			}
+			absolute, err := filepath.Abs(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			return absolute
+		}
+		if corpus.manifest != "" {
+			if len(paths) == 0 {
+				t.Fatalf("%s corpus manifest is empty", corpus.name)
+			}
+			if corpus.name == "compiler" {
+				expected := corpusfiles.Upstream(t, os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), corpusfiles.TypeScriptCommit, []string{"src/compiler"}, []string{"*.ts"})
+				actual := make([]string, len(paths))
+				for i, path := range paths {
+					actual[i] = resolve(path)
+				}
+				slices.Sort(actual)
+				if !slices.Equal(actual, expected) {
+					t.Fatalf("compiler manifest has %d files; must match all %d files at pin %s", len(actual), len(expected), corpusfiles.TypeScriptCommit)
+				}
+			}
+		}
+		parts := make([][2][]string, corpus.ranges)
+		for mode := 0; mode < 2; mode++ {
+			if corpus.name == "repository" {
+				for _, path := range paths {
+					relative, err := filepath.Rel(repository, resolve(path))
+					if err != nil {
+						t.Fatal(err)
+					}
+					if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+						t.Fatalf("repository corpus file outside repository: %s", path)
+					}
+					key := filepath.ToSlash(relative) + "\x00" + []string{"plain", "asan"}[mode]
+					digest := sha256.Sum256([]byte(key))
+					bucket := int(binary.LittleEndian.Uint64(digest[:8]) % uint64(corpus.ranges))
+					parts[bucket][mode] = append(parts[bucket][mode], path)
+				}
+			} else {
+				for i := range parts {
+					parts[i][mode] = paths[len(paths)*i/corpus.ranges : len(paths)*(i+1)/corpus.ranges]
+				}
+			}
+		}
+		for _, part := range parts {
+			for mode, paths := range part {
+				shards = append(shards, shard{corpus.name, corpus.config, paths, mode == 1, corpus.manifest != ""})
 			}
 		}
 		for _, sanitize := range []bool{false, true} {
-			var union []string
+			want, got := map[string]int{}, map[string]int{}
+			for _, path := range paths {
+				want[path]++
+			}
 			for _, s := range shards {
 				if s.corpus == corpus.name && s.sanitize == sanitize {
-					union = append(union, s.paths...)
+					for _, path := range s.paths {
+						got[path]++
+					}
 				}
 			}
-			if !slices.Equal(union, paths) {
-				t.Fatalf("%s sanitize=%t shard union differs from manifest", corpus.name, sanitize)
+			if !maps.Equal(want, got) {
+				t.Fatalf("%s sanitize=%t shard union differs from live manifest", corpus.name, sanitize)
 			}
-			t.Logf("%s sanitize=%t union: %d manifest files in %d contiguous ranges", corpus.name, sanitize, len(union), corpus.ranges)
+			t.Logf("%s sanitize=%t union: %d manifest cases, each in exactly one of %d shards", corpus.name, sanitize, len(paths), corpus.ranges)
 		}
 	}
 	if len(shards) != testVolumeProfileCorporaShards {
@@ -141,7 +204,7 @@ func TestVolumeProfileCorpora(t *testing.T) {
 				t.Skip("set ADAMIC_VOLUME_" + strings.ToUpper(s.corpus) + "_MANIFEST")
 			}
 			if len(s.paths) == 0 {
-				t.Skip("empty contiguous range")
+				t.Skip("empty shard")
 			}
 			h := &harness{t: t, repository: repository, directory: t.TempDir()}
 			manifest := h.write("corpus.manifest", strings.Join(s.paths, "\n")+"\n")
