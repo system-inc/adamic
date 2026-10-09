@@ -2,7 +2,7 @@ package markdownblocks
 
 import "testing"
 
-func TestMdastMalformedEvents(t *testing.T) {
+func TestMdastMalformedEvents_Setup(t *testing.T) {
 	t.Parallel()
-	malformedEventsRun(t)
+	malformedEventsSharedSetup(t)
 }
