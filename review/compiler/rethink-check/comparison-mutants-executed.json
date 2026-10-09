@@ -1,0 +1,53 @@
+[
+  {
+    "mutant": "stdout",
+    "control": "bxpmash",
+    "expected": [
+      0,
+      "ok\n",
+      ""
+    ],
+    "observed": [
+      0,
+      "ok\n!",
+      ""
+    ],
+    "caught_by": [
+      "stdout"
+    ]
+  },
+  {
+    "mutant": "stderr",
+    "control": "bxpmash",
+    "expected": [
+      0,
+      "ok\n",
+      ""
+    ],
+    "observed": [
+      0,
+      "ok\n",
+      "!"
+    ],
+    "caught_by": [
+      "stderr"
+    ]
+  },
+  {
+    "mutant": "exit",
+    "control": "bxpmash",
+    "expected": [
+      0,
+      "ok\n",
+      ""
+    ],
+    "observed": [
+      1,
+      "ok\n",
+      ""
+    ],
+    "caught_by": [
+      "exit"
+    ]
+  }
+]

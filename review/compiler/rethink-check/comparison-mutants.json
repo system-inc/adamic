@@ -1,0 +1,34 @@
+{
+  "control": "bxpmash",
+  "expected": [
+    0,
+    "ok\n",
+    ""
+  ],
+  "mutants": {
+    "stdout": {
+      "observed": [
+        0,
+        "ok\n!",
+        ""
+      ],
+      "caught": true
+    },
+    "stderr": {
+      "observed": [
+        0,
+        "ok\n",
+        "!"
+      ],
+      "caught": true
+    },
+    "exit": {
+      "observed": [
+        1,
+        "ok\n",
+        ""
+      ],
+      "caught": true
+    }
+  }
+}

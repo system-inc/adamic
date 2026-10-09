@@ -1,0 +1,3 @@
+type Item = { readonly kind: 'a'; readonly item: boolean } | { readonly kind: 'b'; readonly item: boolean };
+function get(present: boolean): Item | undefined { return present ? { kind: 'a', item: false } : undefined; }
+console.log(`${get(true)?.item} ${get(false)?.item === undefined}`);

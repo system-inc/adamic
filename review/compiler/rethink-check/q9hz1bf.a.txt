@@ -1,0 +1,3 @@
+const source = { get item(): string { throw new Error('getter'); } };
+try { const copy = { ...source }; console.log(copy.item); }
+catch (error) { if (error instanceof Error) console.log(error.message); }

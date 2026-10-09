@@ -1,0 +1,3 @@
+class Box { readonly value = 1; private constructor() {} static make(): Box { return new Box(); } }
+const box = Box.make();
+console.log(String({ ...{ value: box.value } }.value));

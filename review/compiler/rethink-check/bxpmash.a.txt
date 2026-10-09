@@ -1,0 +1,8 @@
+class ArenaIndex<Tag> {
+ readonly value: Tag;
+ constructor(value: Tag) { this.value = value; }
+}
+class Arena<Tag> {
+ push(value: Tag): ArenaIndex<Tag> { return new ArenaIndex<Tag>(value); }
+}
+console.log(new Arena<string>().push('ok').value);

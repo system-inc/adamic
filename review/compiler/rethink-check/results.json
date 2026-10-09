@@ -1,0 +1,1127 @@
+[
+  {
+    "name": "bxpmash",
+    "source": "review/compiler/rethink-check/bxpmash.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/bxpmash.a"
+      ],
+      "exit": 0,
+      "seconds": 0.519,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/bxpmash.a",
+        "-o",
+        "/tmp/rethink-check/bxpmash-native"
+      ],
+      "exit": 0,
+      "seconds": 33.229,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/bxpmash-native"
+      ],
+      "exit": 0,
+      "seconds": 0.007,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/bxpmash.a",
+        "-o",
+        "/tmp/rethink-check/bxpmash-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 30.249,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/bxpmash-sanitized"
+      ],
+      "exit": 0,
+      "seconds": 0.033,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/bxpmash.a"
+      ],
+      "exit": 0,
+      "seconds": 0.223,
+      "stdout": "generated JavaScript: bxpmash.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/bxpmash.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.169,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "classification": "FIXED"
+  },
+  {
+    "name": "drtmvb3",
+    "source": "review/compiler/rethink-check/drtmvb3.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/drtmvb3.a"
+      ],
+      "exit": 0,
+      "seconds": 0.338,
+      "stdout": "false true\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/drtmvb3.a",
+        "-o",
+        "/tmp/rethink-check/drtmvb3-native"
+      ],
+      "exit": 0,
+      "seconds": 0.472,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/drtmvb3-native"
+      ],
+      "exit": 0,
+      "seconds": 0.005,
+      "stdout": "false true\n",
+      "stderr": ""
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/drtmvb3.a",
+        "-o",
+        "/tmp/rethink-check/drtmvb3-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 1.174,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/drtmvb3-sanitized"
+      ],
+      "exit": 0,
+      "seconds": 0.034,
+      "stdout": "false true\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/drtmvb3.a"
+      ],
+      "exit": 0,
+      "seconds": 0.218,
+      "stdout": "generated JavaScript: drtmvb3.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/drtmvb3.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.22,
+      "stdout": "false true\n",
+      "stderr": ""
+    },
+    "classification": "FIXED"
+  },
+  {
+    "name": "dv99xzy",
+    "source": "review/compiler/rethink-check/dv99xzy.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/dv99xzy.a"
+      ],
+      "exit": 0,
+      "seconds": 0.318,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/dv99xzy.a",
+        "-o",
+        "/tmp/rethink-check/dv99xzy-native"
+      ],
+      "exit": 1,
+      "seconds": 0.171,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/dv99xzy.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/dv99xzy.a",
+        "-o",
+        "/tmp/rethink-check/dv99xzy-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.166,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/dv99xzy.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/dv99xzy.a"
+      ],
+      "exit": 1,
+      "seconds": 0.17,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/dv99xzy.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_t5",
+    "source": "review/compiler/rethink-check/eep1m5z-93122fa_t_t5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.215,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 0,
+      "seconds": 0.367,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 70,
+      "seconds": 0.009,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.773,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.22,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_t5.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_t5.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.17,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v1",
+    "source": "review/compiler/rethink-check/eep1m5z-93122fa_t_v1.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 0,
+      "seconds": 0.216,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 0,
+      "seconds": 0.419,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 70,
+      "seconds": 0.02,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.928,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 0,
+      "seconds": 0.168,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v1.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v1.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.17,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v2",
+    "source": "review/compiler/rethink-check/eep1m5z-93122fa_t_v2.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 0,
+      "seconds": 0.321,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 0,
+      "seconds": 0.423,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 70,
+      "seconds": 0.008,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.977,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.018,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 0,
+      "seconds": 0.216,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v2.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v2.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.166,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v5",
+    "source": "review/compiler/rethink-check/eep1m5z-93122fa_t_v5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.367,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 0,
+      "seconds": 0.52,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 70,
+      "seconds": 0.004,
+      "stdout": "2\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.927,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "2\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.272,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v5.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-93122fa_t_v5.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.218,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-9984394_uncaught_name",
+    "source": "review/compiler/rethink-check/eep1m5z-9984394_uncaught_name.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name.a"
+      ],
+      "exit": 1,
+      "seconds": 0.393,
+      "stdout": "",
+      "stderr": "file:///tmp/rethink-check/eep1m5z-9984394_uncaught_name.a:2\n    throw new Error(`message ${1}`);\n          ^\n\nmessage 1\n    at file:///tmp/rethink-check/eep1m5z-9984394_uncaught_name.a:2:11\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///workspace/adamic/oracle/node.mjs:82:1\n\nNode.js v24.19.0\n"
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name-native"
+      ],
+      "exit": 0,
+      "seconds": 0.625,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name-native"
+      ],
+      "exit": 1,
+      "seconds": 0.005,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.774,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name-sanitized"
+      ],
+      "exit": 1,
+      "seconds": 0.037,
+      "stdout": "",
+      "stderr": ""
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name.a"
+      ],
+      "exit": 0,
+      "seconds": 0.174,
+      "stdout": "generated JavaScript: eep1m5z-9984394_uncaught_name.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-9984394_uncaught_name.mjs"
+      ],
+      "exit": 1,
+      "seconds": 0.216,
+      "stdout": "",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-classfeat_maybe_setter",
+    "source": "review/compiler/rethink-check/eep1m5z-classfeat_maybe_setter.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a"
+      ],
+      "exit": 0,
+      "seconds": 0.367,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter-native"
+      ],
+      "exit": 1,
+      "seconds": 0.219,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a:4:5: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.168,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a:4:5: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a"
+      ],
+      "exit": 1,
+      "seconds": 0.317,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-classfeat_maybe_setter.a:4:5: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-classfeat_method_view",
+    "source": "review/compiler/rethink-check/eep1m5z-classfeat_method_view.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 0,
+      "seconds": 0.522,
+      "stdout": "worker one1\nlazy\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 0,
+      "seconds": 0.573,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 70,
+      "seconds": 0.009,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 1.476,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 0,
+      "seconds": 0.368,
+      "stdout": "generated JavaScript: eep1m5z-classfeat_method_view.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-classfeat_method_view.mjs"
+      ],
+      "exit": 1,
+      "seconds": 0.267,
+      "stdout": "",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-classfeat_static_virtual",
+    "source": "review/compiler/rethink-check/eep1m5z-classfeat_static_virtual.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 1,
+      "seconds": 0.469,
+      "stdout": "",
+      "stderr": "file:///tmp/rethink-check/eep1m5z-classfeat_static_virtual.a:13\n        return this.label.toUpperCase();\n                          ^\n\nTypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at Derived.n (file:///tmp/rethink-check/eep1m5z-classfeat_static_virtual.a:13:27)\n    at Derived.m (file:///tmp/rethink-check/eep1m5z-classfeat_static_virtual.a:6:26)\n    at <static_initializer> (file:///tmp/rethink-check/eep1m5z-classfeat_static_virtual.a:10:25)\n    at file:///tmp/rethink-check/eep1m5z-classfeat_static_virtual.a:9:23\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///workspace/adamic/oracle/node.mjs:82:1\n\nNode.js v24.19.0\n"
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 0,
+      "seconds": 0.773,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 70,
+      "seconds": 0.018,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 1.777,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 0,
+      "seconds": 0.217,
+      "stdout": "generated JavaScript: eep1m5z-classfeat_static_virtual.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-classfeat_static_virtual.mjs"
+      ],
+      "exit": 1,
+      "seconds": 0.115,
+      "stdout": "",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-iterators_derived_symbol",
+    "source": "review/compiler/rethink-check/eep1m5z-iterators_derived_symbol.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol.a"
+      ],
+      "exit": 0,
+      "seconds": 0.43,
+      "stdout": "1,2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol-native"
+      ],
+      "exit": 1,
+      "seconds": 0.17,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-iterators_derived_symbol.a:5:5: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.216,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-iterators_derived_symbol.a:5:5: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z-iterators_derived_symbol.a"
+      ],
+      "exit": 1,
+      "seconds": 0.277,
+      "stdout": "",
+      "stderr": "adamic: /tmp/rethink-check/eep1m5z-iterators_derived_symbol.a:5:5: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z",
+    "source": "review/compiler/rethink-check/eep1m5z.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z.a"
+      ],
+      "exit": 0,
+      "seconds": 0.271,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-native"
+      ],
+      "exit": 0,
+      "seconds": 0.524,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-native"
+      ],
+      "exit": 70,
+      "seconds": 0.006,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/eep1m5z.a",
+        "-o",
+        "/tmp/rethink-check/eep1m5z-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.873,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/rethink-check/eep1m5z-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.02,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/eep1m5z.a"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "stdout": "generated JavaScript: eep1m5z.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/eep1m5z.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.168,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "q9hz1bf",
+    "source": "review/compiler/rethink-check/q9hz1bf.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/q9hz1bf.a"
+      ],
+      "exit": 0,
+      "seconds": 0.267,
+      "stdout": "getter\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/q9hz1bf.a",
+        "-o",
+        "/tmp/rethink-check/q9hz1bf-native"
+      ],
+      "exit": 1,
+      "seconds": 0.22,
+      "stdout": "",
+      "stderr": "adamic: q9hz1bf.a: stage 0 can't lower spreading an accessor literal whose getter may throw yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/q9hz1bf.a",
+        "-o",
+        "/tmp/rethink-check/q9hz1bf-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.166,
+      "stdout": "",
+      "stderr": "adamic: q9hz1bf.a: stage 0 can't lower spreading an accessor literal whose getter may throw yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/q9hz1bf.a"
+      ],
+      "exit": 1,
+      "seconds": 0.216,
+      "stdout": "",
+      "stderr": "adamic: q9hz1bf.a: stage 0 can't lower spreading an accessor literal whose getter may throw yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "vk7ed2m",
+    "source": "review/compiler/rethink-check/vk7ed2m.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/rethink-check/vk7ed2m.a"
+      ],
+      "exit": 0,
+      "seconds": 0.319,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/vk7ed2m.a",
+        "-o",
+        "/tmp/rethink-check/vk7ed2m-native"
+      ],
+      "exit": 1,
+      "seconds": 0.166,
+      "stdout": "",
+      "stderr": "adamic: vk7ed2m.a: stage 0 can't lower spreading in a program with static constructor objects yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "build",
+        "/tmp/rethink-check/vk7ed2m.a",
+        "-o",
+        "/tmp/rethink-check/vk7ed2m-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.22,
+      "stdout": "",
+      "stderr": "adamic: vk7ed2m.a: stage 0 can't lower spreading in a program with static constructor objects yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/rethink-adamic",
+        "js",
+        "/tmp/rethink-check/vk7ed2m.a"
+      ],
+      "exit": 1,
+      "seconds": 0.167,
+      "stdout": "",
+      "stderr": "adamic: vk7ed2m.a: stage 0 can't lower spreading in a program with static constructor objects yet\n"
+    },
+    "classification": "REFUSED"
+  }
+]
