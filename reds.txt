@@ -1,0 +1,17 @@
+run adamic-verify-20261009T065508-57ac2424: void, 10945 tests in 12 units, 3 failed, 1 units broken, 0 killed over budget
+BROKEN tests-07: no results (exited false, last output "loom-runner: still running after 990 s")
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-00)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	90.030s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfilePartition (tests-04)
+    volume_profile_partition_test.go:127: unexpected check checker.a-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check adamic-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check adamic owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker.a owned by [TestVolumeProfileCorpora]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-08)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.042s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/lint	70.009s
