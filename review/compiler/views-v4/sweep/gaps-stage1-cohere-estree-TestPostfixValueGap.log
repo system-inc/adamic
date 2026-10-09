@@ -1,0 +1,7 @@
+=== RUN   TestPostfixValueGap
+=== PAUSE TestPostfixValueGap
+=== CONT  TestPostfixValueGap
+    gaps_test.go:35: Node 7, 1; lowering: /workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet
+--- PASS: TestPostfixValueGap (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.140s

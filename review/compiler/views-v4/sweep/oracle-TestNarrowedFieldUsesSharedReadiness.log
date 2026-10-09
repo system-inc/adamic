@@ -1,0 +1,40 @@
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== PAUSE TestNarrowedFieldUsesSharedReadiness
+=== CONT  TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number
+    view_fields_test.go:146: gate cache node miss
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+    view_fields_test.go:146: gate cache node miss
+--- PASS: TestNarrowedFieldUsesSharedReadiness (0.00s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (0.77s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (0.80s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (0.82s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (0.89s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.911s

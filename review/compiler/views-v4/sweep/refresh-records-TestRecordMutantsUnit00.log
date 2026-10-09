@@ -1,0 +1,10 @@
+=== RUN   TestRecordMutantsUnit00
+=== PAUSE TestRecordMutantsUnit00
+=== CONT  TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit00 (1.44s)
+    --- PASS: TestRecordMutantsUnit00/indices-in-insertion-order (1.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.513s

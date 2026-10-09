@@ -1,0 +1,10 @@
+=== RUN   TestV4HigherAdamicEscapeRefusal
+=== PAUSE TestV4HigherAdamicEscapeRefusal
+=== CONT  TestV4HigherAdamicEscapeRefusal
+    checked_views_v4_higher_test.go:88: gate cache node miss
+--- PASS: TestV4HigherAdamicEscapeRefusal (0.19s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.198s

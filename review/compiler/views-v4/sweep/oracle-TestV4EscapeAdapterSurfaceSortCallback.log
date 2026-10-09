@@ -1,0 +1,12 @@
+=== RUN   TestV4EscapeAdapterSurfaceSortCallback
+=== PAUSE TestV4EscapeAdapterSurfaceSortCallback
+=== CONT  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+    checked_views_v4_call_apply_test.go:102: native sanitized surface counts: [5 5 5 8 5 0]
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceSortCallback (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.596s

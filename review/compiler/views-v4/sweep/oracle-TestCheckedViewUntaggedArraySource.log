@@ -1,0 +1,59 @@
+=== RUN   TestCheckedViewUntaggedArraySource
+=== PAUSE TestCheckedViewUntaggedArraySource
+=== CONT  TestCheckedViewUntaggedArraySource
+=== RUN   TestCheckedViewUntaggedArraySource/good
+=== PAUSE TestCheckedViewUntaggedArraySource/good
+=== RUN   TestCheckedViewUntaggedArraySource/wrong
+=== PAUSE TestCheckedViewUntaggedArraySource/wrong
+=== RUN   TestCheckedViewUntaggedArraySource/nested
+=== PAUSE TestCheckedViewUntaggedArraySource/nested
+=== RUN   TestCheckedViewUntaggedArraySource/empty
+=== PAUSE TestCheckedViewUntaggedArraySource/empty
+=== RUN   TestCheckedViewUntaggedArraySource/mixed
+=== PAUSE TestCheckedViewUntaggedArraySource/mixed
+=== CONT  TestCheckedViewUntaggedArraySource/good
+=== CONT  TestCheckedViewUntaggedArraySource/empty
+=== CONT  TestCheckedViewUntaggedArraySource/mixed
+=== CONT  TestCheckedViewUntaggedArraySource/wrong
+=== CONT  TestCheckedViewUntaggedArraySource/nested
+=== NAME  TestCheckedViewUntaggedArraySource/mixed
+    checked_views_v2_source_test.go:205: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/good
+    checked_views_v2_source_test.go:205: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/empty
+    checked_views_v2_source_test.go:205: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/wrong
+    checked_views_v2_source_test.go:205: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/nested
+    checked_views_v2_source_test.go:205: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/good
+    checked_views_v2_source_test.go:206: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedArraySource/nested
+    checked_views_v2_source_test.go:206: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedArraySource/empty
+    checked_views_v2_source_test.go:206: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedArraySource/wrong
+    checked_views_v2_source_test.go:206: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedArraySource/mixed
+    checked_views_v2_source_test.go:206: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedArraySource/good
+    checked_views_v2_source_test.go:222: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/wrong
+    checked_views_v2_source_test.go:222: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/empty
+    checked_views_v2_source_test.go:222: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/mixed
+    checked_views_v2_source_test.go:222: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArraySource/nested
+    checked_views_v2_source_test.go:222: gate cache node miss
+--- PASS: TestCheckedViewUntaggedArraySource (0.00s)
+    --- PASS: TestCheckedViewUntaggedArraySource/good (1.69s)
+    --- PASS: TestCheckedViewUntaggedArraySource/wrong (1.86s)
+    --- PASS: TestCheckedViewUntaggedArraySource/mixed (1.91s)
+    --- PASS: TestCheckedViewUntaggedArraySource/empty (1.97s)
+    --- PASS: TestCheckedViewUntaggedArraySource/nested (2.05s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.072s

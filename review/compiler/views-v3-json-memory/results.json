@@ -1,0 +1,166 @@
+{
+  "main": "beb1be1b6c34eaecdbac5a82d5cc9aa0c352b82f",
+  "v3": "8880e6bca1207cda77b00e8710d864cdeaf050d7",
+  "cpu_quota": 4,
+  "nproc": 5,
+  "memory_limit_bytes": 17179869184,
+  "full_test": {
+    "main": {
+      "seconds": 233.966354,
+      "exit": 137,
+      "test_peak_rss_kib": 3298780,
+      "release_peak_rss_kib": 2226132
+    },
+    "v3": {
+      "seconds": 259.147236,
+      "exit": 137,
+      "test_peak_rss_kib": 3299024,
+      "release_peak_rss_kib": 2226176
+    }
+  },
+  "serial_sanitized_chunks": [
+    {
+      "chunk": 0,
+      "node": {
+        "peak_rss_kib": 254380,
+        "seconds": 2.157749,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "32573d9cad07ab2b7b2c8938bcce910968418ca5d75b1c403bda6bddac380d0b",
+        "stderr_bytes": 0
+      },
+      "main": {
+        "peak_rss_kib": 571128,
+        "seconds": 10.880274,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "32573d9cad07ab2b7b2c8938bcce910968418ca5d75b1c403bda6bddac380d0b",
+        "stderr_bytes": 0
+      },
+      "v3": {
+        "peak_rss_kib": 564204,
+        "seconds": 11.988407,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "32573d9cad07ab2b7b2c8938bcce910968418ca5d75b1c403bda6bddac380d0b",
+        "stderr_bytes": 0
+      }
+    },
+    {
+      "chunk": 1,
+      "node": {
+        "peak_rss_kib": 2798440,
+        "seconds": 14.303502,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "01cf0d4ec1e4aa7594bb38322ce53e9194ef592f9db84e37e4952d46c36a8926",
+        "stderr_bytes": 0
+      },
+      "main": {
+        "peak_rss_kib": 3551420,
+        "seconds": 120.415154,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "01cf0d4ec1e4aa7594bb38322ce53e9194ef592f9db84e37e4952d46c36a8926",
+        "stderr_bytes": 0
+      },
+      "v3": {
+        "peak_rss_kib": 3541228,
+        "seconds": 111.999655,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "01cf0d4ec1e4aa7594bb38322ce53e9194ef592f9db84e37e4952d46c36a8926",
+        "stderr_bytes": 0
+      }
+    },
+    {
+      "chunk": 2,
+      "node": {
+        "peak_rss_kib": 349704,
+        "seconds": 1.54883,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "abb1acaa8a9ea6104d91c37aef0446b35afc9c2fb5f8e354cc1096627a08f5a6",
+        "stderr_bytes": 0
+      },
+      "main": {
+        "peak_rss_kib": 599024,
+        "seconds": 15.023648,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "abb1acaa8a9ea6104d91c37aef0446b35afc9c2fb5f8e354cc1096627a08f5a6",
+        "stderr_bytes": 0
+      },
+      "v3": {
+        "peak_rss_kib": 606788,
+        "seconds": 10.236422,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "abb1acaa8a9ea6104d91c37aef0446b35afc9c2fb5f8e354cc1096627a08f5a6",
+        "stderr_bytes": 0
+      }
+    },
+    {
+      "chunk": 3,
+      "node": {
+        "peak_rss_kib": 2174984,
+        "seconds": 12.747841,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "555baf11c57c83347928349ae44c094e57a68d8aa592898e6898825ae6762c53",
+        "stderr_bytes": 0
+      },
+      "main": {
+        "peak_rss_kib": 2014800,
+        "seconds": 91.006305,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "555baf11c57c83347928349ae44c094e57a68d8aa592898e6898825ae6762c53",
+        "stderr_bytes": 0
+      },
+      "v3": {
+        "peak_rss_kib": 2054052,
+        "seconds": 82.853516,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "555baf11c57c83347928349ae44c094e57a68d8aa592898e6898825ae6762c53",
+        "stderr_bytes": 0
+      }
+    },
+    {
+      "chunk": 4,
+      "node": {
+        "peak_rss_kib": 1263812,
+        "seconds": 7.855635,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "9a05199e6d42de6c8328b0d7803ac8ee7782a548ce64482bb7e105d372928f9a",
+        "stderr_bytes": 0
+      },
+      "main": {
+        "peak_rss_kib": 2079792,
+        "seconds": 74.69919,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "9a05199e6d42de6c8328b0d7803ac8ee7782a548ce64482bb7e105d372928f9a",
+        "stderr_bytes": 0
+      },
+      "v3": {
+        "peak_rss_kib": 1987312,
+        "seconds": 74.345338,
+        "exit": 0,
+        "signal": 0,
+        "stdout_sha256": "9a05199e6d42de6c8328b0d7803ac8ee7782a548ce64482bb7e105d372928f9a",
+        "stderr_bytes": 0
+      }
+    }
+  ],
+  "clang_counterfactual": {
+    "stores_peak_rss_kib": 1233560,
+    "without_stores_peak_rss_kib": 279016,
+    "without_stores_executed": false,
+    "added_stores": 2885,
+    "introducing_commit": "ef762440"
+  },
+  "source_changes": false
+}

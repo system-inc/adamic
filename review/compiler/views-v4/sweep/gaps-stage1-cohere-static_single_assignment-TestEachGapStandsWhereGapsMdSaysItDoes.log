@@ -1,0 +1,14 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts (0.16s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/static_single_assignment	0.169s

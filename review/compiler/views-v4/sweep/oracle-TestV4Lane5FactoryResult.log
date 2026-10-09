@@ -1,0 +1,14 @@
+=== RUN   TestV4Lane5FactoryResult
+=== PAUSE TestV4Lane5FactoryResult
+=== CONT  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+    checked_views_v4_lane5_test.go:75: native exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2394137794/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2394137794/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: javascript exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2394137794/001/identity.ts:7:64 result expected view Identifier, producer void
+--- PASS: TestV4Lane5FactoryResult (0.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.583s

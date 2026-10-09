@@ -29,6 +29,9 @@ func (p *Program) CallMayThrow(call Call) bool {
 // FunctionTargets is a proven set of possible functions. Unknown means the value
 // cannot be bounded, and analyses must treat it as anything, never as an empty set.
 type FunctionTargets struct {
+	// Value is the invoked value, retained for receiver and boundary flow analysis.
+	// Its presence never proves a target: Unknown still governs the function set.
+	Value     Expression
 	Functions []int
 	Unknown   bool
 }
@@ -42,10 +45,10 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	var value Expression
 	switch call := call.(type) {
 	case CallClosure:
-		if call.Direct > 0 {
-			return FunctionTargets{Functions: []int{call.Direct - 1}}
-		}
 		value = call.Closure
+		if call.Direct > 0 {
+			return FunctionTargets{Value: value, Functions: []int{call.Direct - 1}}
+		}
 	case ArrayMap:
 		value = call.Callback
 	case ArrayVisit:
@@ -66,13 +69,13 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	}
 	switch value := value.(type) {
 	case MakeClosure:
-		return FunctionTargets{Functions: []int{value.Function}}
+		return FunctionTargets{Value: value, Functions: []int{value.Function}}
 	case Read:
 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
-			return FunctionTargets{Functions: []int{target - 1}}
+			return FunctionTargets{Value: value, Functions: []int{target - 1}}
 		}
 	}
-	return FunctionTargets{Unknown: true}
+	return FunctionTargets{Value: value, Unknown: true}
 }
 
 // ClosureMayThrow treats Unknown as anything in the program, including methods

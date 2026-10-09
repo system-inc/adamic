@@ -1,0 +1,288 @@
+[
+  {
+    "fixture": "deferredmapper-targets-bad",
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!().flags is not a TypeFlags; expected TypeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "deferredmapper-sources-bad",
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "nonincrementalbuildinfo-root-bad",
+    "pair": "NonIncrementalBuildInfo.root",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "builderprogramstate-affectedfiles-bad",
+    "pair": "BuilderProgramState.affectedFiles",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad",
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected Canonicalized, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad",
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected Canonicalized, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "unscopedemithelper-dependencies-bad",
+    "pair": "UnscopedEmitHelper.dependencies",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.name is not a string; expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "watchoptions---undefined-excludefiles-bad",
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "watchoptions---undefined-excludedirectories-bad",
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "diagnosticwithdetachedlocation-relatedinformation-bad",
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "interfacetypewithdeclaredmembers-declaredindexinfos-bad",
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.isReadonly is not a boolean; expected boolean, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "interfacetypewithdeclaredmembers-declaredconstructsignatures-bad",
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "interfacetypewithdeclaredmembers-declaredcallsignatures-bad",
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "compileroptions-types-bad",
+    "pair": "CompilerOptions.types",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "compileroptions-modulesuffixes-bad",
+    "pair": "CompilerOptions.moduleSuffixes",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "compileroptions-customconditions-bad",
+    "pair": "CompilerOptions.customConditions",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "configfilespecs---undefined-validatedincludespecs-bad",
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "configfilespecs---undefined-validatedincludespecs-absent",
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "operation": "Allow absent required member",
+    "catcher": "field read failed: viewed?.validatedIncludeSpecs is not initialized; expected readonly string[] | undefined, found missing",
+    "stdout": "absent\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "configfilespecs-validatedexcludespecs-bad",
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "operation": "Widen string consumer to string | number",
+    "catcher": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "stdout": "42\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "configfilespecs-validatedexcludespecs-absent",
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "operation": "Allow absent required member",
+    "catcher": "field read failed: viewed.validatedExcludeSpecs is not initialized; expected readonly string[] | undefined, found missing",
+    "stdout": "absent\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "tsconfigsourcefile-statements-bad",
+    "pair": "TsConfigSourceFile.statements",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "diagnosticwithlocation-relatedinformation-bad",
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "operation": "Replace reached original member read with the observed alternative scalar type",
+    "catcher": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  }
+]

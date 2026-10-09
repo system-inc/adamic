@@ -105,8 +105,16 @@ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *ar
 typedef adamic_code_function *adamic_code;
 typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 typedef adamic_counted_code_function *adamic_counted_code;
+typedef struct adamic_view_adapter {
+	adamic_closure *underlying;
+	const void *key;
+	// Slot in the weak table, updated only while its mutex is held.
+	size_t next;
+} adamic_view_adapter;
 struct adamic_closure {
 	adamic_heap heap;
+	// Ordinary closures pay for one null pointer; only adapters allocate metadata.
+	adamic_view_adapter *view;
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
  bool counted;
@@ -125,6 +133,16 @@ struct adamic_closure {
 #endif
 	adamic_cell *cells[];
 };
+
+// make borrows the normalized underlying and key and returns a fresh owned,
+// noncanonical counted closure. Intern adds the underlying reference itself.
+// view_key is an address-only token whose lifetime includes every adapter using it.
+// The returned adapter is owned, including on a hit. Lookup never revives count zero.
+adamic_closure *adamic_view_adapter_intern(adamic_closure *underlying, const void *view_key, adamic_closure *(*make)(adamic_closure *underlying, const void *view_key));
+// Returns a borrowed root callable; intern guarantees adapters never stack.
+adamic_closure *adamic_view_adapter_underlying(adamic_closure *value);
+// Heap destruction removes a weak entry before dropping the underlying reference.
+void adamic_view_adapter_forget(adamic_closure *adapter);
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);
@@ -404,15 +422,24 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 }
 
 // adamic_array is an array (array.c). references says whether its elements are references.
+#include "view_arrays.h"
 typedef struct adamic_array {
 	adamic_heap heap;
 	size_t length;
 	size_t capacity;
 	bool references;
+	// Physical storage only; zero carries no scalar evidence. Heap pointers are 10.
+	uint8_t element_kind;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	struct adamic_map *sparse;
 } adamic_array;
+
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_is_range_error(const adamic_object *value);
+adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
+void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
 // subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.

@@ -279,7 +279,9 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_array: {
 		adamic_array *array = value;
-		if (array->references) {
+		if (array->sparse != NULL) {
+			let_go(array->sparse);
+		} else if (array->references) {
 			for (size_t index = 0; index < array->length; index++) {
 				let_go(array->elements[index].reference);
 			}
@@ -322,9 +324,16 @@ static void free_one(void *value) {
 #endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+		if (closure->view != NULL) {
+			// Remove under the table lock before its underlying can be freed/reused.
+			adamic_view_adapter_forget(closure);
+			let_go(closure->view->underlying);
+			free(closure->view);
+		} else {
 #ifdef ADAMIC_CANONICAL_CLOSURES
-		adamic_closure_uncache(closure);
+			adamic_closure_uncache(closure);
 #endif
+		}
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

@@ -1,0 +1,251 @@
+=== RUN   TestV4Lane5FactoryIdentifier
+=== PAUSE TestV4Lane5FactoryIdentifier
+=== RUN   TestV4Lane5FactoryStringLiteral
+=== PAUSE TestV4Lane5FactoryStringLiteral
+=== RUN   TestV4Lane5FactoryUniqueName
+=== PAUSE TestV4Lane5FactoryUniqueName
+=== RUN   TestV4Lane5FactoryImport
+=== PAUSE TestV4Lane5FactoryImport
+=== RUN   TestV4Lane5FactoryYield
+=== PAUSE TestV4Lane5FactoryYield
+=== RUN   TestV4Lane5FactoryResult
+=== PAUSE TestV4Lane5FactoryResult
+=== RUN   TestV4Lane5FactoryClone
+=== PAUSE TestV4Lane5FactoryClone
+=== RUN   TestV4Lane5FactoryModifier
+=== PAUSE TestV4Lane5FactoryModifier
+=== RUN   TestV4Lane5FactoryWiderWritePending
+=== PAUSE TestV4Lane5FactoryWiderWritePending
+=== RUN   TestV4Lane5BoxedParameter
+=== PAUSE TestV4Lane5BoxedParameter
+=== RUN   TestV4Lane5BoxedParameterMembers
+=== PAUSE TestV4Lane5BoxedParameterMembers
+=== RUN   TestV4Lane5BoxedResult
+=== PAUSE TestV4Lane5BoxedResult
+=== RUN   TestV4Lane5BoxedResultMembers
+=== PAUSE TestV4Lane5BoxedResultMembers
+=== RUN   TestV4Lane5SkipAdapterMutant
+=== PAUSE TestV4Lane5SkipAdapterMutant
+=== RUN   TestV4Lane5BoxedAdamicRefusal
+=== PAUSE TestV4Lane5BoxedAdamicRefusal
+=== RUN   TestV4Lane5FactoryWiderWriteRefusal
+=== PAUSE TestV4Lane5FactoryWiderWriteRefusal
+=== CONT  TestV4Lane5FactoryIdentifier
+=== CONT  TestV4Lane5FactoryWiderWritePending
+    checked_views_v4_lane5_test.go:94: awaits compiler/checked-wider-writes: checked write through a wider view
+--- SKIP: TestV4Lane5FactoryWiderWritePending (0.00s)
+=== CONT  TestV4Lane5BoxedResult
+=== CONT  TestV4Lane5FactoryWiderWriteRefusal
+=== CONT  TestV4Lane5BoxedAdamicRefusal
+=== CONT  TestV4Lane5BoxedResultMembers
+=== NAME  TestV4Lane5BoxedAdamicRefusal
+    checked_views_v4_lane5_test.go:155: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:41: gate cache node miss
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: gate cache node miss
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+=== NAME  TestV4Lane5FactoryWiderWriteRefusal
+    checked_views_v4_lane5_test.go:173: gate cache node miss
+=== NAME  TestV4Lane5BoxedAdamicRefusal
+    checked_views_v4_lane5_test.go:164: readonly unknown storage grants no .a signature proof: /tmp/adamic-gate/TestV4Lane5BoxedAdamicRefusal2903329481/001/boxed.a:5:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- PASS: TestV4Lane5BoxedAdamicRefusal (0.37s)
+=== CONT  TestV4Lane5SkipAdapterMutant
+=== NAME  TestV4Lane5FactoryWiderWriteRefusal
+    checked_views_v4_lane5_test.go:182: rank165 refusal: /tmp/adamic-gate/TestV4Lane5FactoryWiderWriteRefusal1256701522/001/wider-write.ts:6:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace; keep onEmitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- PASS: TestV4Lane5FactoryWiderWriteRefusal (0.40s)
+=== CONT  TestV4Lane5FactoryYield
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:69: gate cache node miss
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: gate cache node miss
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:41: gate cache node miss
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:41: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5BoxedResult
+    checked_views_v4_lane5_test.go:113: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:113: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:113: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:5:19) result expected view string | number, producer boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResult1947619029/001/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedResult (0.94s)
+=== CONT  TestV4Lane5FactoryModifier
+=== NAME  TestV4Lane5BoxedResultMembers
+    checked_views_v4_lane5_test.go:117: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:6:17
+    checked_views_v4_lane5_test.go:117: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:5:19) result expected view string | number, producer number | boolean call at /tmp/adamic-gate/TestV4Lane5BoxedResultMembers1469514435/001/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedResultMembers (0.94s)
+=== CONT  TestV4Lane5FactoryClone
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:69: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: native exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: javascript exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant3637315121/001/identity.ts:4:94
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:69: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:126: gate cache node hit
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:71: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: gate cache node miss
+=== NAME  TestV4Lane5FactoryIdentifier
+    checked_views_v4_lane5_test.go:43: native exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3996153337/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+    checked_views_v4_lane5_test.go:43: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3996153337/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+    checked_views_v4_lane5_test.go:43: javascript exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryIdentifier3996153337/005/identity.ts:7:79 argument 2 expected producer string | undefined, view number | undefined
+--- PASS: TestV4Lane5FactoryIdentifier (1.68s)
+=== CONT  TestV4Lane5FactoryResult
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:80: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in javascript: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:88: guard mutant admitted in native: exit 0 output "7\n"
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:141: gate cache node miss
+=== NAME  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: gate cache node miss
+=== NAME  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:145: skip-adapter mutant caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4Lane5SkipAdapterMutant (1.46s)
+=== CONT  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+=== NAME  TestV4Lane5FactoryYield
+    checked_views_v4_lane5_test.go:71: gate cache node miss
+    checked_views_v4_lane5_test.go:71: native exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield949700282/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+    checked_views_v4_lane5_test.go:71: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield949700282/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+    checked_views_v4_lane5_test.go:71: javascript exit70 at first call: adamic: panic: callable call failed: factory.createYieldExpression at /tmp/adamic-gate/TestV4Lane5FactoryYield949700282/005/identity.ts:9:79 argument 1 expected producer undefined, view AsteriskToken
+--- PASS: TestV4Lane5FactoryYield (1.68s)
+=== CONT  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:107: gate cache node miss
+=== NAME  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: gate cache node miss
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: gate cache node miss
+=== NAME  TestV4Lane5FactoryModifier
+    checked_views_v4_lane5_test.go:90: native exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier1364388609/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+    checked_views_v4_lane5_test.go:90: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier1364388609/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+    checked_views_v4_lane5_test.go:90: javascript exit70 at first call: adamic: panic: callable call failed: factory.createModifier at /tmp/adamic-gate/TestV4Lane5FactoryModifier1364388609/005/identity.ts:6:79 result expected view ModifierToken<1>, producer { readonly value: string; }
+--- PASS: TestV4Lane5FactoryModifier (1.60s)
+=== CONT  TestV4Lane5FactoryUniqueName
+=== NAME  TestV4Lane5FactoryClone
+    checked_views_v4_lane5_test.go:83: native exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone85652470/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+    checked_views_v4_lane5_test.go:83: sanitized exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone85652470/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+    checked_views_v4_lane5_test.go:83: javascript exit70 at first call: adamic: panic: callable call failed: factory.cloneNode at /tmp/adamic-gate/TestV4Lane5FactoryClone85652470/005/identity.ts:5:79 result expected view { readonly value: number; readonly label: string; }, producer Node
+=== NAME  TestV4Lane5FactoryResult
+    checked_views_v4_lane5_test.go:75: javascript exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2214008647/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: native exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2214008647/001/identity.ts:7:64 result expected view Identifier, producer void
+    checked_views_v4_lane5_test.go:75: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createIdentifier at /tmp/adamic-gate/TestV4Lane5FactoryResult2214008647/001/identity.ts:7:64 result expected view Identifier, producer void
+--- PASS: TestV4Lane5FactoryResult (0.87s)
+=== CONT  TestV4Lane5FactoryImport
+--- PASS: TestV4Lane5FactoryClone (1.60s)
+=== CONT  TestV4Lane5FactoryStringLiteral
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:100: guard mutant admitted in javascript: exit 0 output "5\n"
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: gate cache node miss
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:48: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:107: gate cache node miss
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:107: guard mutant admitted in javascript: exit 0 output "5\n"
+    checked_views_v4_lane5_test.go:109: gate cache node miss
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:48: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: gate cache node miss
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: gate cache node miss
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:48: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameter
+    checked_views_v4_lane5_test.go:102: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:102: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:5:19) argument 1 expected producer number, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameter833606583/005/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedParameter (1.48s)
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:55: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:62: guard mutant admitted in javascript: exit 0 output "7\n"
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:50: gate cache node miss
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:64: gate cache node miss
+=== NAME  TestV4Lane5BoxedParameterMembers
+    checked_views_v4_lane5_test.go:109: gate cache node miss
+    checked_views_v4_lane5_test.go:109: native exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:109: sanitized exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:6:17
+    checked_views_v4_lane5_test.go:109: javascript exit70 at first call: adamic: panic: callable call failed: viewed.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:5:19) argument 1 expected producer number | boolean, view string | number call at /tmp/adamic-gate/TestV4Lane5BoxedParameterMembers1258236631/005/identity.ts:6:17
+--- PASS: TestV4Lane5BoxedParameterMembers (1.52s)
+=== NAME  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:50: gate cache node miss
+    checked_views_v4_lane5_test.go:50: native exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1766417884/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:50: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1766417884/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:50: javascript exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1766417884/005/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+--- PASS: TestV4Lane5FactoryStringLiteral (1.28s)
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+=== NAME  TestV4Lane5FactoryImport
+    checked_views_v4_lane5_test.go:64: gate cache node miss
+    checked_views_v4_lane5_test.go:64: native exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport4158638993/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+    checked_views_v4_lane5_test.go:64: sanitized exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport4158638993/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+    checked_views_v4_lane5_test.go:64: javascript exit70 at first call: adamic: panic: callable call failed: nodeFactory.createImportClause at /tmp/adamic-gate/TestV4Lane5FactoryImport4158638993/005/identity.ts:9:83 argument 1 expected producer boolean, view number | undefined
+--- PASS: TestV4Lane5FactoryImport (1.33s)
+=== NAME  TestV4Lane5FactoryUniqueName
+    checked_views_v4_lane5_test.go:57: native exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName2422929433/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+    checked_views_v4_lane5_test.go:57: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName2422929433/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+    checked_views_v4_lane5_test.go:57: javascript exit70 at first call: adamic: panic: callable call failed: factory.createUniqueName at /tmp/adamic-gate/TestV4Lane5FactoryUniqueName2422929433/005/identity.ts:8:79 argument 3 expected producer number | undefined, view string | GeneratedNamePart | undefined
+--- PASS: TestV4Lane5FactoryUniqueName (1.34s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=47
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.897s

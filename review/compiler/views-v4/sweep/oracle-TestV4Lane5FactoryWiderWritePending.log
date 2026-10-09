@@ -1,0 +1,7 @@
+=== RUN   TestV4Lane5FactoryWiderWritePending
+=== PAUSE TestV4Lane5FactoryWiderWritePending
+=== CONT  TestV4Lane5FactoryWiderWritePending
+    checked_views_v4_lane5_test.go:94: awaits compiler/checked-wider-writes: checked write through a wider view
+--- SKIP: TestV4Lane5FactoryWiderWritePending (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.012s

@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestViewArraySourceCertificateOmission|TestViewArrayWritesNeedSourceCertificate)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.891
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestArrayHolesAbsentSlotMutant|TestArrayHolesMilestone|TestArrayHolesRangeErrorMutant|TestArrayElementKindRuntimeMutant|TestArrayViewHolesAbsenceMutant|TestArrayViewMissingReceiverMutant|TestArrayViewPhysicalWriteMutant|TestOriginalArrayWitnessExtensions|TestOriginalArrayWitnessNode|TestCheckedViewArrayReadMutants)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 23.423
+  }
+]
