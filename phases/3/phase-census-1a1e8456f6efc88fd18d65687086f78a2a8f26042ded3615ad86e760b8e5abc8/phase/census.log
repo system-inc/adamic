@@ -1,0 +1,330 @@
+measurement	github.com/system-inc/adamic/cmd/adamic-test262	TestCompilerStartupMeasurement	TestCompilerStartupMeasurement:c4a4cc95e992b9399ab2a21ae7e3a1caca9c71a5d9b0b7f5d48200073d19ce03	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSParserDarwinLeaks
+unknown	github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterDarwinLeaks
+unknown	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestProduct_GraphQLPrinterRelease
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+pending	github.com/system-inc/adamic/internal/oracle	TestEntriesAcceptance	TestEntriesAcceptance:extra	awaits codex/step12-entries-fixtures
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapshotsAgree	TestCSSProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterThroughput	TestPrinterThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintReleaseAndThroughput	TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestThroughput	TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/selector	TestSelectorThroughput	TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/numeric_record.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/fields.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/jsdoc.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/sorted.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/template.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/paths.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/notyet_element_access/nodearray.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/presence_refused/optional_field_write.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/logical_and_reference_refused/logical_and_reference_null.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/stage3/fixtures/taste/17_binder_flow.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_uint16.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/new_expression_uint16_notyet.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleChecker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionChecker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleParser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionParser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleTypes
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionTypes
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleUtilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionUtilities
+measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestWholePerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/stage3/fixtures	TestTransformedNodeRunnerGuardHook	TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2	Dormant subprocess entry point, not an independent verification check. TestTransformedNodeRunnerGuard supplies ADAMIC_RUNNER_GUARD_REPOSITORY for each positive and negative runner-shape probe; without a request this hook is not applicable.
+measurement	github.com/system-inc/adamic/internal/lower	TestOptionalWideningCensus	TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e	Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit00
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit01
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit02
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit03
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit04
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit05
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit06
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit07
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit08
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit09
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit10
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit11
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit12
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit13
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit14
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit15
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit16
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit17
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit18
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit19
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit20
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit21
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit22
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit23
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit24
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit25
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit26
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit27
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit28
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit29
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit30
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit31
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit32
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit33
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit34
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit35
+unknown	github.com/system-inc/adamic/stage1/cohere/lint	TestFactoryHooks_NativeBuildWorker
+measurement	github.com/system-inc/adamic/internal/native	TestNormalizeLongMeasurements	TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareNativeBuildChild
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_202
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_169
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_168
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_167
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_166
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_165
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_170
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_164
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_163
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_162
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_173
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_148
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_159
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_158
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_156
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_155
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_154
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_153
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_152
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_151
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_150
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_149
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_157
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_161
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_160
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_172
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_043
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_146
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_171
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_145
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_201
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_042
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_147
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_044
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_041
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_143
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_199
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_142
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_141
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_198
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_040
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_140
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_197
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_139
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_196
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_039
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_200
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_038
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_138
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_194
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_193
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_125
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_036
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_124
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_192
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_191
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_137
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_190
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_189
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_188
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_187
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_186
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_136
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_195
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_185
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_135
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_183
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_134
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_182
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_144
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_133
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_180
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_132
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_131
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_184
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_037
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_178
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_129
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_035
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_181
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_128
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_179
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_176
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_130
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_031
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_030
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_034
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_177
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_027
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_033
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_029
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_025
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_175
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_026
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_028
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_032
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_174
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_022
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_123
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_024
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_121
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_021
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_023
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_019
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_120
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_020
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_018
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_122
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_016
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_119
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_017
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_106
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_014
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_013
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_118
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_012
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_015
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_117
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_115
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_009
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_011
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_116
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_113
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_008
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_007
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_114
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_111
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_006
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_112
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_010
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_109
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_004
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_110
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_108
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_002
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_001
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_000
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_107
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_105
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_003
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_104
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_103
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_005
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_102
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_101
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_100
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_099
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_098
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_097
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_096
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_095
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_094
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_093
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_092
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_082
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_091
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_090
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_089
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_088
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_087
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_086
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_085
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_084
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_083
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_081
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_080
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_079
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_078
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_077
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_076
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_075
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_074
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_073
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_019
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_018
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_020
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_015
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_071
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_013
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_070
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_012
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_069
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_017
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_016
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_068
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_067
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_072
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_066
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_065
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_064
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_063
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_062
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_061
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_060
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_059
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_058
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_057
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_056
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_055
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_054
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_Setup
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_053
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_052
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_051
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_050
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_049
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_094
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_048
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_093
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_047
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_092
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_046
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_045
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_090
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_089
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_088
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_086
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileCorpora_216
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_085
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_084
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_082
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_081
+unknown	github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_080
+not-applicable	github.com/system-inc/adamic/internal/oracle	TestStage3FixtureHook	TestStage3FixtureHook:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d	Dormant entry point called by the Stage 3 fixture runner, not an independent correctness check. With ADAMIC_STAGE3_FIXTURE empty there is no runner request, so the hook is not applicable to a whole run. stage3/fixtures supplies the fixture source and ADAMIC_STAGE3_RESULT writable result path when invoking it; opted-in execution failures still fail.
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestRepositoryAgreement	TestRepositoryAgreement:extra	The estree corpus audit lane: runs against a completed Go/Node corpus audit directory (ADAMIC_ESTREE_CORPUS) produced by that audit, not provisioned by the gate, like the GCC and release-flags lanes.
+measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSThroughput	TestCSSThroughput:4f7695919100a8f192d2010d1445c8cf009fb0993b381a9fd014403ff103c479	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterThroughput	TestCSSPrinterThroughput:2de9a123130d9a85700e28f402ef09dab1a7ec570d865b0f14c3cf7e04f5bef1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileArtifacts	TestCSSProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+opt-in-lane	github.com/system-inc/adamic/stage1/cohere/estree	TestCorpusNativeRefusals	TestCorpusNativeRefusals:extra	The estree corpus audit lane: needs the completed frozen corpus that audit produces, not provisioned by the gate.
+measurement	github.com/system-inc/adamic/stage1/cohere/estree	TestThroughput	TestThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/parser	TestPerformance	TestPerformance,TestWholePerformance:70379d1136172e1ccb3d2e6ce37b3c25fb71607b9927b3d32cd60151ea1b9a26	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+skips=327 required-input=0 unknown=284 pending=1
+gate skipped 0 required-input tests; 284 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1

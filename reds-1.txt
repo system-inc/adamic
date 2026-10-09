@@ -1,0 +1,43 @@
+run adamic-gate-pilot-again-20261009T101008-44839d44: red, 5027 tests in 1 units, 12 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-97)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	689.398s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/json	0.011s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestCompleteSuggestionSerialization_IsolatedShard (tests-97)
+    complete_suggestion_isolated_shard_test.go:26: isolated shard: signal: killed
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-go-oracle 564555efabdb miss 8.62
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-lowered-false 629472157dad miss 40.78
+    complete_suggestion_serialization_shards_test.go:195: build complete-suggestion-lowered-false 629472157dad hit 5.03
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestCompleteSuggestionSerialization_PlantedFailure (tests-97)
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-go-oracle 564555efabdb miss 19.79
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-lowered-false 629472157dad miss 20.52
+    complete_suggestion_serialization_shards_test.go:195: build complete-suggestion-lowered-false 629472157dad hit 2.59
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-native 5c8524057f28 miss 38.19
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-lowered-true b0864fc869fe miss 21.56
+    complete_suggestion_serialization_shards_test.go:91: complete suggestion preparation: 100.729s
+    complete_suggestion_serialization_shards_test.go:306: non-owner TestCompleteSuggestionSerialization_005 failed: signal: killed
+    complete_suggestion_serialization_shards_test.go:335: build complete-suggestion-go-oracle 564555efabdb hit 4.01
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_000 (tests-97)
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 c7363793d00e miss 49.19
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch ae2ae844a9e5 miss 51.04
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 34b7365c2272 miss 18.34
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2: cooked: oracle setup: context deadline exceeded
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_001 (tests-97)
+    bv61ffb_decoded_options_test.go:50: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_002 (tests-97)
+    bv61ffb_decoded_options_test.go:51: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_003 (tests-97)
+    bv61ffb_decoded_options_test.go:52: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_004 (tests-97)
+    bv61ffb_decoded_options_test.go:53: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_005 (tests-97)
+    bv61ffb_decoded_options_test.go:54: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDecodedOptionsAndMutant_Setup (tests-97)
+    bv61ffb_decoded_options_test.go:451: decoded-options product preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-97)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-97)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.011s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	524.362s

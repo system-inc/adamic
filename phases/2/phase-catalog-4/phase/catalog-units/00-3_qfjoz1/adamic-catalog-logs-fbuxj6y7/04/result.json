@@ -1,0 +1,18 @@
+{
+  "number": 4,
+  "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+  "target": "543aeff46b0d1a1a6a233d97b9d99e8291a75776",
+  "worktree": "/tmp/loom-units/loom-unit-745602232/workspace/loom-out/phase/catalog-units/00-3_qfjoz1/adamic-catalog-worktree-se0fotcz/entry-04",
+  "setup_seconds": 19.215403615999094,
+  "ok": false,
+  "check_seconds": 395.3412330440042,
+  "cleanup_seconds": 0.4988953419961035,
+  "wall_seconds": 416.109657727,
+  "load_before": "3.06 3.49 4.95 1/449 504856",
+  "load_after": "1.00 1.60 3.50 1/443 506204",
+  "messages": [
+    "04 borrowed-array-move: baseline-fails-or-test-missing (needs investigation)",
+    "04 made against=d772b5c990de4304de990e723835f19ebb613641",
+    "04 wall=416.110s setup=19.215s check=395.341s cleanup=0.499s load=3.06 3.49 4.95 1/449 504856 -> 1.00 1.60 3.50 1/443 506204"
+  ]
+}
