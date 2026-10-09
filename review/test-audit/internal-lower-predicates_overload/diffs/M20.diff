@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -88,7 +88,7 @@
+ 	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
+ 		// Structural types such as {} admit primitives. Their slots must preserve
+ 		// the runtime brand with the same boxes used for scalar/reference unions.
+-		return ir.Union, true
++		return ir.Object, true
+ 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
+ 		return ir.Object, true
+ 	case flags&checker.TypeFlagsObject != 0:

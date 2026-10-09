@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -354,7 +354,7 @@
+ 		return nil
+ 	}
+ 	original := l.proveFlowPredicate(node)
+-	if original == nil {
++	if original != nil {
+ 		return nil
+ 	}
+ 	proof, err := l.provePredicate(node)

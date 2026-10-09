@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -712,7 +712,7 @@
+ 		target = predicateTrueType(l.checker)
+ 	}
+ 	proof := predicateFlowProof{l: l, function: implementation, parameter: parameter, declared: l.checker.GetTypeAtLocation(parameter.Name()), admitted: admitted, target: l.concrete(target), assertion: claim.Kind() == checker.TypePredicateKindAssertsIdentifier}
+-	return proof.proveBody(overload.Type()) == nil
++	return proof.proveBody(overload.Type()) != nil
+ }
+ 
+ // The existing overload-result seam supplies the call. A small IR wrapper keeps

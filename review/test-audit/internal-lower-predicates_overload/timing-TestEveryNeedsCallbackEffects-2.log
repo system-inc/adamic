@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:27:48.607065089Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:27:48.616465209Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects"}
+{"Time":"2026-10-09T10:27:48.616526265Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects","Output":"=== RUN   TestEveryNeedsCallbackEffects\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:27:48.617651302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects","Output":"=== PAUSE TestEveryNeedsCallbackEffects\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:27:48.617679473Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects"}
+{"Time":"2026-10-09T10:27:48.617683514Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects"}
+{"Time":"2026-10-09T10:27:48.61768547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects","Output":"=== CONT  TestEveryNeedsCallbackEffects\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:27:48.655169092Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects","Output":"--- PASS: TestEveryNeedsCallbackEffects (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:27:48.655205489Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEveryNeedsCallbackEffects","Elapsed":0.04}
+{"Time":"2026-10-09T10:27:48.65525009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:27:48.656638794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.049s\n"}
+{"Time":"2026-10-09T10:27:48.656674044Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.05}

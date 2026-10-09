@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -292,7 +292,7 @@
+ }
+ 
+ func predicateNot(t predicateTruth) predicateTruth {
+-	return (t&predicateTrue)<<1 | (t&predicateFalse)>>1
++	return (t&predicateTrue)>>1 | (t&predicateFalse)>>1
+ }
+ func predicateCombine(a, b predicateTruth, and bool) predicateTruth {
+ 	var result predicateTruth

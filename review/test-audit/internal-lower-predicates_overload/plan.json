@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/predicates.go",
+    "line": 82,
+    "pos": 3364,
+    "old": "if changed != nil {",
+    "new": "if changed == nil {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/predicates.go",
+    "line": 170,
+    "pos": 6950,
+    "old": "literal && truth != (expression.Kind == ast.KindTrueKeyword)",
+    "new": "literal && truth == (expression.Kind == ast.KindTrueKeyword)",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/predicates.go",
+    "line": 318,
+    "pos": 12763,
+    "old": "case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:\n\t\t// A property read may dispatch a getter through a structural view.\n\t\treturn true",
+    "new": "case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:\n\t\t// A property read may dispatch a getter through a structural view.\n\t\treturn false",
+    "kind": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/predicates.go",
+    "line": 128,
+    "pos": 5128,
+    "old": "flags = ast.FlowFlagsTrueCondition",
+    "new": "flags = ast.FlowFlagsFalseCondition",
+    "kind": "change option"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/predicates.go",
+    "line": 357,
+    "pos": 14365,
+    "old": "if original == nil {",
+    "new": "if original != nil {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/predicates.go",
+    "line": 477,
+    "pos": 18429,
+    "old": "if signature == nil {\n\t\treturn nil",
+    "new": "if signature != nil {\n\t\treturn nil",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/predicates.go",
+    "line": 472,
+    "pos": 18291,
+    "old": "return found && safe",
+    "new": "return found && !safe",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 62,
+    "pos": 2152,
+    "old": "proof.TaggedView = true",
+    "new": "proof.TaggedView = false",
+    "kind": "change constant"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 99,
+    "pos": 3218,
+    "old": "changed = true",
+    "new": "changed = false",
+    "kind": "change constant"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 295,
+    "pos": 9303,
+    "old": "(t&predicateTrue)<<1",
+    "new": "(t&predicateTrue)>>1",
+    "kind": "change option"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 305,
+    "pos": 9687,
+    "old": "if and {",
+    "new": "if !and {",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 366,
+    "pos": 11782,
+    "old": "yes = v.cells[path.cell] == constant.Text()",
+    "new": "yes = v.cells[path.cell] != constant.Text()",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 618,
+    "pos": 21009,
+    "old": "case ast.KindThrowStatement:\n\t\treturn true",
+    "new": "case ast.KindThrowStatement:\n\t\treturn false",
+    "kind": "change constant"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 545,
+    "pos": 18315,
+    "old": "cells: []string{\"truthy\", \"falsy\"}",
+    "new": "cells: []string{\"truthy\"}",
+    "kind": "change option"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 715,
+    "pos": 24510,
+    "old": "return proof.proveBody(overload.Type()) == nil",
+    "new": "return proof.proveBody(overload.Type()) != nil",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1119,
+    "pos": 42288,
+    "old": "ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership}",
+    "new": "ir.Binary{Operator: ir.Equal, Left: returned, Right: membership}",
+    "kind": "change option"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1226,
+    "pos": 46824,
+    "old": "counts.Unobservable++",
+    "new": "",
+    "kind": "drop statement"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1038,
+    "pos": 38971,
+    "old": "if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {\n\t\treturn 0",
+    "new": "if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {\n\t\treturn predicateEither",
+    "kind": "change constant"
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/expression.go",
+    "line": 49,
+    "pos": 1892,
+    "old": "if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {\n\t\treturn ir.Union, true",
+    "new": "if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {\n\t\treturn ir.Object, true",
+    "kind": "change constant"
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/expression.go",
+    "line": 90,
+    "pos": 3802,
+    "old": "// the runtime brand with the same boxes used for scalar/reference unions.\n\t\treturn ir.Union, true",
+    "new": "// the runtime brand with the same boxes used for scalar/reference unions.\n\t\treturn ir.Object, true",
+    "kind": "change constant"
+  }
+]

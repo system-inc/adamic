@@ -1,0 +1,27 @@
+The starting origin/main is 7709c91213f476eba7e3dbfbf4ee65e6988038cb, not the older commit printed in the brief. All twelve requested names remain in their named files. The clean package passed: 239 top-level tests. Warm env.sh worked, setup was skipped, and stage3/api npm ci ran before the baseline.
+
+The code under test is Adamic's Go lowering: predicate flow and body proof, callback admission, overload result checks, directional-use tracking and primitive-admitting storage. Node, TypeScript's checker, native emission, JavaScript emission, tests and fixture expectations were not mutated. Native products received a distinct ADAMIC_BUILD_CACHE_DIR for every compiler mutation.
+
+The runtime row validates source output with Node and compares native and backend JavaScript against the same validated values. Its checked failure exit 70, complete stderr and proof counters are handwritten contracts. The other rows use handwritten expected diagnostics, admission outcomes, proof flags or IR slots. TypeScript 6.0.3 supplied some positive source bodies, not an independently computed expected Adamic proof result. No external-authority answer was checked.
+
+These are separate rows because their assertions differ. PredicateOverloadCallback's edited lying source is a negative admission input, like the negative cases in CallbackContracts. It is not a witness of a separate comparison harness: both inputs exercise production lowering and expected admission.
+
+The mutation menu was frozen before any kill result. All twenty mutations are condition flips, constant/option changes or statement drops in production. There are no supplemental verdict mutations. The function inventory conservatively includes every production function; it is not an exact dynamic coverage list. Direct proof and admission entries bypass much of Lower's orchestration, so they received their own probes.
+
+M01 caused a real Go panic. Only seven top-level tests completed in its whole-package run. Each requested row was then run alone. M01 kills outside those twelve rows remain unknown. The other nineteen columns completed all 239 tests. The report marks the combined matrix bounded and lists the bounded column explicitly; unique kills in complete columns are package-wide observations.
+
+The initial panic detector also matched quoted native panic text in M15 and M16 failure messages. It conservatively reran twelve scoped rows for each. Completion checks establish that these were complete columns, not Go aborts. This unnecessary work cost time. The AST inventory generator also initially failed on an unnamed receiver, before any mutation test ran; the corrected generator handles it.
+
+Empty-answer probes are not verdict mutations. Lower returning nil,nil is accepted by PredicateBodiesAreProven; refuse returning nil is accepted by ConditionAssertionAdmission. Those two rows are vacuous under their own entries. Other rows reject empty answers, sometimes through a nil-answer panic. Passing subcases are listed separately for body proof, callbacks and use regions.
+
+The two direction rows have no production kill in this fixed plan. Only M18, an assignment-flow helper change, exercised their distinctive chain. Their P04 empty-direction probe fails, proving that they can reject zero directions. Under the brief's production-mutant rule their verdict is untrue for this plan. This is a narrow result from one relevant helper fault, not a claim that those tests cannot fail or should be deleted.
+
+Subsumption is only a hint. IndirectOverload and ConditionAdmission each rest on one shared kill. EveryNeedsCallbackEffects, OverloadCallback and PredicateBodiesAreProven each rest on three. The subsumer medians are reported even when the subsumer is slower; the brief leaves the keep decision to the defender wave. CallbackContracts overlaps multiple rows without one covering its whole kill set.
+
+Diagnostic assertions have different strength: UnprovenPredicateReturnsAreRefused checks Refused type, reason and fix; IndirectPredicateOverloadIsPending checks a substring only. M06 changes its observed refusal to another capability gap, so that catch proves the diagnostic distinction rather than successful execution.
+
+The survivor witness initially used a numeric console argument, which the .a prelude rejects. That attempt produced a checker error before the mutated helper ran. The corrected fixture uses toString; both attempts are preserved. The final witness records helper and entry outputs separately so a private helper change is not mistaken for a demonstrated miscompile.
+
+The approximate twenty-minute budget was exceeded modestly by the complete matrix and additional panic-marker replays. No individual test run timed out. Reported row medians are binary elapsed values from three -count=1 invocations, not Go command wall time. Build and validation timing are recorded separately where measured.
+
+No tests in other packages were run. Repo-wide uniqueness, exhaustive dynamic reachability and a native miscompile from the surviving helper change were not established. Production sources were restored before committing. Every standalone diff applies to the starting source and passes go vet ./internal/lower/.

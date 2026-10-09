@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:42:12.221106221Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:42:12.232357114Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback"}
+{"Time":"2026-10-09T10:42:12.232427053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Output":"=== RUN   TestPredicateOverloadCallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.232453569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Output":"=== PAUSE TestPredicateOverloadCallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.23245617Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback"}
+{"Time":"2026-10-09T10:42:12.23245896Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback"}
+{"Time":"2026-10-09T10:42:12.232460809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Output":"=== CONT  TestPredicateOverloadCallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.298038449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Output":"    predicates_proof_test.go:175: want lying overload callback argument refused at call site, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:42:12.298134256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Output":"--- FAIL: TestPredicateOverloadCallback (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.298258569Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPredicateOverloadCallback","Elapsed":0.07}
+{"Time":"2026-10-09T10:42:12.298295949Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.299715679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.078s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:12.299755979Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.079}

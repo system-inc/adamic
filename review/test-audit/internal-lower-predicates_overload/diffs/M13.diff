@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -616,7 +616,7 @@
+ func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Node]bool) bool {
+ 	switch node.Kind {
+ 	case ast.KindThrowStatement:
+-		return true
++		return false
+ 	case ast.KindExpressionStatement:
+ 		return v.neverCall(node.AsExpressionStatement().Expression, visiting)
+ 	case ast.KindReturnStatement:

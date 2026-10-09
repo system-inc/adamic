@@ -1,0 +1,46 @@
+[
+  [
+    "P01",
+    "lower.go",
+    "Lower",
+    "nil, nil",
+    [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateCallbackContracts",
+      "TestPredicateOverloadCallback",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ]
+  ],
+  [
+    "P02",
+    "predicates_proof.go",
+    "provePredicate",
+    "predicateProof{}, nil",
+    [
+      "TestPredicateBodyProof"
+    ]
+  ],
+  [
+    "P03",
+    "refusals.go",
+    "refuse",
+    "nil",
+    [
+      "TestConditionAssertionAdmission",
+      "TestEveryNeedsCallbackEffects"
+    ]
+  ],
+  [
+    "P04",
+    "predicates_proof.go",
+    "predicateUseDirections",
+    "0",
+    [
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall"
+    ]
+  ]
+]

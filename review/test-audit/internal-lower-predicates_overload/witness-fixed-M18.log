@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:44:47.138503753Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:44:47.148513623Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness"}
+{"Time":"2026-10-09T10:44:47.14859306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"=== RUN   TestAuditMutationWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:47.189967404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"    audit_witness_test.go:3: replacement helper directions=3; entry directions=0\n"}
+{"Time":"2026-10-09T10:44:47.190085766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"--- PASS: TestAuditMutationWitness (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:47.19010037Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Elapsed":0.04}
+{"Time":"2026-10-09T10:44:47.190125278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:47.191388219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.052s\n"}
+{"Time":"2026-10-09T10:44:47.19144737Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.053}

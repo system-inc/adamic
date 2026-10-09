@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -542,7 +542,7 @@
+ // than treating unknown as a boolean or trusting the asserts annotation.
+ func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, error) {
+ 	declaration := node.Parent
+-	verifier := &predicateVerifier{l: l, truthiness: true, cells: []string{"truthy", "falsy"}}
++	verifier := &predicateVerifier{l: l, truthiness: true, cells: []string{"truthy"}}
+ 	parameter := verifier.parameter(declaration)
+ 	if parameter == nil || len(declaration.TypeParameters()) != 0 {
+ 		return predicateProof{}, predicateFailure(l, node, "a non-parameter assertion has no truthiness proof")

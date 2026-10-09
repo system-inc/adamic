@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -47,7 +47,7 @@
+ 	}
+ 	flags := proven.Flags()
+ 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+-		return ir.Union, true
++		return ir.Object, true
+ 	}
+ 	if flags&checker.TypeFlagsIntersection != 0 {
+ 		for _, part := range proven.Types() {

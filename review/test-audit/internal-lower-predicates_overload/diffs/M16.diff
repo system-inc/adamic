@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1116,7 +1116,7 @@
+ }
+ 
+ func predicateDirectionMismatch(returned, membership ir.Expression, directions predicateTruth) ir.Expression {
+-	mismatch := ir.Expression(ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership})
++	mismatch := ir.Expression(ir.Binary{Operator: ir.Equal, Left: returned, Right: membership})
+ 	if directions == predicateTrue {
+ 		return ir.Binary{Operator: ir.And, Left: returned, Right: mismatch}
+ 	}

@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -167,7 +167,7 @@
+ 	}
+ 	for _, path := range paths {
+ 		for _, truth := range []bool{true, false} {
+-			if literal && truth != (expression.Kind == ast.KindTrueKeyword) {
++			if literal && truth == (expression.Kind == ast.KindTrueKeyword) {
+ 				continue
+ 			}
+ 			branch := path

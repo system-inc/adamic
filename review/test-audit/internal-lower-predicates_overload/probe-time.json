@@ -1,0 +1,74 @@
+[
+  {
+    "id": "P01",
+    "row": "TestPredicateOverloadRuntime",
+    "exit": 1,
+    "seconds": 8.994830280000315
+  },
+  {
+    "id": "P01",
+    "row": "TestIndirectPredicateOverloadIsPending",
+    "exit": 1,
+    "seconds": 1.8621880279970355
+  },
+  {
+    "id": "P01",
+    "row": "TestPredicateCallbackContracts",
+    "exit": 1,
+    "seconds": 2.052283826000348
+  },
+  {
+    "id": "P01",
+    "row": "TestPredicateOverloadCallback",
+    "exit": 1,
+    "seconds": 1.819907321001665
+  },
+  {
+    "id": "P01",
+    "row": "TestUnprovenPredicateReturnsAreRefused",
+    "exit": 1,
+    "seconds": 2.2953040409993264
+  },
+  {
+    "id": "P01",
+    "row": "TestPredicateBodiesAreProven",
+    "exit": 0,
+    "seconds": 2.421823085001961
+  },
+  {
+    "id": "P01",
+    "row": "TestPrimitiveAdmittingSlotsUseBoxes",
+    "exit": 1,
+    "seconds": 1.8390511680008785
+  },
+  {
+    "id": "P02",
+    "row": "TestPredicateBodyProof",
+    "exit": 1,
+    "seconds": 2.1179007069986255
+  },
+  {
+    "id": "P03",
+    "row": "TestConditionAssertionAdmission",
+    "exit": 0,
+    "seconds": 1.9572387890002574
+  },
+  {
+    "id": "P03",
+    "row": "TestEveryNeedsCallbackEffects",
+    "exit": 1,
+    "seconds": 2.161993205001636
+  },
+  {
+    "id": "P04",
+    "row": "TestPredicateUseRegions",
+    "exit": 1,
+    "seconds": 2.321314697001071
+  },
+  {
+    "id": "P04",
+    "row": "TestPredicateUsesBelongToEachCall",
+    "exit": 1,
+    "seconds": 1.8522338440016028
+  }
+]

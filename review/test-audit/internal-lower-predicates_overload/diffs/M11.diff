@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -302,7 +302,7 @@
+ 				continue
+ 			}
+ 			yes := x == predicateTrue || y == predicateTrue
+-			if and {
++			if !and {
+ 				yes = x == predicateTrue && y == predicateTrue
+ 			}
+ 			if yes {

@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -317,7 +317,7 @@
+ 	switch node.Kind {
+ 	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+ 		// A property read may dispatch a getter through a structural view.
+-		return true
++		return false
+ 	case ast.KindCallExpression, ast.KindNewExpression, ast.KindBinaryExpression:
+ 		if node.Kind != ast.KindBinaryExpression || ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+ 			return true

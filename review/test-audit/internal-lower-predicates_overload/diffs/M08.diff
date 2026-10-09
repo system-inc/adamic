@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -59,7 +59,7 @@
+ 	target := l.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
+ 	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 && v.kindTarget(target) {
+ 		v.field = "kind"
+-		proof.TaggedView = true
++		proof.TaggedView = false
+ 	} else if !predicatePrimitiveTarget(target) {
+ 		return proof, predicateFailure(l, node, "the target has an unsupported runtime contract")
+ 	}

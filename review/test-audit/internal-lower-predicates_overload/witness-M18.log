@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:42:48.852747433Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:42:48.863677592Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness"}
+{"Time":"2026-10-09T10:42:48.863775109Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"=== RUN   TestAuditMutationWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:48.901952191Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"    audit_witness_test.go:3: /tmp/adamic-gate/TestAuditMutationWitness1979659140/001/probe.a:1:251: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n","OutputType":"error"}
+{"Time":"2026-10-09T10:42:48.90203007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Output":"--- FAIL: TestAuditMutationWitness (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:48.902050238Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAuditMutationWitness","Elapsed":0.04}
+{"Time":"2026-10-09T10:42:48.90214537Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:48.903432539Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.050s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:48.903465043Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.051}

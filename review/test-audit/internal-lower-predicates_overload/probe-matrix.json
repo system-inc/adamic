@@ -1,0 +1,20 @@
+{
+  "P01": [
+    "TestPredicateOverloadRuntime",
+    "TestIndirectPredicateOverloadIsPending",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback",
+    "TestUnprovenPredicateReturnsAreRefused",
+    "TestPrimitiveAdmittingSlotsUseBoxes"
+  ],
+  "P02": [
+    "TestPredicateBodyProof"
+  ],
+  "P03": [
+    "TestEveryNeedsCallbackEffects"
+  ],
+  "P04": [
+    "TestPredicateUseRegions",
+    "TestPredicateUsesBelongToEachCall"
+  ]
+}

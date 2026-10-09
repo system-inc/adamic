@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1036,7 +1036,7 @@
+ 	// A replacement kills earlier predicate facts for this reference. Compound
+ 	// assignments also read the old narrowed value and must keep those checks.
+ 	if flow.Flags&ast.FlowFlagsAssignment != 0 && l.predicateSameReference(flow.Node, reference) && predicateWriteOnly(flow.Node) {
+-		return 0
++		return predicateEither
+ 	}
+ 	var result predicateTruth
+ 	if flow.Flags&ast.FlowFlagsCondition != 0 {

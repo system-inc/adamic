@@ -1,0 +1,89 @@
+{
+  "M01": [
+    "TestEveryNeedsCallbackEffects",
+    "TestPredicateBodiesAreProven",
+    "TestPredicateBodyProof",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback",
+    "TestPredicateOverloadRuntime",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M02": [
+    "TestArrayPredicatePreservesDeclaredElementContract",
+    "TestPredicateBodiesAreProven",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M03": [
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M04": [
+    "TestArrayPredicateCoexistsWithUnknownReflection",
+    "TestArrayPredicatePreservesDeclaredElementContract",
+    "TestEveryNeedsCallbackEffects",
+    "TestPredicateBodiesAreProven",
+    "TestPredicateCallbackContracts",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M05": [
+    "TestArrayPredicateCannotInventAnElementContract",
+    "TestCensusPredicateInteractionBoundary",
+    "TestCensusPredicateInteractionEscapes",
+    "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "TestEveryNeedsCallbackEffects",
+    "TestPredicateBodyProof",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M06": [
+    "TestIndirectPredicateOverloadIsPending",
+    "TestPredicateCallbackContracts",
+    "TestPredicateOverloadCallback"
+  ],
+  "M07": [
+    "TestCensusPredicateInteractionEscapes",
+    "TestPredicateCallbackContracts"
+  ],
+  "M08": [
+    "TestPredicateBodyProof",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M09": [
+    "TestPredicateBodyProof"
+  ],
+  "M10": [
+    "TestPredicateBodyProof"
+  ],
+  "M11": [
+    "TestPredicateBodyProof"
+  ],
+  "M12": [
+    "TestPredicateBodyProof",
+    "TestPredicateSummaryParameterIndex",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M13": [
+    "TestConditionAssertionAdmission",
+    "TestPredicateBodyProof"
+  ],
+  "M14": [
+    "TestPredicateBodyProof",
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "M15": [
+    "TestPredicateOverloadRuntime"
+  ],
+  "M16": [
+    "TestPredicateOverloadRuntime"
+  ],
+  "M17": [
+    "TestPredicateOverloadRuntime"
+  ],
+  "M18": [],
+  "M19": [
+    "TestUnknownReflectionRefusals"
+  ],
+  "M20": [
+    "TestPrimitiveAdmittingSlotsUseBoxes"
+  ]
+}

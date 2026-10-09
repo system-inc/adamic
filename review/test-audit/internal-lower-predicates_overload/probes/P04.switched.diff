@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -957,6 +957,8 @@
+ // its flow region. This includes aliases of the boolean result and continuation
+ // flows after return/throw; lexical then/else scanning would miss those reads.
+ func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTruth {
++if auditSelector()=="P04" {return 0}
++
+ 	claim := predicateOfSignature(l.checker, l.checker.GetResolvedSignature(call.AsNode()))
+ 	if claim == nil || int(claim.ParameterIndex()) < 0 || int(claim.ParameterIndex()) >= len(call.Arguments.Nodes) {
+ 		return predicateEither

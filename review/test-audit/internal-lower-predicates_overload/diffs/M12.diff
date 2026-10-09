@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -363,7 +363,7 @@
+ 				yes := false
+ 				if v.field == "" && test.Kind == ast.KindTypeOfExpression && v.sameParameter(test.AsTypeOfExpression().Expression, parameter) && constant.Kind == ast.KindStringLiteral {
+ 					matched = true
+-					yes = v.cells[path.cell] == constant.Text()
++					yes = v.cells[path.cell] != constant.Text()
+ 				}
+ 				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
+ 					key, ok := predicateLiteral(v.l.checker.GetTypeAtLocation(constant))

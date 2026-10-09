@@ -1,0 +1,27 @@
+{
+  "start_commit": "7709c91213f476eba7e3dbfbf4ee65e6988038cb",
+  "nproc": 5,
+  "setup": "skipped, warm env works",
+  "npm_seconds": 0.6006796199981181,
+  "baseline_binary_seconds": 36.405,
+  "baseline_command_seconds": 38.2770248170018,
+  "baseline_skips": [
+    "TestOriginalCycleLedger",
+    "TestOptionalWideningCensus",
+    "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+  ],
+  "timing_binary_seconds": 25.534,
+  "matrix_and_replay_command_seconds": 798.6642764399949,
+  "matrix_and_replay_binary_seconds": 662.83,
+  "probe_command_seconds": 31.696068991004722,
+  "standalone_vet_seconds": 10.436739956006932,
+  "clean_build_seconds": 2.2822656300013477,
+  "switch_build_seconds": "not separately timed; included in matrix command overhead",
+  "finished_utc": "2026-10-09T10:47:48.044317+00:00",
+  "verdict_counts": {
+    "sacred": 4,
+    "subsumed": 5,
+    "overlapping": 1,
+    "untrue": 2
+  }
+}

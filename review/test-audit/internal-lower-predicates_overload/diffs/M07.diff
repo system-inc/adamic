@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -469,7 +469,7 @@
+ 	for _, file := range l.program.Files() {
+ 		file.AsNode().ForEachChild(visit)
+ 	}
+-	return found && safe
++	return found && !safe
+ }
+ 
+ func (l *lowering) predicateArguments(node *ast.Node) error {
