@@ -1,0 +1,45 @@
+run adamic-verify-20261009T061539-0267612d: void, 6536 tests in 12 units, 12 failed, 1 units broken, 0 killed over budget
+BROKEN tests-10: no results (exited true, last output "5.4G\t/tmp/loom-home")
+FAIL github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/scout22_spread_errors.a (tests-01)
+    trace_test.go:38: a point of function -1 ran inside a call of function 0
+    trace_test.go:38: a point of function -1 ran inside a call of function 0
+    trace_test.go:38: a point of function -1 ran inside a call of function 0
+    trace_test.go:38: a point of function -1 ran inside a call of function 0
+    trace_test.go:38: a point of function -1 ran inside a call of function 0
+    trace_test.go:38: function -1: the call ended at bb2, which doesn't lead to a return
+    trace_test.go:50: 7 points walked, 1378 events
+FAIL github.com/system-inc/adamic/internal/native TestToExponentialAndToPrecisionOutOfRangePanic (tests-01)
+    dtoa_test.go:205: (1.5).toExponential(-1): native exit 1 "", Node exit 1 "before\n"
+    dtoa_test.go:208: (1.5).toExponential(-1): native stderr "/home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29: runtime error: member access within null pointer of type 'const adamic_string' (aka 'const struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29 \n", Node stderr "[eval]:1\nconsole.log('before'); console.log((1.5).toExponential(-1));\n                                         ^\n\nRangeError: toExponential() argument must be between 0 and 100\n    at Number.toExponential (<anonymous>)\n    at [eval]:1:42\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\n"
+    dtoa_test.go:205: (1.5).toExponential(101): native exit 1 "", Node exit 1 "before\n"
+    dtoa_test.go:208: (1.5).toExponential(101): native stderr "/home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29: runtime error: member access within null pointer of type 'const adamic_string' (aka 'const struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29 \n", Node stderr "[eval]:1\nconsole.log('before'); console.log((1.5).toExponential(101));\n                                         ^\n\nRangeError: toExponential() argument must be between 0 and 100\n    at Number.toExponential (<anonymous>)\n    at [eval]:1:42\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\
+    n"
+    dtoa_test.go:205: (1.5).toExponential(Infinity): native exit 1 "", Node exit 1 "before\n"
+    dtoa_test.go:208: (1.5).toExponential(Infinity): native stderr "/home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29: runtime error: member access within null pointer of type 'const adamic_string' (aka 'const struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2819378656/adamic.c:237:29 \n", Node stderr "[eval]:1\nconsole.log('before'); console.log((1.5).toExponential(Infinity));\n                                         ^\n\nRangeError: toExponential() argument must be between 0 and 100\n    at Number.toExponential (<anonymous>)\n    at [eval]:1:42\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js
+    v24.19.0\n"
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestDocumentedStageZeroGaps/repeatInTry.ts (tests-06)
+    gaps_test.go:35: gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/internal/lower TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (tests-07)
+    lower_test.go:110: got <nil>, want an error ending "main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"
+FAIL github.com/system-inc/adamic/internal/lower TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (tests-07)
+    lower_test.go:110: got <nil>, want an error ending "main.a:5:2: stage 0 can't lower a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+FAIL github.com/system-inc/adamic/internal/lower TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (tests-07)
+    lower_test.go:110: got <nil>, want an error ending "main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
+FAIL github.com/system-inc/adamic/internal/lower TestClassFeaturesAccessorRefusals (tests-08)
+    class_features_test.go:86: want throwing spread diagnosed, got <nil>
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (tests-08)
+    gaps_test.go:35: gap closed: update GAPS.md and remove the workaround or unblock native composition
+FAIL github.com/system-inc/adamic/internal/oracle TestNodeProcessErrorNarrowingBlocker (tests-09)
+    node_process_errors_test.go:43: recorded blocker changed:
+    want /tmp/adamic/internal/oracle/testdata/node_process_runtime/node_process_errors.a:21:32: Adamic 0.1 refuses a method read as a value (hasOwnProperty would lose its object, and this with it); call it in an arrow that keeps the object: (v) => its object.hasOwnProperty(v) (unbound-method)
+    got /tmp/adamic/internal/oracle/testdata/node_process_runtime/node_process_errors.a:21:32: stage 0 can't lower Object.prototype.hasOwnProperty.call without a proven complete plain literal shape yet
+FAIL github.com/system-inc/adamic/stage1/cohere/config TestLoadersMatchGoCohere (tests-09)
+    loader_test.go:180: === RUN   TestAdamicConfigCases
+    adamic_config_test.go:152: Go: 2.196209s, 0 projects, 0 projects/s; 3009 source files, 1370 files/s
+    PASS
+    ok  	github.com/system-inc/cohere/command/cohere	2.305s
+    loader_test.go:191: native: exit -1, stderr
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/regex TestDynamicPatternGap (tests-09)
+    regex_test.go:126: expected named native gap, got <nil>
+FAIL github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/scout22_spread_errors.a (tests-11)
+
