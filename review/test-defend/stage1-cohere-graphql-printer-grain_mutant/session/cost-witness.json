@@ -1,0 +1,142 @@
+[
+  {
+    "mutant": "clean",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/printer-defense/witness/clean/stage1/cohere/graphql/printer/main.ts",
+      "--cases",
+      "/tmp/printer-defense/witness/cases.txt"
+    ],
+    "exit": 0,
+    "stdout": "ok\tquery {\\n    hello(a: 1, b: 2)\\n}\\n\n",
+    "width_functions": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "mapped",
+        "count": 0
+      },
+      {
+        "function": "match",
+        "count": 0
+      },
+      {
+        "function": "wide",
+        "count": 0
+      },
+      {
+        "function": "stringWidth",
+        "count": 105
+      }
+    ]
+  },
+  {
+    "mutant": "D1",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/printer-defense/witness/D1/stage1/cohere/graphql/printer/main.ts",
+      "--cases",
+      "/tmp/printer-defense/witness/cases.txt"
+    ],
+    "exit": 0,
+    "stdout": "ok\tquery {\\n    hello(a: 1, b: 2)\\n}\\n\n",
+    "width_functions": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "mapped",
+        "count": 0
+      },
+      {
+        "function": "match",
+        "count": 0
+      },
+      {
+        "function": "wide",
+        "count": 0
+      },
+      {
+        "function": "stringWidth",
+        "count": 105
+      }
+    ]
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/printer-defense/witness/D2/stage1/cohere/graphql/printer/main.ts",
+      "--cases",
+      "/tmp/printer-defense/witness/cases.txt"
+    ],
+    "exit": 0,
+    "stdout": "ok\tquery {\\n    hello(a: 1, b: 2)\\n}\\n\n",
+    "width_functions": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "mapped",
+        "count": 0
+      },
+      {
+        "function": "match",
+        "count": 0
+      },
+      {
+        "function": "wide",
+        "count": 0
+      },
+      {
+        "function": "stringWidth",
+        "count": 105
+      }
+    ]
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/tmp/printer-defense/witness/D3/stage1/cohere/graphql/printer/main.ts",
+      "--cases",
+      "/tmp/printer-defense/witness/cases.txt"
+    ],
+    "exit": 0,
+    "stdout": "ok\tquery {\\n    hello(a: 1, b: 2)\\n}\\n\n",
+    "width_functions": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "mapped",
+        "count": 0
+      },
+      {
+        "function": "match",
+        "count": 0
+      },
+      {
+        "function": "wide",
+        "count": 0
+      },
+      {
+        "function": "stringWidth",
+        "count": 121
+      }
+    ]
+  }
+]

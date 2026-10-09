@@ -1,0 +1,156 @@
+[
+  {
+    "id": "W1",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.16893028800041066,
+    "description": "disable output difference detection"
+  },
+  {
+    "id": "W2",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.157214501999988,
+    "description": "drop unchanged-answer rejection"
+  },
+  {
+    "id": "S1",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.15920709499914665,
+    "description": "off-by-one shard construction omits first case"
+  },
+  {
+    "id": "S2",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.1790048030015896,
+    "description": "drop mutant source construction statement"
+  },
+  {
+    "id": "S3",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.19380004800041206,
+    "description": "replace whole lowering construction callback with empty success; remove unused javascript import"
+  },
+  {
+    "id": "S4",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.18750453000029665,
+    "description": "replace whole native construction callback with empty success; drop now-unused source-read statement and guard"
+  },
+  {
+    "id": "S5",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.18000618400037638,
+    "description": "replace whole oracle product construction callback with empty success, without modifying oracle"
+  },
+  {
+    "id": "S6",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.18596119899848418,
+    "description": "replace corpus construction callback with empty success; remove four unused imports"
+  },
+  {
+    "id": "P2",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.18692193800052337,
+    "description": "empty answer at printerMutantSource entry; remove unused runtime import"
+  },
+  {
+    "id": "P3",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.1710456079999858,
+    "description": "empty answer at printerMutantLowered entry"
+  },
+  {
+    "id": "P4",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.17195953000009467,
+    "description": "empty answer at printerMutantSanitized entry; remove unused github.com/system-inc/adamic/internal/native import"
+  },
+  {
+    "id": "P5",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.1644063660005486,
+    "description": "empty answer at printerMutantOracle entry; remove unused path/filepath import; remove unused github.com/system-inc/adamic/internal/buildcache import"
+  },
+  {
+    "id": "P6",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.17110436700022547,
+    "description": "empty answer at printerMutantCorpus entry"
+  },
+  {
+    "id": "P7",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "exit": 0,
+    "wall": 0.1763788789994578,
+    "description": "empty answer at printerMutantCases entry"
+  }
+]

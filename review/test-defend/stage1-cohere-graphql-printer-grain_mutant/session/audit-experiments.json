@@ -1,0 +1,181 @@
+[
+  {
+    "id": "W1",
+    "type": "witness weakening",
+    "rows": [
+      "TestPrinterMutants_000",
+      "TestPrinterMutants_001",
+      "TestPrinterMutants_002"
+    ],
+    "failing_lines": [
+      "grain_mutant_test.go:201: shard-000 native mutant escaped oracle",
+      "grain_mutant_test.go:201: shard-000 Node mutant escaped oracle",
+      "grain_mutant_test.go:201: shard-001 native mutant escaped oracle",
+      "grain_mutant_test.go:201: shard-001 Node mutant escaped oracle",
+      "grain_mutant_test.go:201: shard-002 native mutant escaped oracle",
+      "grain_mutant_test.go:201: shard-002 Node mutant escaped oracle"
+    ],
+    "command": "ADAMIC_AUDIT_MODE=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002)$'",
+    "diff": "W1.diff"
+  },
+  {
+    "id": "S1",
+    "type": "construction mutation",
+    "rows": [
+      "TestPrinterMutantUnion"
+    ],
+    "failing_lines": [
+      "grain_mutant_test.go:167: shard union 10689 ids, unsplit 10692"
+    ],
+    "command": "ADAMIC_AUDIT_MODE=S1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantUnion)$'",
+    "diff": "S1.diff"
+  },
+  {
+    "id": "P7",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestPrinterMutantUnion"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P7; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantUnion)$'",
+    "diff": "P7.diff"
+  },
+  {
+    "id": "S5",
+    "type": "construction mutation",
+    "rows": [
+      "TestProduct_GraphQLMutantOracle"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=S5; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantOracle)$'",
+    "diff": "S5.diff"
+  },
+  {
+    "id": "P5",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestProduct_GraphQLMutantOracle"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P5; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantOracle)$'",
+    "diff": "P5.diff"
+  },
+  {
+    "id": "S6",
+    "type": "construction mutation",
+    "rows": [
+      "TestProduct_GraphQLMutantDefaults"
+    ],
+    "failing_lines": [
+      "grain_mutant_test.go:109: open /tmp/u098/cache/S6/fc4c04de7e3cc4bf5d294902271215f4278ced42745ca81255314f2d4030e6d7/answers.txt: no such file or directory"
+    ],
+    "command": "ADAMIC_AUDIT_MODE=S6; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantDefaults)$'",
+    "diff": "S6.diff"
+  },
+  {
+    "id": "P6",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestProduct_GraphQLMutantDefaults"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P6; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantDefaults)$'",
+    "diff": "P6.diff"
+  },
+  {
+    "id": "S2",
+    "type": "construction mutation",
+    "rows": [
+      "TestProduct_GraphQLMutantSource000",
+      "TestProduct_GraphQLMutantSource001",
+      "TestProduct_GraphQLMutantSource002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=S2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$'",
+    "diff": "S2.diff"
+  },
+  {
+    "id": "P2",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestProduct_GraphQLMutantSource000",
+      "TestProduct_GraphQLMutantSource001",
+      "TestProduct_GraphQLMutantSource002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$'",
+    "diff": "P2.diff"
+  },
+  {
+    "id": "S3",
+    "type": "construction mutation",
+    "rows": [
+      "TestProduct_GraphQLMutantLowered000",
+      "TestProduct_GraphQLMutantLowered001",
+      "TestProduct_GraphQLMutantLowered002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=S3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$'",
+    "diff": "S3.diff"
+  },
+  {
+    "id": "P3",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestProduct_GraphQLMutantLowered000",
+      "TestProduct_GraphQLMutantLowered001",
+      "TestProduct_GraphQLMutantLowered002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$'",
+    "diff": "P3.diff"
+  },
+  {
+    "id": "S4",
+    "type": "construction mutation",
+    "rows": [
+      "TestProduct_GraphQLMutantSanitized000",
+      "TestProduct_GraphQLMutantSanitized001",
+      "TestProduct_GraphQLMutantSanitized002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=S4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$'",
+    "diff": "S4.diff"
+  },
+  {
+    "id": "P4",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestProduct_GraphQLMutantSanitized000",
+      "TestProduct_GraphQLMutantSanitized001",
+      "TestProduct_GraphQLMutantSanitized002"
+    ],
+    "failing_lines": [],
+    "command": "ADAMIC_AUDIT_MODE=P4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$'",
+    "diff": "P4.diff"
+  },
+  {
+    "id": "W2",
+    "type": "witness weakening",
+    "rows": [
+      "TestPrinterMutantPlantedSurvivor"
+    ],
+    "failing_lines": [
+      "grain_mutant_test.go:245: planted survivor escaped shard-001"
+    ],
+    "command": "ADAMIC_AUDIT_MODE=W2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantPlantedSurvivor)$'",
+    "diff": "W2.diff"
+  },
+  {
+    "id": "P1",
+    "type": "empty-answer probe",
+    "rows": [
+      "TestPrinterThroughput"
+    ],
+    "failing_lines": [
+      "performance_test.go:93: native timed output: exit 0, stderr , difference line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+    ],
+    "command": "write P1 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "diff": "P1.diff"
+  }
+]

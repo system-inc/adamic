@@ -1,0 +1,287 @@
+[
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 7,
+    "signature": "function field(node: GraphNode, key: string): Value {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 8,
+    "signature": "for(const property of node.fields) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 13,
+    "signature": "function child(node: GraphNode, key: string): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 17,
+    "signature": "function list(node: GraphNode, key: string): readonly number[] {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 21,
+    "signature": "function flag(node: GraphNode, key: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 27,
+    "signature": "export function decoded(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 31,
+    "signature": "while(position < text.length) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 59,
+    "signature": "function textValue(node: GraphNode, key: string): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 63,
+    "signature": "function isNewline(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 66,
+    "signature": "function spaces(text: string, index: number, back: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 76,
+    "signature": "function newline(text: string, index: number, back: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 78,
+    "signature": "if(back && index > 0 && text.charCodeAt(index - 1) === 13 && code === 10) return index - 2;"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 79,
+    "signature": "if(!back && code === 13 && text.charCodeAt(index + 1) === 10) return index + 2;"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 82,
+    "signature": "function hasNewline(text: string, index: number, back: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 86,
+    "signature": "function previousEmpty(text: string, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 92,
+    "signature": "function nextEmpty(text: string, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 97,
+    "signature": "while(position !== old) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 106,
+    "signature": "if(text.slice(position, position + 2) === '//') {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 130,
+    "signature": "constructor(ast: Document, source: string, docs: Documents) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 135,
+    "signature": "node(index: number): GraphNode {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 138,
+    "signature": "neighbours(index: number, comment: Comment, enclosing: number): NeighboursInterface {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 172,
+    "signature": "attach(): void {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 201,
+    "signature": "comment(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 206,
+    "signature": "dangling(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 220,
+    "signature": "print(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 277,
+    "signature": "sequence(index: number, key: string, blank: boolean): number[] {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 291,
+    "signature": "arguments(index: number, key: string, blank: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 305,
+    "signature": "description(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 315,
+    "signature": "directives(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 327,
+    "signature": "block(index: number, key: string, required: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 342,
+    "signature": "generic(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 633,
+    "signature": "finish(): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 644,
+    "signature": "export function format(source: string, settings: SettingsOptions = defaults): ResultType {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 650,
+    "signature": "if(result.kind === 'Refused') return { kind: 'Error', message: decoded(result.message) };"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 33,
+    "signature": "constructor(settings: SettingsOptions) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 36,
+    "signature": "get(index: number): DocInterface {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 39,
+    "signature": "add(kind: string, text: string, parts: readonly number[], broken: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 58,
+    "signature": "text(text: string): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 61,
+    "signature": "concat(parts: readonly number[]): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 64,
+    "signature": "join(separator: number, parts: readonly number[]): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 72,
+    "signature": "indent(child: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 75,
+    "signature": "group(child: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 78,
+    "signature": "line(soft: boolean, hard: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 81,
+    "signature": "ifBreak(broken: number, flat: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 84,
+    "signature": "suffix(child: number): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 87,
+    "signature": "breakParent(): number {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 90,
+    "signature": "fits(candidate: CommandInterface, rest: readonly CommandInterface[], width: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 131,
+    "signature": "print(root: number): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 5,
+    "signature": "export function escaped(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 7,
+    "signature": "if(result.includes('\\\\')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 10,
+    "signature": "if(result.includes('\\n')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 13,
+    "signature": "if(result.includes('\\r')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 16,
+    "signature": "if(result.includes('\\t')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 21,
+    "signature": "function unescaped(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 22,
+    "signature": "if(!text.includes('\\\\')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 56,
+    "signature": "for(const line of read.text.split('\\n')) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "line": 67,
+    "signature": "if(result.kind === 'Error') panic(result.message);"
+  }
+]

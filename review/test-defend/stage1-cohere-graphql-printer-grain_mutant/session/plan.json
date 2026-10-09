@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "D1",
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "file_line": "stage1/cohere/graphql/printer/main.ts:7",
+    "change": "change condition to bypass four escaping fast paths"
+  },
+  {
+    "mutant": "D2",
+    "file": "stage1/cohere/graphql/printer/main.ts",
+    "file_line": "stage1/cohere/graphql/printer/main.ts:22",
+    "change": "drop unescaped early-return fast path"
+  },
+  {
+    "mutant": "D3",
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "file_line": "stage1/cohere/graphql/printer/doc.ts:105",
+    "change": "drop cached width lookup in fits, recomputing Unicode width"
+  }
+]

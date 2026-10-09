@@ -1,0 +1,12 @@
+--- a/stage1/cohere/graphql/printer/main.ts
++++ b/stage1/cohere/graphql/printer/main.ts
+@@ -19,9 +19,6 @@
+     return result;
+ }
+ function unescaped(text: string): string {
+-    if(!text.includes('\\')) {
+-        return text;
+-    }
+     const pieces = text.split('\\');
+     const parts: string[] = [pieces[0] ?? ''];
+     for(let index = 1; index < pieces.length; index++) {

@@ -1,0 +1,422 @@
+[
+  {
+    "test": "TestPrinterMutants family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:116",
+    "seconds": 7.291,
+    "oracle": "Unchanged Go cohere answers; requires built-in native and Node mutants to finish cleanly and differ. W1 removes difference detection. Two sides of the same port are products.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: grain_mutant_test.go:201: shard-000 native mutant escaped oracle",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002)$' => grain_mutant_test.go:201: shard-000 native mutant escaped oracle",
+    "members": [
+      "TestPrinterMutants_000",
+      "TestPrinterMutants_001",
+      "TestPrinterMutants_002"
+    ],
+    "member_files": {
+      "TestPrinterMutants_000": "stage1/cohere/graphql/printer/grain_mutant_test.go:116",
+      "TestPrinterMutants_001": "stage1/cohere/graphql/printer/grain_mutant_test.go:117",
+      "TestPrinterMutants_002": "stage1/cohere/graphql/printer/grain_mutant_test.go:118"
+    }
+  },
+  {
+    "test": "TestPrinterMutantUnion",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:119",
+    "seconds": 1.229,
+    "oracle": "Self-authored mutant/case census; whole and shards share printerMutantCases. Empty enumeration passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: grain_mutant_test.go:167: shard union 10689 ids, unsplit 10692",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantUnion)$' => grain_mutant_test.go:167: shard union 10689 ids, unsplit 10692",
+    "members": [
+      "TestPrinterMutantUnion"
+    ],
+    "member_files": {
+      "TestPrinterMutantUnion": "stage1/cohere/graphql/printer/grain_mutant_test.go:119"
+    },
+    "entry_probe": {
+      "id": "P7",
+      "command": "ADAMIC_AUDIT_MODE=P7; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantUnion)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestProduct_GraphQLMutantOracle",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:121",
+    "seconds": 1.141,
+    "oracle": "Preparation completion and nonempty path only; no executable existence or behavior assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S5; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantOracle)$' => PASS despite absent promised artifacts; S5-artifacts.json=[]",
+    "members": [
+      "TestProduct_GraphQLMutantOracle"
+    ],
+    "member_files": {
+      "TestProduct_GraphQLMutantOracle": "stage1/cohere/graphql/printer/grain_mutant_test.go:121"
+    },
+    "entry_probe": {
+      "id": "P5",
+      "command": "ADAMIC_AUDIT_MODE=P5; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantOracle)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestProduct_GraphQLMutantDefaults",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:122",
+    "seconds": 1.212,
+    "oracle": "Go cohere generates defaults cases and expected answers; this row checks preparation/readability, not port agreement. Empty entry passes.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S6: grain_mutant_test.go:109: open /tmp/u098/cache/S6/fc4c04de7e3cc4bf5d294902271215f4278ced42745ca81255314f2d4030e6d7/answers.txt: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S6; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantDefaults)$' => grain_mutant_test.go:109: open /tmp/u098/cache/S6/fc4c04de7e3cc4bf5d294902271215f4278ced42745ca81255314f2d4030e6d7/answers.txt: no such file or directory",
+    "members": [
+      "TestProduct_GraphQLMutantDefaults"
+    ],
+    "member_files": {
+      "TestProduct_GraphQLMutantDefaults": "stage1/cohere/graphql/printer/grain_mutant_test.go:122"
+    },
+    "entry_probe": {
+      "id": "P6",
+      "command": "ADAMIC_AUDIT_MODE=P6; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantDefaults)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestProduct_GraphQLMutantSource family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:123",
+    "seconds": 0.01,
+    "oracle": "Source construction completion only; promised main.ts presence is not asserted.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$' => PASS despite absent promised artifacts; S2-artifacts.json=[]",
+    "members": [
+      "TestProduct_GraphQLMutantSource000",
+      "TestProduct_GraphQLMutantSource001",
+      "TestProduct_GraphQLMutantSource002"
+    ],
+    "member_files": {
+      "TestProduct_GraphQLMutantSource000": "stage1/cohere/graphql/printer/grain_mutant_test.go:123",
+      "TestProduct_GraphQLMutantSource001": "stage1/cohere/graphql/printer/grain_mutant_test.go:124",
+      "TestProduct_GraphQLMutantSource002": "stage1/cohere/graphql/printer/grain_mutant_test.go:125"
+    },
+    "entry_probe": {
+      "id": "P2",
+      "command": "ADAMIC_AUDIT_MODE=P2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestProduct_GraphQLMutantLowered family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:126",
+    "seconds": 2.139,
+    "oracle": "Lowering construction completion only; promised port.c and backend presence are not asserted.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$' => PASS despite absent promised artifacts; S3-artifacts.json=[]",
+    "members": [
+      "TestProduct_GraphQLMutantLowered000",
+      "TestProduct_GraphQLMutantLowered001",
+      "TestProduct_GraphQLMutantLowered002"
+    ],
+    "member_files": {
+      "TestProduct_GraphQLMutantLowered000": "stage1/cohere/graphql/printer/grain_mutant_test.go:126",
+      "TestProduct_GraphQLMutantLowered001": "stage1/cohere/graphql/printer/grain_mutant_test.go:127",
+      "TestProduct_GraphQLMutantLowered002": "stage1/cohere/graphql/printer/grain_mutant_test.go:128"
+    },
+    "entry_probe": {
+      "id": "P3",
+      "command": "ADAMIC_AUDIT_MODE=P3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestProduct_GraphQLMutantSanitized family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:129",
+    "seconds": 2.16,
+    "oracle": "Sanitized compilation construction completion only; promised executable presence is not asserted.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=S4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$' => PASS despite absent promised artifacts; S4-artifacts.json=[]",
+    "members": [
+      "TestProduct_GraphQLMutantSanitized000",
+      "TestProduct_GraphQLMutantSanitized001",
+      "TestProduct_GraphQLMutantSanitized002"
+    ],
+    "member_files": {
+      "TestProduct_GraphQLMutantSanitized000": "stage1/cohere/graphql/printer/grain_mutant_test.go:129",
+      "TestProduct_GraphQLMutantSanitized001": "stage1/cohere/graphql/printer/grain_mutant_test.go:130",
+      "TestProduct_GraphQLMutantSanitized002": "stage1/cohere/graphql/printer/grain_mutant_test.go:131"
+    },
+    "entry_probe": {
+      "id": "P4",
+      "command": "ADAMIC_AUDIT_MODE=P4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$'",
+      "result": "pass"
+    }
+  },
+  {
+    "test": "TestPrinterMutantPlantedSurvivor",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go:232",
+    "seconds": 0.095,
+    "oracle": "Self-authored planted survivor IDs; unchanged answer must be rejected only by its owning shard.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: grain_mutant_test.go:245: planted survivor escaped shard-001",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_AUDIT_MODE=W2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutantPlantedSurvivor)$' => grain_mutant_test.go:245: planted survivor escaped shard-001",
+    "members": [
+      "TestPrinterMutantPlantedSurvivor"
+    ],
+    "member_files": {
+      "TestPrinterMutantPlantedSurvivor": "stage1/cohere/graphql/printer/grain_mutant_test.go:232"
+    }
+  },
+  {
+    "test": "TestPrinterThroughput",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/performance_test.go:16",
+    "seconds": 19.06,
+    "oracle": "Go cohere expected bytes, plus actual Go cohere and Prettier 3.9.6 execution. Native and source Node outputs must match. Logs throughput; has no speed threshold.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: performance_test.go:93: native timed output: exit 0, stderr , difference line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPrinterAsGoCohere family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 12.951,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterMutants family",
+      "TestPrinterMutantUnion",
+      "TestProduct_GraphQLMutantOracle",
+      "TestProduct_GraphQLMutantDefaults",
+      "TestProduct_GraphQLMutantSource family",
+      "TestProduct_GraphQLMutantLowered family",
+      "TestProduct_GraphQLMutantSanitized family",
+      "TestPrinterMutantPlantedSurvivor",
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "write M4 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$' => performance_test.go:93: native timed output: exit 0, stderr , difference line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+    "members": [
+      "TestPrinterThroughput"
+    ],
+    "member_files": {
+      "TestPrinterThroughput": "stage1/cohere/graphql/printer/performance_test.go:16"
+    },
+    "entry_probe": {
+      "id": "P1",
+      "command": "write P1 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+      "result": "fail"
+    }
+  }
+]

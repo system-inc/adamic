@@ -1,0 +1,408 @@
+[
+  {
+    "id": "M1",
+    "command": "write M1 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "statuses": {
+      "TestPrinterThroughput": "fail",
+      "TestPrinterShardPlantedDisagreement": "pass",
+      "TestProduct_GraphQLMutantSource002": "pass",
+      "TestProduct_GraphQLMutantSource001": "pass",
+      "TestProduct_GraphQLMutantSource000": "pass",
+      "TestProduct_GraphQLMutantDefaults": "pass",
+      "TestProduct_GraphQLMutantOracle": "pass",
+      "TestPrinterMutantUnion": "pass",
+      "TestProduct_GraphQLMutantLowered000": "pass",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestPrinterMutants_002": "pass",
+      "TestPrinterWhitespaceGap_004": "pass",
+      "TestPrinterWhitespaceGap_003": "pass",
+      "TestPrinterWhitespaceGap_002": "pass",
+      "TestProduct_GraphQLMutantSanitized000": "pass",
+      "TestPrinterMutantPlantedSurvivor": "pass",
+      "TestProduct_GraphQLMutantSanitized002": "pass",
+      "TestPrinterWhitespaceGap_001": "pass",
+      "TestPrinterWhitespaceGap_000": "pass",
+      "TestProduct_GraphQLMutantLowered002": "pass",
+      "TestProduct_GraphQLMutantLowered001": "pass",
+      "TestProduct_GraphQLMutantSanitized001": "pass",
+      "TestPrinterMutants_000": "pass",
+      "TestPrinterMutants_001": "pass"
+    },
+    "failed_tests": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_001",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_002"
+    ],
+    "failed_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family"
+    ],
+    "production_kill_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family"
+    ],
+    "evidence": {
+      "TestPrinterThroughput": [
+        "performance_test.go:93: native timed output: exit 0, stderr , difference line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n"
+      ],
+      "TestPrinterAsGoCohere family": [
+        "grain_asgo_test.go:299: Node: shard-002 tight/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n",
+        "grain_asgo_test.go:299: Node: shard-001 narrow/case-000539: line 540: \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: TRUE\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: TRUE) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: true\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: true) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-000 defaults/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n",
+        "grain_asgo_test.go:299: Node: shard-003 tabs/case-000539: line 540: \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: TRUE\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: TRUE) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: true\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: true) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-001 narrow/case-000539: line 540: \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: TRUE\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: TRUE) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: true\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: true) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-003 tabs/case-000539: line 540: \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: TRUE\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: TRUE) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: true\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: true) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-000 defaults/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\",
+        "grain_asgo_test.go:299: JS backend: shard-002 tight/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }",
+        "grain_asgo_test.go:299: leaks: shard-003 tabs/case-000539: line 540: \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: TRUE\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: TRUE) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: true\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: true) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-002 tight/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n",
+        "grain_asgo_test.go:299: native: shard-003 tabs/case-000539: line 540: \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: TRUE\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: TRUE) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\talias: field(\\\\n\\\\t\\\\ta: 1\\\\n\\\\t\\\\tb: \\\"two\\\"\\\\n\\\\t\\\\tc: THREE\\\\n\\\\t\\\\td: null\\\\n\\\\t\\\\te: true\\\\n\\\\t\\\\tf: false\\\\n\\\\t\\\\tg: 1.5e3\\\\n\\\\t\\\\th: $v\\\\n\\\\t\\\\ti: [1, 2]\\\\n\\\\t\\\\tj: { k: 1, l: { m: 2 } }\\\\n\\\\t) @include(if: $x) @skip(if: false) {\\\\n\\\\t\\\\t...Spread @defer\\\\n\\\\t\\\\t... on Type {\\\\n\\\\t\\\\t\\\\tx\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... @include(if: true) {\\\\n\\\\t\\\\t\\\\ty\\\\n\\\\t\\\\t}\\\\n\\\\t\\\\t... {\\\\n\\\\t\\\\t\\\\tz\\\\n\\\\t\\\\t}\\\\n\\\\t}\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-001 narrow/case-000539: line 540: \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: TRUE\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: TRUE) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: true\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: true) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-000 defaults/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n",
+        "grain_asgo_test.go:299: leaks: shard-001 narrow/case-000539: line 540: \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: TRUE\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: TRUE) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  alias: field(\\\\n    a: 1\\\\n    b: \\\"two\\\"\\\\n    c: THREE\\\\n    d: null\\\\n    e: true\\\\n    f: false\\\\n    g: 1.5e3\\\\n    h: $v\\\\n    i: [1, 2]\\\\n    j: { k: 1, l: { m: 2 } }\\\\n  ) @include(if: $x) @skip(if: false) {\\\\n    ...Spread @defer\\\\n    ... on Type {\\\\n      x\\\\n    }\\\\n    ... @include(if: true) {\\\\n      y\\\\n    }\\\\n    ... {\\\\n      z\\\\n    }\\\\n  }\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-000 defaults/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: { k: 1, l: { m: 2 } }\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n",
+        "grain_asgo_test.go:299: native: shard-002 tight/case-000539: line 540: \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: TRUE\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: TRUE) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n    }\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    alias: field(\\\\n        a: 1\\\\n        b: \\\"two\\\"\\\\n        c: THREE\\\\n        d: null\\\\n        e: true\\\\n        f: false\\\\n        g: 1.5e3\\\\n        h: $v\\\\n        i: [1, 2]\\\\n        j: {k: 1, l: {m: 2}}\\\\n    ) @include(if: $x) @skip(if: false) {\\\\n        ...Spread @defer\\\\n        ... on Type {\\\\n            x\\\\n        }\\\\n        ... @include(if: true) {\\\\n            y\\\\n        }\\\\n        ... {\\\\n            z\\\\n        }\\\\n"
+      ]
+    }
+  },
+  {
+    "id": "M2",
+    "command": "write M2 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "statuses": {
+      "TestPrinterThroughput": "fail",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterMutantPlantedSurvivor": "pass",
+      "TestPrinterWhitespaceGap_002": "pass",
+      "TestPrinterWhitespaceGap_000": "pass",
+      "TestPrinterWhitespaceGap_001": "pass",
+      "TestProduct_GraphQLMutantLowered002": "pass",
+      "TestProduct_GraphQLMutantSanitized002": "pass",
+      "TestProduct_GraphQLMutantLowered000": "pass",
+      "TestProduct_GraphQLMutantSource002": "pass",
+      "TestProduct_GraphQLMutantSanitized000": "pass",
+      "TestProduct_GraphQLMutantLowered001": "pass",
+      "TestProduct_GraphQLMutantSanitized001": "pass",
+      "TestPrinterShardPlantedDisagreement": "fail",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestProduct_GraphQLMutantDefaults": "pass",
+      "TestProduct_GraphQLMutantSource001": "pass",
+      "TestProduct_GraphQLMutantSource000": "pass",
+      "TestProduct_GraphQLMutantOracle": "pass",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterMutantUnion": "pass",
+      "TestPrinterMutants_000": "pass",
+      "TestPrinterMutants_001": "pass",
+      "TestPrinterWhitespaceGap_004": "pass",
+      "TestPrinterWhitespaceGap_003": "pass",
+      "TestPrinterMutants_002": "pass"
+    },
+    "failed_tests": [
+      "TestPrinterThroughput",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_001"
+    ],
+    "failed_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterShardPlantedDisagreement"
+    ],
+    "production_kill_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family"
+    ],
+    "evidence": {
+      "TestPrinterThroughput": [
+        "performance_test.go:93: native timed output: exit 0, stderr , difference line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ],
+      "TestPrinterAsGoCohere family": [
+        "grain_asgo_test.go:299: Node: shard-000 defaults/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-000 defaults/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-003 tabs/case-000001: line 2: \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-000 defaults/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-002 tight/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-000 defaults/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-003 tabs/case-000001: line 2: \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-002 tight/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-001 narrow/case-000001: line 2: \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-001 narrow/case-000001: line 2: \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-002 tight/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-003 tabs/case-000001: line 2: \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-003 tabs/case-000001: line 2: \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-001 narrow/case-000001: line 2: \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-002 tight/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-001 narrow/case-000001: line 2: \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\""
+      ],
+      "TestPrinterShardPlantedDisagreement": [
+        "grain_asgo_test.go:325: shard-000 defaults/case-000001: line 2: \"ok\\tquery {\\\\n    f(a: \\\"\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\u00db\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ]
+    }
+  },
+  {
+    "id": "M3",
+    "command": "write M3 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "statuses": {
+      "TestPrinterThroughput": "fail",
+      "TestPrinterMutantPlantedSurvivor": "pass",
+      "TestProduct_GraphQLMutantSanitized000": "pass",
+      "TestPrinterFileDriver": "fail",
+      "TestProduct_GraphQLMutantOracle": "pass",
+      "TestPrinterWhitespaceGap_000": "pass",
+      "TestProduct_GraphQLMutantLowered000": "pass",
+      "TestProduct_GraphQLMutantSource002": "pass",
+      "TestProduct_GraphQLMutantSource001": "pass",
+      "TestProduct_GraphQLMutantSource000": "pass",
+      "TestPrinterWhitespaceGap_003": "pass",
+      "TestProduct_GraphQLMutantDefaults": "pass",
+      "TestPrinterMutantUnion": "pass",
+      "TestProduct_GraphQLMutantLowered002": "pass",
+      "TestProduct_GraphQLMutantSanitized002": "pass",
+      "TestProduct_GraphQLMutantLowered001": "pass",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterShardPlantedDisagreement": "fail",
+      "TestPrinterMutants_002": "pass",
+      "TestPrinterWhitespaceGap_004": "pass",
+      "TestPrinterMutants_001": "pass",
+      "TestPrinterMutants_000": "pass",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestProduct_GraphQLMutantSanitized001": "pass",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterWhitespaceGap_001": "pass",
+      "TestPrinterWhitespaceGap_002": "pass"
+    },
+    "failed_tests": [
+      "TestPrinterThroughput",
+      "TestPrinterFileDriver",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_001"
+    ],
+    "failed_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement"
+    ],
+    "production_kill_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver"
+    ],
+    "evidence": {
+      "TestPrinterThroughput": [
+        "performance_test.go:93: native timed output: exit 0, stderr , difference line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ],
+      "TestPrinterAsGoCohere family": [
+        "grain_asgo_test.go:299: Node: shard-000 defaults/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-000 defaults/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-000 defaults/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-000 defaults/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-003 tabs/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-003 tabs/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-002 tight/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-002 tight/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-001 narrow/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n  f(\\\\r\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\r\\\\n    b: [1, 2, 3]\\\\r\\\\n    c: { x: 1, y: 2 }\\\\r\\\\n  )\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-001 narrow/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n  f(\\\\r\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\r\\\\n    b: [1, 2, 3]\\\\r\\\\n    c: { x: 1, y: 2 }\\\\r\\\\n  )\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-003 tabs/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-003 tabs/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-002 tight/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-002 tight/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-001 narrow/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n  f(\\\\r\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\r\\\\n    b: [1, 2, 3]\\\\r\\\\n    c: { x: 1, y: 2 }\\\\r\\\\n  )\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-001 narrow/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n  f(\\\\r\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\r\\\\n    b: [1, 2, 3]\\\\r\\\\n    c: { x: 1, y: 2 }\\\\r\\\\n  )\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\""
+      ],
+      "TestPrinterFileDriver": [
+        "printer_test.go:131: driver: exit 0, stdout \"query {\\r\\n    hello(a: 1, b: 2)\\r\\n}\\r\\n\", stderr \"\""
+      ],
+      "TestPrinterShardPlantedDisagreement": [
+        "grain_asgo_test.go:325: shard-000 defaults/case-000000: line 1: \"ok\\tquery {\\\\r\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\r\\\\n}\\\\r\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ]
+    }
+  },
+  {
+    "id": "M4",
+    "command": "write M4 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "statuses": {
+      "TestPrinterThroughput": "fail",
+      "TestProduct_GraphQLMutantLowered000": "pass",
+      "TestPrinterFileDriver": "pass",
+      "TestPrinterWhitespaceGap_004": "pass",
+      "TestPrinterWhitespaceGap_003": "pass",
+      "TestPrinterWhitespaceGap_002": "pass",
+      "TestProduct_GraphQLMutantSource000": "pass",
+      "TestProduct_GraphQLMutantSource002": "pass",
+      "TestProduct_GraphQLMutantSource001": "pass",
+      "TestPrinterMutants_002": "pass",
+      "TestPrinterShardPlantedDisagreement": "pass",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterWhitespaceGap_001": "pass",
+      "TestPrinterMutants_000": "pass",
+      "TestProduct_GraphQLMutantOracle": "pass",
+      "TestProduct_GraphQLMutantDefaults": "pass",
+      "TestPrinterMutantUnion": "pass",
+      "TestProduct_GraphQLMutantSanitized001": "pass",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestProduct_GraphQLMutantSanitized002": "pass",
+      "TestPrinterMutantPlantedSurvivor": "pass",
+      "TestProduct_GraphQLMutantLowered002": "pass",
+      "TestProduct_GraphQLMutantSanitized000": "pass",
+      "TestProduct_GraphQLMutantLowered001": "pass",
+      "TestPrinterWhitespaceGap_000": "pass",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterMutants_001": "pass",
+      "TestPrinterAsGoCohere_001": "fail"
+    },
+    "failed_tests": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_001"
+    ],
+    "failed_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family"
+    ],
+    "production_kill_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family"
+    ],
+    "evidence": {
+      "TestPrinterThroughput": [
+        "performance_test.go:93: native timed output: exit 0, stderr , difference line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ],
+      "TestPrinterAsGoCohere family": [
+        "grain_asgo_test.go:299: Node: shard-000 defaults/case-000035: line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-000 defaults/case-000035: line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-000 defaults/case-000035: line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-000 defaults/case-000035: line 36: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: { x: 1, y: 2 }\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-002 tight/case-000049: line 50: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: {x: 1, y: 2}\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-002 tight/case-000049: line 50: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: {x: 1, y: 2}\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-003 tabs/case-000035: line 36: \"ok\\tquery {\\\\n\\\\tf(\\\\n\\\\t\\\\ta: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n\\\\t\\\\tb: [1, 2, 3]\\\\n\\\\t\\\\tc: { x: 1, y: 2 }\\\\n\\\\t)\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-003 tabs/case-000035: line 36: \"ok\\tquery {\\\\n\\\\tf(\\\\n\\\\t\\\\ta: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n\\\\t\\\\tb: [1, 2, 3]\\\\n\\\\t\\\\tc: { x: 1, y: 2 }\\\\n\\\\t)\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-002 tight/case-000049: line 50: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: {x: 1, y: 2}\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-002 tight/case-000049: line 50: \"ok\\tquery {\\\\n    f(\\\\n        a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n        b: [1, 2, 3]\\\\n        c: {x: 1, y: 2}\\\\n    )\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-001 narrow/case-000625: line 626: \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(\\\\n  Z: [A]\\\\n  _: [a!]\\\\n  \\\"\ud800\udc00\\\"\\\\n  __: [a9]! @Za\\\\n) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\", Go cohere \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(Z: [A], _: [a!], \\\"\ud800\udc00\\\" __: [a9]! @Za) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-001 narrow/case-000625: line 626: \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(\\\\n  Z: [A]\\\\n  _: [a!]\\\\n  \\\"\ud800\udc00\\\"\\\\n  __: [a9]! @Za\\\\n) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\", Go cohere \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(Z: [A], _: [a!], \\\"\ud800\udc00\\\" __: [a9]! @Za) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-003 tabs/case-000035: line 36: \"ok\\tquery {\\\\n\\\\tf(\\\\n\\\\t\\\\ta: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n\\\\t\\\\tb: [1, 2, 3]\\\\n\\\\t\\\\tc: { x: 1, y: 2 }\\\\n\\\\t)\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-003 tabs/case-000035: line 36: \"ok\\tquery {\\\\n\\\\tf(\\\\n\\\\t\\\\ta: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n\\\\t\\\\tb: [1, 2, 3]\\\\n\\\\t\\\\tc: { x: 1, y: 2 }\\\\n\\\\t)\\\\n}\\\\n\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-001 narrow/case-000625: line 626: \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(\\\\n  Z: [A]\\\\n  _: [a!]\\\\n  \\\"\ud800\udc00\\\"\\\\n  __: [a9]! @Za\\\\n) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\", Go cohere \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(Z: [A], _: [a!], \\\"\ud800\udc00\\\" __: [a9]! @Za) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-001 narrow/case-000625: line 626: \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(\\\\n  Z: [A]\\\\n  _: [a!]\\\\n  \\\"\ud800\udc00\\\"\\\\n  __: [a9]! @Za\\\\n) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\", Go cohere \"ok\\tdirective @a0(\\\\n  Za: aZ @Za\\\\n  \\\"\\\"\\\"\\\\n  x\ud83d\ude00\\\\n  \\\"\\\"\\\"\\\\n  a0: A\\\\n  __: [x_y] @_9\\\\n) on INPUT_OBJECT\\\\ndirective @z(Z: [A], _: [a!], \\\"\ud800\udc00\\\" __: [a9]! @Za) repeatable on SCHEMA | MUTATION\\\\nschema @Type {\\\\n  subscription: Z\\\\n  mutation: Za\\\\n}\\\\n\""
+      ]
+    }
+  },
+  {
+    "id": "P1",
+    "command": "write P1 to /tmp/u098/selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+    "statuses": {
+      "TestPrinterThroughput": "fail",
+      "TestProduct_GraphQLMutantSource000": "pass",
+      "TestProduct_GraphQLMutantSource002": "pass",
+      "TestProduct_GraphQLMutantSource001": "pass",
+      "TestProduct_GraphQLMutantOracle": "pass",
+      "TestProduct_GraphQLMutantDefaults": "pass",
+      "TestPrinterMutantUnion": "pass",
+      "TestPrinterShardPlantedDisagreement": "fail",
+      "TestProduct_GraphQLMutantLowered000": "pass",
+      "TestPrinterAsGoCohere_000": "fail",
+      "TestPrinterAsGoCohere_003": "fail",
+      "TestPrinterAsGoCohere_002": "fail",
+      "TestPrinterAsGoCohere_001": "fail",
+      "TestPrinterMutants_000": "pass",
+      "TestPrinterMutants_002": "pass",
+      "TestPrinterMutants_001": "pass",
+      "TestPrinterFileDriver": "fail",
+      "TestPrinterWhitespaceGap_003": "fail",
+      "TestProduct_GraphQLMutantSanitized001": "pass",
+      "TestPrinterMutantPlantedSurvivor": "pass",
+      "TestProduct_GraphQLMutantSanitized002": "pass",
+      "TestProduct_GraphQLMutantLowered002": "pass",
+      "TestProduct_GraphQLMutantSanitized000": "pass",
+      "TestProduct_GraphQLMutantLowered001": "pass",
+      "TestPrinterWhitespaceGap_004": "fail",
+      "TestPrinterWhitespaceGap_002": "fail",
+      "TestPrinterWhitespaceGap_001": "fail",
+      "TestPrinterWhitespaceGap_000": "fail"
+    },
+    "failed_tests": [
+      "TestPrinterThroughput",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_003",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_001",
+      "TestPrinterFileDriver",
+      "TestPrinterWhitespaceGap_003",
+      "TestPrinterWhitespaceGap_004",
+      "TestPrinterWhitespaceGap_002",
+      "TestPrinterWhitespaceGap_001",
+      "TestPrinterWhitespaceGap_000"
+    ],
+    "failed_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "production_kill_rows": [
+      "TestPrinterThroughput",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": {
+      "TestPrinterThroughput": [
+        "performance_test.go:93: native timed output: exit 0, stderr , difference line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ],
+      "TestPrinterAsGoCohere family": [
+        "grain_asgo_test.go:299: JS backend: shard-002 tight/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-003 tabs/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-003 tabs/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-000 defaults/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-003 tabs/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-000 defaults/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-002 tight/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-002 tight/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-000 defaults/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-000 defaults/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-003 tabs/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n\\\\tf(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-002 tight/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: {x: 1, y: 2})\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: JS backend: shard-001 narrow/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: native: shard-001 narrow/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: leaks: shard-001 narrow/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\"",
+        "grain_asgo_test.go:299: Node: shard-001 narrow/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n  f(\\\\n    a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\"\\\\n    b: [1, 2, 3]\\\\n    c: { x: 1, y: 2 }\\\\n  )\\\\n}\\\\n\""
+      ],
+      "TestPrinterFileDriver": [
+        "printer_test.go:131: driver: exit 0, stdout \"\\n\", stderr \"\""
+      ],
+      "TestPrinterShardPlantedDisagreement": [
+        "grain_asgo_test.go:325: shard-000 defaults/case-000000: line 1: \"ok\\t\", Go cohere \"ok\\tquery {\\\\n    f(a: \\\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\", b: [1, 2, 3], c: { x: 1, y: 2 })\\\\n}\\\\n\""
+      ],
+      "TestPrinterWhitespaceGap family": [
+        "gaps_test.go:129: native: shard-003 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000003: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (2:1)\"",
+        "gaps_test.go:129: Node: shard-003 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000003: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (2:1)\"",
+        "gaps_test.go:129: native: shard-004 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000000: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:1)\"",
+        "gaps_test.go:129: Node: shard-004 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000000: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:1)\"",
+        "gaps_test.go:129: native: shard-002 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000002: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (3:1)\"",
+        "gaps_test.go:129: Node: shard-002 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000002: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (3:1)\"",
+        "gaps_test.go:129: native: shard-001 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000001: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\"",
+        "gaps_test.go:129: Node: shard-001 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000001: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\"",
+        "gaps_test.go:129: native: shard-000 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000004: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\"",
+        "gaps_test.go:129: Node: shard-000 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000004: line 1: \"ok\\t\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:2)\""
+      ]
+    }
+  }
+]

@@ -1,0 +1,23 @@
+--- a/stage1/cohere/graphql/printer/main.ts
++++ b/stage1/cohere/graphql/printer/main.ts
+@@ -4,16 +4,16 @@
+ import { defaults, type SettingsOptions } from './doc.ts';
+ export function escaped(text: string): string {
+     let result = text;
+-    if(result.includes('\\')) {
++    if(true || result.includes('\\')) {
+         result = result.split('\\').join('\\\\');
+     }
+-    if(result.includes('\n')) {
++    if(true || result.includes('\n')) {
+         result = result.split('\n').join('\\n');
+     }
+-    if(result.includes('\r')) {
++    if(true || result.includes('\r')) {
+         result = result.split('\r').join('\\r');
+     }
+-    if(result.includes('\t')) {
++    if(true || result.includes('\t')) {
+         result = result.split('\t').join('\\t');
+     }
+     return result;

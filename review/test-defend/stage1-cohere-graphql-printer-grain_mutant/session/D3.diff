@@ -1,0 +1,17 @@
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -102,12 +102,12 @@
+             const node = this.get(command.doc);
+             if(node.kind === 'suffix' || node.kind === 'breakParent') continue;
+             if(node.kind === 'text') {
+-                remaining -= node.width;
++                remaining -= stringWidth(node.text);
+                 continue;
+             }
+             if(node.kind === 'line') {
+                 if(!command.flat || node.broken) return true;
+-                remaining -= node.width;
++                remaining -= stringWidth(node.text);
+                 continue;
+             }
+             if(node.kind === 'ifBreak') {

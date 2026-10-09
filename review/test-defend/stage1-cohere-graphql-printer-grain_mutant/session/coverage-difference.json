@@ -1,0 +1,25 @@
+{
+  "go_exclusive_blocks": [
+    "github.com/system-inc/adamic/internal/native/native.go:106.2,106.29"
+  ],
+  "v8": {
+    "main": {
+      "exclusive_transformed_js_lines": [
+        44
+      ],
+      "throughput_covered_bytes": 1845,
+      "asgo_covered_bytes": 1876
+    },
+    "doc": {
+      "exclusive_transformed_js_lines": [],
+      "throughput_covered_bytes": 6711,
+      "asgo_covered_bytes": 6757
+    },
+    "printer": {
+      "exclusive_transformed_js_lines": [],
+      "throughput_covered_bytes": 26791,
+      "asgo_covered_bytes": 26870
+    }
+  },
+  "note": "Go profiles instrument compiler only; V8 lines refer saved transformed JavaScript, not origin TS."
+}

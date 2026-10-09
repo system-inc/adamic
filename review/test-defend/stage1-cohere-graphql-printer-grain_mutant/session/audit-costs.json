@@ -1,0 +1,422 @@
+{
+  "clean-switch": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 0,
+    "wall": 70.50925283499964,
+    "seconds": 65.24,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "M1": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 1,
+    "wall": 32.97844820699902,
+    "seconds": 30.957,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": "M1"
+  },
+  "M2": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 1,
+    "wall": 30.60564611600057,
+    "seconds": 28.852,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": "M2"
+  },
+  "M3": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 1,
+    "wall": 28.500373416000002,
+    "seconds": 26.511,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": "M3"
+  },
+  "M4": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 1,
+    "wall": 29.125104773000203,
+    "seconds": 27.33,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": "M4"
+  },
+  "P1": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+    ],
+    "exit": 1,
+    "wall": 17.38391780600068,
+    "seconds": 15.358,
+    "mode": "",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": "P1"
+  },
+  "W1": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002)$"
+    ],
+    "exit": 1,
+    "wall": 9.238977384000464,
+    "seconds": 7.212,
+    "mode": "W1",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "W2": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutantPlantedSurvivor)$"
+    ],
+    "exit": 1,
+    "wall": 2.184694016999856,
+    "seconds": 0.089,
+    "mode": "W2",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "S1": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutantUnion)$"
+    ],
+    "exit": 1,
+    "wall": 3.44847039600063,
+    "seconds": 1.272,
+    "mode": "S1",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "S2": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$"
+    ],
+    "exit": 0,
+    "wall": 1.9906392239990964,
+    "seconds": 0.009,
+    "mode": "S2",
+    "cache": "/tmp/u098/cache/S2",
+    "selector": ""
+  },
+  "S3": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$"
+    ],
+    "exit": 0,
+    "wall": 4.2043060309988505,
+    "seconds": 2.235,
+    "mode": "S3",
+    "cache": "/tmp/u098/cache/S3",
+    "selector": ""
+  },
+  "S4": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$"
+    ],
+    "exit": 0,
+    "wall": 6.84528944900012,
+    "seconds": 4.671,
+    "mode": "S4",
+    "cache": "/tmp/u098/cache/S4",
+    "selector": ""
+  },
+  "S5": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantOracle)$"
+    ],
+    "exit": 0,
+    "wall": 2.977488088001337,
+    "seconds": 1.181,
+    "mode": "S5",
+    "cache": "/tmp/u098/cache/S5",
+    "selector": ""
+  },
+  "S6": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantDefaults)$"
+    ],
+    "exit": 1,
+    "wall": 4.555877423999846,
+    "seconds": 2.624,
+    "mode": "S6",
+    "cache": "/tmp/u098/cache/S6",
+    "selector": ""
+  },
+  "P2": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002)$"
+    ],
+    "exit": 0,
+    "wall": 2.0056074320000334,
+    "seconds": 0.007,
+    "mode": "P2",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "P3": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002)$"
+    ],
+    "exit": 0,
+    "wall": 1.9918765539987362,
+    "seconds": 0.009,
+    "mode": "P3",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "P4": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$"
+    ],
+    "exit": 0,
+    "wall": 2.0867112889991404,
+    "seconds": 0.008,
+    "mode": "P4",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "P5": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantOracle)$"
+    ],
+    "exit": 0,
+    "wall": 2.093489871998827,
+    "seconds": 0.007,
+    "mode": "P5",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "P6": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestProduct_GraphQLMutantDefaults)$"
+    ],
+    "exit": 0,
+    "wall": 1.9315811060005217,
+    "seconds": 0.007,
+    "mode": "P6",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  },
+  "P7": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterMutantUnion)$"
+    ],
+    "exit": 0,
+    "wall": 3.22997289200066,
+    "seconds": 1.237,
+    "mode": "P7",
+    "cache": "/tmp/u098/cache/switch",
+    "selector": ""
+  }
+}

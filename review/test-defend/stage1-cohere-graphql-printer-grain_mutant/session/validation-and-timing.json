@@ -1,0 +1,293 @@
+{
+  "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+  "nproc": 5,
+  "standalone_diffs_apply": true,
+  "source_restored": true,
+  "runs": {
+    "baseline": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:39:48.069185866Z",
+          "Action": "fail",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 90.026
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:39:35.305175617Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 77.25
+        }
+      ],
+      "skips": [],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.530s",
+        "shards_test.go:101: C emission wall 1.322s",
+        "shards_test.go:124: clang wall 5.547s",
+        "shards_test.go:98: lowering wall 1.658s",
+        "shards_test.go:98: lowering wall 1.702s",
+        "shards_test.go:101: C emission wall 2.885s",
+        "shards_test.go:101: C emission wall 3.067s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.489108853 0.479941683 0.477464087 0.491150916 0.491728262], best 0.477464, 5263.2 texts/s",
+        "performance_test.go:109: Node: seconds [0.416907003 0.478738094 0.493241626 0.47320679 0.402389564], best 0.402390, 6245.2 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.293529756 0.3038818 0.294583824 0.301322765 0.290069435], best 0.290069, 8663.4 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.298981376 1.311693002 1.192060495 1.275236139 1.286616303], best 1.192060, 2108.1 texts/s"
+      ]
+    },
+    "baseline-warm": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:41:50.035232509Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 88.932
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:40:43.511703568Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 22.4
+        }
+      ],
+      "skips": [
+        "TestProduct_GraphQLPrinterRelease"
+      ],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.537s",
+        "shards_test.go:101: C emission wall 1.340s",
+        "shards_test.go:98: lowering wall 1.290s",
+        "shards_test.go:98: lowering wall 1.635s",
+        "shards_test.go:101: C emission wall 11.242s",
+        "shards_test.go:101: C emission wall 11.857s",
+        "shards_test.go:98: lowering wall 2.581s",
+        "shards_test.go:101: C emission wall 4.562s",
+        "shards_test.go:98: lowering wall 0.798s",
+        "shards_test.go:101: C emission wall 3.488s",
+        "shards_test.go:98: lowering wall 0.850s",
+        "shards_test.go:101: C emission wall 2.184s",
+        "shards_test.go:124: clang wall 20.596s",
+        "shards_test.go:124: clang wall 12.484s",
+        "shards_test.go:98: lowering wall 1.150s",
+        "shards_test.go:98: lowering wall 0.867s",
+        "shards_test.go:101: C emission wall 2.311s",
+        "shards_test.go:124: clang wall 9.916s",
+        "shards_test.go:101: C emission wall 3.138s",
+        "shards_test.go:98: lowering wall 1.042s",
+        "shards_test.go:101: C emission wall 2.124s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.484323362 0.526108241 0.557757968 0.75531003 0.485995382], best 0.484323, 5188.7 texts/s",
+        "performance_test.go:109: Node: seconds [0.532783736 0.487052587 0.526325554 0.903508761 0.693352938], best 0.487053, 5159.6 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.318143082 0.419117642 0.359535807 0.386818369 0.347999805], best 0.318143, 7899.0 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.281159561 1.434156786 1.168628982 1.307636958 1.326039951], best 1.168629, 2150.4 texts/s"
+      ]
+    },
+    "throughput-coverage": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:40:20.921983902Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 30.03
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:40:20.89361347Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 29.99
+        }
+      ],
+      "skips": [],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.555s",
+        "shards_test.go:101: C emission wall 1.354s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.479410462 0.506259654 0.490317642 0.480569067 0.471129234], best 0.471129, 5334.0 texts/s",
+        "performance_test.go:109: Node: seconds [1.20552635 1.301811588 1.306839169 1.300846927 1.286993731], best 1.205526, 2084.6 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.304780485 0.294221005 0.300793126 0.290752386 0.301330779], best 0.290752, 8643.1 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.93578116 1.960199205 1.9641428090000002 1.976905455 2.094685492], best 1.935781, 1298.2 texts/s"
+      ]
+    },
+    "asgo-coverage": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:41:15.799206036Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 41.599
+        }
+      ],
+      "throughput_events": [],
+      "skips": [],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.718s",
+        "shards_test.go:101: C emission wall 1.461s"
+      ],
+      "timing_lines": []
+    },
+    "D1": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:43:48.96535137Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 78.096
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:43:01.987431967Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 31.11
+        }
+      ],
+      "skips": [
+        "TestProduct_GraphQLPrinterRelease"
+      ],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.530s",
+        "shards_test.go:101: C emission wall 1.321s",
+        "shards_test.go:124: clang wall 5.498s",
+        "shards_test.go:98: lowering wall 0.691s",
+        "shards_test.go:98: lowering wall 0.692s",
+        "shards_test.go:98: lowering wall 0.551s",
+        "shards_test.go:101: C emission wall 1.469s",
+        "shards_test.go:101: C emission wall 1.506s",
+        "shards_test.go:101: C emission wall 2.411s",
+        "shards_test.go:98: lowering wall 0.734s",
+        "shards_test.go:101: C emission wall 1.688s",
+        "shards_test.go:124: clang wall 11.184s",
+        "shards_test.go:98: lowering wall 1.014s",
+        "shards_test.go:101: C emission wall 1.675s",
+        "shards_test.go:98: lowering wall 0.632s",
+        "shards_test.go:101: C emission wall 2.838s",
+        "shards_test.go:124: clang wall 7.310s",
+        "shards_test.go:124: clang wall 10.707s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.510392472 0.505466937 0.500356387 0.509705652 0.49389381], best 0.493894, 5088.1 texts/s",
+        "performance_test.go:109: Node: seconds [0.522828376 0.440517603 0.449932182 0.518477528 0.471399267], best 0.440518, 5704.7 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.300164132 0.286760634 0.294079263 0.300949088 0.295256125], best 0.286761, 8763.4 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.324545318 1.3026452960000001 1.172399261 1.247118028 1.144064339], best 1.144064, 2196.6 texts/s"
+      ]
+    },
+    "D2": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:45:14.041287236Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 83.436
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:44:21.745407737Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 31.13
+        }
+      ],
+      "skips": [
+        "TestProduct_GraphQLPrinterRelease"
+      ],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.537s",
+        "shards_test.go:101: C emission wall 1.328s",
+        "shards_test.go:124: clang wall 5.355s",
+        "shards_test.go:98: lowering wall 1.145s",
+        "shards_test.go:98: lowering wall 1.212s",
+        "shards_test.go:98: lowering wall 0.930s",
+        "shards_test.go:98: lowering wall 0.828s",
+        "shards_test.go:101: C emission wall 2.330s",
+        "shards_test.go:101: C emission wall 2.316s",
+        "shards_test.go:101: C emission wall 2.786s",
+        "shards_test.go:101: C emission wall 2.667s",
+        "shards_test.go:98: lowering wall 0.864s",
+        "shards_test.go:101: C emission wall 3.412s",
+        "shards_test.go:124: clang wall 7.194s",
+        "shards_test.go:98: lowering wall 0.891s",
+        "shards_test.go:101: C emission wall 2.195s",
+        "shards_test.go:98: lowering wall 0.821s",
+        "shards_test.go:101: C emission wall 2.572s",
+        "shards_test.go:98: lowering wall 1.882s",
+        "shards_test.go:101: C emission wall 4.104s",
+        "shards_test.go:98: lowering wall 1.320s",
+        "shards_test.go:101: C emission wall 1.578s",
+        "shards_test.go:124: clang wall 6.720s",
+        "shards_test.go:124: clang wall 5.490s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.486591093 0.482840873 0.479497284 0.486420288 0.478408233], best 0.478408, 5252.8 texts/s",
+        "performance_test.go:109: Node: seconds [0.406510319 0.511542778 0.510706903 0.442987038 0.449323925], best 0.406510, 6181.9 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.288252983 0.303012245 0.291257169 0.291413457 0.311183585], best 0.288253, 8718.0 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.304892263 1.318245603 1.34999849 1.259586 1.302590657], best 1.259586, 1995.1 texts/s"
+      ]
+    },
+    "D3": {
+      "package_events": [
+        {
+          "Time": "2026-10-09T15:46:40.3236061Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Elapsed": 84.298
+        }
+      ],
+      "throughput_events": [
+        {
+          "Time": "2026-10-09T15:45:48.099363779Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+          "Test": "TestPrinterThroughput",
+          "Elapsed": 32.07
+        }
+      ],
+      "skips": [
+        "TestProduct_GraphQLPrinterRelease"
+      ],
+      "build_lines": [
+        "shards_test.go:98: lowering wall 0.535s",
+        "shards_test.go:101: C emission wall 1.326s",
+        "shards_test.go:124: clang wall 5.471s",
+        "shards_test.go:98: lowering wall 0.786s",
+        "shards_test.go:98: lowering wall 0.695s",
+        "shards_test.go:101: C emission wall 1.673s",
+        "shards_test.go:101: C emission wall 1.962s",
+        "shards_test.go:98: lowering wall 0.523s",
+        "shards_test.go:101: C emission wall 1.300s",
+        "shards_test.go:98: lowering wall 0.755s",
+        "shards_test.go:124: clang wall 10.272s",
+        "shards_test.go:101: C emission wall 3.205s",
+        "shards_test.go:98: lowering wall 0.712s",
+        "shards_test.go:101: C emission wall 1.674s",
+        "shards_test.go:124: clang wall 7.744s",
+        "shards_test.go:124: clang wall 13.382s",
+        "shards_test.go:98: lowering wall 0.938s",
+        "shards_test.go:101: C emission wall 2.206s",
+        "shards_test.go:98: lowering wall 1.455s",
+        "shards_test.go:101: C emission wall 3.121s"
+      ],
+      "timing_lines": [
+        "performance_test.go:109: native: seconds [0.557650084 0.561660547 0.559854711 0.575832585 0.563859144], best 0.557650, 4506.4 texts/s",
+        "performance_test.go:109: Node: seconds [0.552413346 0.588737456 0.51737703 0.497780415 0.583554558], best 0.497780, 5048.4 texts/s",
+        "performance_test.go:109: Go cohere: seconds [0.297138605 0.295338977 0.286561385 0.304771629 0.305011287], best 0.286561, 8769.5 texts/s",
+        "performance_test.go:109: Prettier 3.9.6: seconds [1.315500413 1.345546231 1.2650270049999999 1.183503333 1.328470609], best 1.183503, 2123.4 texts/s"
+      ]
+    }
+  }
+}

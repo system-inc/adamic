@@ -1,0 +1,132 @@
+[
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 41,
+    "signature": "func printerMutantSource(t *testing.T, number int) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 58,
+    "signature": "func printerMutantLowered(t *testing.T, number int) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 65,
+    "signature": "func printerMutantSanitized(t *testing.T, number int) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 72,
+    "signature": "func printerMutantProducts(t *testing.T, number int) printerProducts {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 77,
+    "signature": "func printerMutantOracle(t *testing.T) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 107,
+    "signature": "func printerMutantCorpus(t *testing.T) (string, string) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 144,
+    "signature": "func printerMutantUnit(t *testing.T, unit int) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 210,
+    "signature": "func printerMutantCases(number int, enumeration []printerCase) []printerCase {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/grain_mutant_test.go",
+    "line": 219,
+    "signature": "func printerMutantDisagreement(number int, side string, result run, want string) (string, error) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 30,
+    "signature": "func firstDifference(got string, want string) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 51,
+    "signature": "func lowered(t *testing.T, path string) *ir.Program {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 65,
+    "signature": "func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 86,
+    "signature": "func combinedOutput(command *exec.Cmd) ([]byte, error) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 90,
+    "signature": "func execute(t *testing.T, environment []string, name string, arguments ...string) run {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/helpers_test.go",
+    "line": 108,
+    "signature": "func onNode(t *testing.T, path string, arguments ...string) run {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer_test.go",
+    "line": 17,
+    "signature": "func printerCases(t *testing.T, mode string, oracle ...string) (string, string) {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/printer_test.go",
+    "line": 86,
+    "signature": "func printerDirectoryAt(t *testing.T, directory, file, from, to string) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 29,
+    "signature": "func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 57,
+    "signature": "func printerInputFiles(t *testing.T, roots ...string) []string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 92,
+    "signature": "func printerOracle(t *testing.T) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 124,
+    "signature": "func printerLoweredProduct(t *testing.T, path string) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 142,
+    "signature": "func printerCompiledProduct(t *testing.T, loweredProduct string, options native.Options) string {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 164,
+    "signature": "func preparePrinterProducts(t *testing.T, path string) printerProducts {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 181,
+    "signature": "func enumeratePrinter(t *testing.T, mode, path, want string) []printerCase {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 206,
+    "signature": "func printerShardUnion(whole []printerCase, shards []printerShard) error {"
+  },
+  {
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 232,
+    "signature": "func printerShardSelection(value string, count int) ([]bool, error) {"
+  }
+]
