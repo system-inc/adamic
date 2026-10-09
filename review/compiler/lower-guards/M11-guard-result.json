@@ -1,0 +1,50 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestConstructorCacheOneArgumentRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 1.9219587540064822
+  },
+  {
+    "name": "mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestConstructorCacheOneArgumentRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 1.9704567239969037
+  },
+  {
+    "name": "restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestConstructorCacheOneArgumentRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 1.9263840339990566
+  }
+]
