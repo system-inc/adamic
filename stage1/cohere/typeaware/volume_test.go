@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
@@ -83,9 +84,19 @@ func volumeControls() []string {
 	}
 }
 
-// Not parallel: archive builds and corpus runs share the optional artifact directory
-// and need the limited scratch space without another archive build competing.
+// TestMain prepares immutable build inputs once before test units start.
+// ADAMIC_TEST_SHARD=i/n (zero based) selects units; unset runs every unit.
 func TestVolumeAgreementAndMutants(t *testing.T) {
+	setupStarted := time.Now()
+	var buildTime time.Duration
+	built := func(build func() string) string {
+		started := time.Now()
+		path := build()
+		buildTime += time.Since(started)
+		return path
+	}
+	var shards []volumeShard
+	var expected []string
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -101,11 +112,11 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := volumeStage0(t)
-	normal := volumeArchive(h, "checker", "", false)
+	stage0 := built(func() string { return volumeStage0(t) })
+	normal := built(func() string { return volumeArchive(h, "checker", "", false) })
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	binary := volumeNative(h, stage0, "volume", entry, normal, false, false)
-	oracle := volumeProductOracle(h)
+	binary := built(func() string { return volumeNative(h, stage0, "volume", entry, normal, false, false) })
+	oracle := built(func() string { return volumeProductOracle(h) })
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var paths []string
 	for i, source := range volumeControls() {
@@ -114,89 +125,94 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 	paths = append(paths, h.write("native-globals.d.ts", "declare const console: {log():void};\n"))
 	paths = append(paths, h.write("native-console.ts", "const detached=console.log;\nexport {};\n"))
 	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
-	truth := h.compare("controls", oracle, binary, config, manifest)
+	controlInputs := volumeOracleData(t, "controls", config)
+	truth := volumeOracleOutput(h, controlInputs, oracle, config, manifest)
 	for _, name := range volumeRules {
 		if !bytes.Contains(truth.stdout, []byte("@typescript-eslint/"+strings.ReplaceAll(name, "_", "-"))) {
 			t.Fatalf("rule %s lacks a positive control", name)
 		}
 	}
-	sanitized := volumeArchive(h, "checker-asan", "", true)
-	asan := volumeNative(h, stage0, "volume-asan", entry, sanitized, true, false)
-	h.compare("controls-asan", oracle, asan, config, manifest)
+	sanitized := built(func() string { return volumeArchive(h, "checker-asan", "", true) })
+	asan := built(func() string { return volumeNative(h, stage0, "volume-asan", entry, sanitized, true, false) })
+
+	expected = append(expected, volumeIDs("controls", paths)...)
+	shards = append(shards, volumeShard{ids: volumeIDs("controls", paths), run: func(h *harness) {
+		volumeCompareProducts(h, controlInputs, "controls", oracle, binary, asan, config, manifest)
+	}})
 
 	// Each new compiler question is proven consequential by replacing its answer
 	// with another well-formed compiler fact. Every mutant must finish normally;
 	// only the independent production-rule finding bytes may catch it.
-	changes := []struct{ name, path, from, to string }{
-		{"assignable-types", "bridge/tsgo/checker/facts.go", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[1], selected[0]))"},
-		{"widened-shape", "bridge/tsgo/checker/facts.go", "t = checker.Checker_getWidenedType(c, t)", "// Mutant keeps the fresh type."},
-		{"enum-types", "bridge/tsgo/checker/facts.go", "base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)", "base = part"},
-		{"type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\""},
-		{"scope-locals", "bridge/tsgo/checker/scopes.go", "out.text(name)", "out.text(name + \"wrong\")"},
-		{"call-returns", "bridge/tsgo/checker/facts.go", "roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))", "_ = signature; roots = append(roots, g.add(checker.Checker_numberType(c)))"},
-		{"property-shape", "bridge/tsgo/checker/facts.go", "g.add(c.GetTypeOfSymbolAtLocation(property, node))", "g.add(checker.Checker_numberType(c))"},
-		{"contextual-shape", "bridge/tsgo/checker/facts.go", "t := checker.Checker_getContextualType(c, node, checker.ContextFlagsNone)", "t := c.GetTypeAtLocation(node)"},
-		{"symbol-origin", "bridge/tsgo/checker/facts.go", "file = f.FileName()", "file = source.FileName()"},
-		{"type-origin", "bridge/tsgo/checker/metadata.go", "out.text(symbol.Name)", "out.text(symbol.Name + \"wrong\")"},
-		{"property-info", "bridge/tsgo/checker/metadata.go", "out.text(strings.TrimPrefix(declaration.Kind.String(), \"Kind\"))", "out.text(\"PropertySignature\")"},
-		{"call-count", "bridge/tsgo/checker/facts.go", "out.number(uint64(len(c.GetSignaturesOfType(subject, checker.SignatureKindCall))))", "out.number(0)"},
-		{"call-parameters", "bridge/tsgo/checker/facts.go", "g.add(checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(params[0], node)))", "g.add(checker.Checker_numberType(c))"},
-		{"apparent-shape", "bridge/tsgo/checker/facts.go", "g.add(checker.Checker_getApparentType(c, subject))", "g.add(checker.Checker_numberType(c))"},
-		{"base-shapes", "bridge/tsgo/checker/facts.go", "roots = append(roots, g.add(base))", "_ = base"},
-	}
+	changes := volumeMutations()
+
 	for _, change := range changes {
-		t.Run(change.name, func(t *testing.T) {
-			previous := h.t
-			h.t = t
-			defer func() { h.t = previous }()
+
+		var mutant string
+		selected, err := volumeSelected(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if selected {
 			overlay := h.overlay(change.name, change.path, change.from, change.to)
-			archive := volumeArchive(h, change.name+"-checker", overlay, false)
-			t.Cleanup(func() { os.Remove(archive) })
-			mutant := volumeNative(h, stage0, change.name+"-native", entry, archive, false, true)
-			t.Cleanup(func() { os.Remove(mutant) })
+			archive := built(func() string { return volumeArchive(h, change.name+"-checker", overlay, false) })
+			mutant = built(func() string { return volumeNative(h, stage0, change.name+"-native", entry, archive, false, true) })
+		}
+		id := "mutant:" + change.name
+		expected = append(expected, id)
+		shards = append(shards, volumeShard{ids: []string{id}, run: func(h *harness) {
 			observed := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
 			if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
-				t.Fatalf("%s checker question mutant survived: %s", change.name, observed.stderr)
+				h.t.Fatalf("%s checker question mutant survived: %s", change.name, observed.stderr)
 			}
-			t.Logf("%s mutant: byte oracle catches byte %d; %s", change.name, firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
-			// Archives are reproducible, logs and overlay sources remain reviewable.
-			if err := os.Remove(archive); err != nil {
-				t.Fatal(err)
-			}
+			h.t.Logf("%s mutant: byte oracle catches byte %d; %s", change.name, firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+		}})
+	}
+
+	releasedSource := h.write("released-inspect.ts", volumeReleaseSource)
+	stale := built(func() string {
+		return volumeNative(h, stage0, "released-inspect", releasedSource, normal, false, false)
+	})
+	probe := h.write("probe.ts", "x;\n")
+
+	var mutated string
+	selected, err := volumeSelected(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if selected {
+		overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
+		archive := built(func() string { return volumeArchive(h, "released-registry-checker", overlay, false) })
+		mutated = built(func() string {
+			return volumeNative(h, stage0, "released-registry-native", releasedSource, archive, false, true)
 		})
 	}
 
-	releasedSource := h.write("released-inspect.ts", `import { programArguments, tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
-const args=programArguments(); const path=args[1] ?? ''; const program=tsgoProgram(args[0] ?? '',[path]);tsgoRelease(program);
-console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
-`)
-	stale := volumeNative(h, stage0, "released-inspect", releasedSource, normal, false, false)
-	probe := h.write("probe.ts", "x;\n")
-	observed := h.run("released-inspect-run", exec.Command(stale, config, probe))
-	if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(observed.stderr) != "adamic: panic: invalid or released checker handle\n" {
-		t.Fatalf("released program escaped: %v %s", observed.err, observed.stderr)
-	}
-	t.Log("released program queried with new question: panic 70, invalid or released checker handle")
-	overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
-	archive := volumeArchive(h, "released-registry-checker", overlay, false)
-	mutated := volumeNative(h, stage0, "released-registry-native", releasedSource, archive, false, true)
-	observed = h.must("released-registry-run", exec.Command(mutated, config, probe))
-	t.Log("released registry mutant: exit 0 caught by required panic 70")
-	os.Remove(archive)
+	expected = append(expected, "released-registry")
+	shards = append(shards, volumeShard{ids: []string{"released-registry"}, run: func(h *harness) {
+		observed := h.run("released-inspect-run", exec.Command(stale, config, probe))
+		if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(observed.stderr) != "adamic: panic: invalid or released checker handle\n" {
+			h.t.Fatalf("released program escaped: %v %s", observed.err, observed.stderr)
+		}
+		h.t.Log("released program queried with new question: panic 70, invalid or released checker handle")
+		h.must("released-registry-run", exec.Command(mutated, config, probe))
+		h.t.Log("released registry mutant: exit 0 caught by required panic 70")
+	}})
 
-	// Repository roots are the pre-port manifest so rule selection and agreement
-	// describe the same measured population. Include declaration roots from config.
+	// Preserve the pre-port repository population, including declarations from config.
 	if manifest := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"); manifest != "" {
-		h.compare("repository", oracle, binary, filepath.Join(repository, "tsconfig.json"), manifest)
-		h.compare("repository-asan", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
+		config := filepath.Join(repository, "tsconfig.json")
+		paths := volumeManifest(t, config, manifest)
+		expected = append(expected, volumeIDs("repository", paths)...)
+		shards = append(shards, volumeCorpusShards(t, "repository", paths, config, oracle, binary, asan)...)
 	}
 	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-		paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
-		manifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
-		config := filepath.Join(corpus, "src/compiler/tsconfig.json")
-		h.compare("compiler", oracle, binary, config, manifest)
-		h.compare("compiler-asan", oracle, asan, config, manifest)
+		paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+		expected = append(expected, volumeIDs("compiler", paths)...)
+		shards = append(shards, volumeCorpusShards(t, "compiler", paths, filepath.Join(corpus, "src/compiler/tsconfig.json"), oracle, binary, asan)...)
 	}
+	outside := time.Since(setupStarted)
+	t.Logf("volume-setup outside-shards=%.6fs build-inputs=%.6fs logic=%.6fs", outside.Seconds(), buildTime.Seconds(), (outside - buildTime).Seconds())
+	volumeRunShards(t, repository, expected, shards)
 }
 
 // The strict-config limit is explicit. The six-rule runner still supports its
