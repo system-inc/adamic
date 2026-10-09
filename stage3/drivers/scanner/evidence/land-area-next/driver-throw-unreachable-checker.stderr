@@ -1,0 +1,4 @@
+/workspace/scratch/native3-next-walk/main.a:18:25: error TS2339: Property 'message' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+  Property 'message' does not exist on type '{ readonly kind: "Ok"; readonly text: string; }'.
+/workspace/scratch/native3-next-walk/main.a:20:31: error TS2339: Property 'text' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+  Property 'text' does not exist on type '{ readonly kind: "Error"; readonly message: string; }'.
