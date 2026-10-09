@@ -1,0 +1,8 @@
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+    enum_guards_test.go:112: duplicate enum field slot "1"
+--- FAIL: TestEnumReverseMappingUsesSingleSlot (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.138s
+FAIL

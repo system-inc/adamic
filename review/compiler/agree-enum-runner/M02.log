@@ -1,0 +1,9 @@
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+    enums_open_test.go:41: JavaScript backend stdout = "42\n0/\n", source Node = "42\n0/A\n"
+--- FAIL: TestNumericEnumsAreOpen (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.139s
+FAIL
