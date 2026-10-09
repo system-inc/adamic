@@ -34,6 +34,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestRegistrationMutant(t *testing.T) {
+	t.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
@@ -131,6 +132,7 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));
