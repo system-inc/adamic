@@ -75,7 +75,7 @@ voidCause() {
 # Notifications are best effort, once per transition; uppercase runs are normalized because
 # ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
 notifyStorm() {
-  local text=$1 recipient
+  local text=$1 recipients=${2:-system_adamic_developer_tools system_adamic_integration} recipient
   text=$(printf '%s\n' "${text}" | awk '{
     out = ""
     while (match($0, /[A-Z][A-Z][A-Z]+/)) {
@@ -84,7 +84,7 @@ notifyStorm() {
     }
     print out $0
   }')
-  for recipient in system_adamic_developer_tools system_adamic_integration; do
+  for recipient in ${recipients}; do
     (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" &&
       ahra os send "${recipient}" "${text}" --from system_adamic_developer_tools) || true
   done
@@ -110,15 +110,19 @@ countVoid() {
   fi
 }
 # Worker and canary gates share slot selection and launch. Canary logs are separate
-# even when a queued worker has main's sha, and carry the tools version they test.
+# even when a queued worker has main's sha, and carry the tools version they test. A seventh argument "staged" runs
+# the staged tools: only the stage canary passes it.
 dispatch() {
-  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
   started=$(date -u +%s)
   lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
-  # Staged tools: while new tools wait for their first real green, only the canary box runs them.
-  if staging && [ "${box}" != "$(cat "${state}/canary-box")" ]; then
+  # Staged tools never gate a candidate (#9n4p27j, @system_adamic, Oct 9 10:21Z): while new tools are staged, every
+  # box, the canary box included, gates with the last good tools, and the staged tools run main's canary only.
+  if staging && [ "${tools}" != staged ]; then
     script=${goodTree}/cloud/fast-gate.sh token="$(cat "${state}/tools-good"):good"
+  elif [ "${tools}" = staged ]; then
+    token=${canaryToken}:staged
   fi
   if [ "${box}" = pool ]; then
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
@@ -140,10 +144,12 @@ dispatch() {
     echo "${box}" > "${state}/reserved-running/${pid}"
   fi
 }
-# Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents): with a box named
-# in ${state}/canary-box, new tools run on that box only, while every other box gates with the last good
-# tools (${state}/tools-good, checked out in their own worktree); the first real tip gated green on the
-# canary box with the new tools promotes them everywhere. No canary-box file: one tools version, as before.
+# Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents; gate the gate, Oct 9 10:21Z):
+# with a box named in ${state}/canary-box, new box tools run one gate only, a canary of main's tip on that box, while
+# every box gates candidates with the last good tools (${state}/tools-good, checked out in their own worktree). Main's
+# tip is the one sha whose answer we already know, so only that canary's green promotes the new tools everywhere; a
+# candidate's green never does, since a candidate gated with unproven tools is a candidate the gate can fail.
+# No canary-box file: one tools version, as before.
 goodTree=${ADAMIC_FAST_GATE_GOOD_TREE:-${state}/tools-good-tree}
 # The box side of the tools, everything a gate runs, as one fingerprint per commit. Staging keys on it, not on the
 # commit: keyed on the commit, every watcher or alarm change restarted promotion, and staged tools never promoted
@@ -885,7 +891,7 @@ while true; do
     rm -f "${state}/canary-started"
     if staging; then
       canaryRequired=0
-      echo "$(date -u +%H:%M:%S) staging tools ${toolsHead:0:9} on $(cat "${state}/canary-box"); the other boxes stay on $(cut -c1-9 "${state}/tools-good")"
+      echo "$(date -u +%H:%M:%S) staging tools ${toolsHead:0:9} for main's canary on $(cat "${state}/canary-box"); every candidate stays on $(cut -c1-9 "${state}/tools-good")"
     fi
   fi
   if tips > "${state}/now.tmp" && [ -s "${state}/now.tmp" ]; then
@@ -954,12 +960,40 @@ while true; do
       echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; queued again for ${where}"
       continue
     fi
+    if [ "${branch}" = canary/main ] && [[ ${testedHead} == *:staged ]]; then
+      # The stage canary (#k1n98kx): main's tip gated with staged tools. Its green promotes the tools it ran, even
+      # when the head has moved on since (from Oct 8 22:16Z to Oct 9 02:10Z, promoting only the head's own tools
+      # meant every box-side push restarted promotion and nothing promoted). A red holds them until the next box-side
+      # push; a void says the tools, not the boxes, so it counts toward no storm and tries again in ten minutes.
+      tested=${testedHead%%:*} verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1)
+      if [ -n "${cause}" ]; then
+        echo "$(date -u +%H:%M:%S) stage canary void with tools ${tested:0:9}: ${cause}; another in ten minutes"
+        if [ "$(cat "${state}/stage-void" 2>/dev/null)" != "${testedHead}" ]; then
+          echo "${testedHead}" > "${state}/stage-void"
+          notifyStorm "staged box tools ${tested:0:9}: main's canary ${sha:0:12} on ${box} gave no verdict with them (${cause}). Candidates keep tools $(cut -c1-9 "${state}/tools-good"); another canary in ten minutes. Log: ${gateLog}" system_adamic_developer_tools
+        fi
+      elif [[ ${verdict} == "green: ${sha} "* ]]; then
+        if [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
+          echo "${tested}" > "${state}/tools-good"
+          placeGoodTree
+          echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after canary/main ${sha} green with them on ${box}$([ "${tested}" = "${toolsHead}" ] || echo "; ${toolsHead:0:9} stages beyond them")"
+        fi
+      elif [ "${testedHead}" = "${canaryToken}:staged" ]; then
+        echo "${testedHead}" > "${state}/stage-held"
+        echo "$(date -u +%H:%M:%S) held tools ${tested:0:9}: canary/main ${sha} ${verdict%% *} with them on ${box}; candidates keep $(cut -c1-9 "${state}/tools-good")"
+        notifyStorm "staged box tools ${tested:0:9} held: main's canary ${sha:0:12} with them on ${box}: ${verdict}. Every candidate keeps tools $(cut -c1-9 "${state}/tools-good") until a box-side push whose canary is green. Log: ${gateLog}" system_adamic_developer_tools
+      else
+        echo "$(date -u +%H:%M:%S) stage canary of superseded tools ${tested:0:9}: ${verdict%% *}, nothing held"
+      fi
+      continue
+    fi
     if [ "${branch}" = canary/main ]; then
       if [ -n "${cause}" ]; then
         countVoid "${gateLog}"
         enterStorm "${gateLog}"
         echo "$(date -u +%H:%M:%S) canary void: ${cause}"
-      elif [ "${testedHead}" = "${canaryToken}" ]; then
+      elif [ "${testedHead}" = "${canaryToken}" ] || [[ ${testedHead} == *:good ]]; then
+        # While staging, a storm's probe runs the good tools: its real verdict ends the storm just the same.
         canaryRequired=0
         echo "$(date -u +%H:%M:%S) done canary: $(grep -E '^(green|red):' "${gateLog}" | tail -1)"
         if [ -f "${state}/storm" ]; then
@@ -972,17 +1006,6 @@ while true; do
     if [ -z "${cause}" ]; then
       verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
       echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
-      # A real tip green on the canary box promotes the tools it ran to every box, even when the head has moved on since:
-      # promoting only a green of the head's own tools meant every box-side push restarted promotion, and from Oct 8
-      # 22:16Z to Oct 9 02:10Z nothing promoted while developer tools pushed every half hour. The canary box keeps
-      # staging whatever the head is beyond them.
-      tested=${testedHead%%:*}
-      if staging && [[ ${testedHead} != *:good && ${testedHead} != *:pool && ${verdict} == "green: ${sha} "* ]] &&
-         [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
-        echo "${tested}" > "${state}/tools-good"
-        placeGoodTree
-        echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after ${branch} ${sha} green on ${box}$([ "${tested}" = "${toolsHead}" ] || echo "; the canary box stages ${toolsHead:0:9} beyond them")"
-      fi
       # The verdict reaches the branch's owner (and integration for landings and areas) as it exists.
       (python3 "${here}/cloud/verdict-notify.py" "${branch}" "${sha}" "${gateLog}" >> "${state}/logs/verdict-notify.log" 2>&1 &)
       if [[ ${branch} == codex/* && ${verdict} == "green: ${sha} "* ]] && [ -f "${state}/auto-area-merge" ]; then
@@ -1044,6 +1067,24 @@ while true; do
         dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}"
         echo "${now}" > "${state}/canary-started"
         echo "$(date -u +%H:%M:%S) gating canary/main ${sha} (${canarySlot} on ${box}, log ${log})"
+      fi
+    fi
+  fi
+  # Staged box tools get their canary: main's tip on the canary box, ahead of the queue, one at a time, never in a storm
+  # (the storm's own probe runs the good tools), and not again for tools a red already held (#k1n98kx).
+  if staging && [ ! -f "${state}/storm" ] && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ] &&
+     ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null; then
+    now=$(date -u +%s)
+    last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
+    if [ "$((now - last))" -ge 600 ]; then
+      free=$(freeSlots) draining=$(drainingBoxes)
+      read -r box canarySlot <<< "$(usableSlots canary/main | awk -v canary="$(cat "${state}/canary-box")" '$1 != canary {next} $2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
+      sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+      if [ -n "${box}" ] && [ -n "${sha}" ]; then
+        log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
+        dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" staged
+        echo "${now}" > "${state}/canary-started"
+        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with staged tools ${toolsHead:0:9} (${canarySlot} on ${box}, log ${log})"
       fi
     fi
   fi

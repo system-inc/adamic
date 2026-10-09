@@ -895,18 +895,29 @@ class WatchTests(unittest.TestCase):
         self.assertNotIn('cloud/land-test-split-flow', w.read('whole'))
         self.assertEqual((w.state / 'star-boxes').read_text(), '')
 
-    def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
-        # Tips, queue and slots are in place before the watcher starts: with no deploy barrier to hold it,
-        # a write after its first poll races the watcher's own rewrite of the queue.
-        w = Watcher(2, canaryBox='box1', mode='hold')
+    def staged(self, count=2):
+        # Staged tools: good is tools-zero, the head tools-one. Box1 has a slot for the stage canary and one more.
+        w = Watcher(count, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\nbox1 S\n')
         self.addCleanup(w.close)
-        # No fleet-wide deploy barrier while staged: both start at once, one per box and version.
-        w.wait(lambda: w.read('starts').strip() and w.read('good-starts').strip())
-        self.assertNotIn('canary/main', w.read('starts') + w.read('good-starts'))
+        w.wait(lambda: 'canary/main ' in w.read('starts') and len(w.read('good-starts').splitlines()) == count)
+        return w
+
+    def test_staged_tools_gate_no_candidate_and_only_main_s_canary_with_them_promotes(self):
+        # Gate the gate (@system_adamic, Oct 9 10:21Z): a candidate gated with unproven tools is a candidate the gate
+        # can fail, so the staged tools run main's canary on the canary box and nothing else.
+        w = self.staged()
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines()], ['canary/main'])
         self.assertTrue(w.read('starts').strip().endswith(' box1'), w.read('starts'))
-        self.assertTrue(w.read('good-starts').strip().endswith(' box0'), w.read('good-starts'))
+        self.assertEqual(sorted(x.split()[-1] for x in w.read('good-starts').splitlines()), ['box0', 'box1'])
+        # A candidate's green on the canary box promotes nothing: the mutant that promotes on it fails here.
         w.put('mode', 'pass')
+        w.wait(lambda: w.read('output').count('done codex/') == 2)
+        time.sleep(.2)
+        self.assertNotIn('promoted tools', w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+        w.put('initial', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertIn('after canary/main %s green with them on box1' % MAIN, w.read('output'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-one')
         # Promoted, every box runs the new tools. The new tip arrives as a pushed branch, which the watcher
         # queues itself, never as a write to the queue it owns.
@@ -915,18 +926,51 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'codex/c ' in w.read('starts'))
         self.assertNotIn('codex/c ', w.read('good-starts'))
 
-    def test_a_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
+    def test_a_red_stage_canary_holds_the_tools_until_a_box_side_push(self):
+        w = self.staged(1)
+        w.put('initial', 'red')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        w.wait(lambda: 'system_adamic_developer_tools|' in w.read('messages'))
+        self.assertIn('held', w.read('messages'))
+        self.assertNotIn('system_adamic_integration', w.read('messages'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+        # Held: no second canary for the same tools, ten minutes on or not.
+        w.put('clock', '1700')
+        time.sleep(.3)
+        self.assertEqual(w.read('starts').count('canary/main '), 1)
+        self.assertFalse((w.state / 'storm').exists())
+        # A box-side push stages new tools, and their own canary's green promotes them.
+        w.put('head', 'tools-two')
+        w.wait(lambda: w.read('starts').count('canary/main ') == 2)
+        w.put('canary', 'pass')
+        w.wait(lambda: 'promoted tools tools-two' in w.read('output'))
+        self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-two')
+
+    def test_a_void_stage_canary_is_no_storm_and_tries_again_in_ten_minutes(self):
+        w = self.staged(1)
+        w.put('initial', 'void')
+        w.wait(lambda: 'stage canary void with tools tools-one' in w.read('output'))
+        time.sleep(.2)
+        self.assertEqual(w.read('starts').count('canary/main '), 1)
+        self.assertFalse((w.state / 'storm').exists())
+        self.assertEqual(w.read('messages').count('system_adamic_developer_tools|'), 1)
+        w.put('clock', '1600')
+        w.wait(lambda: w.read('starts').count('canary/main ') == 2)
+        w.put('canary', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+
+    def test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
         # Oct 8 22:16Z to Oct 9 02:10Z: every box-side push restarted promotion, and nothing promoted for four hours.
-        w = Watcher(2, canaryBox='box1', mode='hold')
-        self.addCleanup(w.close)
-        w.wait(lambda: w.read('starts').strip() and w.read('good-starts').strip())
-        # The head moves while tools-one's canary gate runs.
+        w = self.staged()
+        # The head moves while tools-one's canary runs.
         w.put('head', 'tools-two')
         w.wait(lambda: 'staging tools tools-two' in w.read('output'))
-        w.put('mode', 'pass')
+        w.put('initial', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-one')
-        self.assertIn('the canary box stages tools-two beyond them', w.read('output'))
+        self.assertIn('tools-two stages beyond them', w.read('output'))
+        # tools-two gets its own canary at once.
+        w.wait(lambda: w.read('starts').count('canary/main ') == 2)
 
     def test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary(self):
         # Staged tools: good is tools-zero, head tools-one, but tools-one changes only the Mac side.
