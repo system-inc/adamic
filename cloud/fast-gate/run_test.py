@@ -156,7 +156,7 @@ class FailClosed(unittest.TestCase):
         listing = mock.Mock(stdout="example.com/p\n")
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
-                mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
+                mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: (mock.Mock(stdout="p\t" + self.tree + "\n") if "-f" in command else listing) if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
                 mock.patch.object(run.Gate, failing, lambda gate, *arguments: gate.fail(failing, "planted failure")) if failing else mock.patch.object(run, "longTestSeconds", run.longTestSeconds), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
@@ -481,7 +481,7 @@ class Products(unittest.TestCase):
     setUp = FailClosed.setUp
     gate = FailClosed.gate
 
-    def probe(self, names=("TestProduct_A", "TestX"), failing=False, complete=False, sourceNames=None):
+    def probe(self, names=("TestProduct_A", "TestX"), failing=False, complete=False, sourceNames=None, full=False, extra=None):
         commands, order = [], []
         with open(os.path.join(self.tree, "product_test.go"), "w") as source:
             source.write("\n".join("func %s(t *testing.T) {}" % name for name in (names if sourceNames is None else sourceNames) if name.startswith("TestProduct_")))
@@ -490,11 +490,11 @@ class Products(unittest.TestCase):
             original(process, command, stdout)
             if "-test.list" in command:
                 process.lines = [name + "\n" for name in names]
-            elif "test2json" in command:
+            elif "test2json" in command or (full and command[:2] == ["go", "test"] and "-run" not in command and "-skip" in command and "^TestProduct_" in command[command.index("-skip") + 1]):
                 commands.append(command)
-                name = command[command.index("-test.run") + 1].strip("^$")
+                name = command[command.index("-test.run") + 1].strip("^$") if "-test.run" in command else "TestX"
                 order.append(name)
-                if name == "TestX" and "-test.skip" not in command and "TestProduct_A" in names:
+                if name == "TestX" and "-test.skip" not in command and "-skip" not in command and "TestProduct_A" in names:
                     order.append("TestProduct_A")
                 action = "fail" if failing and name.startswith("TestProduct_") else "pass"
                 process.returncode = int(action == "fail")
@@ -502,7 +502,7 @@ class Products(unittest.TestCase):
                 process.wait = lambda: process.returncode
             process.stdout = io.StringIO("".join(process.lines)) if stdout == subprocess.PIPE else None
         with mock.patch.object(FakeProcess, "__init__", product):
-            gate, status, result = self.gate(extra={"complete": complete})
+            gate, status, result = self.gate(full=full, extra=dict(extra or {}, complete=complete))
         return gate, status, result, commands, order
 
     def test_products_before_tests_and_skip(self):
@@ -596,6 +596,27 @@ class Products(unittest.TestCase):
                 self.assertEqual(result["stages_exit"]["products"], 1)
                 self.assertEqual(order, [])
 
+    def test_whole_gate_products_before_tests_and_skip(self):
+        _, status, result, commands, order = self.probe(full=True)
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(order, ["TestProduct_A", "TestX"])
+        self.assertEqual(result["stages_exit"]["products"], 0)
+        self.assertIn("^TestProduct_", commands[1][commands[1].index("-skip") + 1])
+
+    def test_whole_gate_phase_products_before_test_units(self):
+        for extra in ({"phase": "wasi"}, {"phases": "vet,wasi"}, {"phases": "products,wasi"}):
+            _, status, result, _, order = self.probe(full=True, extra=extra)
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertEqual(order, ["TestProduct_A"])
+            self.assertEqual(result["stages_exit"]["products"], 0)
+            self.assertEqual(result["planned_stages"].count("products"), 1)
+
+    def test_whole_gate_failed_product_blocks_test_units(self):
+        _, status, result, _, order = self.probe(full=True, failing=True)
+        self.assertEqual(result["failure"]["step"], "products")
+        self.assertEqual(order, ["TestProduct_A"])
+        self.assertNotIn("tests", result["steps_seconds"])
+
     def test_wall_deadline_kills_and_fails_in_complete_mode(self):
         for phase in ("products",):
             with self.subTest(phase=phase), tempfile.TemporaryDirectory() as out:
@@ -676,6 +697,19 @@ class ProductMutants(unittest.TestCase):
                     Products(test).run(result)
                 self.assertEqual(result.errors, [], result.errors)
                 self.assertEqual(len(result.failures), 1, (name, result.failures))
+
+
+class WholeProductMutants(unittest.TestCase):
+    def test_whole_gate_dropped_barrier_is_killed(self):
+        with open(run.__file__) as source:
+            original = source.read()
+        namespace = dict(run.__dict__)
+        exec(compile(original.replace("if not self.wholeProducts(log):", "if False:"), run.__file__, "exec"), namespace)
+        with mock.patch.object(run.Gate, "runFull", namespace["Gate"].runFull):
+            result = unittest.TestResult()
+            Products("test_whole_gate_products_before_tests_and_skip").run(result)
+        self.assertEqual(result.errors, [], result.errors)
+        self.assertEqual(len(result.failures), 1, result.failures)
 
 
 class DeferredInTheWholeGate(FailClosed):
@@ -1389,6 +1423,32 @@ class Budget(unittest.TestCase):
         with mock.patch("builtins.print"):
             gate.budget(ledger, allUnits)
         return gate
+
+    def test_new_product_over_budget_is_named_and_never_burns_down(self):
+        self.write("p/product_test.go", "func TestProduct_New(t *testing.T) {}\n")
+        self.write("cloud/fast-gate/budget-burndown.tsv", "%s/p\tTestProduct_New\t61.0\n" % run.module)
+        self.head = self.commit("new product")
+        gate = self.budget([("TestProduct_New", 61.0)])
+        self.assertEqual(gate.failure["step"], "budget")
+        words = "product %s/p TestProduct_New 61.0 s" % run.module
+        self.assertEqual(gate.result["budget_over"], [words])
+        self.assertIn(words, gate.failure["detail"])
+        self.assertEqual(gate.result["budget_burndown_units"], [])
+        gate.arguments.branch = gate.arguments.session = ""
+        gate.kind, gate.planned, gate.exits, gate.steps = "fast", [], {}, {}
+        gate.counts, gate.failedTests, gate.census = {"pass": 0, "fail": 0, "skip": 0}, [], {"required_input": [], "unclassified": []}
+        gate.result["product_units"] = [{"package": run.module + "/p", "test": "TestProduct_New", "seconds": 61.0, "status": "passed"}]
+        with mock.patch("builtins.print"):
+            gate.finish()
+        with open(os.path.join(self.directory, "status.txt")) as status:
+            self.assertIn(words, status.read())
+
+    def test_old_product_over_budget_is_drift(self):
+        self.write("p/product_test.go", "func TestProduct_Old(t *testing.T) {}\n")
+        self.base = self.head = self.commit("old product")
+        gate = self.budget([("TestProduct_Old", 61.0)])
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.result["budget_drift"], ["product %s/p TestProduct_Old 61.0 s" % run.module])
 
     def test_a_new_unit_over_the_budget_is_red_naming_it_and_the_box(self):
         gate = self.budget([("TestNew/case", 31.5)])
