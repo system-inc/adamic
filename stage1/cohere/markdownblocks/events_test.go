@@ -14,6 +14,7 @@ import (
 )
 
 // Parallel execution reserves memory: full event output and native mutant runs retain large corpus buffers.
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestTokenizerEvents(t *testing.T) {
 	parallelMarkdownMemory(t, 4)
 	root, err := filepath.Abs(repository)
