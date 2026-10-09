@@ -1,0 +1,14 @@
+class Slot {
+    value: string = undefined!;
+    count: number = null!;
+}
+const slot = new Slot();
+slot.value = "field" + " set";
+slot.count = 3;
+console.log(`${slot.value}|${slot.count}`);
+
+slot.value = null!;
+slot.count = undefined!;
+slot.value = "reset" + " field";
+slot.count = 0;
+console.log(`${slot.value}|${slot.count}`);

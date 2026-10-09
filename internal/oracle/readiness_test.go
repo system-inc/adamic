@@ -13,44 +13,157 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{nonNullRuntimeFixture(name), true, name != "definite"})
+		}{"internal/oracle/testdata/non_null_" + name + ".ts", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "uninitialized_optional"})
 	}
 }
 
-func nonNullRuntimeFixture(name string) string {
-	return "internal/oracle/testdata/non_null_" + name + ".ts"
-}
-
-// The unchanged programs now run as checked TypeScript. Initializer assertions
-// stop eagerly; these pins keep their runtime checks covered.
+// These expected outcomes are independent of both emitters, so a shared lowering mistake
+// cannot turn a green native-versus-JavaScript comparison into a false proof.
 func TestReadinessMutants(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, fixture, stdout, stderr string }{
-		{"drop-check", "uninitialized", "before\n", "read before assignment: variable 'value' in value"},
-		{"erase-without-proof", "uninitialized_loop", "", "read before assignment: variable 'value' in value"},
-		{"initialize-to-zero", "uninitialized", "before\n", "read before assignment: variable 'value' in value"},
-		{"miss-captured-read", "uninitialized_capture", "before\n", "read before assignment: variable 'value' in value"},
-		{"miss-exception-path", "uninitialized_exception", "caught\n", "read before assignment: variable 'value' in value"},
-		{"lazy-read", "lazy_read", "before\n", "read before assignment: variable 'text' in textInitial!"},
+		{"replace-unset-check-with-zero", "uninitialized", "before\n", "placeholder 'value' is unset at use as T via value"},
+		{"erase-without-proof", "uninitialized_loop", "", "placeholder 'value' is unset at use as T via value"},
+		{"initialize-to-zero", "uninitialized", "before\n", "placeholder 'value' is unset at use as T via value"},
+		{"miss-captured-read", "uninitialized_capture", "before\n", "placeholder 'value' is unset at use as T via value"},
+		{"miss-exception-path", "uninitialized_exception", "caught\n", "placeholder 'value' is unset at use as T via value"},
+		{"replace-missing-assertion-with-empty", "lazy_read", "", "non-null assertion failed: textInitial! is null or undefined"},
 		{"weak-generic-message", "weak", "before\n", "non-null assertion failed: holder.value! is null or undefined"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, nonNullRuntimeFixture(probe.fixture)))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".ts"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			expression, stdout := "undefined!", ""
-			if probe.fixture == "uninitialized_loop" {
-				expression = "null!"
+			if probe.fixture == "lazy_read" || probe.fixture == "weak" {
+				expression := "textInitial!"
+				if probe.fixture == "weak" {
+					expression = "holder.value!"
+				}
+				assertMigratedNonNullCheck(t, path, expression, probe.stdout, true)
+				return
 			}
-			if probe.fixture == "lazy_read" {
-				expression = "textInitial!"
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
 			}
-			if probe.fixture == "weak" {
-				expression, stdout = "holder.value!", "before\n"
+			want := run{stdout: []byte(probe.stdout), stderr: []byte("adamic: panic: " + probe.stderr + "\n"), exitCode: 70}
+			baseline, _ := nativelyUncached(t, program)
+			if difference := disagreement(want, baseline); difference != "" {
+				t.Fatal(difference)
 			}
-			assertMigratedNonNullCheck(t, path, expression, stdout, true)
+			if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
+				t.Fatal(difference)
+			}
+			changes := 0
+			program.Main = mutateReadiness(program.Main, func(node any) any {
+				switch value := node.(type) {
+				case ir.Coalesce:
+					if probe.name == "replace-missing-assertion-with-empty" && value.Panic != nil && value.Value.Type() == ir.String {
+						index := len(program.Strings)
+						program.Strings = append(program.Strings, "")
+						changes++
+						value.Panic = nil
+						value.Fallback = ir.StringConstant{Index: index}
+						return value
+					}
+					if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Panic != nil {
+						changes++
+						if value.Value.Type() == ir.Union {
+							value.Panic = nil
+							value.Fallback = ir.Box{Value: ir.NumberConstant{}}
+							return value
+						}
+						if value.Value.Type().IsMaybe() {
+							return ir.Unwrap{Value: value.Value, Proven: true}
+						}
+						return value.Value
+					}
+				case ir.Read:
+					if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
+						value.Readiness = ""
+						changes++
+						return value
+					}
+				case ir.Declare:
+					if probe.name == "initialize-to-zero" && value.Uninitialized {
+						value.Uninitialized = false
+						if program.Locals[value.Local].Type == ir.Union {
+							value.Value = ir.Box{Value: ir.NumberConstant{}}
+						}
+						if program.Locals[value.Local].Type.IsMaybe() {
+							value.Value = ir.MaybeOf{Value: ir.NumberConstant{}, Of: program.Locals[value.Local].Type}
+						}
+						changes++
+						return value
+					}
+				case ir.WeakTarget:
+					if probe.name == "weak-generic-message" && !value.Present {
+						value.Present = true
+						changes++
+						return value
+					}
+				}
+				return node
+			})
+			for i := range program.Functions {
+				program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+					switch value := node.(type) {
+					case ir.Coalesce:
+						if probe.name == "replace-missing-assertion-with-empty" && value.Panic != nil && value.Value.Type() == ir.String {
+							index := len(program.Strings)
+							program.Strings = append(program.Strings, "")
+							changes++
+							value.Panic = nil
+							value.Fallback = ir.StringConstant{Index: index}
+							return value
+						}
+						if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Panic != nil {
+							changes++
+							if value.Value.Type() == ir.Union {
+								value.Panic = nil
+								value.Fallback = ir.Box{Value: ir.NumberConstant{}}
+								return value
+							}
+							if value.Value.Type().IsMaybe() {
+								return ir.Unwrap{Value: value.Value, Proven: true}
+							}
+							return value.Value
+						}
+					case ir.Read:
+						if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
+							value.Readiness = ""
+							changes++
+							return value
+						}
+					case ir.Declare:
+						if probe.name == "initialize-to-zero" && value.Uninitialized {
+							value.Uninitialized = false
+							if program.Locals[value.Local].Type == ir.Union {
+								value.Value = ir.Box{Value: ir.NumberConstant{}}
+							}
+							if program.Locals[value.Local].Type.IsMaybe() {
+								value.Value = ir.MaybeOf{Value: ir.NumberConstant{}, Of: program.Locals[value.Local].Type}
+							}
+							changes++
+							return value
+						}
+					}
+					return node
+				})
+			}
+			if changes == 0 {
+				t.Fatal("mutant changed nothing")
+			}
+			mutant, _ := nativelyUncached(t, program)
+			if disagreement(want, mutant) == "" {
+				t.Fatal("mutant escaped pinned assertion")
+			}
+			if mutant.exitCode != 0 && mutant.exitCode != 70 {
+				t.Fatalf("mutant caught only by a crash: exit %d stderr %s", mutant.exitCode, mutant.stderr)
+			}
+			t.Logf("caught by pinned output: exit %d stdout %q stderr %q", mutant.exitCode, mutant.stdout, mutant.stderr)
 		})
 	}
 }
@@ -61,7 +174,37 @@ func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assertMigratedNonNullCheck(t, path, "undefined!", "", true)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onNode(t, path)
+	baseline, _ := nativelyUncached(t, program)
+	if difference := disagreement(want, baseline); difference != "" {
+		t.Fatal(difference)
+	}
+	message := len(program.Strings)
+	program.Strings = append(program.Strings, "non-null assertion failed: undefined! is null or undefined")
+	changes := 0
+	for i := range program.Functions {
+		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+			if declaration, ok := node.(ir.Declare); ok && declaration.Uninitialized && program.Locals[declaration.Local].Placeholder != "" && program.Locals[declaration.Local].Type == ir.Union && changes == 0 {
+				declaration.Uninitialized = false
+				declaration.Value = fitMutantNumber(ir.Coalesce{Value: ir.MaybeOf{Of: ir.MaybeNumber}, Panic: ir.StringConstant{Index: message}, Of: ir.Number}, program.Locals[declaration.Local].Type)
+				changes++
+				return declaration
+			}
+			return node
+		})
+	}
+	if changes != 1 {
+		t.Fatal("ordinary-nullish mutant did not replace one initializer")
+	}
+	mutant, _ := nativelyUncached(t, program)
+	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
+		t.Fatalf("ordinary-nullish mutant escaped Node: %#v", mutant)
+	}
+	t.Logf("ordinary-nullish initializer mutant caught by Node output: %s", mutant.stderr)
 }
 
 func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.Statement {
@@ -97,7 +240,8 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 	return transform(reflect.ValueOf(statements)).Interface().([]ir.Statement)
 }
 
-// Native Weak lifetime differs from Node tracing; keep both original observations.
+// Native Weak lifetime is already ruled to differ from Node's tracing collector.
+// Pin both observations, including this assertion's expression-specific native diagnostic.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
@@ -138,11 +282,22 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
 }
 
-func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
+// Non-literal assertions are checked at initialization, even if a later write would replace them.
+func TestNonliteralInitializerCannotSkipCheck(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	assertMigratedNonNullCheck(t, path, "textInitial!", "", true)
+}
+
+func fitMutantNumber(value ir.Expression, of ir.Type) ir.Expression {
+	if of == ir.Union {
+		return ir.Box{Value: value}
+	}
+	if of.IsMaybe() {
+		return ir.MaybeOf{Value: value, Of: of}
+	}
+	return value
 }

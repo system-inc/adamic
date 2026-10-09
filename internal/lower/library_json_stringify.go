@@ -71,6 +71,13 @@ func jsonScalar(s *ir.JSONSchema) bool {
 // through an object type is refused: that type can hide additional fields or a toJSON method.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
+	if l.uninitializedInitializer(n) && l.placeholderDeclaration(n) {
+		// This temporary field has a known nullish arm and never escapes the serializer.
+		if _, null := l.placeholderInitialValue(n, ir.Union).(ir.Box); null {
+			return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
+		}
+		return ir.Undefined{}, &ir.JSONSchema{Kind: "undefined"}, nil
+	}
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
@@ -97,7 +104,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 				return l.notYet(v, "JSON.stringify a literal field with a two-word representation")
 			}
 			schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: len(literal.Fields), Schema: child})
-			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value, Uninitialized: l.uninitializedInitializer(v), Unset: l.uninitializedInitializer(v)})
 			return nil
 		}
 		if literal.Tuple {

@@ -26,7 +26,7 @@ func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
 			paths = append(paths, "non_null_refuse_"+operand+"."+extension)
 		}
 	}
-	for _, form := range []string{"argument", "return", "expression", "comparison", "conditional", "logical", "spread", "element", "default"} {
+	for _, form := range []string{"argument", "return", "expression", "comparison", "conditional", "logical", "spread", "element"} {
 		paths = append(paths, "non_null_refuse_"+form+".a")
 	}
 	for _, name := range paths {
@@ -91,5 +91,28 @@ func TestPossibleNonNullAdamicAssertionsAreRefused(t *testing.T) {
 				t.Fatalf("wrong .a refusal: %v", err)
 			}
 		})
+	}
+}
+
+// An unused literal default is a slot initializer, not an assertion expression.
+func TestLiteralDefaultPlaceholderAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_refuse_default.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := onNode(t, path)
+	native, binary := nativelyUncached(t, program)
+	for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+		if difference := disagreement(source, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

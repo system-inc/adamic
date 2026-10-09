@@ -244,23 +244,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if l.uninitializedInitializer(parameter.initializer) {
 			l.result.Locals[parameter.local].Uninitialized = true
 			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Value: l.placeholderInitialValue(parameter.initializer, l.result.Locals[parameter.local].Type), Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
 			continue
 		}
 
-		if l.lazyAssertionInitializer(parameter.initializer) {
-			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
-			if lazyErr != nil {
-				err = lazyErr
-				break
-			}
-			l.result.Locals[parameter.local].Uninitialized = true
-			l.result.Locals[parameter.local].InitializerExpression = sourceExpression(parameter.initializer)
-			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-			fallback := append(prefix, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: value}}})
-			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
-			continue
-		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
 			break

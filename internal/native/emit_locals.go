@@ -87,6 +87,10 @@ func (e *emitter) checkReadyRead(local int, expression string) {
 // copied (a string retained) the moment JavaScript would read it; and from inside a function it's
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
+	if read.Unset && e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].Hoisted {
+		message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[read.Local].Name)
+		e.line("if (!%s_declared) adamic_panic(%s, %d);", readyName(read.Local), cString(message), len(message))
+	}
 	name := e.localName(read.Local)
 	if read.Checked {
 		e.checkReady(read.Local)
