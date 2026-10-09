@@ -1,0 +1,80 @@
+{
+  "astPreprocess.ts": [
+    {
+      "line": 8,
+      "declaration": "export class AstPreprocessor {"
+    },
+    {
+      "line": 15,
+      "declaration": "constructor(arena: AstArena, source: string, tabWidth: number) {"
+    },
+    {
+      "line": 20,
+      "declaration": "raw(id: number): string {"
+    },
+    {
+      "line": 25,
+      "declaration": "merge(id: number): void {"
+    },
+    {
+      "line": 51,
+      "declaration": "markRisk(walk: AstWalk): void {"
+    },
+    {
+      "line": 67,
+      "declaration": "sentence(walk: AstWalk): number {"
+    },
+    {
+      "line": 116,
+      "declaration": "run(root: number): number {"
+    }
+  ],
+  "decodeString.ts": [
+    {
+      "line": 7,
+      "declaration": "function punctuation(code: number): boolean {"
+    },
+    {
+      "line": 15,
+      "declaration": "function digit(code: number, hexadecimal: boolean): boolean {"
+    },
+    {
+      "line": 18,
+      "declaration": "function alphanumeric(code: number): boolean {"
+    },
+    {
+      "line": 21,
+      "declaration": "function lookupReference("
+    },
+    {
+      "line": 36,
+      "declaration": "export function namedReference(name: string): string | undefined {"
+    },
+    {
+      "line": 42,
+      "declaration": "function numericReference(value: string, base: number): string {"
+    },
+    {
+      "line": 58,
+      "declaration": "export function decodeString(value: string): string {"
+    }
+  ],
+  "inputChunks.ts": [
+    {
+      "line": 7,
+      "declaration": "function codeChunk(code: number): InputChunkInterface {"
+    },
+    {
+      "line": 10,
+      "declaration": "function textChunk(text: readonly number[]): InputChunkInterface {"
+    },
+    {
+      "line": 13,
+      "declaration": "export function inputChunks(units: readonly number[]): InputChunkInterface[] {"
+    },
+    {
+      "line": 73,
+      "declaration": "export function serializeChunks(chunks: readonly InputChunkInterface[]): string {"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/inputChunks.ts
++++ b/stage1/cohere/markdownblocks/inputChunks.ts
+@@ -42,7 +42,7 @@
+                 column += end - start;
+             }
+             if(code === 0) {
+-                chunks.push(codeChunk(65533));
++                chunks.push(codeChunk(131069));
+                 column++;
+             }
+             else if(code === 9) {

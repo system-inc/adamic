@@ -1,0 +1,7 @@
+baseline-decode-warm 79.44 0 False {'TestMarkdownSourceDecoding': 'pass'}
+baseline-ast-v8 25.94 0 False {'TestMarkdownASTPreprocessing': 'pass'}
+baseline-chunks-v8 10.65 0 False {'TestMicromarkInputChunks': 'pass'}
+baseline-probes-v8 4.96 0 False {'TestParserRepresentationProbes': 'pass'}
+baseline-events-000-v8 27.7 0 False {'TestTokenizerEvents_000': 'pass'}
+baseline-mdast-construction 66.63 0 False {'TestNativeMdastConstruction': 'pass'}
+baseline-mdast-other 27.46 0 False {'TestProduct_MarkdownMalformedEventsLowered': 'pass', 'TestMdastIdentifierWitnesses': 'pass', 'TestMdastMalformedEventsUnion': 'pass', 'TestProduct_MarkdownMalformedEventsNative': 'pass', 'TestMdastMalformedEvents_Setup': 'pass', 'TestMdastMalformedEvents_002': 'pass', 'TestMdastMalformedEvents_001': 'pass', 'TestMdastMalformedEvents_000': 'pass'}

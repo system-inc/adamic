@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D1",
+    "test": "TestMarkdownASTPreprocessing",
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "old": "                    node.originalAlt = alt ?? '';\n",
+    "new": "",
+    "menu": "drop statement",
+    "difference": "AstPreprocessor.run original image alt projection; parser representation probes compile independent gap programs and never import this port.",
+    "line": 140
+  },
+  {
+    "id": "D2",
+    "test": "TestMicromarkInputChunks",
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "old": "chunks.push(codeChunk(65533));",
+    "new": "chunks.push(codeChunk(131069));",
+    "menu": "change constant",
+    "difference": "NUL replacement chunk code grows by 65536. Tokenizer serializers mask positive codes with &65535, while complete raw chunk serialization exposes the invalid code. This shared-line defense concerns raw representation versus normalized event text.",
+    "line": 45
+  },
+  {
+    "id": "D3",
+    "test": "TestMarkdownSourceDecoding",
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "old": "(code > 64975 && code < 65008)",
+    "new": "(code > 64974 && code < 65008)",
+    "menu": "off by one lower bound",
+    "difference": "numericReference newly replaces valid U+FDCF (64975). Exhaustive numeric decoder inputs include it; independent parser gap programs do not call the decoder. Mdast programs also reach the decoder and must be tested.",
+    "line": 50
+  }
+]

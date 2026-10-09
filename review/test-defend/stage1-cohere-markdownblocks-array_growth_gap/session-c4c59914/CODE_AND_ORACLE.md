@@ -1,0 +1,9 @@
+CODE UNDER TEST and ORACLE, stated before the mutants ran
+
+TestMarkdownASTPreprocessing checks AstPreprocessor in astPreprocess.ts and its port imports. Go cohere AST preprocessing and the pinned original Prettier Node implementation decide complete serialized six-pass projections. Source Node and backend are additional port executors within the same Test, not separate twin rows. D1 drops the originalAlt assignment in the image preprocessing pass. Only testdata/ast_probe.ts imports AstPreprocessor; caller evidence maps that probe to this Test.
+
+TestMicromarkInputChunks checks inputChunks and serializeChunks in inputChunks.ts. Actual Go cohere and pinned original micromark on Node decide complete numeric UTF-16 chunk output. Its subsumer uses the same numeric inputs but observes tokenizer events and reconstructed strings. D2 changes the NUL replacement numeric code by 65536, while tokenizerEvents.ts masks it back to the low 16 bits. This is a real production input-chunk defect, not a change to the test serializer, oracle or adapter. The initial separator-change proposal was never applied or executed and is excluded from all verdicts.
+
+TestMarkdownSourceDecoding checks decodeString.ts: punctuation, digit, alphanumeric, lookupReference, namedReference, numericReference and decodeString, plus generated entity tables. Actual Go cohere and pinned original Prettier Node decide output strings; the test sweeps all numeric code points in decimal and hex. D3 moves the forbidden noncharacter interval down by one, replacing U+FDCF incorrectly. Its prior subsumer compiles unrelated gap programs; MdastCompiler does call decodeString and its reached Tests and products are included.
+
+No oracle, harness, test, compiler or runtime source is mutated. Each standalone diff is applied separately and its native product is compiled by the unchanged test pipeline, using its own ADAMIC_BUILD_CACHE_DIR.

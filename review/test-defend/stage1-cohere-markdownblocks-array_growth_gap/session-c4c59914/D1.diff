@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/astPreprocess.ts
++++ b/stage1/cohere/markdownblocks/astPreprocess.ts
+@@ -137,7 +137,6 @@
+                 else if(pass === 3 && (node.kind === 'image' || node.kind === 'imageReference')) {
+                     const alt = bracketContent(this.source, node.start, node.end);
+                     node.hasOriginalAlt = alt !== undefined;
+-                    node.originalAlt = alt ?? '';
+                 }
+                 else if(pass === 4) markAlignedList(this.arena, walk, this.source, this.tabWidth);
+                 else if(pass === 5) replacement = this.sentence(walk);

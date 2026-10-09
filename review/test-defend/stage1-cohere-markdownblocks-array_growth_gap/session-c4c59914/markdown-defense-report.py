@@ -1,0 +1,50 @@
+import pathlib,json,subprocess,shutil,tarfile,re
+R=pathlib.Path('/workspace/adamic');P=R/'review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/session-c4c59914';runs=json.loads((P/'runs.json').read_text());plan=json.loads((P/'plan.json').read_text());tests=[n for n in (P/'list.log').read_text().splitlines() if n.startswith('Test')];matrices={};rows=[]
+subsumers=['TestParserRepresentationProbes','TestTokenizerEvents family','TestParserRepresentationProbes']
+for i,d in enumerate(plan):
+ selected=[r for r in runs if r['name'].startswith(d['id']+'-')];states={}
+ for run in selected:
+  if run['cooked']:continue
+  states.update(run['states'])
+ failed=sorted(n for n,a in states.items() if a=='fail');passed=sorted(n for n,a in states.items() if a=='pass');skipped=sorted(n for n,a in states.items() if a=='skip')
+ assertions=[line for run in selected for line in run['assertions']]
+ expected={'D1':2,'D2':519,'D3':11}[d['id']]
+ result='defended' if failed==[d['test']] and len(states)==expected else 'cannot-judge'
+ row=dict(test=d['test'],package='stage1/cohere/markdownblocks',prior_verdict='subsumed',subsumed_by=subsumers[i],defense=result,unique_mutant=d['id']+' '+d['file']+':'+str(d['line']) if result=='defended' else None,attempts=[dict(mutant=d['id'],file_line=d['file']+':'+str(d['line']),change=d['old'].strip()+' -> '+(d['new'].strip() or '[statement dropped]'),rows_failed=failed)],evidence='; '.join(assertions),bounded=True,matrix_rows=sorted(states),passed_rows=passed,skipped_rows=skipped,unknown_package_rows=sorted(set(tests)-set(states)),commands=[r['command'] for r in selected])
+ rows.append(row);matrices[d['id']]=dict(states=states,failed=failed,passed=passed,skipped=skipped,runs=selected,semantics=d['difference'])
+ for suffix in ['.diff']:
+  p=subprocess.run(['git','apply','--check',str(P/(d['id']+suffix))],cwd=R,capture_output=True,text=True);assert p.returncode==0;(P/(d['id']+'-apply-check.json')).write_text(json.dumps({'command':'git apply --check '+d['id']+suffix,'exit':p.returncode,'output':p.stdout+p.stderr},indent=2))
+(P/'rows.json').write_text(json.dumps(rows,indent=2));(P/'matrix.json').write_text(json.dumps(matrices,indent=2))
+for name in ['markdown-defense-run.py','markdown-defense-extra.py','markdown-defense-plan.py','markdown-defense-mutants.py','markdown-defense-report.py']:shutil.copy('/workspace/'+name,P/name)
+with tarfile.open(P/'raw-v8-coverage.tar.gz','w:gz') as tar:tar.add(P/'v8',arcname='v8')
+base=(P/'starting-commit.txt').read_text().strip()
+report=f'''# Markdownblocks defense
+
+Starting origin/main: {base}. Current package discovery: {len(tests)} Tests. All three requested Tests and their subsumers still exist. The audit started at ce1c5a2; current source locations and standalone diffs use this session's origin/main. Warm /workspace/adamic-tools/env.sh works, so setup was skipped. nproc: 5. npm ci stage3/api passed before baseline. CODE_AND_ORACLE.md names the port source and independent Go cohere / pinned Prettier oracles per row. No oracle, harness, test, compiler or runtime was changed.
+
+The whole package cooked at 90.138 binary seconds in nonparallel layout preparation. It was narrowed before any mutant. AST, chunk, decoder, representation probes, native mdast construction and all eight associated mdast Tests/products passed cleanly. The first decoder run passed parity and built-in mutants but cooked while building the unchanged cohere formatter. A bounded standalone Go formatter prewarm completed; the whole decoder then passed. A full 513-member tokenizer-family coverage attempt cooked at 90.100 seconds after observing some members. The default corpus selection was retained; no harness was edited to shrink fixtures. All exact commands, wall seconds, observed statuses and raw output are retained.
+
+Go -coverpkg profiles all report no statements: this package contains Go tests and its production source is .ts compiled separately. Native statement-line exclusivity cannot be measured by these profiles and remains null. Supplemental NODE_V8_COVERAGE on clean, unchanged source-Node runs confirms AstPreprocessor.run called 4226 times, and inputChunks called 79000 times in chunks versus 158 in event shard 000. serializeChunks is called 79000 times in chunks and zero times in that event shard. V8 offsets refer to Node's transformed JavaScript; they are not mislabeled as origin/main source lines or native execution. Filtered port-only records, raw coverage archive, Go profiles and semantic caller evidence are retained.
+
+Mutants are standalone permitted production edits, applied sequentially and restored in finally blocks. Each has ADAMIC_BUILD_CACHE_DIR=/workspace/defend-markdown-cache/DN. D1 drops AstPreprocessor.run's originalAlt assignment. D2 changes the NUL replacement chunk code from 65533 to 131069; the tokenizer's &65535 normalization hides the high bits, while raw chunk parity exposes them. The initial separator-change proposal was never applied or executed and supports no verdict. D3 moves numericReference's noncharacter lower boundary down one, incorrectly replacing valid U+FDCF. All source diffs apply to starting origin/main. Actual native byte mismatches prove compilation through the unchanged port build pipeline; build-rejection kills are not counted.
+
+The D1 matrix includes its only statically identified production caller TestMarkdownASTPreprocessing plus the prior subsumer as a control. D2 includes raw chunks, the representation control, all four tokenizer products, the union and every numbered tokenizer shard 000 through 511 in groups of 128. D3 includes decoder and representation control, native mdast construction, identifier witnesses, malformed-event setup/union/three shards and both mdast compiler/native products. These scopes come from current imports and callers, not an old audit sample. Exact completed passed lists are matrix.json. Tests outside these reached/control matrices remain unknown; findings are bounded, not unconditional whole-package or repo-wide uniqueness claims.
+
+Results:\n'''
+for row in rows:
+ report+=f"- {row['test']}: {row['defense']}; {row['unique_mutant']}; {len(row['passed_rows'])} passed, {len(row['skipped_rows'])} skipped, {len(row['unknown_package_rows'])} other package Tests unknown. Failure: {row['evidence']}\n"
+report+='''
+Brief feedback and time costs:
+- The prior audit's broad compiler-condition mutant caused unrelated native panics. Its shared catches did not exercise AST-specific image metadata or exhaustive decoder boundaries; read all prior report fragments, not only the supplied truncated failure.
+- Go source coverage cannot instrument this native .ts port. Supplemental source-Node function coverage is useful but has transformed offsets and does not establish native statement coverage.
+- The whole package and 513-member family exceed 90 seconds even on a warm toolchain. The tokenizer family needed four groups of 128; setup/product compilation and the unchanged Go formatter also needed their own bounded preparation.
+- Warm tools did not mean a warm cohere formatter. The initial decoder timeout occurred after its real comparisons succeeded. It was not treated as a red assertion baseline or as a mutant kill.
+- A function-only reach difference was not enough for the stronger chunk defense. Reading the tokenizer's low-16-bit normalization provided a semantic shared-line mutant, then every shard was replayed.
+- The test bodies combine native, source Node and backend executors in single Tests. There are no separate executor twin rows here. The new twin verdict is absent from the requested JSON enum, but that inconsistency does not affect this unit.
+- The cost-mutant exception permits repeating loops while the fixed menu otherwise forbids inserted statements. None of these rows names or asserts a performance threshold, so that ambiguity was not exercised. Some rows log throughput; those logs are not speed gates.
+- /tmp had only about 302 MB free. Task-owned temp files and isolated caches were placed under /workspace rather than risking storage failures. Raw .log files are ignored by repository rules and must be force-added as evidence.
+
+All requested rows are defended in their reached matrices, so no unresolved name-versus-assertion finding is claimed. AST parity checks original image metadata, chunk parity checks raw numeric representation, and decoder parity checks the exact boundary result. No deletion or rewrite recommendation. No test was weakened; production source was restored. No PR or push to main. Dynamic native .ts line coverage, package rows outside the reached matrices and repo-wide replay remain unmeasured.
+'''
+(P/'REPORT.md').write_text(report)
+print([(r['test'],r['defense'],len(r['passed_rows']),len(r['matrix_rows'])) for r in rows])

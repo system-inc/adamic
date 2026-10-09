@@ -1,0 +1,752 @@
+[
+  {
+    "file": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+    "line": 16,
+    "function": "integer"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+    "line": 27,
+    "function": "numbers"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+    "line": 33,
+    "function": "documentIDs"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+    "line": 38,
+    "function": "blocks"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 7,
+    "function": "lineTerminator"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 10,
+    "function": "rest"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 22,
+    "function": "match"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 36,
+    "function": "whitespace"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 51,
+    "function": "canOpenOrClose"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 64,
+    "function": "escapeDelimiterRuns"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 99,
+    "function": "printWord"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 122,
+    "function": "replaceCharacter"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 135,
+    "function": "printInlineCode"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 162,
+    "function": "printWikiLink"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 178,
+    "function": "printURL"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 182,
+    "function": "printTitle"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 197,
+    "function": "printReference"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 220,
+    "function": "printImage"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 226,
+    "function": "formatLeaf"
+  },
+  {
+    "file": "stage1/cohere/markdowninline/classes.ts",
+    "line": 24,
+    "function": "punctuation"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/quotes.ts",
+    "line": 5,
+    "function": "inline"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/quotes.ts",
+    "line": 27,
+    "function": "printQuote"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 30,
+    "function": "whitespace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 53,
+    "function": "orderedMarker"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 69,
+    "function": "gitFriendly"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 77,
+    "function": "alignedList"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 92,
+    "function": "requiredIndent"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 103,
+    "function": "listPrefix"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 122,
+    "function": "loose"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 125,
+    "function": "doubleLine"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/lists.ts",
+    "line": 149,
+    "function": "printList"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 18,
+    "function": "add"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 31,
+    "function": "node"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 34,
+    "function": "text"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 37,
+    "function": "concat"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 40,
+    "function": "align"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 43,
+    "function": "hardline"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 58,
+    "function": "child"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 61,
+    "function": "trailing"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 70,
+    "function": "propagate"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 102,
+    "function": "fits"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 167,
+    "function": "indent"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/document.ts",
+    "line": 213,
+    "function": "printDocument"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/commandStack.ts",
+    "line": 9,
+    "function": "command"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/commandStack.ts",
+    "line": 14,
+    "function": "appendParts"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/width.ts",
+    "line": 14,
+    "function": "stringWidth"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "line": 4,
+    "function": "inRanges"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "line": 15,
+    "function": "mappedUnit"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "line": 23,
+    "function": "constructor"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "line": 28,
+    "function": "closure"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "line": 53,
+    "function": "match"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tables.ts",
+    "line": 16,
+    "function": "rowText"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tables.ts",
+    "line": 27,
+    "function": "printTable"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/codeblocks.ts",
+    "line": 10,
+    "function": "fenceStyle"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/codeblocks.ts",
+    "line": 22,
+    "function": "printCodeBlock"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/htmlblocks.ts",
+    "line": 8,
+    "function": "space"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/htmlblocks.ts",
+    "line": 27,
+    "function": "printHTMLBlock"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/codec.ts",
+    "line": 2,
+    "function": "decode"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/codec.ts",
+    "line": 16,
+    "function": "encode"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "line": 8,
+    "function": "printSentence"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "line": 22,
+    "function": "printParagraph"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "line": 43,
+    "function": "printHeading"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/root.ts",
+    "line": 13,
+    "function": "ignoreKind"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/root.ts",
+    "line": 24,
+    "function": "inline"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/root.ts",
+    "line": 46,
+    "function": "printRoot"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 24,
+    "function": "lines"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 32,
+    "function": "group"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 35,
+    "function": "printLeaf"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/children.ts",
+    "line": 5,
+    "function": "printBlockChildren"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/preservedLabel.ts",
+    "line": 5,
+    "function": "printPreservedLabel"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/splitText.ts",
+    "line": 6,
+    "function": "contains"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/splitText.ts",
+    "line": 12,
+    "function": "nonCJK"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/splitText.ts",
+    "line": 22,
+    "function": "word"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/splitText.ts",
+    "line": 47,
+    "function": "splitText"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/textTokens.ts",
+    "line": 12,
+    "function": "whitespace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/textTokens.ts",
+    "line": 15,
+    "function": "word"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespaceCodec.ts",
+    "line": 5,
+    "function": "number"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespaceCodec.ts",
+    "line": 10,
+    "function": "token"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespaceCodec.ts",
+    "line": 22,
+    "function": "whitespaceFrame"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 30,
+    "function": "koreanPair"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 33,
+    "function": "nonCJ"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 36,
+    "function": "asciiPunctuation"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 44,
+    "function": "cjSpaces"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 59,
+    "function": "converts"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 76,
+    "function": "breakable"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 94,
+    "function": "syntaxLeading"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 109,
+    "function": "printWhitespace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/identifier.ts",
+    "line": 5,
+    "function": "identifier"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 15,
+    "function": "whitespace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 34,
+    "function": "trimWhitespace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 41,
+    "function": "blankPrefix"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 53,
+    "function": "parseFrontMatter"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/testdata/events_probe.ts",
+    "line": 6,
+    "function": "pointText"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenArena.ts",
+    "line": 10,
+    "function": "tokenPoint"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenArena.ts",
+    "line": 19,
+    "function": "copyTokenPoint"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenArena.ts",
+    "line": 34,
+    "function": "tokenEvent"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenArena.ts",
+    "line": 39,
+    "function": "token"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenArena.ts",
+    "line": 42,
+    "function": "add"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 32,
+    "function": "constructor"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 40,
+    "function": "now"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 43,
+    "function": "prepare"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 52,
+    "function": "consume"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 77,
+    "function": "enter"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 85,
+    "function": "exit"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 93,
+    "function": "defineSkip"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 97,
+    "function": "accountSkip"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 104,
+    "function": "store"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 113,
+    "function": "restore"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 123,
+    "function": "sliceTokenChunks"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 145,
+    "function": "serializeTokenChunks"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 7,
+    "function": "codeChunk"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 10,
+    "function": "textChunk"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 13,
+    "function": "inputChunks"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 73,
+    "function": "serializeChunks"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 7,
+    "function": "punctuation"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 15,
+    "function": "digit"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 18,
+    "function": "alphanumeric"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 21,
+    "function": "lookupReference"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 36,
+    "function": "namedReference"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 42,
+    "function": "numericReference"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 58,
+    "function": "decodeString"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astProtocol.ts",
+    "line": 6,
+    "function": "astInteger"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astProtocol.ts",
+    "line": 11,
+    "function": "flags"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astProtocol.ts",
+    "line": 26,
+    "function": "readAstNode"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astProtocol.ts",
+    "line": 56,
+    "function": "serializeAst"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astWalk.ts",
+    "line": 15,
+    "function": "constructor"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astWalk.ts",
+    "line": 22,
+    "function": "next"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astWalk.ts",
+    "line": 31,
+    "function": "descend"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astArena.ts",
+    "line": 32,
+    "function": "node"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astArena.ts",
+    "line": 35,
+    "function": "add"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astArena.ts",
+    "line": 65,
+    "function": "reservePosition"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astArena.ts",
+    "line": 68,
+    "function": "positionFrom"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 15,
+    "function": "constructor"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 20,
+    "function": "raw"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 25,
+    "function": "merge"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 51,
+    "function": "markRisk"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 67,
+    "function": "sentence"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 116,
+    "function": "run"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astLists.ts",
+    "line": 6,
+    "function": "contentStart"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astLists.ts",
+    "line": 10,
+    "function": "spaces"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astLists.ts",
+    "line": 18,
+    "function": "aligned"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astLists.ts",
+    "line": 31,
+    "function": "markAlignedList"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 2,
+    "function": "javascriptSpace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 17,
+    "function": "htmlSpace"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 20,
+    "function": "trimHTML"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 27,
+    "function": "quoteEnd"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 39,
+    "function": "quoteRaw"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 50,
+    "function": "bracketContent"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 70,
+    "function": "isIndented"
+  },
+  {
+    "file": "stage1/cohere/markdownblocks/astSource.ts",
+    "line": 76,
+    "function": "listSpaces"
+  }
+]

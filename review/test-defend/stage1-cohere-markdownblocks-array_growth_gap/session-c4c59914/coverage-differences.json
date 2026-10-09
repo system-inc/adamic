@@ -1,0 +1,17 @@
+{
+  "go_profiles": {
+    "coverage-decode.cover": "mode: set\n",
+    "coverage-events.cover": "mode: set\n",
+    "coverage-probes.cover": "mode: set\n",
+    "coverage-chunks.cover": "mode: set\n",
+    "coverage-ast.cover": "mode: set\n"
+  },
+  "exclusive_native_source_lines": null,
+  "limitation": "Go coverpkg reports no statements because production is separately compiled .ts. V8 measures source-Node execution, not native execution; its offsets refer to transformed JS, so they are not reported as origin/main statement lines.",
+  "v8_function_evidence": "v8-production.json",
+  "exclusive_function_leads": {
+    "AST_vs_probes": "AstPreprocessor.raw, merge, markRisk, sentence, run execute in AST; probe row loads none of astPreprocess.ts.",
+    "chunks_vs_events": "Both inputChunks execute. serializeChunks executes 79000 times in chunks versus zero in event member 000. Actual D2 targets shared inputChunks NUL replacement instead; tokenizer serializer masks positive codes with 65535.",
+    "decoder_vs_probes": "Parser gap programs never import decodeString.ts. Decoder exhaustive numeric input includes U+FDCF; MdastCompiler also imports decodeString and is included in D3 matrix."
+  }
+}

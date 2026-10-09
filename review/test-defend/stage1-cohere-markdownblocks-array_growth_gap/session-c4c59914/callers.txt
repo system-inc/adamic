@@ -1,0 +1,36 @@
+stage1/cohere/markdownblocks/inputChunks.ts:73:export function serializeChunks(chunks: readonly InputChunkInterface[]): string {
+stage1/cohere/markdownblocks/testdata/mdast_probe.ts:22:const input = readTextFile(args[0] ?? panic('usage: mdast_probe.ts <events>'));
+stage1/cohere/markdownblocks/testdata/decode_probe.ts:3:import { decodeString } from '../decodeString.ts';
+stage1/cohere/markdownblocks/testdata/decode_probe.ts:5:const input = readTextFile(args[0] ?? panic('usage: decode_probe.ts <escaped sources>'));
+stage1/cohere/markdownblocks/testdata/decode_probe.ts:10:    output.push(encode(decodeString(decode(line.slice(1)))));
+stage1/cohere/markdownblocks/decode_test.go:103:	main, err := filepath.Abs("testdata/decode_probe.ts")
+stage1/cohere/markdownblocks/decode_test.go:147:			for _, file := range []string{"decodeString.ts", "upperEntityNames.ts", "upperEntityValues.ts", "lowerEntityNames.ts", "lowerEntityValues.ts", "codec.ts", "testdata/decode_probe.ts"} {
+stage1/cohere/markdownblocks/decode_test.go:152:				if file == "decodeString.ts" {
+stage1/cohere/markdownblocks/decode_test.go:160:			result := onNode(t, filepath.Join(scratch, "testdata/decode_probe.ts"), mutantCases)
+stage1/cohere/markdownblocks/testdata/chunks_probe.ts:2:import { inputChunks, serializeChunks } from '../inputChunks.ts';
+stage1/cohere/markdownblocks/testdata/chunks_probe.ts:4:const input = readTextFile(args[0] ?? panic('usage: chunks_probe.ts <UTF-16 cases>'));
+stage1/cohere/markdownblocks/testdata/chunks_probe.ts:17:    output.push(serializeChunks(inputChunks(units)));
+stage1/cohere/markdownblocks/decodeString.ts:41:// Called only on digit runs validated and bounded by decodeString, like cohere.
+stage1/cohere/markdownblocks/decodeString.ts:58:export function decodeString(value: string): string {
+stage1/cohere/markdownblocks/testdata/ast_probe.ts:3:import { AstPreprocessor } from '../astPreprocess.ts';
+stage1/cohere/markdownblocks/testdata/ast_probe.ts:7:const input = readTextFile(args[0] ?? panic('usage: ast_probe.ts <unprocessed AST fixtures>'));
+stage1/cohere/markdownblocks/testdata/ast_probe.ts:23:        const processor = new AstPreprocessor(arena, source, tabWidth);
+stage1/cohere/markdownblocks/chunks_test.go:115:	main, err := filepath.Abs("testdata/chunks_probe.ts")
+stage1/cohere/markdownblocks/chunks_test.go:145:			for _, file := range []string{"inputChunks.ts", "testdata/chunks_probe.ts"} {
+stage1/cohere/markdownblocks/chunks_test.go:158:			result := onNode(t, filepath.Join(scratch, "testdata/chunks_probe.ts"), cases)
+stage1/cohere/markdownblocks/pilot_family_products_test.go:62:	malformedEventsBuildProduct(t, ctx, filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata/mdast_probe.ts"), true)
+stage1/cohere/markdownblocks/pilot_family_products_test.go:68:	malformedEventsBuildProduct(t, ctx, filepath.Join(markdownLayoutProductRoot(t), "stage1/cohere/markdownblocks/testdata/mdast_probe.ts"), false)
+stage1/cohere/markdownblocks/malformed_events_independent_test.go:209:		for _, file := range []string{"tokenizerEvents.ts", "tokenArena.ts", "tokenSource.ts", "mdastNode.ts", "inputChunks.ts", "codec.ts", "mdastArena.ts", "mdastCompile.ts", "parseFrontMatter.ts", "identifier.ts", "identifierCaseKeys.ts", "identifierCaseValues.ts", "decodeString.ts", "upperEntityNames.ts", "upperEntityValues.ts", "lowerEntityNames.ts", "lowerEntityValues.ts", "testdata/mdast_probe.ts"} {
+stage1/cohere/markdownblocks/malformed_events_independent_test.go:222:		mutant := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
+stage1/cohere/markdownblocks/malformed_events_independent_test.go:258:		main, e := filepath.Abs("testdata/mdast_probe.ts")
+stage1/cohere/markdownblocks/ast_test.go:110:	main, err := filepath.Abs("testdata/ast_probe.ts")
+stage1/cohere/markdownblocks/ast_test.go:151:			for _, file := range []string{"astArena.ts", "astWalk.ts", "astSource.ts", "astLists.ts", "astPreprocess.ts", "astProtocol.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "emojiMatcher.ts", "widthTables.ts", "widthRuneRanges.ts", "codec.ts", "testdata/ast_probe.ts"} {
+stage1/cohere/markdownblocks/ast_test.go:164:			result := onNode(t, filepath.Join(scratch, "testdata/ast_probe.ts"), nativeCases)
+stage1/cohere/markdownblocks/astPreprocess.ts:8:export class AstPreprocessor {
+stage1/cohere/markdownblocks/mdast_test.go:108:	main, e := filepath.Abs("testdata/mdast_probe.ts")
+stage1/cohere/markdownblocks/mdast_test.go:146:			for _, file := range []string{"tokenizerEvents.ts", "tokenArena.ts", "tokenSource.ts", "mdastNode.ts", "inputChunks.ts", "codec.ts", "mdastArena.ts", "mdastCompile.ts", "parseFrontMatter.ts", "identifier.ts", "identifierCaseKeys.ts", "identifierCaseValues.ts", "decodeString.ts", "upperEntityNames.ts", "upperEntityValues.ts", "lowerEntityNames.ts", "lowerEntityValues.ts", "testdata/mdast_probe.ts"} {
+stage1/cohere/markdownblocks/mdast_test.go:159:			result := onNode(t, filepath.Join(scratch, "testdata/mdast_probe.ts"), transport)
+stage1/cohere/markdownblocks/mdast_gap_test.go:76:	main, e := filepath.Abs("testdata/mdast_probe.ts")
+stage1/cohere/markdownblocks/mdastCompile.ts:3:import { decodeString } from './decodeString.ts';
+stage1/cohere/markdownblocks/mdastCompile.ts:347:                this.top().value += decodeString(`${prefix + this.serialize(token)};`);
+stage1/cohere/markdownblocks/mdastCompile.ts:440:                node.label = decodeString(text);
