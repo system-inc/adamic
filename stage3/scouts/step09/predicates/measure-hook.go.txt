@@ -72,6 +72,7 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 		var visit ast.Visitor
 		visit = func(n *ast.Node) bool {
 			if n.Kind == ast.KindTypePredicate && n.Parent != nil && ast.IsFunctionLike(n.Parent) && n.Parent.Body() != nil {
+                if os.Getenv("HATCH_CONDITION_ONLY") == "1" && (n.AsTypePredicateNode().Type != nil || n.AsTypePredicateNode().AssertsModifier == nil) { n.ForEachChild(visit); return false }
 				r := HatchPredicateResult{Location: program.Where(n), Admission: "Proven", Calls: []HatchCall{}}
 				l := fresh()
 				err := run(func() error {
@@ -136,7 +137,7 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 						l := fresh()
 						err := run(func() error {
 							claim := predicateOfSignature(ck, sig)
-							if claim == nil || claim.Type() == nil {
+							if claim == nil {
 								return l.notYet(n, "a checked predicate without a reifiable target")
 							}
 							if rows[i].Admission == "Proven" {
@@ -164,7 +165,7 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 								}
 								return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t)
 							}
-							r.ViewTarget = needsView(claim.Type())
+							if claim.Type() != nil { r.ViewTarget = needsView(claim.Type()) }
 							args := []ir.Expression{}
 							fn := ir.Function{Name: "measurement_target", Returns: ir.Boolean}
 							if decl.Type().AsTypePredicateNode().AssertsModifier != nil {

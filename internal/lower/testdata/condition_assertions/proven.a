@@ -1,0 +1,5 @@
+function assertCondition(value: unknown): asserts value { if (!value) throw new Error("false condition"); }
+let reads = 0;
+function condition(): boolean { reads++; console.log(`${reads}`); return reads === 1; }
+assertCondition(condition());
+console.log("continued");

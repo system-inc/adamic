@@ -200,10 +200,14 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		return value, nil
 	}
 	claim := predicateOfSignature(l.checker, resolved)
-	if claim == nil || claim.Type() == nil {
+	if claim == nil {
 		return nil, l.notYet(call.AsNode(), "a checked predicate without a reifiable target")
 	}
 	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
+	conditionAssertion := assertion && claim.Type() == nil
+	if claim.Type() == nil && !conditionAssertion {
+		return nil, l.notYet(call.AsNode(), "a checked predicate without a reifiable target")
+	}
 	index := int(claim.ParameterIndex())
 	directions := l.checkedPredicateDirections(call, claim)
 	proven := l.checkedPredicateBodyProven(declaration.Type())
@@ -219,7 +223,10 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if index >= 0 && index < len(call.Arguments.Nodes) {
 		sourceName = l.checker.TypeToString(l.checker.GetTypeAtLocation(call.Arguments.Nodes[index]))
 	}
-	targetName := l.checker.TypeToString(claim.Type())
+	targetName := "truthy condition"
+	if !conditionAssertion {
+		targetName = l.checker.TypeToString(claim.Type())
+	}
 	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
 		if assertion && direction == predicateFalse {
 			continue
@@ -293,7 +300,14 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if directions&predicateFalse != 0 && !l.checkedPredicateTagDomain(source, claim.Type()) {
 		return nil, l.notYet(call.AsNode(), "checked predicate membership over an open tag domain")
 	}
-	setup, membership, err := l.predicateMembership(declaration, arguments[index], source, claim.Type(), local, 0)
+	var setup []ir.Statement
+	var membership ir.Expression
+	var err error
+	if conditionAssertion {
+		membership = ir.Truthy{Value: arguments[index]}
+	} else {
+		setup, membership, err = l.predicateMembership(declaration, arguments[index], source, claim.Type(), local, 0)
+	}
 	if err != nil {
 		return nil, err
 	}

@@ -1,0 +1,3 @@
+function assertCondition(value: unknown): asserts value { return; }
+assertCondition(false);
+console.log("continued");

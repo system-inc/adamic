@@ -1,0 +1,3 @@
+function assertCondition(value: unknown): asserts value { if (!value) throw new Error("false condition"); }
+function read(value: string | undefined): void { assertCondition(value); console.log(`${value.length}`); }
+read("proof");

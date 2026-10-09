@@ -84,6 +84,25 @@ func predicateCountsTable(t *testing.T) string {
 		}
 		fmt.Fprintf(&table, "| %s | %d | %d | %d | %d |\n", filepath.ToSlash(relative), len(counts.Sites), proven, checked, unobservable)
 	}
+	for _, fixture := range conditionAssertionFixtures {
+		program, err := lowered(t, conditionAssertionInput(t, fixture.name, true))
+		if err != nil {
+			t.Fatal(err)
+		}
+		counts := program.PredicateChecks
+		if len(counts.Sites) != 1 || len(counts.Sites[0].Directions) != 1 {
+			t.Fatalf("incomplete condition site: %+v", counts)
+		}
+		direction := counts.Sites[0].Directions[0]
+		status := "checked"
+		if fixture.proven {
+			status = "proven"
+		}
+		if direction.Direction != "asserts" || direction.Status != status || direction.Reason == "" || counts.Proven+counts.Checked != 1 || counts.Unobservable != 0 {
+			t.Fatalf("invalid condition direction: %+v", counts)
+		}
+		fmt.Fprintf(&table, "| internal/lower/testdata/condition_assertions/%s.a (.ts checked mode) | %d | %d | %d | %d |\n", fixture.name, len(counts.Sites), counts.Proven, counts.Checked, counts.Unobservable)
+	}
 	return table.String()
 }
 
