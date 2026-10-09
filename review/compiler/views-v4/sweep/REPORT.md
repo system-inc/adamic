@@ -12,7 +12,7 @@ Not covered: Set certificate, rank-165 readonly control, checked construction an
 | TestCountsAreRecorded | Complete update passed; independent verification passed; four moved rows named below | 60.602 update; 56.115 verify |
 | Oracle checked-view and V4 suite | 156 top-level leaves: 153 passed, three existing pendings skipped | Per-leaf results in final-results.json; max command 33.366 |
 | TestCallTargetReaders | Passed after compiler fixes | 31.769 |
-| Lane checks | Passed before evidence packaging; final run recorded separately | See lane-checks.log |
+| Lane checks | gofmt/tools: 154 Go files; t.Parallel and vet: eight packages; passed | 2.4 |
 
 The initial main tip was bdb89962b178f618e2e6d34e9a7ea5c395089faf. The initial merge's only conflict was the call-target reader allowlist: retain both V4's callable emission reader and main's class-static test reader. Main advanced with test-only changes to 7d113268b1903e4e47289f226e94ec2fb609e15b; merge 22524743f incorporates that tip. All affected records and JSON/YAML gaps leaves were rerun (refresh.jsonl). No .a fixture files changed between those main tips.
 
