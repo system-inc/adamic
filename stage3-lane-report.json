@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-4-stage3-lane/oracle/report.json'"
+  ],
+  "execution": {
+    "commit": "3b5fbf6c1931b7503c4ed631574bdb5b53c3ebed",
+    "apply_exit": 0,
+    "oracle_exit": -9,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 736.232
+  },
+  "results": "/home/ahra/fast-gate/tree-4-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-4-stage3-lane/oracle/report.json'"
+}
