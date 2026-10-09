@@ -31,23 +31,43 @@ func jsxManifestCases(t *testing.T, cases []string) string {
 	}
 	return path
 }
+
+const testJSXAgreementShards = 9
+
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX case.
 func TestJSXAgreement(t *testing.T) {
-	list := jsxManifest(t)
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	finishSetup := miscStart(t)
+	cases := jsxCases()
+	if len(cases) != testJSXAgreementShards {
+		t.Fatal("JSX agreement enumeration changed")
+	}
+	ids := miscIDs("jsx", len(cases))
+	oracle := miscOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if diff := firstDifference(want, onNode(t, main, "--manifest", list)); diff != "" {
-		t.Fatal(diff)
-	}
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
+	binary, script := miscBuild(t, main)
+	finishSetup()
+	miscRunShards(t, testJSXAgreementShards, ids, func(t *testing.T, i int) {
+		list := jsxManifestCases(t, cases[i:i+1])
+		want := execute(t, "", oracle, "--manifest", list)
+		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
+			if err := miscCompare(want, got, false); err != nil {
+				t.Fatalf("%s %s: %v", ids[i], name, err)
+			}
 		}
-	}
-	t.Logf("%d JSX cases, %d bytes match Go on source Node, native and emitted JS", len(jsxCases()), len(want))
+	})
+}
+
+func TestJSXAgreementPlantedDisagreement(t *testing.T) {
+	miscPlantedProof(t, testJSXAgreementShards, miscIDs("jsx", len(jsxCases())), func(planted bool) error {
+		got := []byte("agree")
+		if planted {
+			got = []byte("disagree")
+		}
+		return miscCompare([]byte("agree"), got, false)
+	})
 }
 
 func TestJSXOriginalLibraries(t *testing.T) {
