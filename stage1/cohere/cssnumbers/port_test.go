@@ -131,14 +131,8 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
 // Contiguous ranges are fixed by cohere commit 7945d102a6c18dd36adf9114a758ce646e8b2359
 // and the generated grammar in enumerateNumbers.
 
-func runCSSNumbersShard(t *testing.T, ordinal int) {
+func prepareCSSNumbersSetup(t *testing.T) {
 	t.Helper()
-	started := time.Now()
-	defer func() {
-		if elapsed := time.Since(started); elapsed > 60*time.Second {
-			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
-		}
-	}()
 	numbersTopSetup.once.Do(func() {
 		corpus := enumerateNumbers(t)
 		units := numbersUnits(corpus)
@@ -207,6 +201,8 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 		if library == "" {
 			t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
 		}
+		fullWant := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+		clean(t, "Go", fullWant)
 		numbersTopSetup.units = units
 		numbersTopSetup.run = func(t *testing.T, unit numbersUnit) {
 			t.Logf("%s: %s range [%d,%d), side %s, %d case IDs", unit.name, unit.kind, unit.lo, unit.hi, unit.side, len(unit.ids))
@@ -261,7 +257,7 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 					}
 				}
 			case "mutant":
-				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+				want := fullWant
 				clean(t, "Go", want)
 				mutation := numbersMutations[unit.lo]
 				for _, r := range []run{
@@ -281,7 +277,7 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 					}
 				}
 			case "throughput":
-				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+				want := fullWant
 				clean(t, "Go", want)
 				side := unit.side
 				command := goBinary
@@ -316,8 +312,23 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 			}
 		}
 	})
+}
+
+func runCSSNumbersShard(t *testing.T, ordinal int) {
+	t.Helper()
 	if numbersTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		t.Fatal("TestCSSNumbers_Setup must finish before a shard starts")
+	}
+	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked TestCSSNumbers_%03d: case deadline exceeded 90s", ordinal)) })
+	defer timer.Stop()
+	started := time.Now()
+	defer func() {
+		if elapsed := time.Since(started); elapsed > 60*time.Second {
+			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
+		}
+	}()
+	if numbersTopSetup.run == nil {
+		t.Fatal("TestCSSNumbers_Setup must finish before a shard starts")
 	}
 	selected := selectedNumbersUnits(t, numbersTopSetup.units)
 	for _, unit := range selected {
