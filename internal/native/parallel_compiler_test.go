@@ -16,7 +16,7 @@ func TestParallelMapCompilerABI(t *testing.T) {
 			ir.Evaluate{Value: ir.ParallelMap{Items: ir.Read{Local: 0, Of: ir.Array}, Work: ir.Read{Local: 1, Of: ir.Closure}, Result: result}},
 		}}
 		code := C(program)
-		if !strings.Contains(code, "work->code(work, arguments)") {
+		if !strings.Contains(code, "adamic_closure_call(work, arguments, 2)") {
 			t.Fatal("adapter must call the original closure with its original self")
 		}
 		flag := "false"

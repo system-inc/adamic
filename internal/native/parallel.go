@@ -30,9 +30,10 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 		e.line("%s = NULL;", e.localName(read.Local))
 	}
 	// A fresh adapter carries the original closure plus reference-valued globals.
-	// Calling the original code with its original self preserves function identity.
+	// Dispatch with the two supplied arguments and the original self so counted
+	// callbacks keep their signature and function identity.
 	adapter := e.temporary() + "_parallel"
-	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_value %s(adamic_closure *self, adamic_value *arguments) {\n\tadamic_closure *work = self->cells[0]->value.reference;\n\treturn work->code(work, arguments);\n}\n", adapter))
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_value %s(adamic_closure *self, adamic_value *arguments) {\n\tadamic_closure *work = self->cells[0]->value.reference;\n\treturn adamic_closure_call(work, arguments, 2);\n}\n", adapter))
 	work := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", adapter, len(expression.Shared)+1))
 	e.line("%s->cells[0] = adamic_cell_new((adamic_value){.reference = %s}, true);", work, retained(original))
 	for index, global := range expression.Shared {
