@@ -47,7 +47,7 @@ func TestParseIntMapUsesIndexRadix(t *testing.T) {
 
 // Each execution owns its working directory so source and lowered JavaScript
 // see the same empty filesystem, without sharing state with parallel tests.
-func lowersAndAgreesWithNode(t *testing.T, source, wantStdout string, wantExit int) {
+func fsLoweringAgreesWithNode(t *testing.T, source, wantStdout string, wantExit int) {
 	t.Helper()
 	runner, err := filepath.Abs("../../oracle/node.mjs")
 	if err != nil {
@@ -98,21 +98,21 @@ func lowersAndAgreesWithNode(t *testing.T, source, wantStdout string, wantExit i
 
 func TestFSOpenStringFlagsLower(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `import {writeFileSync,openSync,closeSync,readFileSync,unlinkSync} from 'node:fs';
+	fsLoweringAgreesWithNode(t, `import {writeFileSync,openSync,closeSync,readFileSync,unlinkSync} from 'node:fs';
  writeFileSync('x','opened bytes'); const fd=openSync('x','r'); closeSync(fd);
  console.log(readFileSync('x','utf8')); unlinkSync('x');`, "opened bytes\n", 0)
 }
 
 func TestFSRemoveDefaultRetryDelayLowers(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `import {writeFileSync,existsSync,rmSync} from 'node:fs';
+	fsLoweringAgreesWithNode(t, `import {writeFileSync,existsSync,rmSync} from 'node:fs';
  writeFileSync('x','remove me'); console.log(existsSync('x')?'present':'missing');
  rmSync('x',{retryDelay:100}); console.log(existsSync('x')?'present':'missing');`, "present\nmissing\n", 0)
 }
 
 func TestFSExistsOperation(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `import {existsSync,writeFileSync,unlinkSync} from 'node:fs';
+	fsLoweringAgreesWithNode(t, `import {existsSync,writeFileSync,unlinkSync} from 'node:fs';
  console.log(existsSync('x')?'present':'missing'); writeFileSync('x','exists');
  console.log(existsSync('x')?'present':'missing'); unlinkSync('x');
  console.log(existsSync('x')?'present':'missing');`, "missing\npresent\nmissing\n", 0)
@@ -122,7 +122,7 @@ func TestFSStatThrowsByDefault(t *testing.T) {
 	t.Parallel()
 	// Missing-file behavior distinguishes throwIfNoEntry's default: Node exits
 	// before the final print; returning undefined instead continues and exits zero.
-	lowersAndAgreesWithNode(t, `import {existsSync,statSync} from 'node:fs';
+	fsLoweringAgreesWithNode(t, `import {existsSync,statSync} from 'node:fs';
  console.log(existsSync('missing')?'present':'missing'); statSync('missing');
  console.log('stat returned instead of throwing');`, "missing\n", 70)
 }
