@@ -34,3 +34,5 @@ Separate process wall seconds, including test-process setup, on a four-CPU quota
 - TestParseIntMapUsesIndexRadix: 1.975s, exit 0.
 
 No persistent fixtures were added, so counts.md is unchanged. Only a _test.go file and review/ evidence changed. Exact mutant diffs remain .diff files; production sources were restored.
+
+Main c0a7667b merged without conflicts; focused behavioral rows and the retained parseInt guard passed again on the merged tip (behavior-merged.json). Lane checks passed: lane checks 1.7 s: gofmt and tools on 3 Go files, t.Parallel on 2 test packages; vet 2 packages.
