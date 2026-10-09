@@ -24,20 +24,20 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
-	"internal/lower/optional_callable.go:optionalCallable:CallClosure.Closure":             {"runtime", "constructs the saved runtime selection and optional result ABI"},
-	"internal/native/discarded_closure_result.go:discardClosureResult:CallClosure.Closure": {"runtime", "selects the runtime method return descriptor for owned discarded results"},
-	"internal/native/arguments_length.go:spreadArguments:Call.Function":                    {"runtime", "names the spread call signature"},
-	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                 {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                     {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                          {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/native/class_inheritance.go:callCode:Call.Function":                          {"runtime", "names the function to call"},
-	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":                       {"runtime", "names the function to call"},
-	"internal/native/emit_expressions.go:evaluate:Call.Function":                           {"runtime", "names the function to call"},
-	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":                     {"runtime", "names the function to call"},
-	"internal/native/emit_functions.go:arguments:Call.Function":                            {"runtime", "names the function to call"},
-	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                    {"runtime", "names the function to call"},
-	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function":          {"runtime", "names the function under test"},
-	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":               {"runtime", "names the function under test"},
+	"internal/lower/optional_callable.go:optionalCallable:CallClosure.Closure":                        {"runtime", "constructs the saved runtime selection and optional result ABI"},
+	"internal/native/discarded_closure_result.go:discardClosureResult:CallClosure.Closure":            {"runtime", "selects the runtime method return descriptor for owned discarded results"},
+	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
+	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function": {"compiler", "names the function under test"},
+	"internal/native/class_inheritance.go:callCode:Call.Function":                                     {"runtime", "names the function to call"},
+	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":                                  {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluate:Call.Function":                                      {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":                                {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:arguments:Call.Function":                                       {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                               {"runtime", "names the function to call"},
+	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function":                     {"runtime", "names the function under test"},
+	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":                          {"runtime", "names the function under test"},
 }
 
 func TestCallTargetReaders(t *testing.T) {

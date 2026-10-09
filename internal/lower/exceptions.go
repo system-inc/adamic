@@ -207,7 +207,7 @@ func (l *lowering) throwsOutReadiness(statements []ir.Statement, readinessChecks
 				found = true
 			}
 		case ir.ArraySort:
-			if (node.Callback != nil && l.result.ClosuresMayThrow) || (node.Callback == nil && l.result.Functions[node.Comparator].MayThrow) {
+			if l.result.ClosureMayThrow(node) {
 				found = true
 			}
 		}

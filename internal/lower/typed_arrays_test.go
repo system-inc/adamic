@@ -12,24 +12,16 @@ func TestTypedArraysLower(t *testing.T) {
 	t.Parallel()
 	for _, kind := range []string{"Uint8Array", "Int32Array", "Float64Array"} {
 		t.Run(kind, func(t *testing.T) {
-			p, err := lowerSource(t, `const source: number[] = [300, -1, NaN];
+			lowersAndAgreesWithNode(t, `const source: number[] = [300, -1, NaN];
 const values = new `+kind+`(source);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
 values[0] = 300;
 values.fill(-1, 1);
 values.set(values.subarray(0, 1), 2);
 for (const value of values) { console.log(value.toString()); }
 console.log((values[values.length] ?? -999).toString());
 `)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if !p.Locals[1].Type.IsTypedArray() {
-				t.Fatalf("typed array represented as %v", p.Locals[1].Type)
-			}
-			write, ok := p.Main[2].(ir.SetIndex)
-			if !ok || write.Element != ir.Number {
-				t.Fatalf("index write: %#v", p.Main[2])
-			}
 		})
 	}
 }
@@ -67,5 +59,33 @@ func TestTypedArrayViewsCannotChangeRepresentation(t *testing.T) {
 		if !errors.As(err, &gap) {
 			t.Errorf("representation change accepted: %s: %v", source, err)
 		}
+	}
+}
+
+func TestTypedArrayFromArray(t *testing.T) {
+	t.Parallel()
+	p := lowersAndAgreesWithNode(t, `const values = new Uint8Array([1, 2]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`)
+	// JavaScript behavior cannot observe FromArray's native constructor dispatch:
+	// the JavaScript backend passes Source directly and ignores this IR flag.
+	constructor := p.Main[0].(ir.Declare).Value.(ir.TypedArrayNew)
+	if !constructor.FromArray {
+		t.Fatal("array source lost native array constructor dispatch")
+	}
+}
+
+func TestTypedArrayFromEmptyArray(t *testing.T) {
+	t.Parallel()
+	p := lowersAndAgreesWithNode(t, `const values = new Uint8Array([]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`)
+	// JavaScript behavior cannot observe FromArray's native constructor dispatch:
+	// the JavaScript backend passes Source directly and ignores this IR flag.
+	constructor := p.Main[0].(ir.Declare).Value.(ir.TypedArrayNew)
+	if !constructor.FromArray {
+		t.Fatal("empty array source lost native array constructor dispatch")
 	}
 }

@@ -1,0 +1,47 @@
+commit cfa294609c27c921047417bbc4a14b5e371da510
+Author: Kirk Ouimet <kirk@kirkouimet.com>
+Commit: Kirk Ouimet <kirk@kirkouimet.com>
+
+    Lower optional indexing with guarded indices
+    
+    Optional index roots: 6 to 0. Longer-chain roots: 11 to 9. Optional-call roots: 136 to 108; all 28 changed Map sites retain a structural receiver boundary. Size roots stay 20 and numeric optional roots stay 3.
+    
+    Keep sparse storage, open index signatures, structural Map dispatch and string keys unsupported. Treat the preexisting optional-string-index gap pin as this indexing unit scope; leave the scout optional-call row and implementation untouched. Base the delivery on area fixture tip 4885cec5.
+commit 28bf5bfbea924356e4e82c7de5848c053f4707f6
+Author: Kirk Ouimet <kirk@kirkouimet.com>
+Commit: Kirk Ouimet <kirk@kirkouimet.com>
+
+    Rebuild optional calls fcbbfdb8 on main
+    
+    Import only the lane's net change from 4885cec5 through fcbbfdb8 onto
+    main 7a10c877. Keep saved callable and receiver selection, lazy arguments
+    and indices, continuous-chain propagation and source return ABI.
+    
+    No textual conflicts. Reconcile both sides of three semantic interactions:
+    - optional_chain.go keeps main's typed-buffer index and required-value
+      unwrap contract within the saved receiver path.
+    - static_single_assignment gap 2 now requires native parity and no leaks;
+      construct.ts restores the original optional chain in renameReturns.
+    - markdownblocks gap 17 now requires Node, native and backend parity
+      with sanitizers and no leaks, instead of the retired NotYet.
+    Main's readObjectField still supplies checked-view and readiness evidence.
+    All refusal, cycle and signature proofs remain in their existing paths.
+    
+    Conservative assumption: callable accessors, Weak callable slots,
+    checked/uninitialized callable fields and unsupported representations
+    remain NotYet pending step 18 storage contract #tvq1eqm. No language
+    acceptance or refusal policy is relaxed.
+    
+    Add a counted discarded-reference check after one array visitor release
+    mutant escaped LeakSanitizer. The control balances 42/42/0; that mutant
+    records 42 allocations, 41 frees and zero regions. All 29 lane mutants
+    are caught, including the source observations and census reader check.
+    
+    Build, vet internal, changed-.a a-check, stage 1 gaps, stage 3 fixtures,
+    scoped Node/sanitizer/release/leak oracles and receiver/ABI checks pass.
+    SSA's port oracle and twelve existing output mutants pass. Linux counts
+    add 25 rows and move 42; every changed row is audited in
+     docs/step-18/main-rebuild.md and held to Node. No stage 3 status or Node
+    record changes. Native tsc entry first stops at builder.ts:1246:69 TS2345;
+    checker diagnostics prevent an entry-level claim about later barriers.
+c8ab7ae2 Merge compiler/optional-calls-main at b6ef2cb4 into side stack lowering-b

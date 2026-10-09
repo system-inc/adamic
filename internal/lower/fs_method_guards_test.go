@@ -124,5 +124,5 @@ func TestFSStatThrowsByDefault(t *testing.T) {
 	// before the final print; returning undefined instead continues and exits zero.
 	fsLoweringAgreesWithNode(t, `import {existsSync,statSync} from 'node:fs';
  console.log(existsSync('missing')?'present':'missing'); statSync('missing');
- console.log('stat returned instead of throwing');`, "missing\n", 70)
+ console.log('stat returned instead of throwing');`, "missing\n", 1)
 }
