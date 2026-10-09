@@ -1,2 +1,7 @@
 idle preemption: 0 marked, 0 survivors in their sessions, 10 ms
 trimmed Go's build cache /home/ahra/.cache/go-build: entries unused 12 h removed, disk 91% to 70% used
+FIRST FAILURE (tests, at 1352.6 s):
+github.com/system-inc/adamic/stage1/cohere/gitignore (package)
+FAIL	github.com/system-inc/adamic/stage1/cohere/gitignore	185.921s
+
+(box load 146.4 on 64 cores at first failure)

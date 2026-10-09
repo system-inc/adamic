@@ -1,0 +1,8 @@
+target 3a391aff13465375512469aa74f32ea3e7dca8ec
+logs /home/ahra/full-gate/out/3a391aff1346-20261009T213800Z/catalog-units/14-gahpsjv2/adamic-catalog-logs-nzrz3kyf
+build flags: commit=3a391aff13465375512469aa74f32ea3e7dca8ec; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)
+15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+15 wall=0.001s setup=0.000s check=0.000s cleanup=0.000s load=19.25 18.99 16.87 79/979 3268226 -> 19.25 18.99 16.87 79/980 3268227
+total wall=0.042s load=19.25 18.99 16.87 79/976 3268168 -> 19.25 18.99 16.87 78/979 3268227
