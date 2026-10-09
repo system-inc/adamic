@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T09:50:38.863350471Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T09:50:38.942357242Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-09T09:50:38.942543225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:50:38.945090128Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.080s [no tests to run]\n"}
+{"Time":"2026-10-09T09:50:38.94513937Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.082}
+{"Time":"2026-10-09T09:50:30.029828125Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd"}
+{"Time":"2026-10-09T09:50:30.030151938Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd","Output":"?   \tgithub.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd\t[no test files]\n"}
+{"Time":"2026-10-09T09:50:30.030168758Z","Action":"skip","Package":"github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd","Elapsed":0}
+{"Time":"2026-10-09T09:50:35.784537652Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/ledger/checker-259"}
+{"Time":"2026-10-09T09:50:35.784639826Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/ledger/checker-259","Output":"?   \tgithub.com/system-inc/adamic/stage3/ledger/checker-259\t[no test files]\n"}
+{"Time":"2026-10-09T09:50:35.784665694Z","Action":"skip","Package":"github.com/system-inc/adamic/stage3/ledger/checker-259","Elapsed":0}
