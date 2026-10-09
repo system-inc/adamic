@@ -20,3 +20,5 @@ Commands and observations:
 - `timeout 100 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v`: PASS before push; complete output in call-targets.log.
 
 The assigned after-chain dependency is intentionally retained; this unit does not merge or rebase onto main, whose panic contract cannot support the caught-error witness. Integration lane checks are scoped to the unit against its prescribed a7edbde5 base, rather than treating thousands of inherited after-chain changes as this test-only unit.
+
+Delivery implementation: d73a2f55. TestCallTargetReaders leaf 22.78s, package 22.792s. Integration lane checks PASS in 1.6s: gofmt/tools on one changed Go file, t.Parallel on one test package, vet one package. The isolated lane bootstrap was stopped while cloning TypeScript; the supported explicit-base lane invocation then reused /workspace/adamic and restored compiler/namespace-readiness-guard afterward. The final evidence-only commit is checked again before pushing.
