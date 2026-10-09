@@ -1,0 +1,10 @@
+caught ignore-dependency: 0 != 17
+caught ignore-skipped: 0 != 17
+caught double-count: 40 != 30
+caught forget-independent: 80 != 45
+caught forget-checker-child: 0 != 20
+caught headline report mutant: headline hidden total
+caught file report mutant: file hidden bytes
+caught ranking report mutant: top ten sizes and ranking
+caught line report mutant: top ten start line
+PASS: all nine mutants failed their intended assertions

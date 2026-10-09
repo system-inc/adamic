@@ -231,3 +231,38 @@ assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
 prove that the equality/reproduction check itself fails under that mutant.
 
 [Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
+
+## Derived IR caches in rollback snapshots
+
+The reflection copier in [full.go.txt](full.go.txt) has an exact owner/field
+allowlist of derived caches. Its sole entry is `ir.Program.argumentFacts`.
+[argument_slots.go](../../../internal/ir/argument_slots.go) recomputes those facts
+when the cache is nil or its function/target-set sizes change. A new snapshot
+leaves this pointer nil, rather than copying its unexported contents or retaining
+facts for the original program. Every other private field still panics; a field
+with the same name on a different owner is not allowed.
+
+[cache_copy_test.go.txt](cache_copy_test.go.txt) is compiled only through the
+no-output overlay. It primes packed facts, lowers an initializer that fails after
+installing a local, checks the real statement rollback, then lowers a following
+statement. It changes target membership without changing the cache's size keys
+and compares all recomputed packed facts and the closure convention with a fresh
+program's known false facts. The original program remains independent.
+The second test requires unrelated private fields to fail loudly.
+
+```sh
+source /workspace/adamic-tools/env.sh
+export TMPDIR=/workspace/census-cache-proof
+mkdir -p "$TMPDIR"
+python3 stage3/census/latent/make_overlay.py "$PWD" "$TMPDIR/overlay" > "$TMPDIR/overlay.log" 2>&1
+gofmt -w "$TMPDIR/overlay"/*.go
+python3 stage3/census/latent/cache_copy_audit.py "$PWD" "$TMPDIR/overlay" "$TMPDIR/proof" > "$TMPDIR/proof.log" 2>&1
+```
+
+The runner selects only `TestLatentCacheRollbackFacts` and
+`TestLatentUnknownPrivateField` in the overlay. Its allowlist-removal mutant brings
+back `latent state copy: unexported IR field argumentFacts` during the real
+statement snapshot. Its skip-all-private-fields mutant fails the unknown-field
+assertion. Neither mutant changes production compiler files, and both must fail
+running tests, rather than compilation. A census recount must separately verify
+zero recovered snapshot-copier panics; panicked boundaries remain hidden source.
