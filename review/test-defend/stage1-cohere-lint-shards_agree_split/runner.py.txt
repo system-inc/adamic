@@ -1,0 +1,19 @@
+from pathlib import Path
+import subprocess,json,os,time
+p=Path('/workspace/adamic/review/test-defend/stage1-cohere-lint-shards_agree_split');runs=[]
+plans=json.loads((p/'planned-mutants.json').read_text())
+groups=[('suggestion','^TestSuggestionAlongsideAutomaticFix_[0-9]+$'),('kind','^TestWitnessScriptKind(_[0-9]+)?$'),('complete','^TestCompleteSuggestionSerialization_[0-9]+$')]
+for id,file,old,new in plans:
+ f=Path('/workspace/adamic')/file;original=f.read_text();assert original.count(old)==1
+ f.write_text(original.replace(old,new,1))
+ try:
+  (p/f'{id}.diff').write_text(subprocess.check_output(['git','diff','--',file],text=True))
+  env=os.environ.copy();env['ADAMIC_TYPESCRIPT_SOURCE']='/tmp/defend-lint/TypeScript';env['ADAMIC_BUILD_CACHE_DIR']=f'/tmp/defend-lint/cache/{id}'
+  ordered=groups if id.startswith('S') else [groups[1],groups[0],groups[2]]
+  for label,regex in ordered:
+   cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./stage1/cohere/lint/','-run',regex]
+   start=time.monotonic()
+   with (p/f'{id}-{label}.log').open('w') as log:rc=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT).returncode
+   runs.append({'mutant':id,'group':label,'command':cmd,'cache':env['ADAMIC_BUILD_CACHE_DIR'],'exit':rc,'wall':time.monotonic()-start})
+   (p/'matrix-runs.json').write_text(json.dumps(runs,indent=2))
+ finally:f.write_text(original)

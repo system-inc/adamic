@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestSuggestionAlongsideAutomaticFix family",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestWitnessScriptKind family",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "S1",
+        "file_line": "stage1/cohere/lint/lint.ts:128",
+        "change": "Collect automatic fixes only when no suggestions exist.",
+        "rows_failed": [
+          "TestSuggestionAlongsideAutomaticFix_002",
+          "TestSuggestionAlongsideAutomaticFix_001",
+          "TestSuggestionAlongsideAutomaticFix_000"
+        ],
+        "unknown_rows": 6748
+      },
+      {
+        "mutant": "S2",
+        "file_line": "stage1/cohere/lint/lint.ts:182",
+        "change": "Drop pieces.push(finding.replacement).",
+        "rows_failed": [
+          "TestSuggestionAlongsideAutomaticFix_002",
+          "TestSuggestionAlongsideAutomaticFix_001",
+          "TestSuggestionAlongsideAutomaticFix_000"
+        ],
+        "unknown_rows": 6748
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/defend-lint/TypeScript ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestSuggestionAlongsideAutomaticFix_[0-9]+$' > S1-suggestion.log 2>&1; suggestion_alongside_shards_test.go:206: native: case 0 line 12: port \"fixed\\t/*\\\\ud83d\\\\ude00*/debugger;\\\\u000a\", Go \"fixed\\t/*\\\\ud83d\\\\ude00*/;\\\\u000a\"",
+    "reason": "Two production mutants distinguish this family from its former subsumer and the complete-serialization family. Package uniqueness remains unknown because broader clean baselines exceed 90 seconds.",
+    "bounded": true
+  },
+  {
+    "test": "TestWitnessScriptKind family",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestSuggestionAlongsideAutomaticFix family",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "K1",
+        "file_line": "stage1/typescript/parser/parser.ts:23",
+        "change": "Change JSX path suffix from .tsx to .ts.",
+        "rows_failed": [
+          "TestWitnessScriptKind_000"
+        ],
+        "unknown_rows": 6748
+      },
+      {
+        "mutant": "K2",
+        "file_line": "stage1/cohere/lint/lint.ts:189",
+        "change": "Omit original path when reparsing fixed source.",
+        "rows_failed": [
+          "TestWitnessScriptKind_000"
+        ],
+        "unknown_rows": 6748
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/defend-lint/TypeScript ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint/cache/K1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestWitnessScriptKind(_[0-9]+)?$' > K1-kind.log 2>&1; witness_script_kind_shards_test.go:148: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/lint-shared-319710382/witness-kind-2506267075/main.ts --manifest /tmp/adamic-gate/TestWitnessScriptKind_000983950997/001/manifest.txt]: exit status 70",
+    "reason": "Two production mutants distinguish this family from its former subsumer and the complete-serialization family. Package uniqueness remains unknown because broader clean baselines exceed 90 seconds.",
+    "bounded": true
+  }
+]

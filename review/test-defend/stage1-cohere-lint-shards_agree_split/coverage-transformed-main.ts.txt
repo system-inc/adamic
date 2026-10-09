@@ -1,0 +1,159 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { written } from '/workspace/adamic/stage1/typescript/parser/nodes.ts';
+import { Parser } from '/workspace/adamic/stage1/typescript/parser/parser.ts';
+import { Scanner } from '/workspace/adamic/stage1/typescript/scanner/scanner.ts';
+import { Linter } from './lint.ts';
+import { Settings } from './settings.ts';
+// Test only: see Linter.junkRows.
+const junkRows = programArguments().includes('--junk-rows');
+function run(row, countOnly) {
+    const fields = row.split('\t');
+    const path = fields[0] ?? panic('missing path');
+    const source = readTextFile(path);
+    if (source.kind === 'Error') {
+        panic(source.message);
+    }
+    const parser = new Parser(source.text, path);
+    const scanner = new Scanner(source.text);
+    const settings = new Settings();
+    settings.load(fields[5] ?? '');
+    const linter = new Linter(source.text, parser, scanner, fields[1] ?? 'all', settings.read('mode', fields[2] ?? ''), settings.read('null', fields[3] ?? ''), settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true', settings);
+    linter.junkRows = junkRows;
+    linter.run();
+    if (countOnly) {
+        return linter.findings.length;
+    }
+    const offsets = [
+        0
+    ];
+    const lines = [
+        0
+    ];
+    let bytes = 0;
+    for(let index = 0; index < source.text.length; index++){
+        const code = source.text.codePointAt(index) ?? 0;
+        if (code === 10) {
+            lines.push(index + 1);
+        }
+        if (code > 65535) {
+            offsets.push(bytes);
+            index++;
+        }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    for (const finding of linter.findings){
+        const start = offsets[finding.start] ?? panic('finding outside source');
+        const end = offsets[finding.end] ?? panic('finding end outside source');
+        let left = 0;
+        let right = lines.length;
+        while(left < right){
+            const middle = Math.floor((left + right) / 2);
+            if ((lines[middle] ?? 0) <= finding.start) {
+                left = middle + 1;
+            } else {
+                right = middle;
+            }
+        }
+        const line = left;
+        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
+        console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+        let repair = finding.repair;
+        let replacement = finding.replacement;
+        let description = finding.suggestion;
+        let editStart = offsets[finding.editStart] ?? 0;
+        let editEnd = offsets[finding.editEnd] ?? 0;
+        let complete = false;
+        if (finding.suggestions.length > 0) {
+            const suggestion = finding.suggestions[0] ?? panic('missing suggestion');
+            const edit = suggestion.edits[0];
+            if (finding.suggestions.length === 1 && suggestion.edits.length === 1 && edit !== undefined && edit.start === finding.start && edit.end === finding.end) {
+                repair = 'suggestion';
+                replacement = edit.text;
+                description = suggestion.message;
+                editStart = offsets[edit.start] ?? panic('suggestion outside source');
+                editEnd = offsets[edit.end] ?? panic('suggestion end outside source');
+            } else if (finding.suggestions.length === 1 && suggestion.edits.length > 0 && suggestion.edits.every((value)=>!value.text.includes('|') && !value.text.includes(':'))) {
+                repair = `suggestion-edits:${suggestion.id}`;
+                replacement = suggestion.edits.map((value)=>`${offsets[value.start] ?? panic('suggestion outside source')}:${offsets[value.end] ?? panic('suggestion end outside source')}:${value.text}`).join('|');
+                description = suggestion.message;
+            } else {
+                repair = 'suggestions';
+                replacement = '';
+                description = '';
+                complete = true;
+            }
+        }
+        console.log(`range ${start} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`);
+        for (const extra of finding.extraFixes){
+            console.log(`fix-edit\t${offsets[extra.start] ?? panic('fix outside source')} ${offsets[extra.end] ?? panic('fix end outside source')}\t${written(extra.text)}`);
+        }
+        if (complete) {
+            for (const suggestion of finding.suggestions){
+                console.log(`suggestion\t${written(suggestion.id)}\t${written(suggestion.message)}\t${suggestion.edits.length}`);
+                for (const edit of suggestion.edits){
+                    console.log(`suggestion-edit\t${offsets[edit.start] ?? panic('suggestion outside source')} ${offsets[edit.end] ?? panic('suggestion end outside source')}\t${written(edit.text)}`);
+                }
+            }
+        }
+    }
+    if (fields[6] === 'recovery') {
+        console.log('recovery findings only');
+    } else {
+        const fixed = linter.fixed();
+        for (const rejection of linter.rejected){
+            console.log(rejection);
+        }
+        if (linter.unconverged.length > 0) {
+            console.log(`unconverged\t${linter.unconverged.join(',')}`);
+        }
+        console.log(`fixed\t${written(fixed)}`);
+    }
+    return linter.findings.length;
+}
+const args = programArguments();
+const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');
+if (first === '--manifest') {
+    const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+    if (manifest.kind === 'Error') {
+        panic(manifest.message);
+    }
+    const countOnly = args.includes('--count');
+    // `--shard <index>/<count>` runs every count-th row starting at index, numbering cases as the whole
+    // manifest does, so the shards' outputs merge by case number into exactly the single-process output
+    // (stage1/cohere/lint/shards). Rows are dealt out in turn rather than in blocks, which spreads a
+    // directory of large files across the shards.
+    let shardIndex = 0;
+    let shardCount = 1;
+    const shardFlag = args.indexOf('--shard');
+    if (shardFlag >= 0) {
+        const shard = (args[shardFlag + 1] ?? panic('missing shard')).split('/');
+        shardIndex = Number.parseInt(shard[0] ?? panic('missing shard index'), 10);
+        shardCount = Number.parseInt(shard[1] ?? panic('missing shard count'), 10);
+        if (!(shardCount >= 1 && shardIndex >= 0 && shardIndex < shardCount)) {
+            panic('shard must be <index>/<count> with 0 <= index < count');
+        }
+    }
+    let count = 0;
+    let caseNumber = 0;
+    for (const row of manifest.text.split('\n')){
+        if (row === '') {
+            continue;
+        }
+        if (caseNumber % shardCount === shardIndex) {
+            if (!countOnly) {
+                console.log(`case ${caseNumber}`);
+            }
+            count += run(row, countOnly);
+        }
+        caseNumber++;
+    }
+    if (countOnly) {
+        console.log(`${count}`);
+    }
+} else {
+    run(first, false);
+}
+
+
+//# sourceMappingURL=data:application/json;base64,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

@@ -1,0 +1,26 @@
+[
+  [
+    "S1",
+    "stage1/cohere/lint/lint.ts",
+    "if(finding.repair === 'fix') {",
+    "if(finding.repair === 'fix' && finding.suggestions.length === 0) {"
+  ],
+  [
+    "S2",
+    "stage1/cohere/lint/lint.ts",
+    "pieces.push(finding.replacement);",
+    ""
+  ],
+  [
+    "K1",
+    "stage1/typescript/parser/parser.ts",
+    "this.jsx = this.javascript || path.endsWith('.tsx');",
+    "this.jsx = this.javascript || path.endsWith('.ts');"
+  ],
+  [
+    "K2",
+    "stage1/cohere/lint/lint.ts",
+    "new Parser(result, this.parser.path)",
+    "new Parser(result)"
+  ]
+]

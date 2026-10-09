@@ -1,0 +1,608 @@
+{
+  "suggestion_only": [
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 1528,
+      "end_offset": 1593,
+      "first_line": 41,
+      "last_line": 43
+    },
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 1622,
+      "end_offset": 1625,
+      "first_line": 44,
+      "last_line": 45
+    },
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 1626,
+      "end_offset": 1666,
+      "first_line": 45,
+      "last_line": 46
+    },
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 4484,
+      "end_offset": 4901,
+      "first_line": 113,
+      "last_line": 120
+    }
+  ],
+  "kind_only": [
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 2108,
+      "end_offset": 2158,
+      "first_line": 57,
+      "last_line": 58
+    },
+    {
+      "file": "main.ts",
+      "function": "run",
+      "start_offset": 2158,
+      "end_offset": 2211,
+      "first_line": 58,
+      "last_line": 59
+    },
+    {
+      "file": "parser.ts",
+      "function": "allowInExpression",
+      "start_offset": 62032,
+      "end_offset": 62360,
+      "first_line": 1584,
+      "last_line": 1590
+    },
+    {
+      "file": "parser.ts",
+      "function": "arguments",
+      "start_offset": 42076,
+      "end_offset": 42703,
+      "first_line": 1091,
+      "last_line": 1109
+    },
+    {
+      "file": "parser.ts",
+      "function": "arrow",
+      "start_offset": 34848,
+      "end_offset": 36224,
+      "first_line": 894,
+      "last_line": 937
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 59714,
+      "end_offset": 61665,
+      "first_line": 1528,
+      "last_line": 1577
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 59802,
+      "end_offset": 59842,
+      "first_line": 1530,
+      "last_line": 1531
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 59844,
+      "end_offset": 59899,
+      "first_line": 1531,
+      "last_line": 1532
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 59899,
+      "end_offset": 60067,
+      "first_line": 1532,
+      "last_line": 1538
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 60762,
+      "end_offset": 60865,
+      "first_line": 1555,
+      "last_line": 1558
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 61102,
+      "end_offset": 61145,
+      "first_line": 1564,
+      "last_line": 1565
+    },
+    {
+      "file": "parser.ts",
+      "function": "assignment",
+      "start_offset": 61638,
+      "end_offset": 61664,
+      "first_line": 1577,
+      "last_line": 1577
+    },
+    {
+      "file": "parser.ts",
+      "function": "binary",
+      "start_offset": 58504,
+      "end_offset": 59709,
+      "first_line": 1496,
+      "last_line": 1528
+    },
+    {
+      "file": "parser.ts",
+      "function": "bindingName",
+      "start_offset": 32321,
+      "end_offset": 33878,
+      "first_line": 826,
+      "last_line": 869
+    },
+    {
+      "file": "parser.ts",
+      "function": "bindingName",
+      "start_offset": 39332,
+      "end_offset": 39354,
+      "first_line": 1022,
+      "last_line": 1023
+    },
+    {
+      "file": "parser.ts",
+      "function": "expect",
+      "start_offset": 1317,
+      "end_offset": 1517,
+      "first_line": 36,
+      "last_line": 41
+    },
+    {
+      "file": "parser.ts",
+      "function": "expect",
+      "start_offset": 7088,
+      "end_offset": 7146,
+      "first_line": 181,
+      "last_line": 182
+    },
+    {
+      "file": "parser.ts",
+      "function": "expect",
+      "start_offset": 38705,
+      "end_offset": 38763,
+      "first_line": 1004,
+      "last_line": 1005
+    },
+    {
+      "file": "parser.ts",
+      "function": "expression",
+      "start_offset": 7415,
+      "end_offset": 7443,
+      "first_line": 191,
+      "last_line": 192
+    },
+    {
+      "file": "parser.ts",
+      "function": "expression",
+      "start_offset": 62365,
+      "end_offset": 62767,
+      "first_line": 1590,
+      "last_line": 1598
+    },
+    {
+      "file": "parser.ts",
+      "function": "file",
+      "start_offset": 62894,
+      "end_offset": 62952,
+      "first_line": 1601,
+      "last_line": 1603
+    },
+    {
+      "file": "parser.ts",
+      "function": "getAwait",
+      "start_offset": 39968,
+      "end_offset": 39989,
+      "first_line": 1041,
+      "last_line": 1041
+    },
+    {
+      "file": "parser.ts",
+      "function": "getIn",
+      "start_offset": 40237,
+      "end_offset": 40256,
+      "first_line": 1045,
+      "last_line": 1046
+    },
+    {
+      "file": "parser.ts",
+      "function": "getYield",
+      "start_offset": 40104,
+      "end_offset": 40125,
+      "first_line": 1044,
+      "last_line": 1044
+    },
+    {
+      "file": "parser.ts",
+      "function": "identifier",
+      "start_offset": 2143,
+      "end_offset": 2372,
+      "first_line": 57,
+      "last_line": 63
+    },
+    {
+      "file": "parser.ts",
+      "function": "identifier",
+      "start_offset": 7290,
+      "end_offset": 7311,
+      "first_line": 187,
+      "last_line": 188
+    },
+    {
+      "file": "parser.ts",
+      "function": "identifier",
+      "start_offset": 38959,
+      "end_offset": 38980,
+      "first_line": 1010,
+      "last_line": 1011
+    },
+    {
+      "file": "parser.ts",
+      "function": "jsxParser",
+      "start_offset": 6821,
+      "end_offset": 7658,
+      "first_line": 173,
+      "last_line": 196
+    },
+    {
+      "file": "parser.ts",
+      "function": "kind",
+      "start_offset": 6983,
+      "end_offset": 6998,
+      "first_line": 176,
+      "last_line": 176
+    },
+    {
+      "file": "parser.ts",
+      "function": "literal",
+      "start_offset": 1522,
+      "end_offset": 2138,
+      "first_line": 41,
+      "last_line": 57
+    },
+    {
+      "file": "parser.ts",
+      "function": "make",
+      "start_offset": 7211,
+      "end_offset": 7264,
+      "first_line": 184,
+      "last_line": 186
+    },
+    {
+      "file": "parser.ts",
+      "function": "next",
+      "start_offset": 7018,
+      "end_offset": 7066,
+      "first_line": 176,
+      "last_line": 180
+    },
+    {
+      "file": "parser.ts",
+      "function": "node",
+      "start_offset": 7166,
+      "end_offset": 7191,
+      "first_line": 183,
+      "last_line": 184
+    },
+    {
+      "file": "parser.ts",
+      "function": "node",
+      "start_offset": 38783,
+      "end_offset": 38808,
+      "first_line": 1006,
+      "last_line": 1007
+    },
+    {
+      "file": "parser.ts",
+      "function": "optionalChain",
+      "start_offset": 41421,
+      "end_offset": 41855,
+      "first_line": 1070,
+      "last_line": 1085
+    },
+    {
+      "file": "parser.ts",
+      "function": "parameters",
+      "start_offset": 30823,
+      "end_offset": 32316,
+      "first_line": 789,
+      "last_line": 826
+    },
+    {
+      "file": "parser.ts",
+      "function": "parameters",
+      "start_offset": 39237,
+      "end_offset": 39258,
+      "first_line": 1019,
+      "last_line": 1020
+    },
+    {
+      "file": "parser.ts",
+      "function": "peek",
+      "start_offset": 39484,
+      "end_offset": 39499,
+      "first_line": 1027,
+      "last_line": 1027
+    },
+    {
+      "file": "parser.ts",
+      "function": "peek",
+      "start_offset": 40761,
+      "end_offset": 41416,
+      "first_line": 1055,
+      "last_line": 1070
+    },
+    {
+      "file": "parser.ts",
+      "function": "primary",
+      "start_offset": 2377,
+      "end_offset": 6816,
+      "first_line": 63,
+      "last_line": 173
+    },
+    {
+      "file": "parser.ts",
+      "function": "rootAssignment",
+      "start_offset": 34354,
+      "end_offset": 34596,
+      "first_line": 882,
+      "last_line": 888
+    },
+    {
+      "file": "parser.ts",
+      "function": "rootAssignment",
+      "start_offset": 39384,
+      "end_offset": 39409,
+      "first_line": 1023,
+      "last_line": 1024
+    },
+    {
+      "file": "parser.ts",
+      "function": "rootExpression",
+      "start_offset": 34601,
+      "end_offset": 34843,
+      "first_line": 888,
+      "last_line": 894
+    },
+    {
+      "file": "parser.ts",
+      "function": "rootExpression",
+      "start_offset": 39439,
+      "end_offset": 39464,
+      "first_line": 1024,
+      "last_line": 1026
+    },
+    {
+      "file": "parser.ts",
+      "function": "setAwait",
+      "start_offset": 40013,
+      "end_offset": 40080,
+      "first_line": 1042,
+      "last_line": 1043
+    },
+    {
+      "file": "parser.ts",
+      "function": "setIn",
+      "start_offset": 40277,
+      "end_offset": 40342,
+      "first_line": 1046,
+      "last_line": 1047
+    },
+    {
+      "file": "parser.ts",
+      "function": "setYield",
+      "start_offset": 40149,
+      "end_offset": 40216,
+      "first_line": 1044,
+      "last_line": 1045
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 42708,
+      "end_offset": 48272,
+      "first_line": 1109,
+      "last_line": 1245
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 42831,
+      "end_offset": 48245,
+      "first_line": 1113,
+      "last_line": 1244
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 45497,
+      "end_offset": 46758,
+      "first_line": 1186,
+      "last_line": 1214
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 46758,
+      "end_offset": 46856,
+      "first_line": 1214,
+      "last_line": 1216
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 47844,
+      "end_offset": 47876,
+      "first_line": 1237,
+      "last_line": 1238
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 47947,
+      "end_offset": 47999,
+      "first_line": 1239,
+      "last_line": 1240
+    },
+    {
+      "file": "parser.ts",
+      "function": "suffix",
+      "start_offset": 48210,
+      "end_offset": 48245,
+      "first_line": 1244,
+      "last_line": 1244
+    },
+    {
+      "file": "parser.ts",
+      "function": "token",
+      "start_offset": 1138,
+      "end_offset": 1312,
+      "first_line": 31,
+      "last_line": 36
+    },
+    {
+      "file": "parser.ts",
+      "function": "typeParameters",
+      "start_offset": 11136,
+      "end_offset": 12178,
+      "first_line": 294,
+      "last_line": 323
+    },
+    {
+      "file": "parser.ts",
+      "function": "typeParameters",
+      "start_offset": 39186,
+      "end_offset": 39211,
+      "first_line": 1018,
+      "last_line": 1018
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 55848,
+      "end_offset": 58499,
+      "first_line": 1436,
+      "last_line": 1496
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 55981,
+      "end_offset": 55992,
+      "first_line": 1439,
+      "last_line": 1439
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 55994,
+      "end_offset": 56118,
+      "first_line": 1439,
+      "last_line": 1441
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 56410,
+      "end_offset": 56451,
+      "first_line": 1447,
+      "last_line": 1448
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 56686,
+      "end_offset": 56727,
+      "first_line": 1452,
+      "last_line": 1454
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57221,
+      "end_offset": 57287,
+      "first_line": 1464,
+      "last_line": 1466
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57288,
+      "end_offset": 57316,
+      "first_line": 1466,
+      "last_line": 1467
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57317,
+      "end_offset": 57351,
+      "first_line": 1467,
+      "last_line": 1469
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57352,
+      "end_offset": 57383,
+      "first_line": 1469,
+      "last_line": 1471
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57384,
+      "end_offset": 57417,
+      "first_line": 1471,
+      "last_line": 1471
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57672,
+      "end_offset": 57743,
+      "first_line": 1478,
+      "last_line": 1480
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 57744,
+      "end_offset": 57775,
+      "first_line": 1480,
+      "last_line": 1481
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 58051,
+      "end_offset": 58221,
+      "first_line": 1488,
+      "last_line": 1491
+    },
+    {
+      "file": "parser.ts",
+      "function": "unary",
+      "start_offset": 58469,
+      "end_offset": 58498,
+      "first_line": 1496,
+      "last_line": 1496
+    }
+  ],
+  "note": "V8 positive function/block ranges; overlapping nested zero ranges mean these are leads, not exact statement exclusivity. Original line numbers preserved by import rewrite. Other-package coverage not asserted.",
+  "superseded": "V8 offsets refer to transformed JS, not raw TypeScript. Do not use these preliminary line mappings; see coverage-source-lines.json using source maps."
+}

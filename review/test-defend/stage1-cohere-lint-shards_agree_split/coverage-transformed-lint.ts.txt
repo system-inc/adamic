@@ -1,0 +1,171 @@
+// The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
+// stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+import { RuleContext } from './context.ts';
+import { createRuleSet } from './.generated/registry.ts';
+import { panic, utf8Length } from 'adamic';
+import { Parser } from '/workspace/adamic/stage1/typescript/parser/parser.ts';
+import { Finding } from './finding.ts';
+import { Scanner as SourceScanner } from '/workspace/adamic/stage1/typescript/scanner/scanner.ts';
+// passBudget and passBudgetMessage are cohere's edit engine's DefaultMaxPasses and ReasonPassesReached.
+const passBudget = 10;
+const passBudgetMessage = 'the pass budget was exhausted before the file converged';
+// compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
+// they were collected in: walk order, and descriptor order within one node's visit.
+function compareFindings(left, right) {
+    return left.start - right.start;
+}
+function compareEdits(left, right) {
+    const position = left.editStart - right.editStart;
+    if (position !== 0) {
+        return position;
+    }
+    const end = left.editEnd - right.editEnd;
+    if (end !== 0) {
+        return end;
+    }
+    return left.rule < right.rule ? -1 : left.rule > right.rule ? 1 : 0;
+}
+export class Linter {
+    source;
+    parser;
+    scanner;
+    findings = [];
+    rejected = [];
+    // The rules still proposing fixes on the pass that exhausted the budget, in the order they first
+    // propose, as cohere's edit engine names them. Empty when the fixes converge.
+    unconverged = [];
+    // junkRows appends a copy of every row to the node table after parsing, attached to nothing. Stage 1
+    // reads the table only by following links from the root, and the flat copy of typescript-go's tree
+    // (#k4fm1vf) relies on it: its tables hold rows no link reaches. TestNodeTableIsLinkOnly sets this
+    // and requires the same findings, so a rule that walks the table by row fails there first.
+    junkRows = false;
+    parents = [];
+    root = -1;
+    selected;
+    mode;
+    nullPolicy;
+    settings;
+    allowCatch;
+    constructor(source, parser, scanner, selected, mode, nullPolicy, allowCatch, settings){
+        this.settings = settings;
+        this.source = source;
+        this.parser = parser;
+        this.scanner = scanner;
+        this.selected = selected === '' ? 'all' : selected;
+        this.mode = mode === '' ? 'Always' : mode;
+        this.nullPolicy = this.mode === 'Always' ? nullPolicy === '' ? 'Always' : nullPolicy : 'Ignore';
+        this.allowCatch = allowCatch;
+    }
+    run() {
+        this.root = this.parser.file();
+        if (this.junkRows) {
+            const attached = this.parser.nodes.length;
+            for(let index = 0; index < attached; index++){
+                this.parser.nodes.push(this.parser.node(index));
+            }
+        }
+        this.parents = this.parser.nodes.map(()=>-1);
+        this.ancestry(this.root, -1);
+        const context = new RuleContext(this.source, this.parser, this.scanner, this.selected, this.mode, this.nullPolicy, this.allowCatch, this.parents, this.settings, this.root);
+        const rules = createRuleSet(context);
+        rules.prepare(this.root);
+        this.walk(this.root, -1, rules);
+        rules.finish(this.root);
+        for (const finding of context.findings){
+            this.findings.push(finding);
+        }
+        this.findings.sort(compareFindings);
+    }
+    ancestry(index, parent) {
+        this.parents[index] = parent;
+        for (const child of this.node(index).children){
+            this.ancestry(child, index);
+        }
+    }
+    node(index) {
+        return this.parser.node(index);
+    }
+    walk(index, parent, rules) {
+        rules.visit(index, parent);
+        for (const child of this.node(index).children){
+            this.walk(child, index, rules);
+        }
+    }
+    fixed() {
+        let current = this.source;
+        let findings = this.findings;
+        let lastProposals = [];
+        for(let pass = 0; pass < passBudget; pass++){
+            const proposals = [];
+            for (const finding of findings){
+                if (finding.repair === 'fix') {
+                    proposals.push(finding);
+                    for (const extra of finding.extraFixes){
+                        const fix = new Finding(finding.rule, finding.id, finding.message, finding.start, finding.end, 'fix', extra.text, '');
+                        fix.editStart = extra.start;
+                        fix.editEnd = extra.end;
+                        proposals.push(fix);
+                    }
+                }
+            }
+            lastProposals = proposals;
+            proposals.sort(compareEdits);
+            const applied = [];
+            let previous = -1;
+            let winner = '';
+            for (const finding of proposals){
+                if (finding.editStart < previous || finding.editStart === previous && finding.editStart === finding.editEnd) {
+                    this.rejected.push(`rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))} ${winner} overlaps another fix`);
+                    continue;
+                }
+                if (finding.editStart < 0 || finding.editEnd < finding.editStart || finding.editEnd > current.length) {
+                    panic('invalid fix range');
+                }
+                if (current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
+                    panic('nonprogressing fix');
+                }
+                applied.push(finding);
+                previous = finding.editEnd;
+                winner = finding.rule;
+            }
+            if (applied.length === 0) {
+                return current;
+            }
+            // The applied fixes are sorted and disjoint, so the new text is built in one pass from the pieces
+            // between them. Splicing each fix into the whole text instead copied the file once per fix, which
+            // on checker.ts (3.1 MB, 708 fixes) was most of the run's instructions.
+            const pieces = [];
+            let copied = 0;
+            for (const finding of applied){
+                pieces.push(current.slice(copied, finding.editStart));
+                pieces.push(finding.replacement);
+                copied = finding.editEnd;
+            }
+            pieces.push(current.slice(copied));
+            const result = pieces.join('');
+            // The parser takes its JSX and JavaScript modes from the path, so each pass reparses under the
+            // file's own path: a .tsx file's fixed source is still TSX.
+            const parser = new Parser(result, this.parser.path);
+            const scanner = new SourceScanner(result);
+            const next = new Linter(result, parser, scanner, this.selected, this.mode, this.nullPolicy, this.allowCatch, this.settings);
+            next.junkRows = this.junkRows;
+            next.run();
+            current = result;
+            findings = next.findings;
+        }
+        // The budget ran out with fixes still landing. Cohere's edit engine discards the whole run and
+        // leaves the file as it was found, because a fixpoint it did not reach is not a result it may
+        // write, and it names the rules still proposing on the last pass, since a rule whose fix does not
+        // silence its own finding is the defect, not the file.
+        this.rejected.push(`rejected fix-engine 0 0  ${passBudgetMessage} (${passBudget} passes)`);
+        for (const finding of lastProposals){
+            if (!this.unconverged.includes(finding.rule)) {
+                this.unconverged.push(finding.rule);
+            }
+        }
+        return this.source;
+    }
+}
+
+
+//# sourceMappingURL=data:application/json;base64,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

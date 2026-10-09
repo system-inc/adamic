@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..167f1b07 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -125,7 +125,7 @@ export class Linter {
+         for(let pass = 0; pass < passBudget; pass++) {
+             const proposals: Finding[] = [];
+             for(const finding of findings) {
+-                if(finding.repair === 'fix') {
++                if(finding.repair === 'fix' && finding.suggestions.length === 0) {
+                     proposals.push(finding);
+                     for(const extra of finding.extraFixes) {
+                         const fix = new Finding(

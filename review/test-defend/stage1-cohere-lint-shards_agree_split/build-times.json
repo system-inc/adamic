@@ -1,0 +1,202 @@
+[
+  {
+    "mutant": "S1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 a7248a54f049 miss 13.69"
+  },
+  {
+    "mutant": "S1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 dc157d7f3f2d miss 10.16"
+  },
+  {
+    "mutant": "S1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 f430bfdc4405 miss 3.57"
+  },
+  {
+    "mutant": "S1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 ab9e943fc3ce miss 13.76"
+  },
+  {
+    "mutant": "S1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1 38097481376e miss 17.69"
+  },
+  {
+    "mutant": "S1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:89: build witness-script-kind-go-oracle-v1 27424fa95e84 miss 3.97"
+  },
+  {
+    "mutant": "S1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-go-oracle 17b04318a3da miss 3.75"
+  },
+  {
+    "mutant": "S1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-false 573f4ad6d978 miss 12.66"
+  },
+  {
+    "mutant": "S1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-native 5f858da27d0d miss 17.46"
+  },
+  {
+    "mutant": "S1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-true 94a2bb824b59 miss 12.41"
+  },
+  {
+    "mutant": "S2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 fe70246ad4b2 miss 12.85"
+  },
+  {
+    "mutant": "S2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 fd5d82f7c287 miss 8.85"
+  },
+  {
+    "mutant": "S2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 9385ddcc4ffe miss 3.43"
+  },
+  {
+    "mutant": "S2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 e818b28acb5e miss 13.17"
+  },
+  {
+    "mutant": "S2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1 1f177976eed3 miss 17.72"
+  },
+  {
+    "mutant": "S2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:89: build witness-script-kind-go-oracle-v1 a123a1673174 miss 4.11"
+  },
+  {
+    "mutant": "S2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-go-oracle a254ee21fd8d miss 3.28"
+  },
+  {
+    "mutant": "S2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-false 9a880322234f miss 12.78"
+  },
+  {
+    "mutant": "S2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-native 4e975520bc2e miss 17.52"
+  },
+  {
+    "mutant": "S2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-true c56c46d11de9 miss 13.21"
+  },
+  {
+    "mutant": "K1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 09945e980d11 miss 12.62"
+  },
+  {
+    "mutant": "K1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 00dc0204cd36 miss 1.82"
+  },
+  {
+    "mutant": "K1",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 a2fa87589507 miss 3.24"
+  },
+  {
+    "mutant": "K1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 e7e44d89d3a5 miss 12.47"
+  },
+  {
+    "mutant": "K1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1 b7580d1820dc miss 2.78"
+  },
+  {
+    "mutant": "K1",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:89: build witness-script-kind-go-oracle-v1 3b94a90a49cb miss 3.92"
+  },
+  {
+    "mutant": "K1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-go-oracle 93d9bd025257 miss 3.39"
+  },
+  {
+    "mutant": "K1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-false f1d44bf65f72 miss 12.86"
+  },
+  {
+    "mutant": "K1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-native f7190305bbab miss 15.55"
+  },
+  {
+    "mutant": "K1",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-true e3f9db835ff2 miss 13.32"
+  },
+  {
+    "mutant": "K2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 2eb66284a639 miss 13.90"
+  },
+  {
+    "mutant": "K2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 2cf4eb0aeaea miss 10.64"
+  },
+  {
+    "mutant": "K2",
+    "group": "suggestion",
+    "line": "suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 d3402afaf0f8 miss 3.71"
+  },
+  {
+    "mutant": "K2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 c03f55a32266 miss 12.46"
+  },
+  {
+    "mutant": "K2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1 d90dd2810762 miss 18.12"
+  },
+  {
+    "mutant": "K2",
+    "group": "kind",
+    "line": "witness_script_kind_shards_test.go:89: build witness-script-kind-go-oracle-v1 8f0f6d2f2d3d miss 4.13"
+  },
+  {
+    "mutant": "K2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-go-oracle d93330011143 miss 3.21"
+  },
+  {
+    "mutant": "K2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-false f61dfa510d76 miss 13.11"
+  },
+  {
+    "mutant": "K2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-native ec4d13fa9760 miss 16.92"
+  },
+  {
+    "mutant": "K2",
+    "group": "complete",
+    "line": "complete_suggestion_serialization_shards_test.go:339: build complete-suggestion-lowered-true 440cc2c6b65b miss 13.27"
+  }
+]

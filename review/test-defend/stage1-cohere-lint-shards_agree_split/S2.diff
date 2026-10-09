@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..33d55bcd 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -179,7 +179,7 @@ export class Linter {
+             let copied = 0;
+             for(const finding of applied) {
+                 pieces.push(current.slice(copied, finding.editStart));
+-                pieces.push(finding.replacement);
++                
+                 copied = finding.editEnd;
+             }
+             pieces.push(current.slice(copied));

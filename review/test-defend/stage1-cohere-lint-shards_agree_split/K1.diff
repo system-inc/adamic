@@ -1,0 +1,13 @@
+diff --git a/stage1/typescript/parser/parser.ts b/stage1/typescript/parser/parser.ts
+index 7fc4bae5..381612af 100644
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -20,7 +20,7 @@ export class Parser {
+         this.path = path;
+         this.javascript =
+             path.endsWith('.js') || path.endsWith('.jsx') || path.endsWith('.mjs') || path.endsWith('.cjs');
+-        this.jsx = this.javascript || path.endsWith('.tsx');
++        this.jsx = this.javascript || path.endsWith('.ts');
+         this.scanner = new Scanner(text);
+         this.next();
+     }

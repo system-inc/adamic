@@ -1,0 +1,242 @@
+[
+  {
+    "mutant": "S1",
+    "group": "suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S1",
+    "exit": 1,
+    "wall": 30.243084950001503
+  },
+  {
+    "mutant": "S1",
+    "group": "kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(_[0-9]+)?$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S1",
+    "exit": 0,
+    "wall": 39.401681988001656
+  },
+  {
+    "mutant": "S1",
+    "group": "complete",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S1",
+    "exit": 0,
+    "wall": 48.62236382500123
+  },
+  {
+    "mutant": "S2",
+    "group": "suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S2",
+    "exit": 1,
+    "wall": 27.63117090399828
+  },
+  {
+    "mutant": "S2",
+    "group": "kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(_[0-9]+)?$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S2",
+    "exit": 0,
+    "wall": 39.34115886899963
+  },
+  {
+    "mutant": "S2",
+    "group": "complete",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/S2",
+    "exit": 0,
+    "wall": 49.35637611299899
+  },
+  {
+    "mutant": "K1",
+    "group": "kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(_[0-9]+)?$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K1",
+    "exit": 1,
+    "wall": 23.348314514001686
+  },
+  {
+    "mutant": "K1",
+    "group": "suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K1",
+    "exit": 0,
+    "wall": 20.040720616998442
+  },
+  {
+    "mutant": "K1",
+    "group": "complete",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K1",
+    "exit": 0,
+    "wall": 47.63403684300283
+  },
+  {
+    "mutant": "K2",
+    "group": "kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(_[0-9]+)?$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K2",
+    "exit": 1,
+    "wall": 38.57832422000138
+  },
+  {
+    "mutant": "K2",
+    "group": "suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K2",
+    "exit": 0,
+    "wall": 30.78546646000177
+  },
+  {
+    "mutant": "K2",
+    "group": "complete",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization_[0-9]+$"
+    ],
+    "cache": "/tmp/defend-lint/cache/K2",
+    "exit": 0,
+    "wall": 49.28216058099861
+  }
+]

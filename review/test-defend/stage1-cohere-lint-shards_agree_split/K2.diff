@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..cdd5cf5d 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -186,7 +186,7 @@ export class Linter {
+             const result = pieces.join('');
+             // The parser takes its JSX and JavaScript modes from the path, so each pass reparses under the
+             // file's own path: a .tsx file's fixed source is still TSX.
+-            const parser = new Parser(result, this.parser.path);
++            const parser = new Parser(result);
+             const scanner = new SourceScanner(result);
+             const next = new Linter(
+                 result,
