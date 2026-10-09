@@ -1,0 +1,8 @@
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 90s bash cloud/setup.sh --wasi-sdk
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 timeout 90s go test ./internal/native ./internal/oracle ./internal/fresh ./stage1/cohere/markdownblocks ./stage1/typescript/scanner ./stage3/fixtures -run '^(TestRecordsAgainstNode|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestEnumInitializationUnknownPinned|TestParserNamespaceClassRegistrationMutant|TestParserConstructionUnsetUse|TestParserStackTinyLimit|TestGenericBodyRelationsMaybeBind|TestCheckedJSONNextRefusals|TestWASIAgreesWithNode|TestFreshCorpusRemainder|TestParserRepresentationProbes|TestGapStandsWhereGapsMdSays|TestBigintGapStandsWhereGapsMdSays|TestFixtureDirectoriesHaveTopLevelTests)$' -skip '^TestWASIAgreesWithNode/shard-00[013567]$' -count=1 -v -timeout 90s
+timeout 90s go test ./internal/lower -count=1 -timeout 90s -v
+timeout 90s go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s
+timeout 90s go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 90s -v
+timeout 90s bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'

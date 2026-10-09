@@ -1,0 +1,120 @@
+[
+  {
+    "test": "TestRecordsAgainstNode",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 18.23
+  },
+  {
+    "test": "TestRecordMutantsUnit00",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 1.19
+  },
+  {
+    "test": "TestRecordMutantsUnit01",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.93
+  },
+  {
+    "test": "TestEnumInitializationUnknownPinned",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.02
+  },
+  {
+    "test": "TestParserNamespaceClassRegistrationMutant",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 2.97
+  },
+  {
+    "test": "TestParserConstructionUnsetUse",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 1.69
+  },
+  {
+    "test": "TestParserStackTinyLimit",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 1.38
+  },
+  {
+    "test": "TestGenericBodyRelationsMaybeBind",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.55
+  },
+  {
+    "test": "TestCheckedJSONNextRefusals",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 2.27
+  },
+  {
+    "test": "TestWASIAgreesWithNode/shard-002",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.05,
+    "fixture_leaves": 146,
+    "timing_note": "Parent reports setup/scheduling only; oracle package completed in 57.756s."
+  },
+  {
+    "test": "TestWASIAgreesWithNode/shard-004",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.09,
+    "fixture_leaves": 146,
+    "timing_note": "Parent reports setup/scheduling only; oracle package completed in 57.756s."
+  },
+  {
+    "test": "TestFreshCorpusRemainder",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 9.73
+  },
+  {
+    "test": "TestParserRepresentationProbes",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.01
+  },
+  {
+    "test": "TestGapStandsWhereGapsMdSays",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 8.09
+  },
+  {
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.3
+  },
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "reported_seconds": 0.01
+  },
+  {
+    "test": "full internal/lower",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "package_seconds": 61.404
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "package_seconds": 0.778
+  },
+  {
+    "test": "TestCountsAreRecorded",
+    "result": "PASS",
+    "tested_sha": "5235536092fe1190225e480f82822de8f682b63c",
+    "package_seconds": 26.714
+  }
+]
