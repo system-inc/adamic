@@ -83,18 +83,11 @@ Relative to the original observations, truthiness and control changed from NotYe
 - Refreshed observations.json, counts.md, proven/status.json, proven/counts.md and mutant evidence. Added a 50-row status.json in the current fixture-harness format, including repository-relative diagnostics and proven/ paths.
 - Extended mutant.go.txt for container-check flags, allocation contracts and the never-array marker, and made nested interface traversal mutable and nil-safe. mutants.py now tests any matching native/JS exit-70 write stop, so a diagnostic-content gap cannot hide a testable runtime check.
 
-## Integration blocker
+## Harness registration
 
-TestFixtureDirectoriesHaveTopLevelTests fails with `fixture directory checked-writes has no top-level test`. The current harness only scans top-level stage3/fixtures/*_test.go. Adding the required two-line TestFixturesCheckedWrites registration there is outside the explicit territory; a scope question is pending. status.json is ready. The proposed registration is:
+The user authorized minimal parent-harness registration. Added stage3/fixtures/checked_writes_test.go with top-level TestFixturesCheckedWrites, t.Parallel(), and testFixtureDirectory(t, "checked-writes"), matching neighboring directories. This resolves the directory-registration failure without changing the shared harness.
 
-```go
-func TestFixturesCheckedWrites(t *testing.T) {
-    t.Parallel()
-    testFixtureDirectory(t, "checked-writes")
-}
-```
-
-No parent-harness file was edited. This unit cannot be called green or pushed under the instruction to push only after its tests pass until that scope conflict is resolved.
+ADAMIC_GATE_UNCACHED=1 timeout 90 go test ./stage3/fixtures -run '^(TestFixturesCheckedWrites|TestFixtureDirectoriesHaveTopLevelTests)$' -count=1 -timeout 90s -v passed all 50 in-place rows. TestFixturesCheckedWrites took 13.44s; package 15.232s; total wall 22.140s. This first registration run disabled gate observation caching and retained setup's toolchain build cache. The full log is logs/registration-final.log.gz. These green in-place results do not erase the nine strict compatibility-driver failures reported above.
 
 ## Toolchain and commands
 
