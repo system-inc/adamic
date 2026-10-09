@@ -1,0 +1,20 @@
+[
+  [
+    "D01",
+    "first === -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText'",
+    "first !== -1 ? 'JsxTextAllWhiteSpaces' : 'JsxText'",
+    "flip JSX whitespace token classification"
+  ],
+  [
+    "D02",
+    "else if(code === 47 && !characterClass)",
+    "else if(code === 47 && characterClass)",
+    "flip regex terminator character-class condition"
+  ],
+  [
+    "D03",
+    "this.template(true);",
+    "this.template(false);",
+    "change template rescan diagnostic option true to false"
+  ]
+]

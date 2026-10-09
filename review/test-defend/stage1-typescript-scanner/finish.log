@@ -1,0 +1,60 @@
+[
+  {
+    "test": "TestScannerAgreesWithTypescriptGo family",
+    "package": "stage1/typescript/scanner",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "stage1/typescript/scanner/scanner.ts:1009",
+        "change": "flip JSX whitespace token classification",
+        "rows_failed": [
+          "TestProfileSnapshotsAgree",
+          "TestScannerAgreesWithTypescriptGo family"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "stage1/typescript/scanner/scanner.ts:857",
+        "change": "flip regex terminator character-class condition",
+        "rows_failed": [
+          "TestProfileSnapshotsAgree",
+          "TestScannerAgreesWithTypescriptGo family"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "stage1/typescript/scanner/scanner.ts:836",
+        "change": "change template rescan diagnostic option true to false",
+        "rows_failed": [
+          "TestProfileSnapshotsAgree",
+          "TestScannerAgreesWithTypescriptGo family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/scanner-defend-tmp/cache/D01 ADAMIC_SCANNER_PROFILE_DIR=/workspace/scanner-defend-tmp/artifacts/D01 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/workspace/scanner-defend-tmp/artifacts/D01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D01.log 2>&1; scanner_products_test.go:340: native: line 42643: port \"JsxTextAllWhiteSpaces 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\", Go \"JsxText 0 6 0\\t\\\\u00e9\\\\ud83d\\\\ude00\"",
+    "members": [
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015"
+    ]
+  }
+]
