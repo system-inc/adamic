@@ -37,3 +37,17 @@ nproc is 5; cpu.max is 400000/100000, a four-CPU quota. Go 1.27.1, clang 20.1.8,
 The first probe ran out of disk space; removing 2,180,745,976 bytes of old regenerable Go cache allowed the rerun.
 No fixture registry entries were added, so counts.md is unchanged.
 No whole package tests or full gate ran. Lane checks and the final merged-base verification are recorded separately.
+
+Final verification merged origin/compiler/views-v3 5e82bd20 into this work at 5554c5ac.
+There were no conflicts. The changed production localRead function and this test file did not change in that merge.
+Both new tests and the existing narrowed-member regression pass on the merged tip.
+Both overlays fail again on the merged tip; their final logs record the expected behavioral failures.
+
+| Test | Cold wall seconds, setup included |
+| --- | ---: |
+| TestNarrowedUnionObjectTagPassing | 14.817 |
+| TestNarrowedUnionObjectTagMisfit | 15.052 |
+
+The first mandated lane run passed formatting, declared tools and parallel checks, but skipped vet after its
+10-second window. An explicit go vet of all seven affected test packages then passed (vet.txt).
+The repeated mandated lane output is in lane-checks.txt.

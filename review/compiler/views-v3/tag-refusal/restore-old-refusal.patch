@@ -1,11 +1,5 @@
 --- a/internal/lower/locals.go
 +++ b/internal/lower/locals.go
-@@ -261,7 +261,7 @@
- 			case ir.Closure:
- 				name = "function"
- 			}
+@@ -264 +264 @@
 -			if name == "object" && narrowed != ir.Array {
 +			if name == "object" {
- 				// Array narrowing uses Array.isArray below, not typeof. Other
- 				// object representations still need their owning kind predicate.
- 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
