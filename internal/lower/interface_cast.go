@@ -59,7 +59,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		}
 		// Optional receivers and optional/accessor slots still need a representation
 		// conversion that the V1 checked read boundary cannot emit.
-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
@@ -68,7 +68,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] && ast.IsAssignmentTarget(part) {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
 				if of == ir.Object {
@@ -387,7 +387,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())

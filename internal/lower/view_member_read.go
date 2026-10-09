@@ -15,7 +15,7 @@ func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *a
 	}
 	property.ViewWhere = l.program.Where(node)
 	if receiver != nil {
-		property.ViewReceiverTypeID = int(receiver.Id())
+		property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
 	}
 	if field != nil {
 		declared := l.checker.GetTypeOfSymbol(field)
@@ -43,4 +43,36 @@ func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *a
 		return fit(property, declared.Present())
 	}
 	return property
+}
+
+// Nullable receivers read the present object's contract. A generic receiver
+// uses its instantiated type, or its constraint when the binder remains rigid.
+// Neither operation relates unrelated objects merely because their names match.
+func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
+	receiver = l.concrete(receiver)
+	if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(receiver); constraint != nil {
+			receiver = l.concrete(constraint)
+		}
+	}
+	return int(l.checker.GetNonNullableType(receiver).Id())
+}
+
+// A union receiver can carry a checked member's allocation. Preserve that
+// boundary for its common field without marking unrelated receiver types.
+func (l *lowering) checkedViewReceiverField(receiver *checker.Type, name string) bool {
+	id := l.viewReceiverTypeID(receiver)
+	if l.result.CheckedFields[checkedViewFieldKey(id, name)] {
+		return true
+	}
+	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
+	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range receiver.Types() {
+			if l.checkedViewReceiverField(member, name) {
+				l.result.CheckedFields[checkedViewFieldKey(id, name)] = true
+				return true
+			}
+		}
+	}
+	return false
 }
