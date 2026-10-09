@@ -1,0 +1,18 @@
+FIRST FAILURE (tests, at 292.1 s):
+github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohereSplit_Setup
+=== RUN   TestPortMatchesGoCohereSplit_Setup
+    port_matches_split_test.go:105: full corpus: 3785 cases before gate sampling
+    port_matches_split_test.go:105: corpus repository: 2691 tracked JSON files; checked against Git HEAD
+    port_matches_split_test.go:105: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    port_matches_split_test.go:105: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    port_matches_split_test.go:105: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    port_matches_split_test.go:105: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_split_test.go:105: gate-sample: TestPortMatchesGoCohereSplit_Setup 360/3751 files, stride 32, offset 29
+    port_matches_split_test.go:105: shard union: 394 cases exactly once across 128 shards
+    port_matches_split_test.go:114: build json_split_Go_oracle 31c213616606 miss 9.92
+    port_matches_split_test.go:122: build json_lowered_port_and_backend_sources cf76332faebc miss 7.26
+    port_matches_split_test.go:130: build json_native_release_port 52c509795041 miss 38.05
+    port_matches_split_test.go:131: build json_native_ASan_UBSan_port 879b2c51c7e0 hit 28.69
+TestPortMatchesGoCohereSplit_Setup exceeded its 90s deadline
+
+(box load 59.7 on 64 cores at first failure)
