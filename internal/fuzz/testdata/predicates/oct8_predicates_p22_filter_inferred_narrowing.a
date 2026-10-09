@@ -1,0 +1,5 @@
+const items: (string | number)[] = ["a", 2, "bc", 4];
+const strings = items.filter((x) => typeof x === "string"); console.log(strings.join("|"));
+const lengths = strings.map((s) => s.length); console.log(lengths.join(","));
+function isNumber(x: string | number): x is number { return typeof x === "number"; }
+const numbers = items.filter(isNumber); let total = 0; for (const n of numbers) total += n; console.log("total " + String(total));

@@ -1,0 +1,4 @@
+function h(y?: unknown, x?: unknown): x is undefined { return typeof x === "undefined"; }
+function g(v: string | undefined): v is undefined { return h(v); }
+const items: (string | undefined)[] = ["a", undefined, "bc"];
+const gone = items.filter(g); console.log(String(gone.length)); for (const item of gone) { console.log("item " + String(item)); }
