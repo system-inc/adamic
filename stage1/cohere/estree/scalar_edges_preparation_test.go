@@ -33,14 +33,17 @@ func scalarEdgeRanges(count int) [testScalarEdgesShards][2]int {
 	return ranges
 }
 
-func scalarEdgeProducts(t *testing.T, main string) (string, string) {
-	t.Helper()
-	inputs := buildcache.Inputs{
+func scalarEdgeInputs() buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "scalar-edges-lowered",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
 		Toolchain: []string{runtime.Version()},
 	}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+}
+
+func scalarEdgeLowered(t *testing.T, main string) string {
+	t.Helper()
+	return buildcache.Product(t, scalarEdgeInputs(), func(dir string) error {
 		program, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -54,6 +57,11 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
+}
+
+func scalarEdgeNative(t *testing.T, lowered string) string {
+	t.Helper()
+	inputs := scalarEdgeInputs()
 	inputs.Name = "scalar-edges-sanitized-native"
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), []string{"Sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}...)
@@ -64,7 +72,13 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 		}
 		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	})
-	return filepath.Join(product, "port"), filepath.Join(lowered, "port.mjs")
+	return filepath.Join(product, "port")
+}
+
+func scalarEdgeProducts(t *testing.T, main string) (string, string) {
+	t.Helper()
+	lowered := scalarEdgeLowered(t, main)
+	return scalarEdgeNative(t, lowered), filepath.Join(lowered, "port.mjs")
 }
 
 func scalarEdgeOracle(t *testing.T) string {
@@ -265,4 +279,21 @@ func TestScalarEdges_002(t *testing.T) {
 func TestScalarEdges_003(t *testing.T) {
 	t.Parallel()
 	scalarEdgeShard(t, 3)
+}
+
+// Build-phase units use the same recipes and keys as standalone shards.
+func TestProduct_scalar_edges_go_oracle(t *testing.T) {
+	t.Parallel()
+	scalarEdgeOracle(t)
+}
+
+func TestProduct_scalar_edges_lowered(t *testing.T) {
+	t.Parallel()
+	scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
+}
+
+func TestProduct_scalar_edges_sanitized_native(t *testing.T) {
+	t.Parallel()
+	lowered := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
+	scalarEdgeNative(t, lowered)
 }
