@@ -1,0 +1,12 @@
+function identity(value: string): string;
+function identity(value: number): number;
+function identity(value: string | number): string | number { return value; }
+console.log(identity('text'));
+console.log(`${identity(23)}`);
+console.log(identity('again'));
+
+// Reusing an entry must still box each argument for the resolved parameter.
+function format(value: string | number): string;
+function format(value: string | number): string | number { return String(value); }
+console.log(format('first'));
+console.log(format('second'));

@@ -1,0 +1,146 @@
+{
+  "internal/lower/testdata/census_panics/computed_relation.a": {
+    "outcome": "refused",
+    "expected": "refused adamic/no-optional-widening",
+    "first": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/computed_relation.a:3:15: Adamic 0.1 refuses an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven c",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/computed_relation.a:3:15: Adamic 0.1 refuses an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\n",
+    "stdout_bytes": 0
+  },
+  "internal/lower/testdata/census_panics/generic_closure.a": {
+    "outcome": "refused",
+    "expected": "refused adamic/invariant-mutable",
+    "first": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/generic_closure.a:3:17: Adamic 0.1 refuses instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/generic_closure.a:3:17: Adamic 0.1 refuses instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)\n",
+    "stdout_bytes": 0
+  },
+  "internal/lower/testdata/census_panics/qualified.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 1339
+  },
+  "internal/lower/testdata/census_panics/types.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 186
+  },
+  "internal/oracle/testdata/generic_empty_array.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 20780
+  },
+  "internal/oracle/testdata/generic_function_value.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 14775
+  },
+  "internal/oracle/testdata/generic_function_value_arms.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 30342
+  },
+  "internal/oracle/testdata/host_phantom_optional_array.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 3350
+  },
+  "internal/oracle/testdata/host_phantom_overload_primitive.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 10704
+  },
+  "internal/oracle/testdata/native-generic-empty-array.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 1879
+  },
+  "internal/oracle/testdata/phantom_brands.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 15365
+  },
+  "internal/oracle/testdata/phantom_catch.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 8051
+  },
+  "internal/oracle/testdata/phantom_undefined.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 1541
+  },
+  "internal/oracle/testdata/scanner_expressions/number_spellings.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 8656
+  },
+  "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 12124
+  },
+  "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a": {
+    "outcome": "checked",
+    "expected": "checked",
+    "first": "",
+    "exit": 0,
+    "stderr": "",
+    "stdout_bytes": 1231
+  },
+  "review/phantom-brands/nonvoid-path.a": {
+    "outcome": "refused",
+    "expected": "refused a primitive brand member __pathBrand whose type is not void",
+    "first": "adamic: /workspace/adamic/review/phantom-brands/nonvoid-path.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/review/phantom-brands/nonvoid-path.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n",
+    "stdout_bytes": 0
+  },
+  "review/phantom-brands/prototype-read.a": {
+    "outcome": "refused",
+    "expected": "refused a primitive brand member __proto__ that exists on the primitive",
+    "first": "adamic: /workspace/adamic/review/phantom-brands/prototype-read.a:2:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/review/phantom-brands/prototype-read.a:2:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain\n",
+    "stdout_bytes": 0
+  }
+}

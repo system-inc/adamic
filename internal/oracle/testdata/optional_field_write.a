@@ -1,0 +1,10 @@
+interface MaybeRecord {
+	slot?: number;
+}
+function maybeRecord(value: number | undefined): number | undefined {
+	const record: MaybeRecord = {};
+	record.slot = 0;
+	return record.slot;
+}
+const maybeValue31: number | undefined = maybeRecord(0);
+console.log(String(maybeValue31));

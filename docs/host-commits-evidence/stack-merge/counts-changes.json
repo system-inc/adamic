@@ -1,0 +1,1230 @@
+{
+  "host-before": [
+    {
+      "row": "bench/parallel_files.a",
+      "before": null,
+      "after": [
+        3952651,
+        3952651,
+        8151045,
+        8654930,
+        8839,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_discard.a",
+      "before": null,
+      "after": [
+        25,
+        25,
+        42,
+        43,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_parameters.a",
+      "before": null,
+      "after": [
+        17,
+        17,
+        18,
+        22,
+        12,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_reject_eager.a",
+      "before": null,
+      "after": [
+        12,
+        9,
+        18,
+        16,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_reject_empty.a",
+      "before": null,
+      "after": [
+        5,
+        4,
+        9,
+        7,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_reject_nested.a",
+      "before": null,
+      "after": [
+        18,
+        15,
+        31,
+        26,
+        17,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_typeof.a",
+      "before": null,
+      "after": [
+        15,
+        15,
+        24,
+        26,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_unions.a",
+      "before": null,
+      "after": [
+        27,
+        27,
+        60,
+        49,
+        12,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_coverage_values.a",
+      "before": null,
+      "after": [
+        66,
+        66,
+        126,
+        121,
+        16,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_nested.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        38,
+        41,
+        12,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_plain.a",
+      "before": null,
+      "after": [
+        21,
+        21,
+        32,
+        36,
+        13,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_three.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        25,
+        29,
+        11,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_throw.a",
+      "before": null,
+      "after": [
+        12,
+        10,
+        16,
+        15,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/async_typeof.a",
+      "before": null,
+      "after": [
+        15,
+        15,
+        24,
+        26,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/fresh.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        10,
+        25,
+        12,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/global_capture.a",
+      "before": null,
+      "after": [
+        10,
+        10,
+        17,
+        21,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/identity.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        13,
+        19,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/large.a",
+      "before": null,
+      "after": [
+        4105,
+        4105,
+        6154,
+        6164,
+        4102,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/map_capture.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        10,
+        9,
+        8,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/nested.a",
+      "before": null,
+      "after": [
+        20,
+        20,
+        6,
+        17,
+        13,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/numbers.a",
+      "before": null,
+      "after": [
+        6,
+        6,
+        3,
+        9,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/readonly_forms.a",
+      "before": null,
+      "after": [
+        12,
+        12,
+        8,
+        11,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/readonly_function.a",
+      "before": null,
+      "after": [
+        9,
+        9,
+        7,
+        9,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/records.a",
+      "before": null,
+      "after": [
+        18,
+        18,
+        19,
+        23,
+        15,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/recursive_tree.a",
+      "before": null,
+      "after": [
+        10,
+        10,
+        9,
+        15,
+        10,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/strings.a",
+      "before": null,
+      "after": [
+        13,
+        13,
+        10,
+        16,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/concurrency/accepted/throw_middle.a",
+      "before": null,
+      "after": [
+        9,
+        9,
+        6,
+        13,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        6,
+        14,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/hidden_boundary_never_array.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        0,
+        4,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/hidden_boundary_never_array_observations.a",
+      "before": null,
+      "after": [
+        17,
+        17,
+        8,
+        33,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/literal_units_walk.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        1,
+        5,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/moves/accepted/objects.a",
+      "before": null,
+      "after": [
+        2056,
+        2056,
+        6145,
+        4104,
+        2053,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_alias.a",
+      "before": null,
+      "after": [
+        10,
+        10,
+        9,
+        20,
+        6,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_alias_variants.a",
+      "before": null,
+      "after": [
+        69,
+        69,
+        32,
+        99,
+        16,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_checked_copy.a",
+      "before": null,
+      "after": [
+        6,
+        2,
+        6,
+        9,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_construction.a",
+      "before": null,
+      "after": [
+        85,
+        85,
+        59,
+        130,
+        25,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_presence.a",
+      "before": null,
+      "after": [
+        45,
+        45,
+        40,
+        59,
+        11,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_unknown.a",
+      "before": null,
+      "after": [
+        22,
+        22,
+        15,
+        44,
+        7,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/optional_field_write.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/output_edges/closed.a",
+      "before": null,
+      "after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/output_edges/fsize.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        3,
+        12,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/output_edges/fsize_out.a",
+      "before": null,
+      "after": [
+        60000,
+        60000,
+        0,
+        60000,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/output_edges/panic_surrogate.a",
+      "before": null,
+      "after": [
+        3,
+        1,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/output_edges/usr1.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_callback_served.a",
+      "before": null,
+      "after": [
+        11,
+        11,
+        14,
+        20,
+        6,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_field_hatch/kind-valid.ts",
+      "before": null,
+      "after": [
+        14,
+        14,
+        7,
+        20,
+        6,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_field_hatch/value-undefined.ts",
+      "before": null,
+      "after": [
+        9,
+        9,
+        19,
+        23,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_field_hatch/value-valid.ts",
+      "before": null,
+      "after": [
+        9,
+        9,
+        17,
+        23,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_results_binding.a",
+      "before": null,
+      "after": [
+        6,
+        6,
+        14,
+        16,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_results_evaluate.a",
+      "before": null,
+      "after": [
+        9,
+        9,
+        13,
+        22,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_results_parameter.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        5,
+        6,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_results_scalar.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        11,
+        14,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_results_transform.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        9,
+        11,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_structural_block.a",
+      "before": null,
+      "after": [
+        6,
+        6,
+        3,
+        9,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_structural_evaluator.a",
+      "before": null,
+      "after": [
+        4,
+        4,
+        9,
+        14,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_structural_factory.a",
+      "before": null,
+      "after": [
+        9,
+        9,
+        8,
+        18,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_structural_fields.a",
+      "before": null,
+      "after": [
+        4,
+        4,
+        16,
+        18,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_values/module-valid.ts",
+      "before": null,
+      "after": [
+        4,
+        4,
+        8,
+        14,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_values/narrow-valid.ts",
+      "before": null,
+      "after": [
+        7,
+        7,
+        17,
+        23,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_values/order-valid.ts",
+      "before": null,
+      "after": [
+        6,
+        6,
+        12,
+        17,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_values/proven.a",
+      "before": null,
+      "after": [
+        7,
+        7,
+        12,
+        19,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_values/returned-valid.ts",
+      "before": null,
+      "after": [
+        13,
+        13,
+        26,
+        37,
+        6,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/helper.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/helper.ts",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/instantiations.ts",
+      "before": null,
+      "after": [
+        11,
+        11,
+        11,
+        21,
+        9,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/original.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/original.ts",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/overloaded-helper.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/overload_visitors/overloaded-helper.ts",
+      "before": null,
+      "after": [
+        5,
+        5,
+        11,
+        17,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        5,
+        6,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a",
+      "before": null,
+      "after": [
+        2,
+        1,
+        5,
+        6,
+        1,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/predicate_refusals/representation_controls.a",
+      "before": null,
+      "after": [
+        14,
+        14,
+        16,
+        32,
+        7,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replace/effects.a",
+      "before": null,
+      "after": [
+        21,
+        21,
+        27,
+        33,
+        11,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replace/move_effect.a",
+      "before": null,
+      "after": [
+        11,
+        11,
+        16,
+        19,
+        8,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replace/reentrant.a",
+      "before": null,
+      "after": [
+        161,
+        161,
+        151,
+        184,
+        30,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_uint16_stop.a",
+      "before": null,
+      "after": [
+        5,
+        4,
+        1,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_uint16array.a",
+      "before": null,
+      "after": [
+        173,
+        173,
+        50,
+        225,
+        16,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/flag-downcast-wrong.a",
+      "before": null,
+      "after": [
+        3,
+        0,
+        2,
+        3,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/interfaces-good.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        6,
+        12,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        5,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        6,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        5,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-good.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        6,
+        12,
+        4,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        5,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        6,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+      "before": null,
+      "after": [
+        6,
+        6,
+        3,
+        10,
+        5,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        3,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/objects-wrong-nested.a",
+      "before": null,
+      "after": [
+        2,
+        0,
+        5,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "stage3/interface-downcasts/lane1/optional-read-control.a",
+      "before": null,
+      "after": [
+        1,
+        1,
+        6,
+        6,
+        1,
+        0
+      ]
+    }
+  ],
+  "stack-before": [
+    {
+      "row": "internal/oracle/testdata/generic_empty_array.a",
+      "before": null,
+      "after": [
+        32,
+        32,
+        24,
+        60,
+        17,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generic_function_value.a",
+      "before": null,
+      "after": [
+        15,
+        15,
+        27,
+        45,
+        7,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generic_function_value_arms.a",
+      "before": null,
+      "after": [
+        18,
+        18,
+        72,
+        99,
+        7,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/host_phantom_optional_array.a",
+      "before": null,
+      "after": [
+        5,
+        5,
+        2,
+        7,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/host_phantom_overload_primitive.a",
+      "before": null,
+      "after": [
+        25,
+        25,
+        13,
+        43,
+        7,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/native-generic-empty-array.a",
+      "before": null,
+      "after": [
+        3,
+        3,
+        1,
+        5,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/phantom_brands.a",
+      "before": null,
+      "after": [
+        15,
+        15,
+        29,
+        42,
+        6,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/phantom_catch.a",
+      "before": null,
+      "after": [
+        8,
+        8,
+        10,
+        18,
+        2,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/phantom_undefined.a",
+      "before": null,
+      "after": [
+        1,
+        0,
+        5,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/scanner_expressions/number_spellings.a",
+      "before": null,
+      "after": [
+        85,
+        85,
+        2,
+        88,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+      "before": null,
+      "after": [
+        33,
+        33,
+        2,
+        38,
+        3,
+        0
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a",
+      "before": null,
+      "after": [
+        2,
+        2,
+        3,
+        6,
+        2,
+        0
+      ]
+    }
+  ]
+}

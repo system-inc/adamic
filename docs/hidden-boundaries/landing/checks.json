@@ -1,0 +1,72 @@
+[
+  {
+    "command": "go build ./...",
+    "exit": 0,
+    "log": "build-all.log.txt"
+  },
+  {
+    "command": "go build ./cmd/adamic",
+    "exit": 0,
+    "log": "build-sealed.log.txt"
+  },
+  {
+    "command": "go vet ./internal/...",
+    "exit": 0,
+    "log": "vet-sealed.log.txt"
+  },
+  {
+    "command": "python3 docs/hidden-boundaries/landing/a-check.py /tmp/overload-hatch-fast-gate.py",
+    "exit": 0,
+    "log": "acheck-sealed.log.txt"
+  },
+  {
+    "command": "go test ./cmd/adamic -run '^TestExplainOverload' -count=1",
+    "exit": 0,
+    "log": "records-sealed.log.txt"
+  },
+  {
+    "command": "go test ./stage1/... -run 'Gap|Gaps|Probes'",
+    "exit": 0,
+    "log": "stage1-final.log.txt"
+  },
+  {
+    "command": "go test ./stage3/fixtures",
+    "exit": 0,
+    "log": "fixtures-final.log.txt"
+  },
+  {
+    "command": "go test ./internal/flow",
+    "exit": 0,
+    "log": "flow-verified.log.txt"
+  },
+  {
+    "command": "go test ./internal/oracle -run TestCountsAreRecorded",
+    "exit": 0,
+    "log": "counts-final.log.txt"
+  },
+  {
+    "command": "go test ./internal/oracle -run 'TestOverload|TestHiddenTNode|TestPredicateDirectionCountsAreRecorded|TestNativeAgreesWithNode/internal/oracle/testdata/(hidden_boundary|overload_)' -count=1",
+    "exit": 0,
+    "log": "oracle-verified.log.txt"
+  },
+  {
+    "command": "go test ./internal/lower -run 'TestOverload|TestHidden(TNode|NeverArray)|TestIndirectPredicateOverload|TestCensusOverload' -count=1",
+    "exit": 0,
+    "log": "lower-verified.log.txt"
+  },
+  {
+    "command": "python3 docs/hidden-boundaries/landing/run-mutants.py",
+    "exit": 0,
+    "log": "mutants-sealed.log.txt"
+  },
+  {
+    "command": "main replay with the scoped measurement overlay",
+    "exit": 0,
+    "log": "main-census.log.txt"
+  },
+  {
+    "command": "candidate replay with the same scoped measurement overlay",
+    "exit": 0,
+    "log": "stack-final.log.txt"
+  }
+]

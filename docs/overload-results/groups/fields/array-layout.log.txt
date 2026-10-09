@@ -1,0 +1,8 @@
+=== RUN   TestHiddenTNodeConstraintRepresentation
+=== RUN   TestHiddenTNodeConstraintRepresentation/array_layout
+    hidden_boundary_generic_tnode_test.go:47: constraint representation = (5, true), want (0, false)
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.039s
+FAIL

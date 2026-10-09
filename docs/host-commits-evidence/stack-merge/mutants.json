@@ -1,0 +1,209 @@
+[
+  {
+    "topic": "non-null-check",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/tmp/host-commits/stack-mutants/non-null-check.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/undefined$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/non-null-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/undefined$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "non-null-narrowing",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/tmp/host-commits/stack-mutants/non-null-narrowing.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/narrowed$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/non-null-narrowing.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/narrowed$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "nested-empty",
+    "file": "internal/lower/empty_literal.go",
+    "overlay": "/tmp/host-commits/stack-mutants/nested-empty.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestNestedEmptyArrayElementKinds$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/nested-empty.json",
+      "./internal/lower",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "string-concatenation",
+    "file": "internal/lower/expression.go",
+    "overlay": "/tmp/host-commits/stack-mutants/string-concatenation.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/string-concatenation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "phantom-primitive",
+    "file": "internal/lower/phantom_brands.go",
+    "overlay": "/tmp/host-commits/stack-mutants/phantom-primitive.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestPhantomCastsAreErased$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/phantom-primitive.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomCastsAreErased$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "proven-predicates",
+    "file": "internal/lower/proven_relations.go",
+    "overlay": "/tmp/host-commits/stack-mutants/proven-predicates.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestCensusComputedRelation$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/proven-predicates.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusComputedRelation$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "generic-empty",
+    "file": "internal/lower/invariance.go",
+    "overlay": "/tmp/host-commits/stack-mutants/generic-empty.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/generic-empty.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "debugger",
+    "file": "internal/lower/statements.go",
+    "overlay": "/tmp/host-commits/stack-mutants/debugger.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestDebuggerNativeEmitsNothing$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/debugger.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDebuggerNativeEmitsNothing$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "generic-values",
+    "file": "internal/lower/expression.go",
+    "overlay": "/tmp/host-commits/stack-mutants/generic-values.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValuesHaveSeparateInstances$",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/stack-mutants/generic-values.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValuesHaveSeparateInstances$",
+      "-count=1",
+      "-timeout",
+      "5m",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  }
+]
