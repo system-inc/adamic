@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -35,12 +36,11 @@ var testFormatterMutants = []struct{ name, file, from, to string }{
 
 const testFormatterMutantsShards = 6
 
-// Written only by the serial setup test, before parallel leaves are released.
-// This also shares the fresh product when ADAMIC_BUILD_CACHE=off.
-var formatterMutantsSetupProduct string
+var formatterMutantsOracle struct {
+	once    sync.Once
+	product string
+}
 
-// The setup product persists across one-shard invocations. Leaves never build
-// this product: a cold leaf-only invocation must run the setup test first.
 func formatterMutantsSetupInputs() buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "yaml-formatter-mutants-oracle-and-corpus-v2",
@@ -83,54 +83,65 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	return out.Bytes(), nil
 }
 
-// Not parallel: prepares the shared formatter-mutant corpus and Go oracle before parallel leaves are released.
-func TestFormatterMutants_Setup(t *testing.T) {
-	defer formatterMutantsDeadline(t)()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	started := time.Now()
-	product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
-		cases, _, count := formatCases(t)
-		data, err := os.ReadFile(cases)
-		if err != nil {
-			return err
-		}
-		if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
-			return fmt.Errorf("corpus count disagrees with live enumeration")
-		}
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			return err
-		}
-		source, err := filepath.Abs("testdata/format_go.go")
-		if err != nil {
-			return err
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(directory, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		binary := filepath.Join(directory, "go-format")
-		if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
-			return err
-		}
-		expected, err := formatterMutantsCommand(ctx, "", binary, "--cases", cases)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
+func formatterMutantsOracleProduct(t *testing.T) string {
+	t.Helper()
+	formatterMutantsOracle.once.Do(func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		started := time.Now()
+		product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
+			cases, _, count := formatCases(t)
+			data, err := os.ReadFile(cases)
+			if err != nil {
+				return err
+			}
+			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
+				return fmt.Errorf("corpus count disagrees with live enumeration")
+			}
+			root, err := filepath.Abs(repository)
+			if err != nil {
+				return err
+			}
+			source, err := filepath.Abs("testdata/format_go.go")
+			if err != nil {
+				return err
+			}
+			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+			if err != nil {
+				return err
+			}
+			path := filepath.Join(directory, "overlay.json")
+			if err := os.WriteFile(path, overlay, 0644); err != nil {
+				return err
+			}
+			binary := filepath.Join(directory, "go-format")
+			if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
+				return err
+			}
+			expected, err := formatterMutantsCommand(ctx, "", binary, "--cases", cases)
+			if err != nil {
+				return err
+			}
+			if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
+		})
+		data, _ := formatterMutantsReadCorpus(t, product)
+		formatterMutantsUnion(t, data)
+		formatterMutantsOracle.product = product
+		t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
+
 	})
-	data, _ := formatterMutantsReadCorpus(t, product)
-	formatterMutantsUnion(t, data)
-	formatterMutantsSetupProduct = product
-	t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
+	if formatterMutantsOracle.product == "" {
+		t.Fatal("oracle preparation failed")
+	}
+	return formatterMutantsOracle.product
+}
+
+func TestProduct_YAMLFormatterMutantsOracle(t *testing.T) {
+	t.Parallel()
+	formatterMutantsOracleProduct(t)
 }
 
 func formatterMutantsReadCorpus(t *testing.T, product string) ([]byte, []byte) {
@@ -174,7 +185,7 @@ func formatterMutantsUnion(t *testing.T, cases []byte) {
 // shard cannot silently make the claimed union complete.
 func formatterMutantsEnumeration(t *testing.T) []int {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "formatter_mutants_split_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "formatter_mutants_grain_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -240,68 +251,18 @@ func formatterMutantSurvived(actual, expected []byte) error {
 
 func formatterMutantsShard(t *testing.T, index int) {
 	t.Helper()
-	// Fetch shared state before starting this leaf's budget. The callback cannot
-	// prepare it lazily; only TestFormatterMutants_Setup is allowed to build it.
-	oracle := formatterMutantsSetupProduct
-	if oracle == "" {
-		oracle = buildcache.Product(t, formatterMutantsSetupInputs(), func(string) error {
-			return fmt.Errorf("shared setup missing: run TestFormatterMutants_Setup before this shard")
-		})
-	}
+	started := time.Now()
+	oracle := formatterMutantsOracleProduct(t)
+	sources, product := formatterMutantsProduct(t, index, 2)
 	corpus, expected := formatterMutantsReadCorpus(t, oracle)
+	t.Logf("setup: %.3fs", time.Since(started).Seconds())
+	started = time.Now()
+	defer func() { t.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
 	defer formatterMutantsDeadline(t)()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	formatterMutantsUnion(t, corpus)
-	mutant := testFormatterMutants[index]
-	entries, err := filepath.Glob("*.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	files := []string{"internal", "cohere", "go.mod"}
-	for _, file := range entries {
-		files = append(files, "stage1/cohere/yaml/"+file)
-	}
-	flags := []string{mutant.file, mutant.from, mutant.to, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
-	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
-	sources := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
-		for _, file := range entries {
-			source, err := os.ReadFile(file)
-			if err != nil {
-				return err
-			}
-			if file == mutant.file {
-				if strings.Count(string(source), mutant.from) != 1 {
-					return fmt.Errorf("mutation site must occur once")
-				}
-				source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
-			}
-			if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
-				return err
-			}
-		}
-		return nil
-	})
 	entry := filepath.Join(sources, "main.ts")
-	lowered := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-lowered", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
-		program, err := load.Load([]string{entry})
-		if err != nil {
-			return err
-		}
-		lowered, err := lower.Lower(ctx, program)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "mutant.c"), []byte(native.C(lowered)), 0644)
-	})
-	options := native.Options{}
-	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.Tool("clang", "--version"))}, func(directory string) error {
-		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(code), filepath.Join(directory, "mutant"), options)
-	})
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	if err := os.WriteFile(cases, corpus, 0644); err != nil {
 		t.Fatal(err)
@@ -328,6 +289,186 @@ func formatterMutantsShard(t *testing.T, index int) {
 	}
 }
 
+var formatterMutantsProducts [testFormatterMutantsShards][3]struct {
+	once             sync.Once
+	sources, product string
+}
+
+func formatterMutantsProduct(t *testing.T, index, level int) (string, string) {
+	t.Helper()
+	state := &formatterMutantsProducts[index][level]
+	state.once.Do(func() {
+		state.sources, state.product = formatterMutantsBuildProduct(t, index, level)
+	})
+	if state.sources == "" {
+		t.Fatal("mutant preparation failed")
+	}
+	return state.sources, state.product
+}
+
+func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, string) {
+	t.Helper()
+	started := time.Now()
+	defer func() { t.Logf("mutant %03d product %d: %.3fs", index, level, time.Since(started).Seconds()) }()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	mutant := testFormatterMutants[index]
+	entries, err := filepath.Glob("*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := []string{"internal", "cohere", "go.mod"}
+	for _, file := range entries {
+		files = append(files, "stage1/cohere/yaml/"+file)
+	}
+	flags := []string{mutant.file, mutant.from, mutant.to, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
+	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
+	var sources string
+	if level > 0 {
+		sources, _ = formatterMutantsProduct(t, index, 0)
+	} else {
+		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+			for _, file := range entries {
+				source, err := os.ReadFile(file)
+				if err != nil {
+					return err
+				}
+				if file == mutant.file {
+					if strings.Count(string(source), mutant.from) != 1 {
+						return fmt.Errorf("mutation site must occur once")
+					}
+					source = []byte(strings.Replace(string(source), mutant.from, mutant.to, 1))
+				}
+				if err := os.WriteFile(filepath.Join(directory, file), source, 0644); err != nil {
+					return err
+				}
+			}
+			return nil
+		})
+	}
+	if level == 0 {
+		return sources, ""
+	}
+	entry := filepath.Join(sources, "main.ts")
+	var lowered string
+	if level > 1 {
+		_, lowered = formatterMutantsProduct(t, index, 1)
+	} else {
+		lowered = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-lowered", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+			program, err := load.Load([]string{entry})
+			if err != nil {
+				return err
+			}
+			lowered, err := lower.Lower(ctx, program)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(directory, "mutant.c"), []byte(native.C(lowered)), 0644)
+		})
+	}
+	if level == 1 {
+		return sources, lowered
+	}
+	options := native.Options{}
+	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.Tool("clang", "--version"))}, func(directory string) error {
+		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
+		if err != nil {
+			return err
+		}
+		return native.Build(string(code), filepath.Join(directory, "mutant"), options)
+	})
+	return sources, product
+}
+
+func TestProduct_YAMLFormatterMutant000Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 0, 0)
+}
+
+func TestProduct_YAMLFormatterMutant000Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 0, 1)
+}
+
+func TestProduct_YAMLFormatterMutant000Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 0, 2)
+}
+
+func TestProduct_YAMLFormatterMutant001Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 1, 0)
+}
+
+func TestProduct_YAMLFormatterMutant001Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 1, 1)
+}
+
+func TestProduct_YAMLFormatterMutant001Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 1, 2)
+}
+
+func TestProduct_YAMLFormatterMutant002Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 2, 0)
+}
+
+func TestProduct_YAMLFormatterMutant002Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 2, 1)
+}
+
+func TestProduct_YAMLFormatterMutant002Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 2, 2)
+}
+
+func TestProduct_YAMLFormatterMutant003Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 3, 0)
+}
+
+func TestProduct_YAMLFormatterMutant003Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 3, 1)
+}
+
+func TestProduct_YAMLFormatterMutant003Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 3, 2)
+}
+
+func TestProduct_YAMLFormatterMutant004Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 4, 0)
+}
+
+func TestProduct_YAMLFormatterMutant004Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 4, 1)
+}
+
+func TestProduct_YAMLFormatterMutant004Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 4, 2)
+}
+
+func TestProduct_YAMLFormatterMutant005Sources(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 5, 0)
+}
+
+func TestProduct_YAMLFormatterMutant005Lowered(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 5, 1)
+}
+
+func TestProduct_YAMLFormatterMutant005Native(t *testing.T) {
+	t.Parallel()
+	formatterMutantsProduct(t, 5, 2)
+}
 func TestFormatterMutants_000(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 0) }
 func TestFormatterMutants_001(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 1) }
 func TestFormatterMutants_002(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 2) }
