@@ -1,0 +1,11 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -326,7 +326,7 @@
+ 			}
+ 			write := f.unproven(fresh.WriteField, holder, field.Name)
+ 			if write == nil {
+-				continue
++				return nil
+ 			}
+ 			where := f.where[holder]
+ 			if len(field.Declarations) > 0 {

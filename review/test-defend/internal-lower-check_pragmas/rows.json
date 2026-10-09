@@ -1,0 +1,55 @@
+[
+  {
+    "test": "TestClassFeaturesNarrowedAccessor",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassFeaturesStaticInterfaceCycle",
+    "defense": "defended",
+    "unique_mutant": "D01 internal/lower/object.go:509",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/object.go:509",
+        "change": "change constant: Exclusive accessor diagnostic block; candidate pins its label while the subsumer exercises no accessor.",
+        "rows_failed": [
+          "TestClassFeaturesNarrowedAccessor"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1; class_features_test.go:121: want changing getter reread refused, got /tmp/adamic-gate/TestClassFeaturesNarrowedAccessor3176960094/001/main.a:1:207: Adamic 0.1 refuses a getter reread after narrowing, which can return a different value; read the getter into a local once, then narrow and use that local; --- FAIL: TestClassFeaturesNarrowedAccessor (0.06s)"
+  },
+  {
+    "test": "TestClassFeaturesStaticParentCycle",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassFeaturesStaticInterfaceCycle",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/cycles.go:329",
+        "change": "return early: Exclusive block cycles.go:329: no unproven write for an earlier slot must not abandon later slots.",
+        "rows_failed": [
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/fresh.go:50",
+        "change": "return early on a nonmatching write instead of continuing the write search; shared-code semantic attempt",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/cycles.go:423",
+        "change": "drop statement: Semantic shared-code lead: direct typeof Child and interface-hidden constructor reach ancestor storage through different paths.",
+        "rows_failed": [
+          "TestClassFeaturesStaticInterfaceCycle",
+          "TestClassFeaturesStaticParentCycle"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > <id>.log 2>&1; fresh_test.go:18: want the readonly parent pointer refused, got <nil>; --- FAIL: TestReadonlyFieldsAreJudgedByTheirConstructorsWrites (0.04s); class_features_test.go:137: constructor interface cycle accepted: <nil>; --- FAIL: TestClassFeaturesStaticInterfaceCycle (0.04s)"
+  }
+]

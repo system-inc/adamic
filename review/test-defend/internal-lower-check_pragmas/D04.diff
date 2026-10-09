@@ -1,0 +1,10 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -420,7 +420,6 @@
+ 		default:
+ 			if f.l.isStaticType(proven) {
+ 				if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
+-					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+ 				}
+ 			}
+ 			for _, accessor := range f.l.accessorCaptures {

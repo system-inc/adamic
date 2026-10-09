@@ -1,0 +1,15 @@
+[
+  "TestCheckPragmasAreRefused",
+  "TestCheckPragmaNeighborsCompile",
+  "TestTsgoHonorsNoCheckInAdamicFiles",
+  "TestClassFeaturesReadonlyChecker",
+  "TestClassFeaturesPrivateChecker",
+  "TestClassFeaturesPrivateStorage",
+  "TestClassFeaturesAccessorRefusals",
+  "TestClassFeaturesStaticDeclarationsExecute",
+  "TestClassFeaturesStaticSoundness",
+  "TestClassFeaturesAccessorCaptureCycle",
+  "TestClassFeaturesNarrowedAccessor",
+  "TestClassFeaturesStaticParentCycle",
+  "TestClassFeaturesStaticInterfaceCycle"
+]
