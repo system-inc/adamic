@@ -1,8 +1,10 @@
 package estree
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -38,26 +40,62 @@ func TestRecoveredGrammar(t *testing.T) {
 	}
 	t.Logf("%d recovered grammar cases, %d identical bytes in all three port builds", len(recoveredGrammar()), len(want))
 }
-func TestRecoveryMutants(t *testing.T) {
-	list := manifest(t, recoveredGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	for _, item := range []struct{ name, file, from, to string }{
-		{"first-accessibility", "modifiers.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
-		{"empty-type-list-range", "typeLists.ts", "arena.node(result).set('params', listValue([]));", "arena.node(result).end -= 1; arena.node(result).set('params', listValue([]));"},
-		{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if diff := firstDifference(want, got); diff == "" {
-					t.Fatal(name + " mutant survived")
-				} else {
-					t.Log(name + ": " + diff)
-				}
-			}
-		})
+
+const testRecoveryMutantsShards = 3
+
+var recoveryMutations = []struct{ name, file, from, to string }{
+	{"first-accessibility", "modifiers.ts", "return stringValue(kind.slice(0, -7).toLowerCase());", "return stringValue('public');"},
+	{"empty-type-list-range", "typeLists.ts", "arena.node(result).set('params', listValue([]));", "arena.node(result).end -= 1; arena.node(result).set('params', listValue([]));"},
+	{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
+}
+
+func recoveryMutantCases() []recoveryCase {
+	var cases []recoveryCase
+	// Interleave mutants so partition i%3 assigns one complete corpus per mutant.
+	for i, source := range recoveredGrammar() {
+		for _, m := range recoveryMutations {
+			cases = append(cases, recoveryCase{fmt.Sprintf("%s/%03d", m.name, i), source})
+		}
 	}
+	return cases
+}
+
+// ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
+// Each mutant retains the entire grammar corpus on both Node and sanitized native.
+func TestRecoveryMutants(t *testing.T) {
+	setup := beginRecoverySetup(t)
+	defer setup.report(t)
+	shards := partitionRecovery(t, recoveryMutantCases(), testRecoveryMutantsShards)
+	if len(recoveryMutations) != testRecoveryMutantsShards {
+		t.Fatal("mutant/shard enumeration changed")
+	}
+	list := manifest(t, recoveredGrammar())
+	want := execute(t, "", recoveryOracle(t, setup), "--manifest", list)
+	type product struct{ main, binary string }
+	products := make([]product, len(recoveryMutations))
+	for i, item := range recoveryMutations {
+		main := mutantPort(t, item.file, item.from, item.to)
+		binary, _ := recoveryPort(t, setup, main)
+		products[i] = product{main, binary}
+	}
+	runRecoveryShards(t, shards, func(t *testing.T, i int, cases []recoveryCase) {
+		item := recoveryMutations[i]
+		p := products[i]
+		for _, c := range cases {
+			if !strings.HasPrefix(c.id, item.name+"/") {
+				t.Fatalf("wrong mutant shard: %s", c.id)
+			}
+		}
+		for name, got := range map[string][]byte{"Node": onNode(t, p.main, "--manifest", list), "native": execute(t, "", p.binary, "--manifest", list)} {
+			if failure := recoveryComparison(want, got, true); failure != "" {
+				t.Fatal(name + " " + failure)
+			}
+			t.Log(name + ": " + firstDifference(want, got))
+		}
+	})
+}
+func TestRecoveryMutantsShardSurvivor(t *testing.T) {
+	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
 func TestRecoveryLibraryGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
