@@ -528,7 +528,7 @@ Seven production mutants caught; four entry probes caught; no production survivo
     ],
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "H04: recovery_shards_test.go:38: setup wall=5.931330s builds=5.920626s without-builds=0.010704s",
+    "last_proven_fail": "H04: recovery_cache_test.go:306: undefined sanitizer failed to catch fixture: exit status 1:",
     "verdict": "setup-check",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -539,7 +539,7 @@ Seven production mutants caught; four entry probes caught; no production survivo
     "matrix_rows": [
       "TestRecoveryNativeRecipe"
     ],
-    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H04 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryNativeRecipe)$' > H04.log; recovery_shards_test.go:38: setup wall=5.931330s builds=5.920626s without-builds=0.010704s",
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u086/cache/H04 ADAMIC_ESTREE_LIBRARY=/tmp/u086/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryNativeRecipe)$' > H04.log; recovery_cache_test.go:306: undefined sanitizer failed to catch fixture: exit status 1:",
     "members": [
       "TestRecoveryNativeRecipe"
     ],

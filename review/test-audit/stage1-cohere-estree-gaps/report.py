@@ -25,7 +25,7 @@ def proof(id,r):
  for e in events(id):
   text=e.get('Output','').strip()
   if row(e.get('Test',''))!=r or not re.search(r'_test.go:\d+:',text):continue
-  if any(x in text for x in ['union:', 'build ', 'yields 1','Node prints','Node 7','Node replacement', 'setup wall:', 'BUILD ']):continue
+  if any(x in text for x in ['union:', 'build ', 'yields 1','Node prints','Node 7','Node replacement', 'setup wall:', 'setup wall=', 'BUILD ']):continue
   candidates.append(text)
  return candidates[0] if candidates else 'No assertion line recorded'
 oracles={
