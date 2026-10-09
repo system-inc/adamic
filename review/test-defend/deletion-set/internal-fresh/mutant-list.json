@@ -1,0 +1,59 @@
+[
+  {
+    "mutant": "M2",
+    "branch": "test-audit/fresh",
+    "source_file": "review/test-audit/fresh/M2.diff",
+    "candidates_failed": [
+      "TestNodeFSFileDoesNotEscapeBorrowedObjects"
+    ],
+    "other_rows_failed": [
+      "TestNodeFSFileResultsAreFresh",
+      "TestFreshWrites____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5",
+      "TestFreshWrites____oracle_testdata_node_fs_file_date_a_e4096c088001",
+      "TestFreshWrites____oracle_testdata_node_fs_file_write_file_a_1f61ee3992e2",
+      "TestFreshWrites____oracle_testdata_node_fs_file_write_buffer_a_bab39c7b6026",
+      "TestFreshWrites____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728",
+      "TestFreshWrites____oracle_testdata_node_fs_file_close_a_93025b0d712c",
+      "TestNodeFSFileOperationsAreKnown"
+    ],
+    "file_line": "internal/fresh/node_fs_file.go:9"
+  },
+  {
+    "mutant": "M18",
+    "branch": "test-audit/fresh",
+    "source_file": "review/test-audit/fresh/M18.diff",
+    "candidates_failed": [
+      "TestNodeFSFileDoesNotEscapeBorrowedObjects"
+    ],
+    "other_rows_failed": [
+      "TestFutureRegexMethodRemainsUnknown",
+      "TestRegexOperandsStillJudgeCycleWrites",
+      "TestNodeFSFileResultsAreFresh",
+      "TestNodeFSFileOperandsStillJudgeWrites",
+      "TestNodeBufferHashUpdateKeepsAlias",
+      "TestRegexOperationsDoNotPoisonTreeWrites",
+      "TestMethodKeepsArgument"
+    ],
+    "file_line": "internal/fresh/fresh.go:54"
+  },
+  {
+    "mutant": "D4",
+    "branch": "test-defend/internal-fresh",
+    "source_file": "review/test-defend/internal-fresh/D4.diff",
+    "candidates_failed": [
+      "TestNodeFSFileDoesNotEscapeBorrowedObjects"
+    ],
+    "other_rows_failed": [
+      "TestNodeFSFileResultsAreFresh",
+      "TestStatAtimeSelfCycleRemainsUnproven",
+      "TestFreshWrites____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5",
+      "TestFreshWrites____oracle_testdata_node_fs_file_write_file_a_1f61ee3992e2",
+      "TestFreshWrites____oracle_testdata_node_fs_file_date_a_e4096c088001",
+      "TestFreshWrites____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728",
+      "TestFreshWrites____oracle_testdata_node_fs_file_write_buffer_a_bab39c7b6026",
+      "TestFreshWrites____oracle_testdata_node_fs_file_close_a_93025b0d712c",
+      "TestNodeFSFileOperationsAreKnown"
+    ],
+    "file_line": "internal/fresh/fresh.go:1333"
+  }
+]
