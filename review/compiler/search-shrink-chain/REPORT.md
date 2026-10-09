@@ -1,5 +1,5 @@
 Built: ported removed-index reads and callback admission checks onto compiler/after-chain for task #b75jjs3.
-Commits: source 0167f5b4213c093fe568e2854598d36e81b33800; base 2391c655a4287fee747af74d31f5781e99be19e5.
+Commits: port df57ed18956e74caa7e126ba59225033ad06f015; source 0167f5b4213c093fe568e2854598d36e81b33800; base 2391c655a4287fee747af74d31f5781e99be19e5.
 Commands and outputs: targeted oracle 32.248s PASS, fourteen-row counts 6.736s PASS, fuzz 0.008s PASS; lane checks recorded separately.
 Mutants: skip-check and old-stop caught in both backends by exit-code assertions; old fuzz matcher caught by four classification assertions.
 Not covered: whole packages, full gate, other array-method policies, or expanded callback representation support.
@@ -60,3 +60,11 @@ Every ported fixture and mutant is now a top-level test. Observed leaf durations
 ```
 
 The six selected existing array oracle fixtures and six chain callback widening leaves passed. This advances the search-shrink ruling on the lowering chain; no numbered roadmap step was supplied in this unit.
+
+Integration lane output:
+
+```text
+lane checks 12.4 s: gofmt and tools on 262 Go files, t.Parallel on 20 test packages; vet skipped, over 10 s
+```
+
+The lane compares against its merge base with origin/main and therefore includes the inherited lowering chain. Separate bounded vet completed: timeout 120 go vet ./internal/fuzz ./internal/ir ./internal/javascript ./internal/lower ./internal/native ./internal/oracle, exit 0 with no output. No compiler changes followed the successful tests.
