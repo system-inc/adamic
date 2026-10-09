@@ -20,7 +20,7 @@ Production restored; evidence branch test-audit/stage1-cohere-lint-factory_hooks
       "M01",
       "M03"
     ],
-    "last_proven_fail": "M01: factory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "last_proven_fail": "M03: --- FAIL: TestFactoryHooks_002 (35.81s)",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 4,
@@ -40,7 +40,7 @@ Production restored; evidence branch test-audit/stage1-cohere-lint-factory_hooks
       "TestProduct_RulesAgreeOracle",
       "TestRulesAgreeLoweringCacheKey"
     ],
-    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M01.log 2>&1\nfactory_hooks_shards_test.go:428: hook sequence on native (mutant=false): case 0",
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u108/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks(Union|PlantedFailure|_[0-9]{3}|_NativeBuildWorker)|TestNestedConstructorGap|TestProduct_(DotARenameSource|DotARenameOracle|RulesAgreeOracle)|TestRulesAgreeLoweringCacheKey)$' > logs/M03.log 2>&1\n--- FAIL: TestFactoryHooks_002 (35.81s)",
     "members": [
       "TestFactoryHooksUnion",
       "TestFactoryHooks_000",
