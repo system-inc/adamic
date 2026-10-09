@@ -204,6 +204,10 @@ func compareAgreement(t agreementTesting, got, want nodeObservation) {
 	if got.code != want.code {
 		t.Fatalf("JavaScript backend exit = %d, source Node = %d", got.code, want.code)
 	}
+	// Step 21 language exceptions compare stdout and exit 1; engine stack rendering is excluded.
+	if got.code == 1 {
+		return
+	}
 	if got.code != 0 {
 		firstLine := func(value []byte) string { return strings.SplitN(string(value), "\n", 2)[0] }
 		if firstLine(got.stderr) != firstLine(want.stderr) {

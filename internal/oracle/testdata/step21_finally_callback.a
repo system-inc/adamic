@@ -1,0 +1,31 @@
+// Reduced from utilities.ts:787 and checker.ts:1937: restore state after a callback.
+let text = `outer${1}`;
+function usingWriter(action: () => void): string {
+    const old = text;
+    try {
+        action();
+        return text;
+    } finally {
+        text = old;
+    }
+}
+console.log(usingWriter(() => { text = `inner${2}`; }));
+console.log(text);
+try {
+    usingWriter(() => { text = `failed${3}`; throw new Error(text); });
+} catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+console.log(text);
+// symbolWalker.ts:50: the result snapshot survives clearing captured traversal state.
+function walk(): readonly string[] {
+    let visited = [`visit${4}`];
+    const visit = (): readonly string[] => {
+        try { return visited.slice(); }
+        finally { visited = []; }
+    };
+    const result = visit();
+    console.log(`${visited.length}`);
+    return result;
+}
+console.log(walk().join(','));

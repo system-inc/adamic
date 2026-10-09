@@ -153,6 +153,12 @@ func TestWASIRequestThrows(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
+	node := exec.Command("node", "-e", "throw new Error('boundary')")
+	nodeOutput, nodeError := node.CombinedOutput()
+	nodeExit, nodeFailed := nodeError.(*exec.ExitError)
+	if !nodeFailed || nodeExit.ExitCode() != 1 || !strings.Contains(string(nodeOutput), "Error: boundary") {
+		t.Fatalf("Node uncaught control: %v, %q", nodeError, nodeOutput)
+	}
 	output := filepath.Join(t.TempDir(), "request.wasm")
 	source := requestSource(t, "export function handleRequest(request: string): string { throw new Error(request); }")
 	if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output}); code != 0 {
@@ -163,7 +169,8 @@ func TestWASIRequestThrows(t *testing.T) {
 	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", "testdata/wasi/throw-host.mjs", output)
 	result, err := command.CombinedOutput()
 	exit, ok := err.(*exec.ExitError)
-	if !ok || exit.ExitCode() != 70 || string(result) != "adamic: panic: Error: boundary\n" {
+	// Step 21 rules stdout and exit status, excluding Node's uncaught renderer.
+	if !ok || exit.ExitCode() != 1 || len(result) != 0 {
 		t.Fatalf("uncaught handler exception: %v, %q", err, result)
 	}
 }

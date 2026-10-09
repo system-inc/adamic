@@ -461,6 +461,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 		return false
 	}
 	throws := false
+	if assign, ok := (*instruction.At).(ir.Assign); ok {
+		throws = assign.Throws(program)
+	}
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
 		switch value.Kind() {
@@ -472,10 +475,17 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
 				throws = true
 			}
+			if call, ok := value.Interface().(ir.NodeBufferCall); ok && call.MayThrow() {
+				throws = true
+			}
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
 			switch value.Type() {
+
+			case reflect.TypeOf(ir.Read{}):
+				throws = throws || value.Interface().(ir.Read).Throws(program)
+
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

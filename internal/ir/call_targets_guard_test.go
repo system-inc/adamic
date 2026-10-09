@@ -27,7 +27,7 @@ var targetReaders = map[string]targetReader{
 	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
 	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                                     {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:throwsOutReadiness:ArraySort.Comparator":                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function": {"compiler", "names the function under test"},
 	"internal/native/class_inheritance.go:callCode:Call.Function":                                     {"runtime", "names the function to call"},
 	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":                                  {"runtime", "names the function to call"},

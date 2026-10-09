@@ -1,0 +1,35 @@
+// debug.ts:197-203 constructs an Error, keeps it, then throws that exact value.
+function message(value: number): string { return `saved${value}`; }
+function debugFail(value: number): void {
+    const saved = new Error(message(value));
+    const alias = saved;
+    function fail(): never { throw alias; }
+    try { [value].forEach((): void => { fail(); }); }
+    catch (error) {
+        console.log(`${error === saved} ${error === alias}`);
+        if (error instanceof Error) {
+            alias.name = 'Saved';
+            console.log(`${error.name}: ${error.message}`);
+        }
+        try { throw error; }
+        catch (again) { console.log(`${again === error} ${again === saved}`); }
+    }
+    console.log(saved.message);
+}
+debugFail(1);
+class SavedFailure extends Error { readonly detail = 'detail'; }
+function deferred(value: number): () => void {
+    const saved = new SavedFailure(message(value));
+    const alias: Error = saved;
+    return () => {
+        try { throw alias; }
+        catch (error) {
+            console.log(`${error === saved} ${error instanceof SavedFailure}`);
+            if (error instanceof SavedFailure) console.log(`${error.name}: ${error.message} ${error.detail}`);
+            try { try { throw error; } finally { console.log('finally'); } }
+            catch (again) { console.log(`${again === saved}`); }
+        }
+    };
+}
+const callback = deferred(2);
+callback();

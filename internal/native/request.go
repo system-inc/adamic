@@ -40,7 +40,7 @@ adamic_string *adamic_request(const unsigned char *bytes, size_t length) {
 	fmt.Fprintf(&builder, " adamic_string *response = %s(%s);\n", e.functionName(handler), "request")
 	builder.WriteString(" adamic_release(request);\n")
 	if e.program.Functions[handler].MayThrow {
-		builder.WriteString(" if (adamic_thrown != NULL) adamic_uncaught();\n")
+		builder.WriteString(" if (adamic_exception_pending) adamic_uncaught();\n")
 	}
 	builder.WriteString(` adamic_output_flush();
  return response;

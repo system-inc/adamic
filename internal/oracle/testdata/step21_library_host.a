@@ -1,0 +1,18 @@
+// program.ts:2844 host callback recovery; sys.ts:1549 rethrows host errors.
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+const hash = createHash('sha256');
+hash.update(`data${1}`);
+console.log(`${hash.digest('hex').length}`);
+for (let attempt = 0; attempt < 2; attempt += 1) {
+    try { if (attempt === 0) hash.update(`more${attempt}`); else hash.digest('hex'); }
+    catch (error) {
+        if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+        if (typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string') console.log(error.code);
+    }
+}
+try { readFileSync('/adamic-step21-no-file', 'utf8'); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+
+try { readFileSync('/adamic\0step21', 'utf8'); }
+catch (error) { if (error instanceof TypeError) console.log(`${error.name}: ${error.message}`); }

@@ -17,7 +17,6 @@ func TestDocumentedStageZeroGaps(t *testing.T) {
 		args                  []string
 	}{
 		{"multiplePush.ts", "push with other than one value", "a,b\n", nil},
-		{"repeatInTry.ts", "a try around repeat", "xxx\n", []string{"a", "b", "c"}},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
 			t.Parallel()
@@ -64,6 +63,30 @@ func TestClosedEmptyFallbackGap(t *testing.T) {
 		}
 	}
 	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+// Step 21 admits the unchanged dynamic repeat under its source catch.
+func TestClosedRepeatInTryGap(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join("gaps", "repeatInTry.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program, "a", "b", "c")
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"native", nativeRun}, {"Node", onNode(t, path, "a", "b", "c")}, {"JavaScript backend", onJavaScriptBackend(t, program, "a", "b", "c")},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "xxx\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
+	}
+	if report := leaks(t, program, binary, "a", "b", "c"); report != "" {
 		t.Fatal(report)
 	}
 }
