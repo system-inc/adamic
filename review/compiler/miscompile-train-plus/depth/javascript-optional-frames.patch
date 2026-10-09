@@ -1,0 +1,17 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -57,14 +57,6 @@
+  };
+  const active=new Map();
+  const matches=(value,id,depth=0)=>{
+-  // A defined value can only use the non-undefined arm of this optional union.
+-  // Resolve it in this frame, leaving branching unions to ordinary backtracking.
+-  const optional=contracts[id-1];
+-  if(value!==undefined && optional?.Kind===4 && (!optional.Unsupported || optional.Unsupported==='untagged object union') && !optional.Nominal && optional.Members?.length===2){
+-   const [left,right]=optional.Members;
+-   if(contracts[left-1]?.Kind===7){id=right;depth++;}
+-   else if(contracts[right-1]?.Kind===7){id=left;depth++;}
+-  }
+   const reference=value!==null && typeof value==='object';
+   let seen=reference ? active.get(value) : undefined;
+   if(seen?.has(id)) return true;
