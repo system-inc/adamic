@@ -1,0 +1,46 @@
+[
+  {
+    "test": "TestNormalizeRandomMatchesNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNormalizeMatchesNode family",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/normalize.c:225",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/normalize.c:225",
+        "change": "Copy total - 1 instead of total code points after counting sort.",
+        "rows_failed": [
+          "TestNormalizeRandomMatchesNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-math/cache/D1 timeout 120 go test -json -overlay /tmp/defend-native-math/D1-overlay.json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalize' > D1-matrix.log 2>&1; normalize_random_test.go:103: 115 of 100000 lines differ",
+    "bounded": true,
+    "rows_passed": [
+      "TestNormalizeMatchesNodePoints09",
+      "TestNormalizeMatchesNodePoints13",
+      "TestNormalizeMatchesNodePoints08",
+      "TestNormalizeMatchesNodePoints07",
+      "TestNormalizeMatchesNodePoints14",
+      "TestNormalizeMatchesNodePoints16",
+      "TestNormalizeMatchesNodePoints15",
+      "TestNormalizeMatchesNodePoints11",
+      "TestNormalizeMatchesNodePoints10",
+      "TestNormalizeMatchesNodePoints12",
+      "TestNormalizeMatchesNodePoints06",
+      "TestNormalizeMatchesNodePoints03",
+      "TestNormalizeMatchesNodeContexts",
+      "TestNormalizeMatchesNodePoints05",
+      "TestNormalizeMatchesNodePoints02",
+      "TestNormalizeMatchesNodePoints04",
+      "TestNormalizeMatchesNodePoints01",
+      "TestNormalizeMatchesNodePoints00"
+    ],
+    "rows_skipped": [
+      "TestNormalizeLongMeasurements"
+    ],
+    "oracle": "Node String.prototype.normalize; exact WTF-8 hex output for NFC, NFD, NFKC and NFKD across 100000 generated inputs"
+  }
+]

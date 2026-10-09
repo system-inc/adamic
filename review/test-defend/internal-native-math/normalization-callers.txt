@@ -1,0 +1,34 @@
+internal/native/case_test.go:323:		{"normalize_tables.h", "NORMALIZE_UNICODE_VERSION", "normalize_generate.go"},
+internal/native/map_hash_test.go:113:		// V8 normalizes -0 through its integer conversion. Send only -0 down the raw-double
+internal/native/normalize_benchmark_test.go:27:	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
+internal/native/normalize_benchmark_test.go:32:	for path, content := range map[string]string{oracle: normalizeLongOracle, driver: normalizeLongDriver} {
+internal/native/normalize_benchmark_test.go:45:const normalizeLongProbe = `#define _POSIX_C_SOURCE 200809L
+internal/native/normalize_benchmark_test.go:62: double start=now(); adamic_string *out=adamic_string_normalize(input,&form); double elapsed=now()-start;
+internal/native/normalize_benchmark_test.go:68:const normalizeLongOracle = `const [kind,n,form]=process.argv.slice(2); const patterns=['a','e\u0301a\u0323\u0301','각','각','ﷺ']; const counts=[1,5,1,3,1];
+internal/native/normalize_benchmark_test.go:72:const start=process.hrtime.bigint(); const out=input.normalize(form); const elapsed=Number(process.hrtime.bigint()-start)/1e9;
+internal/native/normalize_benchmark_test.go:76:const normalizeLongDriver = `import subprocess,os,json,sys,time,resource,threading
+internal/native/normalize_random_test.go:13:	alphabet := strings.Join(append(append([]string{}, normalizeAlphabet...), "0xfdfa", "0x315", "0x34f", "0x1f600", "0x9cb", "0x1ea0"), ", ")
+internal/native/normalize_random_test.go:14:	harness := strings.Split(normalizeHarness, "static const uint32_t alphabet[]")[0]
+internal/native/normalize_random_test.go:67:	oracle := strings.Split(normalizeOracle, "const alphabet =")[0] + `
+internal/native/normalize_test.go:10:// The normalization sweep: native normalize against Node's, in all four forms, byte for byte as
+internal/native/normalize_test.go:14:// composition. The harness and the oracle are case_test.go's, asking normalize instead.
+internal/native/normalize_test.go:16:const normalizeHarness = `#include "adamic.h"
+internal/native/normalize_test.go:76:		adamic_string *normalized = adamic_string_normalize(string, &forms[form]);
+internal/native/normalize_test.go:78:		put_hex(normalized);
+internal/native/normalize_test.go:79:		adamic_release(normalized);
+internal/native/normalize_test.go:128:const normalizeOracle = `const hex = [];
+internal/native/normalize_test.go:159:	return ' ' + ['NFC', 'NFD', 'NFKC', 'NFKD'].map((form) => wtf8(string.normalize(form))).join(' ');
+internal/native/normalize_test.go:197:// normalizeAlphabet is starters that compose with marks (a, A), marks of four classes (U+0300 and
+internal/native/normalize_test.go:203:var normalizeAlphabet = []string{
+internal/native/normalize_test.go:216:	alphabet := strings.Join(normalizeAlphabet, ", ")
+internal/native/normalize_test.go:225:	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
+internal/native/normalize_test.go:233:	oracle := strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
+internal/native/normalize_test.go:234:	pieces := unitRanges(0x110000, normalizePointUnitSize)
+internal/native/normalize_test.go:241:	letters := len(normalizeAlphabet)
+internal/native/split_units_test.go:26:const normalizePointUnitSize = 65536
+internal/native/split_units_test.go:50:		{"normalize_points", 0x110000, normalizePointUnitSize, 17},
+internal/native/split_units_test.go:77:		{"normalize_test.go", "TestNormalizeMatchesNodePoints", "runNormalizeUnit", "", 17},
+internal/native/split_units_test.go:78:		{"normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeUnit", "", 1},
+internal/native/split_units_test.go:230:		normalized := strings.ReplaceAll(arg, scratch, "$SCRATCH")
+internal/native/split_units_test.go:231:		inputs = append(inputs, []byte(normalized))
+internal/native/wasm_test.go:35:	"internal/oracle/testdata/normalize.a", "internal/oracle/testdata/maps_and_text.a",

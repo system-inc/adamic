@@ -1,0 +1,598 @@
+    1|       |// normalize.c: String.prototype.normalize, NFC, NFD, NFKC and NFKD, as Node does them (UAX #15).
+    2|       |//
+    3|       |// A string is decomposed (canonically, or with compatibility mappings too for the K forms), put in
+    4|       |// canonical order (each run of combining marks stably sorted by combining class), and for NFC and
+    5|       |// NFKC composed again, each mark joining the last starter unless something between blocks it. The
+    6|       |// tables are Unicode's, for the version Node carries, written by normalize_generate.go. Hangul
+    7|       |// syllables decompose and compose by arithmetic. A lone surrogate is a starter with nothing to
+    8|       |// decompose or compose, and passes through as its WTF-8 bytes, as in Node.
+    9|       |
+   10|       |#include "adamic.h"
+   11|       |
+   12|       |#include <stdint.h>
+   13|       |#include <stdlib.h>
+   14|       |#include <string.h>
+   15|       |
+   16|       |typedef struct normalize_class {
+   17|       |	uint32_t first;
+   18|       |	uint32_t last;
+   19|       |	uint8_t class;
+   20|       |} normalize_class;
+   21|       |
+   22|       |typedef struct normalize_mapping {
+   23|       |	uint32_t point;
+   24|       |	bool compatibility;
+   25|       |	uint16_t start;
+   26|       |	uint8_t count;
+   27|       |} normalize_mapping;
+   28|       |
+   29|       |typedef struct normalize_pair {
+   30|       |	uint32_t first;
+   31|       |	uint32_t second;
+   32|       |	uint32_t composite;
+   33|       |} normalize_pair;
+   34|       |
+   35|       |#include "normalize_tables.h"
+   36|       |
+   37|  50.7M|#define COUNT(table) (sizeof table / sizeof table[0])
+   38|       |
+   39|       |// Hangul syllables, by arithmetic (The Unicode Standard, 3.12).
+   40|       |enum {
+   41|       |	hangul_s = 0xac00,
+   42|       |	hangul_l = 0x1100,
+   43|       |	hangul_v = 0x1161,
+   44|       |	hangul_t = 0x11a7,
+   45|       |	hangul_l_count = 19,
+   46|       |	hangul_v_count = 21,
+   47|       |	hangul_t_count = 28,
+   48|       |	hangul_n_count = hangul_v_count * hangul_t_count,
+   49|       |	hangul_s_count = hangul_l_count * hangul_n_count,
+   50|       |};
+   51|       |
+   52|   385M|static uint8_t combining_class(uint32_t point) {
+   53|   385M|	if (point < 0x300) {
+   54|  42.9M|		return 0;
+   55|  42.9M|	}
+   56|       |	// Small direct-mapped caches avoid repeating binary searches in patterned text. Keys
+   57|       |	// are checked even when their slots collide; thread-local storage keeps callers independent.
+   58|   343M|	static _Thread_local uint32_t cached_points[64];
+   59|   343M|	static _Thread_local uint8_t cached_classes[64];
+   60|   343M|	size_t slot = (point ^ (point >> 8)) & 63;
+   61|   343M|	if (cached_points[slot] == point) {
+   62|   338M|		return cached_classes[slot];
+   63|   338M|	}
+   64|  4.76M|	size_t low = 0, high = COUNT(normalize_classes);
+   65|  45.0M|	while (low < high) {
+   66|  40.3M|		size_t middle = low + (high - low) / 2;
+   67|  40.3M|		if (normalize_classes[middle].last < point) {
+   68|  25.4M|			low = middle + 1;
+   69|  25.4M|		} else {
+   70|  14.9M|			high = middle;
+   71|  14.9M|		}
+   72|  40.3M|	}
+   73|  4.76M|	uint8_t class = low < COUNT(normalize_classes) && normalize_classes[low].first <= point ? normalize_classes[low].class : 0;
+   74|  4.76M|	cached_points[slot] = point;
+   75|  4.76M|	cached_classes[slot] = class;
+   76|  4.76M|	return class;
+   77|   343M|}
+   78|       |
+   79|  98.3M|static const normalize_mapping *mapping_of(uint32_t point) {
+   80|  98.3M|	if (point < 0xa0) {
+   81|  11.7M|		return NULL;
+   82|  11.7M|	}
+   83|  86.6M|	static _Thread_local uint32_t cached_points[64];
+   84|  86.6M|	static _Thread_local const normalize_mapping *cached_mappings[64];
+   85|  86.6M|	size_t slot = (point ^ (point >> 8)) & 63;
+   86|  86.6M|	if (cached_points[slot] == point) {
+   87|  83.9M|		return cached_mappings[slot];
+   88|  83.9M|	}
+   89|  2.71M|	size_t low = 0, high = COUNT(normalize_mappings);
+   90|  36.5M|	while (low < high) {
+   91|  33.8M|		size_t middle = low + (high - low) / 2;
+   92|  33.8M|		if (normalize_mappings[middle].point < point) {
+   93|  22.4M|			low = middle + 1;
+   94|  22.4M|		} else {
+   95|  11.3M|			high = middle;
+   96|  11.3M|		}
+   97|  33.8M|	}
+   98|  2.71M|	const normalize_mapping *mapping = low < COUNT(normalize_mappings) && normalize_mappings[low].point == point ? &normalize_mappings[low] : NULL;
+   99|  2.71M|	cached_points[slot] = point;
+  100|  2.71M|	cached_mappings[slot] = mapping;
+  101|  2.71M|	return mapping;
+  102|  86.6M|}
+  103|       |
+  104|       |// composite is what first and second compose to, or 0 when they don't.
+  105|  67.4M|static uint32_t composite(uint32_t first, uint32_t second) {
+  106|  67.4M|	if (first >= hangul_l && first < hangul_l + hangul_l_count && second >= hangul_v && second < hangul_v + hangul_v_count) {
+  107|  3.43M|		return hangul_s + ((first - hangul_l) * hangul_v_count + (second - hangul_v)) * hangul_t_count;
+  108|  3.43M|	}
+  109|  63.9M|	if (first >= hangul_s && first < hangul_s + hangul_s_count && (first - hangul_s) % hangul_t_count == 0 && second > hangul_t && second < hangul_t + hangul_t_count) {
+  110|   722k|		return first + (second - hangul_t);
+  111|   722k|	}
+  112|  63.2M|	static _Thread_local normalize_pair cached_pairs[64];
+  113|  63.2M|	size_t slot = ((first * 33 + second) ^ (first >> 8) ^ (second >> 4)) & 63;
+  114|  63.2M|	if (cached_pairs[slot].first == first && cached_pairs[slot].second == second) {
+  115|  53.8M|		return cached_pairs[slot].composite;
+  116|  53.8M|	}
+  117|  9.42M|	size_t low = 0, high = COUNT(normalize_pairs);
+  118|  99.7M|	while (low < high) {
+  119|  90.3M|		size_t middle = low + (high - low) / 2;
+  120|  90.3M|		const normalize_pair *pair = &normalize_pairs[middle];
+  121|  90.3M|		if (pair->first < first || (pair->first == first && pair->second < second)) {
+  122|  66.4M|			low = middle + 1;
+  123|  66.4M|		} else {
+  124|  23.9M|			high = middle;
+  125|  23.9M|		}
+  126|  90.3M|	}
+  127|  9.42M|	uint32_t joined = low < COUNT(normalize_pairs) && normalize_pairs[low].first == first && normalize_pairs[low].second == second ? normalize_pairs[low].composite : 0;
+  128|  9.42M|	cached_pairs[slot] = (normalize_pair){first, second, joined};
+  129|  9.42M|	return joined;
+  130|  63.2M|}
+  131|       |
+  132|       |// A growing list of code points.
+  133|       |typedef struct points {
+  134|       |	uint32_t *items;
+  135|       |	size_t count;
+  136|       |	size_t capacity;
+  137|       |} points;
+  138|       |
+  139|   196M|static void points_add(points *list, uint32_t point) {
+  140|   196M|	if (list->count == list->capacity) {
+  141|  72.8M|		size_t capacity = list->capacity == 0 ? 64 : list->capacity * 2;
+  142|  72.8M|		uint32_t *grown = realloc(list->items, capacity * sizeof *grown);
+  143|  72.8M|		if (grown == NULL) {
+  144|      0|			static const char message[] = "out of memory";
+  145|      0|			adamic_panic(message, sizeof message - 1);
+  146|      0|		}
+  147|  72.8M|		list->items = grown;
+  148|  72.8M|		list->capacity = capacity;
+  149|  72.8M|	}
+  150|   196M|	list->items[list->count++] = point;
+  151|   196M|}
+  152|       |
+  153|       |// decompose appends a code point's full decomposition: its mapping's, each decomposed in turn.
+  154|  84.8M|static void decompose(points *list, uint32_t point, bool compatibility) {
+  155|  84.8M|	if (point >= hangul_s && point < hangul_s + hangul_s_count) {
+  156|  8.05M|		uint32_t index = point - hangul_s;
+  157|  8.05M|		points_add(list, hangul_l + index / hangul_n_count);
+  158|  8.05M|		points_add(list, hangul_v + (index % hangul_n_count) / hangul_t_count);
+  159|  8.05M|		if (index % hangul_t_count != 0) {
+  160|   871k|			points_add(list, hangul_t + index % hangul_t_count);
+  161|   871k|		}
+  162|  8.05M|		return;
+  163|  8.05M|	}
+  164|  76.8M|	const normalize_mapping *mapping = mapping_of(point);
+  165|  76.8M|	if (mapping == NULL || (mapping->compatibility && !compatibility)) {
+  166|  72.7M|		points_add(list, point);
+  167|  72.7M|		return;
+  168|  72.7M|	}
+  169|  11.3M|	for (size_t index = 0; index < mapping->count; index++) {
+  170|  7.31M|		decompose(list, normalize_mapped[mapping->start + index], compatibility);
+  171|  7.31M|	}
+  172|  4.08M|}
+  173|       |
+  174|       |// Small runs use insertion sort. Long runs use a stable counting sort, so scrambled marks
+  175|       |// cost linear work rather than quadratic work. A starter always ends a run.
+  176|  39.4M|static void reorder(points *list) {
+  177|   118M|	for (size_t first = 0; first < list->count;) {
+  178|  79.0M|		if (combining_class(list->items[first]) == 0) {
+  179|  61.4M|			first++;
+  180|  61.4M|			continue;
+  181|  61.4M|		}
+  182|  17.6M|		size_t end = first + 1;
+  183|  17.6M|		bool ordered = true;
+  184|  17.6M|		uint8_t previous = combining_class(list->items[first]);
+  185|  28.8M|		while (end < list->count) {
+  186|  13.8M|			uint8_t class = combining_class(list->items[end]);
+  187|  13.8M|			if (class == 0) {
+  188|  2.56M|				break;
+  189|  2.56M|			}
+  190|  11.2M|			ordered = ordered && previous <= class;
+  191|  11.2M|			previous = class;
+  192|  11.2M|			end++;
+  193|  11.2M|		}
+  194|  17.6M|		if (!ordered && end - first <= 64) {
+  195|  19.2M|			for (size_t index = first + 1; index < end; index++) {
+  196|  9.86M|				uint32_t point = list->items[index];
+  197|  9.86M|				uint8_t class = combining_class(point);
+  198|  9.86M|				size_t at = index;
+  199|  19.6M|				while (at > first && combining_class(list->items[at - 1]) > class) {
+  200|  9.81M|					list->items[at] = list->items[at - 1];
+  201|  9.81M|					at--;
+  202|  9.81M|				}
+  203|  9.86M|				list->items[at] = point;
+  204|  9.86M|			}
+  205|  9.37M|		} else if (!ordered) {
+  206|      0|			size_t offsets[256] = {0};
+  207|      0|			for (size_t index = first; index < end; index++) {
+  208|      0|				offsets[combining_class(list->items[index])]++;
+  209|      0|			}
+  210|      0|			size_t total = 0;
+  211|      0|			for (size_t class = 0; class < COUNT(offsets); class++) {
+  212|      0|				size_t count = offsets[class];
+  213|      0|				offsets[class] = total;
+  214|      0|				total += count;
+  215|      0|			}
+  216|      0|			uint32_t *sorted = malloc(total * sizeof *sorted);
+  217|      0|			if (sorted == NULL) {
+  218|      0|				static const char message[] = "out of memory";
+  219|      0|				adamic_panic(message, sizeof message - 1);
+  220|      0|			}
+  221|      0|			for (size_t index = first; index < end; index++) {
+  222|      0|				uint32_t point = list->items[index];
+  223|      0|				sorted[offsets[combining_class(point)]++] = point;
+  224|      0|			}
+  225|      0|			memcpy(list->items + first, sorted, total * sizeof *sorted);
+  226|      0|			free(sorted);
+  227|      0|		}
+  228|  17.6M|		first = end;
+  229|  17.6M|	}
+  230|  39.4M|}
+  231|       |
+  232|       |// compose joins each code point to the last starter when nothing between blocks it: a mark is blocked
+  233|       |// by anything between of class 0 or of a class at least its own, so a starter joins only the starter
+  234|       |// right before it.
+  235|  44.7M|static void compose(points *list) {
+  236|  44.7M|	size_t written = 0;
+  237|  44.7M|	bool has_starter = false;
+  238|  44.7M|	size_t starter = 0;
+  239|  44.7M|	uint8_t last_class = 0;
+  240|   117M|	for (size_t index = 0; index < list->count; index++) {
+  241|  72.4M|		uint32_t point = list->items[index];
+  242|  72.4M|		uint8_t class = combining_class(point);
+  243|  72.4M|		if (has_starter) {
+  244|  26.7M|			bool adjacent = written - 1 == starter;
+  245|  26.7M|			if (adjacent || (last_class != 0 && last_class < class)) {
+  246|  25.9M|				uint32_t joined = composite(list->items[starter], point);
+  247|  25.9M|				if (joined != 0) {
+  248|  5.10M|					list->items[starter] = joined;
+  249|  5.10M|					continue;
+  250|  5.10M|				}
+  251|  25.9M|			}
+  252|  26.7M|		}
+  253|  67.3M|		if (class == 0) {
+  254|  51.3M|			has_starter = true;
+  255|  51.3M|			starter = written;
+  256|  51.3M|		}
+  257|  67.3M|		last_class = class;
+  258|  67.3M|		list->items[written++] = point;
+  259|  67.3M|	}
+  260|  44.7M|	list->count = written;
+  261|  44.7M|}
+  262|       |
+  263|   106M|static size_t size_at(unsigned char lead) {
+  264|   106M|	return lead < 0x80 ? 1 : lead < 0xe0 ? 2 : lead < 0xf0 ? 3 : 4;
+  265|   106M|}
+  266|       |
+  267|   106M|static uint32_t decode_at(const unsigned char *bytes, size_t size) {
+  268|   106M|	switch (size) {
+  269|  9.92M|	case 1:
+  270|  9.92M|		return bytes[0];
+  271|  37.7M|	case 2:
+  272|  37.7M|		return ((uint32_t)(bytes[0] & 0x1f) << 6) | (bytes[1] & 0x3f);
+  273|  22.4M|	case 3:
+  274|  22.4M|		return ((uint32_t)(bytes[0] & 0x0f) << 12) | ((uint32_t)(bytes[1] & 0x3f) << 6) | (bytes[2] & 0x3f);
+  275|   106M|	}
+  276|  36.2M|	return ((uint32_t)(bytes[0] & 0x07) << 18) | ((uint32_t)(bytes[1] & 0x3f) << 12) | ((uint32_t)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
+  277|   106M|}
+  278|       |
+  279|       |// encode writes a code point as UTF-8, or a lone surrogate as WTF-8's three bytes, which the same
+  280|       |// arithmetic gives.
+  281|   104M|static size_t encode(uint32_t point, char *out) {
+  282|   104M|	if (point < 0x80) {
+  283|  11.9M|		out[0] = (char)point;
+  284|  11.9M|		return 1;
+  285|  11.9M|	}
+  286|  92.1M|	if (point < 0x800) {
+  287|  27.0M|		out[0] = (char)(0xc0 | (point >> 6));
+  288|  27.0M|		out[1] = (char)(0x80 | (point & 0x3f));
+  289|  27.0M|		return 2;
+  290|  27.0M|	}
+  291|  65.1M|	if (point < 0x10000) {
+  292|  30.7M|		out[0] = (char)(0xe0 | (point >> 12));
+  293|  30.7M|		out[1] = (char)(0x80 | ((point >> 6) & 0x3f));
+  294|  30.7M|		out[2] = (char)(0x80 | (point & 0x3f));
+  295|  30.7M|		return 3;
+  296|  30.7M|	}
+  297|  34.4M|	out[0] = (char)(0xf0 | (point >> 18));
+  298|  34.4M|	out[1] = (char)(0x80 | ((point >> 12) & 0x3f));
+  299|  34.4M|	out[2] = (char)(0x80 | ((point >> 6) & 0x3f));
+  300|  34.4M|	out[3] = (char)(0x80 | (point & 0x3f));
+  301|  34.4M|	return 4;
+  302|  65.1M|}
+  303|       |
+  304|       |// Quick check without another Unicode table. Decomposed forms require no applicable mapping
+  305|       |// and canonical order. Composed forms accept only starters that normalize individually to themselves
+  306|       |// and cannot join their neighbour. Marks conservatively take the streaming path: a precomposed
+  307|       |// starter's decomposition can interact with them even when no direct composition pair exists.
+  308|  23.6M|static bool normalized(const adamic_string *string, bool compatibility, bool composed) {
+  309|  23.6M|	points expanded = {NULL, 0, 0};
+  310|  23.6M|	uint32_t cached = UINT32_MAX, starter = 0, self_join = 0, leading = 0;
+  311|  23.6M|	bool same = false, has_starter = false, result = true;
+  312|  23.6M|	uint8_t previous = 0, cached_class = 0;
+  313|  60.8M|	for (size_t at = 0; at < string->length;) {
+  314|  47.3M|		size_t size = size_at((unsigned char)string->bytes[at]);
+  315|  47.3M|		uint32_t point = decode_at((const unsigned char *)string->bytes + at, size);
+  316|  47.3M|		uint8_t class = point == cached ? cached_class : combining_class(point);
+  317|  47.3M|		if ((class != 0 && previous > class) || (composed && class != 0)) {
+  318|  7.07M|			result = false;
+  319|  7.07M|			break;
+  320|  7.07M|		}
+  321|  40.3M|		if (point != cached) {
+  322|  40.2M|			if (composed) {
+  323|  18.7M|				expanded.count = 0;
+  324|  18.7M|				decompose(&expanded, point, compatibility);
+  325|  18.7M|				leading = expanded.items[0];
+  326|  18.7M|				reorder(&expanded);
+  327|  18.7M|				compose(&expanded);
+  328|  18.7M|				same = expanded.count == 1 && expanded.items[0] == point;
+  329|  21.4M|			} else {
+  330|  21.4M|				const normalize_mapping *mapping = mapping_of(point);
+  331|  21.4M|				same = !(point >= hangul_s && point < hangul_s + hangul_s_count) &&
+  332|  21.4M|					(mapping == NULL || (mapping->compatibility && !compatibility));
+  333|  21.4M|			}
+  334|  40.2M|			cached = point;
+  335|  40.2M|			cached_class = class;
+  336|  40.2M|			self_join = composed ? composite(point, leading) : 0;
+  337|  40.2M|		}
+  338|  40.3M|		if (!same || (composed && has_starter && (starter == point ? self_join : composite(starter, leading)) != 0)) {
+  339|  3.16M|			result = false;
+  340|  3.16M|			break;
+  341|  3.16M|		}
+  342|  37.1M|		starter = point;
+  343|  37.1M|		has_starter = true;
+  344|  37.1M|		previous = class;
+  345|  37.1M|		at += size;
+  346|  37.1M|	}
+  347|  23.6M|	free(expanded.items);
+  348|  23.6M|	return result;
+  349|  23.6M|}
+  350|       |
+  351|       |// A batch ends only at a starter. Its last starter stays pending when it could join the next
+  352|       |// one. Growing the buffer never ends a combining run.
+  353|       |// A first pass counts bytes and UTF-16 units; a second writes straight into one exact allocation.
+  354|       |// This also checks V8's length limit before allocating or encoding an oversized result.
+  355|       |typedef struct normalization {
+  356|       |	points segment;
+  357|       |	bool composed;
+  358|       |	char *out;
+  359|       |	size_t length;
+  360|       |	size_t units;
+  361|       |} normalization;
+  362|       |
+  363|  66.8M|static void emit_point(normalization *state, uint32_t point) {
+  364|  66.8M|	char scratch[4];
+  365|  66.8M|	size_t size = encode(point, state->out == NULL ? scratch : state->out + state->length);
+  366|  66.8M|	state->length += size;
+  367|  66.8M|	state->units += point >= 0x10000 ? 2 : 1;
+  368|  66.8M|	if (state->units > ADAMIC_STRING_MAX_UNITS) {
+  369|      0|		adamic_string_check_length((double)state->units);
+  370|      0|	}
+  371|  66.8M|}
+  372|       |
+  373|  20.6M|static void finish_segment(normalization *state, bool keep_starter) {
+  374|  20.6M|	reorder(&state->segment);
+  375|  20.6M|	if (state->composed) {
+  376|  10.2M|		compose(&state->segment);
+  377|  10.2M|	}
+  378|  20.6M|	size_t count = state->segment.count;
+  379|  20.6M|	bool kept = keep_starter && state->composed && count != 0 && combining_class(state->segment.items[count - 1]) == 0;
+  380|  87.4M|	for (size_t index = 0; index < count - (kept ? 1 : 0); index++) {
+  381|  66.8M|		emit_point(state, state->segment.items[index]);
+  382|  66.8M|	}
+  383|  20.6M|	if (kept) {
+  384|      0|		state->segment.items[0] = state->segment.items[count - 1];
+  385|      0|	}
+  386|  20.6M|	state->segment.count = kept ? 1 : 0;
+  387|  20.6M|}
+  388|       |
+  389|  68.4M|static void accept_point(normalization *state, uint32_t point) {
+  390|  68.4M|	if (combining_class(point) == 0 && state->segment.count >= 64) {
+  391|      0|		finish_segment(state, true);
+  392|      0|	}
+  393|  68.4M|	points_add(&state->segment, point);
+  394|  68.4M|}
+  395|       |
+  396|       |// Repeat an already normalized block of starters. Copy by doubling from bytes already written,
+  397|       |// rather than encode eighteen separate points for each occurrence of a compatibility ligature.
+  398|   115k|static void emit_blocks(normalization *state, const char *bytes, size_t length, size_t units, size_t count) {
+  399|   115k|	if (count == 0) {
+  400|   113k|		return;
+  401|   113k|	}
+  402|  2.24k|	if (count > (ADAMIC_STRING_MAX_UNITS - state->units) / units) {
+  403|      0|		adamic_string_check_length((double)ADAMIC_STRING_MAX_UNITS + 1);
+  404|      0|	}
+  405|  2.24k|	size_t size = length * count;
+  406|  2.24k|	if (state->out != NULL) {
+  407|  1.12k|		char *out = state->out + state->length;
+  408|  1.12k|		memcpy(out, bytes, length);
+  409|  1.12k|		for (size_t written = length; written < size;) {
+  410|      6|			size_t next = size - written < written ? size - written : written;
+  411|      6|			memcpy(out + written, out, next);
+  412|      6|			written += next;
+  413|      6|		}
+  414|  1.12k|	}
+  415|  2.24k|	state->length += size;
+  416|  2.24k|	state->units += units * count;
+  417|  2.24k|}
+  418|       |
+  419|       |// A repeated prefix need only be normalized once when its decomposition starts with a
+  420|       |// starter and successive copies cannot compose across their boundary. Keep the final copy
+  421|       |// decomposed, not precomposed: later marks may have to reorder into its last canonical run.
+  422|  20.4M|static size_t repeated_prefix(normalization *state, const adamic_string *string, bool compatibility) {
+  423|  20.4M|	if (string->length < 64) {
+  424|  20.4M|		return 0;
+  425|  20.4M|	}
+  426|      0|	size_t length = 0;
+  427|      0|	for (size_t index = 0; index < 8 && length < string->length; index++) {
+  428|      0|		length += size_at((unsigned char)string->bytes[length]);
+  429|      0|		size_t count = 1, maximum = string->length / length;
+  430|      0|		while (count < maximum &&
+  431|      0|			memcmp(string->bytes, string->bytes + length * count, length) == 0) {
+  432|      0|			count++;
+  433|      0|		}
+  434|      0|		if (count < 8) {
+  435|      0|			continue;
+  436|      0|		}
+  437|      0|		points raw = {NULL, 0, 0}, ordered = {NULL, 0, 0};
+  438|      0|		for (size_t at = 0; at < length;) {
+  439|      0|			size_t size = size_at((unsigned char)string->bytes[at]);
+  440|      0|			decompose(&raw, decode_at((const unsigned char *)string->bytes + at, size), compatibility);
+  441|      0|			at += size;
+  442|      0|		}
+  443|      0|		for (size_t index = 0; index < raw.count; index++) {
+  444|      0|			points_add(&ordered, raw.items[index]);
+  445|      0|		}
+  446|      0|		reorder(&ordered);
+  447|      0|		if (state->composed) {
+  448|      0|			compose(&ordered);
+  449|      0|		}
+  450|      0|		uint32_t first = raw.items[0], last = ordered.items[ordered.count - 1];
+  451|      0|		bool separate = combining_class(first) == 0 &&
+  452|      0|			(!state->composed || combining_class(last) != 0 || composite(last, first) == 0);
+  453|      0|		if (separate) {
+  454|      0|			char *bytes = malloc(ordered.count * 4);
+  455|      0|			if (bytes == NULL) {
+  456|      0|				static const char message[] = "out of memory";
+  457|      0|				adamic_panic(message, sizeof message - 1);
+  458|      0|			}
+  459|      0|			size_t written = 0, units = 0;
+  460|      0|			for (size_t index = 0; index < ordered.count; index++) {
+  461|      0|				written += encode(ordered.items[index], bytes + written);
+  462|      0|				units += ordered.items[index] >= 0x10000 ? 2 : 1;
+  463|      0|			}
+  464|      0|			emit_blocks(state, bytes, written, units, count - 1);
+  465|      0|			for (size_t index = 0; index < raw.count; index++) {
+  466|      0|				accept_point(state, raw.items[index]);
+  467|      0|			}
+  468|      0|			free(bytes);
+  469|      0|		}
+  470|      0|		free(raw.items);
+  471|      0|		free(ordered.items);
+  472|      0|		if (separate) {
+  473|      0|			return length * count;
+  474|      0|		}
+  475|      0|	}
+  476|      0|	return 0;
+  477|      0|}
+  478|       |
+  479|  20.4M|static normalization stream(const adamic_string *string, bool compatibility, bool composed, char *out) {
+  480|  20.4M|	normalization state = {{NULL, 0, 0}, composed, out, 0, 0};
+  481|  20.4M|	points expanded = {NULL, 0, 0}, ordered = {NULL, 0, 0};
+  482|  20.4M|	uint32_t cached = UINT32_MAX;
+  483|  20.4M|	bool starters = false, separate = false;
+  484|  20.4M|	char *bytes = NULL;
+  485|  20.4M|	size_t length = 0, units = 0, capacity = 0;
+  486|  79.4M|	for (size_t at = repeated_prefix(&state, string, compatibility); at < string->length;) {
+  487|  58.9M|		size_t size = size_at((unsigned char)string->bytes[at]);
+  488|  58.9M|		uint32_t point = decode_at((const unsigned char *)string->bytes + at, size);
+  489|  58.9M|		if (point != cached) {
+  490|  58.8M|			expanded.count = 0;
+  491|  58.8M|			decompose(&expanded, point, compatibility);
+  492|  58.8M|			starters = true;
+  493|   126M|			for (size_t index = 0; index < expanded.count; index++) {
+  494|  68.0M|				starters = starters && combining_class(expanded.items[index]) == 0;
+  495|  68.0M|			}
+  496|  58.8M|			if (starters) {
+  497|  31.4M|				ordered.count = 0;
+  498|  69.4M|				for (size_t index = 0; index < expanded.count; index++) {
+  499|  38.0M|					points_add(&ordered, expanded.items[index]);
+  500|  38.0M|				}
+  501|  31.4M|				if (composed) {
+  502|  15.6M|					compose(&ordered);
+  503|  15.6M|				}
+  504|  31.4M|				separate = !composed || composite(ordered.items[ordered.count - 1], expanded.items[0]) == 0;
+  505|  31.4M|				if (expanded.count * 4 > capacity) {
+  506|  20.9M|					capacity = expanded.count * 4;
+  507|  20.9M|					char *grown = realloc(bytes, capacity);
+  508|  20.9M|					if (grown == NULL) {
+  509|      0|						static const char message[] = "out of memory";
+  510|      0|						adamic_panic(message, sizeof message - 1);
+  511|      0|					}
+  512|  20.9M|					bytes = grown;
+  513|  20.9M|				}
+  514|  31.4M|				length = 0, units = 0;
+  515|  68.6M|				for (size_t index = 0; index < ordered.count; index++) {
+  516|  37.2M|					length += encode(ordered.items[index], bytes + length);
+  517|  37.2M|					units += ordered.items[index] >= 0x10000 ? 2 : 1;
+  518|  37.2M|				}
+  519|  31.4M|			}
+  520|  58.8M|			cached = point;
+  521|  58.8M|		}
+  522|   127M|		for (size_t index = 0; index < expanded.count; index++) {
+  523|  68.2M|			accept_point(&state, expanded.items[index]);
+  524|  68.2M|		}
+  525|  58.9M|		size_t next = at + size;
+  526|       |		// Keep the final starter pending for marks or a starter arriving in the next block.
+  527|       |		// The first block above settles any composition with what preceded this input point.
+  528|  58.9M|		if (starters && separate) {
+  529|  31.4M|			size_t count = 0;
+  530|  31.5M|			while (next + size <= string->length && memcmp(string->bytes + at, string->bytes + next, size) == 0) {
+  531|   118k|				count++;
+  532|   118k|				next += size;
+  533|   118k|			}
+  534|  31.4M|			if (count != 0) {
+  535|       |				// Settle composition with the preceding batch before taking the bulk path.
+  536|   116k|				if (composed) {
+  537|  60.0k|					reorder(&state.segment);
+  538|  60.0k|					compose(&state.segment);
+  539|  60.0k|				}
+  540|   116k|				if (state.segment.items[state.segment.count - 1] != ordered.items[ordered.count - 1]) {
+  541|    592|					next = at + size;
+  542|   115k|				} else {
+  543|   115k|					finish_segment(&state, false);
+  544|   115k|					emit_blocks(&state, bytes, length, units, count - 1);
+  545|   273k|					for (size_t index = 0; index < expanded.count; index++) {
+  546|   158k|						accept_point(&state, expanded.items[index]);
+  547|   158k|					}
+  548|   115k|				}
+  549|   116k|			}
+  550|  31.4M|		}
+  551|  58.9M|		at = next;
+  552|  58.9M|	}
+  553|  20.4M|	finish_segment(&state, false);
+  554|  20.4M|	free(bytes);
+  555|  20.4M|	free(expanded.items);
+  556|  20.4M|	free(ordered.items);
+  557|  20.4M|	free(state.segment.items);
+  558|  20.4M|	state.segment = (points){NULL, 0, 0};
+  559|  20.4M|	return state;
+  560|  20.4M|}
+  561|       |
+  562|  59.1M|static bool form_is(const adamic_string *form, const char *name) {
+  563|  59.1M|	size_t length = strlen(name);
+  564|  59.1M|	return form->length == length && memcmp(form->bytes, name, length) == 0;
+  565|  59.1M|}
+  566|       |
+  567|  23.6M|adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form) {
+  568|  23.6M|	bool compatibility, composed;
+  569|  23.6M|	if (form_is(form, "NFC")) {
+  570|  5.91M|		compatibility = false, composed = true;
+  571|  17.7M|	} else if (form_is(form, "NFD")) {
+  572|  5.91M|		compatibility = false, composed = false;
+  573|  11.8M|	} else if (form_is(form, "NFKC")) {
+  574|  5.91M|		compatibility = true, composed = true;
+  575|  5.91M|	} else if (form_is(form, "NFKD")) {
+  576|  5.91M|		compatibility = true, composed = false;
+  577|  5.91M|	} else {
+  578|      0|		static const char message[] = "RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.";
+  579|      0|		adamic_panic(message, sizeof message - 1);
+  580|      0|	}
+  581|       |	// ASCII is the same in every form.
+  582|  23.6M|	bool ascii = true;
+  583|  51.9M|	for (size_t at = 0; at < string->length && ascii; at++) {
+  584|  28.2M|		ascii = (unsigned char)string->bytes[at] < 0x80;
+  585|  28.2M|	}
+  586|  23.6M|	if (ascii) {
+  587|    632|		return adamic_retain((adamic_string *)string);
+  588|    632|	}
+  589|  23.6M|	if (normalized(string, compatibility, composed)) {
+  590|  13.4M|		return adamic_retain((adamic_string *)string);
+  591|  13.4M|	}
+  592|  10.2M|	normalization sized = stream(string, compatibility, composed, NULL);
+  593|  10.2M|	adamic_string *result = adamic_string_allocate(sized.length);
+  594|  10.2M|	stream(string, compatibility, composed, (char *)result->bytes);
+  595|  10.2M|	result->units = sized.units + 1;
+  596|  10.2M|	return result;
+  597|  23.6M|}
+

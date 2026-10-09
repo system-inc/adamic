@@ -1,0 +1,32 @@
+{
+  "mutant": "D1",
+  "bounded": true,
+  "selector": "^TestNormalize",
+  "passed": [
+    "TestNormalizeMatchesNodePoints09",
+    "TestNormalizeMatchesNodePoints13",
+    "TestNormalizeMatchesNodePoints08",
+    "TestNormalizeMatchesNodePoints07",
+    "TestNormalizeMatchesNodePoints14",
+    "TestNormalizeMatchesNodePoints16",
+    "TestNormalizeMatchesNodePoints15",
+    "TestNormalizeMatchesNodePoints11",
+    "TestNormalizeMatchesNodePoints10",
+    "TestNormalizeMatchesNodePoints12",
+    "TestNormalizeMatchesNodePoints06",
+    "TestNormalizeMatchesNodePoints03",
+    "TestNormalizeMatchesNodeContexts",
+    "TestNormalizeMatchesNodePoints05",
+    "TestNormalizeMatchesNodePoints02",
+    "TestNormalizeMatchesNodePoints04",
+    "TestNormalizeMatchesNodePoints01",
+    "TestNormalizeMatchesNodePoints00"
+  ],
+  "failed": [
+    "TestNormalizeRandomMatchesNode"
+  ],
+  "skipped": [
+    "TestNormalizeLongMeasurements"
+  ],
+  "package_seconds": 47.577
+}

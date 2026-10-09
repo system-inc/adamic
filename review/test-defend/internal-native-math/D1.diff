@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -222,7 +222,7 @@
+ 				uint32_t point = list->items[index];
+ 				sorted[offsets[combining_class(point)]++] = point;
+ 			}
+-			memcpy(list->items + first, sorted, total * sizeof *sorted);
++			memcpy(list->items + first, sorted, (total - 1) * sizeof *sorted);
+ 			free(sorted);
+ 		}
+ 		first = end;

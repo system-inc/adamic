@@ -1,0 +1,8 @@
+{
+  "id": "D1",
+  "file_line": "internal/native/runtime/normalize.c:225",
+  "menu": "off by one a bound",
+  "change": "memcpy(list->items + first, sorted, total * sizeof *sorted); -> memcpy(list->items + first, sorted, (total - 1) * sizeof *sorted);",
+  "lead": "Random C coverage executes counting sort; complete sweep family does not. Copying one code point fewer is a production output regression confined to this reached branch.",
+  "base": "7d113268b1903e4e47289f226e94ec2fb609e15b"
+}
