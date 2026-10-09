@@ -1,0 +1,13 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixturesHost/host/05_writeFile.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixturesHost/host/13_createDirectory.a/native
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests
+        units_test.go:130: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+        units_test.go:130: TestFixturesObjects directory=objects fixtures=25
+        units_test.go:130: TestFixturesPredicates directory=predicates fixtures=11
+        units_test.go:113: fixture directory real has no top-level test
+        units_test.go:130: TestFixturesRecords directory=records fixtures=19
+        units_test.go:130: TestFixturesRunner directory=runner fixtures=3
+        units_test.go:130: TestFixturesTaste directory=taste fixtures=24
+        units_test.go:139: union: 12 directories, 173 fixtures
