@@ -1,0 +1,11 @@
+FIRST FAILURE (census, at 1.5 s):
+compiler dependency census: undeclared compiler consumers: stage1/cohere/config/config_test.go, stage1/cohere/config/gaps_test.go, stage1/cohere/config/loader_test.go, stage1/cohere/config/string_units_test.go, stage1/typescript/collections/core_test.go. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the compiler packages it exercises (entries there add to the gate tools' map).
+(box load 20.0 on 64 cores at first failure)
+red: 28a6655d48af451a7e6b9720922a1811279b451a fast gate, first failure at census after 1.5 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 20.0 on 64 cores at start, load 20.0 on 64 cores at first failure, load 20.0 on 64 cores at end; deferred to full gate: 0 tests; branch area/library, session 01a117ca-cd36-77a5-9f11-c545912e9024), 0 fail, 0 pass
+darwin leg: green: darwin build and compile of internal/oracle/testdata/047cb0d_f_maybe.a on Sun2 in 7 s
+remote: 
+remote: Create a pull request for 'gate-logs/28a6655d48af/20261009T094231Z/fast' on GitHub by visiting:        
+remote:      https://github.com/system-inc/adamic/pull/new/gate-logs/28a6655d48af/20261009T094231Z/fast        
+remote: 
+published gate-logs/28a6655d48af/20261009T094231Z/fast (297d2a01a53cb153fd5985d0d0b5a22d7a97a19e)
+red: 28a6655d48af451a7e6b9720922a1811279b451a fast gate, first failure at census after 1.5 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 20.0 on 64 cores at start, load 20.0 on 64 cores at first failure, load 20.0 on 64 cores at end; deferred to full gate: 0 tests; branch area/library, session 01a117ca-cd36-77a5-9f11-c545912e9024), 0 fail, 0 pass
