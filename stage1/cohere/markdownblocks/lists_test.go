@@ -94,7 +94,7 @@ func TestMarkdownRootLayout(t *testing.T) {
 
 // Not parallel: structure-layout fixture and markdown memory configuration.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
-func TestMarkdownStructureLayout(t *testing.T) {
+func TestMarkdownStructureLayout_Setup(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)
 }
