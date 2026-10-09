@@ -43,7 +43,7 @@
 extern const unsigned char ADAMIC_RUNTIME_FEATURES;
 // used keeps the relocation through optimization; retain keeps it through linker section removal.
 // This is a link requirement only: it allocates nothing and executes no runtime check.
-static const void *const adamic_runtime_feature_reference __attribute__((used, retain)) = &ADAMIC_RUNTIME_FEATURES;
+/* mutant: no unit reference */
 
 enum adamic_stream {
 	adamic_stdout = 1,
