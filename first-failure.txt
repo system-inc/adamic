@@ -1,0 +1,8 @@
+FIRST FAILURE (tests, at 28.5 s):
+github.com/system-inc/adamic/internal/oracle TestCheckedViewArrays/array-lazy
+=== RUN   TestCheckedViewArrays/array-lazy
+=== PAUSE TestCheckedViewArrays/array-lazy
+=== CONT  TestCheckedViewArrays/array-lazy
+    checked_views_arrays_test.go:32: /home/ahra/fast-gate/tree/stage3/interface-downcasts/lane2/array-lazy.a:5:16: Adamic 0.1 refuses checked view read of field values with unsupported array contract; prove or implement the array contract before reading this field
+--- FAIL: TestCheckedViewArrays/array-lazy (0.21s)
+
