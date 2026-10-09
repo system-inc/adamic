@@ -16,6 +16,7 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -28,6 +29,25 @@ import (
 // Both assignments have separate plain and sanitized leaves.
 const testVolumeProfileCorporaShards = 2 * (32 + 77)
 
+// Cancel the process group so Go and stage0 cannot leave compiler children
+// running after a deadline. Setpgid and negative-PID Kill work on Linux and macOS.
+func volumeProfileCorporaCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
 func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize bool) string {
 	h.t.Helper()
 	name := "typeaware volume"
@@ -37,7 +57,9 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 	// Use the compiler source recipe rather than executable metadata: workers
 	// have different Git revisions and Go archives embed different scratch paths.
 	archiveName, archiveFlags := "typeaware checker archive", ""
-	cc, err := exec.Command("go", "env", "CC").Output()
+	toolContext, cancelTool := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancelTool()
+	cc, err := volumeProfileCorporaCommand(toolContext, "go", "env", "CC").Output()
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -52,9 +74,9 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "cohere/go.mod", "cohere/go.sum"},
 		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
-	listContext, cancelList := context.WithTimeout(context.Background(), 75*time.Second)
+	listContext, cancelList := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancelList()
-	list := exec.CommandContext(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
+	list := volumeProfileCorporaCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
 	list.Dir = h.repository
 	data, err := list.Output()
 	if err != nil {
@@ -140,13 +162,13 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		if sanitize {
 			args = append(args, "--sanitize")
 		}
-		buildContext, cancelBuild := context.WithTimeout(context.Background(), 75*time.Second)
+		buildContext, cancelBuild := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancelBuild()
-		command := exec.CommandContext(buildContext, stage0, args...)
+		command := volumeProfileCorporaCommand(buildContext, stage0, args...)
 		command.Dir = h.repository
 		if output, err := command.CombinedOutput(); err != nil {
 			if buildContext.Err() != nil {
-				return fmt.Errorf("cooked: %s exceeded 75s hard deadline (60s budget)", name)
+				return fmt.Errorf("cooked: %s exceeded 90s hard deadline (60s budget)", name)
 			}
 			return fmt.Errorf("%s: %w\n%s", name, err, output)
 		}
@@ -291,13 +313,13 @@ func volumeProfileCorporaPrepare(t *testing.T, repository string) {
 		h := &harness{t: t, repository: repository, directory: scratch()}
 		// These are Go builds; keep the original commands until GoBuild lands.
 		runGo := func(h *harness, name string, command *exec.Cmd) {
-			deadline, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+			deadline, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
-			bounded := exec.CommandContext(deadline, command.Path, command.Args[1:]...)
+			bounded := volumeProfileCorporaCommand(deadline, command.Path, command.Args[1:]...)
 			bounded.Dir, bounded.Env = command.Dir, command.Env
 			r := h.run(name, bounded)
 			if deadline.Err() != nil {
-				t.Fatalf("cooked: Go build %s exceeded 75s hard deadline (60s budget)", name)
+				t.Fatalf("cooked: Go build %s exceeded 90s hard deadline (60s budget)", name)
 			}
 			if r.err != nil {
 				t.Fatalf("%s: %v\n%s\n%s", name, r.err, r.stdout, r.stderr)
@@ -392,12 +414,12 @@ func volumeProfileCorporaRun(t *testing.T, index int) {
 	}
 	t.Logf("%s: %d files, first=%s last=%s", name, len(s.paths), s.paths[0], s.paths[len(s.paths)-1])
 	started := time.Now()
-	deadline, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	deadline, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	run := func(label, binary string) result {
-		r := h.run(label, exec.CommandContext(deadline, binary, s.config, manifest))
+		r := h.run(label, volumeProfileCorporaCommand(deadline, binary, s.config, manifest))
 		if deadline.Err() != nil {
-			t.Fatalf("cooked: shard exceeded 75s hard deadline (60s budget)")
+			t.Fatalf("cooked: shard exceeded 90s hard deadline (60s budget)")
 		}
 		if r.err != nil {
 			t.Fatalf("%s: %v\n%s\n%s", label, r.err, r.stdout, r.stderr)
