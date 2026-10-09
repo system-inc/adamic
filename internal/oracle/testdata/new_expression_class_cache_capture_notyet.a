@@ -1,0 +1,11 @@
+class Box {
+    static readonly label = "box";
+    readonly value: number;
+    constructor(value: number) { this.value = value; }
+}
+function factory(initializer: () => typeof Box): (value: number) => Box {
+    let Cached: typeof Box | undefined = undefined;
+    return (value: number): Box => new (Cached || (Cached = initializer()))(value);
+}
+const create = factory((): typeof Box => Box);
+console.log(create(9).value.toString());

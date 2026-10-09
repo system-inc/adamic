@@ -18,6 +18,8 @@ func TestClosedComparatorGaps(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, answer string }{
 		{"3_numeric_or.ts", "2\n"},
+		{"2_optional_index.ts", "1\n"},
+		{"4_last_index_position.ts", "1\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

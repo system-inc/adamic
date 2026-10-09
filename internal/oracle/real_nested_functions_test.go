@@ -10,16 +10,20 @@ import (
 
 func init() {
 	for _, name := range []string{"02_scanner_digits", "03_scanner_hoisting", "04_scanner_escaped_text", "05_scanner_reassigned_text", "06_parser_token_state", "07_binder_symbol_count", "08_checker_symbol_recursion", "09_checker_constituent_recursion", "10_checker_arrow_cleanup", "11_scanner_method_wrapper"} {
-		extension := ".a"
-		if name == "09_checker_constituent_recursion" {
-			extension = ".ts"
-		}
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"stage3/fixtures/nested-functions/" + name + extension, true, false})
+		}{realNestedFixture(name), true, false})
 	}
+}
+
+func realNestedFixture(name string) string {
+	extension := ".a"
+	if name == "09_checker_constituent_recursion" {
+		extension = ".ts"
+	}
+	return "stage3/fixtures/nested-functions/" + name + extension
 }
 
 func errorText(err error) string {

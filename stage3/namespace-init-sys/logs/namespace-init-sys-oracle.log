@@ -1,0 +1,85 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== RUN   TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== PAUSE TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== CONT  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+    oracle_test.go:757: gate cache node miss
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a
+    oracle_test.go:597: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a
+    oracle_test.go:755: Lower: /workspace/adamic/stage3/namespace-init-sys/cwd-control.a:3:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a
+    oracle_test.go:757: gate cache node miss
+    oracle_test.go:757: gate cache node miss
+    oracle_test.go:604: gate cache native miss
+    oracle_test.go:597: gate cache native miss
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_write_before.a (26.90s)
+    --- PASS: TestNativeAgreesWithNode/stage3/namespace-init-sys/realpath-control.a (27.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_function_before.a (27.10s)
+    --- FAIL: TestNativeAgreesWithNode/stage3/namespace-init-sys/cwd-control.a (0.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_before.a (27.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_enum_before.a (27.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_unknown_void_before.a (1.18s)
+FAIL
+gate cache: native hits=1 misses=12
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	28.283s
+FAIL

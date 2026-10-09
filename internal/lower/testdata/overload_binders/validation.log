@@ -1,0 +1,65 @@
+
+$ export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh; source /workspace/adamic-tools/env.sh > /tmp/notyet-overloads-setup.log 2>&1
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.058s)
+setup: go ready (0.059s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.470s)
+
+added 3 packages in 539ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.890s
+setup: markdown dependencies ready (1.071s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (16.351s)
+setup: go build ready (258.256s)
+setup: test binaries deferred (use --warm-tests) (258.367s)
+setup: build cache warm (258.369s)
+setup: build-flags commit=e662629cd666e34125db39547031e407d0917516 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.12 0.03 0.01 1/136 746 load-after=12.14 7.59 3.14 3/183 5414
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (258.401s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.Te2RFy
+
+$ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(census_overload_binders|overload_)|TestOverloadContractRulings' -count=1 -timeout 10m > /tmp/notyet-overloads-final-oracle.log 2>&1
+ok  	github.com/system-inc/adamic/internal/oracle	2.596s
+
+$ go test ./internal/lower -run 'TestCensusOverloadBinderGuards|TestCensusOverloadReturnProof|TestOverloadInferenceWitnesses|TestGenericFunctionPolymorphicRecursionIsRefused|TestGenericUnionFixtureHasSeparateInstances|TestGenericJSONUnionArrayIsNotYet' -count=1 -timeout 10m > /tmp/notyet-overloads-final-lower.log 2>&1
+ok  	github.com/system-inc/adamic/internal/lower	0.392s
+
+$ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/notyet-overloads-counts.log 2>&1
+ok  	github.com/system-inc/adamic/internal/oracle	28.656s
+
+$ python3 internal/lower/testdata/overload_binders/run-mutants.py > /tmp/notyet-overloads-mutants.log 2>&1
+additional-binder-refusal: caught by TestNativeAgreesWithNode/internal/oracle/testdata/(census_overload_binders|overload_(array_to_|ancestor_directory|leading_comment_range|trailing_comment_range|original_node|mutate_map|resolve_type_names|sort_deduplicate)); exit 1
+additional-binder-refusal: all 11 executable per-kind fixtures caught it
+parameter-inference: caught by TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders; exit 1
+bottom-witness: caught by TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders; exit 1
+constraint: caught by TestCensusOverloadBinderGuards/constraint; exit 1
+parameter: caught by TestCensusOverloadBinderGuards/parameter; exit 1
+parameter: also caught by 1 Node-held refusal fixtures
+result: caught by TestCensusOverloadBinderGuards/result; exit 1
+result: also caught by 2 Node-held refusal fixtures
+union-inference: caught by TestOverloadInferenceWitnesses/one_compatible_binder; exit 1
+union-inference: also caught by 3 oracle fixtures
+known-union-member: caught by TestOverloadInferenceWitnesses/incompatible_known_member; exit 1
+multiple-union-binders: caught by TestOverloadInferenceWitnesses/multiple_unknown_binders; exit 1
+optional-rigid-binder: caught by TestOverloadInferenceWitnesses/optional_rigid_binder; exit 1
+optional-rigid-binder: also caught by 1 oracle fixtures
+
+$ go run ./stage3/census/latent/replay -project /tmp/notyet-overloads-adapted/src/tsc/tsc.ts -where /tmp/notyet-overloads-adapted/<site> -kind NotYet -reason '<exact reason>'; once per site in replays.json > /tmp/notyet-overloads-final-replay.log 2>&1
+sortAndDeduplicate reproduced=True remains=False next=[('Refused', "a cast the runtime can't check"), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('error', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('Refused', "a cast the runtime can't check"), ('Refused', "a cast the runtime can't check")]
+arrayToMap reproduced=True remains=False next=[('Refused', 'overload 2 of arrayToMap result Map<K, V2> cannot be served by implementation result Map<K, V1 | V2>')]
+arrayToNumericMap reproduced=True remains=False next=[('Refused', 'overload 2 of arrayToNumericMap result U[] cannot be served by implementation result (T | U)[]')]
+arrayToMultiMap reproduced=True remains=False next=[('Refused', 'overload 2 of arrayToMultiMap result MultiMap<K, U> cannot be served by implementation result MultiMap<K, U | V>')]
+forEachAncestorDirectory reproduced=True remains=False next=[('NotYet', 'a function returning T | undefined')]
+forEachLeadingCommentRange reproduced=True remains=False next=[('NotYet', 'a function returning U | undefined')]
+forEachTrailingCommentRange reproduced=True remains=False next=[('NotYet', 'a function returning U | undefined')]
+getOriginalNode reproduced=True remains=False next=[('NotYet', 'a function returning T | undefined')]
+mutateMapSkippingNewValues reproduced=True remains=False next=[('Refused', 'a method in object destructuring'), ('NotYet', "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")]
+mutateMap reproduced=True remains=False next=[('Refused', 'a method in object destructuring'), ('panic', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('error', 'statement panic: runtime error: invalid memory address or nil pointer dereference'), ('Refused', "a cast the runtime can't check"), ('Refused', 'a method in object destructuring'), ('NotYet', 'a call through ?. (an optional call)')]
+createToken reproduced=True remains=False next=[('Refused', 'overload 1 of createToken result SuperExpression cannot be served by implementation result Mutable<Token<TKind>>')]
+createBinaryExpressionTrampoline reproduced=True remains=False next=[('Refused', 'overload 1 of createBinaryExpressionTrampoline result (node: BinaryExpression) => TResult cannot be served by implementation result (node: BinaryExpression, outerState: TOuterState) => TResult')]
+arrayFrom reproduced=False remains=False next=[('Refused', 'overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]')]
+group reproduced=False remains=False next=[('Refused', 'overload 2 of group parameter resultSelector cannot be served by implementation parameter resultSelector')]
+setSerializerContextAnd reproduced=True remains=False next=[('Refused', 'overload 2 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb')]
+resolveTypeReferenceDirectiveNamesReusingOldState reproduced=True remains=False next=[('NotYet', 'a value of type unknown'), ('NotYet', 'a destructured name held otherwise than its field')]

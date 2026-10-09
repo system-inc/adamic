@@ -1,0 +1,13 @@
+{
+  "mutation": "restore former optional string indexing refusal",
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode/internal/oracle/testdata/optional_indexing_string_gap.a$",
+    "-count=1"
+  ],
+  "exit": 1,
+  "catcher": "stage 0 can't lower ?.[] on a string yet"
+}
