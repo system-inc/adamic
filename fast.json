@@ -1,0 +1,20 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T192218-49d6393c",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "ed0064cd19d48c610ba551677ce1d107ac030708",
+  "branch": "area/stage3",
+  "base": "fc7252a6e30d5c36e27a774188928ec34887dd10",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ]
+}
