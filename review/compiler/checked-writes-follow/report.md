@@ -1,5 +1,5 @@
 Built step 10 follow-up: contract-free writer guards, one receiver hold, metadata documentation and runtime library object proof.
-Commits: based only on cleared 781766ed; delivery SHA is supplied by the push report.
+Commits: implementation 7abb956a, based only on cleared 781766ed; evidence commit delivery SHA is supplied by the push report.
 Commands and outputs: checked witnesses PASS 31.011s; selected runtime tests PASS 23.862s; reader guard PASS 7.910s; lane check recorded separately.
 Mutants: all 36 existing mutants caught; new broad-slot-to-literal mutant fails the required exit-70 witness.
 Limits: push loop remains above main; runtime structural fallback covers broad number/boolean fields only; no full gate or whole-package run.
@@ -70,3 +70,5 @@ Every existing mutant (PASS means the harness caught it):
 - TestCheckedEmitContractsMutants/emit-node-misfit: caught (0.49s).
 - TestCheckedEmitContractsMutants/emit-resolution-misfit: caught (0.48s).
 - TestCheckedEmitContractsMutants/emit-comment-misfit: caught (0.44s).
+
+Lane checks PASS: gofmt and tools on 42 Go files, t.Parallel on 5 test packages, a-check on 16 .a files, vet on 5 packages, 7.7s. First invocation lacked the toolchain environment and could not find gofmt; sourcing the setup environment resolved it. Required command: timeout 300 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -', following git fetch -q origin main devtools/fast-gate cloud/merge-tree.
