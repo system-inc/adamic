@@ -1,0 +1,11 @@
+{
+  "skip_trivia_tokens": 509014,
+  "retain_trivia_tokens": 860418,
+  "files_per_pass": {
+    "true": 81,
+    "false": 81
+  },
+  "normalized_header_sha256": "b07d68ba12169d3d09d451b01d32712eb2407b257f2646786a25e6d3c1b33e83",
+  "prior_reference_normalized_sha256": "b07d68ba12169d3d09d451b01d32712eb2407b257f2646786a25e6d3c1b33e83",
+  "method": "replace absolute pass-header path with its src/compiler-relative path; preserve every other byte"
+}

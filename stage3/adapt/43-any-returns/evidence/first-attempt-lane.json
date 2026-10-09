@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/real-any-after-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "execution": {
+    "commit": "3ffb1a835184713998a34874e86326cd21db971f",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 127.309
+  },
+  "results": "/tmp/real-any-after-lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/real-any-after-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+}
