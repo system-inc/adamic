@@ -3,7 +3,7 @@
   "emitted_units": [
     {
       "name": "main.c",
-      "sha256": "abde80047c6f1f97ee1429ba70a0f373aa156cf2ce870d3ebc09775df2a8c0ac"
+      "sha256": "4b4ba8e8a66929e1ec747963923defb95454724c9b218fa1d36bf26eb2680d52"
     }
   ],
   "compiler_sha256": "92a0ff2751ad344b94c7d30f53c56a71a5edfb6f867e7269a573e0e3f663786a",
@@ -20,6 +20,7 @@
     "-Wno-self-assign",
     "-ffp-contract=off",
     "-fno-optimize-sibling-calls",
+    "-pthread",
     "-O2",
     "-flto=thin",
     "-fuse-ld=lld"
@@ -37,6 +38,7 @@
     "-Wno-self-assign",
     "-ffp-contract=off",
     "-fno-optimize-sibling-calls",
+    "-pthread",
     "-O2",
     "-flto=thin",
     "-fprofile-instr-generate"
@@ -54,13 +56,14 @@
     "-Wno-self-assign",
     "-ffp-contract=off",
     "-fno-optimize-sibling-calls",
+    "-pthread",
     "-O2",
     "-flto=thin",
     "-fprofile-instr-generate",
     "-fuse-ld=lld"
   ],
-  "runtime_sha256": "2556c98a78b43faf3ef49e6c3efa2a1a8777caa0bf3f6d5a28866503838b2654",
-  "profile_sha256": "239808bd42ffa0f6d5b549471d2922aa6bd4a9448057491559757fbb263555f5",
+  "runtime_sha256": "e4305da16e43de62ddc45de86c5c5038f4651a6adfc027ce00113b8925aa12fd",
+  "profile_sha256": "3807eb3812de5f5d7ec743a35f446c5603b2718c70ac4dda1a8964e919189482",
   "training_manifest_sha256": "5e519c9b82359dbd5e133c3d16ae994dbd70d3dbdef4cdabb77794737f4e3ea4",
   "compiler": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /workspace/adamic-tools/llvm/bin\n",
   "target": "linux-amd64",
@@ -77,6 +80,7 @@
     "-Wno-self-assign",
     "-ffp-contract=off",
     "-fno-optimize-sibling-calls",
+    "-pthread",
     "-O2",
     "-flto=thin"
   ]
