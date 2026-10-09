@@ -1,19 +1,25 @@
 package css
 
 import (
+	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -93,7 +99,7 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 		t.Fatal(err)
 	}
 	oracle := filepath.Join(directory, "oracle")
-	command := bounded(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", oracle, "./internal/format/css")
+	command := compositionCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", oracle, "./internal/format/css")
 	command.Dir = filepath.Join(repo, "cohere")
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("build Go composition oracle: %v\n%s", err, output)
@@ -125,7 +131,6 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 }
 
 func compositionRunShard(t *testing.T, index int) {
-	t.Parallel()
 	started := time.Now()
 	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition shard exceeded 75s") })
 	defer timer.Stop()
@@ -142,7 +147,7 @@ func compositionRunShard(t *testing.T, index int) {
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, []string{"ADAMIC_PORT_REQUEST=" + requestPath}, state.oracle, "-test.run=^TestAdamicCompositionCases$", "-test.timeout=75s", "-test.v")
+	result := compositionExecute(t, []string{"ADAMIC_PORT_REQUEST=" + requestPath}, state.oracle, "-test.run=^TestAdamicCompositionCases$", "-test.timeout=75s", "-test.v")
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("Go composition oracle: %d %s %s", result.exitCode, result.stdout, result.stderr)
 	}
@@ -157,9 +162,9 @@ func compositionRunShard(t *testing.T, index int) {
 		name   string
 		result run
 	}{
-		{"native ASan/UBSan", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, state.sanitized, cases)},
-		{"Node", onNode(t, state.source, cases)},
-		{"JavaScript backend", onNode(t, filepath.Join(state.product, "program.mjs"), cases)},
+		{"native ASan/UBSan", compositionExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, state.sanitized, cases)},
+		{"Node", compositionNode(t, state.source, cases)},
+		{"JavaScript backend", compositionNode(t, filepath.Join(state.product, "program.mjs"), cases)},
 	} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
 			t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
@@ -168,13 +173,14 @@ func compositionRunShard(t *testing.T, index int) {
 			t.Fatalf("%s: %s", side.name, difference)
 		}
 	}
-	if report := leaks(t, nil, state.sanitized, cases); report != "" {
+	if report := compositionLeaks(t, state, cases); report != "" {
 		t.Fatal(report)
 	}
 	t.Logf("shard-%03d: %.3fs cooked=false cases=%d (includes setup wait)", index, time.Since(started).Seconds(), len(shard))
 }
 
 func TestCompositionMatchesGoUnion(t *testing.T) {
+	t.Parallel()
 	started := time.Now()
 	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition union exceeded 75s") })
 	defer timer.Stop()
@@ -214,7 +220,7 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	}
 	// Mutant-must-fail remains a whole-corpus condition, as before sharding.
 	source, _ := filepath.Abs("compose_main.ts")
-	baseline := onNode(t, source, cases)
+	baseline := compositionNode(t, source, cases)
 	if baseline.exitCode != 0 || len(baseline.stderr) != 0 {
 		t.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
@@ -225,7 +231,7 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 	}
 	for _, mutation := range mutants {
 		mutated := portDirectory(t, &mutation)
-		result := onNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
+		result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
 		if result.exitCode != 0 || len(result.stderr) != 0 {
 			t.Fatalf("composed mutant must terminate: %s", result.stderr)
 		}
@@ -255,7 +261,7 @@ func compositionCases(t *testing.T) string {
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-timeout=75s", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
+	command := compositionCommand(t, "go", "test", "-timeout=75s", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
 	command.Dir = filepath.Join(repo, "cohere")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := command.CombinedOutput(); err != nil {
@@ -266,37 +272,85 @@ func compositionCases(t *testing.T) string {
 	return cases
 }
 
-func TestCompositionMatchesGo_000(t *testing.T) { compositionRunShard(t, 0) }
+func TestCompositionMatchesGo_000(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 0)
+}
 
-func TestCompositionMatchesGo_001(t *testing.T) { compositionRunShard(t, 1) }
+func TestCompositionMatchesGo_001(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 1)
+}
 
-func TestCompositionMatchesGo_002(t *testing.T) { compositionRunShard(t, 2) }
+func TestCompositionMatchesGo_002(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 2)
+}
 
-func TestCompositionMatchesGo_003(t *testing.T) { compositionRunShard(t, 3) }
+func TestCompositionMatchesGo_003(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 3)
+}
 
-func TestCompositionMatchesGo_004(t *testing.T) { compositionRunShard(t, 4) }
+func TestCompositionMatchesGo_004(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 4)
+}
 
-func TestCompositionMatchesGo_005(t *testing.T) { compositionRunShard(t, 5) }
+func TestCompositionMatchesGo_005(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 5)
+}
 
-func TestCompositionMatchesGo_006(t *testing.T) { compositionRunShard(t, 6) }
+func TestCompositionMatchesGo_006(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 6)
+}
 
-func TestCompositionMatchesGo_007(t *testing.T) { compositionRunShard(t, 7) }
+func TestCompositionMatchesGo_007(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 7)
+}
 
-func TestCompositionMatchesGo_008(t *testing.T) { compositionRunShard(t, 8) }
+func TestCompositionMatchesGo_008(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 8)
+}
 
-func TestCompositionMatchesGo_009(t *testing.T) { compositionRunShard(t, 9) }
+func TestCompositionMatchesGo_009(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 9)
+}
 
-func TestCompositionMatchesGo_010(t *testing.T) { compositionRunShard(t, 10) }
+func TestCompositionMatchesGo_010(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 10)
+}
 
-func TestCompositionMatchesGo_011(t *testing.T) { compositionRunShard(t, 11) }
+func TestCompositionMatchesGo_011(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 11)
+}
 
-func TestCompositionMatchesGo_012(t *testing.T) { compositionRunShard(t, 12) }
+func TestCompositionMatchesGo_012(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 12)
+}
 
-func TestCompositionMatchesGo_013(t *testing.T) { compositionRunShard(t, 13) }
+func TestCompositionMatchesGo_013(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 13)
+}
 
-func TestCompositionMatchesGo_014(t *testing.T) { compositionRunShard(t, 14) }
+func TestCompositionMatchesGo_014(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 14)
+}
 
-func TestCompositionMatchesGo_015(t *testing.T) { compositionRunShard(t, 15) }
+func TestCompositionMatchesGo_015(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 15)
+}
 
 var compositionShardFunctions = [...]func(*testing.T){
 	TestCompositionMatchesGo_000,
@@ -315,4 +369,79 @@ var compositionShardFunctions = [...]func(*testing.T){
 	TestCompositionMatchesGo_013,
 	TestCompositionMatchesGo_014,
 	TestCompositionMatchesGo_015,
+}
+
+// Bound the whole process group, including Go's compiler children, using only
+// the declared command's executable rather than an external timeout utility.
+func compositionCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	cmd := exec.CommandContext(ctx, name, arguments...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	cmd.Cancel = func() error {
+		if cmd.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	cmd.WaitDelay = time.Second
+	return cmd
+}
+
+func compositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	cmd := compositionCommand(t, name, arguments...)
+	if environment != nil {
+		cmd.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := childguard.Run(cmd, childguard.Options{Stall: childStall})
+	var exit *exec.ExitError
+	if err != nil && !errors.As(err, &exit) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
+}
+
+func compositionNode(t *testing.T, path string, arguments ...string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return compositionExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+}
+
+func compositionLeaks(t *testing.T, state compositionProducts, cases string) string {
+	t.Helper()
+	switch runtime.GOOS {
+	case "linux":
+		report := compositionExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, state.sanitized, cases)
+		if report.exitCode != 0 {
+			return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+		}
+	case "darwin":
+		source, err := os.ReadFile(filepath.Join(state.product, "program.c"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		binary := filepath.Join(t.TempDir(), "port")
+		if err := native.Build(string(source), binary, native.Options{}); err != nil {
+			t.Fatal(err)
+		}
+		report := compositionExecute(t, nil, "leaks", "--atExit", "--", binary, cases)
+		if report.exitCode != 0 {
+			return string(report.stdout)
+		}
+	default:
+		t.Fatalf("no leak check for %s", runtime.GOOS)
+	}
+	return ""
 }

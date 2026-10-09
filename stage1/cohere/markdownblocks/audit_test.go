@@ -109,6 +109,7 @@ func auditResults(t *testing.T, name string, result run) []auditOutput {
 	return answers
 }
 
+// Not parallel: prepares the shared oracle binaries and corpus before parallel leaves run.
 func TestWholeDocumentOraclePreflight(t *testing.T) {
 	started := time.Now()
 	fixture := wholeDocumentPreflight(t)

@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,6 +13,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -42,7 +44,9 @@ func jsxMutantsOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		cmd := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		cmd := jsxMutantsCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		cmd.Dir = root
 		out, err := cmd.CombinedOutput()
 		if err != nil {
@@ -158,7 +162,6 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	if selected >= 0 && selected != shard {
 		t.Skip("different ADAMIC_TEST_SHARD selected")
 	}
-	t.Parallel()
 	changes := jsxMutantsChanges()
 	if len(changes) != testJsxMutantsShards {
 		t.Fatalf("enumerated %d mutants, want %d", len(changes), testJsxMutantsShards)
@@ -193,17 +196,18 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
 }
 
-func TestJsxMutants_000(t *testing.T) { jsxMutantsRun(t, 0) }
-func TestJsxMutants_001(t *testing.T) { jsxMutantsRun(t, 1) }
-func TestJsxMutants_002(t *testing.T) { jsxMutantsRun(t, 2) }
-func TestJsxMutants_003(t *testing.T) { jsxMutantsRun(t, 3) }
-func TestJsxMutants_004(t *testing.T) { jsxMutantsRun(t, 4) }
-func TestJsxMutants_005(t *testing.T) { jsxMutantsRun(t, 5) }
-func TestJsxMutants_006(t *testing.T) { jsxMutantsRun(t, 6) }
-func TestJsxMutants_007(t *testing.T) { jsxMutantsRun(t, 7) }
-func TestJsxMutants_008(t *testing.T) { jsxMutantsRun(t, 8) }
+func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
+func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }
+func TestJsxMutants_002(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 2) }
+func TestJsxMutants_003(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 3) }
+func TestJsxMutants_004(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 4) }
+func TestJsxMutants_005(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 5) }
+func TestJsxMutants_006(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 6) }
+func TestJsxMutants_007(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 7) }
+func TestJsxMutants_008(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 8) }
 
 func TestJsxMutantsUnion(t *testing.T) {
+	t.Parallel()
 	changes := jsxMutantsChanges()
 	if len(changes) != testJsxMutantsShards {
 		t.Fatalf("enumerated %d shards, want %d", len(changes), testJsxMutantsShards)
@@ -222,14 +226,15 @@ func TestJsxMutantsUnion(t *testing.T) {
 	t.Logf("union: %d mutants x %d inputs = %d unique case ids", len(changes), count, len(changes)*count)
 }
 
+// Not parallel: the child runs all nine shards sharing this worker's CPU and build-product cache.
 func TestJsxMutantsPlantedFailure(t *testing.T) {
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, executable, "-test.run=^TestJsxMutants_[0-9]+$", "-test.v", "-test.timeout=75s")
+	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^TestJsxMutants_[0-9]+$", "-test.v", "-test.timeout=75s")
 	for _, entry := range os.Environ() {
 		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") {
 			cmd.Env = append(cmd.Env, entry)
@@ -238,7 +243,7 @@ func TestJsxMutantsPlantedFailure(t *testing.T) {
 	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma")
 	out, err := cmd.CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatal("cooked: planted-failure child exceeded 75 seconds")
+		t.Fatal("cooked: planted-failure child exceeded 90 seconds")
 	}
 	if _, ok := err.(*exec.ExitError); !ok {
 		t.Fatalf("planted survivor must fail: %v\n%s", err, out)
@@ -254,4 +259,20 @@ func TestJsxMutantsPlantedFailure(t *testing.T) {
 		t.Fatalf("expected only shard-004 to catch planted survivor, got %v\n%s", failures, out)
 	}
 	t.Log("planted surviving mutant caught only by TestJsxMutants_004 (shard-004)")
+}
+
+// Give spawned compilers the child's process group so cancellation cleans up
+// the whole build on Linux and macOS without an external timeout executable.
+func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	cmd := exec.CommandContext(ctx, name, args...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	cmd.Cancel = func() error {
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	cmd.WaitDelay = 3 * time.Second
+	return cmd
 }

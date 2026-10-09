@@ -2,17 +2,21 @@ package typeaware
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 const testVolumeConfigGuardAndMutantShards = 16
@@ -79,13 +83,22 @@ func volumeGuardArchive(h *harness, name, overlay string, sanitize bool) string 
 	}
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
 		builder := &harness{t: h.t, repository: h.repository, directory: directory}
-		builder.archive("checker", overlay, sanitize)
+		args := []string{"build", "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a")}
+		if overlay != "" {
+			args = append(args, "-overlay", overlay)
+		}
+		args = append(args, "./bridge/tsgo/archive")
+		cmd := exec.Command("go", args...)
+		if sanitize {
+			cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+		}
+		volumeGuardMust(builder, "checker", cmd)
 		return nil
 	})
 	return filepath.Join(directory, "checker.a")
 }
 func volumeGuardInputs(name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: []string{fmt.Sprint(sanitize), os.Getenv("CC"), os.Getenv("CGO_CFLAGS"), os.Getenv("CGO_LDFLAGS"), os.Getenv("GOFLAGS"), os.Getenv("ADAMIC_TOOLS")}, Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
+	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: []string{fmt.Sprint(sanitize), os.Getenv("CC"), os.Getenv("CGO_CFLAGS"), os.Getenv("CGO_LDFLAGS"), os.Getenv("GOFLAGS"), os.Getenv("ADAMIC_TOOLS")}, Toolchain: []string{volumeGuardTool("clang", "--version"), volumeGuardTool("go", "version")}}
 }
 func volumeGuardNative(h *harness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(name, sanitize)
@@ -99,7 +112,11 @@ func volumeGuardNative(h *harness, stage0, name, entry, archive string, sanitize
 	}
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
 		builder := &harness{t: h.t, repository: h.repository, directory: directory}
-		builder.build(stage0, "native", entry, archive, sanitize)
+		args := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
+		if sanitize {
+			args = append(args, "--sanitize")
+		}
+		volumeGuardMust(builder, "native", exec.Command(stage0, args...))
 		return nil
 	})
 	return filepath.Join(directory, "native")
@@ -133,6 +150,7 @@ func volumeGuardBuckets() ([][]volumeGuardCase, []string) {
 	return buckets, controls
 }
 func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
+	t.Parallel()
 	buckets, controls := volumeGuardBuckets()
 	volumeGuardUnion(t, buckets, controls)
 	caught := 0
@@ -151,7 +169,6 @@ func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
 }
 func runVolumeConfigGuardShard(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	products := volumeGuardProductsFor(t)
 	repository, binary, mutant, oracle, asan := products.repository, products.binary, products.mutant, products.oracle, products.asan
 	buckets, _ := volumeGuardBuckets()
@@ -161,17 +178,17 @@ func runVolumeConfigGuardShard(t *testing.T, shard int) {
 		source := h.write("this.ts", "function f(){const x=this.m;const y:number=this;return x;} export {};\n")
 		manifest := h.write("this.manifest", source+"\n")
 		config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`)
-		observed := h.run("nonstrict-this", exec.Command(binary, config, manifest))
+		observed := volumeGuardRun(h, "nonstrict-this", exec.Command(binary, config, manifest))
 		message := []byte("adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n")
 		if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Equal(observed.stderr, message) || len(observed.stdout) != 0 {
 			t.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
 		}
-		observed = h.must("strict-this-run", exec.Command(mutant, config, manifest))
+		observed = volumeGuardMust(h, "strict-this-run", exec.Command(mutant, config, manifest))
 		if len(observed.stderr) != 0 || !bytes.Contains(observed.stdout, []byte("findings ")) {
 			t.Fatal("strict-this mutant did not finish normally")
 		}
 		t.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
-		truth := h.must("nonstrict-go", exec.Command(oracle, config, manifest))
+		truth := volumeGuardMust(h, "nonstrict-go", exec.Command(oracle, config, manifest))
 		if bytes.Equal(observed.stdout, truth.stdout) {
 			t.Fatal("implicit-this input did not distinguish the production message variants")
 		}
@@ -233,7 +250,8 @@ func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
 	h := &harness{t: t, repository: repository, directory: directory}
 	stage0 := filepath.Join(directory, "adamic")
 	stage0Directory := buildcache.Product(t, volumeGuardInputs("stage0", false), func(directory string) error {
-		cmd := exec.Command("go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
+		cmd, cancel := volumeGuardCommand("go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
+		defer cancel()
 		cmd.Dir = repository
 		output, err := cmd.CombinedOutput()
 		if err != nil {
@@ -250,7 +268,14 @@ func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
 	mutant := volumeGuardNative(h, stage0, "strict-this-native", entry, mutantArchive, false)
 	oracleDirectory := buildcache.Product(t, volumeGuardInputs("oracle", false), func(directory string) error {
 		builder := &harness{t: t, repository: repository, directory: directory}
-		volumeOracle(builder, "volume-oracle", "oracle_volume.go")
+		virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
+		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
+		if err != nil {
+			return err
+		}
+		cmd := exec.Command("go", "build", "-overlay", builder.write("volume-oracle-overlay.json", string(data)), "-o", filepath.Join(directory, "volume-oracle"), virtual)
+		cmd.Dir = filepath.Join(repository, "cohere")
+		volumeGuardMust(builder, "volume-oracle-build", cmd)
 		return nil
 	})
 	oracle := filepath.Join(oracleDirectory, "volume-oracle")
@@ -264,8 +289,8 @@ func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
 func volumeGuardFindingBytesEqual(got, want []byte) bool { return bytes.Equal(got, want) }
 func volumeGuardCompare(h *harness, name, oracle, binary, config, manifest string) result {
 	h.t.Helper()
-	want := h.must(name+"-go", exec.Command(oracle, config, manifest))
-	got := h.must(name+"-native", exec.Command(binary, config, manifest))
+	want := volumeGuardMust(h, name+"-go", exec.Command(oracle, config, manifest))
+	got := volumeGuardMust(h, name+"-native", exec.Command(binary, config, manifest))
 	if len(got.stderr) != 0 {
 		h.t.Fatalf("sanitizer stderr: %s", got.stderr)
 	}
@@ -276,19 +301,115 @@ func volumeGuardCompare(h *harness, name, oracle, binary, config, manifest strin
 	return want
 }
 
-func TestVolumeConfigGuardAndMutant_000(t *testing.T) { runVolumeConfigGuardShard(t, 0) }
-func TestVolumeConfigGuardAndMutant_001(t *testing.T) { runVolumeConfigGuardShard(t, 1) }
-func TestVolumeConfigGuardAndMutant_002(t *testing.T) { runVolumeConfigGuardShard(t, 2) }
-func TestVolumeConfigGuardAndMutant_003(t *testing.T) { runVolumeConfigGuardShard(t, 3) }
-func TestVolumeConfigGuardAndMutant_004(t *testing.T) { runVolumeConfigGuardShard(t, 4) }
-func TestVolumeConfigGuardAndMutant_005(t *testing.T) { runVolumeConfigGuardShard(t, 5) }
-func TestVolumeConfigGuardAndMutant_006(t *testing.T) { runVolumeConfigGuardShard(t, 6) }
-func TestVolumeConfigGuardAndMutant_007(t *testing.T) { runVolumeConfigGuardShard(t, 7) }
-func TestVolumeConfigGuardAndMutant_008(t *testing.T) { runVolumeConfigGuardShard(t, 8) }
-func TestVolumeConfigGuardAndMutant_009(t *testing.T) { runVolumeConfigGuardShard(t, 9) }
-func TestVolumeConfigGuardAndMutant_010(t *testing.T) { runVolumeConfigGuardShard(t, 10) }
-func TestVolumeConfigGuardAndMutant_011(t *testing.T) { runVolumeConfigGuardShard(t, 11) }
-func TestVolumeConfigGuardAndMutant_012(t *testing.T) { runVolumeConfigGuardShard(t, 12) }
-func TestVolumeConfigGuardAndMutant_013(t *testing.T) { runVolumeConfigGuardShard(t, 13) }
-func TestVolumeConfigGuardAndMutant_014(t *testing.T) { runVolumeConfigGuardShard(t, 14) }
-func TestVolumeConfigGuardAndMutant_015(t *testing.T) { runVolumeConfigGuardShard(t, 15) }
+func TestVolumeConfigGuardAndMutant_000(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 0)
+}
+func TestVolumeConfigGuardAndMutant_001(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 1)
+}
+func TestVolumeConfigGuardAndMutant_002(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 2)
+}
+func TestVolumeConfigGuardAndMutant_003(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 3)
+}
+func TestVolumeConfigGuardAndMutant_004(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 4)
+}
+func TestVolumeConfigGuardAndMutant_005(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 5)
+}
+func TestVolumeConfigGuardAndMutant_006(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 6)
+}
+func TestVolumeConfigGuardAndMutant_007(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 7)
+}
+func TestVolumeConfigGuardAndMutant_008(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 8)
+}
+func TestVolumeConfigGuardAndMutant_009(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 9)
+}
+func TestVolumeConfigGuardAndMutant_010(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 10)
+}
+func TestVolumeConfigGuardAndMutant_011(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 11)
+}
+func TestVolumeConfigGuardAndMutant_012(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 12)
+}
+func TestVolumeConfigGuardAndMutant_013(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 13)
+}
+func TestVolumeConfigGuardAndMutant_014(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 14)
+}
+func TestVolumeConfigGuardAndMutant_015(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, 15)
+}
+
+// Bound both the driver and compilers it launches without an external deadline tool.
+func volumeGuardCommand(name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	cmd := exec.CommandContext(ctx, name, args...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	cmd.Cancel = func() error {
+		if cmd.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	cmd.WaitDelay = time.Second
+	return cmd, cancel
+}
+func volumeGuardRun(h *harness, name string, original *exec.Cmd) result {
+	h.t.Helper()
+	cmd, cancel := volumeGuardCommand(original.Path, original.Args[1:]...)
+	defer cancel()
+	cmd.Dir, cmd.Env, cmd.Stdin = original.Dir, original.Env, original.Stdin
+	observed := h.run(name, cmd)
+	if observed.elapsed >= 90*time.Second {
+		h.t.Fatalf("%s cooked: child deadline exceeded (over budget)", name)
+	}
+	return observed
+}
+func volumeGuardMust(h *harness, name string, cmd *exec.Cmd) result {
+	h.t.Helper()
+	observed := volumeGuardRun(h, name, cmd)
+	if observed.err != nil {
+		h.t.Fatalf("%s: %v\n%s\n%s", name, observed.err, observed.stdout, observed.stderr)
+	}
+	return observed
+}
+func volumeGuardTool(name string, args ...string) string {
+	cmd, cancel := volumeGuardCommand(name, args...)
+	defer cancel()
+	output, err := cmd.CombinedOutput()
+	report := strings.Join(append([]string{name}, args...), " ") + ": " + strings.TrimSpace(string(output))
+	if err != nil {
+		report += " (" + err.Error() + ")"
+	}
+	return report
+}

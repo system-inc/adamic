@@ -3,6 +3,7 @@ package cssstrings
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,6 +13,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -198,8 +201,8 @@ func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
 	return selected
 }
 
-// Keep inputs beside each builder. This base has no internal/buildcache: there is
-// no package cache; the parent calls each builder once and shares its directory.
+// Every non-Go product uses the shared cache, including temporary mutants.
+// Go overlay builds stay private until GoBuild supports them; products are immutable.
 type stringsInputs struct {
 	Name      string
 	Files     []string
@@ -209,13 +212,70 @@ type stringsInputs struct {
 
 func stringsProduct(t *testing.T, inputs stringsInputs, build func(dir string) error) string {
 	t.Helper()
-	dir := t.TempDir()
+	keyed := stringsCacheInputs(t, inputs)
+	return buildcache.Product(t, keyed, build)
+}
+
+// Go builds have no hand-listed key. Keep their private callback until GoBuild
+// supports these oracle overlays; it is invoked once per parent.
+func stringsGoProduct(t *testing.T, name string, build func(dir string) error) string {
+	t.Helper()
+	dir := stringsTopTempDir(t)
 	start := time.Now()
 	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+		t.Fatalf("Go build %s: %v", name, err)
 	}
-	t.Logf("build cold %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
+	t.Logf("Go build %s %.6fs (private, awaiting GoBuild)", name, time.Since(start).Seconds())
 	return dir
+}
+
+// Temporary generated inputs are keyed by content and logical filename. Their
+// directory names never enter a key; repository inputs stay repository-relative.
+func stringsCacheInputs(t *testing.T, inputs stringsInputs) buildcache.Inputs {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keyed := buildcache.Inputs{Name: "cssstrings " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
+	keyed.Files = append(keyed.Files, "stage1/cohere/cssstrings/shards_test.go", "stage1/cohere/cssstrings/port_test.go")
+	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+
+	for _, name := range inputs.Files {
+		absolute, err := filepath.Abs(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			content, err := os.ReadFile(name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			logical := filepath.Base(name)
+			if filepath.Ext(name) == ".ts" {
+				logical = filepath.Base(filepath.Dir(name)) + "/" + logical
+			}
+			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-input=%s:%x", logical, sha256.Sum256(content)))
+		} else {
+			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
+		}
+	}
+	if strings.Contains(inputs.Name, "lowering and backends") {
+		// This non-Go build executes the compiler already linked into this test
+		// binary. Its content hash covers every compiled Go dependency and toolchain;
+		// the source-program files above cover the remaining lowering inputs.
+		binary, err := os.Executable()
+		if err != nil {
+			t.Fatal(err)
+		}
+		keyed.Flags = append(keyed.Flags, "lowering-compiler-"+stringsOracleIdentity(t, binary))
+	}
+
+	return keyed
 }
 
 type stringsProgram struct{ dir, main, c, javascript string }
@@ -223,7 +283,7 @@ type stringsProgram struct{ dir, main, c, javascript string }
 func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
 	t.Helper()
 	dir := stringsProduct(t, stringsInputs{
-		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "strings.ts"), repository + "/internal/load", repository + "/internal/lower", repository + "/internal/native", repository + "/internal/javascript", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
+		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "strings.ts"), repository + "/internal", repository + "/go.mod", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
 		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
 	}, func(dir string) error {
 		loaded, err := load.Load([]string{main})
@@ -244,7 +304,7 @@ func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
 
 func stringsClangToolchain(t *testing.T) string {
 	t.Helper()
-	version := execute(t, nil, "clang", "--version")
+	version := stringsExecute(t, nil, "clang", "--version")
 	clean(t, "clang version", version)
 	return strings.TrimSpace(string(version.stdout))
 }
@@ -252,7 +312,8 @@ func stringsClangToolchain(t *testing.T) string {
 func buildStringsNative(t *testing.T, name string, program stringsProgram, sanitize bool) string {
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
-	dir := stringsProduct(t, stringsInputs{Name: name, Files: []string{program.c, repository + "/internal/native/runtime"}, Flags: native.Flags(options), Toolchain: stringsClangToolchain(t)}, func(dir string) error {
+	flags := native.Flags(options)
+	dir := stringsProduct(t, stringsInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: stringsClangToolchain(t)}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -264,7 +325,7 @@ func buildStringsNative(t *testing.T, name string, program stringsProgram, sanit
 
 func prepareStringsMutant(t *testing.T, mutation stringsMutation) string {
 	t.Helper()
-	scratch := t.TempDir()
+	scratch := stringsTopTempDir(t)
 	source, err := os.ReadFile("strings.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -296,12 +357,12 @@ func stringsLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		r := execute(t, stringsSanitizerEnvironment(true), sanitized, args...)
+		r := stringsExecute(t, stringsSanitizerEnvironment(true), sanitized, args...)
 		if r.exitCode != 0 {
 			t.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
 		}
 	case "darwin":
-		r := execute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		r := stringsExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if r.exitCode != 0 {
 			t.Fatalf("leaks: %s", r.stdout)
 		}
@@ -340,7 +401,7 @@ func checkStringsOutput(t *testing.T, unit stringsUnit, side string, got, want [
 	}
 }
 
-func TestCSSStringsShardUnion(t *testing.T) {
+func TestCSSStringsUnion(t *testing.T) {
 	t.Parallel()
 	corpus := enumerateStrings(t)
 	units := stringsUnits(corpus)
@@ -419,7 +480,7 @@ func TestCSSStringsPlantedDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r := execute(t, []string{"ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSStringsPlantedDisagreement$", "-test.v", "-test.parallel=4")
+	r := stringsExecute(t, []string{"ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSStringsPlantedDisagreement$", "-test.v", "-test.parallel=4")
 	if r.exitCode != 1 || len(r.stderr) != 0 {
 		t.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
 	}
@@ -428,4 +489,57 @@ func TestCSSStringsPlantedDisagreement(t *testing.T) {
 		t.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
 	}
 	t.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
+}
+
+// Oracle answers are immutable inputs; throughput still executes every original round.
+func stringsOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	t.Helper()
+	dir := stringsProduct(t, stringsInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+		path := filepath.Join(dir, "input.txt")
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			return err
+		}
+		cmd := stringsCommand(t, command, append(append([]string{}, arguments...), path)...)
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout, cmd.Stderr = &stdout, &stderr
+		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {
+			return fmt.Errorf("%s oracle: %v; %s", name, err, &stderr)
+		}
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
+	})
+	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return run{stdout: answer}
+}
+
+func stringsOracleIdentity(t *testing.T, path string) string {
+	t.Helper()
+	hash := sha256.New()
+	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			if entry.Name() == ".git" {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		content, err := os.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(path, name)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }

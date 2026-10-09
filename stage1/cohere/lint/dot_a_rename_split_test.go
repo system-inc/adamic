@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -184,9 +185,23 @@ func TestDotARename_000(t *testing.T) {
 	if err := os.WriteFile(products, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(os.Args[0], "-test.run=^TestDotARename_000$", "-test.v", "-test.timeout=30s")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestDotARename_000$", "-test.v", "-test.timeout=30s")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
 	command.Env = append(os.Environ(), "ADAMIC_DOT_A_RENAME_PROBE="+products)
 	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatalf("planted probe exceeded its deadline: %v\n%s", ctx.Err(), output)
+	}
 	if err == nil || bytes.Count(output, []byte("--- FAIL: TestDotARename_000")) != 1 || !bytes.Contains(output, []byte("emitted JavaScript:")) || !bytes.Contains(output, []byte(marker)) {
 		t.Fatalf("wrong planted failure: %v\n%s", err, output)
 	}

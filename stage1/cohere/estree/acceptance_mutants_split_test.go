@@ -2,12 +2,14 @@ package estree
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -128,6 +130,7 @@ func TestAcceptanceMutants_000(t *testing.T) { t.Parallel(); runAcceptanceMutant
 func TestAcceptanceMutants_001(t *testing.T) { t.Parallel(); runAcceptanceMutantShard(t, 1) }
 
 func TestAcceptanceMutantsUnion(t *testing.T) {
+	t.Parallel()
 	items := acceptanceMutantEnumeration()
 	runners := []int{0, 1}
 	if len(runners) != testAcceptanceMutantsShards || len(items) != testAcceptanceMutantsShards {
@@ -150,9 +153,25 @@ func TestAcceptanceMutantsUnion(t *testing.T) {
 	caught := []int{}
 	for _, index := range runners {
 		name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
-		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		command := exec.CommandContext(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+		command.Cancel = func() error {
+			// Kill the entire group so compiler descendants cannot outlive the proof.
+			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if errors.Is(err, syscall.ESRCH) {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+		command.WaitDelay = 5 * time.Second
 		command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
 		output, err := command.CombinedOutput()
+		contextErr := ctx.Err()
+		cancel()
+		if contextErr != nil {
+			t.Fatalf("%s exceeded child deadline: %v\n%s", name, contextErr, output)
+		}
 		if err != nil {
 			exit, ok := err.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
