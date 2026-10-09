@@ -302,11 +302,11 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
                 removeLine(requests, otherSha)
     # Every slice's whole gate runs ahead, in train order (Kirk, October 8): the full-gate loop takes
     # the oldest line of its request file between mains and drops it when the record publishes.
-    # A slice already red on its fast gate can't land on that tree, so its whole gate would spend Home
-    # on a verdict nobody waits for; it gets one once a fixed build replaces it.
+    # A slice already red on its fast gate or its whole gate can't land on that tree, so another whole
+    # gate would spend Home on a verdict nobody waits for; it gets one once a fixed build replaces it.
     if not dryRun:
         os.makedirs(os.path.dirname(requests), exist_ok=True)
-        if newestLog(candidate, "fast")[1].startswith("red"):
+        if newestLog(candidate, "fast")[1].startswith("red") or newestLog(candidate, "full-main")[1].startswith("red"):
             removeLine(requests, candidate)
         else:
             appendOnce(requests, candidate)
