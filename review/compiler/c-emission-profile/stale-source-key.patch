@@ -1,0 +1,20 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -426,6 +426,8 @@
+ // Metadata queries share one walk. Lowering is complete before an emitter is made,
+ // and emission does not change the expressions or field contracts these facts use.
+ // A new emitter recomputes them even when a caller edits and re-emits the same IR.
++var staleFieldTypesBySource = map[string]bool{}
++
+ type objectMetadataNeeds struct {
+ 	dynamic    bool
+ 	fieldTypes bool
+@@ -447,6 +449,8 @@
+ 		}
+ 	})
+ 	needs.fieldTypes = needs.fieldTypes || needs.dynamic
++	needs.fieldTypes = needs.fieldTypes || staleFieldTypesBySource[e.program.Source]
++	staleFieldTypesBySource[e.program.Source] = needs.fieldTypes
+ 	e.objectMetadata = needs
+ }
+ 

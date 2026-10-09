@@ -1,0 +1,80 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+	"os"
+	"path/filepath"
+	"runtime"
+	"runtime/pprof"
+	"strings"
+	"time"
+)
+
+type input struct {
+	Name, Path string
+	Lowers     bool
+}
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("manifest output-directory")
+	}
+	data, err := os.ReadFile(os.Args[1])
+	must(err)
+	var rows []input
+	must(json.Unmarshal(data, &rows))
+	out := os.Args[2]
+	must(os.MkdirAll(out, 0755))
+	for _, row := range rows {
+		if strings.HasPrefix(row.Name, "port-") {
+			root := filepath.Dir(row.Path)
+			if strings.Contains(row.Name, "lint") || strings.Contains(row.Name, "yepesta") {
+				_, err = registry.Generate(root)
+				must(err)
+			}
+		}
+		start := time.Now()
+		p, err := load.Load([]string{row.Path})
+		must(err)
+		loadTime := time.Since(start)
+		start = time.Now()
+		ir, err := lower.Lower(context.Background(), p)
+		lowerTime := time.Since(start)
+		if !row.Lowers {
+			if err == nil {
+				panic("expected refusal: " + row.Path)
+			}
+			must(os.WriteFile(filepath.Join(out, row.Name+".refused"), []byte(err.Error()), 0644))
+			fmt.Println(row.Name, "refused")
+			continue
+		}
+		must(err)
+		var profile *os.File
+		if strings.HasPrefix(row.Name, "port-") {
+			profile, err = os.Create(filepath.Join(out, row.Name+".pb.gz"))
+			must(err)
+			must(pprof.StartCPUProfile(profile))
+		}
+		start = time.Now()
+		c := native.C(ir)
+		duration := time.Since(start)
+		if profile != nil {
+			pprof.StopCPUProfile()
+			must(profile.Close())
+		}
+		must(os.WriteFile(filepath.Join(out, row.Name+".c"), []byte(c), 0644))
+		fmt.Printf("%s load=%.9f lower=%.9f native.C=%.9f bytes=%d\n", row.Name, loadTime.Seconds(), lowerTime.Seconds(), duration.Seconds(), len(c))
+		runtime.GC()
+	}
+}
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
+}

@@ -1,0 +1,29 @@
+File: c-emission-after
+Build ID: a0ce445d7cebc2a809b1e54aad82aee985e55871
+Type: cpu
+Time: 2026-10-09 07:16:00 UTC
+Duration: 10.72s, Total samples = 10.83s (101.00%)
+Showing nodes accounting for 7.43s, 68.61% of 10.83s total
+Dropped 155 nodes (cum <= 0.05s)
+Showing top 20 nodes out of 55
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%     10.52s 97.14%  github.com/system-inc/adamic/internal/native.C (inline)
+         0     0%     0%     10.52s 97.14%  github.com/system-inc/adamic/internal/native.cProgram
+         0     0%     0%     10.52s 97.14%  main.main
+         0     0%     0%     10.51s 97.05%  runtime.main
+     0.01s 0.092% 0.092%     10.12s 93.44%  github.com/system-inc/adamic/internal/native.(*emitter).statement
+         0     0% 0.092%     10.11s 93.35%  github.com/system-inc/adamic/internal/native.(*emitter).statementAt
+         0     0% 0.092%     10.08s 93.07%  github.com/system-inc/adamic/internal/native.(*emitter).functionBody
+     0.25s  2.31%  2.40%      9.90s 91.41%  github.com/system-inc/adamic/internal/native.walkStatement
+     0.28s  2.59%  4.99%      9.86s 91.04%  github.com/system-inc/adamic/internal/native.walkExpressions.func1
+     0.05s  0.46%  5.45%      9.83s 90.77%  github.com/system-inc/adamic/internal/native.walkExpressions
+     3.47s 32.04% 37.49%      9.81s 90.58%  github.com/system-inc/adamic/internal/native.walkStatement.func1
+         0     0% 37.49%      5.07s 46.81%  github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded
+         0     0% 37.49%      4.75s 43.86%  github.com/system-inc/adamic/internal/native.(*emitter).hasRecordStorage
+     1.23s 11.36% 48.85%      2.38s 21.98%  reflect.Value.Field
+         0     0% 48.85%      1.07s  9.88%  github.com/system-inc/adamic/internal/native.(*emitter).block
+         0     0% 48.85%      1.07s  9.88%  github.com/system-inc/adamic/internal/native.(*emitter).nested (inline)
+     0.04s  0.37% 49.22%      0.98s  9.05%  reflect.Value.Interface (inline)
+     0.95s  8.77% 57.99%      0.96s  8.86%  github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded.func1
+     0.30s  2.77% 60.76%      0.94s  8.68%  reflect.valueInterface
+     0.85s  7.85% 68.61%      0.85s  7.85%  internal/abi.Name.IsExported (inline)
