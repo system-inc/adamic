@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -85,7 +86,9 @@ func wholeMutantOracleProduct(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -247,10 +250,27 @@ func TestWholeMutantsUnion(t *testing.T) {
 	wholeMutantShardUnion(t, ids, groups, testWholeMutantsShards)
 }
 
+// wholeMutantCommandContext bounds our direct child commands without an
+// external timeout utility, and also cancels their compiler descendants.
+func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	// Kill the whole group, including any compiler descendants, on deadline.
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	return command
+}
+
 func TestWholeMutantsRejectsSurvivor(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=75s", "-test.parallel=4")
+	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=75s", "-test.parallel=4")
 	for _, variable := range os.Environ() {
 		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") || strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") {
 			continue
@@ -260,7 +280,7 @@ func TestWholeMutantsRejectsSurvivor(t *testing.T) {
 	command.Env = append(command.Env, "ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly")
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatal("cooked: survivor proof exceeded 75 seconds")
+		t.Fatal("cooked: survivor proof exceeded 90-second command deadline")
 	}
 	if err == nil {
 		t.Fatalf("planted surviving mutant escaped\n%s", output)
