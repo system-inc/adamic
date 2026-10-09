@@ -68,6 +68,7 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 func (e *emitter) typeOf(observation ir.TypeOf) string {
 	value := observation.Value
 	operand, null := e.typeOfReference(observation)
+	if value.Type() == ir.Union { null = "true" }
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
 		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.
