@@ -1,0 +1,175 @@
+run adamic-verify-20261009T130507-72831c56: void, 27100 tests in 92 units, 22 failed, 2 units broken, 0 killed over budget
+AGAIN tests-01: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-03: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-04: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-06: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-07: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-08: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-09: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-10: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-11: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-13: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-14: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-15: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-17: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-19: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-20: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-24: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-25: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-26: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-27: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-30: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-31: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-33: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-00-r2: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-03-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-06-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-10-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-11-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-11-r3: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-11-r4: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-11-r8: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-11-r9: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-11-r11: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-16-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-18-r1: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-21-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-23-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-23-r2: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-23-r3: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-23-r5: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-24-r1: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-24-r2: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-24-r4: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-25-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-25-r2: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r1: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r3: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r4: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r5: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r6: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r7: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r8: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-28-r9: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-28-r11: from run adamic-verify-again-20261009T132340-7fa652a7
+AGAIN tests-28-r12: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-28-r14: from run adamic-verify-again-20261009T133501-6ab2609f
+AGAIN tests-28-r16: from run adamic-verify-again-20261009T133501-6ab2609f
+BROKEN tests-23-r4: exited 2, Loom's fault (last output "none            8.8G  4.9G  4.0G  55% /tmp")
+BROKEN tests-28-r8: no results (exited true, last output "loom-pilot: checkout of e628f5274878a54498b6d0624e914501dbed0c79 failed")
+FAIL github.com/system-inc/adamic/internal/native TestRecordsAgainstNode/semantics (tests-01)
+    record_test.go:73: native: exit status 23
+    /home/agent/.cache/adamic/runtime/.build-4122874720/adamic.h:306:66: runtime error: member access within null pointer of type 'const adamic_shape' (aka 'const struct adamic_shape')
+    #0 0x55afcdc47397 in adamic_object_initialized /home/agent/.cache/adamic/runtime/.build-4122874720/adamic.h:306:66
+    #1 0x55afcdc47397 in write_field /home/agent/.cache/adamic/runtime/.build-4122874720/json_stringify.c:139:54
+    #2 0x55afcdc462ba in write_value /home/agent/.cache/adamic/runtime/.build-4122874720/json_stringify.c:195:62
+    #3 0x55afcdc45229 in adamic_json_stringify /home/agent/.cache/adamic/runtime/.build-4122874720/json_stringify.c:259:17
+    #4 0x55afcdc2754b in json /tmp/adamic-gate/adamic-build-3227844641/main.c:23:26
+    #5 0x55afcdc270d3 in snapshot /tmp/adamic-gate/adamic-build-3227844641/main.c:49:2
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestParserRepresentationProbes/gaps/10_multiple_push.ts (tests-06)
+    gaps_test.go:51: NotYet gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/internal/oracle TestParserNamespaceClassRegistrationMutant (tests-11)
+    parser_namespaces_test.go:144: native missing registration mutant survived: {stdout:[] stderr:[] exitCode:1}
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a (tests-18)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a: exit codes differ
+    node: exit 0, stdout "before\nafter: nn\n", stderr ""
+    wasi: exit 70, stdout "before\n", stderr "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a (tests-18)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a: stderr differs
+    node: exit 70, stdout "", stderr "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+    wasi: exit 70, stdout "", stderr "adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"
+FAIL github.com/system-inc/adamic/stage1/typescript/scanner TestGapStandsWhereGapsMdSays (tests-21)
+    gaps_test.go:34: gap changed: <nil>; update GAPS.md and undo gap 1 workaround
+FAIL github.com/system-inc/adamic/internal/oracle TestEnumInitializationUnknownPinned/unknown-before (tests-28)
+    enum_initialization_reach_test.go:90: exit codes differ: {stdout:[98 101 102 111 114 101 10] stderr:[] exitCode:1}
+FAIL github.com/system-inc/adamic/internal/oracle TestEnumInitializationUnknownPinned/unknown-callback (tests-28)
+    enum_initialization_reach_test.go:90: exit codes differ: {stdout:[98 101 102 111 114 101 10] stderr:[] exitCode:1}
+FAIL github.com/system-inc/adamic/internal/oracle TestEnumInitializationUnknownPinned/unknown-property (tests-28)
+    enum_initialization_reach_test.go:90: exit codes differ: {stdout:[98 101 102 111 114 101 10] stderr:[] exitCode:1}
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a (tests-11-r5)
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function -1
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function -1
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function -1
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function -1
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function 0
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace.a: a write lowering didn't record, in function 1
+    corpus_coverage_test.go:82: 6 writes, 3 proven not to close a cycle
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a (tests-11-r5)
+    corpus_coverage_test.go:82: ../oracle/testdata/placeholder_nonnull_namespace_before_use.a: a write lowering didn't record, in function -1
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a (tests-11-r5)
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 4
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 4
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 17
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 17
+    corpus_coverage_test.go:82: 7 writes, 7 proven not to close a cycle
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a (tests-11-r5)
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_saved_error.a: a write lowering didn't record, in function 8
+    corpus_coverage_test.go:82: ../oracle/testdata/step21_saved_error.a: a write lowering didn't record, in function 8
+    corpus_coverage_test.go:82: 4 writes, 4 proven not to close a cycle
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests (tests-11-r11)
+    units_test.go:132: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:132: TestFixturesAssignmentProofs directory=assignment-proofs fixtures=6
+    units_test.go:132: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:132: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:132: TestFixturesHost directory=host fixtures=25
+    units_test.go:132: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:132: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:132: TestFixturesObjects directory=objects fixtures=25
+FAIL github.com/system-inc/adamic/internal/native TestRecordMutantsUnit00/indices-in-insertion-order (tests-28-r4)
+    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23
+    /home/agent/.cache/adamic/record-mutants/.build-98453041/adamic.h:306:66: runtime error: member access within null pointer of type 'const adamic_shape' (aka 'const struct adamic_shape')
+    #0 0x5588a61463b7 in adamic_object_initialized /home/agent/.cache/adamic/record-mutants/.build-98453041/adamic.h:306:66
+    #1 0x5588a61463b7 in write_field /home/agent/.cache/adamic/record-mutants/.build-98453041/json_stringify.c:139:54
+    #2 0x5588a61452da in write_value /home/agent/.cache/adamic/record-mutants/.build-98453041/json_stringify.c:195:62
+    #3 0x5588a6144249 in adamic_json_stringify /home/agent/.cache/adamic/record-mutants/.build-98453041/json_stringify.c:259:17
+    #4 0x5588a612656b in json /tmp/adamic-gate/TestRecordMutantsUnit00indices-in-insertion-order769601415/001/main.c:23:26
+    #5 0x5588a61260f3 in snapshot /tmp/adamic-gate/TestRecordMutantsUnit00indices-in-insertion-order769601415/001/main.c:49:2
+FAIL github.com/system-inc/adamic/internal/native TestRecordMutantsUnit01/uint32-max-as-index (tests-28-r4)
+    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23
+    /home/agent/.cache/adamic/record-mutants/.build-4028214282/adamic.h:306:66: runtime error: member access within null pointer of type 'const adamic_shape' (aka 'const struct adamic_shape')
+    #0 0x55b7f3e683b7 in adamic_object_initialized /home/agent/.cache/adamic/record-mutants/.build-4028214282/adamic.h:306:66
+    #1 0x55b7f3e683b7 in write_field /home/agent/.cache/adamic/record-mutants/.build-4028214282/json_stringify.c:139:54
+    #2 0x55b7f3e672da in write_value /home/agent/.cache/adamic/record-mutants/.build-4028214282/json_stringify.c:195:62
+    #3 0x55b7f3e66249 in adamic_json_stringify /home/agent/.cache/adamic/record-mutants/.build-4028214282/json_stringify.c:259:17
+    #4 0x55b7f3e4856b in json /tmp/adamic-gate/TestRecordMutantsUnit01uint32-max-as-index951706151/001/main.c:23:26
+    #5 0x55b7f3e480f3 in snapshot /tmp/adamic-gate/TestRecordMutantsUnit01uint32-max-as-index951706151/001/main.c:49:2
+FAIL github.com/system-inc/adamic/internal/oracle TestCheckedJSONNextRefusals/json_dictionary_alias_write (tests-28-r5)
+
+FAIL github.com/system-inc/adamic/internal/oracle TestGenericBodyRelationsMaybeBind (tests-28-r5)
+    generic_body_relations_test.go:38: want dependent return refusal, got /tmp/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:7:33: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use
+FAIL github.com/system-inc/adamic/internal/oracle TestParserConstructionUnsetUse (tests-28-r5)
+    parser_construction_test.go:74: Node {stdout:[116 114 117 101 10] stderr:[102 105 108 101 58 47 47 47 116 109 112 47 97 100 97 109 105 99 47 115 116 97 103 101 51 47 112 97 114 115 101 114 45 97 104 101 97 100 47 114 117 108 105 110 103 115 47 102 97 99 116 111 114 121 45 117 115 101 46 97 58 54 10 99 111 110 115 111 108 101 46 108 111 103 40 110 111 100 101 46 116 101 120 116 46 116 111 85 112 112 101 114 67 97 115 101 40 41 41 59 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 94 10 10 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 116 111 85 112 112 101 114 67 97 115 101 39 41 10 32 32 32 32 97 116 32 102 105 108 101 58 47 47 47 116 109 112 47 97 100 97 109 105 99 47 115 116 97 103 101 51 47 112 97 114 115 101 114 45 97 104 101 97 100 47 114 117 108 105 110 103 115 47 102 97 99 116 111 114 121 45 117 115 101 46 97 58 5
+    4 58 50 51 10 32 32 32 32 97 116 32 77 111 100 117 108 101 74 111 98 46 114 117 110 32 40 110 111 100 101 58 105 110 116 101 114 110 97 108 47 109 111 100 117 108 101 115 47 101 115 109 47 109 111 100 117 108 101 95 106 111 98 58 52 51 57 58 50 53 41 10 32 32 32 32 97 116 32 97 115 121 110 99 32 110 111 100 101 58 105 110 116 101 114 110 97 108 47 109 111 100 117 108 101 115 47 101 115 109 47 108 111 97 100 101 114 58 54 52 51 58 50 54 10 32 32 32 32 97 116 32 97 115 121 110 99 32 102 105 108 101 58 47 47 47 116 109 112 47 97 100 97 109 105 99 47 111 114 97 99 108 101 47 110 111 100 101 46 109 106 115 58 56 50 58 49 10 10 78 111 100 101 46 106 115 32 118 50 52 46 49 57 46 48 10] exitCode:1}
+FAIL github.com/system-inc/adamic/internal/oracle TestParserStackTinyLimit (tests-28-r5)
+    parser_stack_test.go:93: 64 KiB sanitized=false: exit 70 stderr "adamic: panic: RangeError: Maximum call stack size exceeded in exception_repeat\n"
+    parser_stack_test.go:93: 128 KiB sanitized=false: exit 70 stderr "adamic: panic: RangeError: Maximum call stack size exceeded in exception_repeat\n"
+    parser_stack_test.go:93: 64 KiB sanitized=true: exit 70 stderr "adamic: panic: RangeError: Maximum call stack size exceeded in exception_repeat\n"
+    parser_stack_test.go:93: 128 KiB sanitized=true: exit 70 stderr "adamic: panic: RangeError: Maximum call stack size exceeded in exception_repeat\n"
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestProfileCompilation_000 (tests-28-r10)
+    profile_compilation_main_test.go:303: build lint-profile-lowered 569ae988bccd miss 43.70
+    profile_compilation_main_test.go:329: build lint-profile-emit-c 6c9d8c85e95b miss 132.37
+    profile_compilation_main_test.go:303: build lint-profile-lowered 569ae988bccd hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript 317992c5bcac miss 0.11
+    profile_compilation_main_test.go:201: build lint-profile-scanner 71b54a1cbfe5 miss 16.77
+    profile_compilation_main_test.go:201: build lint-profile-counted f9cc3f187474 miss 33.29
+    profile_compilation_main_test.go:201: build lint-profile-profiled: profile clang: exit status 1
+    /usr/bin/ld: /tmp/adamic-gate/main-bfe844.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_028 (tests-28-r10)
+    shards_agree_split_test.go:447: === RUN   TestShardsAgree_028
+    shards_agree_split_test.go:447: union 3952 cases, shard 028: 130 cases
+    shards_agree_split_test.go:447: TestShardsAgree_028: signal: killed (deadline: context deadline exceeded)
+BROKEN tests-23-r4 on 3 placements, workers: 25a03c8da5da, 3abd2637e002, f17e7d8036f8
+BROKEN tests-28-r8 on 3 placements, workers: 837d04dc9a01, d24109916836, ed19b193492d
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 2 of: TestSixRuleAgreementAndMutants (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint whole package started 6739, verdicts 162 of: TestCompilerAndStage1Agree_000, TestCompilerAndStage1Agree_001, TestCompilerAndStage1Agree_002, TestCompilerAndStage1Agree_003, TestCompilerAndStage1Agree_004, TestCompilerAndStage1Agree_005, TestCompilerAndStage1Agree_006, TestCompilerAndStage1Agree_007, TestCompilerAndStage1Agree_008, TestCompilerAndStage1Agree_009, TestCompilerAndStage1Agree_010, TestCompilerAndStage1Agree_011 (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 1 of: TestPortStallControl (tests-02)
+FAIL github.com/system-inc/adamic/internal/oracle whole package started 432, verdicts 365 of: TestAssignmentProofChained, TestAssignmentProofChainedMutant, TestAssignmentProofCompound, TestAssignmentProofCompoundMutant, TestAssignmentProofIfNarrowing, TestAssignmentProofIfNarrowingMutant, TestAssignmentProofReturnDefined, TestAssignmentProofReturnDefinedMutant, TestAssignmentProofScannerKeywordMutant, TestAssignmentProofWiderTarget, TestAssignmentProofWiderTargetMutant, TestCallSpreadEvaluatedTwiceMutant (tests-04)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 4 of: TestSyntaxMutants (tests-23)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestTypeAwareAgreementAndMutants (tests-25)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 1 of: TestBoundedPortParser (tests-29)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 4 of: TestThreePortMutants (tests-31)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 1 of: TestDeepMutants (tests-32)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestShadowIndexMissingBinding (tests-32)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0, requested 1 of: TestAcceptanceMutants (tests-34)
