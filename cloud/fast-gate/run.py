@@ -373,6 +373,12 @@ def main():
     sys.exit(0 if gate.failure is None and not gate.stopped else 1)
 
 
+class CensusRefusal(ValueError):
+    """The compiler dependency census refused a change: a red the change can fix itself, never a gate-tool crash. A
+    plain ValueError reached the runner as 'the gate tool crashed', so main fc7252a6's whole gate recorded cd01cd09's
+    undeclared consumer as infra (#3rq7vga, Oct 9), and red-sort would have counted it as nobody's."""
+
+
 class Gate:
     def __init__(self, arguments):
         self.arguments = arguments
@@ -482,12 +488,8 @@ class Gate:
         changed = [path for path in changed if path]
         try:
             packages, unowned = self.touched(changed)
-        except ValueError as error:
-            if not str(error).startswith("compiler dependency census"):
-                raise
-            # A red the change can fix itself, never a gate-tool crash (developer tools, Oct 9).
-            self.fail("census", "%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, "
-                      "then the compiler packages it exercises (entries there add to the gate tools' map)." % error)
+        except CensusRefusal as error:
+            self.censusRed(error)
             return
         # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
         # with @system_cohere_adamic): the main sha the gate diffs against sets the stride's offset, and the
@@ -649,10 +651,18 @@ class Gate:
             if self.arguments.full:
                 parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
                 changed = [path for path in (self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []) if path]
-                _, unowned = self.touched(changed)
+                try:
+                    _, unowned = self.touched(changed)
+                except CensusRefusal as error:
+                    self.censusRed(error)
+                    return
                 self.cover(unowned, changed)
             else:
-                self.fastPhaseInputs(recordCoverage=True)
+                try:
+                    self.fastPhaseInputs(recordCoverage=True)
+                except CensusRefusal as error:
+                    self.censusRed(error)
+                    return
         elif phase == "tools":
             self.toolsDeclared()
         elif phase == "build":
@@ -698,7 +708,11 @@ class Gate:
                 self.checkCensus()
                 self.requestedRan()
         elif phase in ("workers", "a-check", "catalog-apply"):
-            changed, executors = self.fastPhaseInputs()
+            try:
+                changed, executors = self.fastPhaseInputs()
+            except CensusRefusal as error:
+                self.censusRed(error)
+                return
             if phase == "workers":
                 if not executors & {"workers", "bench-workers"}:
                     raise ValueError("workers has no work for this change")
@@ -759,7 +773,11 @@ class Gate:
         # The no-executor check holds on main too: what this main changed against its first parent.
         parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
         changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
-        _, unowned = self.touched([path for path in changed if path])
+        try:
+            _, unowned = self.touched([path for path in changed if path])
+        except CensusRefusal as error:
+            self.censusRed(error)
+            return
         self.cover(unowned, [path for path in changed if path])
         try:
             self.result["build_ok"] = self.step("build", goPhaseCommand("build"))
@@ -1557,7 +1575,7 @@ class Gate:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
         missing = [path for path in missing if path in touchedFiles]
         if missing:
-            raise ValueError("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+            raise CensusRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}
         return packages
 
@@ -2228,6 +2246,10 @@ class Gate:
                 after_seconds=round(time.monotonic() - self.testsStarted, 3)))
             details["launched"].set()
             self.testLaunchLock.release()
+
+    def censusRed(self, error):
+        self.fail("census", "%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, "
+                  "then the compiler packages it exercises (entries there add to the gate tools' map)." % error)
 
     def fail(self, step, detail):
         with self.lock:
