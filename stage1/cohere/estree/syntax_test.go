@@ -65,6 +65,14 @@ func TestSyntaxMutants(t *testing.T) {
 		{name: "erasure-precedence", file: "sourceBinary.ts", from: "if(nextRank > lastRank ||", to: "if(false && nextRank > lastRank ||", sources: []string{"1+1 as number *2;"}},
 		{name: "reference-pragma", file: "pipeline.ts", from: "if(reference !== '')", to: "if(false)", sources: []string{"/// <reference path='missingquote.ts />\nx;"}},
 	}
+	if len(mutants) != len(groups) {
+		t.Fatal("mutant enumeration differs from shard plan")
+	}
+	for i, m := range mutants {
+		if len(m.sources) != len(groups[i]) {
+			t.Fatalf("shard-%03d has %d inputs, plan has %d IDs", i, len(m.sources), len(groups[i]))
+		}
+	}
 	for i := range mutants {
 		if !selected[i] {
 			continue
@@ -82,14 +90,14 @@ func TestSyntaxMutants(t *testing.T) {
 			t.Parallel()
 			list := manifest(t, m.sources)
 			if i == 0 {
-				want := execute(t, "", oracle, "--manifest", list)
+				want := estreeOracleOutput(t, oracle, "--manifest", list)
 				for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
 					if err := estreeMutantVerdict(want, got); err != nil {
 						t.Fatalf("%s %s: %v", m.name, name, err)
 					}
 				}
 			} else {
-				statuses := string(execute(t, "", oracle, "--audit", list, t.TempDir()))
+				statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
 				if !strings.Contains(statuses, `"status":"error"`) {
 					t.Fatal(statuses)
 				}
@@ -130,7 +138,7 @@ func TestSyntaxRefusals(t *testing.T) {
 		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
 			list := manifest(t, []string{source})
-			statuses := string(execute(t, "", oracle, "--audit", list, t.TempDir()))
+			statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
 			if strings.Count(statuses, `"status":"error"`) != 1 {
 				t.Fatal(statuses)
 			}
@@ -156,7 +164,7 @@ func TestSyntaxLibraries(t *testing.T) {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	samples := syntaxGrammar()
-	checkOriginalLibraries(t, []string{samples[0], samples[1], samples[4], samples[6]}, 0)
+	estreeCheckOriginalLibraries(t, []string{samples[0], samples[1], samples[4], samples[6]}, 0)
 }
 func TestTypeMemberLibraryGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
@@ -165,7 +173,7 @@ func TestTypeMemberLibraryGap(t *testing.T) {
 	}
 	source := "interface I {x:number=5;}"
 	list := manifest(t, []string{source})
-	execute(t, "", goOracle(t), "--manifest", list)
+	estreeOracleOutput(t, estreeOracleProduct(t), "--manifest", list)
 	code := `import {pathToFileURL} from 'node:url';const lib=await import(pathToFileURL(process.argv[1]+'/node_modules/@typescript-eslint/typescript-estree/dist/index.js').href);try{lib.parse(process.argv[2],{warnOnUnsupportedTypeScriptVersion:false});console.log('accepted')}catch(e){console.log('refused')}`
 	if got := string(execute(t, "", "node", "--input-type=module", "-e", code, library, source)); got != "refused\n" {
 		t.Fatal(got)

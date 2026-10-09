@@ -32,7 +32,7 @@ func TestScalarEdgesShardFailure(t *testing.T) {
 
 func TestScalarOriginalLibraries(t *testing.T) {
 	cases := scalarCases()
-	checkOriginalLibraries(t, []string{cases[0], cases[5], cases[6], cases[7], "1e-999; 0; 0o77;"}, 0)
+	estreeCheckOriginalLibraries(t, []string{cases[0], cases[5], cases[6], cases[7], "1e-999; 0; 0o77;"}, 0)
 }
 func TestPinnedNumericGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
@@ -40,7 +40,7 @@ func TestPinnedNumericGaps(t *testing.T) {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	list := manifest(t, []string{"1e999; 0x10000000000000000;"})
-	goAnswer := string(execute(t, "", goOracle(t), "--manifest", list))
+	goAnswer := string(estreeOracleOutput(t, estreeOracleProduct(t), "--manifest", list))
 	if strings.Count(goAnswer, ".value number NaN\n") != 2 {
 		t.Fatal("Go numeric gap changed")
 	}

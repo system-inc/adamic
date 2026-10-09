@@ -30,6 +30,7 @@ func estreePortProduct(t *testing.T, main string, sanitize bool) (string, string
 		t.Fatal(err)
 	}
 	inputs.Name = "estree port C/native/JS"
+	inputs.Flags = append(inputs.Flags, "product format 2")
 	inputs.Files = append(inputs.Files, "stage1/typescript", "stage1/cohere/estree/products_test.go")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	options := native.Options{Sanitize: sanitize}

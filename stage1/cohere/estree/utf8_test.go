@@ -50,7 +50,7 @@ func TestCookedSurrogateMutant(t *testing.T) {
 		t.Run("shard-000", func(t *testing.T) {
 			t.Parallel()
 			list := manifest(t, sources)
-			want := execute(t, "", oracle, "--manifest", list)
+			want := estreeOracleOutput(t, oracle, "--manifest", list)
 			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 				if err := estreeMutantVerdict(want, got); err != nil {
 					t.Fatalf("%s: %v", name, err)
@@ -69,7 +69,7 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	list := manifest(t, []string{cookedSurrogates()[0]})
-	goAnswer := string(execute(t, "", goOracle(t), "--manifest", list))
+	goAnswer := string(estreeOracleOutput(t, estreeOracleProduct(t), "--manifest", list))
 	if !strings.Contains(goAnswer, `.value string \ufffd\ufffd\ufffda\ufffd\ufffd\ufffd`) {
 		t.Fatal("Go WTF-8 gap changed")
 	}
@@ -138,7 +138,7 @@ func TestLossyInputControl(t *testing.T) {
 			if err := os.WriteFile(path, lossyInputs()[0], 0644); err != nil {
 				t.Fatal(err)
 			}
-			want := execute(t, "", oracle, path)
+			want := estreeOracleOutput(t, oracle, path)
 			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
 				if err := estreeMutantVerdict(want, got); err != nil {
 					t.Fatalf("%s lossy-input: %v", name, err)

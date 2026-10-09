@@ -14,14 +14,14 @@ import (
 func estreeOracleProduct(t *testing.T) string {
 	t.Helper()
 	module := filepath.Join(root(t), "stage1/cohere/estree/oraclebuild/go.mod")
-	return buildcache.GoBuild(t, "estree-oracle", "./stage1/cohere/estree/testdata", []string{"-trimpath"}, "GOWORK=off", "GOFLAGS=-modfile="+module)
+	return buildcache.GoBuild(t, "estree-oracle", "./stage1/cohere/estree/testdata", []string{"-trimpath", "-buildvcs=false"}, "GOWORK=off", "GOFLAGS=-modfile="+module)
 }
 
 // In particular, a source-file Go build has no main-module metadata and a
 // custom .mod basename can lose module inputs. Guard the package build's graph.
 func TestEstreeOracleBuildInputs(t *testing.T) {
 	module := filepath.Join(root(t), "stage1/cohere/estree/oraclebuild/go.mod")
-	inputs, err := buildcache.GoInputs("estree-oracle", "./stage1/cohere/estree/testdata", []string{"-trimpath"}, []string{"GOWORK=off", "GOFLAGS=-modfile=" + module})
+	inputs, err := buildcache.GoInputs("estree-oracle", "./stage1/cohere/estree/testdata", []string{"-trimpath", "-buildvcs=false"}, []string{"GOWORK=off", "GOFLAGS=-modfile=" + module})
 	if err != nil {
 		t.Fatal(err)
 	}
