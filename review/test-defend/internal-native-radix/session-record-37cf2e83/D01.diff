@@ -1,0 +1,16 @@
+diff --git a/internal/native/runtime/map.c b/internal/native/runtime/map.c
+index 715141f2..ad61e5ad 100644
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -69,9 +69,11 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
+ 			// to itself.
+ 			return hash;
+ 		}
++		for (size_t repeat = 0; repeat < 8; repeat++) {
+ 		for (size_t index = 0; index < string->length; index++) {
+ 			hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
+ 		}
++		}
+ 		return hash;
+ 	}
+ 	if (map->boolean_keys) {

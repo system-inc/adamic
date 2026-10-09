@@ -1,0 +1,38 @@
+[
+  {
+    "test": "TestRecordBenchmark",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestRuntimeStringEquality",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/native/runtime/map.c:72",
+        "change": "Repeat string hashing eight times, increasing work while retaining consistent equal-key hashes; cost-rule repeat-loop attempt",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D02",
+        "file_line": "internal/native/runtime/record.c:207",
+        "change": "Off-by-one iterator exhaustion bound drops the last snapshot key",
+        "rows_failed": [
+          "TestRecordBenchmark",
+          "TestRecordsAgainstNode"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/native/runtime/map.c:222",
+        "change": "Drop deletion count decrement",
+        "rows_failed": [
+          "TestRecordBenchmark",
+          "TestRecordsAgainstNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/record-defense/cache/<D01-D03> timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run \"^(TestRegExp.*|TestRecord.*|TestRuntimeStringEquality|TestMapHash.*|TestLibraryMapSetIteratorResources)$\"; see matrix.json and D01-D03.log for exact observed failures; D02 and D03: record_test.go:341: benchmark work differs from Node; TestRecordsAgainstNode: record_test.go:83: Node comparison differs.",
+    "bounded": true
+  }
+]

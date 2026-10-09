@@ -1,0 +1,2 @@
+source /workspace/adamic-tools/env.sh
+ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/record-defense/cache/D03 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^(TestRegExp.*|TestRecord.*|TestRuntimeStringEquality|TestMapHash.*|TestLibraryMapSetIteratorResources)$'

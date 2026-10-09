@@ -1,0 +1,17 @@
+Starting commit: 37cf2e8362d65a1a4196426ff38fe7020de5cac6 (fresh origin/main).
+Target: internal/native/record_test.go:294 TestRecordBenchmark. Prior subsumer: internal/native/runtime_profile_test.go:59 TestRuntimeStringEquality.
+
+CODE UNDER TEST: Adamic's native C record and map runtime, including string-key hashing, lookup, insertion, deletion accounting, key snapshots and record iterator exhaustion. The fixture calls adamic_record_new/set/get/delete/iterate/iterator_next/size and the underlying map and string/heap APIs. Production C files alone were mutated. Test fixtures, Node oracle, test bodies and build harness were left unchanged.
+
+ORACLE: live Node Object operations in internal/native/testdata/records/oracle.js decide the work checksum. Self-written assertions decide that output has two lines and five timing fields, each parseable, nonnegative and not NaN. Infinity is not expressly rejected. Timings and native/Node ratios are observations, with no pass threshold. The prior subsumer compares six string equality results against live Node; it does not exercise record operations.
+
+Read the whole record_test.go, runtime_profile_test.go, runtime/record.c, runtime/map.c, testdata/records/harness.c, testdata/records/oracle.js and map_hash_test.go. Read the audit report and associated row, plan, table and limitation notes; copies are retained here.
+
+Per-test coverage: benchmark.cover and subsumer.cover were collected separately with -coverpkg=github.com/system-inc/adamic/internal/native. coverage-difference.json has zero benchmark-only Go blocks. These profiles cover Go compilation helpers, not the C runtime executed by subprocesses. They cannot establish exclusive C lines. Semantic differences are therefore explicit: the benchmark exercises large string-key record workloads, unlike the string equality subsumer. Compared with TestRecordsAgainstNode, it adds sizes 10000 and 100000, repeats fresh process pairs five times, and validates timing-field shape. The correctness row already executes the same million-key workload, compares every remaining key, and also executes bench 1000.
+
+Fixed attempts, recorded in plan.json before running them:
+D01 repeats the production string-hash loop eight times. The cost-row instruction expressly permits repeating a loop; this is the answer-preserving work-growth attempt, not a harness delay. Each key hashes consistently in insertion and lookup, preserving equal-key behavior. It does alter hash distribution, which need not be externally observable. It executes eight byte-hash updates per byte instead of one. Every bounded row passed. The benchmark's checksums matched Node. Its observed binary test time was 51.49 s, versus 30.66 s in the baseline; these shared-worker timings are not a controlled estimate of the slowdown.
+D02 changes the record iterator bound from next < length to next + 1 < length. It omits the final snapshot entry. The benchmark failed at record_test.go:341, comparing 748501 1000 499 500 against Node's 749500 1000 500 500. TestRecordsAgainstNode also failed. String equality and every other bounded row passed.
+D03 drops map deletion's count decrement. This tests deletion accounting, another behavior absent from the string equality subsumer. See matrix.json for its observed outcome.
+
+No test deletion or rewrite is proposed. Three attempts cannot prove there is no unique fault this test could catch.

@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D01",
+    "file": "internal/native/runtime/map.c",
+    "before": "\t\tfor (size_t index = 0; index < string->length; index++) {\n\t\t\thash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;\n\t\t}",
+    "after": "\t\tfor (size_t repeat = 0; repeat < 8; repeat++) {\n\t\tfor (size_t index = 0; index < string->length; index++) {\n\t\t\thash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;\n\t\t}\n\t\t}",
+    "change": "Repeat string hashing eight times, increasing work while retaining consistent equal-key hashes; cost-rule repeat-loop attempt",
+    "line": 72
+  },
+  {
+    "mutant": "D02",
+    "file": "internal/native/runtime/record.c",
+    "before": "while (next < keys->length)",
+    "after": "while (next + 1 < keys->length)",
+    "change": "Off-by-one iterator exhaustion bound drops the last snapshot key",
+    "line": 207
+  },
+  {
+    "mutant": "D03",
+    "file": "internal/native/runtime/map.c",
+    "before": "\tmap->count--;",
+    "after": "",
+    "change": "Drop deletion count decrement",
+    "line": 222
+  }
+]
