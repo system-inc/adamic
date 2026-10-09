@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -110,7 +110,7 @@
+ 			if element != ir.Number {
+ 				return nil, true, l.notYet(node, "constructing a typed array from other than number[]")
+ 			}
+-			return ir.TypedArrayNew{Of: kind, Source: source, FromArray: true}, true, nil
++			return ir.TypedArrayNew{Of: ir.Float64Array, Source: source, FromArray: true}, true, nil
+ 		}
+ 	case ast.KindPropertyAccessExpression:
+ 		access := node.AsPropertyAccessExpression()
