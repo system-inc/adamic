@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -20,13 +21,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Same field layout as the forthcoming internal/buildcache.Inputs. The caller
-// can become buildcache.Product(t, buildcache.Inputs(in), build) without changing
-// these builders. There is no package-local disk cache.
-type jsonBuildInputs struct {
-	Name                    string
-	Files, Flags, Toolchain []string
-}
+// Build inputs use the shared cache API; no package-local disk cache.
+type jsonBuildInputs = buildcache.Inputs
 
 func jsonBuildEnvironment(names ...string) []string {
 	var flags []string
@@ -51,6 +47,24 @@ func jsonGoToolchain() ([]string, error) {
 	configuration := exec.Command("go", "env", "-json")
 	configuration.Dir = directory
 	settings, err := configuration.Output()
+	if err != nil {
+		return nil, err
+	}
+	// Go generates a fresh scratch directory even for go env. It is mapped to
+	// /tmp/go-build in compiler output and cannot affect a product, so normalize
+	// only that generated prefix-map argument; retain every real compiler flag.
+	var resolved map[string]string
+	if err := json.Unmarshal(settings, &resolved); err != nil {
+		return nil, err
+	}
+	compilerFlags := strings.Fields(resolved["GOGCCFLAGS"])
+	for i, flag := range compilerFlags {
+		if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
+			compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
+		}
+	}
+	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
+	settings, err = json.Marshal(resolved)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +98,7 @@ func jsonClangToolchain() ([]string, error) {
 func jsonGoOracleInputs(toolchain []string) jsonBuildInputs {
 	flags := []string{"go", "build", "-overlay=<dir>/overlay.json", "-o=<dir>/go-cohere", "./command/formatter_comparison"}
 	flags = append(flags, jsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT", "GOCACHE", "GOMODCACHE", "GOWORK", "GOPATH", "GOENV", "GOROOT", "GO386", "GOARM", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS")...)
-	return jsonBuildInputs{Name: "json Go oracle", Files: []string{"go.work", "go.mod", "go.sum", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
+	return jsonBuildInputs{Name: "json Go oracle", Files: []string{"go.work", "go.mod", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
 }
 
 // buildJSONGoOracle writes the driver and overlay only into its product directory.
@@ -115,7 +129,7 @@ func buildJSONGoOracle(dir string) error {
 }
 
 func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
-	files := []string{"go.mod", "go.sum", "internal", "cohere/TypeScript", "stage1/cohere/json/builds_test.go"}
+	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/builds_test.go"}
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
@@ -182,18 +196,26 @@ func buildJSONSanitizedPort(source string) func(string) error {
 	}
 }
 
-// A named build census unit runs once before parallel children. If -run selects
-// only a logic child, its fetched inputs still need preparing. TempDir belongs
-// to the parent so it outlives the build subtest and all consumers.
+// A named build census unit prepares immutable shared products before parallel
+// children, including when -run selects only one logic child. Overlay Go builds
+// remain local: buildcache.GoBuild deliberately refuses overlays. Their TempDir
+// belongs to the parent so it outlives the build subtest and all consumers.
 func jsonBuildUnit(parent *testing.T, name string, in jsonBuildInputs, build func(string) error) string {
-	dir := parent.TempDir()
+	var dir string
 	called := false
 	prepare := func(t testing.TB) {
 		called = true
 		start := time.Now()
-		// Replace this call with: dir = buildcache.Product(t, buildcache.Inputs(in), build).
-		if err := build(dir); err != nil {
-			t.Fatal(err)
+		// The oracle currently overlays its formatter_comparison main. Do not
+		// pass that overlay build to Product or GoBuild.
+		if name == "build-go-oracle" {
+			dir = parent.TempDir()
+			if err := build(dir); err != nil {
+				t.Fatal(err)
+			}
+			t.Log("Go oracle overlay: local build, outside the shared product cache")
+		} else {
+			dir = buildcache.Product(t, in, build)
 		}
 		t.Logf("shared %s %.3fs; inputs %s; files %v; %d flags; %d toolchain entries", name, time.Since(start).Seconds(), in.Name, in.Files, len(in.Flags), len(in.Toolchain))
 	}
@@ -253,4 +275,27 @@ func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
 		products.sanitized = filepath.Join(jsonBuildUnit(t, "build-sanitized", jsonNativePortInputs(string(source), true, clang), buildJSONSanitizedPort(string(source))), "port")
 	}
 	return products
+}
+
+// A warm product must have the same key despite Go's fresh compiler scratch path.
+func TestJSONGoToolchainStable(t *testing.T) {
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var previous string
+	for i := 0; i < 2; i++ {
+		tools, err := jsonGoToolchain()
+		if err != nil {
+			t.Fatal(err)
+		}
+		key, err := buildcache.Key(root, buildcache.Inputs{Name: "json toolchain stability", Files: []string{"go.mod"}, Toolchain: tools})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if i > 0 && key != previous {
+			t.Fatal("unchanged Go toolchain produced different product keys")
+		}
+		previous = key
+	}
 }
