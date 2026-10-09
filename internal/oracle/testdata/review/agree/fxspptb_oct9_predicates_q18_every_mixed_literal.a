@@ -1,0 +1,11 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+const items: (string | number)[] = [1, 2, "x"];
+items.pop();
+if (items.every(isNumber)) {
+  let total = 0;
+  for (const v of items) total += v;
+  console.log("total " + String(total));
+}
+console.log(String(items.length));

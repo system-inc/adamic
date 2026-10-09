@@ -1,0 +1,9 @@
+// The views-v3 array arm, read by a string-literal key instead of a dot.
+interface Node { readonly ready: boolean; }
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: Node | readonly Node[]; }
+const raw = { kind: 'Holder' as const, value: { ready: true } };
+const base: Root = raw;
+const viewed = base as View;
+const value = viewed['value'];
+console.log(`${value !== undefined}`);
