@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -47,7 +47,7 @@
+             this.parser.next();
+             this.parser.scanner.scanJsxIdentifier();
+             const right = this.identifier();
+-            return this.make('JsxNamespacedName', pos, [name, right]);
++            return this.make('JsxNamespacedName', pos, [right, name]);
+         }
+         if(isThis) {
+             name = this.make('ThisKeyword', pos);

@@ -1,0 +1,327 @@
+[
+  {
+    "test": "TestJsxMemberNameRejection",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_rejection_test.go:35",
+    "seconds": 32.98,
+    "oracle": "Go rejects with diagnostic 1003; Node/native diagnostic class and exact mutual stderr equality. Location is not compared with Go. M1 passes original refusal at wrong token and fails during built-in permissive parsing.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestJsxMemberNameRejection139679601/008/main.ts /tmp/adamic-gate/TestJsxMemberNameRejection139679601/001/dashed-member.tsx --whole]: exit status 70",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJsxNode"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.66,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNode",
+      "TestJsxNative"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$ > M1-TestJsxMemberNameRejection.log 2>&1; jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestJsxMemberNameRejection139679601/008/main.ts /tmp/adamic-gate/TestJsxMemberNameRejection139679601/001/dashed-member.tsx --whole]: exit status 70",
+    "matrix_ids": [
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "test": "TestJsxNameBoundaryRejections",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_rejection_test.go:77",
+    "seconds": 43.57,
+    "oracle": "Go rejects private/escaped JSX names; Node/native refusal markers and exact mutual stderr equality.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: jsx_rejection_test.go:100: expected parser rejection from node: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNode",
+      "TestJsxNative"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$ > M2-TestJsxNameBoundaryRejections.log 2>&1; jsx_rejection_test.go:100: expected parser rejection from node: <nil>",
+    "matrix_ids": [
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "test": "TestJsxScannerMutants",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_scanner_mutants_test.go:11",
+    "seconds": 41.12,
+    "oracle": "Go whole AST bytes; built-in scanner mutations must disagree in Node and sanitized native. Judged by W1, not production precondition failures.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W1: jsx_scanner_mutants_test.go:69: Node scanner mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxScannerMutants",
+      "TestExpressionsAgree"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxScannerMutants$ > W1-TestJsxScannerMutants.log 2>&1; jsx_scanner_mutants_test.go:69: Node scanner mutant survived",
+    "matrix_ids": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestJsxNode",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_test.go:70",
+    "seconds": 0.66,
+    "oracle": "Go whole AST bytes and Go JSX kind inventory coverage, compared with Node port.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJsxNative"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 22.1,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNode",
+      "TestJsxNative"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > M3-TestJsxNode.log 2>&1; jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "matrix_ids": [
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "test": "TestJsxNative",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_test.go:98",
+    "seconds": 22.1,
+    "oracle": "Go whole AST bytes compared with sanitized and release native port.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJsxNode"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.66,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNode",
+      "TestJsxNative"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > M3-TestJsxNative.log 2>&1; jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+    "matrix_ids": [
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  {
+    "test": "TestExpressionsAgree",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/expressions_products_test.go:163",
+    "seconds": 3,
+    "oracle": "Go expression AST bytes; built-in precedence, optional and arrow mutants must disagree. Judged by W1.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W1: expressions_products_test.go:209: native precedence mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxScannerMutants",
+      "TestExpressionsAgree"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestExpressionsAgree$ > W1-TestExpressionsAgree.log 2>&1; expressions_products_test.go:209: native precedence mutant survived",
+    "matrix_ids": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/parser_test.go:209",
+    "seconds": 2.77,
+    "oracle": "Self: successfully construct pinned corpus, Go oracle and native product. Returned product values are not asserted; S1 drops binary construction and passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree_Setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree_Setup$ > S1-TestCompilerExpressionsAgree_Setup.log 2>&1; --- PASS: TestCompilerExpressionsAgree_Setup",
+    "matrix_ids": [
+      "S1"
+    ]
+  },
+  {
+    "test": "TestPerformance",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/performance_test.go:17",
+    "seconds": 18.29,
+    "oracle": "Go recursive node count compared with Node/native, including warmup and five rotated samples. No speed threshold; equal counts can conceal different trees.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: performance_test.go:95: Node warm-up count \"1114020\\n\" differs from \"557010\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWholePerformance"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 23.97,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPerformance",
+      "TestWholePerformance"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPerformance$ > M4-TestPerformance.log 2>&1; performance_test.go:95: Node warm-up count \"1114020\\n\" differs from \"557010\\n\"",
+    "matrix_ids": [
+      "M4"
+    ]
+  },
+  {
+    "test": "TestWholePerformance",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/performance_test.go:18",
+    "seconds": 23.97,
+    "oracle": "Go full AST preflight plus Go recursive node counts in Node/native. No speed threshold.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: performance_test.go:95: Node warm-up count \"1775606\\n\" differs from \"887803\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPerformance"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 18.29,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPerformance",
+      "TestWholePerformance"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestWholePerformance$ > M4-TestWholePerformance.log 2>&1; performance_test.go:95: Node warm-up count \"1775606\\n\" differs from \"887803\\n\"",
+    "matrix_ids": [
+      "M4"
+    ]
+  },
+  {
+    "test": "TestNodeCountCheckCatchesMutant",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/performance_test.go:142",
+    "seconds": 28.2,
+    "oracle": "Go AST and counts; built-in count mutant must preserve AST but change count. Judged by W2.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W2: performance_test.go:181: native count mutant survived count comparison",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNodeCountCheckCatchesMutant"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestNodeCountCheckCatchesMutant$ > W2-TestNodeCountCheckCatchesMutant.log 2>&1; performance_test.go:181: native count mutant survived count comparison",
+    "matrix_ids": [
+      "W2"
+    ]
+  }
+]

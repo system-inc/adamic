@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -52,7 +52,7 @@
+         if(isThis) {
+             name = this.make('ThisKeyword', pos);
+         }
+-        if(tag) {
++        if(!tag) {
+             while(this.parser.kind() === 'DotToken') {
+                 this.parser.next();
+                 const right = this.identifier();

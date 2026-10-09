@@ -1,0 +1,842 @@
+[
+  {
+    "id": "clean",
+    "label": "TestJsxNameBoundaryRejections",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNameBoundaryRejections$"
+    ],
+    "log": "clean-TestJsxNameBoundaryRejections.log",
+    "wall": 42.63358155900096,
+    "exit": 0,
+    "failed": [],
+    "passed": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "errors": [],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {},
+    "unknown": []
+  },
+  {
+    "id": "clean",
+    "label": "TestJsxScannerMutants",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxScannerMutants$"
+    ],
+    "log": "clean-TestJsxScannerMutants.log",
+    "wall": 42.588023005999275,
+    "exit": 0,
+    "failed": [],
+    "passed": [
+      "TestJsxScannerMutants"
+    ],
+    "errors": [],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {},
+    "unknown": []
+  },
+  {
+    "id": "clean",
+    "label": "new-shards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants.*|TestProduct_Jsx.*)$"
+    ],
+    "log": "clean-new-shards.log",
+    "wall": 77.35811081800057,
+    "exit": 0,
+    "failed": [],
+    "passed": [
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsNative_002",
+      "TestJsxMutants_008",
+      "TestJsxMutants_000",
+      "TestJsxMutants_005",
+      "TestJsxMutants_004",
+      "TestJsxMutants_003",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsNative_008",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsLower_006",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_002",
+      "TestJsxMutants_001"
+    ],
+    "errors": [],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {},
+    "unknown": []
+  },
+  {
+    "id": "D1",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D1-matrix.log",
+    "wall": 91.60948865499813,
+    "exit": 1,
+    "failed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections"
+    ],
+    "passed": [
+      "TestJsxScannerMutants",
+      "TestJsxNative"
+    ],
+    "errors": [
+      "    jsx_rejection_test.go:51: Node failed to reject: 70 adamic: panic: JSX invalid name at 21 in /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection762463858/001/dashed-member.tsx\n",
+      "    jsx_rejection_test.go:102: Node accepted private member: 70 adamic: panic: JSX invalid name at 15 in /workspace/scratch/defend-jsx/tmp/TestJsxNameBoundaryRejections1884854555/004/name.tsx\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxMemberNameRejection": [
+        "jsx_rejection_test.go:51: Node failed to reject: 70 adamic: panic: JSX invalid name at 21 in /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection762463858/001/dashed-member.tsx"
+      ],
+      "TestJsxNameBoundaryRejections": [
+        "jsx_rejection_test.go:102: Node accepted private member: 70 adamic: panic: JSX invalid name at 15 in /workspace/scratch/defend-jsx/tmp/TestJsxNameBoundaryRejections1884854555/004/name.tsx"
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsNative_008",
+      "TestJsxNode"
+    ]
+  },
+  {
+    "id": "D1",
+    "label": "TestJsxNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNode$"
+    ],
+    "log": "D1-TestJsxNode.log",
+    "wall": 2.445757481997134,
+    "exit": 0,
+    "failed": [],
+    "passed": [
+      "TestJsxNode"
+    ],
+    "errors": [],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {},
+    "unknown": []
+  },
+  {
+    "id": "D2",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D2-matrix.log",
+    "wall": 91.60594357999798,
+    "exit": 1,
+    "failed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxScannerMutants",
+      "TestJsxNative",
+      "TestJsxNode"
+    ],
+    "passed": [
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_008"
+    ],
+    "errors": [
+      "    jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/001/dashed-member.tsx --whole]: exit status 70\n",
+      "    jsx_rejection_test.go:100: expected parser rejection from node: <nil> \n",
+      "    jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxScannerMutants954473203/001/manifest --whole]: exit status 70\n",
+      "    jsx_test.go:105: /workspace/scratch/defend-jsx/tmp/TestJsxNative139804325/005/scanner [--manifest /workspace/scratch/defend-jsx/tmp/TestJsxNative139804325/001/manifest --whole]: exit status 70\n",
+      "    jsx_test.go:90: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxNode3613399882/001/manifest --whole]: exit status 70\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxMemberNameRejection": [
+        "jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/001/dashed-member.tsx --whole]: exit status 70"
+      ],
+      "TestJsxNameBoundaryRejections": [
+        "jsx_rejection_test.go:100: expected parser rejection from node: <nil>"
+      ],
+      "TestJsxScannerMutants": [
+        "jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxScannerMutants954473203/001/manifest --whole]: exit status 70"
+      ],
+      "TestJsxNative": [
+        "jsx_test.go:105: /workspace/scratch/defend-jsx/tmp/TestJsxNative139804325/005/scanner [--manifest /workspace/scratch/defend-jsx/tmp/TestJsxNative139804325/001/manifest --whole]: exit status 70"
+      ],
+      "TestJsxNode": [
+        "jsx_test.go:90: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxNode3613399882/001/manifest --whole]: exit status 70"
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsNative_008"
+    ]
+  },
+  {
+    "id": "D3",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D3-matrix.log",
+    "wall": 91.68750106999869,
+    "exit": 1,
+    "failed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections",
+      "TestJsxScannerMutants",
+      "TestJsxNative",
+      "TestJsxNode"
+    ],
+    "passed": [
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_008",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_006"
+    ],
+    "errors": [
+      "    jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/001/dashed-member.tsx --whole]: exit status 70\n",
+      "    jsx_rejection_test.go:102: Node accepted escaped member: 70 adamic: panic: JSX expected name at 14 in /workspace/scratch/defend-jsx/tmp/TestJsxNameBoundaryRejections1511669035/012/name.tsx\n",
+      "    jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxScannerMutants2025177112/001/manifest --whole]: exit status 70\n",
+      "    jsx_test.go:105: /workspace/scratch/defend-jsx/tmp/TestJsxNative2160758610/005/scanner [--manifest /workspace/scratch/defend-jsx/tmp/TestJsxNative2160758610/001/manifest --whole]: exit status 70\n",
+      "    jsx_test.go:90: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxNode2134720345/001/manifest --whole]: exit status 70\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxMemberNameRejection": [
+        "jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/001/dashed-member.tsx --whole]: exit status 70"
+      ],
+      "TestJsxNameBoundaryRejections": [
+        "jsx_rejection_test.go:102: Node accepted escaped member: 70 adamic: panic: JSX expected name at 14 in /workspace/scratch/defend-jsx/tmp/TestJsxNameBoundaryRejections1511669035/012/name.tsx"
+      ],
+      "TestJsxScannerMutants": [
+        "jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxScannerMutants2025177112/001/manifest --whole]: exit status 70"
+      ],
+      "TestJsxNative": [
+        "jsx_test.go:105: /workspace/scratch/defend-jsx/tmp/TestJsxNative2160758610/005/scanner [--manifest /workspace/scratch/defend-jsx/tmp/TestJsxNative2160758610/001/manifest --whole]: exit status 70"
+      ],
+      "TestJsxNode": [
+        "jsx_test.go:90: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /workspace/scratch/defend-jsx/tmp/TestJsxNode2134720345/001/manifest --whole]: exit status 70"
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsNative_005"
+    ]
+  },
+  {
+    "id": "D4",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D4-matrix.log",
+    "wall": 91.75792502900003,
+    "exit": 1,
+    "failed": [
+      "TestJsxScannerMutants"
+    ],
+    "passed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections"
+    ],
+    "errors": [
+      "    jsx_scanner_mutants_test.go:18: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\"\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxScannerMutants": [
+        "jsx_scanner_mutants_test.go:18: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\""
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsNative_008",
+      "TestJsxNode",
+      "TestJsxNative"
+    ]
+  },
+  {
+    "id": "D4",
+    "label": "TestJsxNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNode$"
+    ],
+    "log": "D4-TestJsxNode.log",
+    "wall": 2.6364207989972783,
+    "exit": 1,
+    "failed": [
+      "TestJsxNode"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:92: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNode": [
+        "jsx_test.go:92: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\""
+      ]
+    },
+    "unknown": []
+  },
+  {
+    "id": "D4",
+    "label": "TestJsxNative",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNative$"
+    ],
+    "log": "D4-TestJsxNative.log",
+    "wall": 15.959795363000012,
+    "exit": 1,
+    "failed": [
+      "TestJsxNative"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:107: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNative": [
+        "jsx_test.go:107: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\""
+      ]
+    },
+    "unknown": []
+  },
+  {
+    "id": "D5",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D5-matrix.log",
+    "wall": 91.63851059499939,
+    "exit": 1,
+    "failed": [
+      "TestJsxScannerMutants"
+    ],
+    "passed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections"
+    ],
+    "errors": [
+      "    jsx_scanner_mutants_test.go:18: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxScannerMutants": [
+        "jsx_scanner_mutants_test.go:18: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\""
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsNative_008",
+      "TestJsxNode",
+      "TestJsxNative"
+    ]
+  },
+  {
+    "id": "D5",
+    "label": "TestJsxNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNode$"
+    ],
+    "log": "D5-TestJsxNode.log",
+    "wall": 2.4299955410024268,
+    "exit": 1,
+    "failed": [
+      "TestJsxNode"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNode": [
+        "jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\""
+      ]
+    },
+    "unknown": []
+  },
+  {
+    "id": "D5",
+    "label": "TestJsxNative",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNative$"
+    ],
+    "log": "D5-TestJsxNative.log",
+    "wall": 15.806291360000614,
+    "exit": 1,
+    "failed": [
+      "TestJsxNative"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNative": [
+        "jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\""
+      ]
+    },
+    "unknown": []
+  },
+  {
+    "id": "D6",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$"
+    ],
+    "log": "D6-matrix.log",
+    "wall": 91.59373305400004,
+    "exit": 1,
+    "failed": [
+      "TestJsxScannerMutants"
+    ],
+    "passed": [
+      "TestJsxMemberNameRejection",
+      "TestJsxNameBoundaryRejections"
+    ],
+    "errors": [
+      "    jsx_scanner_mutants_test.go:18: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\"\n"
+    ],
+    "timeout": true,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxScannerMutants": [
+        "jsx_scanner_mutants_test.go:18: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\""
+      ]
+    },
+    "unknown": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsNative_008",
+      "TestJsxNode",
+      "TestJsxNative"
+    ]
+  },
+  {
+    "id": "D6",
+    "label": "TestJsxNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNode$"
+    ],
+    "log": "D6-TestJsxNode.log",
+    "wall": 2.2645566380015225,
+    "exit": 1,
+    "failed": [
+      "TestJsxNode"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:92: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNode": [
+        "jsx_test.go:92: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\""
+      ]
+    },
+    "unknown": []
+  },
+  {
+    "id": "D6",
+    "label": "TestJsxNative",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestJsxNative$"
+    ],
+    "log": "D6-TestJsxNative.log",
+    "wall": 15.312608707001345,
+    "exit": 1,
+    "failed": [
+      "TestJsxNative"
+    ],
+    "passed": [],
+    "errors": [
+      "    jsx_test.go:107: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\"\n"
+    ],
+    "timeout": false,
+    "anchor_failures": [],
+    "possible_build_failures": [],
+    "errors_by_row": {
+      "TestJsxNative": [
+        "jsx_test.go:107: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\""
+      ]
+    },
+    "unknown": []
+  }
+]
