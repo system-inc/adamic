@@ -1,0 +1,26 @@
+=== RUN   TestFX7TextP32
+=== PAUSE TestFX7TextP32
+=== RUN   TestFX7TextP33
+=== PAUSE TestFX7TextP33
+=== CONT  TestFX7TextP32
+=== CONT  TestFX7TextP33
+    fx7_depth_texts_test.go:66: gate cache node miss
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:65: gate cache node miss
+    fx7_depth_texts_test.go:65: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:66: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:65: native: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n"
+    fx7_depth_texts_test.go:65: sanitized: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n"
+--- FAIL: TestFX7TextP32 (0.35s)
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:66: native: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n"
+    fx7_depth_texts_test.go:66: sanitized: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n"
+--- FAIL: TestFX7TextP33 (0.36s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.370s
+FAIL
