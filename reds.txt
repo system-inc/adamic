@@ -1,0 +1,25 @@
+run adamic-verify-20261009T062655-0b9c50d7: void, 10706 tests in 12 units, 3 failed, 2 units broken, 0 killed over budget
+BROKEN tests-03: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited true, last output "5.4G\t/tmp/loom-home")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-04)
+    volume_test.go:95: phase command stage0 3.401045s
+    volume_test.go:18: build typeaware_six_volume-oracle-build 406eb6f1abbd hit 0.05
+    volume_test.go:108: phase command controls-go 0.105359s
+    volume_test.go:108: phase command controls-native 0.083278s
+    volume_test.go:108: controls: 26003 identical finding bytes; findings 73
+    volume_test.go:116: phase command controls-asan-go 0.036966s
+    volume_test.go:116: phase command controls-asan-native 0.459852s
+    volume_test.go:116: controls-asan: 26003 identical finding bytes; findings 73
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfilePartition (tests-04)
+    volume_profile_partition_test.go:127: unexpected check adamic owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check volume-oracle-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check adamic-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker-asan.a-asan owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker.a owned by [TestVolumeProfileCorpora]
+    volume_profile_partition_test.go:127: unexpected check checker.a-asan owned by [TestVolumeProfileCorpora]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-08)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered a962f78650b7 miss 85.55
+    lint_test.go:327: TestRulesAgree (setup lowered): 85.571s
+    lint_test.go:329: cooked: setup over 60s budget
