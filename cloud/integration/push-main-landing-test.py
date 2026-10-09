@@ -203,6 +203,35 @@ class LandingTests(unittest.TestCase):
         self.assertIn('Rerun-units: code', trailers)
         self.assertIn('Moved-main: %s..%s' % (self.main, moved), trailers)
 
+    def test_a_moved_main_whose_test_breaks_the_candidate_is_refused_on_the_rerun(self):
+        # #mbexftz's proof: main takes a test in the candidate's package that fails against its code. The rerun on B
+        # runs that unit and it's red, so B is refused. And a rerun that keeps every old verdict (the moved unit kept,
+        # carrying the input hash it has at B) is refused too: a kept unit must have the gate's hash.
+        candidate = self.change(self.main, 'code/a.go', 'package code\n\n// candidate\n', 'candidate')
+        units = lambda **verdicts: [{'id': name, 'input_sha256': digest, 'verdict': verdict} for name, (digest, verdict) in verdicts.items()]
+        base = self.publish(candidate, 'base', {'sha': candidate, 'base': self.main, 'finished': True,
+                                                'units': units(code=('c1', 'passed'), other=('o1', 'passed'))}, kind='full')
+        breaking = self.change(self.main, 'code/a_test.go', 'package code\n\n// asserts the old behavior\n', 'a test that breaks it')
+        moved = self.assertLanded(self.push('--test-only', breaking, 'breaking'), self.main, breaking)
+        b = self.push(candidate, '1', '1', '0', '0', 'candidate').stderr.split('on B ')[1].split()[0]
+        git(self.repository, 'push', '-q', 'origin', b + ':refs/heads/moved-b')
+        def rerun(name, failing, rerunUnits):
+            record = {'sha': b, 'base': moved, 'finished': True, 'skip': 0, 'packages': ['code'], 'fail': len(failing), 'pass': 3,
+                      'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                      'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                      'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1 if failing else 0),
+                      'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census'], 'rerun_of': base, 'units': rerunUnits}
+            return self.publish(b, name, record, failing=failing)
+        red = rerun('red', [('code', 'TestOld')], units(code=('c2', 'failed'), other=('o1', 'kept')))
+        refused = self.push('--fast-gate', red, b, 'red')
+        self.assertNotEqual(refused.returncode, 0)
+        self.assertIn('rerun unit code is failed', refused.stderr)
+        kept = rerun('kept', [], units(code=('c2', 'kept'), other=('o1', 'kept')))
+        refused = self.push('--fast-gate', kept, b, 'kept')
+        self.assertNotEqual(refused.returncode, 0)
+        self.assertIn('unit code is kept but its inputs changed (c1 to c2), so it must rerun', refused.stderr)
+        self.assertEqual(self.main_now(), moved)
+
     def test_a_moved_main_under_a_whole_pool_record_starts_loom_s_rerun_on_b_and_holds(self):
         # #mbexftz: on a whole record, push-main pushes B (main merged with the gated sha) and starts Loom's rerun.sh on
         # it, which reruns only the units whose input hash moved; push-main holds (exit 3) until that record lands B.
