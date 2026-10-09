@@ -12,6 +12,7 @@ import (
 )
 
 func TestV8CompatibilityRefusals(t *testing.T) {
+	t.Parallel()
 	for _, row := range [][3]string{
 		{`[\q{a}]`, "iv", "singleton"}, {`[\q{Ss|x}]`, "iv", "singleton"},
 		{`(?i:a)[b]`, "v", "scoped"}, {`(?-i:a)[b]`, "iv", "scoped"},
@@ -35,6 +36,7 @@ func TestV8CompatibilityRefusals(t *testing.T) {
 }
 
 func TestV8VisibleShapesNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for _, prefix := range []string{"", "(?i:^)", "(?-i:^)", "(?i:^)(?:)", "(?i:^)(?-i:)"} {
 		for _, atom := range []string{`[b]`, `[a-z]`, `[0-9]`, `\w`, `[\w]`, `\W`, `[\W]`, `[\w\W]`, `[^\w]`, `[^\W]`, `[^b]`, `\p{Lowercase_Letter}`, `[\q{a}]`, `[a\q{a}]`, `[\q{AB}]`, `[\q{ab}]`, `[\q{Ss|x}]`, `[[\q{a}]&&[A]]`, `[[A]--[\q{a}]]`} {
@@ -82,6 +84,7 @@ func TestV8VisibleShapesNode(t *testing.T) {
 }
 
 func TestV8CompatibilityAcceptedNode(t *testing.T) {
+	t.Parallel()
 	cases := []executionCase{}
 	for _, row := range [][3]string{
 		{`[\q{AB}]`, "iv", "ab"}, {`[\q{ab}]`, "iv", "AB"}, {`[\q{Ss}]`, "iv", "sſ"},
@@ -112,6 +115,7 @@ func TestV8CompatibilityAcceptedNode(t *testing.T) {
 // Pin the observed Node 24 slow-path failure without allowing a test hang.
 // Direct exec ordering agrees with CompileAtom; this is not an ordering oracle.
 func TestV8EmptyClassStringReplacement(t *testing.T) {
+	t.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	out, err := exec.CommandContext(ctx, "node", "-e", `const r=/[\q{ab|a|}]/gv; r.lastIndex=0; console.log("🌍a🌍".replace(r,"")); console.log(JSON.stringify(/[\q{ab|a|}]/v.exec("a"))); console.log(process.version,process.versions.v8);`).CombinedOutput()
@@ -132,6 +136,7 @@ func TestV8EmptyClassStringReplacement(t *testing.T) {
 }
 
 func TestV8SurrogateAssertionsNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for _, pattern := range []string{`\B`, `\b`, `(?!\W)`, `(?=\W)`, `(?!.)`, `(?<!.)`, `(?:)`, `\B(a?)`, `\B.`, `(?!\W).`, `(?=\B)`} {
 		for _, flags := range []string{"g", "y", "gu", "yu", "giu", "yiu", "gv", "yv"} {

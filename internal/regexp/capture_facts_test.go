@@ -27,6 +27,7 @@ type captureLiteral struct {
 
 // This fixed checker contract is read by the test, not a measurement dump.
 // Parse every pinned compiler source again so omissions and new literals fail.
+// Not parallel: writes testdata/capture-tsc.json when ADAMIC_UPDATE_CAPTURE_TABLE=1.
 func TestCaptureFactsCompilerTable(t *testing.T) {
 	data, err := os.ReadFile("testdata/capture-tsc.json")
 	if err != nil {
@@ -161,6 +162,7 @@ func assertCaptureFacts(t *testing.T, cases []captureCase) []captureObservation 
 }
 
 func TestCaptureFactsNodeBranches(t *testing.T) {
+	t.Parallel()
 	var cases []captureCase
 	for _, pattern := range []string{`(a)?(b)`, `(a)|(b)`, `((a)|(b))+`, `(a?)(b*)`, `(?=(a))a`, `(?!(a))b`, `(?<=(a))b`, `(?<!(a))b`, `(a)?\1`, `\1(a)`, `(?<x>a)|(?<x>b)`, `(?:(?<x>a)|b)+`, `((a)?){2}`, `(?=(a|))`, `(?:(?=(a)))*`, `((a)?)+?`} {
 		for _, input := range []string{"", "a", "b", "ab", "ba", "aa", "bb", "aba", "bab"} {
@@ -171,6 +173,7 @@ func TestCaptureFactsNodeBranches(t *testing.T) {
 }
 
 func TestCaptureFactsTest262Node(t *testing.T) {
+	t.Parallel()
 	f, err := os.Open("testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -208,6 +211,7 @@ func TestCaptureFactsTest262Node(t *testing.T) {
 // three alternatives and JSX escaping two. JSX entities exercise each capture
 // alternative (decimal, hexadecimal, word); the other sites have no captures
 // except diagnostic substitution's required numeric group.
+// Not parallel: reads testdata/capture-tsc.json, which TestCaptureFactsCompilerTable can rewrite.
 func TestCaptureFactsTSCCallbacksNode(t *testing.T) {
 	var cases []captureCase
 	patterns := []struct{ pattern, input, site string }{
@@ -274,6 +278,7 @@ func TestCaptureFactsTSCCallbacksNode(t *testing.T) {
 }
 
 func TestCaptureFactsOptionalMutant(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("capture_facts.go")
 	if err != nil {
 		t.Fatal(err)
@@ -310,6 +315,7 @@ func TestCaptureFactsOptionalMutant(t *testing.T) {
 // Includes syntax-negative patterns, which have no successful match and must
 // return a parser error instead of a fabricated participation table.
 func TestCaptureFactsTest262Patterns(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("testdata/test262.json")
 	if err != nil {
 		t.Fatal(err)
@@ -360,6 +366,7 @@ func TestCaptureFactsTest262Patterns(t *testing.T) {
 }
 
 func TestCaptureFactsPrecision(t *testing.T) {
+	t.Parallel()
 	for _, c := range []struct {
 		pattern string
 		indices []bool

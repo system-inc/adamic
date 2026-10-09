@@ -6,6 +6,7 @@ import (
 )
 
 func TestRegularCompileBudget(t *testing.T) {
+	t.Parallel()
 	pattern := "(?:)"
 	for k := 0; k < 7; k++ {
 		pattern = "(?:" + pattern + "){32}"
@@ -25,6 +26,7 @@ func TestRegularCompileBudget(t *testing.T) {
 }
 
 func TestRegularPriorityNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for _, pattern := range []string{`a.*b`, `a.*?b`, `a.*z|b`, `(a|aa)(a?)`, `(a|(b))+`, `(a?){2,4}?`} {
 		for _, input := range []string{"aaxb", "abzz", "abxx", "aa", "aba", ""} {

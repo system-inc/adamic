@@ -13,6 +13,7 @@ import (
 )
 
 func TestRuntimeReferenceNode(t *testing.T) {
+	t.Parallel()
 	cases := []struct {
 		Pattern, Flags string
 		Valid          bool
@@ -67,6 +68,7 @@ func TestRuntimeReferenceNode(t *testing.T) {
 // Each isolated source overlay changes the implementation, builds successfully,
 // and must fail the Node comparison or the exact divergence-type assertion.
 func TestRuntimeReferenceMutants(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("parser.go")
 	if err != nil {
 		t.Fatal(err)

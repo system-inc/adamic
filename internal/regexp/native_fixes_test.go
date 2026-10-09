@@ -13,6 +13,7 @@ import (
 )
 
 func TestLegacyClassOctalNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for n := 0; n < 512; n++ {
 		pattern := fmt.Sprintf(`[\%o]`, n)
@@ -25,6 +26,7 @@ func TestLegacyClassOctalNode(t *testing.T) {
 }
 
 func TestLargeQuantifierBoundsNode(t *testing.T) {
+	t.Parallel()
 	var cases []oracleCase
 	for _, lo := range []string{"7", "8", "2147483646", "2147483647", "2147483648", "4294967296", "9007199254740992", "9007199254740993", "9223372036854775807", "9223372036854775808", "18446744073709551615", "18446744073709551616"} {
 		for _, hi := range []string{"7", "8", "2147483646", "2147483647", "2147483648", "4294967296", "9007199254740992", "9007199254740993", "9223372036854775807", "9223372036854775808", "18446744073709551615", "18446744073709551616"} {
