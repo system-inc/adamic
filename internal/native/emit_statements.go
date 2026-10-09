@@ -184,6 +184,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
+		if ir.HasArrayViews(e.program) {
+			e.viewArrayMutation(array, statement.Element)
+		}
 		if statement.Array.Type().IsTypedArray() {
 			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
 			e.end()
@@ -192,7 +195,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		setter := "adamic_array_set"
+		if e.hasArrayHoles() {
+			setter = "adamic_array_holes_set"
+		}
+		e.line("%s(%s, %s, (adamic_value){.%s = %s});", setter, array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
 		if statement.Record {
@@ -482,6 +489,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.indent++
 	e.scopes = append(e.scopes, nil)
 	element := unslotted(statement.Element, fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element)))
+	if statement.ViewRead.View != "" {
+		slot := e.viewArrayElementSlot(statement.ViewRead, held, "(double)"+index)
+		element = unslotted(statement.Element, slot+"."+member(statement.Element))
+	}
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete
 	// the entry.
 	bindEntry := func(local int, slot string, of ir.Type) {
