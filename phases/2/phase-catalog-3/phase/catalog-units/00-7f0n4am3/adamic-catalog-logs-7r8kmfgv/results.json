@@ -1,0 +1,25 @@
+{
+  "target": "eae251c27abc81a0ff8ac74f31acdd213d486256",
+  "jobs": 1,
+  "total_wall_seconds": 16.18098353499954,
+  "load_before": "10.67 7.20 7.03 1/690 417515",
+  "load_after": "7.86 6.78 6.90 1/694 417611",
+  "entries": [
+    {
+      "number": 3,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "eae251c27abc81a0ff8ac74f31acdd213d486256",
+      "worktree": "/tmp/loom-units/loom-unit-2301887325/workspace/loom-out/phase/catalog-units/00-7f0n4am3/adamic-catalog-worktree-7c1rbtz4/entry-03",
+      "ok": false,
+      "cleanup_seconds": 0.16751836899493355,
+      "wall_seconds": 16.155195211998944,
+      "load_before": "10.67 7.20 7.03 1/691 417524",
+      "load_after": "7.86 6.78 6.90 1/695 417611",
+      "messages": [
+        "03 defined-lent: error (Command '['git', '-C', '/tmp/loom-units/loom-unit-2301887325/workspace/loom-out/phase/catalog-units/00-7f0n4am3/adamic-catalog-worktree-7c1rbtz4/entry-03', '-c', 'submodule.cohere.url=https://github.com/system-inc/cohere.git', 'submodule', 'update', '--init', '--recursive', '--depth', '1']' returned non-zero exit status 128.)",
+        "03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "03 wall=16.155s setup=0.000s check=0.000s cleanup=0.168s load=10.67 7.20 7.03 1/691 417524 -> 7.86 6.78 6.90 1/695 417611"
+      ]
+    }
+  ]
+}

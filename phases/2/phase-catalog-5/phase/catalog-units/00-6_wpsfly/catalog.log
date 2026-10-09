@@ -1,0 +1,8 @@
+target eae251c27abc81a0ff8ac74f31acdd213d486256
+logs /tmp/loom-units/loom-unit-4199779971/workspace/loom-out/phase/catalog-units/00-6_wpsfly/adamic-catalog-logs-uk_ceec6
+build flags: commit=eae251c27abc81a0ff8ac74f31acdd213d486256; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+05 spread-method-reuse: baseline-fails-or-test-missing (needs investigation)
+05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+05 wall=249.571s setup=14.663s check=233.100s cleanup=0.426s load=3.37 2.89 1.88 2/508 563113 -> 1.03 1.80 1.65 1/511 564344
+total wall=249.596s load=3.37 2.89 1.88 1/507 563104 -> 1.03 1.80 1.65 1/510 564344

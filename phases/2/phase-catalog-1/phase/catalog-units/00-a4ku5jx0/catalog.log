@@ -1,0 +1,8 @@
+target eae251c27abc81a0ff8ac74f31acdd213d486256
+logs /tmp/loom-units/loom-unit-1232571913/workspace/loom-out/phase/catalog-units/00-a4ku5jx0/adamic-catalog-logs-xjpa69v4
+build flags: commit=eae251c27abc81a0ff8ac74f31acdd213d486256; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: error (Command '['git', '-C', '/tmp/loom-units/loom-unit-1232571913/workspace/loom-out/phase/catalog-units/00-a4ku5jx0/adamic-catalog-worktree-buqc41_l/entry-01', '-c', 'submodule.cohere.url=https://github.com/system-inc/cohere.git', 'submodule', 'update', '--init', '--recursive', '--depth', '1']' returned non-zero exit status 128.)
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=4.768s setup=0.000s check=0.000s cleanup=0.137s load=8.34 3.46 1.99 1/503 562723 -> 7.67 3.40 1.98 1/505 562774
+total wall=4.792s load=8.34 3.46 1.99 1/502 562714 -> 7.67 3.40 1.98 1/504 562774

@@ -1,0 +1,461 @@
+run adamic-gate-pilot-again-20261009T084714-821254ea: void, 24421 tests in 118 units, 69 failed, 1 units broken, 0 killed over budget
+BROKEN tests-103: exited 1 with no failed test (last output "loom-pilot: tests took 587 s in all")
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_000 (tests-22)
+    css_printer_parallel_test.go:146: setup including products: 10.504241ms
+    css_printer_parallel_test.go:146: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 815.382368ms
+    PASS
+    css_printer_parallel_test.go:146: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 850.654657ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_001 (tests-22)
+    css_printer_parallel_test.go:147: setup including products: 7.775236ms
+    css_printer_parallel_test.go:147: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 793.459792ms
+    PASS
+    css_printer_parallel_test.go:147: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 801.853692ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_002 (tests-22)
+    css_printer_parallel_test.go:148: setup including products: 207.687374ms
+    css_printer_parallel_test.go:148: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 927.229951ms
+    PASS
+    css_printer_parallel_test.go:148: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 944.065852ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_003 (tests-22)
+    css_printer_parallel_test.go:149: setup including products: 1.091769921s
+    css_printer_parallel_test.go:149: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 900.903917ms
+    PASS
+    css_printer_parallel_test.go:149: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 918.58285ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_004 (tests-22)
+    printer_shards_test.go:95: build css-printer-executable--1: rename /tmp/adamic-gate/TestCSSPrinterAgreesWithGo_0042357597732/001 /home/agent/.cache/adamic-build/.building-54cc6c40bda9-2246716017/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_005 (tests-22)
+    css_printer_parallel_test.go:151: setup including products: 25.806113ms
+    css_printer_parallel_test.go:151: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.297794219s
+    PASS
+    css_printer_parallel_test.go:151: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.325377616s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_006 (tests-22)
+    css_printer_parallel_test.go:152: setup including products: 49.501551ms
+    css_printer_parallel_test.go:152: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 1.006764334s
+    PASS
+    css_printer_parallel_test.go:152: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.02356232s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_007 (tests-22)
+    css_printer_parallel_test.go:153: setup including products: 11.353684ms
+    css_printer_parallel_test.go:153: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 1.222696172s
+    PASS
+    css_printer_parallel_test.go:153: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.247150565s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_008 (tests-22)
+    css_printer_parallel_test.go:154: setup including products: 12.971162ms
+    css_printer_parallel_test.go:154: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 1.205398886s
+    PASS
+    css_printer_parallel_test.go:154: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.229820086s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_009 (tests-22)
+    css_printer_parallel_test.go:155: setup including products: 15.99268ms
+    css_printer_parallel_test.go:155: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 703.542286ms
+    PASS
+    css_printer_parallel_test.go:155: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 722.205342ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_010 (tests-22)
+    css_printer_parallel_test.go:156: setup including products: 22.94128ms
+    css_printer_parallel_test.go:156: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 912.275371ms
+    PASS
+    css_printer_parallel_test.go:156: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 938.261435ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_011 (tests-22)
+    css_printer_parallel_test.go:157: setup including products: 55.652487ms
+    css_printer_parallel_test.go:157: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 828.461103ms
+    PASS
+    css_printer_parallel_test.go:157: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 841.57668ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_012 (tests-22)
+    css_printer_parallel_test.go:158: setup including products: 17.02646ms
+    css_printer_parallel_test.go:158: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 723.001086ms
+    PASS
+    css_printer_parallel_test.go:158: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 735.671411ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_013 (tests-22)
+    css_printer_parallel_test.go:159: setup including products: 10.402348ms
+    css_printer_parallel_test.go:159: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.163886741s
+    PASS
+    css_printer_parallel_test.go:159: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.174805391s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_014 (tests-22)
+    css_printer_parallel_test.go:160: setup including products: 10.537632ms
+    css_printer_parallel_test.go:160: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 895.166086ms
+    PASS
+    css_printer_parallel_test.go:160: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 918.853338ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_015 (tests-22)
+    css_printer_parallel_test.go:161: setup including products: 12.384607ms
+    css_printer_parallel_test.go:161: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 924.909362ms
+    PASS
+    css_printer_parallel_test.go:161: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 945.701883ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_016 (tests-22)
+    css_printer_parallel_test.go:162: setup including products: 9.801582ms
+    css_printer_parallel_test.go:162: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 909.990324ms
+    PASS
+    css_printer_parallel_test.go:162: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 921.1405ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_017 (tests-22)
+    css_printer_parallel_test.go:163: setup including products: 12.928367ms
+    css_printer_parallel_test.go:163: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 839.214189ms
+    PASS
+    css_printer_parallel_test.go:163: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 852.778406ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_018 (tests-22)
+    css_printer_parallel_test.go:164: setup including products: 35.909495ms
+    css_printer_parallel_test.go:164: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 960.423153ms
+    PASS
+    css_printer_parallel_test.go:164: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 978.943834ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_019 (tests-22)
+    css_printer_parallel_test.go:165: setup including products: 19.031711ms
+    css_printer_parallel_test.go:165: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 837.121478ms
+    PASS
+    css_printer_parallel_test.go:165: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 878.437991ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_020 (tests-22)
+    css_printer_parallel_test.go:166: setup including products: 6.625983ms
+    css_printer_parallel_test.go:166: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 849.967161ms
+    PASS
+    css_printer_parallel_test.go:166: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 862.548781ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_021 (tests-22)
+    css_printer_parallel_test.go:167: setup including products: 16.633104ms
+    css_printer_parallel_test.go:167: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.172483816s
+    PASS
+    css_printer_parallel_test.go:167: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.191527312s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_022 (tests-22)
+    css_printer_parallel_test.go:168: setup including products: 11.090826ms
+    css_printer_parallel_test.go:168: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 856.960347ms
+    PASS
+    css_printer_parallel_test.go:168: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 925.216855ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_023 (tests-22)
+    css_printer_parallel_test.go:169: setup including products: 75.752663ms
+    css_printer_parallel_test.go:169: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 924.38453ms
+    PASS
+    css_printer_parallel_test.go:169: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 941.22644ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_024 (tests-22)
+    css_printer_parallel_test.go:170: setup including products: 15.502349ms
+    css_printer_parallel_test.go:170: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 985.951546ms
+    PASS
+    css_printer_parallel_test.go:170: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 999.636185ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_025 (tests-22)
+    css_printer_parallel_test.go:171: setup including products: 40.390204ms
+    css_printer_parallel_test.go:171: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 918.282772ms
+    PASS
+    css_printer_parallel_test.go:171: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 935.676975ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_026 (tests-22)
+    css_printer_parallel_test.go:172: setup including products: 10.633707ms
+    css_printer_parallel_test.go:172: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 754.301269ms
+    PASS
+    css_printer_parallel_test.go:172: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 792.314573ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_027 (tests-22)
+    css_printer_parallel_test.go:173: setup including products: 20.981002ms
+    css_printer_parallel_test.go:173: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 988.427647ms
+    PASS
+    css_printer_parallel_test.go:173: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.023900305s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_028 (tests-22)
+    css_printer_parallel_test.go:174: setup including products: 15.540758ms
+    css_printer_parallel_test.go:174: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 1.067747623s
+    PASS
+    css_printer_parallel_test.go:174: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.082178937s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_029 (tests-22)
+    css_printer_parallel_test.go:175: setup including products: 18.899271ms
+    css_printer_parallel_test.go:175: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.143706103s
+    PASS
+    css_printer_parallel_test.go:175: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.183126009s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_030 (tests-22)
+    css_printer_parallel_test.go:176: setup including products: 734.8525ms
+    css_printer_parallel_test.go:176: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 778.658404ms
+    PASS
+    css_printer_parallel_test.go:176: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 787.802163ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_031 (tests-22)
+    printer_shards_test.go:95: build css-printer-executable-0: rename /tmp/adamic-gate/TestCSSPrinterAgreesWithGo_0312382739154/001 /home/agent/.cache/adamic-build/.building-8d4b31003d9b-2139741797/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_032 (tests-22)
+    css_printer_parallel_test.go:178: setup including products: 26.95545ms
+    css_printer_parallel_test.go:178: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 1.339985701s
+    PASS
+    css_printer_parallel_test.go:178: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.370810558s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_033 (tests-22)
+    printer_shards_test.go:58: build css-printer-oracle-0 82e4a4fd612a miss 5.80
+    css_printer_parallel_test.go:25: === RUN   TestAdamicPortCases
+    adamic_port_side_test.go:168: corpus files: map[.css:322 .less:43 .scss:180]
+    adamic_port_side_test.go:251: 24594 cases, 5479 parsed
+    adamic_port_side_test.go:269: Go: 245940 stylesheets in 14.857478578s, 16553 stylesheets/s; 54790 parsed, 129910 children
+    PASS
+    css_printer_parallel_test.go:179: setup including products: 32.478743329s
+    css_printer_parallel_test.go:179: === RUN   TestAdamicPrinterCases
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_034 (tests-22)
+    css_printer_parallel_test.go:180: setup including products: 9.513820574s
+    css_printer_parallel_test.go:180: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 1.099191161s
+    PASS
+    css_printer_parallel_test.go:180: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.12834042s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_035 (tests-22)
+    css_printer_parallel_test.go:181: setup including products: 12.908081983s
+    css_printer_parallel_test.go:181: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 820.427615ms
+    PASS
+    css_printer_parallel_test.go:181: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 835.589915ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_036 (tests-22)
+    css_printer_parallel_test.go:182: setup including products: 13.764002327s
+    css_printer_parallel_test.go:182: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 884.999514ms
+    PASS
+    css_printer_parallel_test.go:182: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 895.448526ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_037 (tests-22)
+    printer_shards_test.go:58: build css-printer-oracle-1 52b86de000eb miss 6.65
+    printer_shards_test.go:95: build css-printer-executable-1: rename /tmp/adamic-gate/TestCSSPrinterAgreesWithGo_0373611451743/001 /home/agent/.cache/adamic-build/.building-268ca671d945-3459127232/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_038 (tests-22)
+    css_printer_parallel_test.go:184: setup including products: 6.277779ms
+    css_printer_parallel_test.go:184: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 1.135385154s
+    PASS
+    css_printer_parallel_test.go:184: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.183806357s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_039 (tests-22)
+    css_printer_parallel_test.go:185: setup including products: 35.832572ms
+    css_printer_parallel_test.go:185: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 1.090996087s
+    PASS
+    css_printer_parallel_test.go:185: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.11493396s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_040 (tests-22)
+    css_printer_parallel_test.go:186: setup including products: 16.053562ms
+    css_printer_parallel_test.go:186: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 1.112163372s
+    PASS
+    css_printer_parallel_test.go:186: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.17490287s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_041 (tests-22)
+    css_printer_parallel_test.go:187: setup including products: 38.187554ms
+    css_printer_parallel_test.go:187: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 850.677034ms
+    PASS
+    css_printer_parallel_test.go:187: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 894.099328ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_042 (tests-22)
+    css_printer_parallel_test.go:188: setup including products: 18.953805ms
+    css_printer_parallel_test.go:188: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 786.235739ms
+    PASS
+    css_printer_parallel_test.go:188: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 805.255755ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_043 (tests-22)
+    css_printer_parallel_test.go:189: setup including products: 50.429738ms
+    css_printer_parallel_test.go:189: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 896.519618ms
+    PASS
+    css_printer_parallel_test.go:189: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 915.115599ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_044 (tests-22)
+    css_printer_parallel_test.go:190: setup including products: 14.91887ms
+    css_printer_parallel_test.go:190: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 892.009912ms
+    PASS
+    css_printer_parallel_test.go:190: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 915.625243ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_045 (tests-22)
+    css_printer_parallel_test.go:191: setup including products: 16.934482ms
+    css_printer_parallel_test.go:191: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.000839869s
+    PASS
+    css_printer_parallel_test.go:191: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.034974603s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_046 (tests-22)
+    css_printer_parallel_test.go:192: setup including products: 33.684705ms
+    css_printer_parallel_test.go:192: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 825.893524ms
+    PASS
+    css_printer_parallel_test.go:192: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 845.319342ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_047 (tests-22)
+    css_printer_parallel_test.go:193: setup including products: 44.088623ms
+    css_printer_parallel_test.go:193: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 953.815627ms
+    PASS
+    css_printer_parallel_test.go:193: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 968.873572ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_048 (tests-22)
+    css_printer_parallel_test.go:194: setup including products: 18.376576ms
+    css_printer_parallel_test.go:194: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 963.948994ms
+    PASS
+    css_printer_parallel_test.go:194: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.001675496s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_049 (tests-22)
+    css_printer_parallel_test.go:195: setup including products: 12.059268ms
+    css_printer_parallel_test.go:195: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 935.562683ms
+    PASS
+    css_printer_parallel_test.go:195: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 966.794968ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_050 (tests-22)
+    css_printer_parallel_test.go:196: setup including products: 16.720718ms
+    css_printer_parallel_test.go:196: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 789.877431ms
+    PASS
+    css_printer_parallel_test.go:196: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 806.887405ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_051 (tests-22)
+    css_printer_parallel_test.go:197: setup including products: 38.7092ms
+    css_printer_parallel_test.go:197: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 804.049335ms
+    PASS
+    css_printer_parallel_test.go:197: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 819.033459ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_052 (tests-22)
+    css_printer_parallel_test.go:198: setup including products: 21.936505ms
+    css_printer_parallel_test.go:198: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 801.222282ms
+    PASS
+    css_printer_parallel_test.go:198: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 820.709162ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_053 (tests-22)
+    css_printer_parallel_test.go:199: setup including products: 11.019299ms
+    css_printer_parallel_test.go:199: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.126747032s
+    PASS
+    css_printer_parallel_test.go:199: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.143750006s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_054 (tests-22)
+    css_printer_parallel_test.go:200: setup including products: 21.640849ms
+    css_printer_parallel_test.go:200: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 1.077334413s
+    PASS
+    css_printer_parallel_test.go:200: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.083118536s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_055 (tests-22)
+    css_printer_parallel_test.go:201: setup including products: 49.953623ms
+    css_printer_parallel_test.go:201: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 950.324924ms
+    PASS
+    css_printer_parallel_test.go:201: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.000187248s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_056 (tests-22)
+    css_printer_parallel_test.go:202: setup including products: 14.63934ms
+    css_printer_parallel_test.go:202: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3098 inputs, 600 formatted, elapsed 1.176683187s
+    PASS
+    css_printer_parallel_test.go:202: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.199763518s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_057 (tests-22)
+    css_printer_parallel_test.go:203: setup including products: 24.117245ms
+    css_printer_parallel_test.go:203: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3173 inputs, 608 formatted, elapsed 724.312052ms
+    PASS
+    css_printer_parallel_test.go:203: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 769.966912ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_058 (tests-22)
+    css_printer_parallel_test.go:204: setup including products: 47.035246ms
+    css_printer_parallel_test.go:204: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2896 inputs, 638 formatted, elapsed 926.451558ms
+    PASS
+    css_printer_parallel_test.go:204: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 948.542354ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_059 (tests-22)
+    css_printer_parallel_test.go:205: setup including products: 6.280102ms
+    css_printer_parallel_test.go:205: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3024 inputs, 669 formatted, elapsed 710.389331ms
+    PASS
+    css_printer_parallel_test.go:205: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 718.661608ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_060 (tests-22)
+    css_printer_parallel_test.go:206: setup including products: 16.026756ms
+    css_printer_parallel_test.go:206: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3315 inputs, 789 formatted, elapsed 810.418704ms
+    PASS
+    css_printer_parallel_test.go:206: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 849.776301ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_061 (tests-22)
+    css_printer_parallel_test.go:207: setup including products: 35.155739ms
+    css_printer_parallel_test.go:207: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 2929 inputs, 651 formatted, elapsed 1.00709034s
+    PASS
+    css_printer_parallel_test.go:207: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.027784856s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_062 (tests-22)
+    css_printer_parallel_test.go:208: setup including products: 6.425821ms
+    css_printer_parallel_test.go:208: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3073 inputs, 817 formatted, elapsed 1.039637542s
+    PASS
+    css_printer_parallel_test.go:208: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 1.087900223s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_063 (tests-22)
+    css_printer_parallel_test.go:209: setup including products: 18.69256ms
+    css_printer_parallel_test.go:209: === RUN   TestAdamicPrinterCases
+    adamic_print_side_test.go:92: printed stylesheets: 3086 inputs, 652 formatted, elapsed 906.408719ms
+    PASS
+    css_printer_parallel_test.go:209: running : exec: no command
+    css_printer_parallel_test.go:48: own work: 916.901779ms
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterWidthMutant (tests-22)
+    printer_shards_test.go:95: build css-printer-executable-2: rename /tmp/adamic-gate/TestProduct_CSSPrinterWidthMutant791762248/001 /home/agent/.cache/adamic-build/.building-e8b4e60dd8eb-2465206444/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-22)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.450s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.032s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	91.763s
+    testing: warning: no tests to run
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.983s [no tests to run]
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-011 (tests-90)
+    expressions_test.go:155: Prettier: 2706 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2706 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 35.101s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-013 (tests-90)
+    expressions_test.go:155: Prettier: 2711 cases; 0 exact upstream text differences, 1 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2711 cases; 0 exact upstream text differences, 1 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 36.949s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier/shard-056 (tests-90)
+    expressions_test.go:155: Prettier: 2725 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:156: embedded Prettier: 2725 cases; 0 exact upstream text differences, 0 exact parser refusals, all other bytes match Go
+    expressions_test.go:133: invalid test unit: 34.796s exceeds 30s
