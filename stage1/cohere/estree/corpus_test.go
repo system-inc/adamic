@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestRepositoryAgreement(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
@@ -76,6 +77,7 @@ func TestRepositoryAgreement(t *testing.T) {
 	t.Logf("%d Go-accepted/source-Node-identical repository snapshot files, %d bytes checked on uninstrumented source Node, sanitized native and emitted JS; refusals and mismatches remain excluded and separately reported", len(records), total)
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCorpusNativeRefusals(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {

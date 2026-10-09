@@ -27,6 +27,8 @@ func recoveredGrammar() []string {
 		"class C { static { await(x); class D { x=await(x); } } }",
 	}
 }
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredGrammar(t *testing.T) {
 	list := manifest(t, recoveredGrammar())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
@@ -62,13 +64,17 @@ func recoveryMutantCases() []recoveryCase {
 // ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
 // Each mutant retains the entire grammar corpus on both Node and sanitized native.
 func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
 	// Compatibility enumeration only; execution lives in the top-level shards.
 	checkRecoveryMutantUnion(t)
 }
 
 func TestRecoveryMutantsShardSurvivor(t *testing.T) {
+	t.Parallel()
 	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveryLibraryGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {

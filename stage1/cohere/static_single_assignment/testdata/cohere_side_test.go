@@ -37,6 +37,7 @@ type adamicPortRequest struct {
 	Answers   string   `json:"answers"`
 }
 
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {
