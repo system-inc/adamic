@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -81,7 +81,7 @@
+ 	targets := p.ClosureTargets(call)
+ 	if targets.Unknown {
+ 		for _, function := range p.Functions {
+-			if function.MayThrow {
++			if !function.MayThrow {
+ 				return true
+ 			}
+ 		}
