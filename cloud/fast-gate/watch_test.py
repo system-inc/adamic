@@ -1210,6 +1210,24 @@ class WatchTests(unittest.TestCase):
         self.assertNotIn('d' * 40, (w.state / 'gated').read_text())
         self.assertEqual(w.read('starts').count('gate-mutant/plain '), 1)
 
+    def test_a_mutant_of_a_superseded_staged_suite_is_stopped(self):
+        # Oct 9 16:53Z: wasi mutant runs from four superseded staged suites held workshop and server.
+        w = self.mutantsStaged()
+        w.wait(lambda: 'gate-mutant/plain ' + 'd' * 40 in w.read('starts'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'stopped gate-mutant/plain ' + 'd' * 40 in w.read('output'))
+        self.assertIn('were superseded', w.read('output'))
+        self.assertTrue((w.root / ('stopped-' + 'd' * 40)).exists())
+
+    def test_a_mutant_never_refills_the_box_a_stage_canary_drains(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', mutants=self.suite, boxSides={'tools-one': 'tools-zero'})
+        self.addCleanup(w.close)
+        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'staging tools tools-two' in w.read('output'))
+        time.sleep(1)
+        self.assertNotIn('gate-mutant/', w.read('starts') + w.read('good-starts'))
+
     def test_a_mutant_that_reads_green_or_reds_at_the_wrong_step_holds_the_staged_tools(self):
         w = self.mutantsStaged()
         w.put('mutant-plain', self.green)

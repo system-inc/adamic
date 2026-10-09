@@ -544,6 +544,21 @@ stopOverCeiling() {
 # A stage canary whose tools are already the good tools (promoted by hand, or by another canary) can promote nothing, and
 # one canary runs at a time: 26226fda's ran on for 79 minutes after its tools were promoted at 12:51Z on Oct 9, and no stage
 # canary or half-hourly canary started behind it.
+# A gate mutant gated for staged tools the head has since moved past is stopped: only the current staged suite decides a
+# promotion, and at 16:53Z four wasi mutant runs from four superseded suites held two boxes.
+stopStaleMutants() {
+  local file pid branch sha slot box class token rest
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r branch sha slot box class token rest < "${file}"
+    [[ ${branch} == gate-mutant/* && ${token} == *:staged && ${token} != "${canaryToken}:staged" ]] || continue
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "its suite's staged tools ${token:0:9} were superseded by ${toolsHead:0:9}" &&
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha} on ${box}: its suite's staged tools ${token:0:9} were superseded"
+  done
+}
 stopPromotedCanary() {
   local file pid branch sha slot box class token rest
   for file in "${state}"/running/*; do
@@ -1002,7 +1017,9 @@ usableSlots() {
     # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there. The
     # deploy canary is exempt: nothing dispatches until it has a verdict, so a canary kept off the only
     # free box (the draining one) froze everything, the reserved tip included (Oct 8 17:30Z, 67 queued).
-    if ! isCanary "${branch}" && echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
+    # A gate mutant isn't exempt: it would keep refilling the box a stage canary drains for (Oct 9 16:25 to 16:53Z, four
+    # wasi mutant runs held workshop and server and no whole-box canary started).
+    if [ "${branch}" != canary/main ] && echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
       blocked=yes
     fi
     [ "${blocked}" = no ] || continue
@@ -1178,6 +1195,7 @@ while true; do
   stopSkipped
   stopSuperseded
   stopPromotedCanary
+  stopStaleMutants
   stopOverCeiling
   reapStopped
   startRaces
