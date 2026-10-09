@@ -223,6 +223,9 @@ dispatch() {
   started=$(date -u +%s)
   lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
+  # The stage canary runs on a whole box (@system_adamic, Oct 9 15:44Z): main~10 selects json and lint, about five
+  # CPU-hours, and on a 12-CPU slot it voided at its hour's ceiling (bb34ce2e, 3421 s of tests), so no tools promoted.
+  [ "${branch}" = canary/main ] && [ "${tools}" = staged ] && whole=--whole-box
   # Staged tools never gate a candidate (#9n4p27j, @system_adamic, Oct 9 10:21Z): while new tools are staged, every
   # box, the canary box included, gates with the last good tools, and the staged tools run main's canary only.
   if staging && [ "${tools}" != staged ]; then
@@ -244,7 +247,7 @@ dispatch() {
   dispatchedPid=${pid}
   echo "${started}" > "${state}/running-started/${pid}"
   echo "${branch} ${sha} ${slot} ${box} ${class} ${token} ${log}" > "${state}/running/${pid}"
-  if slotReserved "${branch}" "${box}" "${slot}"; then
+  if [ -n "${whole}" ]; then
     echo "${box}" > "${state}/reserved-running/${pid}"
   fi
 }
@@ -1033,6 +1036,25 @@ drainingBoxes() {
     isFront "${branch}" && starOnPool "${branch}" "${sha}" && continue
     matchesReservation "${branch}" && reservedBoxes "${branch}" "${class}"
   done < "${state}/queue" | sort -u
+  # A stage canary waiting for an empty box drains the canary box, so the box empties instead of refilling.
+  stageCanaryWaiting && cat "${state}/canary-box"
+}
+# Staged tools whose canary hasn't started and isn't held: it waits for a box to empty.
+stageCanaryWaiting() {
+  staging && [ ! -f "${state}/storm" ] && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ] &&
+    ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null
+}
+# A box with nothing running on it, for the stage canary: the canary box first, then the slot table's order. Prints the
+# box and its first slot's class, or nothing.
+emptyBoxForStageCanary() {
+  awk -v canary="$(cat "${state}/canary-box")" '
+    FILENAME == ARGV[1] { busy[$4 == "" ? "threadripper" : $4] = 1; next }
+    $1 == "pool" || ($1 in seen) { next }
+    { seen[$1] = 1; order[++n] = $1; class[$1] = $2 }
+    END {
+      if (canary in class && !(canary in busy)) { print canary " " class[canary]; exit }
+      for (i = 1; i <= n; i++) if (!(order[i] in busy)) { print order[i] " " class[order[i]]; exit }
+    }' "${state}/running.tmp" "${state}/slots"
 }
 # The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
 # waits out the drain for the whole box rather than borrowing a share of another.
@@ -1359,25 +1381,21 @@ while true; do
       fi
     fi
   fi
-  # Staged box tools get their canary: main's tip on the canary box, ahead of the queue, one at a time, never in a storm
-  # (the storm's own probe runs the good tools), and not again for tools a red already held (#k1n98kx). With the
-  # canary box held whole (the star's second box, Oct 9 10:30Z), any box's slot: one run of main's tip risks less than
-  # staged tools waiting out a complete gate.
-  if staging && [ ! -f "${state}/storm" ] && [ "$(cat "${state}/stage-held" 2>/dev/null)" != "${canaryToken}:staged" ] &&
-     ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null; then
+  # Staged box tools get their canary: main's tip on a whole box, the canary box first, ahead of the queue, one at a time,
+  # never in a storm (the storm's own probe runs the good tools), and not again for tools a red already held (#k1n98kx).
+  # Until a box is empty the canary box drains (drainingBoxes): nothing new starts there, and the canary takes it.
+  if stageCanaryWaiting; then
     now=$(date -u +%s)
     last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
     if [ "$((now - last))" -ge 600 ]; then
-      free=$(freeSlots) draining=$(drainingBoxes)
-      read -r box canarySlot <<< "$(usableSlots canary/main | awk -v canary="$(cat "${state}/canary-box")" '$1 == "pool" {next} {rank = ($1 == canary ? 0 : 2) + ($2 == "S" ? 0 : 1)} best == "" || rank < bestRank {best = $1 " " $2; bestRank = rank} END {print best}')"
+      free=$(freeSlots)
+      read -r box canarySlot <<< "$(emptyBoxForStageCanary)"
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
         dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" staged
         echo "${now}" > "${state}/canary-started"
-        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with staged tools ${toolsHead:0:9} (${canarySlot} on ${box}, log ${log})"
-      elif [ -z "${box}" ]; then
-        yieldRaceForCanary
+        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with staged tools ${toolsHead:0:9} (${box} whole, log ${log})"
       fi
     fi
   fi

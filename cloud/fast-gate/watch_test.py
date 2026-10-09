@@ -1011,8 +1011,8 @@ class WatchTests(unittest.TestCase):
         self.assertEqual((w.state / 'star-boxes').read_text(), '')
 
     def staged(self, count=2):
-        # Staged tools: good is tools-zero, the head tools-one. Box1 has a slot for the stage canary and one more.
-        w = Watcher(count, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\nbox1 S\n')
+        # Staged tools: good is tools-zero, the head tools-one. The stage canary holds box1 whole; candidates take box0.
+        w = Watcher(count, canaryBox='box1', mode='hold', slots='box0 S\nbox0 S\nbox1 S\n')
         self.addCleanup(w.close)
         w.wait(lambda: 'canary/main ' in w.read('starts') and len(w.read('good-starts').splitlines()) == count)
         return w
@@ -1023,7 +1023,8 @@ class WatchTests(unittest.TestCase):
         w = self.staged()
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines()], ['canary/main'])
         self.assertTrue(w.read('starts').strip().endswith(' box1'), w.read('starts'))
-        self.assertEqual(sorted(x.split()[-1] for x in w.read('good-starts').splitlines()), ['box0', 'box1'])
+        # The canary holds box1 whole (#6vvjzcq), so both candidates run on box0, with the good tools.
+        self.assertEqual(sorted(x.split()[-1] for x in w.read('good-starts').splitlines()), ['box0', 'box0'])
         # A candidate's green on the canary box promotes nothing: the mutant that promotes on it fails here.
         w.put('mode', 'pass')
         w.wait(lambda: w.read('output').count('done codex/') == 2)
@@ -1103,16 +1104,39 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: w.read('starts').count('canary/main ') == 2)
         self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'), w.read('starts'))
 
-    def test_a_stage_canary_takes_a_free_slot_beside_a_front_run_that_doesn_t_hold_the_box_whole(self):
-        # Oct 9 12:13Z: front runs on all four boxes, three leaving slots free, and the stage canary had nowhere to start.
+    def test_a_stage_canary_takes_an_empty_box_whole_never_a_slot_beside_a_running_gate(self):
+        # Oct 9 15:35Z: bb34ce2e's stage canary of main~10 (json and lint, about five CPU-hours) voided at its hour on a
+        # 12-CPU slot, so no tools could promote. @system_adamic 15:44Z: the stage canary takes a whole box.
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
         self.addCleanup(w.close)
-        (w.state / 'front').write_text('codex/test0*\n')
         w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        (w.state / 'slots').write_text('box0 S\nbox1 S\nbox1 S\n')
         w.put('head', 'tools-two')
+        # box1 runs test0 with a slot free and box0 is empty: the canary takes box0 whole.
         w.wait(lambda: 'gating canary/main' in w.read('output'))
         self.assertTrue(w.read('starts').splitlines()[-1].startswith('canary/main '), w.read('starts'))
-        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box1'))
+        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'), w.read('starts'))
+        self.assertEqual(w.read('whole').splitlines(), ['canary/main'])
+        self.assertIn('(box0 whole, log', w.read('output'))
+
+    def test_a_stage_canary_with_no_empty_box_drains_the_canary_box_and_takes_it_whole(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
+        self.addCleanup(w.close)
+        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'staging tools tools-two' in w.read('output'))
+        # A new tip arrives while box1 is busy: box1 drains for the canary, so it doesn't take box1's free slot.
+        w.put('tips', w.read('tips') + f'{2:012x}' + '0' * 28 + '\trefs/heads/codex/test1\n')
+        w.wait(lambda: 'queued codex/test1 ' in w.read('output'))
+        time.sleep(.5)
+        self.assertNotIn('codex/test1 ', w.read('starts') + w.read('good-starts'))
+        self.assertNotIn('canary/main ', w.read('starts'))
+        # test0 ends: the canary takes the empty box whole, ahead of test1, which waits for it.
+        w.put('mode', 'pass')
+        w.wait(lambda: 'gating canary/main' in w.read('output'))
+        self.assertEqual(w.read('whole').splitlines(), ['canary/main'])
+        time.sleep(.5)
+        self.assertNotIn('codex/test1 ', w.read('starts') + w.read('good-starts'))
 
     def test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
         # Oct 8 22:16Z to Oct 9 02:10Z: every box-side push restarted promotion, and nothing promoted for four hours.
