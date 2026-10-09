@@ -1,0 +1,16 @@
+let order = '';
+const used = { toString: () => { order = order + 'u'; return 'used'; } };
+const ignored = { toString: () => { order = order + 'i'; return 'ignored'; } };
+console.log(String.raw({raw: ['a', 'b']}, used, ignored));
+console.log(order);
+function argument(): string { order = order + 'a'; return 'unused'; }
+console.log(String.raw({raw: []}, argument()));
+console.log(String.raw({raw: {length: 0}}, argument()));
+console.log(String.raw({raw: {length: NaN}}, argument()));
+console.log(String.raw({raw: {length: -Infinity}}, argument()));
+console.log(String.raw({raw: {length: 0.32}}, argument()));
+console.log(order);
+const changes = {raw: ['a', 'b', 'c']};
+const resize = { toString: () => { changes.raw.push('d'); return 'X'; } };
+console.log(String.raw(changes, resize, 'Y', ignored));
+console.log(order);

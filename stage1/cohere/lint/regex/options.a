@@ -1,2 +1,2 @@
-// Required rule-option contract. Native lowering currently refuses this function.
+// Required rule-option contract, supported by the library area runtime constructor.
 export function optionPattern(pattern: string): RegExp { return new RegExp(pattern, 'u'); }

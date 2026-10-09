@@ -1,0 +1,13 @@
+// Compiler-owned expected refusal, ruling 6, core.ts:1409-1417.
+function identity<T>(value: T): T { return value; }
+export function arrayToMap<K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V1 | V2 = identity): Map<K, V1 | V2> {
+    const result = new Map<K, V1 | V2>();
+    for (let i = 0; i < array.length; i++) {
+        const value = array[i];
+        const key = makeKey(value);
+        if (key !== undefined) result.set(key, makeValue(value));
+    }
+    return result;
+}
+const result = arrayToMap(['first', 'second', 'first'], value => value, value => value.length);
+for (const [key, value] of result) console.log(`${key}:${value}`);

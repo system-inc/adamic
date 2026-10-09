@@ -1,0 +1,9 @@
+// utilities.ts:9746,9775-9777; the callback captures the matcher fragment.
+const reservedCharacterPattern = /[^\w\s/]/g;
+function replaceWildcardCharacter(match: string, singleAsteriskRegexFragment: string): string {
+    return match === "*" ? singleAsteriskRegexFragment : match === "?" ? "[^/]" : "\\" + match;
+}
+function replaceComponent(component: string, singleAsteriskRegexFragment: string): string {
+    return component.replace(reservedCharacterPattern, match => replaceWildcardCharacter(match, singleAsteriskRegexFragment));
+}
+console.log(replaceComponent('a*?.ts', '[^/]*'));

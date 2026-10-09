@@ -12,6 +12,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // nodeScanner is one Node process. It builds a string of every code point, split
@@ -306,14 +308,13 @@ func formatPoints(points []uint32) string {
 }
 
 func runScanner(expressions []string) (map[string][]Range, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--eval", nodeScanner)
+	command := exec.Command("node", "--eval", nodeScanner)
 	command.Stdin = strings.NewReader(strings.Join(expressions, "\n") + "\n")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
+	// Each completed property already produces output, so it renews the stall guard.
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
 		return nil, fmt.Errorf("node scanner: %v\n%s", err, stderr.String())
 	}
 	return parseRanges(stdout.String())

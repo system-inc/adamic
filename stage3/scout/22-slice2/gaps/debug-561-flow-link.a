@@ -1,0 +1,7 @@
+// a-check: refused changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
+// debug.ts:561. Parameter/closure provenance cannot exclude a mixed field/prototype cycle yet.
+interface FlowNode { flags: number; }
+function attachFlowNodeDebugInfo(flowNode: FlowNode, flowNodeProto: FlowNode): FlowNode {
+ return Object.setPrototypeOf(flowNode, flowNodeProto);
+}
+console.log(`${attachFlowNodeDebugInfo({flags:1}, {flags:2}).flags}`);

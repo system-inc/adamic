@@ -1,0 +1,4 @@
+function measure(value: number = 9): string { return `${arguments.length}:${value}`; }
+console.log(measure.apply(undefined, []));
+console.log(measure.apply(undefined, [undefined]));
+console.log(measure.apply(undefined, [0]));

@@ -22,6 +22,7 @@
 // against its original; Bignum's methods take the bignum as their first argument.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -1052,8 +1053,9 @@ adamic_string *adamic_number_to_exponential(double value, double fraction_digits
 		return conversion_special(value);
 	}
 	if (digits < 0 || digits > max_fraction_digits) {
-		static const char message[] = "RangeError: toExponential() argument must be between 0 and 100";
-		adamic_panic(message, sizeof message - 1);
+		static const char message[] = "toExponential() argument must be between 0 and 100";
+		adamic_library_throw("RangeError", message, sizeof message - 1);
+		return NULL;
 	}
 	char buffer[conversion_buffer_size];
 	int length = double_to_exponential(value, has_digits ? (int)digits : -1, buffer);
@@ -1070,8 +1072,9 @@ adamic_string *adamic_number_to_precision(double value, double precision, bool h
 		return conversion_special(value);
 	}
 	if (digits < 1 || digits > max_fraction_digits) {
-		static const char message[] = "RangeError: toPrecision() argument must be between 1 and 100";
-		adamic_panic(message, sizeof message - 1);
+		static const char message[] = "toPrecision() argument must be between 1 and 100";
+		adamic_library_throw("RangeError", message, sizeof message - 1);
+		return NULL;
 	}
 	char buffer[conversion_buffer_size];
 	int length = double_to_precision(value, (int)digits, buffer);

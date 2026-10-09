@@ -1,0 +1,3 @@
+// utilities.ts:1385-1386: nested feature tables hold Map references.
+const table = new Map(Object.entries({ Array: new Map(Object.entries({ es2015: ['find'] })) }));
+console.log(`${table.size}`);

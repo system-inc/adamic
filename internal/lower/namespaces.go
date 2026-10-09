@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func namespaceStatements(declaration *ast.Node) []*ast.Node {
@@ -56,7 +57,7 @@ func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {
 		return nil
 	}
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind == ast.KindModuleDeclaration && ast.IsIdentifier(declaration.Name()) {
+		if declaration.Kind == ast.KindModuleDeclaration && ast.IsIdentifier(declaration.Name()) && !load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return declaration
 		}
 	}

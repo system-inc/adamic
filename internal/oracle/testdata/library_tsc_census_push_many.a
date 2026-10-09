@@ -1,0 +1,57 @@
+// tsc utilities.ts:7775 and :7778, escape integer bytes into a shared result.
+const numbers = [1];
+console.log(`${numbers.push(2, 3)}:${numbers.join('|')}`);
+console.log(`${numbers.push(4, 5, 6)}:${numbers.join('|')}`);
+console.log(`${numbers.push()}:${numbers.join('|')}`);
+// tsc utilities.ts:9714 and transformers/esDecorators.ts:701 also append strings and objects.
+const firstPart = 'a';
+const strings = [`${firstPart}b`];
+console.log(`${strings.push(`${firstPart}d`, `${firstPart}f`)}:${strings.join('|')}`);
+const objects = [{ kind: 0 }];
+console.log(`${objects.push({ kind: 1 }, { kind: 2 }, { kind: 3 }, { kind: 4 })}`);
+for(const object of objects) {
+    console.log(`${object.kind}`);
+}
+// Both arguments finish before append, even when the later argument changes length.
+let order = '';
+function receiver(): number[] {
+    order += 'r';
+    return numbers;
+}
+function first(): number {
+    order += 'a';
+    return numbers.length;
+}
+function second(): number {
+    order += 'b';
+    numbers.pop();
+    return numbers.length;
+}
+console.log(`${receiver().push(first(), second())}:${order}:${numbers.join('|')}`);
+// tsc core.ts:1578, sys.ts:717 and executeCommandLine.ts:273 use array spreads.
+const copySource: readonly string[] = ['one', 'two'];
+const names = ['zero'];
+console.log(`${names.push(...copySource, 'three')}:${names.join('|')}`);
+console.log(`${names.push(...names)}:${names.join('|')}`);
+const changing = [1, 2];
+const destination: number[] = [];
+function changeLater(): number {
+    changing.pop();
+    changing.push(9);
+    return 8;
+}
+console.log(`${destination.push(...changing, changeLater())}:${destination.join('|')}:${changing.join('|')}`);
+const referenceSource = [{ kind: 8 }, { kind: 9 }];
+console.log(`${objects.push(...referenceSource)}`);
+for(const object of objects) {
+    console.log(`${object.kind}`);
+}
+// The snapshot owns runtime-built references after later operands remove their source owners.
+const sourceWords = [`before${firstPart}`, `after${firstPart}`];
+const copiedWords: string[] = [];
+function removeWords(): string {
+    sourceWords.pop();
+    sourceWords.pop();
+    return 'end';
+}
+console.log(`${copiedWords.push(...sourceWords, removeWords())}:${copiedWords.join('|')}`);

@@ -1,0 +1,108 @@
+ok  	github.com/system-inc/adamic/internal/load	2.672s
+--- FAIL: TestNodeFSFileQualifiedErrorType (0.92s)
+panic: Unhandled case in Node.Text: *ast.QualifiedName [recovered, repanicked]
+
+goroutine 234 [running]:
+testing.tRunner.func1.2({0x1ba0fa0, 0xbb19a601040})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1ba0fa0?, 0xbb19a601040?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x817ce9?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).castProof(0xbb19a52d600, 0xbb19728e000)
+	/workspace/adamic/internal/lower/cast_proof.go:98 +0x99
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func1(0xbb19728e000)
+	/workspace/adamic/internal/lower/refusals.go:92 +0x1d9
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild(0xbb19b2ebcd8, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1729 +0xc2
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xbb19a52d600?, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8740 +0x1438
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func1(0xbb19b2ebcd8)
+	/workspace/adamic/internal/lower/refusals.go:192 +0xe2c
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xbb19a52d600?, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func1(0xbb197280240)
+	/workspace/adamic/internal/lower/refusals.go:192 +0xe2c
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0xbb1974b4a10?, 0xbb19988fd00?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xbb19a52d600?, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func1(0xbb19728c410)
+	/workspace/adamic/internal/lower/refusals.go:192 +0xe2c
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0xbb197283188, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xbb19726ea08?, 0xbb19988fd00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0xbb19a52d600, 0xbb197283188)
+	/workspace/adamic/internal/lower/refusals.go:195 +0x4c5
+github.com/system-inc/adamic/internal/lower.Lower({0x1c56978?, 0x1d40a40?}, 0xbb19b135920)
+	/workspace/adamic/internal/lower/lower.go:43 +0x37b
+github.com/system-inc/adamic/internal/lower.lowerSource(0xbb19a97a488, {0xc9746e, 0xc1})
+	/workspace/adamic/internal/lower/lower_test.go:25 +0x19a
+github.com/system-inc/adamic/internal/lower.TestNodeFSFileQualifiedErrorType(0xbb19a97a488)
+	/workspace/adamic/internal/lower/library_node_fs_file_test.go:68 +0x28
+testing.tRunner(0xbb19a97a488, 0x1c61000)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	32.180s
+ok  	github.com/system-inc/adamic/internal/native	290.570s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (82.51s)
+    flow_test.go:92: Lower: /workspace/adamic/internal/oracle/testdata/node_process_blocking.a:2:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.05s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a (0.27s)
+        trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+        trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+        trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+        trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+        trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+        trace_test.go:50: 62 points walked, 83 events
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_process_terminal.a (0.95s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_process_terminal.a:4:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_process_method_presence.a (0.63s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_process_method_presence.a:17:18: stage 0 can't lower process.memoryUsage as a value (use its supported process operation directly) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_process_global_presence.a (0.65s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_process_global_presence.a:5:18: stage 0 can't lower process.memoryUsage as a value (use its supported process operation directly) yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/node_process_blocking.a (0.86s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/node_process_blocking.a:2:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestLivenessHoldsOnEveryPath (229.94s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.01s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_process_terminal.a (1.29s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_process_terminal.a:4:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_process_method_presence.a (1.16s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_process_method_presence.a:3:1: stage 0 can't lower console.log with a non-string argument yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_process_global_presence.a (1.25s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_process_global_presence.a:2:1: stage 0 can't lower console.log with a non-string argument yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/node_process_blocking.a (1.10s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/node_process_blocking.a:2:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+    trace_test.go:426: 61820493 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (232.76s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.06s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_process_blocking.a (1.41s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_process_blocking.a:2:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_process_terminal.a (1.80s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_process_terminal.a:4:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_process_method_presence.a (1.22s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_process_method_presence.a:17:18: stage 0 can't lower process.memoryUsage as a value (use its supported process operation directly) yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_process_global_presence.a (1.48s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/node_process_global_presence.a:5:18: stage 0 can't lower process.memoryUsage as a value (use its supported process operation directly) yet
+    ranges_test.go:78: 98261 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	232.820s
+FAIL

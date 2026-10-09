@@ -100,7 +100,11 @@ static void quote(json_writer *w, const adamic_string *text) {
 }
 
 typedef struct json_scalar { enum adamic_json_kind kind; adamic_value value; } json_scalar;
-static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
+static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+	enum adamic_json_kind kind = schema->kind;
+	if (schema->null_reference && value.reference == NULL) {
+		return (json_scalar){adamic_json_null, value};
+	}
 	if (kind == adamic_json_maybe_number) {
 		adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
 		kind = number.present ? adamic_json_number : adamic_json_undefined;
@@ -136,7 +140,7 @@ static void indent(json_writer *w, size_t depth) {
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth);
 static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t depth, size_t *written) {
 	// Undefined and function-valued object fields are omitted, rather than becoming null.
-	json_scalar s = scalar(object->slots[field->slot], field->schema->kind);
+	json_scalar s = scalar(object->slots[field->slot], field->schema);
 	if (s.kind == adamic_json_undefined || s.kind == adamic_json_function) { return; }
 	if ((*written)++ != 0) { ascii(w, ","); }
 	indent(w, depth + 1);
@@ -146,7 +150,7 @@ static void write_field(json_writer *w, const adamic_object *object, const adami
 }
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth) {
 	ADAMIC_CHECK_STACK();
-	json_scalar s = scalar(value, schema->kind);
+	json_scalar s = scalar(value, schema);
 	switch (s.kind) {
 	case adamic_json_undefined: case adamic_json_function: return false;
 	case adamic_json_null: ascii(w, "null"); return true;
@@ -159,6 +163,11 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 	}
 	case adamic_json_boolean: ascii(w, s.value.boolean ? "true" : "false"); return true;
 	case adamic_json_string: quote(w, s.value.reference); return true;
+	case adamic_json_date: {
+		adamic_string *text = adamic_date_json(s.value.reference);
+		if (text == NULL) { ascii(w, "null"); } else { quote(w, text); adamic_release(text); }
+		return true;
+	}
 	case adamic_json_map: ascii(w, "{}"); return true;
 	case adamic_json_array: case adamic_json_tuple: {
 		bool tuple = s.kind == adamic_json_tuple;
@@ -212,7 +221,7 @@ static void keys(json_writer *w, adamic_value value, const adamic_json_schema *s
 	for (size_t index = 0; index < count; index++) {
 		const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
 		adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
-		json_scalar s = scalar(item, element->kind);
+		json_scalar s = scalar(item, element);
 		adamic_string *key;
 		if (s.kind == adamic_json_string) { key = adamic_retain(s.value.reference); }
 		else if (s.kind == adamic_json_number) { key = adamic_string_from_number(s.value.number); }
@@ -232,8 +241,19 @@ adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schem
 	adamic_string *gap = &empty;
 	bool pretty = false;
 	if (space_schema != NULL) {
-		json_scalar s = scalar(space, space_schema->kind);
-		if (s.kind == adamic_json_string) { gap = adamic_string_slice(s.value.reference, 0, 10, true); pretty = gap->length != 0; }
+		json_scalar s = scalar(space, space_schema);
+		if (s.kind == adamic_json_string) {
+			const adamic_string *text = s.value.reference;
+			double width = fmin(10, adamic_string_length(text));
+			pretty = width != 0;
+			// ECMA-262 25.5.2 sets gap to the first ten code units, including NUL. V8's
+			// SerializeJSONProperty indentation buffer instead ends at its first NUL.
+			// Match Node, retaining the multiline path even when NUL is the first unit.
+			for (double index = 0; index < width; index++) {
+				if (adamic_string_char_code_at(text, index) == 0) { width = index; break; }
+			}
+			gap = adamic_string_slice((adamic_string *)text, 0, width, true);
+		}
 		else if (s.kind == adamic_json_number) {
 			// Node 24.19 (V8) enables its multiline path before truncating a positive fraction.
 			// Thus 0 < space < 1 writes newlines with an empty gap, as the Node oracle observes.

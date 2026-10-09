@@ -1,0 +1,14 @@
+const map = new Map<number, number>();
+console.log(`${map.has(-0)}`);
+map.set(-0, 42);
+console.log(`${map.has(+0)}`);
+console.log(`${map.get(+0)}`);
+map.set(NaN, 43);
+console.log(`${map.has(NaN)}`);
+console.log(`${map.get(NaN)}`);
+console.log(`${map.size}`);
+console.log(`${map.delete(-0)}`);
+console.log(`${map.has(+0)}`);
+map.clear();
+console.log(`${map.size}`);
+console.log(`${map.has(NaN)}`);

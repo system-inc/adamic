@@ -15,37 +15,11 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestLexerGaps(t *testing.T) {
-	t.Parallel()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, gap := range []struct{ file, output, diagnostic string }{
-		{"multiplePush.ts", "2\n", "push with other than one value"},
-	} {
-		t.Run(gap.file, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join("gaps", gap.file))
-			if err != nil {
-				t.Fatal(err)
-			}
-			out := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
-			if string(out) != gap.output {
-				t.Fatalf("Node got %q, want %q", out, gap.output)
-			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lower.Lower(context.Background(), program)
-			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), gap.diagnostic) {
-				t.Fatalf("gap changed or closed: %v; update GAPS.md and remove its workaround", err)
-			}
-			t.Log(err)
-		})
-	}
+	t.Run("multiplePush.ts", func(t *testing.T) {
+		closedGap(t, "gaps/multiplePush.ts", "2\n")
+	})
 }
 
 func TestStructuralPositionRefusal(t *testing.T) {

@@ -1,0 +1,1926 @@
+{
+  "files": 77,
+  "typescript": "6.0.3",
+  "counts": {
+    "Math.sign": 1,
+    "Object.getOwnPropertyNames": 1,
+    "Object.getPrototypeOf": 1,
+    "Math.max": 30,
+    "Math.floor": 7,
+    "Math.abs": 4,
+    "Math.ceil": 1,
+    "Math.min": 36,
+    "JSON.stringify": 19,
+    "Object.defineProperties": 7,
+    "Object.create": 4,
+    "Object.setPrototypeOf": 3,
+    "String": 4,
+    "parseInt": 20,
+    "Number": 3,
+    "Object.entries": 75,
+    "Object.defineProperty": 2,
+    "String.fromCharCode": 37,
+    "Number.parseInt": 2,
+    "String.fromCodePoint": 1,
+    "JSON.parse": 3,
+    "Object.keys": 4,
+    "Object.assign": 1,
+    "Object.fromEntries": 1,
+    "isFinite": 3,
+    "isNaN": 1,
+    "String.fromCharCode.apply": 1,
+    "Math.log": 2,
+    "Math.round": 1
+  },
+  "shapes": {
+    "Math.sign(Comparison)": 1,
+    "Object.getOwnPropertyNames(object)": 1,
+    "Object.getPrototypeOf(object)": 1,
+    "Math.max(number, number)": 25,
+    "Math.max(2, number)": 1,
+    "Math.floor(number)": 7,
+    "Math.abs(number)": 4,
+    "Math.ceil(number)": 1,
+    "Math.min(any, any, any)": 1,
+    "Math.min(number, any)": 1,
+    "JSON.stringify(never)": 1,
+    "Object.defineProperties(FlowNode, { __tsDebuggerDisplay: { value(this: FlowNode): string; }; __debugFlowFlags: { get(this: FlowNode): string; }; __debugToString: { value(this: FlowNode): string; }; })": 1,
+    "Object.create(Object)": 1,
+    "Object.setPrototypeOf(FlowNode, FlowNode)": 1,
+    "Object.defineProperties(NodeArray<Node>, { __tsDebuggerDisplay: { value(this: NodeArray<Node>, defaultValue: string): string; }; })": 1,
+    "String(string)": 1,
+    "Object.create(any[])": 1,
+    "Object.setPrototypeOf(NodeArray<Node>, NodeArray<Node>)": 1,
+    "Object.defineProperties(any, { __tsDebuggerDisplay: { value(this: Symbol): string; }; __debugFlags: { get(this: Symbol): string; }; })": 1,
+    "Object.defineProperties(any, { __tsDebuggerDisplay: { value(this: Type): string; }; __debugFlags: { get(this: Type): string; }; __debugObjectFlags: { get(this: Type): string; }; __debugTypeToString: { ...; }; })": 1,
+    "JSON.stringify(string | number | PseudoBigInt)": 1,
+    "Object.defineProperties(any, { __debugFlags: { get(this: Signature): string; }; __debugSignatureToString: { value(this: Signature): string | undefined; }; })": 1,
+    "Object.defineProperties(any, { __tsDebuggerDisplay: { value(this: Node): string; }; __debugKind: { get(this: Node): string; }; __debugNodeFlags: { get(this: Node): string; }; __debugModifierFlags: { ...; }; __debugTransformFlags: { ...; }; __debugIsParseTreeNode: { ...; }; __debugEmitFlags: { ...; }; __debugGetText: { ...; }; })": 1,
+    "JSON.stringify(string)": 1,
+    "Object.setPrototypeOf(TypeMapper, DebugTypeMapper)": 1,
+    "Object.create(null)": 1,
+    "parseInt(string, 10)": 6,
+    "Math.min(number, number)": 31,
+    "JSON.stringify({ cat: string; ph: string; ts: number; pid: number; tid: number; name: string; args: { name: string; }; } | { cat: string; ph: string; ts: number; pid: number; tid: number; name: string; })": 1,
+    "JSON.stringify(Args)": 1,
+    "JSON.stringify({ destructuringPattern: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; firstDeclaration: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; ... 10 more ...; keyofType: number | undefined; })": 1,
+    "JSON.stringify(TraceRecord[])": 1,
+    "Number(string)": 3,
+    "JSON.stringify(Profile)": 1,
+    "Object.entries(MapLike<KeywordSyntaxKind>)": 1,
+    "Object.entries({ \"{\": SyntaxKind.OpenBraceToken; \"}\": SyntaxKind.CloseBraceToken; \"(\": SyntaxKind.OpenParenToken; \")\": SyntaxKind.CloseParenToken; \"[\": SyntaxKind.OpenBracketToken; \"]\": SyntaxKind.CloseBracketToken; \".\": SyntaxKind.DotToken; ... 53 more ...; \"`\": SyntaxKind.BacktickToken; })": 1,
+    "Object.defineProperty(Scanner, \"__debugShowCurrentPositionInText\", { get: () => string; })": 1,
+    "parseInt(string, 8)": 3,
+    "parseInt(string, 16)": 6,
+    "String.fromCharCode(number)": 18,
+    "String.fromCharCode(CharacterCodes._8 | CharacterCodes._9)": 1,
+    "parseInt(string, 2)": 1,
+    "String.fromCharCode(CharacterCodes.openBrace)": 2,
+    "Number.parseInt(string)": 2,
+    "String.fromCharCode(CharacterCodes.closeBrace)": 1,
+    "String.fromCharCode(CharacterCodes.closeBrace | CharacterCodes.closeBracket | CharacterCodes.closeParen)": 1,
+    "String.fromCharCode(CharacterCodes.$ | CharacterCodes.asterisk | CharacterCodes.backslash | CharacterCodes.bar | CharacterCodes.caret | CharacterCodes.closeBrace | ... 8 more ... | CharacterCodes.slash)": 1,
+    "String.fromCharCode(CharacterCodes.ampersand)": 4,
+    "String.fromCharCode(CharacterCodes.ampersand | CharacterCodes.at | CharacterCodes.backtick | CharacterCodes.colon | CharacterCodes.comma | CharacterCodes.equals | ... 7 more ... | CharacterCodes.tilde)": 1,
+    "String.fromCharCode(CharacterCodes.bar | CharacterCodes.closeBrace | CharacterCodes.closeBracket | CharacterCodes.closeParen | CharacterCodes.minus | CharacterCodes.openBrace | CharacterCodes.openBracket | CharacterCodes.openParen | CharacterCodes.slash)": 2,
+    "String.fromCharCode(CharacterCodes.minus)": 1,
+    "String.fromCharCode(CharacterCodes.p | CharacterCodes.P)": 1,
+    "String.fromCharCode(CharacterCodes)": 1,
+    "String.fromCharCode(number, number)": 1,
+    "String.fromCodePoint(number)": 1,
+    "Object.entries({ readonly General_Category: \"General_Category\"; readonly gc: \"General_Category\"; readonly Script: \"Script\"; readonly sc: \"Script\"; readonly Script_Extensions: \"Script_Extensions\"; readonly scx: \"Script_Extensions\"; })": 1,
+    "JSON.parse(string)": 3,
+    "Object.entries({ Array: Map<string, string[]>; Iterator: Map<string, never[]>; AsyncIterator: Map<string, never[]>; ArrayBuffer: Map<string, string[]>; Atomics: Map<string, string[]>; ... 48 more ...; AsyncDisposableStack: Map<...>; })": 1,
+    "Object.entries({ es2015: string[]; es2016: string[]; es2019: string[]; es2022: string[]; es2023: string[]; })": 1,
+    "Object.entries({ es2015: never[]; })": 2,
+    "Object.entries({ es2024: string[]; })": 2,
+    "Object.entries({ es2017: string[]; es2024: string[]; esnext: string[]; })": 1,
+    "Object.entries({ es2017: string[]; es2024: string[]; })": 1,
+    "Object.entries({ es2018: never[]; })": 4,
+    "Object.entries({ es2015: string[]; es2018: string[]; es2024: string[]; })": 1,
+    "Object.entries({ es2025: string[]; })": 1,
+    "Object.entries({ es2015: string[]; })": 4,
+    "Object.entries({ es2015: string[]; esnext: string[]; })": 3,
+    "Object.entries({ es2015: string[]; es2017: string[]; es2019: string[]; es2022: string[]; es2024: string[]; })": 1,
+    "Object.entries({ es2015: string[]; es2025: string[]; })": 2,
+    "Object.entries({ es2015: string[]; es2020: string[]; es2021: string[]; es2024: string[]; es2025: string[]; })": 1,
+    "Object.entries({ es2015: string[]; es2019: string[]; })": 1,
+    "Object.entries({ es2015: string[]; es2017: string[]; es2019: string[]; es2020: string[]; es2021: string[]; es2022: string[]; es2024: string[]; })": 1,
+    "Object.entries({ es2017: string[]; })": 1,
+    "Object.entries({ es2015: never[]; es2018: string[]; })": 1,
+    "Object.entries({ es2018: string[]; })": 3,
+    "Object.entries({ es2018: string[]; es2020: string[]; es2021: string[]; es2022: string[]; es2025: string[]; })": 1,
+    "Object.entries({ es2020: string[]; esnext: string[]; })": 1,
+    "Object.entries({ es2020: string[]; es2025: string[]; })": 1,
+    "Object.entries({ es2020: never[]; })": 1,
+    "Object.entries({ es2020: string[]; })": 1,
+    "Object.entries({ es2022: string[]; es2023: string[]; })": 8,
+    "Object.entries({ es2022: string[]; es2023: string[]; esnext: string[]; })": 1,
+    "Object.entries({ es2025: never[]; })": 1,
+    "Object.entries({ es2020: never[]; es2022: string[]; es2023: string[]; })": 2,
+    "Object.entries({ es2022: string[]; })": 1,
+    "Object.entries({ esnext: string[]; })": 3,
+    "Object.entries({ esnext: never[]; })": 2,
+    "Object.entries({ \"\\t\": string; \"\\v\": string; \"\\f\": string; \"\\b\": string; \"\\r\": string; \"\\n\": string; \"\\\\\": string; '\"': string; \"'\": string; \"`\": string; \"\\u2028\": string; \"\\u2029\": string; \"\\u0085\": string; \"\\r\\n\": string; })": 1,
+    "Object.entries({ '\"': string; \"'\": string; })": 1,
+    "Object.keys(any)": 2,
+    "Object.assign(ObjectAllocator, ObjectAllocator)": 1,
+    "Object.create(SourceFile)": 1,
+    "Object.defineProperties(SourceFile, { id: { get(this: SourceFile): number | undefined; set(this: SourceFile, value: number | undefined): void; }; symbol: { get(this: SourceFile): Symbol; set(this: SourceFile, value: Symbol): void; }; })": 1,
+    "Object.keys(MapLike<KeywordSyntaxKind>)": 1,
+    "Math.max(0, number)": 1,
+    "Object.entries({ preserve: JsxEmit.Preserve; \"react-native\": JsxEmit.ReactNative; \"react-jsx\": JsxEmit.ReactJSX; \"react-jsxdev\": JsxEmit.ReactJSXDev; react: JsxEmit.React; })": 1,
+    "Object.entries({ fixedpollinginterval: WatchFileKind.FixedPollingInterval; prioritypollinginterval: WatchFileKind.PriorityPollingInterval; dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling; fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling; usefsevents: WatchFileKind.UseFsEvents; usefseventsonparentdirectory: W...)": 1,
+    "Object.entries({ usefsevents: WatchDirectoryKind.UseFsEvents; fixedpollinginterval: WatchDirectoryKind.FixedPollingInterval; dynamicprioritypolling: WatchDirectoryKind.DynamicPriorityPolling; fixedchunksizepolling: WatchDirectoryKind.FixedChunkSizePolling; })": 1,
+    "Object.entries({ fixedinterval: PollingWatchKind.FixedInterval; priorityinterval: PollingWatchKind.PriorityInterval; dynamicpriority: PollingWatchKind.DynamicPriority; fixedchunksize: PollingWatchKind.FixedChunkSize; })": 1,
+    "Object.entries({ es3: ScriptTarget.ES3; es5: ScriptTarget.ES5; es6: ScriptTarget.ES2015; es2015: ScriptTarget.ES2015; es2016: ScriptTarget.ES2016; es2017: ScriptTarget.ES2017; ... 8 more ...; esnext: ScriptTarget.ESNext; })": 1,
+    "Object.entries({ none: ModuleKind.None; commonjs: ModuleKind.CommonJS; amd: ModuleKind.AMD; system: ModuleKind.System; umd: ModuleKind.UMD; es6: ModuleKind.ES2015; ... 8 more ...; preserve: ModuleKind.Preserve; })": 1,
+    "Object.entries({ remove: ImportsNotUsedAsValues.Remove; preserve: ImportsNotUsedAsValues.Preserve; error: ImportsNotUsedAsValues.Error; })": 1,
+    "Object.entries({ node10: ModuleResolutionKind.NodeJs; node: ModuleResolutionKind.NodeJs; classic: ModuleResolutionKind.Classic; node16: ModuleResolutionKind.Node16; nodenext: ModuleResolutionKind.NodeNext; bundler: ModuleResolutionKind.Bundler; })": 1,
+    "Object.entries({ crlf: NewLineKind.CarriageReturnLineFeed; lf: NewLineKind.LineFeed; })": 1,
+    "Object.entries({ auto: ModuleDetectionKind.Auto; legacy: ModuleDetectionKind.Legacy; force: ModuleDetectionKind.Force; })": 1,
+    "parseInt(string)": 2,
+    "Object.fromEntries(Map<string, CompilerOptionsValue>)": 1,
+    "Object.keys(CompilerOptions)": 1,
+    "JSON.stringify(PresetValue)": 1,
+    "Object.defineProperty(CompilerOptions, \"configFile\", { enumerable: false; writable: false; value: TsConfigSourceFile; })": 1,
+    "JSON.stringify(readonly string[])": 2,
+    "Object.entries({ string: TypeFacts.TypeofNEString; number: TypeFacts.TypeofNENumber; bigint: TypeFacts.TypeofNEBigInt; boolean: TypeFacts.TypeofNEBoolean; symbol: TypeFacts.TypeofNESymbol; undefined: TypeFacts.NEUndefined; object: TypeFacts.TypeofNEObject; function: TypeFacts.TypeofNEFunction; })": 1,
+    "Object.entries({ Uppercase: IntrinsicTypeKind.Uppercase; Lowercase: IntrinsicTypeKind.Lowercase; Capitalize: IntrinsicTypeKind.Capitalize; Uncapitalize: IntrinsicTypeKind.Uncapitalize; NoInfer: IntrinsicTypeKind.NoInfer; })": 1,
+    "isFinite(number)": 3,
+    "Math.min(number, InferencePriority)": 1,
+    "Math.max(number, 0)": 2,
+    "Math.min(number, 1)": 1,
+    "Math.min(number, 2)": 1,
+    "Math.max(number, 1)": 1,
+    "String(string | number)": 1,
+    "isNaN(number)": 1,
+    "JSON.stringify(RawSourceMap)": 1,
+    "String.fromCharCode.apply(undefined, number[])": 1,
+    "parseInt(any, 10)": 1,
+    "parseInt(any, 16)": 1,
+    "Object.entries({ quot: number; amp: number; apos: number; lt: number; gt: number; nbsp: number; iexcl: number; cent: number; pound: number; curren: number; yen: number; brvbar: number; sect: number; uml: number; copy: number; ... 237 more ...; diams: number; })": 1,
+    "String(number)": 1,
+    "JSON.stringify(BuildInfo)": 1,
+    "String.fromCharCode(CharacterCodes.E)": 1,
+    "String.fromCharCode(CharacterCodes.e)": 1,
+    "Object.entries(MapLike<WatchDirectoryFlags>)": 1,
+    "JSON.stringify(WatchOptions | undefined)": 1,
+    "Math.log(number)": 2,
+    "JSON.stringify(string[] | undefined)": 1,
+    "JSON.stringify(CompilerOptions | undefined)": 1,
+    "JSON.stringify(readonly ProjectReference[])": 1,
+    "String(string | number | boolean | DiagnosticMessage | undefined)": 1,
+    "Object.entries({ [value: string]: string[]; })": 1,
+    "JSON.stringify(TSConfig, null, 4)": 2,
+    "Math.round(number)": 1
+  },
+  "instanceCounts": {
+    "Map/Set instance.has": 182,
+    "Map/Set instance.get": 420,
+    "Map/Set instance.set": 374,
+    "Map/Set instance.add": 90,
+    "Map/Set instance.forEach": 91,
+    "Map/Set instance.values": 28,
+    "Map/Set instance.delete": 88,
+    "Map/Set instance.clear": 38,
+    "Map/Set instance.entries": 13,
+    "Map/Set instance.keys": 20
+  },
+  "helperCounts": {
+    "Object.getOwnPropertyDescriptor": 3,
+    "Object.defineProperty": 6,
+    "Object.create": 3,
+    "Object.getOwnPropertySymbols": 1,
+    "String": 1
+  },
+  "borrowedCounts": {
+    "Object.prototype.hasOwnProperty.call": 12
+  },
+  "locations": [
+    {
+      "file": "core.ts",
+      "line": 1212,
+      "column": 17,
+      "name": "Math.sign"
+    },
+    {
+      "file": "core.ts",
+      "line": 1302,
+      "column": 23,
+      "name": "Object.getOwnPropertyNames"
+    },
+    {
+      "file": "core.ts",
+      "line": 1307,
+      "column": 18,
+      "name": "Object.getPrototypeOf"
+    },
+    {
+      "file": "core.ts",
+      "line": 2004,
+      "column": 16,
+      "name": "Math.max"
+    },
+    {
+      "file": "core.ts",
+      "line": 2170,
+      "column": 37,
+      "name": "Math.max"
+    },
+    {
+      "file": "core.ts",
+      "line": 2170,
+      "column": 49,
+      "name": "Math.floor"
+    },
+    {
+      "file": "core.ts",
+      "line": 2171,
+      "column": 24,
+      "name": "Math.floor"
+    },
+    {
+      "file": "core.ts",
+      "line": 2175,
+      "column": 44,
+      "name": "Math.abs"
+    },
+    {
+      "file": "core.ts",
+      "line": 2210,
+      "column": 22,
+      "name": "Math.ceil"
+    },
+    {
+      "file": "core.ts",
+      "line": 2211,
+      "column": 22,
+      "name": "Math.floor"
+    },
+    {
+      "file": "core.ts",
+      "line": 2225,
+      "column": 19,
+      "name": "Math.min"
+    },
+    {
+      "file": "core.ts",
+      "line": 2227,
+      "column": 22,
+      "name": "Math.min"
+    },
+    {
+      "file": "debug.ts",
+      "line": 274,
+      "column": 173,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "debug.ts",
+      "line": 518,
+      "column": 13,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 558,
+      "column": 37,
+      "name": "Object.create"
+    },
+    {
+      "file": "debug.ts",
+      "line": 561,
+      "column": 17,
+      "name": "Object.setPrototypeOf"
+    },
+    {
+      "file": "debug.ts",
+      "line": 575,
+      "column": 13,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 584,
+      "column": 40,
+      "name": "String"
+    },
+    {
+      "file": "debug.ts",
+      "line": 598,
+      "column": 38,
+      "name": "Object.create"
+    },
+    {
+      "file": "debug.ts",
+      "line": 601,
+      "column": 17,
+      "name": "Object.setPrototypeOf"
+    },
+    {
+      "file": "debug.ts",
+      "line": 621,
+      "column": 9,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 638,
+      "column": 9,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 644,
+      "column": 87,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "debug.ts",
+      "line": 692,
+      "column": 9,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 714,
+      "column": 17,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "debug.ts",
+      "line": 721,
+      "column": 74,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "debug.ts",
+      "line": 859,
+      "column": 20,
+      "name": "Object.setPrototypeOf"
+    },
+    {
+      "file": "debug.ts",
+      "line": 944,
+      "column": 54,
+      "name": "Object.create"
+    },
+    {
+      "file": "debug.ts",
+      "line": 1043,
+      "column": 25,
+      "name": "Math.max"
+    },
+    {
+      "file": "debug.ts",
+      "line": 1051,
+      "column": 26,
+      "name": "Math.max"
+    },
+    {
+      "file": "debug.ts",
+      "line": 1059,
+      "column": 39,
+      "name": "Math.max"
+    },
+    {
+      "file": "semver.ts",
+      "line": 149,
+      "column": 16,
+      "name": "parseInt"
+    },
+    {
+      "file": "semver.ts",
+      "line": 150,
+      "column": 16,
+      "name": "parseInt"
+    },
+    {
+      "file": "semver.ts",
+      "line": 151,
+      "column": 16,
+      "name": "parseInt"
+    },
+    {
+      "file": "semver.ts",
+      "line": 169,
+      "column": 20,
+      "name": "Math.min"
+    },
+    {
+      "file": "semver.ts",
+      "line": 302,
+      "column": 33,
+      "name": "parseInt"
+    },
+    {
+      "file": "semver.ts",
+      "line": 303,
+      "column": 54,
+      "name": "parseInt"
+    },
+    {
+      "file": "semver.ts",
+      "line": 304,
+      "column": 75,
+      "name": "parseInt"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 103,
+      "column": 31,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 193,
+      "column": 52,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 337,
+      "column": 35,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 356,
+      "column": 38,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "sys.ts",
+      "line": 155,
+      "column": 64,
+      "name": "Number"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1707,
+      "column": 56,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "path.ts",
+      "line": 322,
+      "column": 26,
+      "name": "Math.max"
+    },
+    {
+      "file": "path.ts",
+      "line": 383,
+      "column": 29,
+      "name": "Math.max"
+    },
+    {
+      "file": "path.ts",
+      "line": 686,
+      "column": 52,
+      "name": "Math.max"
+    },
+    {
+      "file": "path.ts",
+      "line": 695,
+      "column": 58,
+      "name": "Math.max"
+    },
+    {
+      "file": "path.ts",
+      "line": 910,
+      "column": 26,
+      "name": "Math.min"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 222,
+      "column": 31,
+      "name": "Object.entries"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 224,
+      "column": 29,
+      "name": "Object.entries"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 540,
+      "column": 19,
+      "name": "Math.min"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1116,
+      "column": 9,
+      "name": "Object.defineProperty"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1258,
+      "column": 35,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1367,
+      "column": 30,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1419,
+      "column": 16,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1581,
+      "column": 34,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1588,
+      "column": 28,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1602,
+      "column": 28,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1645,
+      "column": 38,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1646,
+      "column": 44,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1662,
+      "column": 46,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1665,
+      "column": 53,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1682,
+      "column": 24,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1682,
+      "column": 44,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1704,
+      "column": 24,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1713,
+      "column": 51,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1774,
+      "column": 55,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1882,
+      "column": 19,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 1884,
+      "column": 19,
+      "name": "parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2317,
+      "column": 38,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2344,
+      "column": 48,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2783,
+      "column": 120,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2788,
+      "column": 45,
+      "name": "Number.parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2788,
+      "column": 68,
+      "name": "Number.parseInt"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2794,
+      "column": 116,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2801,
+      "column": 72,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2846,
+      "column": 110,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2954,
+      "column": 32,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2968,
+      "column": 28,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 2985,
+      "column": 28,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3129,
+      "column": 106,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3194,
+      "column": 114,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3199,
+      "column": 114,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3252,
+      "column": 114,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3257,
+      "column": 114,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3386,
+      "column": 32,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3425,
+      "column": 102,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3427,
+      "column": 28,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3450,
+      "column": 32,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3544,
+      "column": 134,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3562,
+      "column": 26,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3579,
+      "column": 56,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 3909,
+      "column": 34,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 4054,
+      "column": 16,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 4057,
+      "column": 23,
+      "name": "Math.floor"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 4060,
+      "column": 12,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 4063,
+      "column": 111,
+      "name": "String.fromCodePoint"
+    },
+    {
+      "file": "scanner.ts",
+      "line": 4073,
+      "column": 44,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 413,
+      "column": 19,
+      "name": "Math.max"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 414,
+      "column": 17,
+      "name": "Math.min"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 434,
+      "column": 27,
+      "name": "Math.min"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 435,
+      "column": 25,
+      "name": "Math.max"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 595,
+      "column": 21,
+      "name": "Math.min"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 596,
+      "column": 19,
+      "name": "Math.max"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 597,
+      "column": 19,
+      "name": "Math.max"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "line": 749,
+      "column": 44,
+      "name": "JSON.parse"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1385,
+      "column": 13,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1386,
+      "column": 24,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1415,
+      "column": 27,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1418,
+      "column": 32,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1421,
+      "column": 30,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1431,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1453,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1464,
+      "column": 32,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1467,
+      "column": 40,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1470,
+      "column": 33,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1473,
+      "column": 41,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1476,
+      "column": 25,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1489,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1494,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1511,
+      "column": 35,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1520,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1543,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1553,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1577,
+      "column": 22,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1588,
+      "column": 33,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1593,
+      "column": 22,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1609,
+      "column": 37,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1629,
+      "column": 25,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1638,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1649,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1656,
+      "column": 25,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1702,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1708,
+      "column": 33,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1713,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1719,
+      "column": 35,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1724,
+      "column": 34,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1729,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1749,
+      "column": 31,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1754,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1764,
+      "column": 27,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1776,
+      "column": 25,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1779,
+      "column": 37,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1786,
+      "column": 28,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1799,
+      "column": 29,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1818,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1831,
+      "column": 29,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1844,
+      "column": 30,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1857,
+      "column": 29,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1870,
+      "column": 30,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1883,
+      "column": 31,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1886,
+      "column": 31,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1899,
+      "column": 31,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1912,
+      "column": 32,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1926,
+      "column": 33,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1940,
+      "column": 24,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1945,
+      "column": 35,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1950,
+      "column": 40,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1956,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1961,
+      "column": 34,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1964,
+      "column": 39,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 6164,
+      "column": 33,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 6231,
+      "column": 36,
+      "name": "Object.entries"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7148,
+      "column": 17,
+      "name": "Math.min"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7715,
+      "column": 23,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7728,
+      "column": 23,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7733,
+      "column": 23,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7811,
+      "column": 16,
+      "name": "JSON.parse"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 7979,
+      "column": 54,
+      "name": "Math.min"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 8148,
+      "column": 25,
+      "name": "Object.keys"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 8148,
+      "column": 53,
+      "name": "Object.keys"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 8578,
+      "column": 5,
+      "name": "Object.assign"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 10387,
+      "column": 17,
+      "name": "Math.min"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "line": 6096,
+      "column": 34,
+      "name": "Object.create"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "line": 6097,
+      "column": 9,
+      "name": "Object.defineProperties"
+    },
+    {
+      "file": "parser.ts",
+      "line": 2356,
+      "column": 38,
+      "name": "Object.keys"
+    },
+    {
+      "file": "parser.ts",
+      "line": 6145,
+      "column": 35,
+      "name": "Math.min"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10177,
+      "column": 21,
+      "name": "Math.min"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10204,
+      "column": 13,
+      "name": "Math.min"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10331,
+      "column": 21,
+      "name": "Math.max"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 132,
+      "column": 30,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 291,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 305,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 317,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 575,
+      "column": 19,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 608,
+      "column": 19,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 838,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 1098,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 1427,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 1672,
+      "column": 23,
+      "name": "Object.entries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 1898,
+      "column": 81,
+      "name": "parseInt"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2077,
+      "column": 70,
+      "name": "parseInt"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2556,
+      "column": 24,
+      "name": "Number"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2562,
+      "column": 25,
+      "name": "Number"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2715,
+      "column": 12,
+      "name": "Object.fromEntries"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2838,
+      "column": 27,
+      "name": "Object.keys"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 2960,
+      "column": 16,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 3034,
+      "column": 9,
+      "name": "Object.defineProperty"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 3338,
+      "column": 9,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "line": 3339,
+      "column": 9,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "line": 1251,
+      "column": 27,
+      "name": "Math.min"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "line": 1266,
+      "column": 40,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 1313,
+      "column": 63,
+      "name": "Object.entries"
+    },
+    {
+      "file": "checker.ts",
+      "line": 1443,
+      "column": 76,
+      "name": "Object.entries"
+    },
+    {
+      "file": "checker.ts",
+      "line": 7506,
+      "column": 50,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 14462,
+      "column": 29,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 18772,
+      "column": 36,
+      "name": "Math.floor"
+    },
+    {
+      "file": "checker.ts",
+      "line": 18823,
+      "column": 25,
+      "name": "Math.floor"
+    },
+    {
+      "file": "checker.ts",
+      "line": 21983,
+      "column": 63,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 21983,
+      "column": 100,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 24482,
+      "column": 49,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 26228,
+      "column": 66,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 26605,
+      "column": 26,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 26606,
+      "column": 24,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 26619,
+      "column": 16,
+      "name": "isFinite"
+    },
+    {
+      "file": "checker.ts",
+      "line": 26920,
+      "column": 41,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27044,
+      "column": 37,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27067,
+      "column": 33,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27161,
+      "column": 49,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27392,
+      "column": 67,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27393,
+      "column": 43,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 27499,
+      "column": 41,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 30291,
+      "column": 57,
+      "name": "Math.abs"
+    },
+    {
+      "file": "checker.ts",
+      "line": 30330,
+      "column": 71,
+      "name": "Math.abs"
+    },
+    {
+      "file": "checker.ts",
+      "line": 32543,
+      "column": 116,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 32543,
+      "column": 239,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 33170,
+      "column": 29,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 35710,
+      "column": 41,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 35891,
+      "column": 37,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36183,
+      "column": 37,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36334,
+      "column": 13,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36334,
+      "column": 22,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36429,
+      "column": 19,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36518,
+      "column": 33,
+      "name": "Math.min"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36521,
+      "column": 33,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 36718,
+      "column": 35,
+      "name": "Math.max"
+    },
+    {
+      "file": "checker.ts",
+      "line": 40808,
+      "column": 74,
+      "name": "Math.abs"
+    },
+    {
+      "file": "checker.ts",
+      "line": 44582,
+      "column": 27,
+      "name": "String"
+    },
+    {
+      "file": "checker.ts",
+      "line": 47946,
+      "column": 69,
+      "name": "isFinite"
+    },
+    {
+      "file": "checker.ts",
+      "line": 47949,
+      "column": 21,
+      "name": "isNaN"
+    },
+    {
+      "file": "sourcemap.ts",
+      "line": 83,
+      "column": 25,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "sourcemap.ts",
+      "line": 315,
+      "column": 25,
+      "name": "String.fromCharCode.apply"
+    },
+    {
+      "file": "sourcemap.ts",
+      "line": 424,
+      "column": 24,
+      "name": "JSON.parse"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "line": 626,
+      "column": 44,
+      "name": "parseInt"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "line": 629,
+      "column": 44,
+      "name": "parseInt"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "line": 683,
+      "column": 26,
+      "name": "Object.entries"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "line": 2818,
+      "column": 67,
+      "name": "Math.min"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "line": 2819,
+      "column": 19,
+      "name": "Math.max"
+    },
+    {
+      "file": "transformers/generators.ts",
+      "line": 2969,
+      "column": 51,
+      "name": "String"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 1138,
+      "column": 12,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 2677,
+      "column": 35,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 2678,
+      "column": 35,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 2684,
+      "column": 57,
+      "name": "isFinite"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 2685,
+      "column": 42,
+      "name": "Math.floor"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 5602,
+      "column": 29,
+      "name": "String.fromCharCode"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "line": 522,
+      "column": 21,
+      "name": "Object.entries"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "line": 830,
+      "column": 47,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "program.ts",
+      "line": 355,
+      "column": 19,
+      "name": "Math.min"
+    },
+    {
+      "file": "program.ts",
+      "line": 719,
+      "column": 23,
+      "name": "Math.max"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "line": 374,
+      "column": 17,
+      "name": "Math.max"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "line": 428,
+      "column": 26,
+      "name": "Math.max"
+    },
+    {
+      "file": "watch.ts",
+      "line": 308,
+      "column": 43,
+      "name": "Math.log"
+    },
+    {
+      "file": "watch.ts",
+      "line": 314,
+      "column": 29,
+      "name": "Math.max"
+    },
+    {
+      "file": "watch.ts",
+      "line": 315,
+      "column": 27,
+      "name": "Math.max"
+    },
+    {
+      "file": "watch.ts",
+      "line": 321,
+      "column": 40,
+      "name": "Math.log"
+    },
+    {
+      "file": "watchPublic.ts",
+      "line": 685,
+      "column": 30,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "watchPublic.ts",
+      "line": 686,
+      "column": 32,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "watchPublic.ts",
+      "line": 687,
+      "column": 65,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 317,
+      "column": 15,
+      "name": "String"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 411,
+      "column": 28,
+      "name": "Object.entries"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 666,
+      "column": 23,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 706,
+      "column": 23,
+      "name": "JSON.stringify"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 1078,
+      "column": 74,
+      "name": "Math.max"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "line": 1283,
+      "column": 20,
+      "name": "Math.round"
+    }
+  ],
+  "borrowedLocations": [
+    {
+      "file": "core.ts",
+      "line": 1267,
+      "column": 12,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1279,
+      "column": 12,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1290,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1315,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1374,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1375,
+      "column": 18,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1381,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1382,
+      "column": 18,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1481,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1498,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1504,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    },
+    {
+      "file": "core.ts",
+      "line": 1515,
+      "column": 13,
+      "name": "Object.prototype.hasOwnProperty.call"
+    }
+  ]
+}

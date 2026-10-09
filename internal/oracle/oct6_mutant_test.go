@@ -95,7 +95,7 @@ func TestOct6ReleaseMutant(t *testing.T) {
 		t.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
+	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux", Malloc: runtime.GOOS == "darwin"}); err != nil {
 		t.Fatal(err)
 	}
 	want := onNode(t, path)

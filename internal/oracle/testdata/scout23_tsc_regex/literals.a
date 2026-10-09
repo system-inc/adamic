@@ -1,0 +1,188 @@
+// Every literal in the pinned tsc compiler snapshot; pattern text is a control subject.
+const rows = [
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:1154
+    { literal: /^".+"$/, pattern: "^\".+\"$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:7877
+    { literal: /\n/g, pattern: "\\n", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:8062
+    { literal: /\r\n|\n|\r/, pattern: "\\r\\n|\\n|\\r", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:8062
+    { literal: /^\s+/, pattern: "^\\s+", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:8943
+    { literal: /\\./g, pattern: "\\\\.", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:9919
+    { literal: /\n/g, pattern: "\\n", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:11133
+    { literal: /[^a-z0-9]/gi, pattern: "[^a-z0-9]", flags: "gi" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts:35211
+    { literal: /^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$/, pattern: "^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts:3901
+    { literal: /(?:^|\/)\*\*\/?$/, pattern: "(?:^|\\/)\\*\\*\\/?$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts:3915
+    { literal: /^[^*?]*(?=\/[^/]*[*?])/, pattern: "^[^*?]*(?=\\/[^/]*[*?])", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts:1861
+    { literal: /[^\u0130\u0131\u00DFa-z0-9\\/:\-_. ]+/g, pattern: "[^\\u0130\\u0131\\u00DFa-z0-9\\\\/:\\-_. ]+", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts:377
+    { literal: /^function\s+([\w$]+)\s*\(/, pattern: "^function\\s+([\\w$]+)\\s*\\(", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts:584
+    { literal: /(?:,[\s\w]+:[^,]+)+\]$/, pattern: "(?:,[\\s\\w]+:[^,]+)+\\]$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts:4105
+    { literal: /\r\n?|\n/, pattern: "\\r\\n?|\\n", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts:4976
+    { literal: /\r\n?|\n/, pattern: "\\r\\n?|\\n", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts:2763
+    { literal: /\*/g, pattern: "\\*", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts:2807
+    { literal: /\*/g, pattern: "\\*", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts:2809
+    { literal: /\*/g, pattern: "\\*", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts:152
+    { literal: /[^iu]/g, pattern: "[^iu]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts:10712
+    { literal: /^\/\/\/\s*<(\S+)\s.*?\/>/m, pattern: "^\\/\\/\\/\\s*<(\\S+)\\s.*?\\/>", flags: "m" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts:10713
+    { literal: /^\/\/\/?\s*@([^\s:]+)((?:[^\S\r\n]|:).*)?$/m, pattern: "^\\/\\/\\/?\\s*@([^\\s:]+)((?:[^\\S\\r\\n]|:).*)?$", flags: "m" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts:10759
+    { literal: /@(\S+)(\s+(?:\S.*)?)?$/gm, pattern: "@(\\S+)(\\s+(?:\\S.*)?)?$", flags: "gm" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts:10784
+    { literal: /\s+/, pattern: "\\s+", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts:32
+    { literal: /\\/g, pattern: "\\\\", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts:101
+    { literal: /^\.\.?(?:$|[\\/])/, pattern: "^\\.\\.?(?:$|[\\\\/])", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts:738
+    { literal: /\/\.\//g, pattern: "\\/\\.\\/", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts:882
+    { literal: /\/\/|(?:^|\/)\.\.?(?:$|\/)/, pattern: "\\/\\/|(?:^|\\/)\\.\\.?(?:$|\\/)", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:736
+    { literal: /\t/g, pattern: "\\t", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:750
+    { literal: /\S/g, pattern: "\\S", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:751
+    { literal: /./g, pattern: ".", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:754
+    { literal: /./g, pattern: ".", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:758
+    { literal: /./g, pattern: ".", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts:2982
+    { literal: /^\s*\/\/.*$/, pattern: "^\\s*\\/\\/.*$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts:273
+    { literal: /[a-z]:/i, pattern: "[a-z]:", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts:277
+    { literal: /[a-z]\$$/i, pattern: "[a-z]\\$$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts:287
+    { literal: /^users$/i, pattern: "^users$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts:293
+    { literal: /^workspaces$/i, pattern: "^workspaces$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts:349
+    { literal: /^\/\/\/?\s*@(ts-expect-error|ts-ignore)/, pattern: "^\\/\\/\\/?\\s*@(ts-expect-error|ts-ignore)", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts:354
+    { literal: /^(?:\/|\*)*\s*@(ts-expect-error|ts-ignore)/, pattern: "^(?:\\/|\\*)*\\s*@(ts-expect-error|ts-ignore)", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts:356
+    { literal: /@(?:see|link)/i, pattern: "@(?:see|link)", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts:792
+    { literal: /^#!.*/, pattern: "^#!.*", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:20
+    { literal: /^(0|[1-9]\d*)(?:\.(0|[1-9]\d*)(?:\.(0|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i, pattern: "^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:27
+    { literal: /^(?:0|[1-9]\d*|[a-z-][a-z0-9-]*)(?:\.(?:0|[1-9]\d*|[a-z-][a-z0-9-]*))*$/i, pattern: "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)(?:\\.(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*))*$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:28
+    { literal: /^(?:0|[1-9]\d*|[a-z-][a-z0-9-]*)$/i, pattern: "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:34
+    { literal: /^[a-z0-9-]+(?:\.[a-z0-9-]+)*$/i, pattern: "^[a-z0-9-]+(?:\\.[a-z0-9-]+)*$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:35
+    { literal: /^[a-z0-9-]+$/i, pattern: "^[a-z0-9-]+$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:39
+    { literal: /^(?:0|[1-9]\d*)$/, pattern: "^(?:0|[1-9]\\d*)$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:247
+    { literal: /\|\|/, pattern: "\\|\\|", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:248
+    { literal: /\s+/, pattern: "\\s+", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:260
+    { literal: /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i, pattern: "^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:265
+    { literal: /^\s*([a-z0-9-+.*]+)\s+-\s+([a-z0-9-+.*]+)\s*$/i, pattern: "^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts:273
+    { literal: /^([~^<>=]|<=|>=)?\s*([a-z0-9-+.*]+)$/i, pattern: "^([~^<>=]|<=|>=)?\\s*([a-z0-9-+.*]+)$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts:363
+    { literal: /\/\/[@#] source[M]appingURL=(.+)\r?\n?$/, pattern: "\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts:365
+    { literal: /^\/\/[@#] source[M]appingURL=(.+)\r?\n?$/, pattern: "^\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts:368
+    { literal: /^\s*(\/\/[@#] .*)?$/, pattern: "^\\s*(\\/\\/[@#] .*)?$", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts:1469
+    { literal: /^native |^\([^)]+\)$|^(?:internal[\\/]|[\w\s]+(?:\.js)?$)/, pattern: "^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts:1594
+    { literal: /^--(?:inspect|debug)(?:-brk)?(?:=\d+)?$/i, pattern: "^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts:1699
+    { literal: /:/g, pattern: ":", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts:1733
+    { literal: /\w/g, pattern: "\\w", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts:1974
+    { literal: /^development$/i, pattern: "^development$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts:624
+    { literal: /&((#((\d+)|x([\da-fA-F]+)))|(\w+));/g, pattern: "&((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts:672
+    { literal: /^[A-Z_]\w*$/i, pattern: "^[A-Z_]\\w*$", flags: "i" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts:130
+    { literal: /\r\n?/g, pattern: "\\r\\n?", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts:2718
+    { literal: /\*\//g, pattern: "\\*\\/", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:1330
+    { literal: /\r\n|\n|\r/, pattern: "\\r\\n|\\n|\\r", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:1330
+    { literal: /^\s*\*/, pattern: "^\\s*\\*", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2062
+    { literal: /^(\d)/, pattern: "^(\\d)", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2062
+    { literal: /\W/g, pattern: "\\W", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2781
+    { literal: /^\/\/\/\s*<reference\s+path\s*=\s*(?:'[^']*'|"[^"]*").*?\/>/, pattern: "^\\/\\/\\/\\s*<reference\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2782
+    { literal: /^\/\/\/\s*<reference\s+types\s*=\s*(?:'[^']*'|"[^"]*").*?\/>/, pattern: "^\\/\\/\\/\\s*<reference\\s+types\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2783
+    { literal: /^\/\/\/\s*<reference\s+lib\s*=\s*(?:'[^']*'|"[^"]*").*?\/>/, pattern: "^\\/\\/\\/\\s*<reference\\s+lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2784
+    { literal: /^\/\/\/\s*<amd-dependency\s+path\s*=\s*(?:'[^']*'|"[^"]*").*?\/>/, pattern: "^\\/\\/\\/\\s*<amd-dependency\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2785
+    { literal: /^\/\/\/\s*<amd-module\s+(?:\S.*?)??\/>/, pattern: "^\\/\\/\\/\\s*<amd-module\\s+(?:\\S.*?)??\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:2786
+    { literal: /^\/\/\/\s*<reference\s+no-default-lib\s*=\s*(?:'[^']*'|"[^"]*")\s*\/>/, pattern: "^\\/\\/\\/\\s*<reference\\s+no-default-lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\")\\s*\\/>", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6138
+    { literal: /\$\{/g, pattern: "\\$\\{", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6160
+    { literal: /[\\"\u0000-\u001f\u2028\u2029\u0085]/g, pattern: "[\\\\\"\\u0000-\\u001f\\u2028\\u2029\\u0085]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6161
+    { literal: /[\\'\u0000-\u001f\u2028\u2029\u0085]/g, pattern: "[\\\\'\\u0000-\\u001f\\u2028\\u2029\\u0085]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6163
+    { literal: /\r\n|[\\`\u0000-\u0009\u000b-\u001f\u2028\u2029\u0085]/g, pattern: "\\r\\n|[\\\\`\\u0000-\\u0009\\u000b-\\u001f\\u2028\\u2029\\u0085]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6214
+    { literal: /[^\u0000-\u007F]/g, pattern: "[^\\u0000-\\u007F]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6229
+    { literal: /["\u0000-\u001f\u2028\u2029\u0085]/g, pattern: "[\"\\u0000-\\u001f\\u2028\\u2029\\u0085]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:6230
+    { literal: /['\u0000-\u001f\u2028\u2029\u0085]/g, pattern: "['\\u0000-\\u001f\\u2028\\u2029\\u0085]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:8584
+    { literal: /\{(\d+)\}/g, pattern: "\\{(\\d+)\\}", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:9594
+    { literal: /[^\w\s/]/g, pattern: "[^\\w\\s/]", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:9685
+    { literal: /[.*?]/, pattern: "[.*?]", flags: "" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:10158
+    { literal: /\//g, pattern: "\\/", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:10916
+    { literal: /\$/g, pattern: "\\$", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts:12179
+    { literal: /import|require/g, pattern: "import|require", flags: "g" },
+    // cohere/TypeScript/tsc/testdata/fixtures/compiler/utilitiesPublic.ts:699
+    { literal: /^([a-z]+)(?:[_-]([a-z]+))?$/, pattern: "^([a-z]+)(?:[_-]([a-z]+))?$", flags: "" },
+];
+for (const row of rows) {
+    const expression = new RegExp(row.pattern, row.flags);
+    console.log(row.literal.source);
+    console.log(expression.source);
+    console.log(row.literal.flags);
+    console.log(expression.flags);
+    console.log(`${row.literal.test(row.pattern)}`);
+    console.log(`${expression.test(row.pattern)}`);
+}

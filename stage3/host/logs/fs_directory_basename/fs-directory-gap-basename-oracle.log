@@ -1,0 +1,30 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodePathBasenameMutants
+=== PAUSE TestNodePathBasenameMutants
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodePathBasenameMutants
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== RUN   TestNodePathBasenameMutants/suffix
+=== PAUSE TestNodePathBasenameMutants/suffix
+=== RUN   TestNodePathBasenameMutants/dirname
+=== PAUSE TestNodePathBasenameMutants/dirname
+=== CONT  TestNodePathBasenameMutants/suffix
+=== CONT  TestNodePathBasenameMutants/dirname
+    node_path_basename_test.go:51: caught only by Node stdout comparison; sanitizers and leaks clean
+=== NAME  TestNodePathBasenameMutants/suffix
+    node_path_basename_test.go:51: caught only by Node stdout comparison; sanitizers and leaks clean
+--- PASS: TestNodePathBasenameMutants (0.00s)
+    --- PASS: TestNodePathBasenameMutants/dirname (11.44s)
+    --- PASS: TestNodePathBasenameMutants/suffix (11.45s)
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+    input_test.go:111: gate cache probe miss
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a (22.83s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	22.877s

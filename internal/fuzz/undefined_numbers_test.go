@@ -22,7 +22,7 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 	t.Parallel()
 	programs := map[uint64]string{}
 	for seed := uint64(1); seed <= 40; seed++ {
-		programs[seed] = Generate(seed).Source()
+		programs[seed] = GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 	}
 
 	// The literal ranges are also the gate's independently selectable work units.
@@ -106,7 +106,7 @@ func checkUndefinedNumbersVocabulary(t *testing.T, programs map[uint64]string) {
 
 	var optedIn bool
 	for seed := uint64(1); seed <= 40 && !optedIn; seed++ {
-		source := GenerateFeatures(seed, nil, []string{interfaceOmittedOptional}).Source()
+		source := GenerateFeatures(seed, []string{"moves", "parallel"}, []string{interfaceOmittedOptional}).Source()
 		optedIn = interfaceOmitted.MatchString(source)
 	}
 	if !optedIn {

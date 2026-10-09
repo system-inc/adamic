@@ -1,0 +1,34 @@
+[
+  {
+    "file": "02_readFile_utf16le.a",
+    "node": "Agrees",
+    "native": "Checker",
+    "javascript": "Checker",
+    "native_diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n",
+    "javascript_diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "node": "Agrees",
+    "native": "Checker",
+    "javascript": "Checker",
+    "native_diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n",
+    "javascript_diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+  },
+  {
+    "file": "21_createHash.a",
+    "node": "Agrees",
+    "native": "Compiles",
+    "javascript": "Compiles",
+    "native_diagnostic": "",
+    "javascript_diagnostic": ""
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "node": "Agrees",
+    "native": "Compiles",
+    "javascript": "Compiles",
+    "native_diagnostic": "",
+    "javascript_diagnostic": ""
+  }
+]

@@ -1,0 +1,40 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectorySymlinkMutants
+=== PAUSE TestNodeFSDirectorySymlinkMutants
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodeFSDirectorySymlinkMutants
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestNodeFSDirectorySymlinkMutants/target
+=== PAUSE TestNodeFSDirectorySymlinkMutants/target
+=== RUN   TestNodeFSDirectorySymlinkMutants/code
+=== PAUSE TestNodeFSDirectorySymlinkMutants/code
+=== RUN   TestNodeFSDirectorySymlinkMutants/message
+=== PAUSE TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/code
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestNodeFSDirectorySymlinkMutants/message
+    node_fs_directory_symlink_test.go:34: mkdir /tmp/adamic-gate/adamic-input-479934647/mutant: file exists
+=== NAME  TestNodeFSDirectorySymlinkMutants/code
+    node_fs_directory_symlink_test.go:34: mkdir /tmp/adamic-gate/adamic-input-3974030548/mutant: file exists
+=== NAME  TestNodeFSDirectorySymlinkMutants/target
+    node_fs_directory_symlink_test.go:34: mkdir /tmp/adamic-gate/adamic-input-1612018031/mutant: file exists
+--- FAIL: TestNodeFSDirectorySymlinkMutants (0.00s)
+    --- FAIL: TestNodeFSDirectorySymlinkMutants/message (2.12s)
+    --- FAIL: TestNodeFSDirectorySymlinkMutants/code (2.13s)
+    --- FAIL: TestNodeFSDirectorySymlinkMutants/target (2.15s)
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+    input_test.go:148: open /tmp/adamic-gate/adamic-input-665468828/run2/broken: no such file or directory
+--- FAIL: TestInputAgreesWithNode (0.00s)
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (2.73s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+FAIL	github.com/system-inc/adamic/internal/oracle	2.787s
+FAIL

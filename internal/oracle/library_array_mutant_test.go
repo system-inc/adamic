@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -24,7 +25,7 @@ func TestArrayFamilyMutants(t *testing.T) {
 			return strings.ReplaceAll(source, "adamic_array_join_nested(", "array_mutant_join_nested(")
 		}},
 		{"method metadata", "library_array_metadata.a", func(source string) string {
-			return strings.ReplaceAll(source, "ADAMIC_STRING(\"indexOf\")", "ADAMIC_STRING(\"wrong\")")
+			return strings.ReplaceAll(source, "ADAMIC_STRING_UNITS(\"indexOf\", 7)", "ADAMIC_STRING_UNITS(\"wrongOf\", 7)")
 		}},
 		{"with replacement", "library_array_with.a", func(source string) string {
 			return strings.ReplaceAll(source, "adamic_array_set(", "array_mutant_set(")
@@ -113,7 +114,12 @@ static adamic_array *array_mutant_reverse(adamic_array *array) { return array; }
 			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			var environment []string
+			if runtime.GOOS == "linux" {
+				environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
+			}
+			got := executeWith(t, environment, binary)
 			truth := onNode(t, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)

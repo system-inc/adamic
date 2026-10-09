@@ -1,0 +1,17 @@
+// TypeScript v6.0.3 src/compiler/scanner.ts:141-153,222 and parser.ts:2356.
+// Keep a finite subset of the original keyword table and the exact consumers.
+// These are the pinned compiler's SyntaxKind values for those members.
+enum SyntaxKind { BreakKeyword = 83, ConstKeyword = 87, ContinueKeyword = 88, IfKeyword = 101 }
+const textToKeywordObj = {
+    break: SyntaxKind.BreakKeyword,
+    const: SyntaxKind.ConstKeyword,
+    continue: SyntaxKind.ContinueKeyword,
+    if: SyntaxKind.IfKeyword,
+};
+const textToKeyword = new Map(Object.entries(textToKeywordObj));
+const viableKeywordSuggestions = Object.keys(textToKeywordObj).filter(keyword => keyword.length > 2);
+for (const [keyword, token] of textToKeyword) {
+    console.log(`${keyword}:${token}`);
+}
+console.log(viableKeywordSuggestions.join('|'));
+console.log(`${textToKeyword.get('continue')} ${textToKeyword.get('missing')}`);

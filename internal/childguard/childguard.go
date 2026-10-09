@@ -20,7 +20,17 @@ const DefaultCeiling = 60 * time.Minute
 
 // FirstOutput is the silence allowed before the first byte; Stall applies thereafter.
 // Options overrides the defaults. Zero durations select the defaults.
-type Options struct{ FirstOutput, Stall, Ceiling time.Duration }
+type Options struct {
+	FirstOutput, Stall, Ceiling time.Duration
+	// Started runs after Start, before the guard waits. It must not block.
+	Started func()
+	// KeepFiles preserves file/pipe descriptors for descriptor-sensitive probes.
+	// Regular-file size changes count as output without replacing the descriptor.
+	KeepFiles bool
+	// Progress observes output drained by an external driver or reader. Its count
+	// must increase only when child output arrives, never for a heartbeat.
+	Progress func() uint64
+}
 
 // Error reports a guard termination, separately from a child's nonzero exit.
 // Reason is "stalled" or "ceiling". Load is the one-minute load average,
@@ -100,19 +110,45 @@ func Run(cmd *exec.Cmd, options Options) error {
 		}
 		return &watched{dst: dst, activity: a}
 	}
-	cmd.Stdout = wrap(originalOut)
+	var files []*os.File
+	var sizes []int64
+	preserve := func(dst io.Writer) bool {
+		file, ok := dst.(*os.File)
+		if !options.KeepFiles || !ok {
+			return false
+		}
+		if info, err := file.Stat(); err == nil && info.Mode().IsRegular() {
+			files = append(files, file)
+			sizes = append(sizes, info.Size())
+		}
+		return true
+	}
+	if !preserve(originalOut) {
+		cmd.Stdout = wrap(originalOut)
+	}
 	// Preserve exec's serialization when both streams share a writer.
 	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalErr {
 		cmd.Stderr = cmd.Stdout
-	} else {
+	} else if !preserve(originalErr) {
 		cmd.Stderr = wrap(originalErr)
 	}
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	if options.Started != nil {
+		options.Started()
+	}
+	observed := uint64(0)
+	polling := options.Progress != nil || len(files) > 0
+	next := func(duration time.Duration) time.Duration {
+		if polling {
+			return min(duration, 100*time.Millisecond)
+		}
+		return duration
+	}
 	done := make(chan error, 1)
 	go func() { done <- cmd.Wait() }()
-	timer := time.NewTimer(min(options.FirstOutput, options.Ceiling))
+	timer := time.NewTimer(next(min(options.FirstOutput, options.Ceiling)))
 	defer timer.Stop()
 	for {
 		select {
@@ -127,7 +163,25 @@ func Run(cmd *exec.Cmd, options Options) error {
 			default:
 			}
 			now := time.Now()
+			changed := false
+			if options.Progress != nil {
+				count := options.Progress()
+				if count != observed {
+					observed = count
+					changed = true
+				}
+			}
+			for i, file := range files {
+				if info, err := file.Stat(); err == nil && info.Size() != sizes[i] {
+					sizes[i] = info.Size()
+					changed = true
+				}
+			}
 			a.Lock()
+			if changed {
+				a.last = now
+				a.seen = true
+			}
 			idle := now.Sub(a.last)
 			firstOutput := !a.seen
 			window := options.Stall
@@ -155,7 +209,7 @@ func Run(cmd *exec.Cmd, options Options) error {
 				}
 				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: cmd.Path, Elapsed: elapsed, Load: load}
 			}
-			timer.Reset(min(window-idle, options.Ceiling-elapsed))
+			timer.Reset(next(min(window-idle, options.Ceiling-elapsed)))
 		}
 	}
 }

@@ -2,12 +2,14 @@ package cssstrings
 
 import (
 	"context"
-	"errors"
+	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestMultiPushGap(t *testing.T) {
@@ -23,9 +25,21 @@ func TestMultiPushGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "push with other than one value" {
-		t.Fatalf("gap changed: %v; update GAPS.md and remove the workaround if closed", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "gap")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	emitted := filepath.Join(t.TempDir(), "gap.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []run{actual, onNode(t, emitted)} {
+		clean(t, "closed push gap", side)
+		equal(t, "closed push gap", side.stdout, answer.stdout)
 	}
 }

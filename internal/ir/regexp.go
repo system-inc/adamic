@@ -20,6 +20,11 @@ type RegExpCall struct {
 
 func (r RegExpCall) Type() Type { return r.Returns }
 
+// String matchAll and replaceAll reject a non-global RegExp before matching.
+func (r RegExpCall) MayThrow() bool {
+	return r.Method == "matchAll" || r.Method == "replaceAll"
+}
+
 // RegExpProperty reads result-array metadata, preserving optional access.
 type RegExpProperty struct {
 	Array    Expression

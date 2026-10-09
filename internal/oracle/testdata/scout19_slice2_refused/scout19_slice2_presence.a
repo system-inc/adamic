@@ -1,0 +1,17 @@
+// Compiler-owned expected refusal, ruling 5, core.ts:519-526.
+export function getOrUpdate<K, V>(map: Map<K, V>, key: K, callback: () => V): V {
+    if (map.has(key)) {
+        return map.get(key)!;
+    }
+    const value = callback();
+    map.set(key, value);
+    return value;
+}
+let calls = 0;
+const numbers = new Map<string, number>();
+console.log(`${getOrUpdate(numbers, 'present', () => { calls++; return 7; })}`);
+console.log(`${getOrUpdate(numbers, 'present', () => { calls++; return 9; })} calls ${calls}`);
+const optional = new Map<string, number | undefined>();
+optional.set('present', undefined);
+const value = getOrUpdate(optional, 'present', () => { calls++; return 10; });
+console.log(`stored ${value === undefined} has ${optional.has('present')} calls ${calls}`);

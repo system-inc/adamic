@@ -1,0 +1,15 @@
+console.log(`${typeof work === 'function'} ${typeof work !== 'object'} ${'function' === typeof ((work))}`);
+async function work(): Promise<void> { console.log('must not run'); }
+async function observe(work: boolean): Promise<void> {
+    const before = typeof work;
+    await Promise.resolve();
+    console.log(`${before} ${typeof work}`);
+}
+async function compare(): Promise<void> {
+    const before = typeof work === 'function';
+    await Promise.resolve();
+    const after = typeof (work);
+    console.log(`${before} ${after} ${typeof work === 'function'}`);
+}
+await observe(false);
+await compare();

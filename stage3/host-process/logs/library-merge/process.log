@@ -1,0 +1,352 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeProcessDirectoryRuntime
+=== PAUSE TestNodeProcessDirectoryRuntime
+=== RUN   TestNodeProcessEnvironmentRuntime
+=== PAUSE TestNodeProcessEnvironmentRuntime
+=== RUN   TestNodeProcessErrorNarrowingBlocker
+    node_process_errors_test.go:40: /workspace/adamic/internal/oracle/testdata/node_process_errors.a:5:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map
+--- PASS: TestNodeProcessErrorNarrowingBlocker (0.36s)
+=== RUN   TestNodeProcessErrorsRuntime
+=== PAUSE TestNodeProcessErrorsRuntime
+=== RUN   TestNodeProcessCwdErrorRuntime
+=== PAUSE TestNodeProcessCwdErrorRuntime
+=== RUN   TestNodeProcessTerminal
+=== PAUSE TestNodeProcessTerminal
+=== RUN   TestNodeProcessMissingMark
+=== PAUSE TestNodeProcessMissingMark
+=== RUN   TestNodeProcessMutants
+=== PAUSE TestNodeProcessMutants
+=== RUN   TestNodeProcessUnicodeDirectory
+=== PAUSE TestNodeProcessUnicodeDirectory
+=== RUN   TestNodeProcessBlocking
+=== PAUSE TestNodeProcessBlocking
+=== RUN   TestNodeProcessCachedDirectory
+=== PAUSE TestNodeProcessCachedDirectory
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud
+=== RUN   TestNodeProcessTmpdir
+=== PAUSE TestNodeProcessTmpdir
+=== RUN   TestNodeProcessOSNamespace
+=== PAUSE TestNodeProcessOSNamespace
+=== RUN   TestProcessExitOutput
+=== PAUSE TestProcessExitOutput
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== CONT  TestNodeProcessTmpdir
+=== CONT  TestNodeProcessCwdErrorRuntime
+=== CONT  TestNodeProcessCachedDirectory
+=== CONT  TestNodeProcessErrorsRuntime
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== CONT  TestNodeProcessUnicodeDirectory
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=" "TMP=" "TEMP="] -> "/tmp\n"
+--- PASS: TestNodeProcessUnicodeDirectory (1.39s)
+=== CONT  TestNodeProcessBlocking
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=/" "TMP=second" "TEMP=third"] -> "/\n"
+=== NAME  TestNodeProcessErrorsRuntime
+    node_process_errors_test.go:161: clean ERR_OUT_OF_RANGE mutant caught by Node stdout comparison
+    node_process_errors_test.go:163: own string code/message agree for real directory failures, Linux ENOMEM/EIO fault injection, and exit/exitCode numeric validation
+--- PASS: TestNodeProcessErrorsRuntime (1.50s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=//" "TMP=second" "TEMP=third"] -> "/\n"
+=== NAME  TestNodeProcessCwdErrorRuntime
+    node_process_errors_test.go:232: removed cwd own code/message match Node; clean code mutant caught by Node stdout
+--- PASS: TestNodeProcessCwdErrorRuntime (2.12s)
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/performance_entries
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/performance_entries
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/measure_options
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/measure_options
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+=== CONT  TestNodeProcessMutants
+=== RUN   TestNodeProcessMutants/cwd
+=== PAUSE TestNodeProcessMutants/cwd
+=== RUN   TestNodeProcessMutants/platform
+=== PAUSE TestNodeProcessMutants/platform
+=== RUN   TestNodeProcessMutants/EOL
+=== PAUSE TestNodeProcessMutants/EOL
+=== RUN   TestNodeProcessMutants/nextTick_feature
+=== PAUSE TestNodeProcessMutants/nextTick_feature
+=== RUN   TestNodeProcessMutants/pid_range
+=== PAUSE TestNodeProcessMutants/pid_range
+=== RUN   TestNodeProcessMutants/argv
+=== PAUSE TestNodeProcessMutants/argv
+=== RUN   TestNodeProcessMutants/execArgv
+=== PAUSE TestNodeProcessMutants/execArgv
+=== RUN   TestNodeProcessMutants/columns
+=== PAUSE TestNodeProcessMutants/columns
+=== RUN   TestNodeProcessMutants/handle_feature
+=== PAUSE TestNodeProcessMutants/handle_feature
+=== RUN   TestNodeProcessMutants/write
+=== PAUSE TestNodeProcessMutants/write
+=== RUN   TestNodeProcessMutants/memory_range
+=== PAUSE TestNodeProcessMutants/memory_range
+=== RUN   TestNodeProcessMutants/monotonic_now
+=== PAUSE TestNodeProcessMutants/monotonic_now
+=== RUN   TestNodeProcessMutants/time_origin_range
+=== PAUSE TestNodeProcessMutants/time_origin_range
+=== RUN   TestNodeProcessMutants/performance_hooks
+=== PAUSE TestNodeProcessMutants/performance_hooks
+=== RUN   TestNodeProcessMutants/mark
+=== PAUSE TestNodeProcessMutants/mark
+=== RUN   TestNodeProcessMutants/measure
+=== PAUSE TestNodeProcessMutants/measure
+=== RUN   TestNodeProcessMutants/clear_all_marks
+=== PAUSE TestNodeProcessMutants/clear_all_marks
+=== RUN   TestNodeProcessMutants/clear_named_marks
+=== PAUSE TestNodeProcessMutants/clear_named_marks
+=== RUN   TestNodeProcessMutants/clear_measures
+=== PAUSE TestNodeProcessMutants/clear_measures
+=== CONT  TestNodeProcessMissingMark
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=/tmp///" "TMP=second" "TEMP=third"] -> "/tmp//\n"
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=relative/" "TMP=second" "TEMP=third"] -> "relative\n"
+    node_process_tmpdir_test.go:29: ["TMPDIR=héllo 🌍/" "TMP=second" "TEMP=third"] -> "héllo 🌍\n"
+    node_process_tmpdir_test.go:29: ["TMPDIR=" "TMP=second/" "TEMP=third/"] -> "second\n"
+=== NAME  TestNodeProcessCachedDirectory
+    node_process_test.go:242: uncached cwd mutant compiled and ran without sanitizer errors; Node keeps its cached path, mutant panics with ENOENT
+--- PASS: TestNodeProcessCachedDirectory (3.62s)
+=== CONT  TestNodeProcessTerminal
+=== NAME  TestNodeProcessMissingMark
+    node_process_test.go:51: gate cache node miss
+    node_process_test.go:55: gate cache node miss
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=" "TMP=" "TEMP=third/"] -> "third\n"
+--- PASS: TestNodeProcessMissingMark (1.91s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:29: ["TMPDIR=bad\xff/" "TMP=" "TEMP="] -> "bad�\n"
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestNodeProcessBlocking
+    node_process_test.go:200: setBlocking mutant runs without sanitizer errors; Node has 200000 bytes and exit 0, mutant has 4096 bytes and exit 70
+--- PASS: TestNodeProcessBlocking (4.77s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== NAME  TestNodeProcessTerminal
+    node_process_test.go:44: file: Node "width -1\ntty false\nhandle undefined\nset blocking\n"
+=== NAME  TestNodeProcessTmpdir
+    node_process_tmpdir_test.go:38: clean tmpdir mutant caught by Node stdout
+--- PASS: TestNodeProcessTmpdir (6.31s)
+=== CONT  TestNodeProcessDirectoryRuntime
+=== NAME  TestNodeProcessTerminal
+    node_process_test.go:44: pipe: Node "width -1\ntty false\nhandle function\nset blocking\n"
+=== CONT  TestNodeProcessEnvironmentRuntime
+=== NAME  TestNodeProcessDirectoryRuntime
+    node_process_directory_test.go:54: gate cache node miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+    input_test.go:114: gate cache probe miss
+=== NAME  TestNodeProcessDirectoryRuntime
+    oracle_test.go:502: gate cache native miss
+=== NAME  TestNodeProcessTerminal
+    node_process_test.go:44: tty: Node "width 93\ntty true\nhandle function\nset blocking\n"
+--- PASS: TestNodeProcessTerminal (3.56s)
+=== CONT  TestProcessExitOutput
+=== RUN   TestProcessExitOutput/file_immediate
+=== PAUSE TestProcessExitOutput/file_immediate
+=== RUN   TestProcessExitOutput/file_normal
+=== PAUSE TestProcessExitOutput/file_normal
+=== RUN   TestProcessExitOutput/merged_pipe
+=== PAUSE TestProcessExitOutput/merged_pipe
+=== RUN   TestProcessExitOutput/merged_file
+=== PAUSE TestProcessExitOutput/merged_file
+=== RUN   TestProcessExitOutput/large_file
+=== PAUSE TestProcessExitOutput/large_file
+=== CONT  TestNodeProcessOSNamespace
+=== NAME  TestNodeProcessEnvironmentRuntime
+    node_process_environment_test.go:47: gate cache node miss
+    oracle_test.go:502: gate cache native miss
+=== RUN   TestNodeProcessDirectoryRuntime/cache_invalidation
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/performance_entries
+=== RUN   TestNodeProcessEnvironmentRuntime/set
+=== NAME  TestNodeProcessDirectoryRuntime/cache_invalidation
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessDirectoryRuntime/error_code
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/performance_entries
+    node_process_test.go:264: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudperformance_entries3980720897/001/node_process_unsupported.a:1:48: stage 0 can't lower node:perf_hooks.Performance.getEntries yet
+=== CONT  TestNodeProcessMutants/cwd
+=== NAME  TestNodeProcessEnvironmentRuntime/set
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessEnvironmentRuntime/delete
+=== NAME  TestNodeProcessOSNamespace
+    node_process_tmpdir_test.go:44: gate cache node miss
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a (3.17s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a (2.79s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a (2.80s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a (2.44s)
+=== NAME  TestNodeProcessDirectoryRuntime/error_code
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessDirectoryRuntime (2.47s)
+    --- PASS: TestNodeProcessDirectoryRuntime/cache_invalidation (0.74s)
+    --- PASS: TestNodeProcessDirectoryRuntime/error_code (0.63s)
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== NAME  TestNodeProcessOSNamespace
+    node_process_tmpdir_test.go:45: gate cache node miss
+=== NAME  TestNodeProcessEnvironmentRuntime/delete
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessEnvironmentRuntime (2.55s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/set (0.72s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/delete (0.79s)
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/measure_options
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+    node_process_test.go:264: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudnextTick_callback997113577/001/node_process_unsupported.a:1:24: stage 0 can't lower process.nextTick as a value (use its supported process operation directly) yet
+=== CONT  TestNodeProcessMutants/clear_measures
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+    node_process_test.go:264: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudwrite_backpressure1849321784/001/node_process_unsupported.a:1:41: stage 0 can't lower observing the backpressure return of process.stdout.write yet
+=== CONT  TestNodeProcessMutants/clear_named_marks
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/measure_options
+    node_process_test.go:264: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudmeasure_options537869836/001/node_process_unsupported.a:1:73: stage 0 can't lower performance.measure with a non-string argument yet
+--- PASS: TestNodeProcessUnsupportedOperationsStayLoud (0.00s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/performance_entries (0.82s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback (1.13s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure (1.04s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/measure_options (0.79s)
+=== CONT  TestNodeProcessMutants/clear_all_marks
+=== NAME  TestNodeProcessMutants/cwd
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/measure
+--- PASS: TestNodeProcessOSNamespace (3.60s)
+=== CONT  TestNodeProcessMutants/mark
+=== NAME  TestNodeProcessMutants/clear_measures
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/performance_hooks
+=== NAME  TestNodeProcessMutants/clear_named_marks
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/time_origin_range
+=== NAME  TestNodeProcessMutants/clear_all_marks
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/monotonic_now
+=== NAME  TestNodeProcessMutants/measure
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/execArgv
+=== NAME  TestNodeProcessMutants/mark
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/memory_range
+=== NAME  TestNodeProcessMutants/performance_hooks
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/write
+=== NAME  TestNodeProcessMutants/time_origin_range
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/handle_feature
+=== NAME  TestNodeProcessMutants/execArgv
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/columns
+=== NAME  TestNodeProcessMutants/monotonic_now
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/nextTick_feature
+=== NAME  TestNodeProcessMutants/memory_range
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/argv
+=== NAME  TestNodeProcessMutants/nextTick_feature
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/pid_range
+=== NAME  TestNodeProcessMutants/columns
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/EOL
+=== NAME  TestNodeProcessMutants/write
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestNodeProcessMutants/platform
+=== NAME  TestNodeProcessMutants/handle_feature
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestProcessExitOutput/file_immediate
+=== NAME  TestNodeProcessMutants/argv
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestProcessExitOutput/merged_file
+=== NAME  TestProcessExitOutput/file_immediate
+    process_test.go:126: node shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestNodeProcessMutants/pid_range
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestProcessExitOutput/large_file
+=== NAME  TestProcessExitOutput/file_immediate
+    process_test.go:131: node shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestNodeProcessMutants/EOL
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestProcessExitOutput/merged_pipe
+=== NAME  TestProcessExitOutput/merged_file
+    process_test.go:126: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestNodeProcessMutants/platform
+    node_process_test.go:145: mutant compiled and ran without sanitizer errors; Node comparison caught it
+=== CONT  TestProcessExitOutput/file_normal
+--- PASS: TestNodeProcessMutants (0.00s)
+    --- PASS: TestNodeProcessMutants/cwd (2.11s)
+    --- PASS: TestNodeProcessMutants/clear_measures (2.29s)
+    --- PASS: TestNodeProcessMutants/clear_named_marks (2.27s)
+    --- PASS: TestNodeProcessMutants/clear_all_marks (2.15s)
+    --- PASS: TestNodeProcessMutants/measure (2.25s)
+    --- PASS: TestNodeProcessMutants/mark (2.54s)
+    --- PASS: TestNodeProcessMutants/performance_hooks (2.33s)
+    --- PASS: TestNodeProcessMutants/time_origin_range (2.42s)
+    --- PASS: TestNodeProcessMutants/execArgv (2.06s)
+    --- PASS: TestNodeProcessMutants/monotonic_now (2.46s)
+    --- PASS: TestNodeProcessMutants/memory_range (2.08s)
+    --- PASS: TestNodeProcessMutants/nextTick_feature (1.19s)
+    --- PASS: TestNodeProcessMutants/columns (1.41s)
+    --- PASS: TestNodeProcessMutants/write (1.96s)
+    --- PASS: TestNodeProcessMutants/handle_feature (1.88s)
+    --- PASS: TestNodeProcessMutants/argv (1.64s)
+    --- PASS: TestNodeProcessMutants/pid_range (1.35s)
+    --- PASS: TestNodeProcessMutants/EOL (1.49s)
+    --- PASS: TestNodeProcessMutants/platform (1.55s)
+=== NAME  TestProcessExitOutput/file_immediate
+    process_test.go:137: program shared=false backpressure=false: stdout=0 stderr=0 exit=37 pipe capacity=0
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== NAME  TestProcessExitOutput/merged_file
+    process_test.go:131: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:126: node shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/merged_pipe
+    process_test.go:126: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:131: node shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/merged_pipe
+    process_test.go:131: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+    process_test.go:131: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+=== NAME  TestProcessExitOutput/file_normal
+    process_test.go:126: node shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/merged_file
+    process_test.go:137: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+    process_test.go:145: Node order "out 0\nerr 0\nout 1\nerr 1\nout last\n"; mutant order "err 0\nerr 1\nout 0\nout 1\nout last\n"
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:137: program shared=false backpressure=false: stdout=196608 stderr=0 exit=37 pipe capacity=0
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== NAME  TestProcessExitOutput/file_normal
+    process_test.go:131: node shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/merged_pipe
+    process_test.go:137: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+    process_test.go:145: Node order "out 0\nerr 0\nout 1\nerr 1\nout last\n"; mutant order "err 0\nerr 1\nout 0\nout 1\nout last\n"
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+--- PASS: TestProcessExitOutput (0.00s)
+    --- PASS: TestProcessExitOutput/file_immediate (1.62s)
+    --- PASS: TestProcessExitOutput/merged_file (1.87s)
+    --- PASS: TestProcessExitOutput/large_file (1.76s)
+    --- PASS: TestProcessExitOutput/file_normal (1.21s)
+    --- PASS: TestProcessExitOutput/merged_pipe (1.75s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=4
+ok  	github.com/system-inc/adamic/internal/oracle	19.744s

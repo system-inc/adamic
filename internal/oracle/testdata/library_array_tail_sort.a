@@ -1,0 +1,17 @@
+const numbers = [10, 9, 1, -10, -2, 0, NaN, Infinity, -Infinity];
+const alias = numbers;
+console.log(numbers.sort().join('|'));
+console.log(`${numbers === alias}`);
+const words = ['z', '🌍', '\uFFFF', 'a'.repeat(2), 'a', 'aa'];
+console.log(words.sort(undefined).join('|'));
+console.log([true, false, true].sort().join('|'));
+const empty: number[] = [];
+console.log(`${empty.sort() === empty}`);
+console.log([1].sort().join('|'));
+const numeric = [10, 9, 1];
+console.log(numeric.sort((left, right) => left - right).join('|'));
+let reads = 0;
+const changed = [3, 2, 1];
+function receiver(): number[] { reads++; changed.push(10); return changed; }
+console.log(receiver().sort(undefined).join('|'));
+console.log(`${reads}`);

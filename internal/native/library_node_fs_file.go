@@ -8,6 +8,9 @@ import (
 )
 
 func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+	if strings.HasPrefix(call.Operation, "date_") {
+		return e.dateHostCall(call)
+	}
 	args := make([]string, len(call.Arguments))
 	for i, argument := range call.Arguments {
 		args[i] = e.value(argument)

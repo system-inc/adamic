@@ -104,6 +104,10 @@ func (l *lowering) libraryMapArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
+	// The typed own-property alias keeps its real closure and its separately proven .call uses.
+	if l.borrowedOwnAlias(node) != nil {
+		return nil, false, nil
+	}
 	_, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
 	if !known {
 		return nil, false, nil
@@ -170,6 +174,10 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	}
 	method, known := l.libraryMethod(target, map[*ast.Symbol]bool{})
 	if !known {
+		return nil, false, nil
+	}
+	// Keep the library's generic Array receiver proof for immediate prototype calls.
+	if mode == "call" && method.source == ast.SkipParentheses(target) && method.family == "Array.prototype" {
 		return nil, false, nil
 	}
 	// Leave existing immediate primitive prototype calls on their established paths.
@@ -334,7 +342,7 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	}
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 		expected, proven := l.representation(contextual)
-		if !proven || expected != value.Type() && expected != ir.Maybe(value.Type()) && !(expected == ir.Union && l.writable(contextual) && (value.Type() == ir.String || value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber)) {
+		if !l.libraryMethodConsoleScalar(node, method, value.Type()) && (!proven || expected != value.Type() && expected != ir.Maybe(value.Type()) && !(expected == ir.Union && l.writable(contextual) && (value.Type() == ir.String || value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber))) {
 			return nil, true, l.notYet(node, "a delayed library result whose contextual representation is not proven")
 		}
 		if value.Type() == ir.Array && method.family == "Array.prototype" {
@@ -568,4 +576,40 @@ func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error) 
 		value = l.methodSequence([]ir.Expression{alias, value})
 	}
 	return value, true, nil
+}
+
+// Console prints immediately, without storing its nullable contextual view. Only a known
+// intrinsic's declared non-nullable scalar result proves this upcast; flow narrowing and
+// nullable results cannot supply that proof. The ordinary delayed-result guard remains intact.
+func (l *lowering) libraryMethodConsoleScalar(node *ast.Node, method libraryMethod, result ir.Type) bool {
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	parent := outer.Parent
+	if parent == nil || parent.Kind != ast.KindCallExpression || !l.isConsole(parent.AsCallExpression().Expression) {
+		return false
+	}
+	arguments := parent.AsCallExpression().Arguments.Nodes
+	if len(arguments) != 1 || arguments[0] != outer {
+		return false
+	}
+	if result != ir.String && result != ir.Number && result != ir.Boolean {
+		return false
+	}
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(method.source), checker.SignatureKindCall)
+	if len(signatures) == 0 {
+		return false
+	}
+	for _, signature := range signatures {
+		declared := l.checker.GetReturnTypeOfSignature(signature)
+		if l.includesNull(declared) || l.includesUndefined(declared) {
+			return false
+		}
+		represented, proven := l.representation(declared)
+		if !proven || represented != result {
+			return false
+		}
+	}
+	return true
 }

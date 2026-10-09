@@ -1,0 +1,5 @@
+// Reduced from core.ts:1291
+const keys: string[] = [];
+const key = 'compiler';
+keys.push(key);
+console.log(keys.join('|'));

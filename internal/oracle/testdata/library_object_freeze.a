@@ -14,3 +14,48 @@ function copied(): boolean {
 }
 console.log(`${copied()}`);
 console.log(`${Object.freeze(1)} ${Object.freeze(true)} ${Object.freeze('abc')} ${Object.is(Object.freeze(undefined), undefined)}`);
+
+// Seal keeps writes legal and aliases identical, while preventing extensions.
+const sealedObject = { value: 1, label: 'built' + '-sealed' };
+const sealedAlias = Object.seal(sealedObject);
+console.log(`${Object.is(sealedObject, sealedAlias)} ${Object.isSealed(sealedAlias)} ${Object.isFrozen(sealedAlias)} ${Object.isExtensible(sealedAlias)}`);
+sealedObject.value = 7;
+Object.assign(sealedObject, { value: 9 });
+console.log(`${sealedAlias.value} ${sealedAlias.label}`);
+Object.preventExtensions(sealedObject);
+console.log(`${Object.isSealed(sealedObject)} ${Object.isFrozen(sealedObject)}`);
+Object.freeze(sealedObject);
+console.log(`${Object.isSealed(sealedObject)} ${Object.isFrozen(sealedObject)} ${Object.isExtensible(sealedObject)}`);
+
+// Empty objects are neither sealed nor frozen until extensions are prevented.
+const empty = {};
+console.log(`${Object.isExtensible(empty)} ${Object.isSealed(empty)} ${Object.isFrozen(empty)}`);
+const prevented = Object.preventExtensions(empty);
+console.log(`${Object.is(empty, prevented)} ${Object.isExtensible(empty)} ${Object.isSealed(empty)} ${Object.isFrozen(empty)}`);
+const writable = { value: 1 };
+Object.preventExtensions(writable);
+console.log(`${Object.isSealed(writable)} ${Object.isFrozen(writable)} ${Object.isExtensible(writable)}`);
+writable.value = 2;
+console.log(`${writable.value}`);
+
+// Spreading a sealed or nonextensible object makes a fresh, extensible object.
+function spreadSealed(): string {
+ const source = { value: 2 };
+ Object.seal(source);
+ const copy = { ...source, value: 4 };
+ return `${Object.isSealed(copy)} ${Object.isExtensible(copy)} ${copy.value}`;
+}
+function spreadPrevented(): boolean {
+ const source = { value: 2 };
+ Object.preventExtensions(source);
+ const copy = { ...source, value: 4 };
+ return Object.isExtensible(copy);
+}
+console.log(spreadSealed());
+console.log(`${spreadPrevented()}`);
+console.log(`${Object.isSealed(undefined)} ${Object.isSealed(null)} ${Object.isSealed(true)} ${Object.isSealed('abc')} ${Object.isSealed(NaN)}`);
+console.log(`${Object.isExtensible(undefined)} ${Object.isExtensible(null)} ${Object.isExtensible(true)} ${Object.isExtensible('abc')} ${Object.isExtensible(NaN)}`);
+console.log(`${Object.isSealed([1])} ${Object.isExtensible([1])} ${Object.isSealed(new Map<string, number>())} ${Object.isExtensible(new Map<string, number>())}`);
+console.log(`${Object.seal(true)} ${Object.seal(1)} ${Object.seal('abc')} ${Object.preventExtensions(true)} ${Object.preventExtensions(1)}`);
+
+console.log(`${Object.is(Object.seal(null), null)} ${Object.is(Object.preventExtensions(null), null)}`);

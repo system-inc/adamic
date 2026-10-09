@@ -52,13 +52,14 @@ must still agree with Go. Measurements include process startup, file reading,
 batch escaping and stdout collection; compilation is excluded. They are mixed
 short-text throughput, not a steady-state full-CSS-formatting benchmark.
 
-## Gap 1: multi-value Array.push
+## Gap 1: multi-value Array.push: closed
 
-`gaps/1_multi_push.ts` is accepted by the checker and prints `ab\n` on Node.
-Stage 0 refuses lowering with `push with other than one value` (`lower.NotYet`).
-The port uses one push per value instead. `TestMultiPushGap` asserts Node's output
-and the exact refusal, so a closed gap requires updating this record and removing
-the workaround. No compiler files were changed.
+Closed on library/area-on-main-4 (`d767edf5`). The unchanged
+`gaps/1_multi_push.ts` prints `ab\n` on source Node, native
+ASan/UBSan/LeakSanitizer and emitted JavaScript. `TestMultiPushGap` now
+requires those exact bytes instead of `push with other than one value`.
+The sub-printer combines adjacent pushes into multi-value calls; no compiler
+files or oracle expectations were changed.
 
 ## Boundaries
 

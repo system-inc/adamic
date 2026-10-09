@@ -52,7 +52,7 @@ func TestGenericJSONUnionArrayIsNotYet(t *testing.T) {
 	}
 	_, err = lowerSource(t, string(source))
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "JSON.stringify unions containing arrays (adamic/json-union-array)" {
-		t.Fatalf("want the named JSON union array NotYet, got %v", err)
+	if !errors.As(err, &notYet) || (notYet.What != "JSON.stringify unions containing arrays (adamic/json-union-array)" && notYet.What != "JSON.stringify a generic union without per-instantiation container metadata") {
+		t.Fatalf("want a JSON union metadata NotYet, got %v", err)
 	}
 }

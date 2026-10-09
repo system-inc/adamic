@@ -1,0 +1,94 @@
+=== RUN   TestLibraryArrayNewFamilyMutants
+=== PAUSE TestLibraryArrayNewFamilyMutants
+=== RUN   TestLibraryArrayHeterogeneousCrashIsRefused
+=== PAUSE TestLibraryArrayHeterogeneousCrashIsRefused
+=== RUN   TestLibraryArrayGenericRefusals
+=== PAUSE TestLibraryArrayGenericRefusals
+=== CONT  TestLibraryArrayNewFamilyMutants
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== RUN   TestLibraryArrayNewFamilyMutants/isArray_classification
+=== PAUSE TestLibraryArrayNewFamilyMutants/isArray_classification
+=== RUN   TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== PAUSE TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== CONT  TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== CONT  TestLibraryArrayNewFamilyMutants/isArray_classification
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== CONT  TestLibraryArrayHeterogeneousCrashIsRefused
+--- PASS: TestLibraryArrayHeterogeneousCrashIsRefused (0.37s)
+=== CONT  TestLibraryArrayGenericRefusals
+=== RUN   TestLibraryArrayGenericRefusals/detached
+=== PAUSE TestLibraryArrayGenericRefusals/detached
+=== RUN   TestLibraryArrayGenericRefusals/shadowed_Array
+=== PAUSE TestLibraryArrayGenericRefusals/shadowed_Array
+=== RUN   TestLibraryArrayGenericRefusals/widened_shape
+=== PAUSE TestLibraryArrayGenericRefusals/widened_shape
+=== RUN   TestLibraryArrayGenericRefusals/reassigned_shape
+=== PAUSE TestLibraryArrayGenericRefusals/reassigned_shape
+=== RUN   TestLibraryArrayGenericRefusals/object_coercion
+=== PAUSE TestLibraryArrayGenericRefusals/object_coercion
+=== RUN   TestLibraryArrayGenericRefusals/empty_object_field
+=== PAUSE TestLibraryArrayGenericRefusals/empty_object_field
+=== RUN   TestLibraryArrayGenericRefusals/optional_field_value
+=== PAUSE TestLibraryArrayGenericRefusals/optional_field_value
+=== RUN   TestLibraryArrayGenericRefusals/optional_search_value
+=== PAUSE TestLibraryArrayGenericRefusals/optional_search_value
+=== RUN   TestLibraryArrayGenericRefusals/hidden_object_field
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_object_field
+=== RUN   TestLibraryArrayGenericRefusals/hidden_search_view
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_search_view
+=== RUN   TestLibraryArrayGenericRefusals/null_array_search
+=== PAUSE TestLibraryArrayGenericRefusals/null_array_search
+=== RUN   TestLibraryArrayGenericRefusals/null_receiver
+=== PAUSE TestLibraryArrayGenericRefusals/null_receiver
+=== RUN   TestLibraryArrayGenericRefusals/hidden_array
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_array
+=== RUN   TestLibraryArrayGenericRefusals/optional_array
+=== PAUSE TestLibraryArrayGenericRefusals/optional_array
+=== CONT  TestLibraryArrayGenericRefusals/detached
+=== CONT  TestLibraryArrayGenericRefusals/optional_array
+=== CONT  TestLibraryArrayGenericRefusals/hidden_array
+=== CONT  TestLibraryArrayGenericRefusals/null_receiver
+=== CONT  TestLibraryArrayGenericRefusals/null_array_search
+=== CONT  TestLibraryArrayGenericRefusals/hidden_search_view
+=== CONT  TestLibraryArrayGenericRefusals/hidden_object_field
+=== NAME  TestLibraryArrayNewFamilyMutants/isArray_classification
+    library_array_mutants_test.go:154: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayGenericRefusals/optional_search_value
+=== CONT  TestLibraryArrayGenericRefusals/optional_field_value
+=== NAME  TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+    library_array_mutants_test.go:154: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayGenericRefusals/empty_object_field
+=== CONT  TestLibraryArrayGenericRefusals/reassigned_shape
+=== CONT  TestLibraryArrayGenericRefusals/object_coercion
+=== CONT  TestLibraryArrayGenericRefusals/widened_shape
+=== CONT  TestLibraryArrayGenericRefusals/shadowed_Array
+--- PASS: TestLibraryArrayGenericRefusals (0.00s)
+    --- PASS: TestLibraryArrayGenericRefusals/detached (0.12s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_array (0.19s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_array (0.12s)
+    --- PASS: TestLibraryArrayGenericRefusals/null_receiver (0.20s)
+    --- PASS: TestLibraryArrayGenericRefusals/null_array_search (0.20s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_search_view (0.16s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_object_field (0.22s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_search_value (0.25s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_field_value (0.25s)
+    --- PASS: TestLibraryArrayGenericRefusals/empty_object_field (0.20s)
+    --- PASS: TestLibraryArrayGenericRefusals/reassigned_shape (0.22s)
+    --- PASS: TestLibraryArrayGenericRefusals/object_coercion (0.20s)
+    --- PASS: TestLibraryArrayGenericRefusals/widened_shape (0.20s)
+    --- PASS: TestLibraryArrayGenericRefusals/shadowed_Array (0.13s)
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+    library_array_mutants_test.go:154: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+    library_array_mutants_test.go:154: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+--- PASS: TestLibraryArrayNewFamilyMutants (0.00s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/isArray_classification (1.46s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end (1.65s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign (2.99s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_forward_boundary (3.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.179s

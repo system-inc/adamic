@@ -1,0 +1,26 @@
+// a-check: checked
+// core.ts:1542-1567, adapted by the step 19 composition ruling.
+import { createMultiMap, multiMapAdd, multiMapRemove, multiMapForEach } from '../../../stage1/typescript/collections/multimap.a';
+const receiver = createMultiMap<string, number>();
+const bucket = multiMapAdd(receiver, 'first', 1);
+multiMapAdd(receiver, 'second', 9);
+multiMapAdd(receiver, 'first', 2);
+multiMapAdd(receiver, 'first', 3);
+multiMapAdd(receiver, 'first', 2);
+multiMapAdd(receiver, 'first', 4);
+console.log(`alias ${receiver.map.get('first') === bucket} ${bucket.join(',')}`);
+multiMapRemove(receiver, 'first', 2);
+console.log(`unordered ${bucket.join(',')}`);
+multiMapRemove(receiver, 'missing', 1);
+multiMapRemove(receiver, 'first', 99);
+console.log(`unchanged ${bucket.join(',')} ${receiver.map.size}`);
+multiMapRemove(receiver, 'second', 9);
+console.log(`empty ${receiver.map.has('second')}`);
+multiMapAdd(receiver, 'second', 8);
+for (const [key, values] of receiver.map) console.log(`${key}:${values.join(',')}`);
+const other = createMultiMap<string, number>();
+const otherBucket = multiMapAdd(other, 'first', 7);
+console.log(`separate ${otherBucket.join(',')} ${bucket.join(',')}`);
+multiMapForEach(receiver, (values, key, owner) => console.log(`visit ${key}:${values.join(',')}:${owner === receiver}`));
+receiver.map.clear();
+console.log(`clear ${receiver.map.size} alias ${bucket.join(',')}`);

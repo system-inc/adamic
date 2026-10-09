@@ -14,7 +14,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "02_reverse_barrel/main.a",
@@ -31,7 +34,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "03_extensions/main.a",
@@ -49,7 +55,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "04_directory_callback/main.a",
@@ -66,7 +75,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"
+    }
   },
   {
     "file": "05_safe_load_read/main.a",
@@ -117,7 +129,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "08_named_reexports/main.a",
@@ -134,7 +149,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "09_function_value_load/main.a",
@@ -148,7 +166,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   },
   {
     "file": "10_hoisted_before_body/main.a",
@@ -162,6 +183,9 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Compiles","what":""}
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
   }
 ]

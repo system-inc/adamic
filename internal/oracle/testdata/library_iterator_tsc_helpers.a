@@ -1,0 +1,70 @@
+// TypeScript 6.0.3 src/compiler/utilities.ts:746 and core.ts:82,93.
+// Types are specialized to numbers; truthiness is explicit because Adamic refuses optional-number conditions.
+function visitEntries(
+    map: ReadonlyMap<number, number>,
+    callback: (value: number, key: number) => number | undefined,
+): number | undefined {
+    const iterator = map.entries();
+    for(const [key, value] of iterator) {
+        const result = callback(value, key);
+        if(result !== undefined && result !== 0 && !Number.isNaN(result)) {
+            return result;
+        }
+    }
+    return undefined;
+}
+
+function firstDefinedValues(iter: Set<number>, callback: (element: number) => number | undefined): number | undefined {
+    for(const value of iter) {
+        const result = callback(value);
+        if(result !== undefined) {
+            return result;
+        }
+    }
+    return undefined;
+}
+
+function reduceValues(
+    iterator: MapIterator<number> | undefined,
+    callback: (memo: number, value: number, index: number) => number,
+    initial: number,
+): number {
+    let result = initial;
+    if(iterator !== undefined) {
+        let pos = 0;
+        for(const value of iterator) {
+            result = callback(result, value, pos);
+            pos++;
+        }
+    }
+    return result;
+}
+
+const map = new Map<number, number>([
+    [1, 10],
+    [2, 20],
+    [3, 30],
+]);
+const seen: number[] = [];
+const visited = visitEntries(map, function(value: number, key: number): number | undefined {
+    seen.push(key);
+    if(key === 1) {
+        map.delete(2);
+        map.set(4, 40);
+        return 0;
+    }
+    return value;
+});
+console.log(`${visited} ${seen.join(',')}`);
+const set = new Set<number>([1, 2]);
+const defined = firstDefinedValues(set, (value: number): number | undefined => (value === 1 ? 0 : 99));
+console.log(`${defined}`);
+console.log(`${firstDefinedValues(new Set<number>(), (value: number): number | undefined => value)}`);
+const values = map.values();
+console.log(
+    `${reduceValues(values, (memo: number, value: number, index: number): number => memo + value + index, 100)}`,
+);
+console.log(`${values.next().done}`);
+console.log(
+    `${reduceValues(undefined, (memo: number, value: number, index: number): number => memo + value + index, 100)}`,
+);

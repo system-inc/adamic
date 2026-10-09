@@ -109,10 +109,11 @@ func TestToStringWithARadixOutOfRangePanics(t *testing.T) {
 #include <stdlib.h>
 
 int main(int count, char **arguments) {
-	(void)count;
+	adamic_start(count, arguments);
 	static adamic_string before = ADAMIC_STRING("before");
 	adamic_write_line(adamic_stdout, &before);
 	adamic_string *text = adamic_number_to_radix(strtod(arguments[1], NULL), strtod(arguments[2], NULL));
+	if (adamic_thrown != NULL) adamic_uncaught();
 	adamic_write_line(adamic_stdout, text);
 	adamic_release(text);
 	return 0;

@@ -132,9 +132,7 @@ export class Parser {
                 let trailing = false;
                 if(this.kind() === 'OpenParenToken') {
                     const args = this.arguments();
-                    for(const argument of args) {
-                        children.push(argument);
-                    }
+                    children.push(...args);
                     list = args.length;
                     trailing = this.lastTrailing;
                 }
