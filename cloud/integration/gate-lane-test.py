@@ -80,6 +80,8 @@ class GateLaneTests(unittest.TestCase):
                                        GATE_LANE_PUSH_MAIN=str(fake), GATE_LANE_AHRA=str(poster)))
 
     def test_network_calls_are_batched(self):
+        # Two gate merges on origin: the first run fetches them, the second fetches nothing (all of them every run took 64 s).
+        self.gateMerge()
         shas = [self.sha]
         for number in range(2):
             (self.repository / 'a.txt').write_text(str(number))
@@ -115,7 +117,7 @@ class GateLaneTests(unittest.TestCase):
             self.assertLessEqual(calls.count('ls-remote'), 1, calls)
             self.assertLessEqual(calls.count('fetch'), 1, calls)
             self.assertEqual(calls.count('fetch'), 1, calls)
-            self.assertIn('18 refs fetched', ran.stdout)
+            self.assertIn('20 refs fetched', ran.stdout)
             network.write_text('')
             ran = self.run_lane(3)
             self.assertEqual(ran.returncode, 0, ran.stderr)

@@ -49,12 +49,14 @@ def prepare(shas):
         "for-each-ref", "refs/gate-merges", "--format=%(objectname)").splitlines())
     prefixes.update(oid[:12] for oid, ref in remote if ref.startswith("refs/gate-merges/"))
     local = dict(line.split(" ", 1)[::-1] for line in git(
-        "for-each-ref", "refs/remotes/origin/gate-logs", "--format=%(objectname) %(refname)").splitlines())
+        "for-each-ref", "refs/remotes/origin/gate-logs", "refs/gate-merges", "--format=%(objectname) %(refname)").splitlines())
     refspecs = []
     remoteRecords = []
     for oid, ref in remote:
         if ref.startswith("refs/gate-merges/"):
-            refspecs.append("+%s:%s" % (ref, ref))
+            # A gate merge never changes once made; fetch only the ones this clone lacks (all 184 every run took 64 s).
+            if local.get(ref) != oid:
+                refspecs.append("+%s:%s" % (ref, ref))
         elif ref.split("/")[3] in prefixes and ref.rsplit("/", 1)[1] in ("fast", "fast-phases", "full-main"):
             name = ref.removeprefix("refs/heads/")
             remoteRecords.append(name)
