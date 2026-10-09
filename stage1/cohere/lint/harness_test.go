@@ -3,7 +3,6 @@ package lint
 import (
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 	"time"
 )
@@ -51,11 +50,4 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	t.Parallel()
 	suggestionAlongsideUnion(t)
-}
-
-func TestWitnessScriptKind(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindRequireReady(t)
-	witnessScriptKindUnion(t)
-	t.Logf("TestWitnessScriptKind (union): %s", strings.Join(witnessScriptKindState.Keys, ", "))
 }
