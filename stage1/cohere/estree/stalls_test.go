@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -102,14 +101,14 @@ func boundedPortParserShard(t *testing.T, shard int) {
 		accepted := item.audit && byID[item.id].Status == "ok"
 		if accepted {
 			want := byID[item.id].Data
-			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path), "emitted": onNode(t, script, path)} {
+			for name, got := range map[string][]byte{"Node": estreeScopedNode(t, main, path), "native": estreeScopedExecute(t, binary, path), "emitted": estreeScopedNode(t, script, path)} {
 				if err := miscCompare(want, got, false); err != nil {
 					t.Fatalf("%s %s: %v", item.id, name, err)
 				}
 			}
 		} else {
 			for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-				refusedBeforeDeadline(t, argv, "ESTree parser")
+				estreeScopedRefusal(t, argv, "ESTree parser")
 			}
 		}
 	}
@@ -148,7 +147,7 @@ func portStallControlShard(t *testing.T, shard int) {
 		}
 		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}} {
 			ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
-			cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)
+			cmd := estreeScopedCommand(ctx, argv[0], argv[1:]...)
 			output, err := os.CreateTemp(t.TempDir(), "control-log")
 			if err != nil {
 				cancel()
