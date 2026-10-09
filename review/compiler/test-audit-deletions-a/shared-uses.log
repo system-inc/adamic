@@ -1,0 +1,24 @@
+internal/load/regexp_test.go:11:			diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.a", expression + ";"}))
+internal/load/load_test.go:13:// writeProgram writes files into a fresh directory and returns their absolute paths, in the order
+internal/load/load_test.go:15:func writeProgram(t *testing.T, files ...[2]string) []string {
+internal/load/load_test.go:56:	paths := writeProgram(t, [2]string{"main.ts", `const answer = 42;
+internal/load/load_test.go:89:	paths := writeProgram(t, [2]string{"main.ts", "const broken: number = 'x';\n"})
+internal/load/load_test.go:113:			diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.ts", probe.source}))
+internal/load/load_test.go:126:	paths := writeProgram(t,
+internal/load/load_test.go:137:	paths := writeProgram(t,
+internal/load/load_test.go:147:	broken := writeProgram(t,
+internal/load/load_test.go:159:	paths := writeProgram(t, [2]string{"main.ts", `import { panic } from 'adamic';
+internal/load/load_test.go:168:	diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.ts", "console.log(42);\n"}))
+internal/load/load_test.go:187:			paths := writeProgram(t, probe.files...)
+internal/load/load_test.go:238:			paths := writeProgram(t, [2]string{"main" + extension, "const value: number = 'disk';"})
+internal/load/load_test.go:260:			if _, err := Load(writeProgram(t, [2]string{"main.a", source})); err != nil {
+internal/load/load_test.go:265:	diagnostics := checkErrors(t, writeProgram(t, [2]string{"main.a", "function sign(value: number): number { if (value > 0) { return 1; } }"}))
+internal/load/export_collision_test.go:10:	paths := writeProgram(t,
+internal/fuzz/undefined_numbers_test.go:25:		programs[seed] = Generate(seed).Source()
+internal/fuzz/generate.go:26:func Generate(seed uint64) *Program {
+internal/fuzz/fuzz_test.go:42:				source := Generate(seed).Source()
+internal/fuzz/fuzz_test.go:79:				source := Generate(seed).Source()
+internal/fuzz/fuzz_test.go:98:		source := Generate(seed).Source()
+internal/fuzz/fuzz_test.go:118:		if candidate := Generate(seed); strings.Contains(candidate.Source(), "table.delete(") {
+internal/fuzz/fuzz_test.go:171:		source := Generate(seed).Source()
+internal/fuzz/fuzz_test.go:214:		source := Generate(seed).Source()
