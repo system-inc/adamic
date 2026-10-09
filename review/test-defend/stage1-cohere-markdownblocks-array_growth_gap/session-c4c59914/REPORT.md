@@ -26,3 +26,5 @@ Brief feedback and time costs:
 - /tmp had only about 302 MB free. Task-owned temp files and isolated caches were placed under /workspace rather than risking storage failures. Raw .log files are ignored by repository rules and must be force-added as evidence.
 
 All requested rows are defended in their reached matrices, so no unresolved name-versus-assertion finding is claimed. AST parity checks original image metadata, chunk parity checks raw numeric representation, and decoder parity checks the exact boundary result. No deletion or rewrite recommendation. No test was weakened; production source was restored. No PR or push to main. Dynamic native .ts line coverage, package rows outside the reached matrices and repo-wide replay remain unmeasured.
+
+The requested remote defense branch already contained other completed units. The initial push was rejected as non-fast-forward. A full-refspec fetch and ordinary merge preserved that evidence alongside this session directory, then the push succeeded. Reusing a branch name across defense scopes adds reconciliation work; no force push or history rewrite was used.
