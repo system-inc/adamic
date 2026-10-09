@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -59,6 +60,29 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
+	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
+		return ir.Object, true
+	}
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -103,7 +127,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			for _, member := range proven.Types() {
 				if member.Flags()&checker.TypeFlagsNull == 0 {
 					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
+					if !known || !of.IsReference() || of == ir.Record || of == ir.String || of == ir.Union {
 						return 0, false
 					}
 				}
@@ -144,6 +168,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				return maybe, true
 			}
 			return 0, false
+		}
+		if shared == ir.Record && l.includesNull(proven) {
+			return 0, false // Nullable dictionary metadata is not supported by this records path.
 		}
 		return shared, shared != 0
 	}
@@ -283,6 +310,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	}
 	if !l.nodeBufferView(from, to) {
 		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
@@ -486,6 +516,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return l.readArgumentsCount(), nil
 	}
 	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
+	if value, handled, err := l.recordExpression(node); handled {
 		return value, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {
@@ -906,6 +939,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			of, err := l.typeOf(node)
 			if err != nil {
 				return nil, err
+			}
+			if left.Type() == ir.Record && of != ir.Record && of != ir.Union && !of.IsMaybe() {
+				return nil, l.notYet(node, "a logical record operand converted to "+typeName(of)+" without a proven result representation")
 			}
 			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
 		}

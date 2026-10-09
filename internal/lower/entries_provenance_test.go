@@ -48,15 +48,24 @@ func TestEntriesAllocationProof(t *testing.T) {
 	}
 }
 
-// Index annotations do not establish an allocation or a named field slot.
+// Dictionary parameters and fields now lower through records; fixed-object spreads remain a boundary.
 func TestEntriesRecordBoundaries(t *testing.T) {
-	for _, probe := range []struct{ source, reason string }{
-		{`const base={visible:1}; const source:{[key:string]:number;visible:number}={...base}; source['late']=2; Object.entries(source);`, "spread into record storage"},
-		{`function write(value:{[key:string]:number}):void {value['late']=2;} const source={visible:1}; Object.entries(source);`, "closed const literal origin"},
-		{`const source:{[key:string]:number;visible:number}={visible:1}; source['late']=2; console.log(source.late.toString()); Object.entries(source);`, "indexed record field read"},
+	for _, probe := range []struct {
+		source, reason string
+		admitted       bool
+	}{
+		{`const base={visible:1}; const source:{[key:string]:number;visible:number}={...base}; source['late']=2; Object.entries(source);`, "spread into record storage", false},
+		{`function write(value:{[key:string]:number}):void {value['late']=2;} const source={visible:1}; Object.entries(source);`, "dictionary parameter write", true},
+		{`const source:{[key:string]:number;visible:number}={visible:1}; source['late']=2; console.log(source.late.toString()); Object.entries(source);`, "dictionary field read", true},
 	} {
 		t.Run(probe.reason, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
+			if probe.admitted {
+				if err != nil {
+					t.Fatal(err)
+				}
+				return
+			}
 			var stopped *NotYet
 			if !errors.As(err, &stopped) || !strings.Contains(stopped.What, probe.reason) {
 				t.Fatalf("want explicit NotYet %q, got %v", probe.reason, err)

@@ -11,10 +11,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/01_has_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "02_get_property.a",
@@ -28,10 +25,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/02_get_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "03_own_keys.a",
@@ -45,10 +39,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/03_own_keys.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_own_values.a",
@@ -79,10 +70,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/05_integer_order.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "06_delete_readd.a",
@@ -97,10 +85,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/06_delete_readd.a:6:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_optional_view.a",
@@ -114,10 +99,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/07_optional_view.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/records/07_optional_view.a:17:7: stage 0 can't lower a Record\u003cstring, string\u003e seen as Named (fixed objects and records have different storage; copy explicitly) yet"}
   },
   {
     "file": "08_option_boolean.a",
@@ -219,10 +201,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/13_strict_option.a:4:72: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/records/13_strict_option.a:17:12: stage 0 can't lower a record value of type boolean | undefined yet"}
   },
   {
     "file": "14_group_by.a",
@@ -268,10 +247,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/records/16_built_strings.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "17_compare_missing_object.a",

@@ -1,0 +1,6 @@
+function check(): boolean {
+    const copied = own;
+    return copied.call({ value: 1 }, "value");
+}
+console.log(String(check()));
+const own = Object.prototype.hasOwnProperty;
