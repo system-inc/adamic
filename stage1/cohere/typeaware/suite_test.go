@@ -162,6 +162,14 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
+	// Common products are ready before any case deadline starts.
+	typeAwareStage0(h)
+	readyBinary, readyOptimized := binary(h), optimized(h)
+	binary = func(*harness) string { return readyBinary }
+	optimized = func(*harness) string { return readyOptimized }
+	readyNormal, readySanitized := normal(h), sanitized(h)
+	normal = func(*harness) string { return readyNormal }
+	sanitized = func(*harness) string { return readySanitized }
 	oracle := filepath.Join(directory, "oracle")
 	virtual := filepath.Join(repository, "cohere/adamic_six_oracle.go")
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_six.go")}})
@@ -375,6 +383,9 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	directCost := func(h *harness) string {
 		return typeAwareProduct(h, "facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
 	}
+	readyNativeCost, readyDirectCost := nativeCost(h), directCost(h)
+	nativeCost = func(*harness) string { return readyNativeCost }
+	directCost = func(*harness) string { return readyDirectCost }
 	costSource := "-1;\ninterface Pair { get value(): number; set value(v: string); }\ninterface Merge {}\nclass Merge {}\ndeclare function accept(x:number):void;\ndeclare const x:any;\naccept(x);\ndeclare const nullable:boolean|undefined;\nnullable === true;\ndeclare const nr:number|bigint;\nnr + nr;\n"
 	costProbe := h.write("facts-probe.ts", costSource)
 	getter := strings.Index(costSource, "get value") - 1

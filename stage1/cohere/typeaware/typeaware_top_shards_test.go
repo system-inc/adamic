@@ -41,6 +41,7 @@ func typeAwareTopPlan(t *testing.T, key string) *typeAwarePlan {
 	stored, _ := typeAwarePlans.LoadOrStore(key, &typeAwarePlanEntry{})
 	entry := stored.(*typeAwarePlanEntry)
 	entry.once.Do(func() {
+		defer typeAwareDeadline(t, "setup/"+key)()
 		if key == "planted" {
 			entry.plan = typeAwarePlantedPlan(t)
 		} else if key == "six" {
@@ -56,8 +57,8 @@ func typeAwareTopPlan(t *testing.T, key string) *typeAwarePlan {
 }
 func typeAwareTopShard(t *testing.T, key string, index int) {
 	t.Helper()
-	defer typeAwareDeadline(t, t.Name())()
 	plan := typeAwareTopPlan(t, key)
+	defer typeAwareDeadline(t, t.Name())()
 	shard := plan.shards[index]
 	directory := filepath.Join(productDirectory, "top-shards", t.Name())
 	if err := os.MkdirAll(directory, 0755); err != nil {
@@ -72,8 +73,8 @@ func typeAwareTopShard(t *testing.T, key string, index int) {
 }
 func typeAwareTopUnion(t *testing.T, key string) {
 	t.Helper()
-	defer typeAwareDeadline(t, t.Name())()
 	plan := typeAwareTopPlan(t, key)
+	defer typeAwareDeadline(t, t.Name())()
 	if len(plan.expected) == 0 {
 		t.Fatal("empty shard corpus")
 	}
@@ -306,4 +307,14 @@ func TestTypeAwareAgreementAndMutants_019(t *testing.T) {
 func TestTypeAwareAgreementAndMutants_020(t *testing.T) {
 	t.Parallel()
 	typeAwareTopShard(t, "typeaware", 20)
+}
+
+// Not parallel: publishes the shared Six plan before parallel case leaves run.
+func TestSixRuleAgreementAndMutants_Setup(t *testing.T) {
+	typeAwareTopPlan(t, "six")
+}
+
+// Not parallel: publishes the shared TypeAware plan before parallel case leaves run.
+func TestTypeAwareAgreementAndMutants_Setup(t *testing.T) {
+	typeAwareTopPlan(t, "typeaware")
 }
