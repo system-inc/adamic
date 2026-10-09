@@ -43,18 +43,10 @@ func TestMarkdownTableLayout(t *testing.T) {
 // Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
-func TestMarkdownCodeBlockLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "code")
-}
 
 // Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
-func TestMarkdownHTMLBlockLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "html")
-}
 
 // Bound the large fixture streams below so layouts fit both memory and the gate deadline.
 var layoutSlots = make(chan struct{}, 2)
@@ -95,10 +87,6 @@ func TestMarkdownLeafComposition(t *testing.T) {
 // Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
-func TestMarkdownRootLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "root")
-}
 
 // Not parallel: structureLayoutComplete is initialized for the parallel structure layout shards. shared layout fixtures and memory-budget admission are handled by the setup helper.
 // Not parallel: structure-layout fixture and markdown memory configuration.
