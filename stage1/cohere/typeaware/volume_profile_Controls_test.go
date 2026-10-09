@@ -57,9 +57,7 @@ func volumeProfileHarness(t *testing.T) *harness {
 
 // Go products retain the original build commands until GoBuild is available.
 func volumeProfileStage0(h *harness) string {
-	stage0 := filepath.Join(h.directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	return stage0
+	return h.stage0()
 }
 
 func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool, name string, variant ...string) buildcache.Inputs {
@@ -82,7 +80,7 @@ func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool
 		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "cohere/go.mod", "cohere/go.sum"},
 		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
-	listContext, cancelList := context.WithTimeout(context.Background(), 90*time.Second)
+	listContext, cancelList := context.WithCancel(context.Background())
 	defer cancelList()
 	list := volumeProfileCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
 	list.Dir = h.repository
@@ -245,6 +243,27 @@ func TestVolumeProfileControlsUnion(t *testing.T) {
 	t.Logf("controls union: %d live source/mode cases in %d shards", len(seen), len(cases))
 }
 
+func volumeProfileControlsBinary(h *harness, stage0, archive string, sanitize bool) string {
+	t := h.t
+	name := "typeaware volume"
+	if sanitize {
+		name += " asan"
+	}
+	lowered := volumeProfileControlsLowered(h, stage0)
+	binary := volumeProfileNative(h, stage0, archive, sanitize, name, func(local *harness) string {
+		source, err := os.ReadFile(lowered)
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(local.directory, "volume")
+		if err := typeAwareNativeBuild(string(source), path, archive, sanitize); err != nil {
+			t.Fatal(err)
+		}
+		return path
+	})
+	return binary
+}
+
 func runVolumeProfileControls(t *testing.T, index int) {
 	started := time.Now()
 	c := volumeProfileControlsCases()[index]
@@ -274,22 +293,7 @@ func runVolumeProfileControls(t *testing.T, index int) {
 		return
 	}
 	t.Logf("setup: %.3fs", time.Since(started).Seconds())
-	name := "typeaware volume"
-	if c.sanitize {
-		name += " asan"
-	}
-	lowered := volumeProfileControlsLowered(h, stage0)
-	binary := volumeProfileNative(h, stage0, archive, c.sanitize, name, func(local *harness) string {
-		source, err := os.ReadFile(lowered)
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := filepath.Join(local.directory, "volume")
-		if err := native.BuildTSGo(string(source), path, archive, native.Options{Sanitize: c.sanitize}); err != nil {
-			t.Fatal(err)
-		}
-		return path
-	})
+	binary := volumeProfileControlsBinary(h, stage0, archive, c.sanitize)
 	checkStarted := time.Now()
 	h.compare(c.name, oracle, binary, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), volumeProfileControlsManifest(h))
 	t.Logf("check after product fetch: %.3fs; cooked=false", time.Since(checkStarted).Seconds())

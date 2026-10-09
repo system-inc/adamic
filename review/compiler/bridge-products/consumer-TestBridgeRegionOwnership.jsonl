@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:59.125369096Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:59.133844661Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership"}
+{"Time":"2026-10-09T06:52:59.133918079Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Output":"=== RUN   TestBridgeRegionOwnership\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:59.494658807Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Output":"    units_test.go:71: build bridge-test-region-native fa294734d8a3 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:59.859386608Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Output":"    units_test.go:302: build bridge-test-region-native fa294734d8a3 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:59.98592166Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Output":"    units_test.go:306: region ownership: LeakSanitizer catches the unowned heap result\n"}
+{"Time":"2026-10-09T06:52:59.9859897Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Output":"--- PASS: TestBridgeRegionOwnership (0.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:59.98600302Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeRegionOwnership","Elapsed":0.85}
+{"Time":"2026-10-09T06:52:59.986022018Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:59.990321295Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.865s\n"}
+{"Time":"2026-10-09T06:52:59.990353032Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.865}

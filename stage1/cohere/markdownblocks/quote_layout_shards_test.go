@@ -39,26 +39,21 @@ func quoteLayoutSetup(t *testing.T) quoteLayoutProducts {
 	})
 }
 
-// Not parallel: sanitized and release build products initialized before parallel shards.
+// Shared products are also prepared by independently selected shards.
 func TestMarkdownQuoteLayoutNative(t *testing.T) {
+	t.Parallel()
 	quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
 }
 
 func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {
 	return testgrain.Setup(t, "markdown-quote/native", func() (quoteLayoutProducts, error) {
-		inputs, source := products.inputs, products.source
+		buildProducts := products
 		var builds sync.WaitGroup
 		for _, sanitize := range []bool{true, false} {
 			builds.Add(1)
 			go func() {
 				defer builds.Done()
-				options := native.Options{Sanitize: sanitize}
-				nativeInputs := inputs
-				nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
-				nativeInputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
-				nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-				nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
-				dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+				dir := quoteLayoutNativeProduct(t, buildProducts, sanitize)
 				if sanitize {
 					products.sanitized = filepath.Join(dir, "port")
 				} else {
@@ -66,14 +61,17 @@ func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLay
 				}
 			}()
 		}
-
 		builds.Wait()
+		if products.sanitized == "" || products.release == "" {
+			return products, fmt.Errorf("quote native setup failed")
+		}
 		return products, nil
 	})
 }
 
-// Not parallel: quote build products are prepared before the parallel corpus shards.
+// Setup exercises the same preparation used by independently selected shards.
 func TestMarkdownQuoteLayout_Setup(t *testing.T) {
+	t.Parallel()
 	quoteLayoutReady(t)
 }
 
@@ -126,7 +124,7 @@ func quoteLayoutBytesEqual(actual, expected []byte) bool { return bytes.Equal(ac
 
 func quoteLayoutRunShard(t *testing.T, shard int) {
 	t.Helper()
-	// Shared builds and admission are charged to setup, before the shard clock.
+	// Each shard prepares shared products itself before its own clock starts.
 	products := quoteLayoutReady(t)
 	testgrain.Unit(t)
 	inputs, shards := quoteLayoutEnumerate(t)
@@ -153,6 +151,15 @@ func TestMarkdownQuoteLayout_010(t *testing.T) { t.Parallel(); quoteLayoutRunSha
 func TestMarkdownQuoteLayout_011(t *testing.T) { t.Parallel(); quoteLayoutRunShard(t, 11) }
 
 func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
+	return quoteLayoutBuildProduct(t, root, "")
+}
+
+func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProducts {
+	t.Helper()
+	return testgrain.Setup(t, "markdown-quote/product/"+target, func() (quoteLayoutProducts, error) { return quoteLayoutBuildProductPrepare(t, root, target), nil })
+}
+
+func quoteLayoutBuildProductPrepare(t *testing.T, root, target string) quoteLayoutProducts {
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -182,12 +189,18 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 		t.Fatal(err)
 	}
 	products := quoteLayoutProducts{backend: backend, source: string(source), inputs: inputs}
+	if target == "lowered" {
+		return products
+	}
 	// GoBuild is not on this base; cache the unchanged overlay builds as products.
 	cohere := filepath.Join(root, "cohere")
 	for _, mode := range []struct{ name, driver, command string }{
 		{"lists", "list_go.go", "adamic_markdown_lists"},
 		{"layout", "document_go.go", "adamic_markdown_doclayout"},
 	} {
+		if target != "" && target != mode.name {
+			continue
+		}
 		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
 		if err != nil {
 			t.Fatal(err)
@@ -216,7 +229,7 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
-			command := quoteLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
+			command := quoteLayoutSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
 			command.Dir = cohere
 			if output, err := combinedOutput(command); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
@@ -483,10 +496,16 @@ func quoteLayoutFixture(t *testing.T, inputs []auditInput, products quoteLayoutP
 	}
 }
 
-// quoteLayoutCommand registers compiler and oracle groups with the active grain.
+// quoteLayoutCommand tracks child groups under the active setup or unit.
 func quoteLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	return testgrain.Command(t, name, arguments...)
+	return testgrain.CommandContext(t, t.Context(), name, arguments...)
+}
+
+// Setup keeps process-group cancellation without a deadline of its own.
+func quoteLayoutSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	return testgrain.CommandContext(t, t.Context(), name, arguments...)
 }
 
 func quoteLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
@@ -530,4 +549,15 @@ func quoteLayoutOnNode(t *testing.T, path string, arguments ...string) run {
 		t.Fatal(err)
 	}
 	return result
+}
+
+func quoteLayoutNativeProduct(t *testing.T, products quoteLayoutProducts, sanitize bool) string {
+	options := native.Options{Sanitize: sanitize}
+	nativeInputs := products.inputs
+	nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
+	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })
+	return dir
 }

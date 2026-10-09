@@ -1,0 +1,15 @@
+{
+  "executed_units": 329,
+  "shards": 192,
+  "other_leaves": 137,
+  "skipped": [
+    "TestMeasureClangUnits",
+    "TestNormalizeLongMeasurements",
+    "TestRecordBenchmark"
+  ],
+  "union_equals_whole": true,
+  "max_leaf_seconds": 12.49,
+  "max_invocation_seconds": 16.277178846001334,
+  "products": 54,
+  "products_rebuilt_after_group": []
+}
