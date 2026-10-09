@@ -1,0 +1,13 @@
+{"Time": "2026-10-09T19:57:54.689903693Z", "Action": "start", "Package": "github.com/system-inc/adamic/internal/oracle"}
+{"Time": "2026-10-09T19:57:54.701714455Z", "Action": "run", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded"}
+{"Time": "2026-10-09T19:57:54.701826234Z", "Action": "pause", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded"}
+{"Time": "2026-10-09T19:57:54.701832345Z", "Action": "cont", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded"}
+{"Time": "2026-10-09T19:59:23.074915803Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded", "Output": "    counts_test.go:221: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):\n", "OutputType": "error"}
+{"Time": "2026-10-09T19:59:23.076734092Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded", "Output": "--- FAIL: TestCountsAreRecorded (88.37s)\n", "OutputType": "frame"}
+{"Time": "2026-10-09T19:59:23.076814207Z", "Action": "fail", "Package": "github.com/system-inc/adamic/internal/oracle", "Test": "TestCountsAreRecorded", "Elapsed": 88.37}
+{"Time": "2026-10-09T19:59:23.076987106Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Output": "FAIL\n", "OutputType": "frame"}
+{"Time": "2026-10-09T19:59:23.077034969Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Output": "gate cache: native hits=0 misses=1008\n"}
+{"Time": "2026-10-09T19:59:23.07703753Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Output": "gate cache: node hits=0 misses=0\n"}
+{"Time": "2026-10-09T19:59:23.077039469Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Output": "gate cache: probe hits=0 misses=0\n"}
+{"Time": "2026-10-09T19:59:23.085127272Z", "Action": "output", "Package": "github.com/system-inc/adamic/internal/oracle", "Output": "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t88.395s\n", "OutputType": "frame"}
+{"Time": "2026-10-09T19:59:23.085197787Z", "Action": "fail", "Package": "github.com/system-inc/adamic/internal/oracle", "Elapsed": 88.395}

@@ -1,0 +1,12 @@
+{
+ "about": "The engine's curated catch rules (#rdrbxnp). pins: goldens, hashes and censuses that trip on any change, right or wrong. witnesses: tests that plant their own mutants beyond the Mutant/Mutants/Witness name rule. pairs: a pin with a direction check another test holds equal to measurement, proven by the mutant plus a regenerated golden. Each entry was judged in the audit (keeper/findings.md).",
+ "pins": [
+  "TestCountsAreRecorded",
+  "TestUnicodeNodeShardCoverage",
+  "TestMdastIdentifierWitnesses"
+ ],
+ "witnesses": [],
+ "pairs": [
+  {"golden": "TestCountsAreRecorded", "direction": "TestStatementRegionsAreUsed", "regenerate": "go test ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts"}
+ ]
+}
