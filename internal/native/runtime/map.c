@@ -372,7 +372,7 @@ void adamic_map_iterator_close(adamic_map_iterator *iterator) {
 	}
 }
 
-adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
+adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair, int key_type, int value_type) {
 	adamic_array *entries = adamic_array_new(map->count, true);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
@@ -381,6 +381,9 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		}
 		// [key, value], an object whose fields are named "0" and "1".
 		adamic_object *tuple = adamic_object_new(pair);
+		tuple->tuple = true;
+		adamic_object_field_types(tuple)[0] = (unsigned char)key_type;
+		adamic_object_field_types(tuple)[1] = (unsigned char)value_type;
 		tuple->slots[0] = entry->key;
 		tuple->slots[1] = entry->value;
 		if (map->reference_keys) {

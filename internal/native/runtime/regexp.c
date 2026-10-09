@@ -715,6 +715,9 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 			adamic_object *pair = NULL;
 			if (spans[2 * k] >= 0) {
 				pair = adamic_object_new(&pair_shape);
+				pair->tuple = true;
+				adamic_object_field_types(pair)[0] = 1;
+				adamic_object_field_types(pair)[1] = 1;
 				pair->slots[0].number = (double)spans[2 * k];
 				pair->slots[1].number = (double)spans[2 * k + 1];
 			}

@@ -1,0 +1,21 @@
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: readonly [number, number]; }
+function printPair(pair: [number, number]): void {
+ const raw = {kind: 'Holder' as const, value: pair};
+ const base: Root = raw;
+ const view = base as View;
+ console.log(`${view.value[0]}:${view.value[1]}`);
+}
+for (const pair of new Set<number>([7]).entries()) printPair(pair);
+for (const pair of [9].entries()) printPair(pair);
+const match = /(?<word>a)(b)?/d.exec('a');
+if (match !== null && match.indices !== undefined) {
+ const whole = match.indices[0];
+ if (whole !== undefined) printPair(whole);
+ const groups = match.indices.groups;
+ if (groups !== undefined) {
+  const word = groups.word;
+  if (word !== undefined) printPair(word);
+ }
+ console.log(`${match.indices[2] === undefined}`);
+}
