@@ -306,6 +306,18 @@ def is_critical(brief, critical):
     return bool(named & critical)
 
 
+def adds_no_gate_load(brief):
+    """A brief whose branch never enters the fast gate's candidate queue says so on a 'Gate-load: none' line: the gate's own
+    tools (devtools/fast-gate and branches the watcher's skip list names), tested and promoted by canary, never gated as
+    a candidate. Backpressure protects that queue, so such a brief starts under it (Kirk, Oct 9 16:22Z: every live wave-0
+    task gets a worker; developer tools' five tools briefs sat behind 63 queued candidates they'd never join)."""
+    try:
+        text = brief.read_text(errors='replace')
+    except OSError:
+        return False
+    return re.search(r'^Gate-load:\s*none\b', text, re.MULTILINE) is not None
+
+
 def queue(state, lane):
     path = state / 'queues' / lane['lane']
     # A brief marked *.dispatched* already ran (compiler, Oct 9 10:06Z: three parked ones re-dispatched as duplicates).
@@ -374,7 +386,7 @@ def one_pass(state, configured, checkout, credit_floor, dry=False, records=None)
             continue
         notify(state, lane, running, len(briefs), dry, records)
         if pressure and not blocked:
-            briefs = [brief for brief in briefs if is_critical(brief, critical)]
+            briefs = [brief for brief in briefs if is_critical(brief, critical) or adds_no_gate_load(brief)]
         reason = ('off' if (state / 'off').exists() else blocked if blocked else
                   'floor_met' if running >= lane['floor'] else
                   pressure if pressure and not briefs else 'queue_empty' if not briefs else '')
