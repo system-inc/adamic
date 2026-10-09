@@ -11,7 +11,7 @@ bool adamic_instanceof(const void *value, const adamic_class *wanted) {
 	return false;
 }
 
-adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot) {
+size_t adamic_virtual(const adamic_object *object, size_t slot) {
 	if (object == NULL || object->class == NULL) {
 		static const char message[] = "compiler bug: virtual call on an object without class identity";
 		adamic_panic(message, sizeof message - 1);

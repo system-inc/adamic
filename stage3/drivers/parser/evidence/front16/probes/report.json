@@ -1,0 +1,89 @@
+{
+  "probes": [
+    {
+      "file": "native-has-own-property.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-has-own-property.a"
+        ],
+        "exit": 0,
+        "stdout": "true\nfalse\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front16-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-has-own-property.a",
+          "-o",
+          "/workspace/scratch/parser-front16-probes/native-has-own-property.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front16-probes/native-has-own-property.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "true\nfalse\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 436672,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-debug-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front16-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-front16-probes/native-debug-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front16-probes/native-debug-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 436328,
+      "native_byte_mutant_cmp": 1
+    }
+  ],
+  "passing": 2,
+  "total": 2,
+  "full_slice": "held; last observed stop core.ts:204:12, no new slice claim"
+}

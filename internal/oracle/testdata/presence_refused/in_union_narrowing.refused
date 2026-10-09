@@ -1,0 +1,1 @@
+internal/oracle/testdata/presence_refused/in_union_narrowing.a:12:9: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map
