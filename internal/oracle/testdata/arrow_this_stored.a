@@ -1,0 +1,12 @@
+class Base {
+    readonly label: string;
+    constructor(label: string) { this.label = label; }
+    describe(): string { return this.label; }
+}
+class Derived extends Base {
+    override describe(): string {
+        const read = () => super.describe() + '/' + this.label;
+        return read();
+    }
+}
+console.log(new Derived(['arrow', 'stored'].join('-')).describe());
