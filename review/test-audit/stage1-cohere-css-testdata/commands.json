@@ -1,0 +1,47 @@
+[
+  {
+    "name": "list",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/css/testdata/"
+    ],
+    "exit": 1,
+    "wall_seconds": 1.008877313000994
+  },
+  {
+    "name": "npm",
+    "command": [
+      "timeout",
+      "90",
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.9676604600026621
+  },
+  {
+    "name": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/css/testdata/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall_seconds": 0.030837206002615858
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "unit": "u081",
+  "starting_commit": "12e77e8972a2e606cab6db05d84f428246a85339",
+  "package": "stage1/cohere/css/testdata",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "status": "red-baseline",
+  "mutants": [],
+  "probes": [],
+  "test_scope": null,
+  "reason": "Required go test -list fails before discovering tests; directory contains mixed packages."
+}

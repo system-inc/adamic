@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/css/testdata","Action":"build-output","Output":"# github.com/system-inc/adamic/stage1/cohere/css/testdata\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/css/testdata","Action":"build-output","Output":"found packages postcss (cohere_side_test.go) and css (compose_side_test.go) in /workspace/adamic/stage1/cohere/css/testdata\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/css/testdata","Action":"build-fail"}
+{"Time":"2026-10-09T11:30:14.858032589Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css/testdata"}
+{"Time":"2026-10-09T11:30:14.858267874Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css/testdata","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/css/testdata [setup failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:30:14.858290978Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css/testdata","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/stage1/cohere/css/testdata"}

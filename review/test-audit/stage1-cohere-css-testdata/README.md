@@ -1,0 +1,1 @@
+Read REPORT.md for the stopped audit. commands.json contains actual commands, exit codes and monotonic wall times. list.log and baseline.log reproduce the mixed-package failure on origin/main 12e77e8972a2e606cab6db05d84f428246a85339. rows.json is empty because scope discovery failed, not because no static Test declarations exist. No mutations or probes were planted.
