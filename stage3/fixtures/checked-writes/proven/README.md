@@ -1,5 +1,7 @@
 # Writable views covered by static proofs
 
+The current rebuilt-compiler run is recorded in [../REPORT.md](../REPORT.md) and counts.md. All 98 stock TypeScript receiver classifications are unchanged. Two witnesses compile with zero writable-view checks; individual original-site Adamic proof observations remain unavailable. The material below describes the preserved original baseline.
+
 Basis: adaptation 71's classification at Adamic commit `9b8ebd77`, measured on
 adapted TypeScript 6.0.3 source commit `12fef29628bfda6cf8bec4ba2a326fa4ec4a66d5`.
 This branch starts from `origin/main` (`45487a809f89885a3fc651cd590e7dabf31362dc`);

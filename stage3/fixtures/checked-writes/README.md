@@ -1,5 +1,7 @@
 # Checked writes through wider views
 
+Current rebuilt-compiler measurements for Task #cf15j5c are in [REPORT.md](REPORT.md). The material below preserves the original survey and dependency baseline. The current run passes 31 of 40 strict runtime contracts and catches 18 real IR mutants. The 515 figure counts survey sites, not executable fixtures.
+
 Step 10 (#7hc82dv). Fixtures derived from TypeScript 6.0.3, original commit
 `050880ce59e30b356b686bd3144efe24f875ebc8`, Copyright Microsoft Corporation,
 Apache-2.0. Copied/reduced declarations and statements are identified in each
