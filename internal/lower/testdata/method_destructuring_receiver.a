@@ -1,0 +1,6 @@
+const host = {
+    value: 7,
+    read(): number { return this.value; },
+};
+const { read } = host;
+console.log(read().toString());

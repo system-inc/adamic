@@ -1,0 +1,11 @@
+--- internal/lower/census_small.go
++++ internal/lower/census_small.go
+@@ -223,7 +223,7 @@
+ 		if givenRest && !takesRest {
+ 			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
+ 		}
+-		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) {
++		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) && len(l.checker.GetSignaturesOfType(l.concrete(given), checker.SignatureKindCall)) == 0 {
+ 			if admitted, err := l.admitOverloadVisitor(implementation, overload, index, ordinal); err != nil {
+ 				return err
+ 			} else if admitted {

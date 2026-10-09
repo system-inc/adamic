@@ -1,0 +1,12 @@
+=== RUN   TestHiddenBoundary04EagerIndexMutant
+    hidden_boundary_04_test.go:117: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    hidden_boundary_04_test.go:149: gate cache node hit
+    hidden_boundary_04_test.go:153: native eager index caught by Node side effects, clean exit 0
+    hidden_boundary_04_test.go:153: javascript eager index caught by Node side effects, clean exit 0
+--- PASS: TestHiddenBoundary04EagerIndexMutant (0.55s)
+PASS
+gate cache: native hits=1 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.618s

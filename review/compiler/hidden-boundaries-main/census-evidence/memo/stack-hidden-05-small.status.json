@@ -1,0 +1,22 @@
+{
+  "side": "stack",
+  "query": {
+    "label": "hidden-05-small",
+    "file": "transformers/es2015.ts",
+    "start": 144178,
+    "end": 149926
+  },
+  "command": [
+    "/tmp/hidden-census-stack-memo",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts",
+    "-region-start",
+    "144178",
+    "-region-end",
+    "149926"
+  ],
+  "exit": 0,
+  "seconds": 4.237
+}

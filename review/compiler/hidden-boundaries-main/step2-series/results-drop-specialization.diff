@@ -1,0 +1,21 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -252,17 +252,7 @@
+ 	if !known {
+ 		return nil, l.notYet(call.AsNode(), "an overload result without a representation")
+ 	}
+-	key := fmt.Sprintf("overload-result:%d:%d:%s", invoked.Function, ordinal, l.genericTypeKey(promised))
+-	key += ":" + l.genericTypeKey(produced)
+-	if closure != nil {
+-		key += ":closure"
+-	}
+-	if field != "" {
+-		key += ":" + l.program.Where(call.AsNode())
+-	}
+-	for _, parameter := range resolved.Parameters() {
+-		key += ":" + l.genericTypeKey(l.concrete(l.checker.GetTypeOfSymbol(parameter)))
+-	}
++	key := fmt.Sprintf("overload-result:%d:%d:erased", invoked.Function, ordinal)
+ 	for _, argument := range invoked.Arguments {
+ 		key += fmt.Sprintf(":%d", argument.Type())
+ 	}

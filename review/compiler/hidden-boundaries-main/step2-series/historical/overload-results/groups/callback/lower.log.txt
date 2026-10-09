@@ -1,0 +1,18 @@
+=== RUN   TestOverloadCallbackServed
+--- PASS: TestOverloadCallbackServed (0.03s)
+=== RUN   TestOverloadCallbackUnserved
+=== RUN   TestOverloadCallbackUnserved/input
+=== RUN   TestOverloadCallbackUnserved/result
+=== RUN   TestOverloadCallbackUnserved/generic
+=== RUN   TestOverloadCallbackUnserved/alias
+=== RUN   TestOverloadCallbackUnserved/representation
+--- PASS: TestOverloadCallbackUnserved (0.16s)
+    --- PASS: TestOverloadCallbackUnserved/input (0.03s)
+    --- PASS: TestOverloadCallbackUnserved/result (0.03s)
+    --- PASS: TestOverloadCallbackUnserved/generic (0.02s)
+    --- PASS: TestOverloadCallbackUnserved/alias (0.04s)
+    --- PASS: TestOverloadCallbackUnserved/representation (0.04s)
+=== RUN   TestOverloadCallbackFieldStorage
+--- PASS: TestOverloadCallbackFieldStorage (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.246s
