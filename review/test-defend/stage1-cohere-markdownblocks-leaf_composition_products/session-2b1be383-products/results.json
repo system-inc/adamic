@@ -1,0 +1,182 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:90",
+    "from": "arena.text('!['),\n            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n            arena.text(']('),",
+    "to": "arena.text('['),\n            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n            arena.text(']('),",
+    "change": "image opener '![' becomes '['",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownLeaf.*|TestMarkdownLeafComposition.*)$"
+    ],
+    "seconds": 74.359,
+    "exit": 1,
+    "rows_failed": [
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003"
+    ],
+    "rows_passed": [
+      "TestMarkdownLeafComposition",
+      "TestMarkdownLeafCompositionPlantedDisagreement",
+      "TestMarkdownLeafCompositionUnion",
+      "TestMarkdownLeafComposition_004",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_006",
+      "TestMarkdownLeafComposition_Setup",
+      "TestProduct_MarkdownLeafGoDocLayout",
+      "TestProduct_MarkdownLeafGoLists",
+      "TestProduct_MarkdownLeafLowered",
+      "TestProduct_MarkdownLeafNativeRelease",
+      "TestProduct_MarkdownLeafNativeSanitized"
+    ],
+    "failing_lines": [
+      "differs: got \"[a](/x 'title') [a](/x 'title')\\\\n\\\\n[a]: /x 'title'\\\\n\" want \"[a](/x 'title') ![a](/x 'title')\\\\n\\\\n[a]: /x 'title'\\\\n\"",
+      "differs: got \"[a](x 'a \\\"b\\\"') [a](x 'a \\\"b\\\"')\\\\n\\\\n[a]: x 'a \\\"b\\\"'\\\\n\" want \"[a](x 'a \\\"b\\\"') ![a](x 'a \\\"b\\\"')\\\\n\\\\n[a]: x 'a \\\"b\\\"'\\\\n\"",
+      "differs: got \"[a](/x) [a](/x)\\\\n\\\\n[a]: /x\\\\n\" want \"[a](/x) ![a](/x)\\\\n\\\\n[a]: /x\\\\n\"",
+      "differs: got \"[a](<(a'b)>) [a](<(a'b)>)\\\\n\\\\n[a]: (a'b)\\\\n\" want \"[a](<(a'b)>) ![a](<(a'b)>)\\\\n\\\\n[a]: (a'b)\\\\n\""
+    ],
+    "build_cache_dir": "/tmp/defend-markdown-products/cache/D1",
+    "build_evidence": [
+      "leaf_composition_independent_test.go:490: build markdown-leaf-go-adamic_markdown_lists f88290b77989 miss 1.49",
+      "leaf_composition_independent_test.go:491: build markdown-leaf-go-adamic_markdown_doclayout 5856ea4de213 miss 1.43",
+      "leaf_composition_independent_test.go:510: build markdown-leaf-lowered ddeaeecce646 miss 37.63",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-false 402bf2971fe3 miss 6.30",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-true e19b145123df miss 25.19"
+    ],
+    "failure_headings": [
+      "leaf_composition_independent_test.go:191: source Node lists case generated/leaves/links/[a](/x \"title\") ![a](/x \"title\")",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/leaves/links/[a](<x> 'a \"b\"') ![a](<x> 'a \"b\"')",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/leaves/links/[a](/x) ![a](/x)",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/leaves/links/[a]( (a'b)) ![a]( (a'b))"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:135",
+    "from": "if(frame.kind === 'footnoteReference') return arena.text(`[^${frame.label}]`);",
+    "to": "if(frame.kind === 'footnoteReference') return arena.text(`[${frame.label}]`);",
+    "change": "footnote reference drops caret constant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownLeaf.*|TestMarkdownLeafComposition.*)$"
+    ],
+    "seconds": 70.67,
+    "exit": 1,
+    "rows_failed": [
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003"
+    ],
+    "rows_passed": [
+      "TestMarkdownLeafComposition",
+      "TestMarkdownLeafCompositionPlantedDisagreement",
+      "TestMarkdownLeafCompositionUnion",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_004",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_006",
+      "TestMarkdownLeafComposition_Setup",
+      "TestProduct_MarkdownLeafGoDocLayout",
+      "TestProduct_MarkdownLeafGoLists",
+      "TestProduct_MarkdownLeafLowered",
+      "TestProduct_MarkdownLeafNativeRelease",
+      "TestProduct_MarkdownLeafNativeSanitized"
+    ],
+    "failing_lines": [
+      "differs: got \"[x]\\\\n\\\\n[^x]: a\\\\n\\\\n    {{ b }}\\\\n\" want \"[^x]\\\\n\\\\n[^x]: a\\\\n\\\\n    {{ b }}\\\\n\"",
+      "differs: got \"- a\\\\n\\\\n    [^x]: footnote\\\\n\\\\n- [x]\\\\n\" want \"- a\\\\n\\\\n    [^x]: footnote\\\\n\\\\n- [^x]\\\\n\"",
+      "differs: got \"[x]\\\\n\\\\n[^x]:\\\\n    first\\\\n    second\\\\n\\\\n    - a\\\\n    - b\\\\n\" want \"[^x]\\\\n\\\\n[^x]:\\\\n    first\\\\n    second\\\\n\\\\n    - a\\\\n    - b\\\\n\""
+    ],
+    "build_cache_dir": "/tmp/defend-markdown-products/cache/D2",
+    "build_evidence": [
+      "leaf_composition_independent_test.go:490: build markdown-leaf-go-adamic_markdown_lists f88290b77989 miss 1.45",
+      "leaf_composition_independent_test.go:491: build markdown-leaf-go-adamic_markdown_doclayout 5856ea4de213 miss 1.17",
+      "leaf_composition_independent_test.go:510: build markdown-leaf-lowered b34a023f5ec1 miss 35.95",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-false be8bad46f1a0 miss 6.12",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-true 0078fa62705f miss 23.20"
+    ],
+    "failure_headings": [
+      "leaf_composition_independent_test.go:191: backend lists case generated/whitespace/edge/[^x]",
+      "leaf_composition_independent_test.go:191: release block layout case generated/list-layout/edge/- a",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/leaves/edge/[^x]"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:157",
+    "from": "? '***' : '---'",
+    "to": "? '**' : '---'",
+    "change": "thematic-break marker has two rather than three stars",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownLeaf.*|TestMarkdownLeafComposition.*)$"
+    ],
+    "seconds": 73.439,
+    "exit": 1,
+    "rows_failed": [
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_003"
+    ],
+    "rows_passed": [
+      "TestMarkdownLeafComposition",
+      "TestMarkdownLeafCompositionPlantedDisagreement",
+      "TestMarkdownLeafCompositionUnion",
+      "TestMarkdownLeafComposition_000",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_004",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_006",
+      "TestMarkdownLeafComposition_Setup",
+      "TestProduct_MarkdownLeafGoDocLayout",
+      "TestProduct_MarkdownLeafGoLists",
+      "TestProduct_MarkdownLeafLowered",
+      "TestProduct_MarkdownLeafNativeRelease",
+      "TestProduct_MarkdownLeafNativeSanitized"
+    ],
+    "failing_lines": [
+      "leaf_composition_independent_test.go:191: source Node lists case generated/block/- *** differs: got \"- **\\\\n\" want \"- ***\\\\n\"",
+      "differs: got \"- a\\\\n\\\\n    ### h\\\\n\\\\n    **\\\\n\" want \"- a\\\\n\\\\n    ### h\\\\n\\\\n    ***\\\\n\""
+    ],
+    "build_cache_dir": "/tmp/defend-markdown-products/cache/D3",
+    "build_evidence": [
+      "leaf_composition_products_test.go:35: build markdown-leaf-go-adamic_markdown_doclayout 5856ea4de213 miss 1.76",
+      "leaf_composition_independent_test.go:490: build markdown-leaf-go-adamic_markdown_lists f88290b77989 miss 1.80",
+      "leaf_composition_independent_test.go:510: build markdown-leaf-lowered 7659a51800ef miss 37.42",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-false a9f53ea02ed1 miss 5.58",
+      "leaf_composition_independent_test.go:41: build markdown-leaf-native-true b352ada0c139 miss 23.64"
+    ],
+    "failure_headings": [
+      "leaf_composition_independent_test.go:191: source Node lists case generated/block/- *** differs: got \"- **\\\\n\" want \"- ***\\\\n\"",
+      "leaf_composition_independent_test.go:191: source Node lists case generated/list-layout/edge/- a"
+    ]
+  }
+]

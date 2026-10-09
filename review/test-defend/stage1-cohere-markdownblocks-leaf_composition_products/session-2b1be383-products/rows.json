@@ -1,0 +1,94 @@
+[
+  {
+    "test": "TestProduct_MarkdownLeafGo family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "coverage-Go.log: both Go product wrappers PASS; no production calls beyond package initialization. Their only action builds the independent Go cohere oracle. A meaningful targeted mutant would alter the forbidden oracle or harness."
+  },
+  {
+    "test": "TestProduct_MarkdownLeafLowered",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:90",
+        "change": "image opener '![' becomes '['",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_000",
+          "TestMarkdownLeafComposition_001",
+          "TestMarkdownLeafComposition_002",
+          "TestMarkdownLeafComposition_003"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:135",
+        "change": "footnote reference drops caret constant",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_000",
+          "TestMarkdownLeafComposition_002",
+          "TestMarkdownLeafComposition_003"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:157",
+        "change": "thematic-break marker has two rather than three stars",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_001",
+          "TestMarkdownLeafComposition_003"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-markdown-products/cache/D{1,2,3} timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestProduct_MarkdownLeaf.*|TestMarkdownLeafComposition.*)$'; all target members PASS in D1.log, D2.log, D3.log. D3: leaf_composition_independent_test.go:191: source Node lists case generated/block/- *** differs: got - **, want - ***."
+  },
+  {
+    "test": "TestProduct_MarkdownLeafNative family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:90",
+        "change": "image opener '![' becomes '['",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_000",
+          "TestMarkdownLeafComposition_001",
+          "TestMarkdownLeafComposition_002",
+          "TestMarkdownLeafComposition_003"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:135",
+        "change": "footnote reference drops caret constant",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_000",
+          "TestMarkdownLeafComposition_002",
+          "TestMarkdownLeafComposition_003"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/leaves.ts:157",
+        "change": "thematic-break marker has two rather than three stars",
+        "rows_failed": [
+          "TestMarkdownLeafComposition_001",
+          "TestMarkdownLeafComposition_003"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-markdown-products/cache/D{1,2,3} timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestProduct_MarkdownLeaf.*|TestMarkdownLeafComposition.*)$'; all target members PASS in D1.log, D2.log, D3.log. D3: leaf_composition_independent_test.go:191: source Node lists case generated/block/- *** differs: got - **, want - ***."
+  }
+]

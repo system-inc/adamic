@@ -1,0 +1,194 @@
+Static import closure inventory. Includes type-only imports and functions not dynamically demonstrated. This is an upper bound, not a coverage proof.
+stage1/cohere/markdownblocks/children.ts:5 export function printBlockChildren(arena: DocumentArena, children: readonly ListBlockInterface[]): number {
+stage1/cohere/markdownblocks/codeblocks.ts:10 export function fenceStyle(value: string): string {
+stage1/cohere/markdownblocks/codeblocks.ts:22 export function printCodeBlock(arena: DocumentArena, frame: CodeBlockInterface): number {
+stage1/cohere/markdownblocks/codeblocks.ts:29 if(frame.indented) {
+stage1/cohere/markdownblocks/codec.ts:2 export function decode(text: string): string {
+stage1/cohere/markdownblocks/codec.ts:16 export function encode(text: string): string {
+stage1/cohere/markdownblocks/commandStack.ts:9 export function command(indentID: number, mode: number, doc: number, offset = 0): CommandInterface {
+stage1/cohere/markdownblocks/commandStack.ts:14 appendParts(parts: readonly number[], current: CommandInterface, offset = 0): void {
+stage1/cohere/markdownblocks/decodeString.ts:7 function punctuation(code: number): boolean {
+stage1/cohere/markdownblocks/decodeString.ts:15 function digit(code: number, hexadecimal: boolean): boolean {
+stage1/cohere/markdownblocks/decodeString.ts:18 function alphanumeric(code: number): boolean {
+stage1/cohere/markdownblocks/decodeString.ts:21 function lookupReference(
+stage1/cohere/markdownblocks/decodeString.ts:28 while(low < high) {
+stage1/cohere/markdownblocks/decodeString.ts:36 export function namedReference(name: string): string | undefined {
+stage1/cohere/markdownblocks/decodeString.ts:42 function numericReference(value: string, base: number): string {
+stage1/cohere/markdownblocks/decodeString.ts:58 export function decodeString(value: string): string {
+stage1/cohere/markdownblocks/decodeString.ts:62 while(index < value.length) {
+stage1/cohere/markdownblocks/document.ts:18 add(kind: string, text: string, width: number, children: readonly number[], flag = 0, group = -1): number {
+stage1/cohere/markdownblocks/document.ts:31 node(id: number): DocumentInterface {
+stage1/cohere/markdownblocks/document.ts:34 text(value: string): number {
+stage1/cohere/markdownblocks/document.ts:37 concat(parts: readonly number[]): number {
+stage1/cohere/markdownblocks/document.ts:40 align(prefix: string, contents: number): number {
+stage1/cohere/markdownblocks/document.ts:43 hardline(): number {
+stage1/cohere/markdownblocks/document.ts:58 function child(node: DocumentInterface, index = 0): number {
+stage1/cohere/markdownblocks/document.ts:61 function trailing(text: string, previous: number): number {
+stage1/cohere/markdownblocks/document.ts:70 function propagate(arena: DocumentArena, root: number): void {
+stage1/cohere/markdownblocks/document.ts:74 while(stack.length > 0) {
+stage1/cohere/markdownblocks/document.ts:102 function fits(
+stage1/cohere/markdownblocks/document.ts:116 while(remaining >= 0) {
+stage1/cohere/markdownblocks/document.ts:167 function indent(
+stage1/cohere/markdownblocks/document.ts:177 if(kind === 'r') {
+stage1/cohere/markdownblocks/document.ts:189 for(const queued of queue) {
+stage1/cohere/markdownblocks/document.ts:213 export function printDocument(
+stage1/cohere/markdownblocks/document.ts:228 while(stack.values.length > 0) {
+stage1/cohere/markdownblocks/emojiMatcher.ts:4 export function inRanges(code: number, ranges: readonly number[]): boolean {
+stage1/cohere/markdownblocks/emojiMatcher.ts:7 while(low < high) {
+stage1/cohere/markdownblocks/emojiMatcher.ts:15 export function mappedUnit(code: number): number {
+stage1/cohere/markdownblocks/emojiMatcher.ts:23 constructor(instructions: readonly WidthInstructionInterface[], entry: number) {
+stage1/cohere/markdownblocks/emojiMatcher.ts:28 closure(seeds: readonly number[], position: number, start: number, end: number): number[] {
+stage1/cohere/markdownblocks/emojiMatcher.ts:53 match(text: string, start: number, end: number): number {
+stage1/cohere/markdownblocks/htmlblocks.ts:8 function space(code: number): boolean {
+stage1/cohere/markdownblocks/htmlblocks.ts:27 export function printHTMLBlock(arena: DocumentArena, frame: HTMLBlockInterface): number {
+stage1/cohere/markdownblocks/htmlblocks.ts:29 if(frame.rootLast) {
+stage1/cohere/markdownblocks/identifier.ts:5 export function identifier(source: string): string {
+stage1/cohere/markdownblocks/identifier.ts:8 for(const character of source) {
+stage1/cohere/markdownblocks/inputChunks.ts:7 function codeChunk(code: number): InputChunkInterface {
+stage1/cohere/markdownblocks/inputChunks.ts:10 function textChunk(text: readonly number[]): InputChunkInterface {
+stage1/cohere/markdownblocks/inputChunks.ts:13 export function inputChunks(units: readonly number[]): InputChunkInterface[] {
+stage1/cohere/markdownblocks/inputChunks.ts:19 while(start < units.length) {
+stage1/cohere/markdownblocks/inputChunks.ts:73 export function serializeChunks(chunks: readonly InputChunkInterface[]): string {
+stage1/cohere/markdownblocks/leaves.ts:24 function lines(arena: DocumentArena, value: string): number {
+stage1/cohere/markdownblocks/leaves.ts:26 for(const line of value.split('\n')) {
+stage1/cohere/markdownblocks/leaves.ts:32 function group(arena: DocumentArena, contents: number): number {
+stage1/cohere/markdownblocks/leaves.ts:35 export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {
+stage1/cohere/markdownblocks/leaves.ts:38 if(frame.kind === 'ignored') {
+stage1/cohere/markdownblocks/leaves.ts:49 if(frame.kind === 'wikiLink') {
+stage1/cohere/markdownblocks/leaves.ts:53 if(frame.kind === 'emphasis' || frame.kind === 'strong' || frame.kind === 'delete') {
+stage1/cohere/markdownblocks/leaves.ts:66 if(frame.kind === 'link') {
+stage1/cohere/markdownblocks/leaves.ts:86 if(frame.kind === 'image') {
+stage1/cohere/markdownblocks/leaves.ts:98 if(frame.kind === 'linkReference') {
+stage1/cohere/markdownblocks/leaves.ts:107 if(frame.kind === 'imageReference') {
+stage1/cohere/markdownblocks/leaves.ts:121 if(frame.kind === 'definition') {
+stage1/cohere/markdownblocks/leaves.ts:136 if(frame.kind === 'footnoteDefinition') {
+stage1/cohere/markdownblocks/leaves.ts:158 if(frame.kind === 'break') {
+stage1/cohere/markdownblocks/leaves.ts:165 if(frame.kind === 'math') {
+stage1/cohere/markdownblocks/lists.ts:30 function whitespace(code: number): boolean {
+stage1/cohere/markdownblocks/lists.ts:53 export function orderedMarker(text: string): OrderedMarkerInterface {
+stage1/cohere/markdownblocks/lists.ts:58 while(index < text.length && text.charCodeAt(index) >= 48 && text.charCodeAt(index) <= 57) {
+stage1/cohere/markdownblocks/lists.ts:69 function gitFriendly(frame: ListFrameInterface): boolean {
+stage1/cohere/markdownblocks/lists.ts:77 export function alignedList(frame: ListFrameInterface, tabWidth: number): boolean {
+stage1/cohere/markdownblocks/lists.ts:92 function requiredIndent(frame: ListFrameInterface): number {
+stage1/cohere/markdownblocks/lists.ts:103 export function listPrefix(frame: ListFrameInterface, index: number, tabWidth: number): string {
+stage1/cohere/markdownblocks/lists.ts:105 if(frame.ordered) {
+stage1/cohere/markdownblocks/lists.ts:122 function loose(item: ListItemInterface, next: ListItemInterface | undefined): boolean {
+stage1/cohere/markdownblocks/lists.ts:125 function doubleLine(
+stage1/cohere/markdownblocks/lists.ts:149 export function printList(arena: DocumentArena, frame: ListFrameInterface, tabWidth: number): number {
+stage1/cohere/markdownblocks/mdastArena.ts:8 node(id: number): MdastNode {
+stage1/cohere/markdownblocks/mdastArena.ts:11 add(type: string, parent: boolean, literal: boolean): number {
+stage1/cohere/markdownblocks/mdastArena.ts:19 attachFrontMatter(front: ParsedFrontMatter): void {
+stage1/cohere/markdownblocks/mdastArena.ts:32 toString(id: number): string {
+stage1/cohere/markdownblocks/mdastArena.ts:46 canonical(root: number): string {
+stage1/cohere/markdownblocks/mdastCompile.ts:11 function trimEnding(value: string, start: boolean, end: boolean): string {
+stage1/cohere/markdownblocks/mdastCompile.ts:17 function tablePipes(value: string): string {
+stage1/cohere/markdownblocks/mdastCompile.ts:47 constructor(tokens: TokenArena, sources: readonly TokenSource[], events: readonly TokenEventInterface[]) {
+stage1/cohere/markdownblocks/mdastCompile.ts:52 top(): MdastNode {
+stage1/cohere/markdownblocks/mdastCompile.ts:55 serialize(token: MarkdownTokenInterface): string {
+stage1/cohere/markdownblocks/mdastCompile.ts:61 enter(type: string, parent: boolean, literal: boolean, id: number): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:68 exit(id: number): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:78 buffer(): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:81 resume(): string {
+stage1/cohere/markdownblocks/mdastCompile.ts:84 enterData(token: MarkdownTokenInterface): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:94 exitData(token: MarkdownTokenInterface): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:99 label(token: MarkdownTokenInterface): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:105 finishLink(): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:121 paragraph(id: number): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:154 onEnter(id: number): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:292 onExit(id: number): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:516 topAfterResume(field: string): void {
+stage1/cohere/markdownblocks/mdastCompile.ts:533 prepareList(start: number, last: number): number {
+stage1/cohere/markdownblocks/mdastCompile.ts:619 compile(): MdastArena {
+stage1/cohere/markdownblocks/mdastNode.ts:35 constructor(type: string) {
+stage1/cohere/markdownblocks/mdastNode.ts:38 setStart(point: TokenPointInterface): void {
+stage1/cohere/markdownblocks/mdastNode.ts:41 setEnd(point: TokenPointInterface): void {
+stage1/cohere/markdownblocks/parseFrontMatter.ts:31 function indexFrom(text: string, search: string, from: number): number {
+stage1/cohere/markdownblocks/parseFrontMatter.ts:35 export function parseFrontMatter(text: string): ParsedFrontMatter {
+stage1/cohere/markdownblocks/preservedLabel.ts:5 export function printPreservedLabel(arena: DocumentArena, source: string): number {
+stage1/cohere/markdownblocks/preservedLabel.ts:7 for(const token of splitText(source)) {
+stage1/cohere/markdownblocks/quotes.ts:5 function inline(kind: string): boolean {
+stage1/cohere/markdownblocks/quotes.ts:27 export function printQuote(arena: DocumentArena, children: readonly ListBlockInterface[]): number {
+stage1/cohere/markdownblocks/root.ts:13 export function ignoreKind(kind: string, value: string): string {
+stage1/cohere/markdownblocks/root.ts:24 function inline(kind: string): boolean {
+stage1/cohere/markdownblocks/root.ts:46 export function printRoot(arena: DocumentArena, source: string, children: readonly RootChildInterface[]): number {
+stage1/cohere/markdownblocks/splitText.ts:6 function contains(value: string, ranges: readonly number[]): boolean {
+stage1/cohere/markdownblocks/splitText.ts:7 for(const character of value) {
+stage1/cohere/markdownblocks/splitText.ts:12 function nonCJK(tokens: TextTokens, value: string): void {
+stage1/cohere/markdownblocks/splitText.ts:22 function word(tokens: TextTokens, value: string): void {
+stage1/cohere/markdownblocks/splitText.ts:25 while(index < value.length) {
+stage1/cohere/markdownblocks/splitText.ts:47 export function splitText(text: string): readonly TextTokenInterface[] {
+stage1/cohere/markdownblocks/splitText.ts:51 while(index < text.length) {
+stage1/cohere/markdownblocks/structure.ts:8 export function printSentence(arena: DocumentArena, children: readonly SentenceChildInterface[]): number {
+stage1/cohere/markdownblocks/structure.ts:11 for(const child of children) {
+stage1/cohere/markdownblocks/structure.ts:22 export function printParagraph(arena: DocumentArena, children: readonly number[]): number {
+stage1/cohere/markdownblocks/structure.ts:25 while(stack.length > 0) {
+stage1/cohere/markdownblocks/structure.ts:43 export function printHeading(
+stage1/cohere/markdownblocks/tables.ts:16 function rowText(cells: readonly PrintedCellInterface[], widths: readonly number[], aligns: readonly string[]): string {
+stage1/cohere/markdownblocks/tables.ts:27 export function printTable(
+stage1/cohere/markdownblocks/tables.ts:35 for(const row of frame.rows) {
+stage1/cohere/markdownblocks/testdata/list_probe.ts:16 function integer(text: string): number {
+stage1/cohere/markdownblocks/testdata/list_probe.ts:27 function numbers(text: string): number[] {
+stage1/cohere/markdownblocks/testdata/list_probe.ts:33 function documentIDs(text: string, documents: readonly number[]): number[] {
+stage1/cohere/markdownblocks/testdata/list_probe.ts:38 function blocks(serialized: string, documents: readonly number[]): ListBlockInterface[] {
+stage1/cohere/markdownblocks/testdata/list_probe.ts:40 if(serialized !== '') {
+stage1/cohere/markdownblocks/testdata/mdast_probe.ts:14 function number(value: string | undefined): number {
+stage1/cohere/markdownblocks/testdata/mdast_probe.ts:17 function point(value: string | undefined): TokenPointInterface {
+stage1/cohere/markdownblocks/textTokens.ts:12 whitespace(value: string): void {
+stage1/cohere/markdownblocks/textTokens.ts:15 word(value: string, kind: string, cj: boolean, leading: boolean, trailing: boolean): void {
+stage1/cohere/markdownblocks/tokenArena.ts:10 export function tokenPoint(
+stage1/cohere/markdownblocks/tokenArena.ts:19 export function copyTokenPoint(point: TokenPointInterface): TokenPointInterface {
+stage1/cohere/markdownblocks/tokenArena.ts:34 export function tokenEvent(enter: boolean, token: number, context: number): TokenEventInterface {
+stage1/cohere/markdownblocks/tokenArena.ts:39 token(id: number): MarkdownTokenInterface {
+stage1/cohere/markdownblocks/tokenArena.ts:42 add(type: string, start: TokenPointInterface): number {
+stage1/cohere/markdownblocks/tokenSource.ts:5 constructor(chunks: readonly InputChunkInterface[]) {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:32 constructor(arena: TokenArena, context: number, chunks: readonly InputChunkInterface[], from: TokenPointInterface) {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:40 now(): TokenPointInterface {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:43 prepare(): number {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:52 consume(code: number): void {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:77 enter(type: string, fields: number): number {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:85 exit(type: string): number {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:93 defineSkip(point: TokenPointInterface): void {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:97 accountSkip(): void {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:104 store(): TokenStoreInterface {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:113 restore(info: TokenStoreInterface): void {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:123 export function sliceTokenChunks(
+stage1/cohere/markdownblocks/tokenizerEvents.ts:127 if(token.start.index === token.end.index) {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:134 if(token.start.bufferIndex > -1) {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:139 if(token.end.bufferIndex > 0) {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:145 export function serializeTokenChunks(chunks: readonly InputChunkInterface[], expandTabs: boolean): string {
+stage1/cohere/markdownblocks/tokenizerEvents.ts:148 for(const chunk of chunks) {
+stage1/cohere/markdownblocks/whitespace.ts:30 function koreanPair(previous: string, next: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:33 function nonCJ(kind: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:36 function asciiPunctuation(unit: number): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:44 function cjSpaces(samples: readonly CJSpaceSampleInterface[]): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:47 for(const sample of samples) {
+stage1/cohere/markdownblocks/whitespace.ts:59 function converts(frame: WhitespaceFrameInterface): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:76 function breakable(frame: WhitespaceFrameInterface, proseWrap: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:94 function syntaxLeading(value: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:97 if(value.length >= 1 && value.length <= 6) {
+stage1/cohere/markdownblocks/whitespace.ts:109 export function printWhitespace(arena: DocumentArena, frame: WhitespaceFrameInterface): number {
+stage1/cohere/markdownblocks/whitespaceCodec.ts:5 function number(value: string): number {
+stage1/cohere/markdownblocks/whitespaceCodec.ts:10 function token(fields: readonly string[], start: number): WhitespaceTokenInterface {
+stage1/cohere/markdownblocks/whitespaceCodec.ts:22 export function whitespaceFrame(fields: readonly string[]): WhitespaceFrameInterface {
+stage1/cohere/markdownblocks/whitespaceCodec.ts:36 if((fields[19] ?? '') !== '') {
+stage1/cohere/markdownblocks/width.ts:14 export function stringWidth(text: string): number {
+stage1/cohere/markdowninline/classes.ts:24 export function punctuation(code: number): boolean {
+stage1/cohere/markdowninline/classes.ts:27 while(low < high) {
+stage1/cohere/markdowninline/inline.ts:7 function lineTerminator(code: number): boolean {
+stage1/cohere/markdowninline/inline.ts:10 function rest(text: string, start: number): MatchType {
+stage1/cohere/markdowninline/inline.ts:22 function match(text: string, position: number): MatchType {
+stage1/cohere/markdowninline/inline.ts:29 if(position === 0) {
+stage1/cohere/markdowninline/inline.ts:36 function whitespace(code: number): boolean {
+stage1/cohere/markdowninline/inline.ts:51 function canOpenOrClose(preceding: number, marker: number, following: number): boolean {
+stage1/cohere/markdowninline/inline.ts:64 export function escapeDelimiterRuns(text: string, previous: string, next: string): string {
+stage1/cohere/markdowninline/inline.ts:69 while(position < text.length) {
+stage1/cohere/markdowninline/inline.ts:99 export function printWord(
+stage1/cohere/markdowninline/inline.ts:108 if(!emphasis) {
+stage1/cohere/markdowninline/inline.ts:122 function replaceCharacter(text: string, character: number, replacement: string): string {
+stage1/cohere/markdowninline/inline.ts:135 export function printInlineCode(value: string, preserve: boolean, table: boolean): string {
+stage1/cohere/markdowninline/inline.ts:162 export function printWikiLink(value: string, preserve: boolean): string {
+stage1/cohere/markdowninline/inline.ts:178 export function printURL(url: string, dangerous: string): string {
+stage1/cohere/markdowninline/inline.ts:182 export function printTitle(title: string, single: boolean): string {
+stage1/cohere/markdowninline/inline.ts:197 export function printReference(label: string): string {
+stage1/cohere/markdowninline/inline.ts:220 export function printImage(alt: string, original: string, url: string, title: string, single: boolean): string {
+stage1/cohere/markdowninline/inline.ts:226 export function formatLeaf(mode: string, text: string): string {

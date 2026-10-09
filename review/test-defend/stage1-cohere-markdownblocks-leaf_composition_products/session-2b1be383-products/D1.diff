@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/leaves.ts b/stage1/cohere/markdownblocks/leaves.ts
+index 2479d520..dbde4230 100644
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -87,7 +87,7 @@ export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): numb
+         const destination = frame.url === '' ? '<>' : printURL(frame.url, ')');
+         const title = printTitle(frame.title, true);
+         return arena.concat([
+-            arena.text('!['),
++            arena.text('['),
+             arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),
+             arena.text(']('),
+             arena.text(destination),

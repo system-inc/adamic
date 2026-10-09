@@ -1,0 +1,86 @@
+[
+  {
+    "mutant": "D1",
+    "git_apply_check": 0,
+    "output": "",
+    "actual_port_build_validation": [
+      {
+        "Time": "2026-10-09T15:14:05.151133006Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeRelease",
+        "Elapsed": 43.94
+      },
+      {
+        "Time": "2026-10-09T15:14:30.602926217Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeSanitized",
+        "Elapsed": 3.39
+      },
+      {
+        "Time": "2026-10-09T15:14:32.389259331Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafLowered",
+        "Elapsed": 1.82
+      }
+    ]
+  },
+  {
+    "mutant": "D2",
+    "git_apply_check": 0,
+    "output": "",
+    "actual_port_build_validation": [
+      {
+        "Time": "2026-10-09T15:15:17.585181514Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeRelease",
+        "Elapsed": 42.09
+      },
+      {
+        "Time": "2026-10-09T15:15:42.00751779Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeSanitized",
+        "Elapsed": 3.04
+      },
+      {
+        "Time": "2026-10-09T15:15:42.968546337Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafLowered",
+        "Elapsed": 1.78
+      }
+    ]
+  },
+  {
+    "mutant": "D3",
+    "git_apply_check": 0,
+    "output": "",
+    "actual_port_build_validation": [
+      {
+        "Time": "2026-10-09T15:16:23.732304871Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafLowered",
+        "Elapsed": 37.42
+      },
+      {
+        "Time": "2026-10-09T15:16:29.326588881Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeRelease",
+        "Elapsed": 41.18
+      },
+      {
+        "Time": "2026-10-09T15:16:55.767303772Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestProduct_MarkdownLeafNativeSanitized",
+        "Elapsed": 4.23
+      }
+    ]
+  }
+]
