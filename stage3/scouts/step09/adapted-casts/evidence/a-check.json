@@ -1,0 +1,77 @@
+{
+  "gate": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "baseline": {
+    "exit": 0,
+    "results": {
+      "stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a": {
+        "outcome": "refused",
+        "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a:5:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class an"
+      },
+      "stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a": {
+        "outcome": "refused",
+        "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a:7:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class an"
+      },
+      "stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a": {
+        "outcome": "refused",
+        "expected": "refused a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a:8:10: Adamic 0.1 refuses a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; w"
+      }
+    },
+    "failure": null
+  },
+  "mutants": [
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a",
+      "change": "missing header",
+      "exit": 1
+    },
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a",
+      "change": "wrong header",
+      "exit": 1
+    },
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a",
+      "change": "missing header",
+      "exit": 1
+    },
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a",
+      "change": "wrong header",
+      "exit": 1
+    },
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a",
+      "change": "missing header",
+      "exit": 1
+    },
+    {
+      "file": "stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a",
+      "change": "wrong header",
+      "exit": 1
+    }
+  ],
+  "final": {
+    "exit": 0,
+    "results": {
+      "stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a": {
+        "outcome": "refused",
+        "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/01_capture_free_split.a:5:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class an"
+      },
+      "stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a": {
+        "outcome": "refused",
+        "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/02_generic_field_write.a:7:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class an"
+      },
+      "stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a": {
+        "outcome": "refused",
+        "expected": "refused a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/scouts/step09/adapted-casts/fixtures/03_tracing_undefined_data.a:8:10: Adamic 0.1 refuses a function taking ArrayBufferView<ArrayBufferLike> seen as one taking string | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; w"
+      }
+    },
+    "failure": null
+  }
+}
