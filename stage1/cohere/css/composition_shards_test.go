@@ -226,7 +226,7 @@ func compositionCases(t *testing.T) string {
 		t.Fatal(err)
 	}
 	oracle := compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicCompositionCorpusCases$")
 	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := command.CombinedOutput(); err != nil {

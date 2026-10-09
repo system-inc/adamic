@@ -195,9 +195,10 @@ func TestInvalidDeclarations(t *testing.T) {
 
 // The fixture preserves the final two output events and terminal skip event for
 // each named skip in gate-logs/2e165469ec95/plain, without altering event contents.
+// Its declarations are pinned with the log; the live census follows renamed/sharded tests.
 func TestHistoricalPlainSkips(t *testing.T) {
 	t.Parallel()
-	table, err := os.Open("testdata/skips.json")
+	table, err := os.Open("testdata/plain-skips-baseline.json")
 	if err != nil {
 		t.Fatal(err)
 	}
