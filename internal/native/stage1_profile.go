@@ -71,7 +71,7 @@ func newStage1ProfileManifest(source string, profile []byte, training string, op
 	if err != nil {
 		return Stage1ProfileManifest{}, err
 	}
-	compiler, err := exec.Command("clang", "--version").CombinedOutput()
+	compiler, err := clangCommand("clang", "--version").CombinedOutput()
 	if err != nil {
 		return Stage1ProfileManifest{}, fmt.Errorf("native: compiler identity: %w", err)
 	}

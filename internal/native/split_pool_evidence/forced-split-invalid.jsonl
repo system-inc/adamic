@@ -1,0 +1,1 @@
+{"mode": "unpooled", "round": 1, "seconds": 1261.247316799, "exit": 1, "load_before": "6.52 6.79 5.93 1/167 106863", "load_after": "7.48 11.08 10.29 1/183 278692", "command": ["go", "test", "-overlay=/workspace/adamic/.split-pool-work/baseline.json", "./internal/oracle", "-count=1", "-timeout=30m"]}

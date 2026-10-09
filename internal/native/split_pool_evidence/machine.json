@@ -1,0 +1,10 @@
+{
+  "cpus": 5,
+  "cpu_max": "400000 100000",
+  "load": "5.27 8.62 9.46 2/203 342396",
+  "flags": [
+    "-count=1",
+    "-timeout=30m"
+  ],
+  "uncached": true
+}
