@@ -1,0 +1,82 @@
+[
+  {
+    "mutant": "D1",
+    "phase": "vet",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.8594725131988525,
+    "log": "D1-vet.log"
+  },
+  {
+    "mutant": "D1",
+    "phase": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 70.84922313690186,
+    "log": "D1-matrix.log"
+  },
+  {
+    "mutant": "A1",
+    "phase": "vet",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.9103567600250244,
+    "log": "A1-vet.log"
+  },
+  {
+    "mutant": "A1",
+    "phase": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/A1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 81.48427414894104,
+    "log": "A1-matrix.log"
+  },
+  {
+    "mutant": "E1",
+    "phase": "vet",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.7445485591888428,
+    "log": "E1-vet.log"
+  },
+  {
+    "mutant": "E1",
+    "phase": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 77.88463020324707,
+    "log": "E1-matrix.log"
+  },
+  {
+    "mutant": "E2",
+    "phase": "vet",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.9061441421508789,
+    "log": "E2-vet.log"
+  },
+  {
+    "mutant": "E2",
+    "phase": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 75.25162553787231,
+    "log": "E2-matrix.log"
+  },
+  {
+    "mutant": "E3",
+    "phase": "vet",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.7583599090576172,
+    "log": "E3-vet.log"
+  },
+  {
+    "mutant": "E3",
+    "phase": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 78.17321610450745,
+    "log": "E3-matrix.log"
+  }
+]

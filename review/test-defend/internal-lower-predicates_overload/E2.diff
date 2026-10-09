@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates_proof.go b/internal/lower/predicates_proof.go
+index 86451984..d50b0152 100644
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -61,7 +61,7 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
+ 		v.field = "kind"
+ 		proof.TaggedView = true
+ 	} else if !predicatePrimitiveTarget(target) {
+-		return proof, predicateFailure(l, node, "the target has an unsupported runtime contract")
++		return proof, nil
+ 	}
+ 	if v.field == "" {
+ 		v.cells = []string{"string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"}

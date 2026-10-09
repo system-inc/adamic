@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..ed60e0eb 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -480,7 +480,7 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
+ 	if overload := signature.Declaration(); overload != nil && overload.Kind == ast.KindFunctionDeclaration && overload.Body() == nil && overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
+ 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+ 		if callee.Kind != ast.KindIdentifier || l.symbol(callee) != l.symbol(overload.Name()) {
+-			return l.notYet(node, "an indirect call of a checked predicate overload")
++			return l.notYet(node, "a direct call of a checked predicate overload")
+ 		}
+ 	}
+ 	for index, parameter := range signature.Parameters() {

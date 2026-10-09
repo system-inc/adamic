@@ -1,0 +1,21 @@
+{
+  "defended": [
+    "TestConditionAssertionAdmission",
+    "TestIndirectPredicateOverloadIsPending"
+  ],
+  "last_mutant": "E3",
+  "failures": [
+    "TestEveryNeedsCallbackEffects",
+    "TestPredicateOverloadCallback",
+    "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "TestCensusPredicateInteractionBoundary",
+    "TestArrayPredicateCannotInventAnElementContract",
+    "TestConditionAssertionAdmission",
+    "TestPredicateOverloadRuntime",
+    "TestUnprovenPredicateReturnsAreRefused",
+    "TestCensusPredicateInteractionEscapes",
+    "TestPredicateCallbackContracts",
+    "TestPredicateBodyProof"
+  ],
+  "cooked": false
+}

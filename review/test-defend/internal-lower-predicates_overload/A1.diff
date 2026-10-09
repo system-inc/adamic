@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..d8d7f48e 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -773,7 +773,7 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	if prefix.Operator == ast.KindExclamationToken {
++	if prefix.Operator == ast.KindExclamationToken && operand.Type() != ir.Union {
+ 		return ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil
+ 	}
+ 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))

@@ -1,0 +1,96 @@
+[
+  {
+    "test": "TestIndirectPredicateOverloadIsPending",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateOverloadCallback"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/predicates.go:483",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/predicates.go:483",
+        "change": "\"an indirect call of a checked predicate overload\" -> \"a direct call of a checked predicate overload\"",
+        "rows_failed": [
+          "TestIndirectPredicateOverloadIsPending"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_overload_test.go:127: want explicit indirect-call capability gap, got /tmp/adamic-gate/TestIndirectPredicateOverloadIsPending3621282536/001/main.a:1:136: stage 0 can't lower a direct call of a checked predicate overload yet"
+  },
+  {
+    "test": "TestConditionAssertionAdmission",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateBodyProof"
+    ],
+    "defense": "defended",
+    "unique_mutant": "A1 internal/lower/expression.go:776",
+    "attempts": [
+      {
+        "mutant": "A1",
+        "file_line": "internal/lower/expression.go:776",
+        "change": "if prefix.Operator == ast.KindExclamationToken {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil -> if prefix.Operator == ast.KindExclamationToken && operand.Type() != ir.Union {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil",
+        "rows_failed": [
+          "TestConditionAssertionAdmission"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/A1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_proof_test.go:92: Lower refused acceptance row: /tmp/adamic-gate/TestConditionAssertionAdmission1007734018/001/main.a:3:6: stage 0 can't lower a PrefixUnaryExpression on a union of differently held members yet"
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "E1",
+        "file_line": "internal/lower/predicates.go:251",
+        "change": "return nil, p.refused(node, fmt.Sprintf(\"return paths through %s are not verified\", node.Kind)) -> return nil, nil",
+        "rows_failed": [
+          "TestUnprovenPredicateReturnsAreRefused"
+        ]
+      },
+      {
+        "mutant": "E2",
+        "file_line": "internal/lower/predicates_proof.go:64",
+        "change": "return proof, predicateFailure(l, node, \"the target has an unsupported runtime contract\") -> return proof, nil",
+        "rows_failed": [
+          "TestArrayPredicateCannotInventAnElementContract",
+          "TestEveryNeedsCallbackEffects",
+          "TestUnprovenPredicateReturnsAreRefused"
+        ]
+      },
+      {
+        "mutant": "E3",
+        "file_line": "internal/lower/predicates.go:361",
+        "change": "proof, err := l.provePredicate(node)\n\tif err != nil {\n\t\treturn original\n\t} -> proof, err := l.provePredicate(node)\n\tif err == nil {\n\t\treturn original\n\t}",
+        "rows_failed": [
+          "TestArrayPredicateCannotInventAnElementContract",
+          "TestCensusPredicateInteractionBoundary",
+          "TestCensusPredicateInteractionEscapes",
+          "TestCensusPredicateMarkerKeepsProofBoundaries",
+          "TestConditionAssertionAdmission",
+          "TestEveryNeedsCallbackEffects",
+          "TestPredicateBodyProof",
+          "TestPredicateCallbackContracts",
+          "TestPredicateOverloadCallback",
+          "TestPredicateOverloadRuntime",
+          "TestUnprovenPredicateReturnsAreRefused"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_proof_test.go:152: want array proof refusal without callback effects, got <nil>\nADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_proof_test.go:152: want array proof refusal without callback effects, got <nil>",
+    "prior_subsumed_by": [
+      "TestPredicateCallbackContracts"
+    ]
+  }
+]

@@ -1,0 +1,830 @@
+func (l *lowering) builtinArguments(node *ast.Node) bool {
+func (l *lowering) isArgumentsLength(node *ast.Node) bool {
+func (l *lowering) argumentsRefusal(node *ast.Node) error {
+func (l *lowering) readArgumentsCount() ir.Expression {
+func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, error) {
+func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
+func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spread []bool) {
+func (l *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile) {
+func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Type, index int, to ir.Type) (ir.Expression, error) {
+func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
+func borrow(program *ir.Program) {
+func findAssigned(statements []ir.Statement, assigned map[int]bool) {
+func (l *lowering) caseLabel(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) fieldLiteral(member *checker.Type, field string) *checker.Type {
+func (l *lowering) literalConstant(literal *checker.Type) (ir.Expression, ir.Type, bool) {
+func (l *lowering) castAssignable(source, target *checker.Type) bool {
+func (l *lowering) castOptionalFields(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+func castMembers(proven *checker.Type) []*checker.Type {
+func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+func (l *lowering) castUnionWrites(source *checker.Type) bool {
+func (l *lowering) classCastArguments(source, target *checker.Type) bool {
+func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets []*checker.Type, message string) (ir.Expression, error) {
+func (l *lowering) censusNumberObject(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+func (l *lowering) censusHasUndefined(proven *checker.Type) bool {
+func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {
+func (l *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
+func censusSignaturePredicate(*checker.Checker, *checker.Signature) *checker.TypePredicate
+func (l *lowering) censusDiscardedMarkerPredicate(source, target *checker.Signature) bool {
+func (l *lowering) censusPredicateMarkerContract(annotation *ast.Node) bool {
+func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
+func (l *lowering) censusRestDeclaration(function int) *ast.Node {
+func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declaration *ast.Node) (ir.Expression, error) {
+func censusFieldSlotless(of ir.Type) bool {
+func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
+func (l *lowering) censusRelated(from, to *checker.Type) bool {
+func (l *lowering) censusOverloads(implementation *ast.Node) error {
+func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
+func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
+func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
+func censusCallableSlotless(of ir.Type) bool {
+func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {
+func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
+func censusBooleanCondition(value ir.Expression) ir.Expression {
+func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left, right ir.Expression) (ir.Expression, bool) {
+func censusCondition(value ir.Expression) ir.Expression {
+func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
+func (lowered *instance) methodList() []ir.Method {
+func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
+func (l *lowering) thisLocal(owner int) int {
+func (l *lowering) constructor(index int, declaration *ast.Node) error {
+func zeroValue(of ir.Type) ir.Expression {
+func containsThis(node *ast.Node) bool {
+func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
+func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) absentOptionalWrite(target *ast.Node) error {
+func presentBeforeWrite(target *ast.Node) bool {
+func testsPresence(condition *ast.Node, spelled string) bool {
+func plainPropertyName(property *ast.Node) string {
+func accessPath(node *ast.Node) string {
+func (l *lowering) literalGivesField(target *ast.Node) bool {
+func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
+func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
+func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) classOf(access *ast.Node) int {
+func nodesOf(list *ast.NodeList) []*ast.Node {
+func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
+func (l *lowering) useOfThis(node *ast.Node) error {
+func identicalTypes(checker *checker.Checker, source, target *checker.Type) bool
+func (l *lowering) classKeyPrefix(declaration *ast.Node) string {
+func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+func (l *lowering) classInstanceKey(declaration *ast.Node, arguments []*checker.Type) string {
+func (l *lowering) classKeyMatches(key string, declaration *ast.Node) bool {
+func accessorMember(node *ast.Node) bool {
+func classFunction(node *ast.Node) bool {
+func (l *lowering) methodKey(node *ast.Node, class int) string {
+func (l *lowering) registerAccessor(class int, node *ast.Node, function int) {
+func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) literalAccessor(owner, declaration *ast.Node) (ir.Expression, int, error) {
+func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) finishAccessors() error {
+func accessorSymbol(symbol *ast.Symbol) bool {
+func (l *lowering) hasAccessorStorage(proven *checker.Type) bool {
+func (l *lowering) checkAccessorSpreads() error {
+func (l *lowering) noteAccessorNames(modules []*ast.SourceFile) {
+func (l *lowering) validateAccessorSignature(member *ast.Node, function int) error {
+func (l *lowering) memberKey(name *ast.Node, class int) string {
+func (l *lowering) declaringClass(name *ast.Node) *ast.Node {
+func (l *lowering) privateName(spelling string, class *ast.Node) string {
+func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {
+func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) genericUsesClasses(declaration *ast.Node, seen map[*ast.Node]bool) bool {
+func (l *lowering) nominalTypeArguments(declaration *ast.Node, arguments []*checker.Type, mapper *typeMapper, where *ast.Node) error {
+func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) (*instance, error) {
+func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
+func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
+func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
+func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) error {
+func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Statement, error) {
+func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) finishClassCalls() {
+func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
+func (l *lowering) classViewRefusal(node *ast.Node) error {
+func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
+func (l *lowering) fieldName(name *ast.Node) string {
+func (l *lowering) classAssignable(from, to *checker.Type) bool {
+func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {
+func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
+func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string) bool {
+func (l *lowering) cycleFieldName(field *ast.Symbol) string {
+func (l *lowering) classDefinition(declaration *ast.Node) int {
+func (l *lowering) classIdentity(declaration *ast.Node) int {
+func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+func (l *lowering) classBases(proven *checker.Type) []*checker.Type {
+func literalParts(node *ast.Node) []*ast.Node {
+func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
+func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
+func (l *lowering) needsStatics(declaration *ast.Node) bool {
+func (l *lowering) staticClass(proven *checker.Type, fallback *ast.Node) *ast.Node {
+func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
+func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) isStaticType(proven *checker.Type) bool {
+func (l *lowering) staticWriteSite(node *ast.Node) int {
+func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {
+func (l *lowering) staticProperty(node *ast.Node) error {
+func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
+func (l *lowering) staticStorage(declaration *ast.Node) {
+func insideClass(node, declaration *ast.Node) bool {
+func (l *lowering) staticClassRead(node *ast.Node) (ir.Expression, bool) {
+func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int, arguments []ir.Expression) ir.Expression {
+func (l *lowering) privateStaticMember(name *ast.Node) *ast.Node {
+func (l *lowering) privateStaticReceiver(name *ast.Node, object ir.Expression, write bool) ir.Expression {
+func (l *lowering) privateStaticStore(target *ast.Node, object, value ir.Expression) (ir.Expression, bool) {
+func (flow *constructorSuperFlow) reads(node *ast.Node, state uint8) error {
+func (flow *constructorSuperFlow) list(nodes []*ast.Node, state uint8) (uint8, error) {
+func (flow *constructorSuperFlow) expression(node *ast.Node, state uint8) (uint8, error) {
+func (flow *constructorSuperFlow) statement(node *ast.Node, state uint8) (uint8, error) {
+func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, error) {
+func (l *lowering) superError(message string) ir.Statement {
+func (l *lowering) superEnd() ir.Statement {
+func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error) {
+func (flow *constructorSuperFlow) loop(node *ast.Node, state uint8) (uint8, error) {
+func (flow *constructorSuperFlow) switchCases(node *ast.Node, state uint8) (uint8, error) {
+func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {
+func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[*checker.Type]bool) bool {
+func (l *lowering) closedFrameInput(local int) bool {
+func (l *lowering) closedInputLiteral(value ir.Expression) bool {
+func keyable(valueType ir.Type) bool {
+func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
+func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part string) (ir.Expression, ir.Type, error) {
+func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
+func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string, set bool) (ir.Expression, bool, error) {
+func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, error) {
+func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, index *ast.Node) (ir.Expression, error) {
+func (l *lowering) everyKnown(types []*checker.Type) bool {
+func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
+func initializerIsLet(_ ir.Statement, node *ast.Node) bool {
+func counters(program *ir.Program) {
+func markCounter(program *ir.Program, block ir.Block, known facts) {
+func boundRange(bound ir.Expression, known facts, depth int) (float64, float64, bool) {
+func neverNegativeZero(expression ir.Expression, known facts, depth int) bool {
+func constantOf(expression ir.Expression) (float64, bool) {
+func whole(value float64, limit float64) bool {
+func stepOf(statement ir.Statement, counter int) (float64, bool) {
+func perIteration(loop ir.Loop, local int) bool {
+func declaredIn(block ir.Block, local int) (ir.Expression, bool) {
+func findDeclared(statements []ir.Statement, declared map[int]ir.Expression) {
+func eachBlock(statements []ir.Statement, visit func(ir.Block)) {
+func eachNested(statement ir.Statement, visit func([]ir.Statement)) {
+func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
+func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
+func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
+func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node {
+func (f *cycleFinder) template(proven *checker.Type) bool {
+func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
+func (f *cycleFinder) isFunction(proven *checker.Type) bool {
+func (f *cycleFinder) weak(proven *checker.Type) bool {
+func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+func (f *cycleFinder) present(proven *checker.Type) string {
+func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool {
+func literalMethod(property *ast.Symbol) bool {
+func (n *NotYet) Error() string {
+func (r *Refused) Error() string {
+func (l *lowering) notYet(node *ast.Node, what string) error {
+func describe(node *ast.Node) string {
+func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.Expression, error) {
+func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
+func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
+func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, depth int) bool {
+func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
+func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
+func constantStringKey(node *ast.Node) (string, bool) {
+func (l *lowering) enumerationInModule(module *ast.SourceFile) bool {
+func (l *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly bool) bool {
+func (l *lowering) enumerationIndexSignature(node *ast.Node) bool {
+func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
+func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
+func (l *lowering) entriesProgramHasRecords() bool {
+func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool {
+func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+func (l *lowering) flagEnum(symbol *ast.Symbol) bool {
+func (l *lowering) flagLiteral(node *ast.Node, value float64) bool {
+func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {
+func (l *lowering) flagTarget(proven *checker.Type) *ast.Symbol {
+func (l *lowering) flagDomain(node *ast.Node, target *ast.Symbol) bool {
+func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*ast.Node]bool) bool {
+func (l *lowering) flagWriteRefusal(node *ast.Node, target *checker.Type) error {
+func (l *lowering) flagInitializerBound(node *ast.Node) error {
+func (l *lowering) flagUpdate(node, updated *ast.Node) bool {
+func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *widening {
+func (l *lowering) flagValueSymbol(node *ast.Node) *ast.Symbol {
+func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
+func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
+func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
+func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen map[*ast.Node]bool) bool {
+func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity *ast.Symbol) ir.Expression {
+func (l *lowering) enumAssignable(from, to *checker.Type) bool {
+func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
+func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
+func enumObjectSymbol(proven *checker.Type) *ast.Symbol {
+func (l *lowering) enumObjectView(node *ast.Node) error {
+func (l *lowering) enumIdentity(proven *checker.Type) *ast.Symbol {
+func (l *lowering) enumMember(node *ast.Node) *ast.Node {
+func (l *lowering) enumObject(node *ast.Node) *ast.Node {
+func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {
+func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
+func (l *lowering) enumLocal(node *ast.Node) (int, error) {
+func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) enumRefusal(node *ast.Node) error {
+func (l *lowering) enumSwitch(node *ast.Node) error {
+func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
+func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
+func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
+func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
+func (l *lowering) exceptions() error {
+func (l *lowering) throwsOut(statements []ir.Statement) bool {
+func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]bool) string {
+func constantWithin(value ir.Expression, low float64, high float64) bool {
+func isNormalizationForm(value ir.Expression, strings []string) bool {
+func walk(value any, visit func(node any) bool) {
+func walkValue(value reflect.Value, visit func(node any) bool) {
+func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
+func (l *lowering) includesUndefined(proven *checker.Type) bool {
+func (l *lowering) includesNull(proven *checker.Type) bool {
+func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) (*checker.Type, *checker.Type) {
+func (l *lowering) present(proven *checker.Type) *checker.Type {
+func (l *lowering) kept(proven *checker.Type) (ir.Type, bool) {
+func (l *lowering) typeArguments(proven *checker.Type) []*checker.Type {
+func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
+func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+func fit(value ir.Expression, to ir.Type) ir.Expression {
+func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+func typeName(valueType ir.Type) string {
+func (l *lowering) writable(proven *checker.Type) bool {
+func slotless(valueType ir.Type) bool {
+func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+func (l *lowering) optionalCall(call *ast.Node) error {
+func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }
+func (l *lowering) writeSite(receiver *ast.Node) int {
+func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
+func (f *cycleFinder) writtenAt(write *fresh.Write) string {
+func (l *lowering) functionName(function int) string {
+func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) functionBody(declaration *ast.Node) error {
+func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
+func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
+func (l *lowering) genericTypeKey(proven *checker.Type) string {
+func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
+func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
+func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+func newTypeMapper(sources []*checker.Type, targets []*checker.Type) *typeMapper
+func instantiateType(receiver *checker.Checker, proven *checker.Type, mapper *typeMapper) *checker.Type
+func (l *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {
+func (l *lowering) closureNodeOf(function int) *ast.Node {
+func (l *lowering) concrete(proven *checker.Type) *checker.Type {
+func (l *lowering) classNodeFor(proven *checker.Type) *ast.Node {
+func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+func interfaceScalar(proven *checker.Type) bool {
+func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
+func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
+func (l *lowering) interfaceConstructions(cast *ast.Node, target *checker.Type, field string, literal *checker.Type) error {
+func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Type, fail func(*ast.Node, string)) {
+func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+func (l *lowering) callableViewContract(proven *checker.Type) bool {
+func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) generic(proven *checker.Type) bool {
+func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) containers(proven *checker.Type) []*checker.Type {
+func (l *lowering) sameContainer(from *checker.Type, to *checker.Type) bool {
+func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool) bool {
+func (l *lowering) narrowedFrom(from *checker.Type, to *checker.Type) bool {
+func (l *lowering) structured(proven *checker.Type) bool {
+func (l *lowering) withoutUndefined(proven *checker.Type) *checker.Type {
+func (l *lowering) definedMembers(proven *checker.Type) []*checker.Type {
+func isClassInstance(proven *checker.Type) bool {
+func viewSite(node *ast.Node) bool {
+func (l *lowering) refuseWidening(node *ast.Node) error {
+func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
+func (l *lowering) freshValue(node *ast.Node) bool {
+func (l *lowering) isExpression(node *ast.Node) bool {
+func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
+func destructuringTarget(node *ast.Node) *ast.Node {
+func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
+func (l *lowering) genericFunction(node *ast.Node) bool {
+func (l *lowering) symbolIterator(node *ast.Node) bool {
+func (l *lowering) methodName(node *ast.Node) (string, bool) {
+func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
+func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) iterationLocal(name string, of ir.Type, function int) int {
+func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, error) {
+func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value ir.Expression, member *ast.Symbol) (ir.Expression, bool, int, error) {
+func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Expression, arguments []ir.Expression, returns ir.Type) ir.Expression {
+func (l *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {
+func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+func (l *lowering) startIteration(where *ast.Node, plan *iterationPlan, source ir.Expression) ([]ir.Statement, *iterationState, error) {
+func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
+func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body []ir.Statement) ([]ir.Statement, error) {
+func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) collectIteration(where, sourceNode, callbackNode *ast.Node, plan *iterationPlan, element ir.Type) (ir.Expression, error) {
+func (l *lowering) iteratedType(node *ast.Node) (*iterationPlan, ir.Type, error) {
+func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iterationPlan) ([]ir.Statement, error) {
+func (l *lowering) iterationArrayWriteSite(where *ast.Node) int {
+func memberConvention(member *ast.Symbol) *ast.Node {
+func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool {
+func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
+func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
+func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+func (l *lowering) sameMemberOrigin(actual, expected *ast.Symbol) bool {
+func (l *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+func (l *lowering) iterationFactoryKnown(member *ast.Symbol, next, close *ast.Symbol) bool {
+func hasConstructorReturn(body *ast.Node) bool {
+func (l *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Node {
+func (l *lowering) sameIterationClass(actual, expected *checker.Type) bool {
+func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, depth int) bool {
+func (l *lowering) iterationReturnsClass(body *ast.Node, expected, receiver *checker.Type, depth int) bool {
+func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, iterator *checker.Type) bool {
+func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+func (l *lowering) labeled(node *ast.Node) ([]ir.Statement, error) {
+func labelIteration(body []ir.Statement, name string) bool {
+func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayComparator(element ir.Type) int {
+func (l *lowering) libraryArrayBuilder(arguments []ir.Expression) *libraryArrayBuilder {
+func (b *libraryArrayBuilder) local(name string, of ir.Type) int {
+func (b *libraryArrayBuilder) read(local int) ir.Expression {
+func (b *libraryArrayBuilder) declare(name string, value ir.Expression) int {
+func (b *libraryArrayBuilder) finish(name string, result ir.Expression) ir.Expression {
+func (l *lowering) libraryArraySpliced(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expression) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
+func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool) {
+func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
+func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
+func (l *lowering) libraryArraySyntheticWriteSite(node *ast.Node) int {
+func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expression) (ir.Expression, bool, error) {
+func (l *lowering) isArrayPredicateCall(node *ast.Node) bool {
+func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *checker.Type {
+func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
+func (l *lowering) arrayPredicateType(node *ast.Node) *checker.Type {
+func (l *lowering) arrayPredicateObservedType(node *ast.Node) *checker.Type {
+func predicateReadonlyArray(receiver *checker.Checker, element *checker.Type, readonly bool) *checker.Type
+func (l *lowering) arrayPredicateFlowCall(node *ast.Node) bool {
+func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
+func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryGlobalValue(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+func jsonScalar(s *ir.JSONSchema) bool {
+func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
+func jsonIndex(name string) (uint64, bool) {
+func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) libraryCollectionIterator(node, receiver *ast.Node, part string) (ir.Expression, bool, error) {
+func (l *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryEmptyCollectionArgument(node *ast.Node) bool {
+func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
+func (l *lowering) libraryLocal(function int, name string, of ir.Type) ir.Read {
+func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
+func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, item ir.Read, body []ir.Statement) []ir.Statement {
+func (l *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, element ir.Type) ir.Expression {
+func (l *lowering) libraryForOfIterator(node *ast.Node, iterator ir.Expression, element ir.Type, name *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) ir.Expression {
+func (f *cycleFinder) libraryIteratorMade(node *ast.Node) {
+func (f *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
+func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+func (l *lowering) libraryIteratorType(proven *checker.Type) bool {
+func (l *lowering) libraryMathNumberProperty(node *ast.Node) (ir.Expression, bool) {
+func (l *lowering) numberPrototype(node *ast.Node) bool {
+func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool {
+func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (libraryMethod, bool) {
+func constMethodInitializer(node *ast.Node) bool {
+func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
+func (l *lowering) libraryMapArgument(node *ast.Node) bool {
+func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) methodSequence(values []ir.Expression) ir.Expression {
+func (l *lowering) methodAliasRead(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) libraryMethodBind(node, target *ast.Node, method libraryMethod) (ir.Expression, error) {
+func (l *lowering) delayedNumberMethod(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error) {
+func RegisterNodeLibraryMembers(names ...string) {
+func (l *lowering) nodeLibraryMember(node *ast.Node) string {
+func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+func nodeBufferModule(symbol *ast.Symbol) string {
+func (l *lowering) nodeBufferSymbol(node *ast.Node, name string) bool {
+func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
+func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
+func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
+func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
+func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
+func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error) {
+func init() {
+func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+func init() {
+func (l *lowering) nodeFSDirectoryStatOptions(node *ast.Node) bool {
+func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
+func init() {
+func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+func (l *lowering) objectCanFreeze() bool {
+func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
+func (l *lowering) regexReplacement(node *ast.Node, input ir.Expression, arguments []ir.Expression, method string, written *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) regexReplacementArgument(node *ast.Node) bool {
+func (l *lowering) regexReplacementKind(proven *checker.Type, of ir.Type) int {
+func (l *lowering) stringPrototypeMethod(node *ast.Node) (string, bool) {
+func (l *lowering) stringMethodObservation(node *ast.Node) bool {
+func (l *lowering) stringTypeOf(node *ast.Node) (ir.Expression, bool) {
+func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) stringHelper(name string, values []ir.Expression) (int, []ir.Expression) {
+func stringInteger(value ir.Expression) ir.Expression {
+func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments []ir.Expression) ir.Expression {
+func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression, error) {
+func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
+func (l *lowering) refuseStringWidening(node *ast.Node) error {
+func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) literalCallableBranch(node *ast.Node) *ast.Node {
+func (cohereRuleRunner) RunRule(program *compiler.Program, typeChecker *checker.Checker, files []*ast.SourceFile, name string) ([]Finding, error) {
+func (l *lowering) loadTimeReads(files []*ast.SourceFile) error {
+func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
+func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
+func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+func skipped(binding *ast.Node) bool {
+func (l *lowering) declareLocal(name *ast.Node) (int, error) {
+func (l *lowering) noteAlso(local int, proven *checker.Type) {
+func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
+func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
+func (l *lowering) local(identifier *ast.Node) (int, bool) {
+func (l *lowering) touch(local int) {
+func (l *lowering) checked(local int) bool {
+func (l *lowering) constant(value string) int {
+func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+func logicalAssignment(kind ast.Kind) bool {
+func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
+func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+func (l *lowering) moduleNamespace(node *ast.Node) bool {
+func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
+func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
+func (l *lowering) declareModule(statements []*ast.Node) error {
+func runtimeModuleStatement(statement *ast.Node) bool {
+func (l *lowering) namespaceMergedFunction(node *ast.Node) bool {
+func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+func (l *lowering) namespaceFixedFunction(node *ast.Node) bool {
+func callableNamespaceIntrinsic(name string) bool {
+func namespaceOwnThis(declaration *ast.Node) bool {
+func namespaceStatements(declaration *ast.Node) []*ast.Node {
+func namespaceRuntime(declaration *ast.Node) bool {
+func namespaceDeclarations(statements []*ast.Node) []*ast.Node {
+func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {
+func (l *lowering) namespaceMember(node *ast.Node) bool {
+func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) namespaceValueNode(node *ast.Node) bool {
+func (l *lowering) namespaceRefusal(node *ast.Node) error {
+func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
+func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int {
+func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expression {
+func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
+func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Expression {
+func namespaceVariable(list *ast.Node) bool {
+func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
+func namespaceObjectBindings(pattern *ast.Node) bool {
+func (l *lowering) namespaceReadyStatements(node *ast.Node, writing bool) []ir.Statement {
+func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
+func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
+func (l *lowering) namespaceReturnAssignment(expression *ast.Node) ([]ir.Statement, bool, error) {
+func (l *lowering) narrowedAway(node *ast.Node) bool {
+func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
+func comparedWithUndefined(node *ast.Node) bool {
+func (l *lowering) acceptsUndefined(node *ast.Node) bool {
+func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error) {
+func (l *lowering) nestedSibling(node *ast.Node) int {
+func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) preallocateNestedBindings(name *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
+func (l *lowering) nestedReferenceEnvironment(index int) {
+func (l *lowering) isNever(node *ast.Node) bool {
+func (l *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error) {
+func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) conditionalNever(node *ast.Node, condition ir.Expression) (ir.Expression, error) {
+func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, error) {
+func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
+func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
+func (l *lowering) hasProperty(node *ast.Node, name string) bool {
+func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) hasOwnPropertyArguments(node *ast.Node, receiver *ast.Node, arguments []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
+func refusedRandom(l *lowering, node *ast.Node) error {
+func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) numberCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) numberCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
+func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
+func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+func writtenOut(pairs *ast.Node) bool {
+func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+func (l *lowering) stringFromCodesArguments(node *ast.Node, codePoints bool, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) tupleType(node *ast.Node) *checker.Type {
+func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
+func hasSpread(call *ast.Node) bool {
+func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
+func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets []*checker.Type, depth int) bool {
+func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+func isCallee(node *ast.Node) bool {
+func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback string) ir.Expression {
+func (l *lowering) mayBeUndefined(node *ast.Node) bool {
+func (l *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+func (l *lowering) optionalIndexContinuation(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
+func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) isOptionalJoin(node *ast.Node) bool {
+func (l *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) nodeHostConsumesArgument(call *ast.Node, index int) bool { return false }
+func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
+func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
+func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
+func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
+func parameterProperty(node *ast.Node) bool {
+func classMembersWithParameters(declaration *ast.Node) []*ast.Node {
+func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
+func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
+func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, available map[string]bool) ([]ir.Statement, error) {
+func predicateFlowType(receiver *checker.Checker, reference *ast.Node, declared, initial *checker.Type, container *ast.Node, flow *ast.FlowNode) *checker.Type
+func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
+func (l *lowering) proveFlowPredicate(node *ast.Node) error {
+func (p *predicateFlowProof) proveBody(node *ast.Node) error {
+func (p *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
+func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) predicateFlowPath {
+func (p *predicateFlowProof) admittedValueProof() bool {
+func (p *predicateFlowProof) normalReturn(node *ast.Node, path predicateFlowPath) error {
+func (p *predicateFlowProof) returned(node, expression *ast.Node, paths []predicateFlowPath) error {
+func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath) ([]predicateFlowPath, error) {
+func (p *predicateFlowProof) check(node *ast.Node) bool {
+func (p *predicateFlowProof) reference(node *ast.Node) bool {
+func (p *predicateFlowProof) checkedValue(node *ast.Node) bool {
+func (p *predicateFlowProof) literal(node *ast.Node) bool {
+func predicateEffects(node *ast.Node) bool {
+func predicateTrueType(c *checker.Checker) *checker.Type {
+func (l *lowering) predicateRefusal(node *ast.Node) error {
+func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
+func (l *lowering) predicateCallbackCallers(function *ast.Node, callback *ast.Symbol) bool {
+func (l *lowering) predicateArguments(node *ast.Node) error {
+func predicateOfSignature(receiver *checker.Checker, signature *checker.Signature) *checker.TypePredicate
+func predicateMatchingReference(receiver *checker.Checker, source, target *ast.Node) bool
+func predicateFailure(l *lowering, node *ast.Node, path string) error {
+func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
+func predicatePrimitiveTarget(t *checker.Type) bool {
+func (v *predicateVerifier) kindTarget(t *checker.Type) bool {
+func predicateLiteral(t *checker.Type) (string, bool) {
+func (v *predicateVerifier) addKind(t *checker.Type) {
+func (v *predicateVerifier) collectKinds(declaration *ast.Node) {
+func (v *predicateVerifier) wanted(t *checker.Type, cell string) (bool, bool) {
+func (v *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol {
+func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, error) {
+func predicateNot(t predicateTruth) predicateTruth {
+func predicateCombine(a, b predicateTruth, and bool) predicateTruth {
+func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path predicatePath) (predicateTruth, error) {
+func (v *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {
+func (v *predicateVerifier) constant(n *ast.Node) bool {
+func (v *predicateVerifier) pure(n *ast.Node) bool {
+func copyPredicatePath(path predicatePath) predicatePath {
+func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol, paths []predicatePath, check func(*ast.Node, predicateTruth) error) ([]predicatePath, error) {
+func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, error) {
+func (v *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.Node]bool) bool {
+func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Node]bool) bool {
+func predicateNormalExit(node *ast.Node) bool {
+func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) bool {
+func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
+func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
+func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTruth {
+func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argument *ast.Node) predicateTruth {
+func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
+func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *ast.Node, seen map[*ast.FlowNode]bool) predicateTruth {
+func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool, depth int) predicateTruth {
+func (l *lowering) predicateDirectionCount(call *ast.CallExpression, directions predicateTruth) int {
+func predicateDirectionMismatch(returned, membership ir.Expression, directions predicateTruth) ir.Expression {
+func predicateWriteOnly(node *ast.Node) bool {
+func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast.Node, direction predicateTruth) *ast.FlowNode {
+func (l *lowering) predicateOverloadOrdinal(implementation, overload *ast.Node) int {
+func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementation, overload *ast.Node, observed predicateTruth, proven bool) {
+func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Type) bool {
+func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
+func (l *lowering) isPanicCall(expression *ast.Node) bool {
+func (l *lowering) isPreludeFunction(callee *ast.Node, name string) bool {
+func (l *lowering) isConsole(callee *ast.Node) bool {
+func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
+func isPreludeConsole(symbol *ast.Symbol) bool {
+func (l *lowering) memberSymbol(node *ast.Node) *ast.Symbol {
+func (l *lowering) libraryMember(node *ast.Node) bool {
+func (l *lowering) inheritedLibraryMember(node *ast.Node) bool {
+func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
+func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
+func (l *lowering) prototypeRead(node *ast.Node, name string) error {
+func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+func (l *lowering) exactPlainObject(node *ast.Node) bool {
+func (l *lowering) nonObjectOwnProperty(node, receiver *ast.Node, name string, of ir.Type) (ir.Expression, bool, error) {
+func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name string, of ir.Type, arguments []*ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
+func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
+func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.Node, seen map[[2]*checker.Type]bool) string {
+func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
+func sourceExpression(node *ast.Node) string {
+func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+func readiness(program *ir.Program) {
+func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow.Instruction, state []bool, fields map[fieldReadiness]int) {
+func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int) ir.Statement {
+func readinessObject(value ir.Expression) (int, bool) {
+func readinessCalls(instruction *flow.Instruction) bool {
+func assertionInitializer(node *ast.Node) bool {
+func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+func assertionVarList(list *ast.Node) bool {
+func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
+func (l *lowering) refuse(module *ast.SourceFile) error {
+func called(node *ast.Node) bool {
+func scannedText(node *ast.Node) string {
+func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
+func joinPatternStrings(left, right string) string {
+func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
+func escapeRegexSource(pattern, flags string) string {
+func (l *lowering) regexGroups(node *ast.Node) bool {
+func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
+func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
+func (l *lowering) isSet(node *ast.Node) bool {
+func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
+func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+func (graph *allocationFlowGraph) ReachingAllocations(expression ir.Expression) ir.AllocationSet {
+func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, project bool, depth int) (result ir.AllocationSet) {
+func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Statement {
+func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
+func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
+func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
+func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*ast.Node) (ir.Expression, error) {
+func switchBodyLeaves(body []ir.Statement) bool {
+func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, unmatchedCheck ir.Statement) []ir.Statement {
+func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) initializeLocal(local int, value ir.Expression) []ir.Statement {
+func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
+func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+func typedArrayName(kind ir.Type) string {
+func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
+func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
+func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
+func (l *lowering) typedArraySetArgument(node *ast.Node) bool {
+func (l *lowering) typeOfNull(node *ast.Node) bool {
+func dynamicObjectType(proven *checker.Type) bool {
+func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
+func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+func (l *lowering) dynamicScalarProperty(node *ast.Node) bool {
+func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) error {
+func (l *lowering) dynamicReadHazard(name string) bool {
+func (l *lowering) presenceHazard(name string) string {
+func unavailableViewFamily(family string) viewContractHook {
+func init() { viewUnionContractHook = buildUnionReadContract }
+func viewErasureProof(*ir.Program, ir.Property) bool { return false }
+func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, _ map[*checker.Type]bool, _ bool) error {
+func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+func (l *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
+func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
+func (graph *allocationFlowGraph) resultNode(function int) int {
+func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
+func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
+func assignAllocationSites(program *ir.Program) {
+func (l *lowering) viewInterfaceFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool) error {
+func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+func (l *lowering) checkLazyViewReads() error {
+func viewAggregate(value ir.Expression) bool {
+func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+func viewDataType(target *checker.Type) bool {
+func viewInterfaceType(target *checker.Type) bool {
+func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+func voidInitializer(node *ast.Node) bool {
+func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker.Type) {
+func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
+func phantomField(proven *checker.Type, optional bool) bool {
+func primitiveMember(flags checker.TypeFlags, name string) bool {
+func (l *lowering) phantomUndefined(proven *checker.Type) bool {
+func (l *lowering) viewRepresentation(target *checker.Type) (ir.Type, bool) {
+func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {
+func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
+func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
+func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) ([]UntaggedViewMember, error) {
+func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
+func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
+func (l *lowering) completeUntaggedRecursiveContracts() {
+func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, seen map[*checker.Type]bool) {
+func (l *lowering) certifyUntaggedCallableProducers() {
+func certifiedUntaggedCallableRead(program *ir.Program, id ir.ViewContractID) bool {
+func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
+func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+func (l *lowering) unionReadCertificate(node *ast.Node, of ir.Type) bool {
+Conservative complete production function inventory; mutation sites below are in scoped proof, lowering and representation chains.

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "D1",
+    "row": "TestIndirectPredicateOverloadIsPending",
+    "file": "internal/lower/predicates.go",
+    "old": "\"an indirect call of a checked predicate overload\"",
+    "new": "\"a direct call of a checked predicate overload\"",
+    "kind": "change constant",
+    "aim": "exclusive indirect-call capability diagnostic",
+    "line": 483
+  },
+  {
+    "id": "A1",
+    "row": "TestConditionAssertionAdmission",
+    "file": "internal/lower/expression.go",
+    "old": "if prefix.Operator == ast.KindExclamationToken {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil",
+    "new": "if prefix.Operator == ast.KindExclamationToken && operand.Type() != ir.Union {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil",
+    "kind": "flip condition for boxed operands",
+    "aim": "runtime negation of an unknown assertion argument; proof-only subsumer does not emit it",
+    "line": 776
+  },
+  {
+    "id": "E1",
+    "row": "TestEveryNeedsCallbackEffects",
+    "file": "internal/lower/predicates.go",
+    "old": "return nil, p.refused(node, fmt.Sprintf(\"return paths through %s are not verified\", node.Kind))",
+    "new": "return nil, nil",
+    "kind": "return early",
+    "aim": "unsupported loop loses all remaining paths, incorrectly certifying the array callback",
+    "line": 251
+  },
+  {
+    "id": "E2",
+    "row": "TestEveryNeedsCallbackEffects",
+    "file": "internal/lower/predicates_proof.go",
+    "old": "return proof, predicateFailure(l, node, \"the target has an unsupported runtime contract\")",
+    "new": "return proof, nil",
+    "kind": "return early",
+    "aim": "accept unsupported array target after flow proof failed on callback loop",
+    "line": 64
+  },
+  {
+    "id": "E3",
+    "row": "TestEveryNeedsCallbackEffects",
+    "file": "internal/lower/predicates.go",
+    "old": "proof, err := l.provePredicate(node)\n\tif err != nil {\n\t\treturn original\n\t}",
+    "new": "proof, err := l.provePredicate(node)\n\tif err == nil {\n\t\treturn original\n\t}",
+    "kind": "flip condition",
+    "aim": "invert summary-failure handoff so failed array callback proof is admitted",
+    "line": 360
+  },
+  {
+    "id": "A2",
+    "row": "TestConditionAssertionAdmission",
+    "file": "internal/lower/predicates_proof.go",
+    "old": "truthiness: true, cells: []string{\"truthy\", \"falsy\"}",
+    "new": "truthiness: false, cells: []string{\"truthy\", \"falsy\"}",
+    "kind": "change option",
+    "aim": "condition assertion loses truthiness partition",
+    "line": 545
+  },
+  {
+    "id": "A3",
+    "row": "TestConditionAssertionAdmission",
+    "file": "internal/lower/expression.go",
+    "old": "if prefix.Operator == ast.KindExclamationToken {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil",
+    "new": "if prefix.Operator != ast.KindExclamationToken {\n\t\treturn ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil",
+    "kind": "flip condition",
+    "aim": "runtime condition negation fails despite a valid body proof",
+    "line": 776
+  }
+]

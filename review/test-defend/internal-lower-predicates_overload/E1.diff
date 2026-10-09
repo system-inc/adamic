@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..64b0ce10 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -248,7 +248,7 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
+ 		}
+ 		return paths, nil
+ 	default:
+-		return nil, p.refused(node, fmt.Sprintf("return paths through %s are not verified", node.Kind))
++		return nil, nil
+ 	}
+ }
+ 

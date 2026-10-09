@@ -1,0 +1,563 @@
+[
+  {
+    "test": "TestPredicateOverloadRuntime",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_overload_test.go",
+    "seconds": 5.981,
+    "oracle": "Node runs original fixtures and validates handwritten stdout; native and backend JS match those validated values. Checked exit 70, diagnostic text and counters are self-written contracts.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M15",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [
+      "M15",
+      "M16",
+      "M17"
+    ],
+    "last_proven_fail": "M17: predicates_overload_test.go:95: predicate counts: {Proven:2 Checked:0 Unobservable:0 Sites:[{Where:/tmp/adamic-gate/TestPredicateOverloadRuntimeoverload_some_empty3637780986/001/main.a:7:20 Function:some Overload:1 Directions:[{Direction:true Status:unobservable Reason:no narrowed read in the true region} {Direction:false Status:unobservable Reason:no narrowed read in the false region}]}]}, want [2 0 2] (proven, checked, unobservable)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M17.log 2>&1; predicates_overload_test.go:95: predicate counts: {Proven:2 Checked:0 Unobservable:0 Sites:[{Where:/tmp/adamic-gate/TestPredicateOverloadRuntimeoverload_some_empty3637780986/001/main.a:7:20 Function:some Overload:1 Directions:[{Direction:true Status:unobservable Reason:no narrowed read in the true region} {Direction:false Status:unobservable Reason:no narrowed read in the false region}]}]}, want [2 0 2] (proven, checked, unobservable)"
+  },
+  {
+    "test": "TestIndirectPredicateOverloadIsPending",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_overload_test.go",
+    "seconds": 0.049,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked. Checks diagnostic substring, not diagnostic type.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: predicates_overload_test.go:130: want explicit indirect-call capability gap, got /tmp/adamic-gate/TestIndirectPredicateOverloadIsPending3273718591/001/main.a:1:131: stage 0 can't lower an overloaded function as a value yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateOverloadCallback"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.081,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M06.log 2>&1; predicates_overload_test.go:130: want explicit indirect-call capability gap, got /tmp/adamic-gate/TestIndirectPredicateOverloadIsPending3273718591/001/main.a:1:131: stage 0 can't lower an overloaded function as a value yet",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestPredicateBodyProof",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.451,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked. TypeScript 6.0.3 supplies positive input bodies, not expected Adamic proof results.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M05",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "last_proven_fail": "M14: predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M14.log 2>&1; predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, <nil>",
+    "vacuous_subcases": [
+      "TestPredicateBodyProof/condition_assertion",
+      "TestPredicateBodyProof/typeof",
+      "TestPredicateBodyProof/helper",
+      "TestPredicateBodyProof/diagnostic_work_on_failure",
+      "TestPredicateBodyProof/assertion"
+    ]
+  },
+  {
+    "test": "TestConditionAssertionAdmission",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.053,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13: predicates_proof_test.go:108: condition assertion must pass the production admission seam: /tmp/adamic-gate/TestConditionAssertionAdmission56825249/001/assert.a:2:57: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateBodyProof"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.451,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M13.log 2>&1; predicates_proof_test.go:108: condition assertion must pass the production admission seam: /tmp/adamic-gate/TestConditionAssertionAdmission56825249/001/assert.a:2:57: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestPredicateCallbackContracts",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.263,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M04",
+      "M05",
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M07: predicates_proof_test.go:134: /tmp/adamic-gate/TestPredicateCallbackContractsinferred_arrow890367569/001/main.a:1:45: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicatePreservesDeclaredElementContract",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestEveryNeedsCallbackEffects",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodiesAreProven",
+      "TestPredicateBodyProof",
+      "TestPredicateOverloadCallback",
+      "TestPredicateOverloadRuntime",
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M07.log 2>&1; predicates_proof_test.go:134: /tmp/adamic-gate/TestPredicateCallbackContractsinferred_arrow890367569/001/main.a:1:45: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "vacuous_subcases": [
+      "TestPredicateCallbackContracts/inferred_arrow",
+      "TestPredicateCallbackContracts/inferred_named",
+      "TestPredicateCallbackContracts/arrow",
+      "TestPredicateCallbackContracts/named"
+    ]
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.05,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M04",
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: predicates_proof_test.go:160: want array proof refusal without callback effects, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateCallbackContracts"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": 0.263,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M05.log 2>&1; predicates_proof_test.go:160: want array proof refusal without callback effects, got <nil>",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestPredicateOverloadCallback",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.081,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: predicates_proof_test.go:175: want lying overload callback argument refused at call site, got /tmp/adamic-gate/TestPredicateOverloadCallback705287358/002/main.a:7:58: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to number, not number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateCallbackContracts"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.263,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M06.log 2>&1; predicates_proof_test.go:175: want lying overload callback argument refused at call site, got /tmp/adamic-gate/TestPredicateOverloadCallback705287358/002/main.a:7:58: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to number, not number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestPredicateUseRegions",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.526,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked. Only the assignment-flow mutation reached the direction checker chain; no production kill was demonstrated in this plan.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "Probe only: ADAMIC_MUTANT=P04 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/P04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateUseRegions$ > P04-TestPredicateUseRegions.log 2>&1; predicates_proof_test.go:233: directions 0, want 1",
+    "vacuous_subcases": [
+      "TestPredicateUseRegions/unused",
+      "TestPredicateUseRegions/replacement"
+    ]
+  },
+  {
+    "test": "TestPredicateUsesBelongToEachCall",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_proof_test.go",
+    "seconds": 0.049,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked. Only the assignment-flow mutation reached the direction checker chain; no production kill was demonstrated in this plan.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "Probe only: ADAMIC_MUTANT=P04 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/P04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateUsesBelongToEachCall$ > P04-TestPredicateUsesBelongToEachCall.log 2>&1; predicates_proof_test.go:274: call 1: directions 0, want 1"
+  },
+  {
+    "test": "TestUnprovenPredicateReturnsAreRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_test.go",
+    "seconds": 0.51,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M08",
+      "M12",
+      "M14"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M14: predicates_test.go:44: got <nil>, want a predicate refusal naming \"normal return\" and its rewrite",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M14.log 2>&1; predicates_test.go:44: got <nil>, want a predicate refusal naming \"normal return\" and its rewrite"
+  },
+  {
+    "test": "TestPredicateBodiesAreProven",
+    "package": "internal/lower",
+    "file": "internal/lower/predicates_test.go",
+    "seconds": 0.341,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: /tmp/adamic-gate/TestPredicateBodiesAreProven384616363/003/main.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to undefined, not string); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.51,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M04.log 2>&1; predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: /tmp/adamic-gate/TestPredicateBodiesAreProven384616363/003/main.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to undefined, not string); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+    "package": "internal/lower",
+    "file": "internal/lower/primitive_slots_test.go",
+    "seconds": 0.051,
+    "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M20"
+    ],
+    "unique_kills": [
+      "M20"
+    ],
+    "last_proven_fail": "M20: primitive_slots_test.go:26: {} binding is 4, want boxed union",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPredicateOverloadRuntime",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestPredicateBodyProof",
+      "TestConditionAssertionAdmission",
+      "TestPredicateCallbackContracts",
+      "TestEveryNeedsCallbackEffects",
+      "TestPredicateOverloadCallback",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodiesAreProven",
+      "TestPrimitiveAdmittingSlotsUseBoxes"
+    ],
+    "bounded_mutants": [
+      "M01"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M20.log 2>&1; primitive_slots_test.go:26: {} binding is 4, want boxed union"
+  }
+]

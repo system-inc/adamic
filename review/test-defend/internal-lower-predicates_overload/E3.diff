@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..e3ae48a2 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -358,7 +358,7 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
+ 		return nil
+ 	}
+ 	proof, err := l.provePredicate(node)
+-	if err != nil {
++	if err == nil {
+ 		return original
+ 	}
+ 	if proof.TaggedView {
