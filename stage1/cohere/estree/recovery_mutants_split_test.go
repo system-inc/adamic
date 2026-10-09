@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -267,8 +268,17 @@ func TestRecoveryMutants_Setup(t *testing.T) {
 	}
 }
 
+// These are setup's Product handles, including uncached products when the gate
+// sets ADAMIC_BUILD_CACHE=off. No execution shard invokes a builder.
+var recoveryMutantProducts sync.Map
+
 func recoveryMutantPrepared(t *testing.T, name string, build func(string) error) string {
 	t.Helper()
+	if build == nil {
+		if product, ok := recoveryMutantProducts.Load(name); ok {
+			return product.(string)
+		}
+	}
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -288,5 +298,7 @@ func recoveryMutantPrepared(t *testing.T, name string, build func(string) error)
 	if build == nil {
 		build = func(string) error { return fmt.Errorf("run TestRecoveryMutants_Setup first; shards never build") }
 	}
-	return buildcache.Product(t, inputs, build)
+	product := buildcache.Product(t, inputs, build)
+	recoveryMutantProducts.Store(name, product)
+	return product
 }
