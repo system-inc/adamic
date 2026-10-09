@@ -1055,3 +1055,11 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T06:46:11.629653Z,runtime,0,8,0,,,"gate_backpressure: 107 queued, 16 slots"
 2026-10-09T06:46:14.049951Z,library,1,8,0,,,"gate_backpressure: 107 queued, 16 slots"
 2026-10-09T06:46:24.868357Z,developer_tools,0,4,0,,,"gate_backpressure: 107 queued, 16 slots"
+2026-10-09T06:50:29.154124Z,compiler,6,30,0,,,"gate_backpressure: 106 queued, 17 slots"
+2026-10-09T06:51:04.582861Z,cohere_adamic,0,30,0,,,"gate_backpressure: 106 queued, 17 slots"
+2026-10-09T06:51:08.703744Z,typescript,0,10,0,,,"gate_backpressure: 106 queued, 17 slots"
+2026-10-09T06:51:21.128439Z,runtime,0,8,2,19-step06c-canonical-program.md,01a11431-4432-7421-9353-50c70c0d8039,sent
+2026-10-09T06:51:29.999824Z,runtime,1,8,1,20-step06d-membership-proofs.md,01a11477-b1e8-7134-8ed7-8360ef421013,sent
+2026-10-09T06:51:30.251029Z,runtime,2,8,0,,,queue_empty
+2026-10-09T06:51:32.111213Z,library,0,8,0,,,"gate_backpressure: 106 queued, 17 slots"
+2026-10-09T06:51:41.944295Z,developer_tools,0,4,0,,,"gate_backpressure: 106 queued, 17 slots"
