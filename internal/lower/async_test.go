@@ -101,6 +101,15 @@ async function run(): Promise<void> { await Promise.resolve(); }
 const holder: { item: { text: string } | undefined } = { item: undefined };
 write(holder);
 await run();`)
+	// Program membership does not cover suspended frames after async normalization.
+	if os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		var refused *Refused
+		if !errors.As(err, &refused) || refused.What != "Program region with async work" {
+			t.Fatalf("want Program membership refusal for suspended async frames, got %v", err)
+		}
+		return
+	}
+
 	if err != nil {
 		t.Fatal(err)
 	}
