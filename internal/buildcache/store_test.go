@@ -236,6 +236,21 @@ func TestABuildPublishesBlobsThenItsRefAndAnotherMachineFetchesIt(t *testing.T) 
 	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	Product(t, thisPackage, build)
+	if len(store.writes) != 0 {
+		t.Fatalf("a test uploaded inline: %v", store.writes)
+	}
+	entries, err := spoolEntries()
+	if err != nil || len(entries) != 1 {
+		t.Fatalf("spool entries: %v, %v", entries, err)
+	}
+	// The recorded trust survives a change in the publisher's environment.
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "main")
+	runPublisher(t)
+	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "")
+	entries, err = spoolEntries()
+	if err != nil || len(entries) != 0 {
+		t.Fatalf("spool after publish: %v, %v", entries, err)
+	}
 	// A candidate's build writes the candidate ref, never main's.
 	if len(store.writes) != 4 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build-candidate/"+thisKey(t) {
 		t.Fatalf("writes: %q", store.writes)
@@ -267,6 +282,11 @@ func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
 	})
 	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "this machine's" {
 		t.Fatalf("the built product reads %q", content)
+	}
+	if err := PublishSpool(); err == nil || !strings.Contains(err.Error(), "isn't honest") {
+		t.Fatalf("publish: %v", err)
+	} else {
+		note("%v", err)
 	}
 	if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), "isn't honest") {
 		t.Fatalf("log: %q", lines)
