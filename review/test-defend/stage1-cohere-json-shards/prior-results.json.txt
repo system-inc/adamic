@@ -1,0 +1,748 @@
+[
+  {
+    "test": "TestJSONPortShardUnion",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/shards_test.go",
+    "seconds": 0.025,
+    "oracle": "Self-written exact-union/selector invariants. Does not assert the 16-case bound.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4 shards_test.go:126: shard union has 36 cases, unsplit enumeration has 39",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParity",
+      "TestProduct_JSONUpstreamOracle"
+    ],
+    "evidence": {
+      "command": {
+        "id": "S4",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestProduct_JSONUpstreamOracle)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 11.524644601000546,
+        "exit": 1
+      },
+      "failing_output": "shards_test.go:126: shard union has 36 cases, unsplit enumeration has 39"
+    },
+    "members_file": "family-members.txt#R1",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [
+      "S4"
+    ],
+    "witness_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestJSONPortShardDisagreement",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/shards_test.go",
+    "seconds": 0.017,
+    "oracle": "Self-written planted protocol mismatch and ownership invariant.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1 shards_test.go:199: shard-1030 planted case ownership disagrees with comparison: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardDisagreement",
+      "TestJSONUpstreamShardDisagreement",
+      "TestUpstreamRepositoryCorpusParityShardProof"
+    ],
+    "evidence": {
+      "command": {
+        "id": "W1",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardDisagreement|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParityShardProof)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 12.255170484999326,
+        "exit": 1
+      },
+      "failing_output": "shards_test.go:199: shard-1030 planted case ownership disagrees with comparison: <nil>"
+    },
+    "members_file": "family-members.txt#R2",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [],
+    "witness_kills": [
+      "W1"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestJSONHashShardsStayStable",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/shards_test.go",
+    "seconds": 0.02,
+    "oracle": "Self-written fixed bucket count, case conservation and ownership stability.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2 shards_test.go:248: static bucket count moved",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParity",
+      "TestProduct_JSONUpstreamOracle"
+    ],
+    "evidence": {
+      "command": {
+        "id": "S2",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestProduct_JSONUpstreamOracle)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 12.122611578999567,
+        "exit": 1
+      },
+      "failing_output": "shards_test.go:248: static bucket count moved"
+    },
+    "members_file": "family-members.txt#R3",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [
+      "S2"
+    ],
+    "witness_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestPortMatchesGoCohere agreement family",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/top_portmatchesgocohere_test.go + top_shared_test.go",
+    "seconds": null,
+    "oracle": "Runs Go cohere and compares complete output/error protocol against source Node, release native, JavaScript backend, ASan/UBSan and LeakSanitizer.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 port_test.go:357: TestPortMatchesGoCohere_0648 Node case 1 generated/5/package.json byte 4: got \"ok\\t{ \\\"a\\\": 1, \\\"b\\\": [2, 3] }\\\\n\"; Go \"ok\\t{\\\\n  \\\"a\\\": 1,\\\\n  \\\"b\\\": [\\\\n    2,\\\\n    3\\\\n  ]\\\\n}\\\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONPortShardDisagreement",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestJSONUpstreamShardDisagreement",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParityShardProof",
+      "TestProduct_JSONUpstreamOracle",
+      "TestPortMatchesGoCohere_0023",
+      "TestPortMatchesGoCohere_0154",
+      "TestPortMatchesGoCohere_0220",
+      "TestPortMatchesGoCohere_0254",
+      "TestPortMatchesGoCohere_0445",
+      "TestPortMatchesGoCohere_0587",
+      "TestPortMatchesGoCohere_0627",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_0648",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_1694",
+      "TestPortMatchesGoCohere_1938",
+      "TestPortMatchesGoCohere_1976",
+      "TestPortMatchesGoCohere_2117",
+      "TestPortMatchesGoCohere_2510",
+      "TestPortMatchesGoCohere_2708",
+      "TestPortMatchesGoCohere_2810",
+      "TestPortMatchesGoCohere_3383",
+      "TestPortMatchesGoCohere_3809",
+      "TestPortMatchesGoCohere_3929",
+      "TestPortMatchesGoCohere_3941",
+      "TestPortMatchesGoCohere_3992",
+      "TestPortMatchesGoCohere_4649",
+      "TestPortMatchesGoCohere_4652",
+      "TestPortMatchesGoCohere_6395",
+      "TestPortMatchesGoCohere_7025",
+      "TestPortMatchesGoCohere_7043",
+      "TestPortMatchesGoCohere_7130",
+      "TestPortMatchesGoCohere_7862",
+      "TestPortMatchesGoCohere_7976"
+    ],
+    "evidence": {
+      "command": {
+        "id": "M3",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParityShardProof|TestProduct_JSONUpstreamOracle|TestPortMatchesGoCohere_0023|TestPortMatchesGoCohere_0154|TestPortMatchesGoCohere_0220|TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0445|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0627|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_1694|TestPortMatchesGoCohere_1938|TestPortMatchesGoCohere_1976|TestPortMatchesGoCohere_2117|TestPortMatchesGoCohere_2510|TestPortMatchesGoCohere_2708|TestPortMatchesGoCohere_2810|TestPortMatchesGoCohere_3383|TestPortMatchesGoCohere_3809|TestPortMatchesGoCohere_3929|TestPortMatchesGoCohere_3941|TestPortMatchesGoCohere_3992|TestPortMatchesGoCohere_4649|TestPortMatchesGoCohere_4652|TestPortMatchesGoCohere_6395|TestPortMatchesGoCohere_7025|TestPortMatchesGoCohere_7043|TestPortMatchesGoCohere_7130|TestPortMatchesGoCohere_7862|TestPortMatchesGoCohere_7976)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u104/cache/M3"
+        },
+        "wall_seconds": 33.66173536899987,
+        "exit": 1
+      },
+      "failing_output": "port_test.go:357: TestPortMatchesGoCohere_0648 Node case 1 generated/5/package.json byte 4: got \"ok\\t{ \\\"a\\\": 1, \\\"b\\\": [2, 3] }\\\\n\"; Go \"ok\\t{\\\\n  \\\"a\\\": 1,\\\\n  \\\"b\\\": [\\\\n    2,\\\\n    3\\\\n  ]\\\\n}\\\\n\""
+    },
+    "members_file": "family-members.txt#R4",
+    "member_count": 2049,
+    "timing_runs": 3,
+    "timing_scope": "bounded subset of family",
+    "bounded_seconds": 10.445,
+    "construction_kills": [
+      "S2"
+    ],
+    "witness_kills": [],
+    "vacuous_subcases": [],
+    "subsumer_bounded_seconds": 6.702,
+    "subsumption_basis": "3 port mutants; only the selected members were replayed"
+  },
+  {
+    "test": "TestPortMatchesGoCohere benchmark family",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/top_portmatchesgocohere_test.go",
+    "seconds": null,
+    "oracle": "Runs Go cohere and compares complete protocol against release native and source Node.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 port_test.go:461: TestPortMatchesGoCohere_7043 release case 1 stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/package.json byte 101: got \",\\\\n  \\\"version\\\": \\\"1.0.0\\\",\\\\n  \\\"typesVersions\\\": {\\\\n    \\\"*\\\": {\\\\n      \\\"__proto__\\\": [\\\"target.d.ts\\\"]\\\\n    }\\\\n  }\\\\n}\\\\n\"; Go \",\\\\n  \\\"version\\\": \\\"1.0.0\\\",\\\\n  \\\"typesVersions\\\": {\\\\n    \\\"*\\\": {\\\\n      \\\"__proto__\\\": [\\\\n        \\\"target.d.ts\\\"\\\\n      ]\\\\n    }\\\\n  }\\\\n}\\\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPortMatchesGoCohere agreement family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONPortShardDisagreement",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestJSONUpstreamShardDisagreement",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParityShardProof",
+      "TestProduct_JSONUpstreamOracle",
+      "TestPortMatchesGoCohere_0023",
+      "TestPortMatchesGoCohere_0154",
+      "TestPortMatchesGoCohere_0220",
+      "TestPortMatchesGoCohere_0254",
+      "TestPortMatchesGoCohere_0445",
+      "TestPortMatchesGoCohere_0587",
+      "TestPortMatchesGoCohere_0627",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_0648",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_1694",
+      "TestPortMatchesGoCohere_1938",
+      "TestPortMatchesGoCohere_1976",
+      "TestPortMatchesGoCohere_2117",
+      "TestPortMatchesGoCohere_2510",
+      "TestPortMatchesGoCohere_2708",
+      "TestPortMatchesGoCohere_2810",
+      "TestPortMatchesGoCohere_3383",
+      "TestPortMatchesGoCohere_3809",
+      "TestPortMatchesGoCohere_3929",
+      "TestPortMatchesGoCohere_3941",
+      "TestPortMatchesGoCohere_3992",
+      "TestPortMatchesGoCohere_4649",
+      "TestPortMatchesGoCohere_4652",
+      "TestPortMatchesGoCohere_6395",
+      "TestPortMatchesGoCohere_7025",
+      "TestPortMatchesGoCohere_7043",
+      "TestPortMatchesGoCohere_7130",
+      "TestPortMatchesGoCohere_7862",
+      "TestPortMatchesGoCohere_7976"
+    ],
+    "evidence": {
+      "command": {
+        "id": "M3",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParityShardProof|TestProduct_JSONUpstreamOracle|TestPortMatchesGoCohere_0023|TestPortMatchesGoCohere_0154|TestPortMatchesGoCohere_0220|TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0445|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0627|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_1694|TestPortMatchesGoCohere_1938|TestPortMatchesGoCohere_1976|TestPortMatchesGoCohere_2117|TestPortMatchesGoCohere_2510|TestPortMatchesGoCohere_2708|TestPortMatchesGoCohere_2810|TestPortMatchesGoCohere_3383|TestPortMatchesGoCohere_3809|TestPortMatchesGoCohere_3929|TestPortMatchesGoCohere_3941|TestPortMatchesGoCohere_3992|TestPortMatchesGoCohere_4649|TestPortMatchesGoCohere_4652|TestPortMatchesGoCohere_6395|TestPortMatchesGoCohere_7025|TestPortMatchesGoCohere_7043|TestPortMatchesGoCohere_7130|TestPortMatchesGoCohere_7862|TestPortMatchesGoCohere_7976)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u104/cache/M3"
+        },
+        "wall_seconds": 33.66173536899987,
+        "exit": 1
+      },
+      "failing_output": "port_test.go:461: TestPortMatchesGoCohere_7043 release case 1 stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/package.json byte 101: got \",\\\\n  \\\"version\\\": \\\"1.0.0\\\",\\\\n  \\\"typesVersions\\\": {\\\\n    \\\"*\\\": {\\\\n      \\\"__proto__\\\": [\\\"target.d.ts\\\"]\\\\n    }\\\\n  }\\\\n}\\\\n\"; Go \",\\\\n  \\\"version\\\": \\\"1.0.0\\\",\\\\n  \\\"typesVersions\\\": {\\\\n    \\\"*\\\": {\\\\n      \\\"__proto__\\\": [\\\\n        \\\"target.d.ts\\\"\\\\n      ]\\\\n    }\\\\n  }\\\\n}\\\\n\""
+    },
+    "members_file": "family-members.txt#R5",
+    "member_count": 6144,
+    "timing_runs": 3,
+    "timing_scope": "bounded subset of family",
+    "bounded_seconds": 6.702,
+    "construction_kills": [],
+    "witness_kills": [],
+    "vacuous_subcases": [],
+    "subsumer_bounded_seconds": 10.445,
+    "subsumption_basis": "3 port mutants; only the selected members were replayed"
+  },
+  {
+    "test": "TestUpstreamRepositoryCorpusParity top family",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/top_upstreamrepositorycorpusparity_test.go + top_shared_test.go",
+    "seconds": null,
+    "oracle": "Runs Go cohere and Prettier 3.9.6; expected disagreements are our checked-in report. Both-error acceptance uses sameAnswer and ignores differing diagnostic text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": {
+      "command": {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestUpstreamRepositoryCorpusParityShardProof|TestProduct_JSONUpstreamOracle|TestPortMatchesGoCohere_0023|TestPortMatchesGoCohere_0154|TestPortMatchesGoCohere_0220|TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0445|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0627|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_1694|TestPortMatchesGoCohere_1938|TestPortMatchesGoCohere_1976|TestPortMatchesGoCohere_2117|TestPortMatchesGoCohere_2510|TestPortMatchesGoCohere_2708|TestPortMatchesGoCohere_2810|TestPortMatchesGoCohere_3383|TestPortMatchesGoCohere_3809|TestPortMatchesGoCohere_3929|TestPortMatchesGoCohere_3941|TestPortMatchesGoCohere_3992|TestPortMatchesGoCohere_4649|TestPortMatchesGoCohere_4652|TestPortMatchesGoCohere_6395|TestPortMatchesGoCohere_7025|TestPortMatchesGoCohere_7043|TestPortMatchesGoCohere_7130|TestPortMatchesGoCohere_7862|TestPortMatchesGoCohere_7976|TestUpstreamRepositoryCorpusParity_0023|TestUpstreamRepositoryCorpusParity_0154|TestUpstreamRepositoryCorpusParity_0220|TestUpstreamRepositoryCorpusParity_0254|TestUpstreamRepositoryCorpusParity_0445|TestUpstreamRepositoryCorpusParity_0587|TestUpstreamRepositoryCorpusParity_0627|TestUpstreamRepositoryCorpusParity_0631|TestUpstreamRepositoryCorpusParity_0648|TestUpstreamRepositoryCorpusParity_0867|TestUpstreamRepositoryCorpusParity_0868|TestUpstreamRepositoryCorpusParity_1449|TestUpstreamRepositoryCorpusParity_1659|TestUpstreamRepositoryCorpusParity_1665|TestUpstreamRepositoryCorpusParity_1694|TestUpstreamRepositoryCorpusParity_1938|TestUpstreamRepositoryCorpusParity_1976|TestUpstreamRepositoryCorpusParity_000|TestUpstreamRepositoryCorpusParity_001|TestUpstreamRepositoryCorpusParity_002|TestUpstreamRepositoryCorpusParity_003|TestUpstreamRepositoryCorpusParity_004|TestUpstreamRepositoryCorpusParity_005|TestUpstreamRepositoryCorpusParity_006|TestUpstreamRepositoryCorpusParity_007|TestUpstreamRepositoryCorpusParity_008|TestUpstreamRepositoryCorpusParity_009|TestUpstreamRepositoryCorpusParity_010|TestUpstreamRepositoryCorpusParity_011|TestUpstreamRepositoryCorpusParity_012|TestUpstreamRepositoryCorpusParity_013|TestUpstreamRepositoryCorpusParity_014|TestUpstreamRepositoryCorpusParity_015)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        }
+      },
+      "failing_output": null
+    },
+    "members_file": "family-members.txt#R6",
+    "member_count": 2049,
+    "timing_runs": 3,
+    "timing_scope": "bounded subset of family",
+    "bounded_seconds": 4.943,
+    "construction_kills": [
+      "S2"
+    ],
+    "witness_kills": [],
+    "vacuous_subcases": [],
+    "cannot_judge_reason": "These rows run Go cohere and Prettier, not the Adamic port. Mutating either external oracle is prohibited; no production mutant was judged for these rows."
+  },
+  {
+    "test": "TestJSONUpstreamShardDisagreement",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/top_upstream_proof_test.go",
+    "seconds": 0.014,
+    "oracle": "Self-written planted difference must be detected by jsonUpstreamBlockCheck.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2 top_upstream_proof_test.go:44: planted disagreement caught by 0 shards",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardDisagreement",
+      "TestJSONUpstreamShardDisagreement",
+      "TestUpstreamRepositoryCorpusParityShardProof"
+    ],
+    "evidence": {
+      "command": {
+        "id": "W2",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardDisagreement|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParityShardProof)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 10.567021701999693,
+        "exit": 1
+      },
+      "failing_output": "top_upstream_proof_test.go:44: planted disagreement caught by 0 shards"
+    },
+    "members_file": "family-members.txt#R7",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [],
+    "witness_kills": [
+      "W2"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestUpstreamRepositoryCorpusParity preparation family",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/upstream_parity_split_test.go",
+    "seconds": 2.17,
+    "oracle": "Self-written declaration census and corpus construction checks; also builds an oracle without executing it.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3 upstream_parity_split_test.go:104: enumerated 16 tests, declared 15",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParity",
+      "TestProduct_JSONUpstreamOracle"
+    ],
+    "evidence": {
+      "command": {
+        "id": "S3",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestProduct_JSONUpstreamOracle)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 11.811262553001143,
+        "exit": 1
+      },
+      "failing_output": "upstream_parity_split_test.go:104: enumerated 16 tests, declared 15"
+    },
+    "members_file": "family-members.txt#R8",
+    "member_count": 2,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [
+      "S3"
+    ],
+    "witness_kills": [],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestUpstreamRepositoryCorpusParityShardProof",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/upstream_parity_split_test.go",
+    "seconds": 1.134,
+    "oracle": "Self-written planted difference must be detected by upstreamParityBlockCheck; also detects missing corpus case.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3 upstream_parity_split_test.go:304: planted failure caught by 0 shards",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardDisagreement",
+      "TestJSONUpstreamShardDisagreement",
+      "TestUpstreamRepositoryCorpusParityShardProof"
+    ],
+    "evidence": {
+      "command": {
+        "id": "W3",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardDisagreement|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParityShardProof)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        },
+        "wall_seconds": 10.737138722999589,
+        "exit": 1
+      },
+      "failing_output": "upstream_parity_split_test.go:304: planted failure caught by 0 shards"
+    },
+    "members_file": "family-members.txt#R9",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [],
+    "witness_kills": [
+      "W3"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestUpstreamRepositoryCorpusParity legacy family",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/upstream_parity_split_test.go",
+    "seconds": 63.087,
+    "oracle": "Runs Go cohere and Prettier 3.9.6; expected disagreements are our checked-in report. Both-error acceptance ignores diagnostic text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": {
+      "command": {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestJSONUpstreamShardDisagreement|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestUpstreamRepositoryCorpusParityShardProof|TestProduct_JSONUpstreamOracle|TestPortMatchesGoCohere_0023|TestPortMatchesGoCohere_0154|TestPortMatchesGoCohere_0220|TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0445|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0627|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_1694|TestPortMatchesGoCohere_1938|TestPortMatchesGoCohere_1976|TestPortMatchesGoCohere_2117|TestPortMatchesGoCohere_2510|TestPortMatchesGoCohere_2708|TestPortMatchesGoCohere_2810|TestPortMatchesGoCohere_3383|TestPortMatchesGoCohere_3809|TestPortMatchesGoCohere_3929|TestPortMatchesGoCohere_3941|TestPortMatchesGoCohere_3992|TestPortMatchesGoCohere_4649|TestPortMatchesGoCohere_4652|TestPortMatchesGoCohere_6395|TestPortMatchesGoCohere_7025|TestPortMatchesGoCohere_7043|TestPortMatchesGoCohere_7130|TestPortMatchesGoCohere_7862|TestPortMatchesGoCohere_7976|TestUpstreamRepositoryCorpusParity_0023|TestUpstreamRepositoryCorpusParity_0154|TestUpstreamRepositoryCorpusParity_0220|TestUpstreamRepositoryCorpusParity_0254|TestUpstreamRepositoryCorpusParity_0445|TestUpstreamRepositoryCorpusParity_0587|TestUpstreamRepositoryCorpusParity_0627|TestUpstreamRepositoryCorpusParity_0631|TestUpstreamRepositoryCorpusParity_0648|TestUpstreamRepositoryCorpusParity_0867|TestUpstreamRepositoryCorpusParity_0868|TestUpstreamRepositoryCorpusParity_1449|TestUpstreamRepositoryCorpusParity_1659|TestUpstreamRepositoryCorpusParity_1665|TestUpstreamRepositoryCorpusParity_1694|TestUpstreamRepositoryCorpusParity_1938|TestUpstreamRepositoryCorpusParity_1976|TestUpstreamRepositoryCorpusParity_000|TestUpstreamRepositoryCorpusParity_001|TestUpstreamRepositoryCorpusParity_002|TestUpstreamRepositoryCorpusParity_003|TestUpstreamRepositoryCorpusParity_004|TestUpstreamRepositoryCorpusParity_005|TestUpstreamRepositoryCorpusParity_006|TestUpstreamRepositoryCorpusParity_007|TestUpstreamRepositoryCorpusParity_008|TestUpstreamRepositoryCorpusParity_009|TestUpstreamRepositoryCorpusParity_010|TestUpstreamRepositoryCorpusParity_011|TestUpstreamRepositoryCorpusParity_012|TestUpstreamRepositoryCorpusParity_013|TestUpstreamRepositoryCorpusParity_014|TestUpstreamRepositoryCorpusParity_015)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1"
+        }
+      },
+      "failing_output": null
+    },
+    "members_file": "family-members.txt#R10",
+    "member_count": 16,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [],
+    "witness_kills": [],
+    "vacuous_subcases": [],
+    "cannot_judge_reason": "These rows run Go cohere and Prettier, not the Adamic port. Mutating either external oracle is prohibited; no production mutant was judged for these rows."
+  },
+  {
+    "test": "TestProduct_JSONUpstreamOracle",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "file": "stage1/cohere/json/upstream_parity_split_test.go",
+    "seconds": 3.162,
+    "oracle": "Build-exit and nonempty product-directory checks only; does not verify the expected oracle executable exists.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJSONPortShardUnion",
+      "TestJSONHashShardsStayStable",
+      "TestPortMatchesGoCohereUnion",
+      "TestUpstreamRepositoryCorpusParityUnion",
+      "TestUpstreamRepositoryCorpusParity_Setup",
+      "TestUpstreamRepositoryCorpusParity",
+      "TestProduct_JSONUpstreamOracle"
+    ],
+    "evidence": {
+      "command": {
+        "id": "S5",
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./stage1/cohere/json/",
+          "-run",
+          "^(TestJSONPortShardUnion|TestJSONHashShardsStayStable|TestPortMatchesGoCohereUnion|TestUpstreamRepositoryCorpusParityUnion|TestUpstreamRepositoryCorpusParity_Setup|TestUpstreamRepositoryCorpusParity|TestProduct_JSONUpstreamOracle)$"
+        ],
+        "env": {
+          "ADAMIC_JSON_PRETTIER": "/tmp/u104/prettier",
+          "ADAMIC_JSON_BENCH": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/u104/cache/S5"
+        },
+        "wall_seconds": 15.060643597998933,
+        "exit": 0
+      },
+      "failing_output": null,
+      "passing_output": "S5: --- PASS: TestProduct_JSONUpstreamOracle; expected oracle absent, missing-oracle present (S5-artifact-witness.txt)."
+    },
+    "members_file": "family-members.txt#R11",
+    "member_count": 1,
+    "timing_runs": 3,
+    "timing_scope": "entire row",
+    "bounded_seconds": null,
+    "construction_kills": [],
+    "witness_kills": [],
+    "vacuous_subcases": []
+  }
+]

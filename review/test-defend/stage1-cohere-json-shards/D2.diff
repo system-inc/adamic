@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/doc.ts
++++ b/stage1/cohere/json/doc.ts
+@@ -147,7 +147,7 @@
+             else if(node.kind === 'fill') {
+                 const index = command.offset;
+                 const first = node.parts[index] ?? panic('missing fill part');
+-                let flat = this.fits([{ doc: first, indent: 0, flat: true, offset: 0 }], [], 80 - column, true);
++                let flat = this.fits([{ doc: first, indent: 0, flat: true, offset: 0 }], [], 50 - column, true);
+                 if(index + 1 < node.parts.length) {
+                     const whitespace = node.parts[index + 1] ?? panic('missing fill space');
+                     let spaceFlat = flat;

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/json/doc.ts",
+    "old": "remainingWidth -= node.width;",
+    "new": "remainingWidth -= stringWidth(node.text);",
+    "occurrence": "first, text branch only",
+    "operator": "drop cached-width fast path",
+    "purpose": "Preserve answers while repeating width computation in fits.",
+    "origin_line": 79
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/json/doc.ts",
+    "old": "[], 80 - column, true);",
+    "new": "[], 50 - column, true);",
+    "operator": "change constant",
+    "purpose": "Alter numeric fill budget for long numeric generated boundary inputs.",
+    "origin_line": 150
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/json/formatter.ts",
+    "old": "negative ? '-' : ''",
+    "new": "negative ? '+' : ''",
+    "operator": "change constant",
+    "purpose": "Alter negative exponent normalization present in generated scalar numbers but absent from fixed small driver cases.",
+    "origin_line": 33
+  }
+]

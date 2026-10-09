@@ -1,0 +1,77 @@
+[
+  {
+    "test": "TestPortMatchesGoCohere agreement family",
+    "package": "stage1/cohere/json",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPortMatchesGoCohere benchmark family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/json/doc.ts:79",
+        "change": "Preserve answers while repeating width computation in fits.",
+        "rows_failed": [
+          "TestCachedWidthMutantIsCaught"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/json/doc.ts:150",
+        "change": "Alter numeric fill budget for long numeric generated boundary inputs.",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/json/formatter.ts:33",
+        "change": "Alter negative exponent normalization present in generated scalar numbers but absent from fixed small driver cases.",
+        "rows_failed": [
+          "TestPortMatchesGoCohere_077",
+          "TestPortMatchesGoCohere_0254"
+        ]
+      }
+    ],
+    "bounded": true,
+    "evidence": "ADAMIC_JSON_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/json-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run <exact matrix-selection.txt selector>; port_test.go:357: TestPortMatchesGoCohere_0254 Node case 2 generated/9/probe.json byte 30: got 1e+3; Go 1e-3. Also caught by TestPortMatchesGoCohere_077, port_matches_prepared_split_test.go:525.",
+    "matrix_rows": [
+      "TestPortMatchesGoCohere_0254",
+      "TestPortMatchesGoCohere_0587",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_0648",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_001",
+      "TestPortMatchesGoCohere_032",
+      "TestPortMatchesGoCohere_063",
+      "TestPortMatchesGoCohere_067",
+      "TestPortMatchesGoCohere_074",
+      "TestPortMatchesGoCohere_077",
+      "TestPortMatchesGoCohere_092",
+      "TestPortMatchesGoCohere_094",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver",
+      "TestJSONPortShardUnion",
+      "TestJSONPortShardDisagreement",
+      "TestCachedWidthMutantIsCaught"
+    ],
+    "current_catcher": "TestPortMatchesGoCohere prepared agreement family (three-digit wrappers)"
+  },
+  {
+    "test": "TestPortMatchesGoCohere benchmark family",
+    "package": "stage1/cohere/json",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPortMatchesGoCohere agreement family"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "bounded": true,
+    "evidence": "Fresh go test -list . ./stage1/cohere/json/: 4278 current tests, all 6144 former benchmark wrappers vanished. Their rounds now execute inside agreement wrappers. No independent benchmark-family execution or failure can be observed at this commit."
+  }
+]

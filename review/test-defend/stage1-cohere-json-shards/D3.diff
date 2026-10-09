@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -30,7 +30,7 @@
+             while(tail.length > 1 && tail.startsWith('0') && tail.charCodeAt(1) >= 48 && tail.charCodeAt(1) <= 57) {
+                 tail = tail.slice(1);
+             }
+-            value = value.slice(0, exponent) + (tail === '0' ? '' : `e${negative ? '-' : ''}${tail}`);
++            value = value.slice(0, exponent) + (tail === '0' ? '' : `e${negative ? '+' : ''}${tail}`);
+         }
+     }
+     if(value.startsWith('.')) {

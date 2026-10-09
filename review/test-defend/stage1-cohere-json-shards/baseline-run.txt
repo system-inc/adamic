@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/json/",
+    "-run",
+    "."
+  ],
+  "exit": 1,
+  "wall": 92.53720325799804,
+  "env": {
+    "ADAMIC_JSON_PRETTIER": "/tmp/json-defend/prettier",
+    "ADAMIC_JSON_BENCH": "1"
+  }
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/doc.ts
++++ b/stage1/cohere/json/doc.ts
+@@ -76,7 +76,7 @@
+                 continue;
+             }
+             if(node.kind === 'text') {
+-                remainingWidth -= node.width;
++                remainingWidth -= stringWidth(node.text);
+             }
+             else if(node.kind === 'line') {
+                 if(!command.flat || node.broken) {

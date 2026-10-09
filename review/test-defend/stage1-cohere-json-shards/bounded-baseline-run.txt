@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/json/",
+    "-run",
+    "^(TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_001|TestPortMatchesGoCohere_032|TestPortMatchesGoCohere_063|TestPortMatchesGoCohere_067|TestPortMatchesGoCohere_074|TestPortMatchesGoCohere_077|TestPortMatchesGoCohere_092|TestPortMatchesGoCohere_094|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestCachedWidthMutantIsCaught)$"
+  ],
+  "exit": 0,
+  "wall": 73.97909385799721
+}

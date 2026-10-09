@@ -1,0 +1,308 @@
+{
+  "note": "Conservative static transitive closure for the port; conditional paths depend on inputs. No dynamic per-method coverage claim. M1, M2, M3 and P1 provide direct reach evidence for Documents.print, numberText, stringifyName and format.",
+  "port_functions": {
+    "main.ts": [
+      {
+        "line": 4,
+        "class": null,
+        "declaration": "export function escaped(text: string): string {"
+      },
+      {
+        "line": 20,
+        "class": null,
+        "declaration": "function unescaped(text: string): string {"
+      }
+    ],
+    "parser.ts": [
+      {
+        "line": 17,
+        "class": null,
+        "declaration": "export function quoted(text: string): string {"
+      },
+      {
+        "line": 46,
+        "class": null,
+        "declaration": "function whitespace(code: number): boolean {"
+      },
+      {
+        "line": 61,
+        "class": null,
+        "declaration": "function digit(code: number): number {"
+      },
+      {
+        "line": 70,
+        "class": null,
+        "declaration": "function inRanges(code: number, ranges: readonly (readonly number[])[]): boolean {"
+      },
+      {
+        "line": 81,
+        "class": null,
+        "declaration": "function nameStart(code: number): boolean {"
+      },
+      {
+        "line": 90,
+        "class": null,
+        "declaration": "export function numericValue(raw: string): number {"
+      },
+      {
+        "line": 103,
+        "class": "Reader",
+        "declaration": "constructor(text: string) {"
+      },
+      {
+        "line": 106,
+        "class": "Reader",
+        "declaration": "get(index: number): JsonNodeInterface {"
+      },
+      {
+        "line": 109,
+        "class": "Reader",
+        "declaration": "add(kind: string, start: number, raw: string, children: number[]): number {"
+      },
+      {
+        "line": 114,
+        "class": "Reader",
+        "declaration": "message(detail: string): string {"
+      },
+      {
+        "line": 117,
+        "class": "Reader",
+        "declaration": "skip(): void {"
+      },
+      {
+        "line": 157,
+        "class": "Reader",
+        "declaration": "peek(): number {"
+      },
+      {
+        "line": 161,
+        "class": "Reader",
+        "declaration": "expect(char: string): void {"
+      },
+      {
+        "line": 167,
+        "class": "Reader",
+        "declaration": "name(): string {"
+      },
+      {
+        "line": 186,
+        "class": "Reader",
+        "declaration": "unexpected(): string {"
+      },
+      {
+        "line": 189,
+        "class": "Reader",
+        "declaration": "number(): number {"
+      },
+      {
+        "line": 240,
+        "class": "Reader",
+        "declaration": "string(): number {"
+      },
+      {
+        "line": 303,
+        "class": "Reader",
+        "declaration": "value(key: boolean): number {"
+      },
+      {
+        "line": 378,
+        "class": "Reader",
+        "declaration": "parse(stringify: boolean): number {"
+      }
+    ],
+    "formatter.ts": [
+      {
+        "line": 5,
+        "class": null,
+        "declaration": "export function stringifyName(name: string): boolean {"
+      },
+      {
+        "line": 10,
+        "class": null,
+        "declaration": "function numberText(raw: string): string {"
+      },
+      {
+        "line": 53,
+        "class": null,
+        "declaration": "function stringText(raw: string): string {"
+      },
+      {
+        "line": 86,
+        "class": null,
+        "declaration": "function unicodeEnd(text: string, start: number): number {"
+      },
+      {
+        "line": 89,
+        "class": null,
+        "declaration": "function unicodeCode(text: string, start: number, end: number): number {"
+      },
+      {
+        "line": 95,
+        "class": null,
+        "declaration": "function cookedTemplate(raw: string): string {"
+      },
+      {
+        "line": 167,
+        "class": null,
+        "declaration": "function jsonQuote(text: string): string {"
+      },
+      {
+        "line": 210,
+        "class": "Printer",
+        "declaration": "constructor(reader: Reader, stringify: boolean) {"
+      },
+      {
+        "line": 223,
+        "class": "Printer",
+        "declaration": "attach(root: number): void {"
+      },
+      {
+        "line": 277,
+        "class": "Printer",
+        "declaration": "blankAfter(end: number): boolean {"
+      },
+      {
+        "line": 294,
+        "class": "Printer",
+        "declaration": "print(index: number, key: boolean): number {"
+      },
+      {
+        "line": 474,
+        "class": null,
+        "declaration": "export function format(name: string, text: string): string {"
+      }
+    ],
+    "doc.ts": [
+      {
+        "line": 20,
+        "class": "Documents",
+        "declaration": "add(kind: string, text: string, parts: number[], broken: boolean): number {"
+      },
+      {
+        "line": 33,
+        "class": "Documents",
+        "declaration": "text(text: string): number {"
+      },
+      {
+        "line": 36,
+        "class": "Documents",
+        "declaration": "concat(parts: number[]): number {"
+      },
+      {
+        "line": 39,
+        "class": "Documents",
+        "declaration": "line(soft: boolean, hard: boolean): number {"
+      },
+      {
+        "line": 42,
+        "class": "Documents",
+        "declaration": "indent(child: number): number {"
+      },
+      {
+        "line": 45,
+        "class": "Documents",
+        "declaration": "group(child: number, broken: boolean): number {"
+      },
+      {
+        "line": 48,
+        "class": "Documents",
+        "declaration": "fill(parts: number[]): number {"
+      },
+      {
+        "line": 51,
+        "class": "Documents",
+        "declaration": "get(index: number): DocInterface {"
+      },
+      {
+        "line": 55,
+        "class": "Documents",
+        "declaration": "fits("
+      },
+      {
+        "line": 99,
+        "class": "Documents",
+        "declaration": "print(root: number): string {"
+      }
+    ],
+    "width.ts": [
+      {
+        "line": 4,
+        "class": null,
+        "declaration": "function mapped(code: number): number {"
+      },
+      {
+        "line": 8,
+        "class": null,
+        "declaration": "function match(program: readonly (readonly number[])[], instruction: number, text: string, position: number): number {"
+      },
+      {
+        "line": 53,
+        "class": null,
+        "declaration": "function wide(code: number): boolean {"
+      },
+      {
+        "line": 69,
+        "class": null,
+        "declaration": "export function stringWidth(text: string): number {"
+      }
+    ]
+  },
+  "construction_entries": {
+    "R1": [
+      "jsonPortShards",
+      "jsonPortUnion",
+      "jsonPortSelection"
+    ],
+    "R2": [
+      "jsonHashShards",
+      "jsonCaseShard",
+      "jsonPortUnion",
+      "protocol",
+      "escape",
+      "comparisonError"
+    ],
+    "R3": [
+      "jsonHashShards",
+      "jsonCaseShard",
+      "jsonPortUnion"
+    ],
+    "R6": [
+      "jsonTopCorpus",
+      "jsonHashShards",
+      "jsonPortUnion",
+      "jsonUpstreamBlockCheck",
+      "sameAnswer"
+    ],
+    "R7": [
+      "jsonHashShards",
+      "jsonCaseShard",
+      "jsonPortUnion",
+      "jsonUpstreamBlockCheck"
+    ],
+    "R8": [
+      "upstreamParityPrepare",
+      "upstreamParityPrepareProducts",
+      "upstreamParityOrdinal",
+      "upstreamParityUnion",
+      "upstreamParityOracleProduct"
+    ],
+    "R9": [
+      "sampledCorpusCases",
+      "upstreamParityOrdinal",
+      "upstreamParityUnion",
+      "upstreamParityBlock",
+      "sameAnswer",
+      "upstreamParityBlockCheck"
+    ],
+    "R10": [
+      "upstreamParityRun",
+      "upstreamParityPrepare",
+      "upstreamParityBlock",
+      "sameAnswer",
+      "upstreamParityBlockCheck"
+    ],
+    "R11": [
+      "upstreamParityOracleProduct"
+    ]
+  }
+}

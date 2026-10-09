@@ -1,0 +1,265 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/json/doc.ts",
+    "old": "remainingWidth -= node.width;",
+    "new": "remainingWidth -= stringWidth(node.text);",
+    "occurrence": "first, text branch only",
+    "operator": "drop cached-width fast path",
+    "purpose": "Preserve answers while repeating width computation in fits.",
+    "origin_line": 79,
+    "matrix": {
+      "label": "D1",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/json/",
+        "-run",
+        "^(TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_001|TestPortMatchesGoCohere_032|TestPortMatchesGoCohere_063|TestPortMatchesGoCohere_067|TestPortMatchesGoCohere_074|TestPortMatchesGoCohere_077|TestPortMatchesGoCohere_092|TestPortMatchesGoCohere_094|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestCachedWidthMutantIsCaught)$"
+      ],
+      "exit": 1,
+      "wall": 72.32618707000074,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D1",
+        "ADAMIC_JSON_BENCH": "1"
+      }
+    },
+    "witness": {
+      "label": "cost-D1",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/json/main.ts",
+        "--cases",
+        "/tmp/json-defend/cost-cases.txt"
+      ],
+      "exit": 0,
+      "wall": 0.1542208050013869,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D1",
+        "ADAMIC_JSON_BENCH": "1",
+        "NODE_V8_COVERAGE": "/tmp/json-defend/cost/D1"
+      }
+    },
+    "rows_failed": [
+      "TestCachedWidthMutantIsCaught"
+    ],
+    "rows_passed": [
+      "TestJSONPortShardDisagreement",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_092",
+      "TestJSONPortShardUnion/missing",
+      "TestJSONPortShardUnion/repeated",
+      "TestJSONPortShardUnion/out_of_bounds",
+      "TestJSONPortShardUnion",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_094",
+      "TestPortMatchesGoCohere_0648",
+      "TestPortMatchesGoCohere_067",
+      "TestPortMatchesGoCohere_0587",
+      "TestPortMatchesGoCohere_032",
+      "TestPortMatchesGoCohere_063",
+      "TestPortMatchesGoCohere_0254",
+      "TestPortMatchesGoCohere_074",
+      "TestPortMatchesGoCohere_077",
+      "TestPortMatchesGoCohere_001"
+    ],
+    "rows_skipped": [],
+    "failing_output": [
+      "performance_test.go:35: Go cohere: === RUN   TestAdamicJSONAudit",
+      "adamic_json_audit_test.go:44: 1 texts in 0.000s",
+      "performance_test.go:58: native release failed to catch zero cached width"
+    ],
+    "witness_same": true
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/json/doc.ts",
+    "old": "[], 80 - column, true);",
+    "new": "[], 50 - column, true);",
+    "operator": "change constant",
+    "purpose": "Alter numeric fill budget for long numeric generated boundary inputs.",
+    "origin_line": 150,
+    "matrix": {
+      "label": "D2",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/json/",
+        "-run",
+        "^(TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_001|TestPortMatchesGoCohere_032|TestPortMatchesGoCohere_063|TestPortMatchesGoCohere_067|TestPortMatchesGoCohere_074|TestPortMatchesGoCohere_077|TestPortMatchesGoCohere_092|TestPortMatchesGoCohere_094|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestCachedWidthMutantIsCaught)$"
+      ],
+      "exit": 0,
+      "wall": 74.66840773700096,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D2",
+        "ADAMIC_JSON_BENCH": "1"
+      }
+    },
+    "witness": {
+      "label": "cost-D2",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/json/main.ts",
+        "--cases",
+        "/tmp/json-defend/cost-cases.txt"
+      ],
+      "exit": 0,
+      "wall": 0.12678611899900716,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D2",
+        "ADAMIC_JSON_BENCH": "1",
+        "NODE_V8_COVERAGE": "/tmp/json-defend/cost/D2"
+      }
+    },
+    "rows_failed": [],
+    "rows_passed": [
+      "TestCachedWidthMutantIsCaught",
+      "TestJSONPortShardUnion/missing",
+      "TestJSONPortShardUnion/repeated",
+      "TestJSONPortShardUnion/out_of_bounds",
+      "TestJSONPortShardUnion",
+      "TestJSONPortShardDisagreement",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_092",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_067",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_0648",
+      "TestPortMatchesGoCohere_0254",
+      "TestPortMatchesGoCohere_0587",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver",
+      "TestPortMatchesGoCohere_074",
+      "TestPortMatchesGoCohere_032",
+      "TestPortMatchesGoCohere_077",
+      "TestPortMatchesGoCohere_094",
+      "TestPortMatchesGoCohere_063",
+      "TestPortMatchesGoCohere_001"
+    ],
+    "rows_skipped": [],
+    "failing_output": [],
+    "witness_same": true
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/json/formatter.ts",
+    "old": "negative ? '-' : ''",
+    "new": "negative ? '+' : ''",
+    "operator": "change constant",
+    "purpose": "Alter negative exponent normalization present in generated scalar numbers but absent from fixed small driver cases.",
+    "origin_line": 33,
+    "matrix": {
+      "label": "D3",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/json/",
+        "-run",
+        "^(TestPortMatchesGoCohere_0254|TestPortMatchesGoCohere_0587|TestPortMatchesGoCohere_0631|TestPortMatchesGoCohere_0648|TestPortMatchesGoCohere_0867|TestPortMatchesGoCohere_0868|TestPortMatchesGoCohere_1449|TestPortMatchesGoCohere_1659|TestPortMatchesGoCohere_1665|TestPortMatchesGoCohere_001|TestPortMatchesGoCohere_032|TestPortMatchesGoCohere_063|TestPortMatchesGoCohere_067|TestPortMatchesGoCohere_074|TestPortMatchesGoCohere_077|TestPortMatchesGoCohere_092|TestPortMatchesGoCohere_094|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestJSONPortShardUnion|TestJSONPortShardDisagreement|TestCachedWidthMutantIsCaught)$"
+      ],
+      "exit": 1,
+      "wall": 70.28880148099415,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D3",
+        "ADAMIC_JSON_BENCH": "1"
+      }
+    },
+    "witness": {
+      "label": "cost-D3",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/json/main.ts",
+        "--cases",
+        "/tmp/json-defend/cost-cases.txt"
+      ],
+      "exit": 0,
+      "wall": 0.12548090199561557,
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/json-defend/cache/D3",
+        "ADAMIC_JSON_BENCH": "1",
+        "NODE_V8_COVERAGE": "/tmp/json-defend/cost/D3"
+      }
+    },
+    "rows_failed": [
+      "TestPortMatchesGoCohere_077",
+      "TestPortMatchesGoCohere_0254"
+    ],
+    "rows_passed": [
+      "TestCachedWidthMutantIsCaught",
+      "TestJSONPortShardDisagreement",
+      "TestPortMatchesGoCohere_0867",
+      "TestPortMatchesGoCohere_067",
+      "TestPortMatchesGoCohere_1665",
+      "TestPortMatchesGoCohere_1659",
+      "TestPortMatchesGoCohere_1449",
+      "TestPortMatchesGoCohere_092",
+      "TestPortMatchesGoCohere_0631",
+      "TestPortMatchesGoCohere_0648",
+      "TestJSONPortShardUnion/missing",
+      "TestJSONPortShardUnion/repeated",
+      "TestJSONPortShardUnion/out_of_bounds",
+      "TestJSONPortShardUnion",
+      "TestPortMatchesGoCohere_0868",
+      "TestPortMatchesGoCohere_074",
+      "TestPortMatchesGoCohere_0587",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver",
+      "TestPortMatchesGoCohere_032",
+      "TestPortMatchesGoCohere_063",
+      "TestPortMatchesGoCohere_094",
+      "TestPortMatchesGoCohere_001"
+    ],
+    "rows_skipped": [],
+    "failing_output": [
+      "port_matches_prepared_split_test.go:525: Node case 9 generated/9/probe.json byte 30: got \"ok\\t[0, -0, 1, -1, 1.5, 1e3, 1e+3, 1e309, 1e+400, 9007199254740993]\\\\n\"; Go \"ok\\t[0, -0, 1, -1, 1.5, 1e3, 1e-3, 1e309, 1e-400, 9007199254740993]\\\\n\"",
+      "port_test.go:242: shard union: 3892 cases exactly once across 2048 shards",
+      "port_test.go:342: Go 0.067s",
+      "port_test.go:342: Node 0.362s",
+      "port_test.go:342: release 0.078s",
+      "port_test.go:342: ASan/UBSan 0.332s",
+      "port_test.go:342: JavaScript backend 0.236s",
+      "port_test.go:342: LeakSanitizer 0.474s",
+      "port_test.go:357: TestPortMatchesGoCohere_0254 Node case 2 generated/9/probe.json byte 30: got \"ok\\t[0, -0, 1, -1, 1.5, 1e3, 1e+3, 1e309, 1e+400, 9007199254740993]\\\\n\"; Go \"ok\\t[0, -0, 1, -1, 1.5, 1e3, 1e-3, 1e309, 1e-400, 9007199254740993]\\\\n\""
+    ],
+    "witness_same": false
+  }
+]

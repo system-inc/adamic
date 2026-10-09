@@ -1,0 +1,66 @@
+{
+  "baseline": [
+    {
+      "url": "file:///workspace/adamic/stage1/cohere/json/width.ts",
+      "function": {
+        "functionName": "stringWidth",
+        "ranges": [
+          {
+            "startOffset": 2214,
+            "endOffset": 3196,
+            "count": 51
+          },
+          {
+            "startOffset": 2317,
+            "endOffset": 2464,
+            "count": 64
+          },
+          {
+            "startOffset": 2401,
+            "endOffset": 2458,
+            "count": 0
+          },
+          {
+            "startOffset": 2515,
+            "endOffset": 3195,
+            "count": 0
+          }
+        ],
+        "isBlockCoverage": true
+      }
+    }
+  ],
+  "D1": [
+    {
+      "url": "file:///workspace/adamic/stage1/cohere/json/width.ts",
+      "function": {
+        "functionName": "stringWidth",
+        "ranges": [
+          {
+            "startOffset": 2214,
+            "endOffset": 3196,
+            "count": 134
+          },
+          {
+            "startOffset": 2317,
+            "endOffset": 2464,
+            "count": 256
+          },
+          {
+            "startOffset": 2401,
+            "endOffset": 2458,
+            "count": 0
+          },
+          {
+            "startOffset": 2515,
+            "endOffset": 3195,
+            "count": 0
+          }
+        ],
+        "isBlockCoverage": true
+      }
+    }
+  ],
+  "stdout_identical": true,
+  "interpretation": "D1 increases stringWidth invocation count 51 to 134 on the identical generated numeric input without changing bytes. It does not establish a stable wall-time regression."
+}

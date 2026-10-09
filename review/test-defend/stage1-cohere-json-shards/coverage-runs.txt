@@ -1,0 +1,74 @@
+[
+  {
+    "label": "agreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-json-shards/agreement.cover",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_0254$"
+    ],
+    "exit": 0,
+    "wall": 10.43400250999548,
+    "env": {
+      "ADAMIC_JSON_BENCH": "0",
+      "NODE_V8_COVERAGE": "/tmp/json-defend/v8/agreement"
+    }
+  },
+  {
+    "label": "prepared",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-json-shards/prepared.cover",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_092$"
+    ],
+    "exit": 0,
+    "wall": 6.316672674998699,
+    "env": {
+      "ADAMIC_JSON_BENCH": "0",
+      "NODE_V8_COVERAGE": "/tmp/json-defend/v8/prepared"
+    }
+  },
+  {
+    "label": "timed-agreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-json-shards/timed-agreement.cover",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_0254$"
+    ],
+    "exit": 0,
+    "wall": 6.577417438005796,
+    "env": {
+      "ADAMIC_JSON_BENCH": "1",
+      "NODE_V8_COVERAGE": "/tmp/json-defend/v8/timed-agreement"
+    }
+  }
+]

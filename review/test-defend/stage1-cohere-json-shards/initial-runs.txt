@@ -1,0 +1,23 @@
+[
+  {
+    "name": "npm",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0,
+    "wall": 0.4896304829962901
+  },
+  {
+    "name": "list",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/json/"
+    ],
+    "exit": 0,
+    "wall": 6.932115982999676
+  }
+]

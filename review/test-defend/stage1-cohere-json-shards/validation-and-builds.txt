@@ -1,0 +1,42 @@
+{
+  "diffs": [
+    {
+      "id": "D1",
+      "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+      "apply_check_exit": 0,
+      "compiled": "Actual unchanged release and sanitized Native.Build products completed, recorded in D1.log."
+    },
+    {
+      "id": "D2",
+      "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+      "apply_check_exit": 0,
+      "compiled": "Actual unchanged release and sanitized Native.Build products completed, recorded in D2.log."
+    },
+    {
+      "id": "D3",
+      "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+      "apply_check_exit": 0,
+      "compiled": "Actual unchanged release and sanitized Native.Build products completed, recorded in D3.log."
+    }
+  ],
+  "native_build_log_lines": {
+    "D1": [
+      "port_matches_prepared_split_test.go:599: build json_split_Go_oracle dab7471a6411 miss 1.99",
+      "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 0ce72f0ac6df miss 2.07",
+      "port_matches_prepared_split_test.go:621: build json_native_release_port cd60eebaa89d miss 4.82",
+      "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port 16ab1f33c19e miss 7.09"
+    ],
+    "D2": [
+      "port_matches_prepared_split_test.go:599: build json_split_Go_oracle dab7471a6411 miss 1.94",
+      "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 6a0c0be444ee miss 2.18",
+      "port_matches_prepared_split_test.go:621: build json_native_release_port a39871d45eba miss 4.74",
+      "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port 27fcfb9691af miss 8.21"
+    ],
+    "D3": [
+      "port_matches_prepared_split_test.go:599: build json_split_Go_oracle dab7471a6411 miss 1.87",
+      "port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources f926a7cce201 miss 2.04",
+      "port_matches_prepared_split_test.go:621: build json_native_release_port e852e9b98c2a miss 4.81",
+      "port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port ca85bf6e19ae miss 7.55"
+    ]
+  }
+}
