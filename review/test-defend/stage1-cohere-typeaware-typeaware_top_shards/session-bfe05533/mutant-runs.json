@@ -1,0 +1,215 @@
+[
+  {
+    "id": "D1-build-asan",
+    "rows": [
+      "TestProduct_typeaware_native_asan"
+    ],
+    "states": {
+      "TestProduct_typeaware_native_asan": "pass"
+    },
+    "failed": [],
+    "exit": 0,
+    "seconds": 62.30930226300552,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_typeaware_native_asan)$"
+    ],
+    "binary_seconds": 58.516
+  },
+  {
+    "id": "D1-build-native",
+    "rows": [
+      "TestProduct_typeaware_native"
+    ],
+    "states": {
+      "TestProduct_typeaware_native": "pass"
+    },
+    "failed": [],
+    "exit": 0,
+    "seconds": 26.29106046000379,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_typeaware_native)$"
+    ],
+    "binary_seconds": 21.604
+  },
+  {
+    "id": "D1-setup",
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_Setup"
+    ],
+    "states": {
+      "TestTypeAwareAgreementAndMutants_Setup": "pass"
+    },
+    "failed": [],
+    "exit": 0,
+    "seconds": 48.55966354699922,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_Setup)$"
+    ],
+    "binary_seconds": 42.801
+  },
+  {
+    "id": "D1-matrix-0",
+    "rows": [
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_typeaware_oracle"
+    ],
+    "states": {
+      "TestProduct_typeaware_lowered": "pass",
+      "TestTypeAwareAgreementAndMutants_019": "skip",
+      "TestTypeAwareAgreementAndMutants_018": "skip",
+      "TestTypeAwareAgreementAndMutants_017": "skip",
+      "TestTypeAwareAgreementAndMutants_020": "skip",
+      "TestTypeAwareAgreementAndMutants_015": "skip",
+      "TestTypeAwareAgreementAndMutants_012": "skip",
+      "TestTypeAwareAgreementAndMutants_014": "skip",
+      "TestTypeAwareAgreementAndMutants_016": "skip",
+      "TestTypeAwareAgreementAndMutants_013": "skip",
+      "TestTypeAwareAgreementAndMutants_011": "pass",
+      "TestTypeAwareAgreementAndMutants_001": "pass",
+      "TestTypeAwareAgreementAndMutants_Setup": "pass",
+      "TestTypeAwareAgreementAndMutants_000": "fail",
+      "TestTypeAwareAgreementAndMutantsUnion": "pass",
+      "TestTypeAwareAgreementAndMutants_009": "pass",
+      "TestProduct_typeaware_native_asan": "pass",
+      "TestProduct_typeaware_oracle": "pass",
+      "TestTypeAwareAgreementAndMutants_002": "pass",
+      "TestTypeAwareAgreementAndMutants_007": "pass",
+      "TestProduct_typeaware_native": "pass",
+      "TestTypeAwareAgreementAndMutants_008": "pass",
+      "TestTypeAwareAgreementAndMutants_006": "pass",
+      "TestTypeAwareAgreementAndMutants_005": "pass",
+      "TestTypeAwareAgreementAndMutants_004": "pass"
+    },
+    "failed": [
+      "TestTypeAwareAgreementAndMutants_000"
+    ],
+    "exit": 1,
+    "seconds": 94.11499725199974,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup|TestProduct_typeaware_lowered|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_typeaware_oracle)$"
+    ],
+    "binary_seconds": 90.084
+  },
+  {
+    "id": "D1-matrix-recovery-003",
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_003"
+    ],
+    "states": {
+      "TestTypeAwareAgreementAndMutants_003": "pass"
+    },
+    "failed": [],
+    "exit": 0,
+    "seconds": 67.85577912499866,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_003)$"
+    ],
+    "binary_seconds": 62.742
+  },
+  {
+    "id": "D1-matrix-recovery-010",
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_010"
+    ],
+    "states": {
+      "TestTypeAwareAgreementAndMutants_010": "pass"
+    },
+    "failed": [],
+    "exit": 0,
+    "seconds": 41.09768892300053,
+    "cache": "/workspace/defend-typeaware-cache/D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_010)$"
+    ],
+    "binary_seconds": 32.604
+  }
+]

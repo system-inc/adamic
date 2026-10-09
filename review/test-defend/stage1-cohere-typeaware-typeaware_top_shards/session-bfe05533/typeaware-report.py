@@ -1,0 +1,49 @@
+import pathlib,json,subprocess,shutil
+R=pathlib.Path('/workspace/adamic');P=R/'review/test-defend/stage1-cohere-typeaware-typeaware_top_shards/session-bfe05533'
+def events(name):
+ es=[]
+ for l in (P/name).read_text().splitlines():
+  try:es.append(json.loads(l))
+  except:pass
+ return es
+runs=json.loads((P/'mutant-runs.json').read_text());scope=json.loads((P/'matrix-scope.json').read_text());plan=json.loads((P/'mutant-plan.json').read_text())[0];states={};lines=[]
+for run in runs:
+ if not run['id'].startswith('D1-matrix'):continue
+ states.update(run['states'])
+ for e in events(run['id']+'.log'):
+  if e.get('Test','').startswith('TestTypeAwareAgreementAndMutants_000') and any(s in e.get('Output','') for s in ['mismatch','different','!=','differ','native output']):lines.append(e.get('Output','').strip())
+failed=[n for n,a in states.items() if a=='fail'];failed_rows=['TestTypeAwareAgreementAndMutants family' if n in scope['family'] else n for n in failed];unique=set(failed_rows)=={'TestTypeAwareAgreementAndMutants family'} and len(states)==len(scope['reached_tests'])
+row=dict(test='TestTypeAwareAgreementAndMutants family',package='stage1/cohere/typeaware',prior_verdict='subsumed',subsumed_by='TestVolumeConfigGuardAndMutant family',defense='defended' if unique else 'cannot-judge',unique_mutant='D1 '+plan['file']+':'+str(plan['line']) if unique else None,attempts=[dict(mutant='D1',file_line=plan['file']+':'+str(plan['line']),change=plan['old']+' -> '+plan['new'],rows_failed=sorted(set(failed_rows)),failed_members=failed)],evidence='; '.join(lines),bounded=True,matrix_rows=scope['reached_tests'],unknown_rows=scope['unknown_tests'],members=scope['family'],command=[r['command'] for r in runs if r['id'].startswith('D1-matrix')])
+(P/'rows.json').write_text(json.dumps([row],indent=2));matrix=dict(states=states,failed=failed,failed_rows=sorted(set(failed_rows)),passed=[n for n,a in states.items() if a=='pass'],skipped=[n for n,a in states.items() if a=='skip'],runs=runs);(P/'matrix.json').write_text(json.dumps(matrix,indent=2))
+r=subprocess.run(['git','apply','--check',str(P/'D1.diff')],cwd=R,capture_output=True,text=True);assert r.returncode==0;(P/'apply-check.json').write_text(json.dumps(dict(exit=r.returncode,command='git apply --check D1.diff',output=r.stdout+r.stderr),indent=2))
+for name in ['typeaware-mutant.py','typeaware-clean-groups.py','typeaware-report.py','typeaware-recovery.py']:shutil.copy('/workspace/'+name,P/name)
+report=f'''# Typeaware family defense
+
+Starting origin/main: {(P/'starting-commit.txt').read_text().strip()}. All 22 requested family members exist: union plus numbered 000 through 020. Setup is a separate construction row, retained in the matrix. Current discovery lists 578 top-level tests. nproc: 5. Warm env.sh worked; npm ci stage3/api succeeded before baseline. No test, oracle, harness, Go cohere matcher or compiler source was mutated.
+
+CODE UNDER TEST: the Adamic .ts port entry stage1/cohere/typeaware/main.ts, its UnaryMinus class (constructor, visit, walk, run), byteOffsets, and its parser/scanner dependencies. Only main.ts is mutated. ORACLE: unchanged Go cohere no-unsafe-unary-minus finding bytes compared exactly, plus self-written coverage, panic/refusal and count assertions in other family leaves. There is no Node port executor twin here. The main and volume families are distinct entry programs sharing libraries, not two executors of one program.
+
+Prior fixed-menu unary mask and byte-offset mutations exercised libraries shared with volume_suite.ts. The difference targeted here is the main.ts entry's file-header emission. main.ts and volume_suite.ts each emit their own header; neither entry imports the other. entry-callers.txt and entry-imports.txt document this reach lead. D1 changes the file marker constant from file to unit in main.ts. This changes real generated finding output compared with the independent Go oracle, while leaving the volume entry source untouched.
+
+Coverage limitation: requested per-family Go profiles contain only mode: set. This package contains Go tests but no Go production statements. Go -coverpkg cannot instrument the .ts code executing in a separately compiled native binary. Source-line exclusivity is therefore unknown, not zero. Entry/import/caller evidence supplies the semantic reach difference. The target profiles and the subsumer coverage attempt are retained, with every narrowing explicitly logged. No Go harness coverage is represented as native-port coverage.
+
+Baseline budget: the whole package cooked at 90.158 binary seconds while running nonparallel TestInspectRequestRefusals, before the requested family ran. The cold reached slice also cooked; a warmed whole-family attempt cooked while the ignored-kind built-in mutant was still preparing. Existing unchanged setup then passed in 23.536 binary seconds. Clean baseline was established by two groups: all 26 reached tests except _010, then _010 alone. Both passed. Their raw commands and wall times are baseline-groups.json. These are timeout narrowings, not red semantic baselines.
+
+Matrix: 27 current reached or preparation tests were observed across the initial group and individual recovery runs, with their own cache ADAMIC_BUILD_CACHE_DIR=/workspace/defend-typeaware-cache/D1. These include the 22 family members, setup, three main-program products and the associated unchanged Go-oracle product. The oracle product does not execute main.ts. The initial mutant group cooked after 25 top-level results; missing _003 and separately grouped _010 were rerun alone and passed. No timeout was treated as a mutant kill. No arbitrary old-audit slice was substituted. Source restored afterward. Failed logical rows: {sorted(set(failed_rows))}. Exact leaves and all observed passed/skipped names are in matrix.json. Kills in the other 551 package rows remain unknown because the full package was cooked; uniqueness is bounded to this reached matrix. Optional compiler corpus/benchmark leaves skipped under their default opt-ins.
+
+Compile proof: D1-build-asan and D1-build-native compile the standalone diff through the port's own native production build, including the runtime clang flags and Go archive. Both passed; D1-setup also passed. Thus this is a runtime finding-byte kill, not a compiler rejection. Every build and command wall/binary duration is in mutant-runs.json. The permitted source mutant is a constant change and the standalone D1.diff applies to starting origin/main without a selector switch.
+
+The positive agreement leaf's real output comparison decides the defense. Internal planted-failure leaf preconditions do not count as unique protection of their comparisons. Count-only benchmark oracles remain weaker than full finding-byte equality, and passing built-in wrong-node checks under an unrelated output defect is not evidence of their independent strength.
+
+Brief feedback and costs:
+- A literal family name is not a runnable Test name; the current 22 members and separate Setup had to be resolved from go test -list and bodies.
+- The audit header gave no failing line. The fetched report/results contained the prior failure and bounded scope.
+- Requiring Go source coverage on a .ts native port is not implementable with -coverpkg. Empty profiles are evidence of this measurement limit, not proof of shared execution lines.
+- The whole package has 578 tests and blocks first on cold nonparallel inspect preparation. The requested family itself includes expensive built-in native mutant builds; splitting the package alone was insufficient, so the family had to be divided too.
+- Warm tools are not warm products. The entire source tree and test files enter some product keys, and compiler products changed since the audit. Each production mutant needs its separate cache even when all dependencies are unchanged.
+- /tmp had roughly 302 MB free. Task-owned TMPDIR and caches were put under /workspace from the start, avoiding the audit's disk-full invalid runs. Task-owned orphan native subprocess groups were checked/stopped after timeout; other processes were not touched.
+- Twins instruction adds a verdict absent from the final JSON enum. No such twin occurs in this selected row, so it does not affect this result.
+
+No deletion recommendation. Production restored; no main push or PR. Full-package uniqueness, opt-in compiler/benchmark runs, repo-wide uniqueness and .ts source-level dynamic coverage remain unmeasured.
+'''
+(P/'REPORT.md').write_text(report);print(json.dumps([row],indent=2));print('passed',len(matrix['passed']),'skipped',len(matrix['skipped']))

@@ -1,0 +1,12 @@
+{
+  "code_under_test": "stage1/cohere/typeaware/main.ts and imported .ts port libraries",
+  "dynamic_exclusive_lines": null,
+  "reason": "Go -coverpkg cannot instrument a separately compiled .ts native port; all emitted profiles contain only mode: set.",
+  "target_profiles": [
+    "baseline-agreement.cover",
+    "baseline-kind-witness.cover"
+  ],
+  "subsumer_attempt": "volume-coverage.log: cooked at 90.145 test-binary seconds",
+  "subsumer_narrowing": "volume-union-coverage.log checks union construction only, not every family member",
+  "semantic_difference": "main.ts and volume_suite.ts own distinct file-header statements; volume_suite.ts does not import main.ts"
+}

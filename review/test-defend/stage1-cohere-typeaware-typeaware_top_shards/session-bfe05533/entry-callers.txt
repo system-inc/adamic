@@ -1,0 +1,20 @@
+stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go:319:		entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+stage1/cohere/typeaware/build_products_test.go:114:	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"), "native")
+stage1/cohere/typeaware/build_products_test.go:118:	typeAwareNativeProduct(typeAwareProductHarness(t), "native", "main.ts", false)
+stage1/cohere/typeaware/build_products_test.go:122:	typeAwareNativeProduct(typeAwareProductHarness(t), "native-asan", "main.ts", true)
+stage1/cohere/typeaware/build_products_test.go:153:	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), "volume")
+stage1/cohere/typeaware/build_products_test.go:157:	typeAwareNativeProduct(typeAwareProductHarness(t), "volume", "volume_suite.ts", false)
+stage1/cohere/typeaware/volume_type_symbol_test.go:198:	inputs, build, err := typeSymbolNativeSpec(h.repository, stage0, "volume-type-symbol-native", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, false)
+stage1/cohere/typeaware/split_volume_products_test.go:16:	typeAwareNativeProduct(typeAwareProductHarness(t), "volume-asan", "volume_suite.ts", true)
+stage1/cohere/typeaware/volume_profile_Controls_test.go:79:		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build ./cmd/adamic", "archive=" + archiveName, "go build -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
+stage1/cohere/typeaware/volume_profile_Controls_test.go:186:		program, err := load.Load([]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")})
+stage1/cohere/typeaware/volume_profile_Mutants_test.go:160:	flags := append([]string{"build volume_suite.ts --tsgo checker.a", "sanitize=false", "repository=" + repository, fmt.Sprintf("mutated-source=%x", digest.Sum(nil))}, products...)
+stage1/cohere/typeaware/volume_profile_Mutants_test.go:232:	h.must(name, volumeProfileMutantCommand(h.t, stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive))
+stage1/cohere/typeaware/six_shards_test.go:242:	repositoryIDs := sixIDs("repository", []string{filepath.Join(repository, "fixtures/main.ts"), filepath.Join(repository, "stage1/main.ts")})
+stage1/cohere/typeaware/six_shards_test.go:243:	if err := sixUnion([]string{"repository/fixtures/main.ts", "repository/stage1/main.ts"}, []sixShard{{name: "repository", ids: repositoryIDs}}); err != nil {
+stage1/cohere/typeaware/volume_agreement_shards_test.go:160:	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:73:		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build -buildvcs=false ./cmd/adamic", "archive=" + archiveName, "go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
+stage1/cohere/typeaware/typeaware_test.go:311:	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
+stage1/cohere/typeaware/typeaware_test.go:451:	mutantEntry := h.write("wrong-main.ts", mainSource)
+stage1/cohere/typeaware/suite_test.go:122:	return h.build(stage0, name, h.write(name+"-main.ts", main), normal, false)
+stage1/cohere/typeaware/profile_test.go:42:	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)

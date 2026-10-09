@@ -1,0 +1,106 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "file": "stage1/cohere/typeaware/unary_minus.ts",
+    "line": 8,
+    "old": "const numericOrExempt = 1 | 262144 | 64 | 2048 | 65536 | 128 | 4096;",
+    "new": "const numericOrExempt = 1 | 262144 | 0 | 2048 | 65536 | 128 | 4096;"
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "file": "stage1/cohere/typeaware/unary_minus.ts",
+    "line": 19,
+    "old": "bytes += code < 128 ? 1 :",
+    "new": "bytes += code < 128 ? 2 :"
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "file": "stage1/cohere/typeaware/frames.ts",
+    "line": 15,
+    "old": "value = value * 10 + digit;",
+    "new": "value = value * 11 + digit;"
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "file": "stage1/cohere/typeaware/volume_suite.ts",
+    "line": 41,
+    "old": "if(!strictThis) {",
+    "new": "if(strictThis) {"
+  },
+  {
+    "id": "W1",
+    "kind": "witness",
+    "file": "stage1/cohere/typeaware/six_shards_test.go",
+    "line": 177,
+    "old": "if !bytes.Equal(want, got) {",
+    "new": "if false && !bytes.Equal(want, got) {"
+  },
+  {
+    "id": "W2",
+    "kind": "witness",
+    "file": "stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go",
+    "line": 353,
+    "old": "func volumeGuardFindingBytesEqual(got, want []byte) bool { return bytes.Equal(got, want) }",
+    "new": "func volumeGuardFindingBytesEqual(got, want []byte) bool { return true }"
+  },
+  {
+    "id": "S1",
+    "kind": "setup",
+    "file": "stage1/cohere/typeaware/typeaware_top_shards_test.go",
+    "line": 97,
+    "old": "if i == 1 && os.Getenv(\"ADAMIC_TYPEAWARE_TOP_PLANTED\") == \"1\" {",
+    "new": "if i == 1 {"
+  },
+  {
+    "id": "S2",
+    "kind": "setup",
+    "file": "stage1/cohere/typeaware/typeaware_test.go",
+    "line": 285,
+    "old": "const testTypeAwareAgreementAndMutantsShards = 21",
+    "new": "const testTypeAwareAgreementAndMutantsShards = 22"
+  },
+  {
+    "id": "S3",
+    "kind": "setup",
+    "file": "stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go",
+    "line": 165,
+    "old": "\tbuckets[0] = append(buckets[0], volumeGuardCase{\"strict-this-guard\", \"\"})\n",
+    "new": ""
+  },
+  {
+    "id": "S4",
+    "kind": "setup",
+    "file": "stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go",
+    "line": 329,
+    "old": "repository: h.repository, oracle: volumeGuardProduct(h, \"oracle\")",
+    "new": "repository: \"\", oracle: volumeGuardProduct(h, \"oracle\")"
+  },
+  {
+    "id": "S5",
+    "kind": "setup",
+    "file": "stage1/cohere/typeaware/volume_config_guard_self_prepare_test.go",
+    "line": 98,
+    "old": "return filepath.Join(directory, \"checker.a\")",
+    "new": "return filepath.Join(directory, \"missing.a\")"
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "file": "stage1/cohere/typeaware/main.ts",
+    "line": 7,
+    "old": "const args = programArguments();\nconst config = args[0] ?? panic('usage: main.ts tsconfig manifest [--count]');\nconst manifest = readTextFile(args[1] ?? panic('missing manifest'));\nif(manifest.kind === 'Error') {\n    panic(manifest.message);\n}\nconst paths = manifest.text.split('\\n').filter((path) => path !== '');\nconst program = tsgoProgram(config, paths);\nlet findings = 0;\nlet queries = 0;\nfor(const path of paths) {\n    const source = readTextFile(path);\n    if(source.kind === 'Error') {\n        panic(source.message);\n    }\n    const parser = new Parser(source.text, path);\n    const scanner = new Scanner(source.text);\n    const linter = new UnaryMinus(program, path, parser, scanner, byteOffsets(source.text));\n    linter.run();\n    findings += linter.findings.length;\n    queries += linter.queries;\n    if(!args.includes('--count')) {\n        console.log(`file\\t${written(path)}`);\n        for(const finding of linter.findings) {\n            console.log(\n                `${finding.start}\\t${finding.end}\\t${finding.rule}\\t${finding.id}\\t${written(finding.message)}\\t0\\t0`,\n            );\n        }\n    }\n}\nconsole.log(`findings ${findings} queries ${queries}`);\ntsgoRelease(program);\n",
+    "new": ""
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "file": "stage1/cohere/typeaware/volume_suite.ts",
+    "line": 15,
+    "old": "const args = programArguments();\nconst config = args[0] ?? panic('usage: volume_suite.ts tsconfig manifest [--count]');\nconst manifest = readTextFile(args[1] ?? panic('missing manifest'));\nif(manifest.kind === 'Error') {\n    panic(manifest.message);\n}\nconst paths = manifest.text.split('\\n').filter((path) => path !== '');\nconst program = tsgoProgram(config, paths);\nlet findings = 0;\nlet optionsChecked = false;\nfor(const path of paths) {\n    const source = readTextFile(path);\n    if(source.kind === 'Error') {\n        panic(source.message);\n    }\n    const parser = new Parser(source.text, path);\n    const scanner = new Scanner(source.text);\n    const offsets = byteOffsets(source.text);\n    const unary = new UnaryMinus(program, path, parser, scanner, offsets);\n    const linter = new Rules(program, path, parser, scanner, offsets, unary);\n    linter.run();\n    if(!optionsChecked) {\n        const options = new Frames(linter.ask(parser.nodes.length - 1, 'strict-this'));\n        header(options, 'strict-this');\n        const strictThis = options.yes();\n        options.end();\n        if(!strictThis) {\n            panic('volume suite requires noImplicitThis; implicit-this messages are not yet ported');\n        }\n        optionsChecked = true;\n    }\n    const volume = new Volume(linter);\n    const shadow = new Shadow(linter);\n    shadow.run();\n    const assignment = new Assignment(linter, volume, shadow);\n    assignment.run();\n    const voidRule = new VoidRule(linter, volume);\n    voidRule.run();\n    const returns = new Returns(linter, shadow);\n    returns.run();\n    const unbound = new Unbound(linter, shadow);\n    unbound.run();\n    volume.run();\n    findings += linter.findings.length;\n    if(!args.includes('--count')) {\n        console.log(`file\\t${written(path)}`);\n        for(const finding of linter.findings) {\n            console.log(finding.written());\n        }\n    }\n}\nconsole.log(`findings ${findings}`);\ntsgoRelease(program);\n",
+    "new": ""
+  }
+]

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "baseline-agreement",
+    "rows": [
+      "TestTypeAwareAgreementAndMutantsUnion",
+      "TestTypeAwareAgreementAndMutants_000",
+      "TestTypeAwareAgreementAndMutants_001",
+      "TestTypeAwareAgreementAndMutants_002",
+      "TestTypeAwareAgreementAndMutants_003",
+      "TestTypeAwareAgreementAndMutants_004",
+      "TestTypeAwareAgreementAndMutants_005",
+      "TestTypeAwareAgreementAndMutants_006",
+      "TestTypeAwareAgreementAndMutants_007",
+      "TestTypeAwareAgreementAndMutants_008",
+      "TestTypeAwareAgreementAndMutants_009",
+      "TestTypeAwareAgreementAndMutants_011",
+      "TestTypeAwareAgreementAndMutants_012",
+      "TestTypeAwareAgreementAndMutants_013",
+      "TestTypeAwareAgreementAndMutants_014",
+      "TestTypeAwareAgreementAndMutants_015",
+      "TestTypeAwareAgreementAndMutants_016",
+      "TestTypeAwareAgreementAndMutants_017",
+      "TestTypeAwareAgreementAndMutants_018",
+      "TestTypeAwareAgreementAndMutants_019",
+      "TestTypeAwareAgreementAndMutants_020",
+      "TestTypeAwareAgreementAndMutants_Setup",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_typeaware_oracle"
+    ],
+    "seconds": 77.82815954300168,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutantsUnion|TestTypeAwareAgreementAndMutants_000|TestTypeAwareAgreementAndMutants_001|TestTypeAwareAgreementAndMutants_002|TestTypeAwareAgreementAndMutants_003|TestTypeAwareAgreementAndMutants_004|TestTypeAwareAgreementAndMutants_005|TestTypeAwareAgreementAndMutants_006|TestTypeAwareAgreementAndMutants_007|TestTypeAwareAgreementAndMutants_008|TestTypeAwareAgreementAndMutants_009|TestTypeAwareAgreementAndMutants_011|TestTypeAwareAgreementAndMutants_012|TestTypeAwareAgreementAndMutants_013|TestTypeAwareAgreementAndMutants_014|TestTypeAwareAgreementAndMutants_015|TestTypeAwareAgreementAndMutants_016|TestTypeAwareAgreementAndMutants_017|TestTypeAwareAgreementAndMutants_018|TestTypeAwareAgreementAndMutants_019|TestTypeAwareAgreementAndMutants_020|TestTypeAwareAgreementAndMutants_Setup|TestProduct_typeaware_lowered|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_typeaware_oracle)$",
+      "-coverpkg=github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-typeaware-typeaware_top_shards/session-bfe05533/baseline-agreement.cover"
+    ]
+  },
+  {
+    "id": "baseline-kind-witness",
+    "rows": [
+      "TestTypeAwareAgreementAndMutants_010"
+    ],
+    "seconds": 42.58697319000203,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestTypeAwareAgreementAndMutants_010)$",
+      "-coverpkg=github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-typeaware-typeaware_top_shards/session-bfe05533/baseline-kind-witness.cover"
+    ]
+  }
+]

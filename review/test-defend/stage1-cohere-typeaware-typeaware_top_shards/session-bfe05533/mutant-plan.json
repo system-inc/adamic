@@ -1,0 +1,11 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/typeaware/main.ts",
+    "line": 29,
+    "old": "console.log(`file\\t${written(path)}`);",
+    "new": "console.log(`unit\\t${written(path)}`);",
+    "kind": "change constant",
+    "difference": "main.ts finding-stream file marker is emitted by the unary-minus-only entry; volume_suite.ts owns its own file marker and never imports main.ts"
+  }
+]
