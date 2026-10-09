@@ -58,17 +58,43 @@ stamp=$(date -u +%Y%m%dT%H%M%SZ)
 out=fast-gate/out/${sha:0:12}-${stamp}
 
 echo "fast gate: ${sha} against ${baseName} ${base}, tools ${tools}, on ${box}, class ${class}"
+# The tip is gated merged onto its base's tip (gateMerge): the box gates that merge commit, pushed under refs/gate-merges/
+# so the box and the Darwin leg can fetch it and push-main can land it. A conflict is the tip's red now, at merge.
+read -r merged gated <<< "$(gateMerge "${sha}" "${base}" || echo "error")"
+case ${merged} in
+  same) ;;
+  merge)
+    git -C "${here}" push -q origin "${gated}:refs/gate-merges/${gated}" || { echo "void: ${sha} fast gate couldn't push its merge onto ${baseName} ${base}"; exit 1; }
+    echo "gating ${sha} merged onto ${baseName} ${base} as ${gated}" ;;
+  conflict)
+    local=$(mktemp -d)
+    mkdir "${local}/fast"
+    echo "red: ${sha} fast gate, first failure at merge after 0.0 s (conflicts with ${baseName} ${base:0:12} in ${gated})" > "${local}/fast/status.txt"
+    python3 - "${local}/fast/fast.json" "${sha}" "${base}" "${baseName}" "${branch}" "${tools}" "${gated}" <<'CONFLICT'
+import json, sys
+path, sha, base, baseName, branch, tools, paths = sys.argv[1:]
+json.dump({"sha": sha, "candidate": sha, "base": base, "base_name": baseName, "branch": branch, "tools": tools, "status": "red",
+           "failure": {"step": "merge", "after_seconds": 0.0, "detail": "conflicts with %s %s in %s" % (baseName, base, paths)},
+           "merge_conflicts": paths.split()}, open(path, "w"), indent=2)
+CONFLICT
+    ;;
+  *) echo "void: ${sha} fast gate couldn't merge it onto ${baseName} ${base}"; exit 1 ;;
+esac
+# A conflicting tip never reaches the box: its red record is already written.
+if [ "${merged}" = conflict ]; then
+  code=1
+else
 # Landings and areas also compile on macOS (cloud/darwin-leg.sh), beside the box's gate: a Darwin-only
 # compile break (area-next 517cb633, st_atimespec) got through when nothing on macOS gated (Oct 8).
 darwinLog=""
 if [[ ${branch} == cloud/land-* || ${branch} == area/* ]]; then
   darwinLog=$(mktemp)
-  bash "${here}/cloud/darwin-leg.sh" "${sha}" "${branch}" > "${darwinLog}" 2>&1 &
+  bash "${here}/cloud/darwin-leg.sh" "${gated}" "${branch}" > "${darwinLog}" 2>&1 &
   darwinPid=$!
 fi
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
-ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}" "${baseName}" "${wholeBox}")" <<'BOX'
+ssh "${box}" bash -s -- "$(printf '%q ' "${gated}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}" "${baseName}" "${wholeBox}")" <<'BOX'
 set -euo pipefail
 sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B} baseName=${11:-main} wholeBox=${12:-}
 mkdir -p ~/fast-gate
@@ -309,6 +335,22 @@ json.dump(result, open(path, "w"), indent=2)
 DARWIN
   echo "darwin leg: $(head -1 "${local}/fast/darwin-compile.log" | cut -c1-200)"
 fi
+if [ "${merged}" = merge ]; then
+  # The record names the tip, so everything keyed by it reads this verdict, and says what was gated.
+  python3 - "${local}/fast" "${sha}" "${gated}" "${baseName}" "${base}" <<'MERGED'
+import json, os, sys
+directory, sha, gated, baseName, base = sys.argv[1:]
+status = os.path.join(directory, "status.txt")
+lines = open(status).read().splitlines() if os.path.exists(status) else ["void: %s fast gate left no status" % gated]
+lines[0] = lines[0].replace(gated, sha, 1) + " (gated merged onto %s %s as %s)" % (baseName, base[:12], gated)
+open(status, "w").write("\n".join(lines) + "\n")
+path = os.path.join(directory, "fast.json")
+result = json.load(open(path)) if os.path.exists(path) else {}
+result.update({"candidate": sha, "gated": gated, "merged_onto": base})
+json.dump(result, open(path, "w"), indent=2)
+MERGED
+fi
+fi
 # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
 # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
 find "${local}/fast" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
@@ -321,5 +363,11 @@ commit=$(git -C "${here}" commit-tree "${tree}" -m "Fast gate of ${sha} against 
 git -C "${here}" push -q origin "${commit}:refs/heads/${logBranch}"
 rm -f "${index}"
 echo "published ${logBranch} (${commit})"
+# The merge's own sha holds the same record, so push-main lands the merge commit by its green record.
+if [ "${merged}" = merge ]; then
+  git -C "${here}" push -q origin "${commit}:refs/heads/gate-logs/${gated:0:12}/${stamp}/fast"
+  # Not a "published" line: readers take the last of those as the tip's record (verdict-notify, contribution-clock).
+  echo "merge record gate-logs/${gated:0:12}/${stamp}/fast (${commit})"
+fi
 cat "${local}/fast/status.txt"
 exit ${code}

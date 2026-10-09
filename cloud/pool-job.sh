@@ -34,12 +34,27 @@ mkdir -p "${jobs}"
 read -r baseName base <<< "$(gateBase "${branch}" "${sha}")"
 [[ ${base} =~ ^[0-9a-f]{40}$ ]] || { echo "void: ${sha} pool job: no base for ${branch} (origin unreachable?)"; exit 1; }
 echo "fast gate: ${sha} against ${baseName} ${base}, tools ${tools}, on pool, class P"
+# The pool gates the tip merged onto its base's tip, as the boxes do (gateMerge, #11ymb02): the job names the merge
+# commit as "gate", pushed where an instance can fetch it. A conflict is the tip's red now, with no pool time spent.
+read -r merged gated <<< "$(gateMerge "${sha}" "${base}" || echo "error")"
+case ${merged} in
+  same) gated="" ;;
+  merge)
+    git -C "${here}" push -q origin "${gated}:refs/gate-merges/${gated}" || { echo "void: ${sha} pool job couldn't push its merge onto ${baseName} ${base}"; exit 1; }
+    echo "gating ${sha} merged onto ${baseName} ${base} as ${gated}" ;;
+  conflict)
+    echo "red: ${sha} fast gate on Loom's side pool, first failure at merge after 0.0 s (conflicts with ${baseName} ${base:0:12} in ${gated})"
+    exit 0 ;;
+  *) echo "void: ${sha} pool job couldn't merge it onto ${baseName} ${base}"; exit 1 ;;
+esac
 # A verdict left from an earlier job of this sha belongs to other tools or another base: the pool runs it fresh.
 rm -f "${jobs}/${sha}.verdict"
-python3 - "${jobs}/${sha}.json" "${branch}" "${sha}" "${base}" "${baseName}" "${tools}" "${priority}" <<'PY'
+python3 - "${jobs}/${sha}.json" "${branch}" "${sha}" "${base}" "${baseName}" "${tools}" "${priority}" "${gated}" <<'PY'
 import json, os, sys
-path, branch, sha, base, baseName, tools, priority = sys.argv[1:]
+path, branch, sha, base, baseName, tools, priority, gated = sys.argv[1:]
 job = {"branch": branch, "sha": sha, "base": base, "base_name": baseName, "tools": tools, "packages": "select", "env": {}}
+if gated:
+    job["gate"] = gated
 if priority:
     job["priority"] = int(priority)
 with open(path + ".partial", "w") as handle:

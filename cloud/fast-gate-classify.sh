@@ -52,3 +52,29 @@ haveCommits() {
   local commit
   for commit in "$@"; do git -C "${here}" cat-file -e "${commit}^{commit}" 2> /dev/null || return 1; done
 }
+# What a tip is gated as (#11ymb02; @system_adamic, Oct 9 08:17Z): the tip merged onto its base's tip at gate start,
+# never its fork point, since V3 and floor1 each went red twice on setup budgets main had already fixed. Prints
+# "same <sha>" when the tip already holds the base, "merge <sha>" for a clean merge commit (first parent the base,
+# second the tip), or "conflict <paths>" when the two don't merge, which is the tip's red with no gate time spent;
+# returns 1 if git can't answer. The merge is made from fixed metadata (one gate identity, the base's committer
+# date), so one tip on one base is one sha on every attempt and every machine.
+gateMerge() {
+  local sha=$1 base=$2 merged code date
+  haveCommits "${sha}" "${base}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" "${base}" 2> /dev/null || return 1
+  if git -C "${here}" merge-base --is-ancestor "${base}" "${sha}" 2> /dev/null; then
+    echo "same ${sha}"
+    return
+  fi
+  # Exit 1 is a conflict: the first line is the partial tree, the rest the conflicted paths. Above 1, git failed.
+  merged=$(git -C "${here}" merge-tree --write-tree --name-only --no-messages "${base}" "${sha}") && code=0 || code=$?
+  if [ "${code}" = 1 ]; then
+    echo "conflict $(echo "${merged}" | sed 1d | sed '/^$/d' | tr '\n' ' ' | sed 's/ $//')"
+    return
+  fi
+  [ "${code}" = 0 ] || return 1
+  date=$(git -C "${here}" show -s --format=%cI "${base}")
+  merged=$(GIT_AUTHOR_NAME="Adamic gate" GIT_AUTHOR_EMAIL=gate@adamic.invalid GIT_AUTHOR_DATE="${date}" \
+    GIT_COMMITTER_NAME="Adamic gate" GIT_COMMITTER_EMAIL=gate@adamic.invalid GIT_COMMITTER_DATE="${date}" \
+    git -C "${here}" -c commit.gpgSign=false commit-tree "${merged}" -p "${base}" -p "${sha}" -m "Gate merge of ${sha} onto ${base}") || return 1
+  echo "merge ${merged}"
+}
