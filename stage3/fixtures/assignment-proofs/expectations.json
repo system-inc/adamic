@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "ruling": "#cvhj5fk, October 8 2026 11:16",
+  "scout_commit": "91c49dcd",
+  "records": [
+    {
+      "file": "01_scanner_keyword.a",
+      "source": [
+        "src/compiler/scanner.ts:1815-1828"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "KeywordSyntaxKind membership and definedness survive assignment into full SyntaxKind; both writes checked separately.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return token = keyword;",
+        "with": "return token = SyntaxKind.Identifier;",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    },
+    {
+      "file": "02_if_narrowing.a",
+      "source": [
+        "ruling #cvhj5fk, October 8 2026 11:16: authored 02_if_narrowing.a"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "The !== undefined guard narrows the assignment result and x; f runs once.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "4 1\n-1 2\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "4 1\n-1 2\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return present ? \"name\" : undefined;",
+        "with": "return present ? \"name\" : \"missing\";",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    },
+    {
+      "file": "03_return_defined.a",
+      "source": [
+        "ruling #cvhj5fk, October 8 2026 11:16: authored 03_return_defined.a"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "compute returns a defined string; result keeps that proof despite optional cache target; compute runs once.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "value1 value1 1\nvalue2 value2 2\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "value1 value1 1\nvalue2 value2 2\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return (cache = compute());",
+        "with": "return compute();",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    },
+    {
+      "file": "04_chained.a",
+      "source": [
+        "ruling #cvhj5fk, October 8 2026 11:16: authored 04_chained.a"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "Each simple assignment result retains the defined RHS; both targets receive it and computation runs once.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "value1 value1 value1 1\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "value1 value1 value1 1\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return a = b = value;",
+        "with": "return a = value;",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    },
+    {
+      "file": "05_compound.a",
+      "source": [
+        "ruling #cvhj5fk, October 8 2026 11:16: authored 05_compound.a"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "Compound assignment returns the updated x; it does not inherit y as its result.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "12 12 1\n14 14 2\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "12 12 1\n14 14 2\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return x += y;",
+        "with": "return x = y;",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    },
+    {
+      "file": "06_wider_target.a",
+      "source": [
+        "ruling #cvhj5fk, October 8 2026 11:16: authored 06_wider_target.a"
+      ],
+      "reason": "assignment expression proof propagation, step 12 ruling",
+      "proof": "Kind.Keyword membership survives assignment into the whole enum; result remains the member, with the store checked.",
+      "expected_adamic": {
+        "outcome": "Compiles",
+        "stdout": "128 128 1\n",
+        "stderr": "",
+        "exit": 0,
+        "proof_recheck_required": false,
+        "target_write_checked": true
+      },
+      "node": {
+        "stdout": "128 128 1\n",
+        "stderr": "",
+        "exit": 0
+      },
+      "mutant": {
+        "replace": "return wide = value;",
+        "with": "return value;",
+        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
+      }
+    }
+  ],
+  "upstream_source": {
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "file": "src/compiler/scanner.ts",
+    "start": 1815,
+    "end": 1828,
+    "file_sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+    "function_text": "function getIdentifierToken(): SyntaxKind.Identifier | KeywordSyntaxKind {\n    // Reserved words are between 2 and 12 characters long and start with a lowercase letter\n    const len = tokenValue.length;\n    if (len >= 2 && len <= 12) {\n        const ch = tokenValue.charCodeAt(0);\n        if (ch >= CharacterCodes.a && ch <= CharacterCodes.z) {\n            const keyword = textToKeyword.get(tokenValue);\n            if (keyword !== undefined) {\n                return token = keyword;\n            }\n        }\n    }\n    return token = SyntaxKind.Identifier;\n}\n"
+  }
+}
