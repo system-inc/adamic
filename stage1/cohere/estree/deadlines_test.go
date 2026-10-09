@@ -17,6 +17,7 @@ import (
 // waiting for a core. A separate pipe leaves stdout/stderr assertions unchanged.
 // All callers have whole-second budgets. The hard limit is one second beyond
 // the soft limit, so even a child handling SIGXCPU cannot evade it.
+// Not parallel: child helper changes process-wide RLIMIT_CPU and ADAMIC_ESTREE_DEADLINE_CHILD.
 func TestDeadlineChild(t *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_DEADLINE_CHILD") != "1" {
 		return

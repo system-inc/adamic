@@ -31,6 +31,7 @@ func jsxManifestCases(t *testing.T, cases []string) string {
 	}
 	return path
 }
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestJSXAgreement(t *testing.T) {
 	list := jsxManifest(t)
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -51,6 +52,7 @@ func TestJSXAgreement(t *testing.T) {
 }
 
 func TestJSXOriginalLibraries(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
@@ -120,6 +122,7 @@ func TestJSXOriginalLibraries(t *testing.T) {
 		}
 	}
 }
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestJSXMutant(t *testing.T) {
 	list := jsxManifest(t)
 	want := execute(t, "", goOracle(t), "--manifest", list)

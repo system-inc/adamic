@@ -11,6 +11,7 @@ import (
 	"testing"
 )
 
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestInterfaceTypeMethodGap(t *testing.T) {
 	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
 	if err != nil {

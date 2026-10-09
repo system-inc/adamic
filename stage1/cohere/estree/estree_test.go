@@ -172,6 +172,7 @@ func firstDifference(want, got []byte) string {
 	}
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))
 }
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestGeneratedAgreement(t *testing.T) {
 	path, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -247,6 +248,7 @@ func TestThreePortMutants(t *testing.T) {
 }
 
 func TestOriginalLibraries(t *testing.T) {
+	t.Parallel()
 	checkOriginalLibraries(t, generated(), 3)
 }
 func checkOriginalLibraries(t *testing.T, cases []string, postprocessedGaps int) {

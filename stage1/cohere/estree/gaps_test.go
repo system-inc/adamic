@@ -15,6 +15,7 @@ import (
 )
 
 func TestPostfixValueGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/postfixValue.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -35,6 +36,7 @@ func TestPostfixValueGap(t *testing.T) {
 }
 
 func TestMethodReplacementGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/methodReplacement.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -53,6 +55,7 @@ func TestMethodReplacementGap(t *testing.T) {
 	t.Logf("Node replacement/original; Adamic: %v", err)
 }
 
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestRawInputGap(t *testing.T) {
 	dir := t.TempDir()
 	first := filepath.Join(dir, "malformed.ts")
@@ -87,6 +90,7 @@ func TestRawInputGap(t *testing.T) {
 	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
 }
 
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestParserRecoveryGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {
@@ -113,6 +117,7 @@ func TestParserRecoveryGap(t *testing.T) {
 }
 
 func TestInterfaceDefaultGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/interfaceDefault.ts")
 	if err != nil {
 		t.Fatal(err)

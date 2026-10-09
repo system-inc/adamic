@@ -38,10 +38,12 @@ func TestScalarEdges(t *testing.T) {
 }
 
 func TestScalarOriginalLibraries(t *testing.T) {
+	t.Parallel()
 	cases := scalarCases()
 	checkOriginalLibraries(t, []string{cases[0], cases[5], cases[6], cases[7], "1e-999; 0; 0o77;"}, 0)
 }
 func TestPinnedNumericGaps(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")

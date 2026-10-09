@@ -10,6 +10,7 @@ import (
 func recoveredExpressions() []string {
 	return []string{"const C = @d class {};", "const C = @d @e(1) class Named extends Base { static x=1; };", "(@d class { m(){return 1;} });", "function f(){ await 'x'; await 1; await true; await this; }", "function f(){ yield 'x'; yield 1; yield true; }", "await\nx; yield\nx;", "await(x); yield(x);"}
 }
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestRecoveredExpressions(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -22,6 +23,7 @@ func TestRecoveredExpressions(t *testing.T) {
 	}
 	t.Logf("%d decorated class / await / yield cases, %d bytes match Go", len(recoveredExpressions()), len(want))
 }
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -36,6 +38,7 @@ func TestRecoveredExpressionMutant(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestUnattachedDecorator(t *testing.T) {
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(t, main, true)
@@ -48,6 +51,7 @@ func TestUnattachedDecorator(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes the shared adamic/runtime user cache and native.runtimeBuilds.
 func TestUnattachedDecoratorControl(t *testing.T) {
 	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
