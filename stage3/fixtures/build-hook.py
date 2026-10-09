@@ -80,9 +80,12 @@ def fetch(repository, store, prepare):
             with tempfile.TemporaryDirectory(dir=store) as scratch:
                 binary = Path(scratch) / 'oracle.test'
                 with (store / (key + '.build.log')).open('w') as log:
-                    subprocess.run(['go', 'test', '-buildvcs=false', '-c', '-o', str(binary),
-                                    './internal/oracle'], cwd=repository, stdout=log,
-                                   stderr=subprocess.STDOUT, check=True)
+                    result = subprocess.run(
+                        ['go', 'test', '-buildvcs=false', '-c', '-o', str(binary), './internal/oracle'],
+                        cwd=repository, stdout=log, stderr=subprocess.STDOUT)
+                if result.returncode:
+                    raise RuntimeError('oracle hook preparation failed (exit %d):\n%s' % (
+                        result.returncode, (store / (key + '.build.log')).read_text()))
                 if action_key(repository) != key:
                     raise RuntimeError('oracle inputs changed during preparation')
                 digest = hashlib.sha256(binary.read_bytes()).hexdigest()

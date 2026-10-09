@@ -162,11 +162,11 @@ func TestFixtures(t *testing.T) {
 	if len(statuses) == 0 {
 		t.Fatal("no fixture status.json files found")
 	}
-	// Preparation belongs to the build tier. Each unit fetches the same checked
-	// product; a missing product fails instead of rebuilding inside the test.
-	fetched := execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py")
+	// Prepare missing products under the same input-key lock. A warm gate only
+	// verifies and fetches the product, without rebuilding it.
+	fetched := execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
 	if fetched.Exit != 0 {
-		t.Fatalf("fetching oracle hook: %s%s", fetched.Stdout, fetched.Stderr)
+		t.Fatalf("preparing or fetching oracle hook: %s%s", fetched.Stdout, fetched.Stderr)
 	}
 	hook := strings.TrimSpace(fetched.Stdout)
 	shard, count := fixtureShard(t)

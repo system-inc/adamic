@@ -11,7 +11,7 @@ Run the parallel fixture gate from the repository root:
 
 ```sh
 source /workspace/adamic-tools/env.sh
-# Build tier, once. Tests fail if this product has not been prepared.
+# Optional prefetch. Tests also prepare missing products themselves.
 python3 stage3/fixtures/build-hook.py --prepare > /tmp/stage3-hook-build.log 2>&1
 # One gate unit; other units set indices 1 through 7.
 ADAMIC_TEST_SHARD=0/8 ADAMIC_GATE_UNCACHED=1 go test ./stage3/fixtures -run '^TestFixtures$' -count=1 -parallel=4 -timeout 30s -v > /tmp/stage3-fixtures-0.log 2>&1
@@ -31,11 +31,14 @@ outcome and complete diagnostic. A change says `gap changed: update status.json
 and check the native output`. Newly compiling gaps run natively even when their
 record still says NotYet or Refused, so a gap closure cannot hide wrong output.
 
-The build tier prepares the oracle test binary once with `build-hook.py --prepare`.
+TestFixtures prepares a missing oracle test binary with `build-hook.py --prepare`.
+The build tier may use that same command to prefetch it.
 Its key covers effective Go dependency file lists and contents, embedded runtime
 inputs, module/workspace manifests, compiler/linker bytes and Go flags. Tests fetch
-the content-addressed binary and verify its SHA-256; they never build a missing
-hook. `ADAMIC_STAGE3_BUILD_STORE` selects the product store. The store is local;
+the content-addressed binary and verify its SHA-256. The input-key lock ensures
+that concurrent cold units build it once; warm units do not rebuild. A corrupt
+prepared binary fails loudly rather than being executed, and a failed build
+reports its complete build log in the test failure. `ADAMIC_STAGE3_BUILD_STORE` selects the product store. The store is local;
 no remote artifact service is configured by this change.
 
 Native checks invoke its small exported
