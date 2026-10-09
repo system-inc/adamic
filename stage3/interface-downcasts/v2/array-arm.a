@@ -1,4 +1,3 @@
-// NotYet: views-v3: array element kind
 interface Node { readonly ready: boolean; }
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { readonly value: Node | readonly Node[]; }
