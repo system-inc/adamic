@@ -15,6 +15,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -43,12 +44,12 @@ type entry struct {
 	Class             string       `json:"class"`
 	Base              observation  `json:"base_compile"`
 	Head              observation  `json:"compile"`
-	Node              *observation `json:"node,omitempty"`
-	JavaScript        *observation `json:"javascript,omitempty"`
-	Native            *observation `json:"native,omitempty"`
+	Node              *observation `json:"node"`
+	JavaScript        *observation `json:"javascript"`
+	Native            *observation `json:"native"`
 	JavaScriptCompile *observation `json:"javascript_compile,omitempty"`
 	NativeCompile     *observation `json:"native_compile,omitempty"`
-	Agree             *bool        `json:"agree,omitempty"`
+	Agree             *bool        `json:"agree"`
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
@@ -72,6 +73,9 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = dir
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
+	command.WaitDelay = time.Second
 	var out, errout bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &errout
@@ -227,7 +231,11 @@ func run(args []string) error {
 		}
 	} else if *corpusDir != "" {
 		c := corpus{Name: "adhoc", Programs: []program{}}
-		start := filepath.Join(headTree, *corpusDir)
+		cleanCorpus := filepath.Clean(*corpusDir)
+		if filepath.IsAbs(cleanCorpus) || cleanCorpus == ".." || strings.HasPrefix(cleanCorpus, "../") {
+			return fmt.Errorf("corpus must be inside head checkout")
+		}
+		start := filepath.Join(headTree, cleanCorpus)
 		err = filepath.WalkDir(start, func(path string, d os.DirEntry, e error) error {
 			if e != nil {
 				return e
@@ -269,6 +277,13 @@ func run(args []string) error {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
 			if filepath.IsAbs(p.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
 				return fmt.Errorf("unsafe program path %q", p.Path)
+			}
+			info, e := os.Lstat(filepath.Join(headTree, p.Path))
+			if e != nil {
+				return e
+			}
+			if !info.Mode().IsRegular() {
+				return fmt.Errorf("program is not a regular file: %s", p.Path)
 			}
 			blob, e := git(root, "rev-parse", result.Head+":"+p.Path)
 			if e != nil {
