@@ -51,13 +51,15 @@ func viewAdapterFixture(t *testing.T, fixture string, sanitize bool, mutant stri
 		if name == "closure.c" {
 			switch mutant {
 			case "skip-intern":
-				replace("if (held->view_underlying == underlying && held->view_key == view_key)", "if (false && held->view_underlying == underlying && held->view_key == view_key)")
+				replace("if (held->view->underlying == underlying && held->view->key == view_key)", "if (false && held->view->underlying == underlying && held->view->key == view_key)")
 			case "dying-retain":
 				replace("if (value->heap.references == 0) {\n\t\treturn NULL;\n\t}", "/* mutant: count zero is treated as live */")
 			case "skip-recheck":
 				replace("held = view_adapter_find_locked(underlying, view_key);\n\tif (held == NULL)", "held = NULL;\n\tif (held == NULL)")
 			case "canonical-factory":
 				replace("|| fresh->canonical_owner != NULL", "|| false")
+			case "identity-overread":
+				replace("value == NULL || value->heap.references == 0", "value == NULL")
 			case "strong-leak-root":
 				replace("(uintptr_t)value ^ VIEW_ADAPTER_HIDDEN", "(uintptr_t)value")
 				replace("(adamic_closure *)(value ^ VIEW_ADAPTER_HIDDEN)", "(adamic_closure *)value")
@@ -67,8 +69,8 @@ func viewAdapterFixture(t *testing.T, fixture string, sanitize bool, mutant stri
 bool view_adapter_listed_for_test(adamic_closure *adapter) {
     view_adapter_lock_table();
     bool found = false;
-    for (adamic_closure *held = view_adapter_reveal(view_adapter_first); held != NULL; held = view_adapter_reveal(held->view_next)) {
-        found = found || held == adapter;
+    for (size_t i = 0; i < view_adapter_capacity; i++) {
+        if (view_adapter_entries[i] > VIEW_ADAPTER_TOMBSTONE) found = found || view_adapter_reveal(view_adapter_entries[i]) == adapter;
     }
     view_adapter_unlock_table();
     return found;
@@ -85,7 +87,7 @@ bool view_adapter_listed_for_test(adamic_closure *adapter) {
 				replace("#include \"adamic.h\"", "#include \"adamic.h\"\nextern void view_adapter_order_probe(adamic_closure *);")
 				replace("adamic_view_adapter_forget(closure);", "adamic_view_adapter_forget(closure);\n\t\t\tview_adapter_order_probe(closure);")
 				if mutant == "release-before-remove" {
-					replace("adamic_view_adapter_forget(closure);\n\t\t\tview_adapter_order_probe(closure);\n\t\t\tlet_go(closure->view_underlying);", "let_go(closure->view_underlying);\n\t\t\tview_adapter_order_probe(closure);\n\t\t\tadamic_view_adapter_forget(closure);")
+					replace("adamic_view_adapter_forget(closure);\n\t\t\tview_adapter_order_probe(closure);\n\t\t\tlet_go(closure->view->underlying);", "let_go(closure->view->underlying);\n\t\t\tview_adapter_order_probe(closure);\n\t\t\tadamic_view_adapter_forget(closure);")
 				}
 			}
 		}
@@ -95,8 +97,17 @@ bool view_adapter_listed_for_test(adamic_closure *adapter) {
 		}
 		sources = append(sources, path)
 	}
+	if fixture == "identity" {
+		sources = append(sources, filepath.Join("runtime", "library_language.c"))
+	}
 	binary := filepath.Join(directory, "fixture")
 	flags := append(Flags(Options{Sanitize: sanitize, Count: true}), "-DADAMIC_CANONICAL_CLOSURES=1", "-pthread", "-I", directory, "-I", filepath.Join("testdata", "view-adapters"), "-o", binary)
+	if fixture == "identity" {
+		flags = append(flags, "-ffunction-sections", "-Wl,--gc-sections")
+	}
+	if fixture == "bytes" {
+		flags = append(flags, "-UADAMIC_CANONICAL_CLOSURES")
+	}
 	flags = append(flags, sources...)
 	flags = append(flags, filepath.Join("testdata", "view-adapters", "support.c"), filepath.Join("testdata", "view-adapters", fixture+".c"))
 	buildContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -214,7 +225,7 @@ func TestViewAdapterCacheWeakLeakRoot(t *testing.T) {
 func TestViewAdapterRuntimeStaticsPending(t *testing.T) {
 	t.Parallel()
 	// runtime's condition 3: one locked global table, statics doc, ThreadSanitizer re-view.
-	// List closure.c:view_adapter_first and view_adapter_lock in docs/runtime-statics.md
+	// List closure.c:view_adapter_entries, capacity/count/used and view_adapter_lock in docs/runtime-statics.md
 	// and runtime_statics_parallel_test when those audit files land.
 	t.Skip("awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)")
 }
@@ -238,4 +249,24 @@ func TestViewAdapterProgramUnderlyingPending(t *testing.T) {
 	// runtime's condition 4: adapters never region members, runtime's slice 6c #c2zbg7a.
 	// Exercise an adapter over a canonical closure in the real Program region.
 	t.Skip("awaits runtime's slice with the thread-safe heap, pool and region adoption (area/runtime)")
+}
+
+func TestViewAdapterCacheIdentity(t *testing.T) {
+	t.Parallel()
+	viewAdapterClean(t, "identity", "immortal identity untouched")
+	got := viewAdapterFixture(t, "identity", true, "identity-overread")
+	if got.exitCode == 0 || !strings.Contains(got.stderr, "ERROR: AddressSanitizer: global-buffer-overflow") {
+		t.Fatalf("identity overread must fail ASan: %#v", got)
+	}
+	t.Logf("identity-overread caught by ASan: %s", got.stderr)
+}
+
+func TestViewAdapterCacheBytes(t *testing.T) {
+	t.Parallel()
+	viewAdapterClean(t, "bytes", "closure bytes 40000 peak 1000")
+}
+
+func TestViewAdapterCacheMany(t *testing.T) {
+	t.Parallel()
+	viewAdapterClean(t, "many", "distinct keys and tombstones balanced")
 }

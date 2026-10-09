@@ -12,7 +12,7 @@ static adamic_value producer(adamic_closure *self, adamic_value *arguments) {
     return arguments[0];
 }
 static adamic_value invoke(adamic_closure *self, adamic_value *arguments) {
-    return adamic_closure_call(self->view_underlying, arguments, 1);
+    return adamic_closure_call(self->view->underlying, arguments, 1);
 }
 static adamic_closure *make_adapter(adamic_closure *underlying, const void *view_key) {
     (void)underlying; (void)view_key;

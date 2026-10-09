@@ -7,7 +7,7 @@ void view_adapter_dying_probe(adamic_closure *dying) {
     if (!armed) { return; }
     armed = false;
     require(dying->heap.references == 0, "probe must observe a dying adapter");
-    rescued = adamic_view_adapter_intern(dying->view_underlying, dying->view_key, make_adapter);
+    rescued = adamic_view_adapter_intern(dying->view->underlying, dying->view->key, make_adapter);
 }
 int main(void) {
     adamic_closure *root = adamic_closure_new(producer, 0);

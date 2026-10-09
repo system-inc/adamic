@@ -105,14 +105,16 @@ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *ar
 typedef adamic_code_function *adamic_code;
 typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 typedef adamic_counted_code_function *adamic_counted_code;
-#define ADAMIC_CLOSURE_VIEW_ADAPTER ((uint8_t)1)
+typedef struct adamic_view_adapter {
+	adamic_closure *underlying;
+	const void *key;
+	// Slot in the weak table, updated only while its mutex is held.
+	size_t next;
+} adamic_view_adapter;
 struct adamic_closure {
 	adamic_heap heap;
-	uint8_t flags;
-	// An adapter owns its underlying; the cache link is hidden and non-owning.
-	adamic_closure *view_underlying;
-	const void *view_key;
-	uintptr_t view_next;
+	// Ordinary closures pay for one null pointer; only adapters allocate metadata.
+	adamic_view_adapter *view;
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
  bool counted;

@@ -4,7 +4,7 @@ bool view_adapter_listed_for_test(adamic_closure *adapter);
 static bool armed, order_failed;
 void view_adapter_order_probe(adamic_closure *adapter) {
     if (!armed) { return; }
-    if (view_adapter_listed_for_test(adapter) || adapter->view_underlying->heap.references != 1) {
+    if (view_adapter_listed_for_test(adapter) || adapter->view->underlying->heap.references != 1) {
         order_failed = true;
     }
 }
