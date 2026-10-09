@@ -748,6 +748,44 @@ class WholeProductMutants(unittest.TestCase):
         self.assertEqual(len(result.failures), 1, result.failures)
 
 
+class DeferredFamiliesInTheWholeGate(unittest.TestCase):
+    """Main 20d538c0's whole log (#6g4zmzt): five deferred families read missing with every shard passing, since the whole
+    gate matched exact names, and the record had no deferred verdict at all, since the census red had cancelled the run
+    and the list's hash-object spawn refused."""
+
+    def check(self, events):
+        directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, directory, True)
+        os.makedirs(os.path.join(directory, "cloud/fast-gate"))
+        with open(os.path.join(directory, "cloud/fast-gate/deferred.txt"), "w") as handle:
+            handle.write("# package test seconds kind\ninternal/native    TestFamily    40.0    differential-sweep\n")
+        realRun(["git", "-C", directory, "init", "-q"], check=True)
+        with open(os.path.join(directory, "test.jsonl"), "w") as handle:
+            for action, test in events:
+                handle.write(json.dumps({"Action": action, "Package": run.module + "/internal/native", "Test": test}) + "\n")
+        failures = []
+
+        def refuse(*arguments):
+            raise SystemExit(1)
+
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=directory, tools=directory, out=directory), result={},
+                                     cancelled=True, git=refuse, fail=lambda step, detail: failures.append((step, detail)))
+        gate.deferredList = lambda: run.Gate.deferredList(gate)
+        with mock.patch.object(run, "deferredClassedOut", lambda tools, deferred: []):
+            run.Gate.deferredRanWhole(gate)
+        return gate.result["deferred_whole_results"][run.module + "/internal/native TestFamily"], failures
+
+    def test_a_split_family_is_judged_over_its_shards_even_after_the_run_was_cancelled(self):
+        self.assertEqual(self.check([("pass", "TestFamilyUnit00"), ("pass", "TestFamilyUnit01")]), ("pass", []))
+        outcome, failures = self.check([("pass", "TestFamilyUnit00"), ("fail", "TestFamilyUnit01")])
+        self.assertEqual((outcome, failures), ("fail", []))
+        # A bare prefix is no shard, and shards that all skipped prove nothing.
+        for events in ([("pass", "TestFamilyOther")], [("skip", "TestFamilyUnit00")]):
+            outcome, failures = self.check(events)
+            self.assertEqual(outcome, "missing")
+            self.assertEqual(failures[0][0], "census")
+
+
 class DeferredInTheWholeGate(FailClosed):
     def test_a_deferred_test_the_whole_gate_never_runs_is_red_at_census(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/deferred.txt"), "w") as handle:
