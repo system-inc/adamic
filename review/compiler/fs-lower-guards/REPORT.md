@@ -41,3 +41,5 @@ Mutant kills (exact diffs retained as .diff):
 
 Current main 0942c516 merged without conflicts. Post-merge focused lowering tests and both uncached oracle split runs passed (merged-lower.json and merged-oracle-{0,1}.json).
 Lane output: lane checks 1.6 s: gofmt and tools on 3 Go files, t.Parallel on 2 test packages; vet 2 packages.
+
+Main advanced again to 68db8ddd with meter test-only guards. Merged without conflicts and repeated the same focused lowering and uncached split-mode oracle checks; all passed. Final evidence: final-lower.json, final-oracle-0.json and final-oracle-1.json. Lane output: lane checks 0.9 s: gofmt and tools on 3 Go files, t.Parallel on 2 test packages; vet 2 packages.
