@@ -135,6 +135,7 @@ func TestNoFirstOutput(t *testing.T) {
 
 // Leave Stall unset to exercise the default window after the first output.
 func TestChildFinishesWithinDefaultStallWindow(t *testing.T) {
+	t.Parallel()
 	out, err := CombinedOutput(child("finish"), Options{FirstOutput: 5 * time.Second, Ceiling: 5 * time.Second})
 	if err != nil {
 		t.Fatalf("child finishing within its window reported an error: %v (output %q)", err, out)
@@ -145,6 +146,7 @@ func TestChildFinishesWithinDefaultStallWindow(t *testing.T) {
 }
 
 func TestRunRestoresStdout(t *testing.T) {
+	t.Parallel()
 	var out bytes.Buffer
 	cmd := child("finish")
 	cmd.Stdout = &out
@@ -157,6 +159,7 @@ func TestRunRestoresStdout(t *testing.T) {
 }
 
 func TestStalledReportsSystemLoad(t *testing.T) {
+	t.Parallel()
 	readLoad := func() string {
 		t.Helper()
 		data, err := os.ReadFile("/proc/loadavg")
