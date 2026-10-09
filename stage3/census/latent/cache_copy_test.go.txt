@@ -1,0 +1,108 @@
+// Compiled only by cache_copy_audit.py's no-output census overlay.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"path/filepath"
+	"reflect"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+func latentCacheFixture() *ir.Program {
+	return &ir.Program{
+		Locals: []ir.Local{{Type: ir.MaybeNumber}, {Type: ir.MaybeBoolean}},
+		Functions: []ir.Function{
+			{Closure: true, Parameters: []int{0}},
+			{Closure: true, Parameters: []int{1}},
+		},
+		FunctionTypeTargets: map[int][]int{1: {0, 1}},
+	}
+}
+
+func TestLatentCacheRollbackFacts(t *testing.T) {
+	// Not parallel: the census records findings in package-global state.
+	t.Setenv("LATENT_FULL", "1")
+	path := filepath.Join(t.TempDir(), "cache.a")
+	// external's failed initializer installs poison before the statement rolls back.
+	if err := os.WriteFile(path, []byte("declare function external(): number;\nconst poison: number = external();\nconst after: number = 1;\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.LatentLoad([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	entry := program.Files()[0]
+	checker, release := program.Checker(context.Background(), entry)
+	defer release()
+	l := &lowering{program: program, checker: checker, result: latentCacheFixture(), this: -1, functionIndex: -1}
+	if !l.result.PackedCountNeeded(0) || !l.result.PackedCountNeeded(1) || !l.result.ClosureConventionNeeded() {
+		t.Fatal("fixture must prime true packed facts")
+	}
+	original := l.result
+	latentFindings = nil
+	latentFindingOwner, latentFindingPhase = program.Where(entry.Statements.Nodes[1]), "lowering"
+	body, err := l.statement(entry.Statements.Nodes[1])
+	if err != nil || len(body) != 0 {
+		t.Fatalf("rollback did not recover: %v %#v", err, body)
+	}
+	boundary := false
+	for _, finding := range latentFindings {
+		if finding.Kind == "panic" {
+			t.Fatalf("cache snapshot panicked: %s", finding.Text)
+		}
+		if finding.Kind == "Boundary" && strings.Contains(finding.Reason, "state rolled back") {
+			boundary = true
+		}
+	}
+	if !boundary || l.result == original || len(l.result.Locals) != 2 {
+		t.Fatal("failed initializer must restore a distinct checkpoint without poison")
+	}
+	if !reflect.ValueOf(l.result).Elem().FieldByName("argumentFacts").IsNil() {
+		t.Fatal("checkpoint must invalidate the derived cache")
+	}
+	// Continue real statement lowering after rollback. Rebuild the target set at
+	// unchanged function/set sizes: copying the primed cache would return stale true.
+	l.result.FunctionTypeTargets[1] = []int{0}
+	body, err = l.statement(entry.Statements.Nodes[2])
+	if err != nil || len(body) == 0 || len(l.result.Locals) != 3 {
+		t.Fatalf("lowering after rollback failed: %v %#v", err, body)
+	}
+	fresh := latentCacheFixture()
+	fresh.FunctionTypeTargets[1] = []int{0}
+	fresh.Locals = append(fresh.Locals, l.result.Locals[2])
+	for i := range fresh.Functions {
+		got, want := l.result.PackedCountNeeded(i), fresh.PackedCountNeeded(i)
+		if got != want || got {
+			t.Fatalf("recomputed packed fact %d: got %v fresh %v", i, got, want)
+		}
+	}
+	if l.result.ClosureConventionNeeded() != fresh.ClosureConventionNeeded() || l.result.ClosureConventionNeeded() {
+		t.Fatal("recomputed convention differs from fresh program")
+	}
+	if reflect.ValueOf(l.result).Elem().FieldByName("argumentFacts").IsNil() {
+		t.Fatal("packed reader must repopulate the cache")
+	}
+	if !original.PackedCountNeeded(0) {
+		t.Fatal("rollback copy must not mutate original cache or target set")
+	}
+}
+
+func TestLatentUnknownPrivateField(t *testing.T) {
+	for _, value := range []any{struct{ argumentFacts *int }{new(int)}, struct{ newSemanticState int }{1}} {
+		func() {
+			defer func() {
+				r := recover()
+				if r == nil || !strings.Contains(fmt.Sprint(r), "unexported IR field") {
+					t.Fatalf("unreviewed private field accepted: %v", r)
+				}
+			}()
+			latentCopyIR(value, map[any]any{})
+		}()
+	}
+}
