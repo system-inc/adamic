@@ -137,7 +137,7 @@ func viewCallableAggregateResults(program *ir.Program) []ir.CallClosure {
 
 func (l *lowering) addViewCallableAggregateResults(graph *allocationFlowGraph, calls []ir.CallClosure, viewed map[int]bool, unknown bool, add func(ir.AllocationSet)) {
 	for _, call := range calls {
-		owner := call.Closure
+		owner := l.result.ClosureTargets(call).Value
 		if property, ok := owner.(ir.Property); ok {
 			owner = property.Object
 		}

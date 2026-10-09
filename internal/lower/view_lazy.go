@@ -178,7 +178,7 @@ func (l *lowering) checkLazyViewReads() error {
 		}
 
 		if call, ok := node.(ir.CallClosure); ok {
-			if property, ok := call.Closure.(ir.Property); ok && program.CheckedFields[property.Name] {
+			if property, ok := program.ClosureTargets(call).Value.(ir.Property); ok && program.CheckedFields[property.Name] {
 				reaches := graph.ReachingAllocations(property.Object)
 				demanded := unknown || reaches.Unknown
 				for _, site := range reaches.Sites {
