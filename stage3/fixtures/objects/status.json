@@ -89,7 +89,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower writing a possibly absent optional own field yet"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/06_watch_close.a:14:15: Adamic 0.1 refuses 'file', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"}
   },
   {
     "file": "07_synthetic_reference.a",

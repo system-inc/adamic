@@ -1,0 +1,7 @@
+// acceptance dependency: compiler/views-rehearsal 2b6c032a
+interface Source { readonly kind: string; flag?: boolean | undefined }
+interface View { readonly kind: 'flag'; flag?: boolean | undefined }
+const source: Source = { kind: 'flag' };
+const view = source as View;
+view.flag = true;
+console.log(String(view.flag));

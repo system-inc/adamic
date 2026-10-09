@@ -23,26 +23,9 @@ stage 0 can't lower indexOf with these arguments yet        (Node prints 3)
 
 **Around it:** `indexOfFrom` (tokenize.ts) slices from the position and searches the rest. The tokenizer looks for a closing quote, the end of a comment and the end of a line that way, as upstream does with `css.indexOf(search, from)`. It copies the rest of the value each time, which upstream doesn't.
 
-## 2. A `boolean | undefined` field
+## 2. Boolean field gap retired
 
-A field that holds a boolean or nothing is refused, in a class or an object type. A field of `number | undefined`, `string | undefined` or `T[] | undefined` lowers.
-
-```ts
-class Holder {
-	flag: boolean | undefined = undefined;
-}
-const holder = new Holder();
-holder.flag = true;
-console.log(`${holder.flag === true}`);
-```
-
-```
-stage 0 can't lower a field of type boolean | undefined yet        (Node prints true)
-```
-
-`interface Flags { readonly flag: boolean | undefined }` is refused the same way.
-
-**Around it:** a node's flags (`inline`, `quoted`, `isHex`, `isColor`) are present on some nodes and absent on others, which is how upstream's classes leave them. The natural port is one optional field each. Instead the node carries a `shape`, which constructor made it, and the shape says which fields it has (`keysOf`, nodes.ts), with the flags as plain booleans. That is upstream's own rule, a node's fields are its class's, so it reads well enough, but it is a second way of saying what the type should.
+The refusal test and shape-encoded boolean workaround are removed. ValueNode now carries inline, quoted, isHex and isColor as boolean | undefined, and the renderer determines boolean field presence from those values. Shape still selects nonboolean fields and container kind; it no longer supplies boolean presence. The port's own differential test holds every parsed tree to Go cohere, source Node and both backends under sanitizers. The minimized program moved to internal/oracle/testdata/boolean_optional_values.a.
 
 ## 3. A `case` that names a constant (closed by compiler's area-next, on main as 41791f72)
 

@@ -17,9 +17,7 @@ export class SelectorNode {
     attribute: string | undefined = undefined;
     operator: string | undefined = undefined;
     insensitive = false;
-    // gap 3: represent an absent boolean with a presence bit.
-    quoted = false;
-    quotedPresent = false;
+    quoted: boolean | undefined = undefined;
     rawInsensitive: string | undefined = undefined;
     unquoted: string | undefined = undefined;
     trailingComma = false;
@@ -156,7 +154,7 @@ export function render(nodes: readonly SelectorNode[], index: number, text: stri
         if(node.insensitive) {
             fields.set('insensitive', 'true');
         }
-        if(node.quotedPresent) {
+        if(node.quoted !== undefined) {
             fields.set('quoted', node.quoted ? 'true' : 'false');
         }
     }

@@ -1,0 +1,16 @@
+class Parent {
+    static flag: boolean | undefined = undefined;
+}
+class Child extends Parent {}
+console.log(String(Parent.flag));
+console.log(String(Child.flag));
+Parent.flag = false;
+console.log(String(Child.flag));
+Parent.flag = true;
+console.log(String(Child.flag));
+Child.flag = false;
+console.log(String(Child.flag));
+console.log(String(Parent.flag));
+Parent.flag = undefined;
+console.log(String(Parent.flag));
+console.log(String(Child.flag));

@@ -3,6 +3,7 @@ package lower
 import (
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -68,9 +69,17 @@ func jsonScalar(s *ir.JSONSchema) bool {
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
-// through an object type is refused: that type can hide additional fields or a toJSON method.
+// through an object type needs a complete literal-origin proof: its annotation can hide keys or toJSON.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
+	if n.Kind == ast.KindObjectLiteralExpression && l.jsonBooleanObject(n, 0) {
+		for _, property := range n.AsObjectLiteralExpression().Properties.Nodes {
+			if property.Kind == ast.KindSpreadAssignment {
+				value, err := l.expression(n)
+				return value, &ir.JSONSchema{Kind: "boolean_object"}, err
+			}
+		}
+	}
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
@@ -92,9 +101,6 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			value, child, err := l.jsonInput(v)
 			if err != nil {
 				return err
-			}
-			if value.Type() == ir.MaybeBoolean {
-				return l.notYet(v, "JSON.stringify a literal field with a two-word representation")
 			}
 			schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: len(literal.Fields), Schema: child})
 			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
@@ -169,6 +175,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if t.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
+	if depth == 0 && l.jsonBooleanObject(node, 0) {
+		return &ir.JSONSchema{Kind: "boolean_object"}, nil
+	}
 	of, known := l.representation(t)
 	if !known {
 		return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))
@@ -201,4 +210,65 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
 	return &ir.JSONSchema{Kind: kind}, nil
+}
+
+// Follow actual literal origins, never an annotated surface that could hide toJSON or keys.
+// The runtime enumerates the object's complete shape and physical scalar tags.
+func (l *lowering) jsonBooleanObject(node *ast.Node, depth int) bool {
+	if depth > 16 {
+		return false
+	}
+	node = ast.SkipParentheses(node)
+	if ast.IsIdentifier(node) {
+		symbol := l.symbol(node)
+		if symbol == nil || len(symbol.Declarations) != 1 {
+			return false
+		}
+		declaration := symbol.Declarations[0]
+		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+			return false
+		}
+		initializer := declaration.AsVariableDeclaration().Initializer
+		return initializer != nil && l.jsonBooleanObject(initializer, depth+1)
+	}
+	if node.Kind != ast.KindObjectLiteralExpression {
+		return false
+	}
+	for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind == ast.KindSpreadAssignment {
+			if !l.jsonBooleanObject(property.AsSpreadAssignment().Expression, depth+1) {
+				return false
+			}
+			continue
+		}
+		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+			return false
+		}
+		name, known := l.methodName(property)
+		if !known || name == "toJSON" || name == "__proto__" || strings.ContainsRune(name, 0) {
+			return false
+		}
+		value := property.Name()
+		if property.Kind == ast.KindPropertyAssignment {
+			value = property.AsPropertyAssignment().Initializer
+		}
+		proven := l.checker.GetTypeAtLocation(value)
+		of, known := l.representation(proven)
+		if proven.Flags()&checker.TypeFlagsUndefined == 0 && (!known || (of != ir.Boolean && of != ir.MaybeBoolean)) {
+			return false
+		}
+	}
+	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if contextual != nil {
+		for _, field := range l.checker.GetPropertiesOfType(contextual) {
+			if field.Name == "toJSON" || field.Name == "__proto__" {
+				return false
+			}
+			of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+			if !known || (of != ir.Boolean && of != ir.MaybeBoolean) {
+				return false
+			}
+		}
+	}
+	return true
 }

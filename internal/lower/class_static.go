@@ -122,7 +122,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if err != nil {
 				return nil, err
 			}
-			if slotless(of) {
+			if slotless(of) && of != ir.MaybeBoolean {
 				return nil, l.notYet(member, "a static field without a native slot")
 			}
 			if member.AsPropertyDeclaration().Initializer == nil && !l.uninitializedDeclaration(member) && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {

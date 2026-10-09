@@ -105,7 +105,11 @@ static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
 		adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
 		kind = number.present ? adamic_json_number : adamic_json_undefined;
 		value.number = number.number;
-	} else if (kind == adamic_json_union || kind == adamic_json_maybe_boolean) {
+	} else if (kind == adamic_json_maybe_boolean) {
+		adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(value.maybe_boolean);
+		kind = boolean.present ? adamic_json_boolean : adamic_json_undefined;
+		value.boolean = boolean.boolean;
+	} else if (kind == adamic_json_union) {
 		adamic_heap *reference = value.reference;
 		if (reference == NULL) { kind = adamic_json_undefined; }
 		else {
@@ -177,6 +181,36 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 		ascii(w, "]");
 		return true;
 	}
+
+    case adamic_json_boolean_object: {
+        const adamic_object *object = value.reference;
+        adamic_array *names = adamic_object_keys(object);
+        ascii(w, "{");
+        size_t written = 0;
+        size_t count = w->key_list ? w->key_count : names->length;
+        for (size_t index = 0; index < count; index++) {
+            adamic_string *name = w->key_list ? w->keys[index] : names->elements[index].reference;
+            for (size_t slot = 0; slot < object->shape->count; slot++) {
+                const char *key = object->shape->names[slot];
+                if (strlen(key) != name->length || memcmp(key, name->bytes, name->length) != 0 || adamic_object_orders(object)[slot] == 0) continue;
+                int type = object->dynamic_shape ? object->dynamic_types[slot] : adamic_shape_type(object->shape, slot);
+                adamic_json_schema child = {adamic_json_boolean, NULL, 0, NULL};
+                if (type == 9) child.kind = adamic_json_maybe_boolean;
+                else if (type == 3 && object->slots[slot].reference == NULL) child.kind = adamic_json_undefined;
+                else if (type != 2) {
+                    static const char message[] = "JSON boolean object lacks proven scalar metadata";
+                    adamic_panic(message, sizeof message - 1);
+                }
+                adamic_json_field field = {name, slot, &child};
+                write_field(w, object, &field, depth, &written);
+                break;
+            }
+        }
+        adamic_release(names);
+        if (written != 0) indent(w, depth);
+        ascii(w, "}");
+        return true;
+    }
 	case adamic_json_object: {
 		const adamic_object *object = value.reference;
 		ascii(w, "{");

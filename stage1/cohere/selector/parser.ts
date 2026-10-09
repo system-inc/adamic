@@ -123,7 +123,6 @@ class Parser {
                 attr.rawInsensitive = suffix;
             }
             const trimmed = (insensitive[0] ?? '').trim();
-            attr.quotedPresent = true;
             attr.quoted = trimmed.startsWith("'") || trimmed.startsWith('"');
             attr.unquoted = attr.quoted ? trimmed.slice(1, -1) : trimmed;
         }

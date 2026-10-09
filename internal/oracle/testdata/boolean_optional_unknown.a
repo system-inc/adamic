@@ -1,0 +1,18 @@
+interface Flag { flag?: boolean | undefined }
+function observe(value: unknown): void {
+    if (typeof value === 'object' && value !== null && 'flag' in value) {
+        console.log(String(value.flag));
+    } else { console.log('absent'); }
+}
+const value: Flag = {};
+observe(value);
+value.flag = false;
+observe(value);
+value.flag = true;
+observe(value);
+const copy: Flag = { ...value };
+observe(copy);
+delete value.flag;
+observe(value);
+value.flag = undefined;
+observe(value);

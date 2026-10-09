@@ -75,8 +75,9 @@ function source(of: Source): string {
 function field(node: ValueNode, key: string): string {
 	switch (key) {
 		case 'inline':
+			return String(node.inline);
 		case 'quoted':
-			return node.flag ? 'true' : 'false';
+			return String(node.quoted);
 		case 'isColor':
 			return node.isColor ? 'true' : 'false';
 		case 'isHex':
@@ -109,7 +110,7 @@ function field(node: ValueNode, key: string): string {
 function render(tree: ValueTree, depth: number, lines: string[]): void {
 	const node = tree.node;
 	let line = `${'  '.repeat(depth)}${node.type}`;
-	for (const key of keysOf(node.shape)) {
+	for (const key of keysOf(node)) {
 		line += ` ${key}=${field(node, key)}`;
 	}
 	if (hasNodes(node.shape)) {

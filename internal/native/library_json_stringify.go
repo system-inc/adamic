@@ -27,13 +27,6 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 }
 func (e *emitter) jsonSlot(expression ir.Expression) string {
 	value := e.value(expression)
-	// A maybe boolean has two words as a value, and is not a slot type. Make its scalar-or-
-	// undefined union for the duration of this call without allocating a number box.
-	if expression.Type() == ir.MaybeBoolean {
-		temp := e.temporary()
-		e.line("adamic_maybe_boolean %s = %s;", temp, value)
-		return fmt.Sprintf("(adamic_value){.reference = %s.present ? (%s.boolean ? (void *)&adamic_box_true : (void *)&adamic_box_false) : NULL}", temp, temp)
-	}
 	return borrowed(expression.Type(), value)
 }
 func (e *emitter) jsonStringify(expression ir.JSONStringify) string {

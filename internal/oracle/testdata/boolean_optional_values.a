@@ -1,0 +1,6 @@
+class Holder {
+	flag: boolean | undefined = undefined;
+}
+const holder = new Holder();
+holder.flag = true;
+console.log(`${holder.flag === true}`);

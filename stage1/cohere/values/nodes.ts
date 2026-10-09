@@ -8,10 +8,7 @@
 // fields are its class's. The Go side of the test checks every Go node has exactly the keys its shape
 // gives, so the class can't be leaving one out.
 //
-// The shape carries presence because stage 0 doesn't lower a boolean | undefined field yet (gap 2 in
-// GAPS.md), which is how the flags (inline, isHex, isColor, quoted) present on some nodes and absent on
-// others would otherwise be written. The other optional fields are plain values the shape ignores
-// where it leaves them out.
+// Boolean fields retain their own optional values. Shape selects the remaining node fields.
 //
 // A container's children are not a field of its node while the parse runs. The parser appends to them
 // long after it made the node (a func's arguments, a value's words), and a mutable list of nodes that
@@ -69,11 +66,12 @@ export class ValueNode {
 	readonly id: number;
 	unbalanced = 0;
 	readonly unit: string;
-	readonly flag: boolean;
-	isHex = false;
-	isColor = false;
+	inline: boolean | undefined = undefined;
+	quoted: boolean | undefined = undefined;
+	isHex: boolean | undefined = undefined;
+	isColor: boolean | undefined = undefined;
 
-	// flag is comment's inline and string's quoted, the one boolean each of them has.
+	// Constructors publish only the boolean field their upstream node owns.
 	constructor(type: string, shape: Shape, value: string, source: Source | undefined, sourceIndex: number, unit: string, flag: boolean, id: number) {
 		this.type = type;
 		this.shape = shape;
@@ -81,7 +79,8 @@ export class ValueNode {
 		this.source = source;
 		this.sourceIndex = sourceIndex;
 		this.unit = unit;
-		this.flag = flag;
+		if (shape === 'comment') { this.inline = flag; }
+		if (shape === 'string') { this.quoted = flag; }
 		this.id = id;
 	}
 }
@@ -99,7 +98,7 @@ export class ValueTree {
 
 // keysOf is the node's own fields but type, parent and nodes, sorted, as the library's class leaves
 // them: what the test's dump prints.
-export function keysOf(shape: Shape): readonly string[] {
+function shapeKeys(shape: Shape): readonly string[] {
 	switch (shape) {
 		case 'root':
 			return ['raws'];
@@ -108,11 +107,11 @@ export function keysOf(shape: Shape): readonly string[] {
 		case 'leaf':
 			return ['raws', 'source', 'sourceIndex', 'value'];
 		case 'word':
-			return ['isColor', 'isHex', 'raws', 'source', 'sourceIndex', 'value'];
+			return ['raws', 'source', 'sourceIndex', 'value'];
 		case 'paren':
 			return ['parenType', 'raws', 'source', 'sourceIndex', 'value'];
 		case 'comment':
-			return ['inline', 'raws', 'source', 'sourceIndex', 'value'];
+			return ['raws', 'source', 'sourceIndex', 'value'];
 		case 'atword':
 			return ['raws', 'source', 'sourceIndex', 'value'];
 		case 'number':
@@ -120,7 +119,7 @@ export function keysOf(shape: Shape): readonly string[] {
 		case 'func':
 			return ['raws', 'source', 'sourceIndex', 'unbalanced', 'value'];
 		case 'string':
-			return ['quoted', 'raws', 'source', 'sourceIndex', 'value'];
+			return ['raws', 'source', 'sourceIndex', 'value'];
 	}
 }
 
@@ -184,4 +183,16 @@ export function newFunc(value: string, source: Source, sourceIndex: number, id: 
 // nodes.go: newString, Node with type 'string' and quoted from its options.
 export function newString(value: string, source: Source, sourceIndex: number, quoted: boolean): ValueNode {
 	return new ValueNode('string', 'string', value, source, sourceIndex, '', quoted, -1);
+}
+
+// Optional booleans determine their own presence, independent of the constructor shape.
+export function keysOf(node: ValueNode): readonly string[] {
+	const keys: string[] = [];
+	if (node.inline !== undefined) { keys.push('inline'); }
+	if (node.isColor !== undefined) { keys.push('isColor'); }
+	if (node.isHex !== undefined) { keys.push('isHex'); }
+	if (node.quoted !== undefined) { keys.push('quoted'); }
+	for (const key of shapeKeys(node.shape)) { keys.push(key); }
+	keys.sort((left, right) => left < right ? -1 : left > right ? 1 : 0);
+	return keys;
 }

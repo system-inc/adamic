@@ -172,6 +172,10 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		case 9: {
+			adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot.maybe_boolean);
+			return !boolean.present ? NULL : boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		}
 		case 7: {
 			adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
 			return number.present ? adamic_box_number(number.number) : NULL;

@@ -1,0 +1,43 @@
+interface Flags { flag?: boolean | undefined }
+function show(value: Flags): void {
+    console.log(`${String(value.flag)}|${Object.keys(value).join(',')}`);
+    console.log(String(JSON.stringify({ flag: value.flag })));
+}
+const value: Flags = {};
+show(value);
+value.flag = false;
+show(value);
+value.flag = true;
+show(value);
+const copy: Flags = { ...value };
+show(copy);
+delete value.flag;
+show(value);
+const deleted: Flags = { ...value };
+show(deleted);
+value.flag = undefined;
+show(value);
+value.flag = false;
+show(value);
+class Holder {
+    flag: boolean | undefined = undefined;
+}
+const holder = new Holder();
+console.log(String(holder.flag));
+holder.flag = true;
+console.log(String(holder.flag));
+holder.flag = false;
+console.log(String(holder.flag));
+
+console.log(String(JSON.stringify(value)));
+console.log(String(JSON.stringify(copy)));
+console.log(String(JSON.stringify(deleted)));
+interface Pair { first?: boolean | undefined; second?: boolean | undefined }
+const pair: Pair = { first: true, second: false };
+delete pair.first;
+pair.first = true;
+console.log(String(JSON.stringify(pair)));
+const pairCopy: Pair = { ...pair };
+console.log(String(JSON.stringify(pairCopy)));
+console.log(String(JSON.stringify(pair, ['first', 'second'])));
+console.log(String(JSON.stringify({ ...pair })));

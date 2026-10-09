@@ -408,6 +408,9 @@ func (e *emitter) dynamicProperties() bool {
 		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
 			found = true
 		}
+		if call, ok := expression.(ir.JSONStringify); ok && call.Schema != nil && call.Schema.Kind == "boolean_object" {
+			found = true
+		}
 		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
 			found = true
 		}

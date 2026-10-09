@@ -262,9 +262,9 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
-	case ir.MaybeNumber:
-		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
-		return ir.MaybeOf{Of: ir.MaybeNumber}
+	case ir.MaybeNumber, ir.MaybeBoolean:
+		// A scalar optional left without a value keeps its declared slot representation.
+		return ir.MaybeOf{Of: of}
 	}
 	return ir.Undefined{}
 }

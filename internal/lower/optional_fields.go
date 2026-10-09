@@ -47,7 +47,10 @@ func (l *lowering) optionalLiteralSlots(node *ast.Node, own []ir.Field) ([]ir.Fi
 			if len(members) > 1 {
 				of = l.declaredField(node, field.Name)
 			}
-			if of == 0 || slotless(of) || !(of.IsReference() || of == ir.MaybeNumber) {
+			if of == ir.MaybeBoolean && field.Name == "__proto__" {
+				return nil, l.notYet(node, "an optional boolean slot with __proto__ setter semantics")
+			}
+			if of == 0 || (slotless(of) && of != ir.MaybeBoolean) || !(of.IsReference() || of.IsMaybe()) {
 				continue // Unsupported representations remain refused at their reads and writes.
 			}
 			missing = append(missing, ir.Field{Name: field.Name, Value: fit(ir.Undefined{}, of)})

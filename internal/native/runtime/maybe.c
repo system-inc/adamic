@@ -51,5 +51,9 @@ uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value) {
     return value.present ? (value.boolean ? 1 : 0) : 2;
 }
 adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed) {
+    if (packed > 2) {
+        static const char message[] = "invalid boolean field domain";
+        adamic_panic(message, sizeof message - 1);
+    }
     return (adamic_maybe_boolean){packed != 2, packed == 1};
 }
