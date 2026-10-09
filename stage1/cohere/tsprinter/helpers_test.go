@@ -145,7 +145,8 @@ func natively(t *testing.T, program *ir.Program, arguments ...string) (run, stri
 }
 
 // nativeBinary allows a corpus-owning test to build before starting its run units.
-// The owner supplies the directory so it outlives preparation.
+// The directory argument remains compatible with corpus preparation callers;
+// the shared cache now owns the binary and keeps it alive for all run units.
 func nativeBinary(t *testing.T, program *ir.Program, directory string) string {
 	t.Helper()
 	binary, err := buildNative(program, directory)
@@ -155,12 +156,8 @@ func nativeBinary(t *testing.T, program *ir.Program, directory string) string {
 	return binary
 }
 
-func buildNative(program *ir.Program, directory string) (string, error) {
-	binary := filepath.Join(directory, "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		return "", err
-	}
-	return binary, nil
+func buildNative(program *ir.Program, _ string) (string, error) {
+	return cachedNative(program)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on

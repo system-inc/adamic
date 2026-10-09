@@ -94,15 +94,13 @@ func TestMutants(t *testing.T) {
 			break
 		}
 	}
-	// Build once before the timed run units. Directories belong to this test,
-	// so binaries survive until every shard finishes.
+	// Fetch or build once before the timed run units. Cache products outlive
+	// every shard; source mutant directories belong to this test.
 	paths := make([]string, testMutantsShards)
-	directories := make([]string, testMutantsShards)
 	for i, change := range mutations {
 		paths[i] = mutatedPort(t, change)
-		directories[i] = t.TempDir()
 	}
-	binaries := buildMutants(t, paths, directories)
+	binaries := buildMutants(t, paths)
 	if t.Failed() {
 		return
 	}

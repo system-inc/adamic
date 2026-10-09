@@ -104,7 +104,7 @@ func mutantCorpus(t *testing.T, change mutation, path, want string) (string, str
 
 // Preparation belongs to the parent, not to timed shard subtests. Limit heavy
 // compiler work to four workers and report all errors from the test goroutine.
-func buildMutants(t *testing.T, paths, directories []string) []string {
+func buildMutants(t *testing.T, paths []string) []string {
 	t.Helper()
 	binaries := make([]string, len(paths))
 	errors := make([]error, len(paths))
@@ -116,10 +116,8 @@ func buildMutants(t *testing.T, paths, directories []string) []string {
 		go func(i int) {
 			defer group.Done()
 			defer func() { <-workers }()
-			program, err := lowerProgram(paths[i])
-			if err == nil {
-				binaries[i], err = buildNative(program, directories[i])
-			}
+			binary, err := cachedMutant(paths[i])
+			binaries[i] = binary
 			if err != nil {
 				errors[i] = fmt.Errorf("mutant %d (%s): %w", i, mutations[i].name, err)
 			}
