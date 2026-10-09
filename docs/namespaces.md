@@ -419,3 +419,9 @@ Executable namespaces retain SCC reachability and runtime readiness checks.
 The [sys initialization report](../stage3/namespace-init-sys/REPORT.md) records
 exact host reductions, Node observations, both backend diagnostics, runnable
 structural controls, the reaching-access mutant and the production rerun.
+
+## Namespace objects passed, stored or returned
+
+Namespace container values remain a temporary `NotYet` boundary. Qualified exports use live singleton slots, but there is no runtime namespace object sharing those slots. The diagnostic names the namespace, its declaration and the escaping expression, and recommends qualified member access or passing fixed namespace functions with explicit state.
+
+The passing controls and the three stored, passed and returned witnesses in `stage3/namespace-value` pin this distinction against Node. Object snapshots lose live reads and alias writes. This boundary does not establish a permanent language refusal; see `stage3/namespace-value/REPORT.md` for the replay and mutant evidence.

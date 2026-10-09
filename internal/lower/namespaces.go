@@ -217,7 +217,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
 		}
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
-			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
+			return l.namespaceValueNotYet(node)
 		}
 	}
 	if l.isExpression(node) && l.namespaceMember(node) {
