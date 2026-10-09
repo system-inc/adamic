@@ -562,3 +562,13 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-08T23:57:59.085864Z,runtime,2,8,0,,,queue_empty
 2026-10-08T23:58:00.973406Z,library,1,8,0,,,"gate_backpressure: 114 queued, 8 slots"
 2026-10-08T23:58:09.604553Z,developer_tools,0,4,0,,,"gate_backpressure: 114 queued, 8 slots"
+2026-10-09T00:01:27.307684Z,compiler,13,30,0,,,"gate_backpressure: 117 queued, 8 slots"
+2026-10-09T00:01:59.454814Z,cohere_adamic,3,30,0,,,"gate_backpressure: 117 queued, 8 slots"
+2026-10-09T00:02:10.993514Z,typescript,6,10,4,55-step24-jsdoc.md,01a1140d-2d02-752e-9fbf-0a3827712012,sent
+2026-10-09T00:02:19.657329Z,typescript,7,10,3,56-step09-adapt77.md,01a1140d-501e-74b5-ad50-62e558103015,sent
+2026-10-09T00:02:26.687986Z,typescript,8,10,2,60-step31-checker-stop.md,01a1140d-7312-74d4-886b-c6abad79f00c,sent
+2026-10-09T00:02:26.690365Z,typescript,9,10,1,,,pass_cap
+2026-10-09T00:02:37.174697Z,runtime,1,8,1,14-slice6b-canonical-graph.md,01a11477-b1e8-7134-8ed7-8360ef421013,sent
+2026-10-09T00:02:37.703474Z,runtime,2,8,0,,,queue_empty
+2026-10-09T00:02:39.649037Z,library,1,8,0,,,"gate_backpressure: 117 queued, 8 slots"
+2026-10-09T00:02:47.903331Z,developer_tools,0,4,0,,,"gate_backpressure: 117 queued, 8 slots"
