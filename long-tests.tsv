@@ -1,0 +1,131 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree	343.14	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants (setup)	339.10	fail
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/native	325.19	pass
+github.com/system-inc/adamic/bridge/tsgo	TestBridge	309.97	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly	288.89	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveryMutants_001	279.71	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestTSCCorpusAgreement (setup)	269.80	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo (setup)	227.21	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths (setup)	206.51	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestExpressionsAgainstGoAndPrettier (setup)	201.18	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownRootLayout (setup)	167.69	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownHTMLBlockLayout (setup)	164.73	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownCodeBlockLayout (setup)	164.37	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveredExpressionMutant	155.49	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDecoratedExportMutant (setup)	150.91	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestExpressionsAgree	148.65	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMatchesGo	146.73	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDeepGrammar	143.59	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/mapped-constraint	140.27	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestLossyInputControl	138.58	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceDiagnostics	137.93	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestUnattachedDecoratorControl	137.03	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownAstPath (setup)	135.94	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestGeneratedAgreement	127.89	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestJSXMutant (setup)	127.76	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileControls_001	125.70	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestCookedSurrogates	124.36	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/reference-pragma	123.80	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveredExpressions	121.87	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxRefusals	121.80	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceDiagnosticControl	120.08	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceGrammar	116.34	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestCookedSurrogateMutant	115.96	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxGrammar	114.41	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDecoratedExports (setup)	112.88	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/erasure-precedence	110.35	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveredGrammar	108.75	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestUnattachedDecorator	108.64	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestJSXAgreement (setup)	108.42	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestLossyInputRefusal	107.46	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveryLoweredRecipe (setup)	106.42	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveryMutants_002	104.80	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownSourceDecoding (setup)	100.57	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestPortStallControl_000	95.77	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	94.93	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_012	90.13	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_000	90.11	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_024	90.11	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_014	90.11	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_005	90.11	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_017	90.10	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_020	90.10	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_002	90.10	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_013	90.09	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_010	90.09	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_015	90.09	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_018	90.09	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_022	90.09	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_001	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_006	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_009	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_003	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_008	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_019	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_011	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/lint	TestRulesAgree	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutantsUnion	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_Setup	90.08	fail
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownQuoteLayout	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_023	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_021	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_007	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_016	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_004	90.07	fail
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceMutants_Setup	90.04	fail
+github.com/system-inc/adamic/stage1/cohere/estree	TestThreePortMutants_Setup	90.04	fail
+github.com/system-inc/adamic/stage1/cohere/estree	TestScalarEdges	90.02	fail
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterMutants (setup)	86.68	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestShadowIndexMissingBinding_000	85.74	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestConsumerCommentHelpers	84.42	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileControls_000	79.06	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestNativeMdastConstruction (setup)	78.70	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle	TestCompileProfiles	77.60	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterOptimizedMatchesGo	76.70	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining	TestCompileProfiles	72.66	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestUnistMatchesGo	72.58	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation	TestCompileProfiles	71.63	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestNodeCountCheckCatchesMutant	71.61	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMemberNameRejection	70.74	pass
+github.com/system-inc/adamic/internal/native	TestSplitTSGoAgrees	69.63	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/wasi	69.41	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias	TestCompileProfiles	68.51	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeCompilerAgrees	67.63	pass
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestShapeFixtures (setup)	67.51	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestComposeMatchGo	63.05	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestInspectRequestRefusals (setup)	62.19	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCompositionMatchesGo	60.41	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestOptionalBooleanPrinterMatchesGo	58.43	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_0338	54.20	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCompositionMatchesGoUnion	52.26	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes_Setup	52.23	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestScalarEdges_Setup	50.07	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_005	43.66	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail (setup)	42.83	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterAsGoCohere (setup)	37.82	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	36.61	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/leak_sanitizer	36.53	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCountGuardMutant	36.45	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants/raw_attribute_value	36.37	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections (setup)	35.72	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants (setup)	35.63	pass
+github.com/system-inc/adamic/stage1/typescript/scanner	TestScannerAgreesWithTypescriptGo (setup)	35.45	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/shard-013	34.66	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/shard-014	34.44	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/undefined_behavior_sanitizer	33.42	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections/escaped_name_accepted	32.82	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants/JSX_name_payload	32.65	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/base-shapes	32.41	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/apparent-shape	31.90	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/widened-shape	31.75	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCompositionMatchesGo_006	31.51	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/call-parameters	31.22	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/call-count	31.20	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/assignable-types	30.91	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCompositionMatchesGo_000	30.84	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline_Setup	30.77	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestUnistMutants/document_end_marker_lost	30.76	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections/private_name_accepted	30.22	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/address_sanitizer	30.13	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/shard-078	30.07	pass
