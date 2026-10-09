@@ -1,0 +1,49 @@
+run adamic-verify-20261009T104711-ae07e82d: void, 7937 tests in 92 units, 6 failed, 34 units broken, 0 killed over budget
+BROKEN tests-01: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-06: no results (exited false, last output "loom-runner: still running after 420 s")
+BROKEN tests-11: no results (exited false, last output "loom-runner: still running after 480 s")
+BROKEN tests-16: no results (exited false, last output "loom-pilot: 0c616c0dd185 slot ? cpus ? tree 4745f4736527be0a171f72737f7624f408b31f06 setup 442 s, 2 packages at a time")
+BROKEN tests-17: no results (exited false, last output "loom-runner: still running after 570 s")
+BROKEN tests-21: no results (exited false, last output "loom-runner: still running after 390 s")
+BROKEN tests-22: no results (exited false, last output "loom-runner: still running after 540 s")
+BROKEN tests-23: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-24: no results (exited false, last output "loom-pilot: 42cfa37b3403 slot ? cpus ? tree 4745f4736527be0a171f72737f7624f408b31f06 setup 448 s, 2 packages at a time")
+BROKEN tests-28: no results (exited false, last output "")
+BROKEN tests-01-r1: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-11-r2: no results (exited false, last output "loom-runner: still running after 390 s")
+BROKEN tests-11-r5: no results (exited false, last output "loom-runner: still running after 540 s")
+BROKEN tests-11-r9: no results (exited false, last output "")
+BROKEN tests-11-r10: no results (exited false, last output "")
+BROKEN tests-11-r11: no results (exited false, last output "")
+BROKEN tests-23-r3: no results (exited false, last output "loom-runner: still running after 420 s")
+BROKEN tests-23-r4: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-28-r1: no results (exited false, last output "")
+BROKEN tests-28-r2: no results (exited false, last output "")
+BROKEN tests-28-r3: no results (exited false, last output "")
+BROKEN tests-28-r4: no results (exited false, last output "")
+BROKEN tests-28-r5: no results (exited false, last output "")
+BROKEN tests-28-r6: no results (exited false, last output "")
+BROKEN tests-28-r7: no results (exited false, last output "")
+BROKEN tests-28-r8: no results (exited false, last output "")
+BROKEN tests-28-r9: no results (exited false, last output "")
+BROKEN tests-28-r10: no results (exited false, last output "")
+BROKEN tests-28-r11: no results (exited false, last output "")
+BROKEN tests-28-r12: no results (exited false, last output "")
+BROKEN tests-28-r13: no results (exited false, last output "")
+BROKEN tests-28-r14: no results (exited false, last output "")
+BROKEN tests-28-r15: no results (exited false, last output "")
+BROKEN tests-28-r16: no results (exited false, last output "")
+FAIL github.com/system-inc/adamic/stage1/typescript/parser TestPushSpreadGap (tests-05)
+    gaps_test.go:64: GAPS.md records push spread NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/lower TestOptionalIndexingMapShapeRefused (tests-09)
+    optional_indexing_boundary_test.go:18: got <nil>, want structural Map receiver boundary
+FAIL github.com/system-inc/adamic/stage1/cohere/cssstrings TestMultiPushGap (tests-09)
+    gaps_test.go:29: gap changed: <nil>; update GAPS.md and remove the workaround if closed
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestDocumentedStageZeroGaps/multiplePush.ts (tests-15)
+    gaps_test.go:33: gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-26)
+    call_targets_guard_test.go:171: unapproved call-target read internal/lower/exceptions.go:throwsOutReadiness:ArraySort.Comparator at /tmp/adamic/internal/lower/exceptions.go:210:106; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:171: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:45:13; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:184: stale call-target allowlist entry internal/lower/exceptions.go:throwsOut:ArraySort.Comparator; remove it
+FAIL github.com/system-inc/adamic/internal/oracle TestEnumCleanupMutant (tests-26)
+    enums_test.go:137: enum cleanup site not unique
