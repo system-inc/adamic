@@ -1,0 +1,42 @@
+[
+  {
+    "name": "shared",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-css-print/shared.cover",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestSharedSliceAppendAgreesWithNode$"
+    ],
+    "exit": 0,
+    "seconds": 7.727184379000391
+  },
+  {
+    "name": "optional",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-css-print/optional.cover",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestOptionalBooleanPrinterMatchesGo$"
+    ],
+    "exit": 0,
+    "seconds": 33.93715423799949
+  }
+]

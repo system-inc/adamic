@@ -1,0 +1,47 @@
+[
+  {
+    "test": "TestSharedSliceAppendAgreesWithNode",
+    "package": "stage1/cohere/css",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalBooleanPrinterMatchesGo",
+      "TestThePortParsesAsGoCohereDoes comparison family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/string_share.c:61",
+        "change": "Flip owner references == 0 to != 0, dropping dynamic owner retention.",
+        "rows_failed": [
+          "TestSharedSliceAppendAgreesWithNode",
+          "TestThePortParsesAsGoCohereDoes comparison family",
+          "TestCSSPrinterAgreesWithGo family",
+          "TestCompositionMatchesGo family"
+        ],
+        "matrix": "D1-*.log; complete observed results in matrix.json; timeout-only failures are not kills."
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/string_append.c:90",
+        "change": "Drop adamic_release(string) when replacement append storage is allocated.",
+        "rows_failed": [
+          "TestSharedSliceAppendAgreesWithNode",
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestThePortParsesAsGoCohereDoes_073"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/string_append.c:77",
+        "change": "Copy length - 1 prefix bytes instead of length.",
+        "rows_failed": [
+          "TestOptionalBooleanPrinterMatchesGo",
+          "TestThePortParsesAsGoCohereDoes_073"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-css-tmp/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run <exact nine-row regexp in fallback-runs.json>: shared_slice_test.go:28: exit 1. D1: shared_slice_test.go:24: native: exit 1, AddressSanitizer heap-use-after-free, READ of size 128. D3 target PASS; prefix-byte-probe Node and clean native 1152 120, mutated native 1152 190."
+  }
+]
