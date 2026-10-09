@@ -1,0 +1,254 @@
+[
+  {
+    "id": "D01-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.41800632100057555,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D02-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.32387525400554296,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D03-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.29585890500311507,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D04-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.3070914060008363,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D05-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.30961899799876846,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D06-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.30439564799598884,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D07-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.29863407800439745,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "switch-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 0.39831707399571314,
+    "exit": 0,
+    "selector": null,
+    "build_cache": null
+  },
+  {
+    "id": "D01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 79.70058147099917,
+    "exit": 1,
+    "selector": "D01",
+    "build_cache": "/workspace/defend-test262-cache/D01"
+  },
+  {
+    "id": "D02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 62.74571114799619,
+    "exit": 1,
+    "selector": "D02",
+    "build_cache": "/workspace/defend-test262-cache/D02"
+  },
+  {
+    "id": "D03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 72.57951929500268,
+    "exit": 1,
+    "selector": "D03",
+    "build_cache": "/workspace/defend-test262-cache/D03"
+  },
+  {
+    "id": "D04",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 58.15989655999874,
+    "exit": 1,
+    "selector": "D04",
+    "build_cache": "/workspace/defend-test262-cache/D04"
+  },
+  {
+    "id": "D05",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 56.044771139997465,
+    "exit": 1,
+    "selector": "D05",
+    "build_cache": "/workspace/defend-test262-cache/D05"
+  },
+  {
+    "id": "D06",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 64.14423793799506,
+    "exit": 1,
+    "selector": "D06",
+    "build_cache": "/workspace/defend-test262-cache/D06"
+  },
+  {
+    "id": "D07",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 48.887540743999125,
+    "exit": 1,
+    "selector": "D07",
+    "build_cache": "/workspace/defend-test262-cache/D07"
+  }
+]

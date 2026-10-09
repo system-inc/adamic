@@ -1,0 +1,27 @@
+[
+  {
+    "test": "TestVerdictCorpus",
+    "code_under_test": "decide, decideNegative, crashedExecution and verdict helpers in verdict.go",
+    "oracle": "Handwritten verdictInput JSON fixtures and Want labels; self"
+  },
+  {
+    "test": "TestFrontmatterShapes",
+    "code_under_test": "parseFrontmatter, parseYAMLSubset, addField and classify",
+    "oracle": "Handwritten expected Features, Flags, Includes, NegativePhase, NegativeType and non-skip invariant; self"
+  },
+  {
+    "test": "TestMiniRunner",
+    "code_under_test": "prepare, engine.runFilter, engine.attempt, listTests, report accumulation",
+    "oracle": "Executing Node compared with native plus handwritten report counts and refuses-var label; external-run and self"
+  },
+  {
+    "test": "TestEditCacheSeparation",
+    "code_under_test": "engine.attempt cache-command identities and result/profile observation paths",
+    "oracle": "Executing Node plus handwritten cache-hit histories after runtime/compiler edits; external-run and self"
+  },
+  {
+    "test": "TestCompilerStartupMeasurement",
+    "code_under_test": "runCommandWithLimit and limitedBuffer production capture of compiler subprocess output",
+    "oracle": "Exact C from internal/load, internal/lower and internal/native.C; self. No timing threshold asserted."
+  }
+]

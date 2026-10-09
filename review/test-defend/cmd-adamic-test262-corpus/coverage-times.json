@@ -1,0 +1,173 @@
+[
+  {
+    "test": "TestVerdictCorpus",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestVerdictCorpus.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestVerdictCorpus$"
+    ],
+    "seconds": 23.63107875299829,
+    "exit": 0
+  },
+  {
+    "test": "TestEditCacheSeparation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestEditCacheSeparation.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestEditCacheSeparation$"
+    ],
+    "seconds": 26.79743741999846,
+    "exit": 0
+  },
+  {
+    "test": "TestFrontmatterShapes",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestFrontmatterShapes.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestFrontmatterShapes$"
+    ],
+    "seconds": 2.966011806998722,
+    "exit": 0
+  },
+  {
+    "test": "TestClassifyCorpus",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestClassifyCorpus.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestClassifyCorpus$"
+    ],
+    "seconds": 3.4598604689999775,
+    "exit": 0
+  },
+  {
+    "test": "TestMiniRunner",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestMiniRunner.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestMiniRunner$"
+    ],
+    "seconds": 9.711908133001998,
+    "exit": 0
+  },
+  {
+    "test": "TestParallelCachedMatchesSerial",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestParallelCachedMatchesSerial.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestParallelCachedMatchesSerial$"
+    ],
+    "seconds": 11.12381412400282,
+    "exit": 0
+  },
+  {
+    "test": "TestLoweringSourceEdit",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestLoweringSourceEdit.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestLoweringSourceEdit$"
+    ],
+    "seconds": 8.93806993600083,
+    "exit": 0
+  },
+  {
+    "test": "TestCompilerStartupMeasurement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestCompilerStartupMeasurement.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerStartupMeasurement$"
+    ],
+    "seconds": 12.71788012899924,
+    "exit": 0
+  },
+  {
+    "test": "TestLargeCompilerOutputIsComplete",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/cmd/adamic-test262",
+      "-coverprofile=review/test-defend/cmd-adamic-test262-corpus/coverage/TestLargeCompilerOutputIsComplete.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestLargeCompilerOutputIsComplete$"
+    ],
+    "seconds": 22.333672264998313,
+    "exit": 0
+  }
+]

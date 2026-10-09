@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -314,7 +314,7 @@
+ 	arguments = append(arguments, e.runtime...)
+ 	arguments = append(arguments, "-lm")
+ 	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+-	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
++	key := nativeResultKey(lowered.Stdout, "", nativeCommand, e.context)
+ 	linkFailed := false
+ 	// Imported modules can read files or have mutable dependencies. Until their whole input
+ 	// graph is keyed, all their observations run fresh.

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -448,7 +448,7 @@
+ 		if len(data) > room {
+ 			data = data[:room]
+ 		}
+-		_, _ = buffer.buf.Write(data)
++		_, _ = buffer.buf.Write(data[:max(0, len(data)-1)])
+ 	}
+ 	return written, nil
+ }

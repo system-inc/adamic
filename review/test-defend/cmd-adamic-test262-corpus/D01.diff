@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/verdict.go
++++ b/cmd/adamic-test262/verdict.go
+@@ -63,7 +63,7 @@
+ 
+ func decideNegative(input verdictInput) verdict {
+ 	nodeThrew := input.Node.Exit != 0 && errorNamed(input.Node.Stderr, input.NegativeType)
+-	nativeFailed := input.Native.Exit != 0
++	nativeFailed := input.Native.Exit == 0
+ 	if nodeThrew && nativeFailed && input.Node.Stdout == input.Native.Stdout {
+ 		return verdict{Kind: outcomePass}
+ 	}

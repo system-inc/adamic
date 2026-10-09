@@ -1,0 +1,41 @@
+[
+  {
+    "id": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "seconds": 0.9512125200017181,
+    "exit": 0
+  },
+  {
+    "id": "list",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./cmd/adamic-test262/"
+    ],
+    "seconds": 11.144392182999582,
+    "exit": 0
+  },
+  {
+    "id": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "seconds": 78.54215975699844,
+    "exit": 0
+  }
+]

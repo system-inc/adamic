@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/frontmatter.go
++++ b/cmd/adamic-test262/frontmatter.go
+@@ -72,7 +72,7 @@
+ 		indent := indentOf(line)
+ 		trim := strings.TrimSpace(line)
+ 		if strings.HasPrefix(trim, "- ") && listKey != "" && indent > listIndent {
+-			addField(&parsed, listKey, unquote(strings.TrimSpace(trim[2:])))
++
+ 			continue
+ 		}
+ 		colon := strings.Index(trim, ":")

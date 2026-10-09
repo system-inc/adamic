@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -459,7 +459,7 @@
+ 	root := filepath.Join(test262, "test")
+ 	target := root
+ 	if filter != "" {
+-		target = filepath.Join(root, filepath.FromSlash(filter))
++
+ 	}
+ 	info, err := os.Stat(target)
+ 	if err != nil {

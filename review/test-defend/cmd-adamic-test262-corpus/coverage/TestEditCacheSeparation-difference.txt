@@ -1,0 +1,9 @@
+Row: TestEditCacheSeparation
+Subsumer: TestLoweringSourceEdit
+Exclusive covered blocks:
+github.com/system-inc/adamic/cmd/adamic-test262/cache.go:225.4,225.12
+github.com/system-inc/adamic/cmd/adamic-test262/profile.go:38.3,38.17
+github.com/system-inc/adamic/cmd/adamic-test262/profile.go:38.18,38.18
+Exclusive covered source lines:
+cmd/adamic-test262/cache.go:225: 			continue
+cmd/adamic-test262/profile.go:38: 		return func() {}

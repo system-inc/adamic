@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -393,7 +393,7 @@
+ 	command.Stderr = &stderr
+ 	err := command.Run()
+ 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
+-	if stdout.exceeded || stderr.exceeded {
++	if !stdout.exceeded || stderr.exceeded {
+ 		result.Exit = -1
+ 		result.Stderr = "command output exceeded capture limit\n"
+ 		return result

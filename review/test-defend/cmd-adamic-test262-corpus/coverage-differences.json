@@ -1,0 +1,129 @@
+[
+  {
+    "test": "TestVerdictCorpus",
+    "subsumer": "TestEditCacheSeparation",
+    "row_only_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:53.3,54.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:56.3,57.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:61.2,61.66",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:65.2,67.75",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:68.3,69.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:70.2,71.26",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:73.9,73.23",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:75.9,75.35",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:76.3,77.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:80.2,80.51",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:84.2,84.16",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:87.2,87.91",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:99.2,99.9",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:109.3,109.28",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:116.2,116.52",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:117.3,118.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:119.2,119.42",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:122.2,122.46",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:123.3,124.1"
+    ],
+    "row_only_lines": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:53",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:54",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:56",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:57",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:61",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:65",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:66",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:67",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:68",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:69",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:70",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:71",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:73",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:75",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:76",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:77",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:80",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:84",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:87",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:99",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:109",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:116",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:117",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:118",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:119",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:122",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:123",
+      "github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:124"
+    ]
+  },
+  {
+    "test": "TestFrontmatterShapes",
+    "subsumer": "TestClassifyCorpus",
+    "row_only_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:79.2,79.21",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:102.3,102.15",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:164.2,164.85",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:167.2,167.82",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:170.2,170.41",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:173.2,173.194",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:176.2,176.18",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:64.4,64.69",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:65.5,65.13",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:67.4,67.20",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:75.4,76.12",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:85.4,86.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:93.4,94.12",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:122.3,122.45"
+    ],
+    "row_only_lines": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:79",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:102",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:164",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:167",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:170",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:173",
+      "github.com/system-inc/adamic/cmd/adamic-test262/classify.go:176",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:64",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:65",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:67",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:75",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:76",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:85",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:86",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:93",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:94",
+      "github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:122"
+    ]
+  },
+  {
+    "test": "TestMiniRunner",
+    "subsumer": "TestParallelCachedMatchesSerial",
+    "row_only_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:164.3,165.1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:462.3,463.1"
+    ],
+    "row_only_lines": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:164",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:165",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:462",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:463"
+    ]
+  },
+  {
+    "test": "TestEditCacheSeparation",
+    "subsumer": "TestLoweringSourceEdit",
+    "row_only_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/cache.go:225.4,225.12",
+      "github.com/system-inc/adamic/cmd/adamic-test262/profile.go:38.3,38.17",
+      "github.com/system-inc/adamic/cmd/adamic-test262/profile.go:38.18,38.18"
+    ],
+    "row_only_lines": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/cache.go:225",
+      "github.com/system-inc/adamic/cmd/adamic-test262/profile.go:38"
+    ]
+  },
+  {
+    "test": "TestCompilerStartupMeasurement",
+    "subsumer": "TestLargeCompilerOutputIsComplete",
+    "row_only_blocks": [],
+    "row_only_lines": []
+  }
+]

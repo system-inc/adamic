@@ -1,0 +1,72 @@
+[
+  {
+    "id": "D01",
+    "test": "TestVerdictCorpus",
+    "file": "cmd/adamic-test262/verdict.go",
+    "old": "nativeFailed := input.Native.Exit != 0",
+    "new": "nativeFailed := input.Native.Exit == 0",
+    "menu": "flip condition",
+    "difference": "decideNegative covered by VerdictCorpus, not EditCacheSeparation",
+    "line": 66
+  },
+  {
+    "id": "D02",
+    "test": "TestFrontmatterShapes",
+    "file": "cmd/adamic-test262/frontmatter.go",
+    "old": "\t\t\taddField(&parsed, listKey, unquote(strings.TrimSpace(trim[2:])))",
+    "new": "",
+    "menu": "drop statement",
+    "difference": "block-list addField branch covered only by Shapes versus ClassifyCorpus",
+    "line": 75
+  },
+  {
+    "id": "D03",
+    "test": "TestMiniRunner",
+    "file": "cmd/adamic-test262/run.go",
+    "old": "\t\ttarget = filepath.Join(root, filepath.FromSlash(filter))",
+    "new": "",
+    "menu": "drop statement",
+    "difference": "nonempty-filter path covered only by MiniRunner versus ParallelCachedMatchesSerial",
+    "line": 462
+  },
+  {
+    "id": "D04",
+    "test": "TestEditCacheSeparation",
+    "file": "cmd/adamic-test262/run.go",
+    "old": "nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)",
+    "new": "nativeResultKey(lowered.Stdout, \"\", nativeCommand, e.context)",
+    "menu": "change identity argument to empty constant",
+    "difference": "EditCacheSeparation changes runtimeKey while LoweringSourceEdit changes context; statement coverage does not record these argument histories",
+    "line": 317
+  },
+  {
+    "id": "D05",
+    "test": "TestCompilerStartupMeasurement",
+    "file": "cmd/adamic-test262/run.go",
+    "old": "\tcommand.Stdout = &stdout",
+    "new": "",
+    "menu": "drop statement",
+    "difference": "No exclusive blocks; test exact subprocess/in-process C comparison by dropping captured stdout",
+    "line": 392
+  },
+  {
+    "id": "D06",
+    "test": "TestCompilerStartupMeasurement",
+    "file": "cmd/adamic-test262/run.go",
+    "old": "buffer.buf.Write(data)",
+    "new": "buffer.buf.Write(data[:max(0, len(data)-1)])",
+    "menu": "off-by-one write bound",
+    "difference": "No exclusive blocks; lose one final byte from each capture write, preserving successful compiler exit",
+    "line": 451
+  },
+  {
+    "id": "D07",
+    "test": "TestCompilerStartupMeasurement",
+    "file": "cmd/adamic-test262/run.go",
+    "old": "if stdout.exceeded || stderr.exceeded {",
+    "new": "if !stdout.exceeded || stderr.exceeded {",
+    "menu": "flip condition",
+    "difference": "No exclusive blocks; reject complete stdout capture as overflow",
+    "line": 396
+  }
+]

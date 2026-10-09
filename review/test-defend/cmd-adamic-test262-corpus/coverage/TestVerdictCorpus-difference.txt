@@ -1,0 +1,51 @@
+Row: TestVerdictCorpus
+Subsumer: TestEditCacheSeparation
+Exclusive covered blocks:
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:53.3,54.1
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:56.3,57.1
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:61.2,61.66
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:65.2,67.75
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:68.3,69.1
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:70.2,71.26
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:73.9,73.23
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:75.9,75.35
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:76.3,77.1
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:80.2,80.51
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:84.2,84.16
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:87.2,87.91
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:99.2,99.9
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:109.3,109.28
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:116.2,116.52
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:117.3,118.1
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:119.2,119.42
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:122.2,122.46
+github.com/system-inc/adamic/cmd/adamic-test262/verdict.go:123.3,124.1
+Exclusive covered source lines:
+cmd/adamic-test262/verdict.go:53: 		return verdict{Kind: outcomeCrashed, Reason: crashReason(input)}
+cmd/adamic-test262/verdict.go:54: 	}
+cmd/adamic-test262/verdict.go:56: 		return decideNegative(input)
+cmd/adamic-test262/verdict.go:57: 	}
+cmd/adamic-test262/verdict.go:61: 	return verdict{Kind: outcomeFail, Reason: disagreeReason(input)}
+cmd/adamic-test262/verdict.go:65: 	nodeThrew := input.Node.Exit != 0 && errorNamed(input.Node.Stderr, input.NegativeType)
+cmd/adamic-test262/verdict.go:66: 	nativeFailed := input.Native.Exit != 0
+cmd/adamic-test262/verdict.go:67: 	if nodeThrew && nativeFailed && input.Node.Stdout == input.Native.Stdout {
+cmd/adamic-test262/verdict.go:68: 		return verdict{Kind: outcomePass}
+cmd/adamic-test262/verdict.go:69: 	}
+cmd/adamic-test262/verdict.go:70: 	reason := "negative " + input.NegativeType + " not observed"
+cmd/adamic-test262/verdict.go:71: 	if input.Node.Exit == 0 {
+cmd/adamic-test262/verdict.go:73: 	} else if !nodeThrew {
+cmd/adamic-test262/verdict.go:75: 	} else if input.Native.Exit == 0 {
+cmd/adamic-test262/verdict.go:76: 		reason = "negative " + input.NegativeType + ": native exited 0"
+cmd/adamic-test262/verdict.go:77: 	} else if input.Node.Stdout != input.Native.Stdout {
+cmd/adamic-test262/verdict.go:80: 	return verdict{Kind: outcomeFail, Reason: reason}
+cmd/adamic-test262/verdict.go:84: 	if name == "" {
+cmd/adamic-test262/verdict.go:87: 	return regexp.MustCompile(`(?:^|\b)` + regexp.QuoteMeta(name) + `\b`).MatchString(stderr)
+cmd/adamic-test262/verdict.go:99: 	switch {
+cmd/adamic-test262/verdict.go:109: 		return "native sanitizer"
+cmd/adamic-test262/verdict.go:116: 	if input.Node.Exit == 0 && input.Native.Exit != 0 {
+cmd/adamic-test262/verdict.go:117: 		return "native failed where node passed (node 0, native " + strconv.Itoa(input.Native.Exit) + ")"
+cmd/adamic-test262/verdict.go:118: 	}
+cmd/adamic-test262/verdict.go:119: 	if input.Node.Exit != input.Native.Exit {
+cmd/adamic-test262/verdict.go:122: 	if input.Node.Stdout != input.Native.Stdout {
+cmd/adamic-test262/verdict.go:123: 		return "stdout disagrees"
+cmd/adamic-test262/verdict.go:124: 	}

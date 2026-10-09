@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -387,7 +387,7 @@
+ 	command.Env = append(os.Environ(), extra...)
+ 	command.WaitDelay = 2 * time.Second
+ 	var stdout, stderr limitedBuffer
+-	stdout.limit = limit
++	stdout.limit = 0
+ 	stderr.limit = limit
+ 	command.Stdout = &stdout
+ 	command.Stderr = &stderr

@@ -1,0 +1,35 @@
+Row: TestFrontmatterShapes
+Subsumer: TestClassifyCorpus
+Exclusive covered blocks:
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:79.2,79.21
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:102.3,102.15
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:164.2,164.85
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:167.2,167.82
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:170.2,170.41
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:173.2,173.194
+github.com/system-inc/adamic/cmd/adamic-test262/classify.go:176.2,176.18
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:64.4,64.69
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:65.5,65.13
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:67.4,67.20
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:75.4,76.12
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:85.4,86.1
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:93.4,94.12
+github.com/system-inc/adamic/cmd/adamic-test262/frontmatter.go:122.3,122.45
+Exclusive covered source lines:
+cmd/adamic-test262/classify.go:79: 	return path[:slash]
+cmd/adamic-test262/classify.go:102: 		switch flag {
+cmd/adamic-test262/classify.go:164: 	if strings.HasPrefix(feature, "Symbol.") || strings.HasPrefix(feature, "Reflect.") {
+cmd/adamic-test262/classify.go:167: 	if strings.HasPrefix(feature, "regexp") || strings.HasPrefix(feature, "RegExp") {
+cmd/adamic-test262/classify.go:170: 	if strings.HasPrefix(feature, "async") {
+cmd/adamic-test262/classify.go:173: 	if strings.HasSuffix(feature, "Array") && (strings.HasPrefix(feature, "Float") || strings.HasPrefix(feature, "Int") || strings.HasPrefix(feature, "Uint") || strings.HasPrefix(feature, "Big")) {
+cmd/adamic-test262/classify.go:176: 	return "", false
+cmd/adamic-test262/frontmatter.go:64: 			if strings.TrimSpace(line) == "" || indentOf(line) > blockIndent {
+cmd/adamic-test262/frontmatter.go:65: 				continue
+cmd/adamic-test262/frontmatter.go:67: 			blockIndent = -1
+cmd/adamic-test262/frontmatter.go:75: 			addField(&parsed, listKey, unquote(strings.TrimSpace(trim[2:])))
+cmd/adamic-test262/frontmatter.go:76: 			continue
+cmd/adamic-test262/frontmatter.go:85: 			parent = ""
+cmd/adamic-test262/frontmatter.go:86: 		}
+cmd/adamic-test262/frontmatter.go:93: 			blockIndent = indent
+cmd/adamic-test262/frontmatter.go:94: 			continue
+cmd/adamic-test262/frontmatter.go:122: 		parsed.Flags = append(parsed.Flags, value)

@@ -1,0 +1,10 @@
+Row: TestMiniRunner
+Subsumer: TestParallelCachedMatchesSerial
+Exclusive covered blocks:
+github.com/system-inc/adamic/cmd/adamic-test262/run.go:164.3,165.1
+github.com/system-inc/adamic/cmd/adamic-test262/run.go:462.3,463.1
+Exclusive covered source lines:
+cmd/adamic-test262/run.go:164: 		jobs = 1
+cmd/adamic-test262/run.go:165: 	}
+cmd/adamic-test262/run.go:462: 		target = filepath.Join(root, filepath.FromSlash(filter))
+cmd/adamic-test262/run.go:463: 	}
