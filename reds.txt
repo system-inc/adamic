@@ -1,0 +1,49 @@
+run adamic-verify-20261009T104719-68e3d7ea: void, 6330 tests in 91 units, 2 failed, 36 units broken, 0 killed over budget
+BROKEN tests-01: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-03: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-08: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-09: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-10: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-11: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-12: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/stage1/cohere/typeaware exited 1")
+BROKEN tests-24: no results (exited false, last output "loom-runner: still running after 240 s")
+BROKEN tests-26: no results (exited false, last output "loom-runner: still running after 120 s")
+BROKEN tests-28: no results (exited false, last output "loom-pilot: 266128d81d53 slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-33: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-35: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-00-r2: no results (exited false, last output "loom-runner: still running after 210 s")
+BROKEN tests-01-r1: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-06-r1: no results (exited false, last output "loom-runner: still running after 240 s")
+BROKEN tests-11-r2: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-11-r3: no results (exited false, last output "loom-runner: still running after 120 s")
+BROKEN tests-11-r10: no results (exited false, last output "")
+BROKEN tests-11-r11: no results (exited false, last output "loom-pilot: 58e4d53798b4 slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 0 s, 2 packages at a time")
+BROKEN tests-23-r4: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-24-r4: no results (exited false, last output "loom-runner: still running after 240 s")
+BROKEN tests-28-r1: no results (exited false, last output "")
+BROKEN tests-28-r3: no results (exited false, last output "loom-pilot: 3e1761c0c28c slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 2 s, 2 packages at a time")
+BROKEN tests-28-r4: no results (exited false, last output "loom-pilot: ddf4d400950e slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-28-r5: no results (exited false, last output "loom-pilot: 5bf21d4dee82 slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-28-r6: no results (exited false, last output "loom-pilot: 7c335cd6cb8e slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-28-r7: no results (exited false, last output "loom-pilot: 3abd2637e002 slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-28-r8: no results (exited false, last output "loom-pilot: 5849598db9ce slot ? cpus ? tree bd5f81b80304ae6af437616ee1d5af109f84073a setup 1 s, 2 packages at a time")
+BROKEN tests-28-r9: no results (exited false, last output "")
+BROKEN tests-28-r10: no results (exited false, last output "")
+BROKEN tests-28-r11: no results (exited false, last output "")
+BROKEN tests-28-r12: no results (exited false, last output "")
+BROKEN tests-28-r13: no results (exited false, last output "")
+BROKEN tests-28-r14: no results (exited false, last output "")
+BROKEN tests-28-r15: no results (exited false, last output "")
+BROKEN tests-28-r16: no results (exited false, last output "")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/symbol-origin (tests-18)
+    volume_test.go:143: phase command symbol-origin-checker 90.011277s
+    volume_test.go:143: symbol-origin-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-30)
+    volume_test.go:95: phase command stage0 6.110696s
+    volume_test.go:18: build typeaware_six_volume-oracle-build 9a6127c97a86 hit 0.05
+    volume_test.go:108: phase command controls-go 0.033468s
+    volume_test.go:108: phase command controls-native 0.035220s
+    volume_test.go:108: controls: 26054 identical finding bytes; findings 73
+    volume_test.go:116: phase command controls-asan-go 0.023168s
+    volume_test.go:116: phase command controls-asan-native 0.087518s
+    volume_test.go:116: controls-asan: 26054 identical finding bytes; findings 73
