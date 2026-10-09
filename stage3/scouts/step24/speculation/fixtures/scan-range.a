@@ -1,0 +1,54 @@
+// Portions Copyright (c) Microsoft Corporation. Apache 2.0 license: ../LICENSE.upstream.txt.
+// scanner.ts:3952-3974, parser.ts:8911. scanRange always restores all fields.
+// Token enums become numbers; comment directives become a scalar witness.
+let end = 30;
+let pos = 10;
+let fullStartPos = 8;
+let tokenStart = 9;
+let token = 1;
+let tokenValue = "";
+let tokenFlags = 0;
+let commentDirectives = 7;
+function resetTokenState(position: number): void {
+    pos = position;
+    fullStartPos = position;
+    tokenStart = position;
+    token = 0;
+    tokenValue = "";
+    tokenFlags = 0;
+}
+function scanRange<T>(start: number, length: number, callback: () => T): T {
+    const saveEnd = end;
+    const savePos = pos;
+    const saveStartPos = fullStartPos;
+    const saveTokenPos = tokenStart;
+    const saveToken = token;
+    const saveTokenValue = tokenValue;
+    const saveTokenFlags = tokenFlags;
+    const saveErrorExpectations = commentDirectives;
+    end = start + length;
+    resetTokenState(start);
+    const result = callback();
+    end = saveEnd;
+    pos = savePos;
+    fullStartPos = saveStartPos;
+    tokenStart = saveTokenPos;
+    token = saveToken;
+    tokenValue = saveTokenValue;
+    tokenFlags = saveTokenFlags;
+    commentDirectives = saveErrorExpectations;
+    return result;
+}
+interface JSDoc { readonly comment: string; }
+function doJSDocScan(): JSDoc {
+    pos += 1;
+    tokenFlags = 4;
+    tokenValue = "comment";
+    commentDirectives = 99;
+    return { comment: "" };
+}
+const result = scanRange(3, 6, doJSDocScan);
+console.log(`${result.comment === ""}:${end}:${pos}:${fullStartPos}:${tokenStart}:${token}:${tokenValue}:${tokenFlags}:${commentDirectives}`);
+// Supplemental instantiation holds the generic result itself to empty string.
+const empty = scanRange(3, 6, () => "");
+console.log(`${empty === ""}:${end}:${pos}`);
