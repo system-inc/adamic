@@ -1,0 +1,6 @@
+// Another replacement for testdata/hello/main.go: different content, so a different key.
+package main
+
+import "fmt"
+
+func main() { fmt.Println("hello from overlay two") }
