@@ -125,6 +125,28 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 fi
 "$tools/bin/node" --version
 step "node ready"
+# Stock tsc, TypeScript 6.0.3 as cohere's checks pin it: library's test262 runner starts it as an oracle
+# (cmd/adamic-test262/typescript.go, exec.LookPath("tsc")), so a missing or other tsc fails setup, never a skipped test.
+typescriptVersion=6.0.3
+if ! PATH="$tools/bin:$PATH" tsc --version 2> /dev/null | grep -qx "Version $typescriptVersion"; then
+	# Downloaded whole and checked against its pinned digest before anything unpacks, then staged and renamed in, so a
+	# cut download or a half-unpacked tree never becomes $tools/typescript.
+	curl -fsSL "https://registry.npmjs.org/typescript/-/typescript-$typescriptVersion.tgz" -o "$run/typescript.tgz"
+	echo "33cd0ee1beaa8c9e9d15a9da836c62ddea4c34a42d7c2d349dbc80d94165d22a  $run/typescript.tgz" | sha256sum -c --quiet - ||
+		{ echo "setup: typescript-$typescriptVersion.tgz doesn't match its pinned sha256" >&2; return 1; }
+	mkdir "$run/typescript"
+	tar --no-same-owner -xz -C "$run/typescript" --strip-components 1 -f "$run/typescript.tgz"
+	rm -f "$run/typescript.tgz"
+	[ ! -e "$tools/typescript" ] || mv "$tools/typescript" "$run/typescript.old"
+	mv "$run/typescript" "$tools/typescript"
+fi
+# A link to the package's own bin/tsc, which runs on the node in $tools/bin: cloud/fast-gate/tools.txt proves tsc by
+# lib/typescript.js beside the file the link resolves to.
+ln -sfn ../typescript/bin/tsc "$tools/bin/tsc.partial"
+mv -f "$tools/bin/tsc.partial" "$tools/bin/tsc"
+PATH="$tools/bin:$PATH" tsc --version | grep -qx "Version $typescriptVersion" && test -f "$(dirname "$(readlink -f "$tools/bin/tsc")")/../lib/typescript.js" ||
+	{ echo "setup: $tools/bin/tsc isn't TypeScript $typescriptVersion" >&2; return 1; }
+step "tsc ready (TypeScript $typescriptVersion)"
 python3 "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
