@@ -53,6 +53,16 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
+		case "class_features_accessors.a":
+			// TestScout22AccessorSpreadRefusal pins the throwing accessor-spread gap.
+			return true
+		case "scout22_prototype_links.a", "scout22_prototype_lifetimes.a":
+			// Prototype mutation is refused in .a; their own tests compile .ts copies
+			// with proven heap lifetimes and compare them with Node.
+			return true
+		case "library_date_string.a", "library_date_string_utc.a", "library_date_string_refusal.a", "library_date_dynamic_parse.a":
+			// TestDateStringRuling10Refusals pins local-Date and unproven-parse refusals.
+			return true
 		case "scout19_slice2_create_set.a", "scout19_slice2_range.a":
 			// TestScout19Slice2ExpectedRefusals pins TS2345 (T | undefined into T);
 			// createSet also reports TS2322. Neither source has accepted IR.
