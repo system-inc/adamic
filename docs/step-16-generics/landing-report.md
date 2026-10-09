@@ -100,3 +100,10 @@ Prepared pinned TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8 with bash st
 The generic source selector core.ts:220:1 (contains, the generic comparator default shape) was attempted with go run ./stage3/census/latent/replay -project /tmp/generics-scout-adapted/src/compiler -where /tmp/generics-scout-adapted/src/compiler/core.ts:220:1 -kind NotYet -reason 'a generic function as a value'. It exits 1 because the census snapshotter reports `latent state copy: unexported IR field argumentFacts`. No generic diagnostic was reproduced. This is a tool blocker, not evidence that the generic wall disappeared. The next generic source stop remains unverified; the reduced function-value fixture still pins the reason. The snapshotter needs to handle the current IR's argumentFacts before that measurement is possible. No unrelated census fix is included.
 
 The scout's unresolved proposals remain proposals. For the specialization depth ceiling, propose a configurable resource diagnostic rather than a language refusal. For generic function values, propose preserving JavaScript function identity while specializing only proven concrete call signatures; retain NotYet until the identity/dispatch representation is ruled and implemented. No code is built past either choice. The dependent-body questions have already been ruled and are assigned to compiler/generic-body-relations.
+
+## Copier repair follow-up
+
+The blocked generic source replay above was rerun after the explicitly authorized
+cherry-pick of d2651d95. [copier-replay.md](copier-replay.md) supersedes that pending
+measurement: the next stop is core.ts:220:62, a value of type T. The selected
+replay's hidden intersection shrinks by 155 bytes; no whole-corpus credit is claimed.
