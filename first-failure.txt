@@ -1,0 +1,2 @@
+FIRST FAILURE (catalog-apply, at 1.3 s):
+this change stops the bug catalog's undo patch from applying: 01-shared-slice-append.patch. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)
