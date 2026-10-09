@@ -31,6 +31,11 @@ def run(*arguments, **options):
     return subprocess.run(arguments, capture_output=True, text=True, **options)
 
 
+def packageOf(finding):
+    # "vet: stage1/x/y_test.go:9:2: message" (or without the prefix) -> "./stage1/x"
+    return "./" + os.path.dirname(re.sub(r"^(vet: )?", "", finding.strip()).split(":")[0])
+
+
 changed = run("git", "diff", "--name-only", "--diff-filter=AM", old, tree).stdout.split()
 goFiles = [path for path in changed if path.endswith(".go") and not path.startswith(("cohere/", "stage3/upstream/"))]
 problems, notes = [], []
@@ -95,6 +100,18 @@ if testPackages and not problems:
             # submodule, say) is the gate's to vet, not a reason to refuse.
             loading = re.compile(r"replacement directory|no required module|cannot find module|does not exist|no such file or directory|go\.mod|missing go\.sum|is not in std|cannot load")
             findings = [line for line in (vetted.stdout + vetted.stderr).splitlines() if re.search(r"\.go:\d+:\d+: ", line) and not loading.search(line)]
+            if findings:
+                # vet stops at a package's first type error, so a package main already breaks can't be judged
+                # here: only packages that vet clean on main refuse, or a fix into a broken package never lands.
+                broken = sorted({packageOf(line) for line in findings})
+                run("git", "-C", laneTree, "checkout", "-q", "--detach", "--force", old)
+                run("git", "submodule", "update", "-q", cwd=laneTree, timeout=300)
+                before = run("go", "vet", *broken, cwd=laneTree, timeout=vetSeconds * 3, env=goEnvironment)
+                alreadyBroken = {packageOf(line)
+                                 for line in (before.stdout + before.stderr).splitlines() if re.search(r"\.go:\d+:\d+: ", line) and not loading.search(line)}
+                findings = [line for line in findings if packageOf(line) not in alreadyBroken]
+                if alreadyBroken:
+                    notes.append("vet already fails on main in " + " ".join(sorted(alreadyBroken)))
             if findings:
                 problems.append("go vet: " + " | ".join(findings[:5])[:600])
             elif vetted.returncode != 0:
