@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_mixed.go
++++ b/internal/javascript/view_unions_mixed.go
+@@ -16,7 +16,7 @@
+   if (['object', 'array', 'Map', 'function'].includes(member.kind)) {
+    if (!member.contract || match === undefined || !match(member, snapshot)) continue;
+   }
+-  return index;
++  return index + 1;
+  }
+  const found = snapshot.kind === 'unknown' ? 'unsupported representation' : snapshot.kind;
+  panic('field read failed: ' + expression + ' matches no member of ' + declared + '; expected ' + declared + ', found ' + found);
