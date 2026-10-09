@@ -869,6 +869,16 @@ if ! laneChecks=$(python3 "$directory/lane-checks.py" "$old" "$tree" "$laneCommi
 	exit 1
 fi
 branches="${branches}; ${laneChecks}"
+# A ruled gate has no gate record of its own, so the census a gate would run runs here, on the landing tree against
+# old main (@system_adamic, Oct 9 19:17Z: floor1 landed through its ruled gate and the census then refused
+# productidentity as an undeclared compiler consumer, reddening main fc7252a6).
+if [ -n "$ruledGate" ]; then
+	if ! census=$(bash "${ADAMIC_CENSUS_CHECK:-$directory/census-check.sh}" "$old" "$laneCommit" 2>&1); then
+		echo "refused: a ruled gate's census on the landing tree: $(printf '%s' "$census" | tail -n 2 | paste -sd ' ' -)" >&2
+		exit 1
+	fi
+	branches="${branches}; ${census}"
+fi
 
 # One commit per landing, first parent the old main and second the landed sha, its tree exactly the
 # landing's, its numbers as trailers (@system_adamic, Oct 9, from Kirk: the velocity table left main).

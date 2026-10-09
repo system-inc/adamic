@@ -31,6 +31,9 @@ class LandingTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         root = Path(self.tmp.name)
+        # The ruled gate's census, faked: a real one needs Go and developer tools' run.py (census-check.sh).
+        self.census = root / 'census.sh'
+        self.census.write_text('echo "census: compiler dependencies declared"\n')
         origin = root / 'origin.git'
         git(root, 'init', '-q', '--bare', str(origin))
         self.repository = root / 'repository'
@@ -74,7 +77,8 @@ class LandingTests(unittest.TestCase):
         return subprocess.run(['bash', str(self.scripts / 'push-main.sh')] + list(arguments), cwd=self.repository,
                               capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_FILE=str(root / 'star'),
                                                                        ADAMIC_FAST_GATE_STATE=str(root / 'watch'),
-                                                                       ADAMIC_LANE_TREE=str(root / 'lane'), **identity))
+                                                                       ADAMIC_LANE_TREE=str(root / 'lane'),
+                                                                       ADAMIC_CENSUS_CHECK=str(self.census), **identity))
 
     def main_now(self):
         git(self.repository, 'fetch', '-q', 'origin')
@@ -496,6 +500,15 @@ class LandingTests(unittest.TestCase):
         refusedFast = self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', '--ruled-gate', 'ruling', alone, 'one').stderr
         self.assertIn('landings are paused', refusedFast)
         before = self.main_now()
+        # A ruled gate runs the census on its landing tree (Oct 9 19:17Z, after floor1's landing reddened main): a census red
+        # refuses it, and a green one rides in its trailer.
+        self.census.write_text('echo "compiler dependency census: undeclared compiler consumers: tool/main.go"; exit 1\n')
+        refusedCensus = self.push('--ruled-gate', 'Oct 9 11:16', alone, '18', '18', '0', '0', 'cache program')
+        self.assertNotEqual(refusedCensus.returncode, 0)
+        self.assertIn("a ruled gate's census on the landing tree", refusedCensus.stderr)
+        self.assertIn('undeclared compiler consumers', refusedCensus.stderr)
+        self.assertEqual(self.main_now(), before)
+        self.census.write_text('echo "census: compiler dependencies declared"\n')
         ruledLanding = self.assertLanded(self.push('--ruled-gate', 'Oct 9 11:16', alone, '18', '18', '0', '0', 'cache program'), before, alone)
         message = git(self.repository, 'log', '-1', '--format=%B', ruledLanding)
         self.assertIn("ruled gate, not held by main's product-red pause (Oct 9 11:16)", message)
