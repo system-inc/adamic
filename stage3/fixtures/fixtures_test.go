@@ -153,6 +153,7 @@ func TestFixturesNamespaces(t *testing.T)      { testFixtureDirectory(t, "namesp
 func TestFixturesNestedFunctions(t *testing.T) { testFixtureDirectory(t, "nested-functions") }
 func TestFixturesObjects(t *testing.T)         { testFixtureDirectory(t, "objects") }
 func TestFixturesPredicates(t *testing.T)      { testFixtureDirectory(t, "predicates") }
+func TestFixturesReal(t *testing.T)            { testFixtureDirectory(t, "real") }
 func TestFixturesRecords(t *testing.T)         { testFixtureDirectory(t, "records") }
 func TestFixturesRunner(t *testing.T)          { testFixtureDirectory(t, "runner") }
 func TestFixturesTaste(t *testing.T)           { testFixtureDirectory(t, "taste") }

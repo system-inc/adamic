@@ -265,6 +265,136 @@ class LandingLaneTests(unittest.TestCase):
                 self.killed(label)
                 self.oracle = oracle
 
+    def test_failure_text_and_diff_are_published(self):
+        report = self.replay()
+        self.assertEqual(report['status'], 'pass')
+        self.assertEqual(report['cause_counts']['baseline-content'], 1)
+        failure = report['failures'][0]
+        self.assertIn('api/typescript.d.ts', failure['message'])
+        self.assertTrue(failure['stack_top'])
+        self.assertEqual(failure['baselines'][0]['path'], 'api/typescript.d.ts')
+        self.assertIn('reference/api/typescript.d.ts', failure['baselines'][0]['preview'])
+        published = json.loads((self.results / 'verdict.json').read_text())
+        self.assertEqual(published['failures'], report['failures'])
+        self.assertIn('baseline-content=1', report['verdict'])
+        self.assertIn(failure['message'], (self.results / 'failures.md').read_text())
+
+    def test_error_text_drop_mutant_is_caught(self):
+        from unittest.mock import patch
+        self.replay()
+        original = check.read_failures
+        def mutant(*args, **kwargs):
+            rows = original(*args, **kwargs)
+            for row in rows:
+                row['message'] = ''
+            return rows
+        with patch.object(check, 'read_failures', side_effect=mutant):
+            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+        # The mutant leaves every gate predicate and cause untouched.
+        self.assertEqual(report['status'], 'pass')
+        self.assertEqual(report['cause_counts']['baseline-content'], 1)
+        with self.assertRaises(AssertionError):
+            self.assertIn('api/typescript.d.ts', report['failures'][0]['message'])
+        print('caught dropped error text: expected API error message absent')
+
+    def test_observer_preserves_arguments_and_return_values(self):
+        # Exercise the real preload with Mocha's small event API doubled in Node.
+        script = r"""
+const assert = require('node:assert/strict');
+const Module = require('node:module');
+const fs = require('node:fs');
+const calls = [];
+function Runnable() {}
+Runnable.prototype.run = function(...args) { calls.push(args); return 456; };
+Runnable.prototype.titlePath = () => ['', 'original failure'];
+Runnable.prototype.timeout = () => 5;
+function Runner() {}
+Runner.prototype.emit = function(...args) { calls.push(args); return 123; };
+const load = Module._load;
+Module._load = function(name, ...args) {
+    return name === 'mocha' ? {Runnable, Runner} : Reflect.apply(load, this, [name, ...args]);
+};
+process.argv[1] = 'run.js';
+process.env.STAGE3_ERROR_DIR = process.argv[3];
+require(process.argv[2]);
+const runner = new Runner();
+for (const args of [['start'], ['suite', {title:'s'}], ['unknown', 1, 2, 3]]) {
+    assert.equal(runner.emit(...args), 123);
+    assert.deepEqual(calls.at(-1), args);
+}
+const runnable = new Runnable();
+const callback = () => {};
+assert.equal(runnable.run(callback, 'tail'), 456);
+assert.deepEqual(calls.at(-1), [callback, 'tail']);
+const error = new Error('Timeout of 5ms exceeded');
+assert.equal(runner.emit('fail', runnable, error), 123);
+assert.deepEqual(calls.at(-1), ['fail', runnable, error]);
+const row = JSON.parse(fs.readFileSync(process.argv[3] + '/' + process.pid + '.jsonl', 'utf8'));
+assert.equal(row.message, error.message);
+assert.equal(row.title, 'original failure');
+assert.equal(row.timeout_ms, 5);
+assert.ok(row.elapsed_ms >= 0);
+"""
+        # node -e starts argv at index 1; seed its entry point in the script itself.
+        command = ['node', '-e', script, 'run.js', str(LANE.parent / 'oracle/observe-errors.cjs'), str(self.results)]
+        result = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_failure_details_survive_missing_api_snapshot(self):
+        self.replay()
+        (self.results / 'adapted-tree/tests/baselines/local/api/typescript.d.ts').unlink()
+        report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+        self.assertEqual(report['status'], 'fail')
+        self.assertIn('api/typescript.d.ts', report['failures'][0]['message'])
+
+    def test_metadata_error_does_not_change_acceptance(self):
+        from unittest.mock import patch
+        self.replay()
+        with patch.object(check, 'read_failures', side_effect=ValueError('invalid observation fixture')):
+            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+        self.assertEqual(report['status'], 'pass')
+        self.assertIn('invalid observation fixture', report['failure_details_error'])
+
+    def test_failure_cause_precedence_and_multiple_files(self):
+        from failure_details import read_failures, cause_counts
+        log = ' 0 passing\n 5 failing\n\n 1) compiler\n      case.ts\n        "before all" hook:\n    Error: Timeout of 2ms exceeded.\n      at hook (fixture.js:1:1)\n\n 2) compiler\n      Correct type/symbol baselines:\n    Error: The baseline file case.types has changed.\n    The baseline file case.symbols has changed.\n      at baseline (fixture.js:2:1)\n\n 3) compiler\n      Correct type/symbol baselines:\n    Error: The baseline file absent.types has changed.\n\n 4) compiler\n      thrown:\n    TypeError: undefined receiver\n      at receiver (fixture.js:3:1)\n\n 5) compiler\n      unknown:\n    unexplained assertion\n'
+        diff = '--- reference/case.types\n+++ local/case.types\n@@ -1 +1 @@\n-old\n+new\n' + '--- reference/case.symbols\n+++ local/case.symbols\n@@ -1 +1 @@\n-old\n+new\n'
+        rows = read_failures(log, diff)
+        self.assertEqual(cause_counts(rows), dict.fromkeys(check.cause_counts([]), 1))
+        self.assertEqual(rows[0]['timeout_ms'], 2)
+        self.assertIn('undefined receiver', rows[3]['message'])
+        self.assertIn('receiver (fixture.js:3:1)', rows[3]['stack_top'])
+        self.assertEqual(len(rows[1]['baselines']), 2)
+        self.assertEqual(rows[0]['baselines'], [])
+
+    def test_diff_previews_are_first_40_lines_per_file(self):
+        from failure_details import diff_previews
+        diff = '--- reference/first.types\n+++ local/first.types\n' + '+line\n' * 70 + '--- reference/second.symbols\n+++ local/second.symbols\n+short\n'
+        rows = diff_previews(diff)
+        self.assertEqual(len(rows['first.types']['preview'].splitlines()), 40)
+        self.assertTrue(rows['first.types']['truncated'])
+        self.assertEqual(rows['second.symbols']['total_lines'], 3)
+        self.assertFalse(rows['second.symbols']['truncated'])
+
+    def test_original_mocha_event_retains_elapsed_and_stack(self):
+        from failure_details import read_failures
+        observations = self.results / 'events'; observations.mkdir()
+        title = self.expected['failed_tests'][0]
+        row = dict(title=' ' + title, kind='test', message='The baseline file api/typescript.d.ts has changed.',
+                   stack='Error: full error\n    at original (file.js:1:2)\n    at caller (file.js:2:1)',
+                   stack_top='    at original (file.js:1:2)', elapsed_ms=42.125, timeout_ms=40000)
+        (observations / '1.jsonl').write_text(json.dumps(row) + '\n')
+        failure = read_failures(self.log, '--- reference/api/typescript.d.ts\n+++ local/api/typescript.d.ts\n-old\n+new\n', observations)[0]
+        self.assertEqual(failure['source'], 'mocha')
+        self.assertEqual(failure['message'], row['message'])
+        self.assertEqual(failure['elapsed_ms'], 42.125)
+        self.assertEqual(failure['stack'], row['stack'])
+        # Retain captured failures when a later worker crash suppresses the summary.
+        incomplete = read_failures('Test worker process exited with nonzero exit code!', '', observations)
+        self.assertEqual(len(incomplete), 1)
+        self.assertEqual(incomplete[0]['message'], row['message'])
+        self.assertEqual(incomplete[0]['elapsed_ms'], 42.125)
+
     def test_missing_evidence(self):
         self.replay()
         (self.results / 'oracle/baseline.diff').unlink()

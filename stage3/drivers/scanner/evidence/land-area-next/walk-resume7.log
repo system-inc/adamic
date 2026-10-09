@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/scanner-next-walk.py", line 14, in <module>
+    assert code==1 and m,(order,code,diagnostic)
+           ^^^^^^^^^^^^^
+AssertionError: (15, 1, '/workspace/scratch/native3-next-walk/main.a:18:25: error TS2339: Property \'message\' does not exist on type \'{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }\'.\n  Property \'message\' does not exist on type \'{ readonly kind: "Ok"; readonly text: string; }\'.\n/workspace/scratch/native3-next-walk/main.a:20:31: error TS2339: Property \'text\' does not exist on type \'{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }\'.\n  Property \'text\' does not exist on type \'{ readonly kind: "Error"; readonly message: string; }\'.\n')

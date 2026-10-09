@@ -1,0 +1,56 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/step12/baseline-observed/lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "failures": [
+    {
+      "title": "conformance tests conformance tests for tests/cases/conformance/parser/ecmascript5/Protected/Protected1.ts Correct type/symbol baselines for tests/cases/conformance/parser/ecmascript5/Protected/Protected1.ts",
+      "kind": "test",
+      "message": "Error: New baseline created at tests/baselines/local/Protected1.types\n    at writeComparison (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:1490:27)\n    at Object.runBaseline2 [as runBaseline] (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:1509:9)\n    at checkBaseLines (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:732:26)\n    at Object.doTypeAndSymbolBaseline (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:695:13)\n    at _CompilerTest.verifyTypesAndSymbols (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/testRunner/compilerRunner.ts:327:18)\n    at Context.<anonymous> (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/testRunner/compilerRunner.ts:104:80)\n    at callFn (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test.Runnable.run (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test.Mocha.Runnable.run (/workspace/adamic/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)\r\nError: New baseline created at tests/baselines/local/Protected1.symbols\n    at writeComparison (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:1490:27)\n    at Object.runBaseline2 [as runBaseline] (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:1509:9)\n    at checkBaseLines (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:732:26)\n    at Object.doTypeAndSymbolBaseline (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/harness/harnessIO.ts:702:13)\n    at _CompilerTest.verifyTypesAndSymbols (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/testRunner/compilerRunner.ts:327:18)\n    at Context.<anonymous> (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/src/testRunner/compilerRunner.ts:104:80)\n    at callFn (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test.Runnable.run (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test.Mocha.Runnable.run (/workspace/adamic/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/verdict-gate/lane-serial/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+      "stack": "Error: Error: New baseline created at tests/baselines/local/Protected1.types\n    at writeComparison (src/harness/harnessIO.ts:1490:27)\n    at Object.runBaseline2 [as runBaseline] (src/harness/harnessIO.ts:1509:9)\n    at checkBaseLines (src/harness/harnessIO.ts:732:26)\n    at Object.doTypeAndSymbolBaseline (src/harness/harnessIO.ts:695:13)\n    at _CompilerTest.verifyTypesAndSymbols (src/testRunner/compilerRunner.ts:327:18)\n    at Context.<anonymous> (src/testRunner/compilerRunner.ts:104:80)\n    at Test.Mocha.Runnable.run (/workspace/adamic/stage3/oracle/observe-errors.cjs:11:24)\n    at processImmediate (node:internal/timers:534:21)\r\nError: New baseline created at tests/baselines/local/Protected1.symbols\n    at writeComparison (src/harness/harnessIO.ts:1490:27)\n    at Object.runBaseline2 [as runBaseline] (src/harness/harnessIO.ts:1509:9)\n    at checkBaseLines (src/harness/harnessIO.ts:732:26)\n    at Object.doTypeAndSymbolBaseline (src/harness/harnessIO.ts:702:13)\n    at _CompilerTest.verifyTypesAndSymbols (src/testRunner/compilerRunner.ts:327:18)\n    at Context.<anonymous> (src/testRunner/compilerRunner.ts:104:80)\n    at Test.Mocha.Runnable.run (/workspace/adamic/stage3/oracle/observe-errors.cjs:11:24)\n    at processImmediate (node:internal/timers:534:21)\n    at Object.doTypeAndSymbolBaseline (src/harness/harnessIO.ts:709:19)\n    at _CompilerTest.verifyTypesAndSymbols (src/testRunner/compilerRunner.ts:327:18)\n    at Context.<anonymous> (src/testRunner/compilerRunner.ts:104:80)\n    at Test.Mocha.Runnable.run (/workspace/adamic/stage3/oracle/observe-errors.cjs:11:24)\n    at processImmediate (node:internal/timers:534:21)",
+      "stack_top": "    at writeComparison (src/harness/harnessIO.ts:1490:27)",
+      "timeout_ms": 40000,
+      "elapsed_ms": 967.656646,
+      "pid": 840985,
+      "source": "mocha",
+      "cause": "baseline-content",
+      "baselines": [
+        {
+          "path": "Protected1.symbols",
+          "preview": "--- reference/Protected1.symbols\n+++ local/Protected1.symbols\n@@ -4,3 +4,6 @@\n protected class C {\n >C : Symbol(C, Decl(Protected1.ts, 0, 0))\n }\n+const stage3ForcedMismatch = 123;\n+>stage3ForcedMismatch : Symbol(stage3ForcedMismatch, Decl(Protected1.ts, 2, 5))\n+\n",
+          "total_lines": 9,
+          "truncated": false
+        },
+        {
+          "path": "Protected1.types",
+          "preview": "--- reference/Protected1.types\n+++ local/Protected1.types\n@@ -5,3 +5,9 @@\n >C : C\n >  : ^\n }\n+const stage3ForcedMismatch = 123;\n+>stage3ForcedMismatch : 123\n+>                     : ^^^\n+>123 : 123\n+>    : ^^^\n+\n",
+          "total_lines": 12,
+          "truncated": false
+        }
+      ]
+    }
+  ],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 1,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "baseline_previews": [
+    {
+      "path": "Protected1.symbols",
+      "preview": "--- reference/Protected1.symbols\n+++ local/Protected1.symbols\n@@ -4,3 +4,6 @@\n protected class C {\n >C : Symbol(C, Decl(Protected1.ts, 0, 0))\n }\n+const stage3ForcedMismatch = 123;\n+>stage3ForcedMismatch : Symbol(stage3ForcedMismatch, Decl(Protected1.ts, 2, 5))\n+\n",
+      "total_lines": 9,
+      "truncated": false
+    },
+    {
+      "path": "Protected1.types",
+      "preview": "--- reference/Protected1.types\n+++ local/Protected1.types\n@@ -5,3 +5,9 @@\n >C : C\n >  : ^\n }\n+const stage3ForcedMismatch = 123;\n+>stage3ForcedMismatch : 123\n+>                     : ^^^\n+>123 : 123\n+>    : ^^^\n+\n",
+      "total_lines": 12,
+      "truncated": false
+    }
+  ],
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/step12/baseline-observed/lane/adapted-tree/tests/baselines/local/api/typescript.d.ts' [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]"
+}

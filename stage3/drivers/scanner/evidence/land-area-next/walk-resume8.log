@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/scanner-next-walk.py", line 14, in <module>
+    assert code==1 and m,(order,code,diagnostic)
+           ^^^^^^^^^^^^^
+AssertionError: (15, 1, "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-2778228572/main.c:7923:9: error: incompatible pointer types returning 'adamic_object *' (aka 'struct adamic_object *') from a function with result type 'adamic_string *' (aka 'struct adamic_string *') [-Werror,-Wincompatible-pointer-types]\n 7923 |         return adamic_temporary_11;\n      |                ^~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n")
