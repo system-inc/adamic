@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+    oracle_test.go:792: exit codes differ
+        node:   exit 0, stdout "undefined:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:false\n", stderr ""
+        native: exit 70, stdout "undefined:undefined:undefined\n", stderr "adamic: panic: field write failed: flag expected missing storage, found boolean\n"
+    oracle_test.go:798: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "undefined:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:false\n", stderr ""
+        backend: exit 70, stdout "undefined:undefined:undefined\n", stderr "adamic: panic: field write failed: flag expected missing storage, found boolean\n"
+    oracle_test.go:805: leaks:
+        exit 70
+        adamic: panic: field write failed: flag expected missing storage, found boolean
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a (0.76s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.804s
+FAIL

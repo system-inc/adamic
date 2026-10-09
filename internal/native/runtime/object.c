@@ -427,7 +427,7 @@ void adamic_object_view_store(adamic_object *object, const char *name, adamic_sl
     adamic_value *slot = adamic_object_optional_find(object, name, cache);
     if (slot == NULL && cache->index < object->shape->count) slot = &object->slots[cache->index];
     unsigned char actual = slot == NULL ? 0 : adamic_object_field_types(object)[cache->index];
-    if (slot != NULL && actual == 0) actual = (unsigned char)(object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[cache->index] : adamic_shape_type(object->shape, cache->index));
+    if (slot != NULL && actual == 0) actual = (object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[cache->index] : adamic_shape_type(object->shape, cache->index)) & 255;
     unsigned char incoming = wanted;
     if (wanted == 7) {
         adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
