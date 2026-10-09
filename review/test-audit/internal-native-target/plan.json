@@ -77,7 +77,9 @@
     "line": 300,
     "old": "\"-E\", unit.name",
     "new": "\"-EP\", unit.name",
-    "menu": "change option"
+    "menu": "change option",
+    "supplemental": true,
+    "reason": "invalid combined clang option, excluded from verdicts"
   },
   {
     "id": "M11",
@@ -134,5 +136,15 @@
     "old": "((adamic_weak *)reveal(*entry))->target = 0;",
     "new": "",
     "menu": "drop statement"
+  },
+  {
+    "id": "M10c",
+    "file": "internal/native/units.go",
+    "line": 300,
+    "old": "\"-E\", unit.name",
+    "new": "\"-E\", \"-P\", unit.name",
+    "menu": "change option",
+    "supplemental": false,
+    "reason": "Correct CLI option spelling, fixed before this rerun"
   }
 ]

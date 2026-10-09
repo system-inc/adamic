@@ -182,7 +182,6 @@
     "oracle_kind": "self",
     "kills": [
       "M09",
-      "M10",
       "M12"
     ],
     "unique_kills": [
@@ -223,7 +222,6 @@
       "self"
     ],
     "kills": [
-      "M10",
       "M11"
     ],
     "unique_kills": [
@@ -300,19 +298,19 @@
       "self"
     ],
     "kills": [
-      "M10"
+      "M10c"
     ],
-    "unique_kills": [],
-    "last_proven_fail": "M10: units_test.go:64: native: preprocessing unit probe.c: exit status 1",
-    "verdict": "subsumed",
-    "subsumed_by": [
-      "TestUnitCacheFlagsHoldSanitizer"
+    "unique_kills": [
+      "M10c"
     ],
+    "last_proven_fail": "M10c: units_test.go:143: system-header provenance lost: native: compiling unit probe.c: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
     "mutants_in_matrix": 17,
     "probe_kills": [
       "PCompile"
     ],
-    "subsumer_seconds": 0.163,
+    "subsumer_seconds": null,
     "vacuous": false,
     "bounded": true,
     "matrix_rows": [
@@ -326,8 +324,7 @@
       "TestUnitSystemHeaderProvenance",
       "TestViewMixedUnionUnknownAndUnavailable"
     ],
-    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u054/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$ > M10.log 2>&1; M10: units_test.go:64: native: preprocessing unit probe.c: exit status 1",
-    "subsumption_mutants": 1
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u054/cache/M10c timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$ > M10c.log 2>&1; units_test.go:143: system-header provenance lost: native: compiling unit probe.c: exit status 1"
   },
   {
     "test": "TestViewMixedUnionUnknownAndUnavailable",

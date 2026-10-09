@@ -222,7 +222,7 @@
     "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
     "log": "M10.log",
     "wasi": false,
-    "valid": true,
+    "valid": false,
     "failed": [
       "TestUnitCacheFlagsHoldSanitizer",
       "TestUnitSystemHeaderProvenance",
@@ -237,7 +237,7 @@
       "TestWASITargetFlags"
     ],
     "binary_seconds": 0.766,
-    "reason": null
+    "reason": "clang rejects combined -EP; excluded from verdicts, replaced by M10c"
   },
   {
     "id": "M11",
@@ -1074,6 +1074,31 @@
       "TestWASIUnit family"
     ],
     "binary_seconds": 31.801,
+    "reason": null
+  },
+  {
+    "id": "M10c",
+    "status": 1,
+    "wall": 7.532900074999816,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M10c.log",
+    "wasi": false,
+    "standalone": true,
+    "valid": true,
+    "failed": [
+      "TestUnitSystemHeaderProvenance"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.26,
     "reason": null
   }
 ]

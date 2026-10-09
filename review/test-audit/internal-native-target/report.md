@@ -1,7 +1,7 @@
 u054 started clean at 0942c5169d0ea736d9dfaa19881af1ad8adad162; all 48 listed functions exist.
 Two unit families give 12 audit rows; no requested function moved or vanished.
 Whole package timed out at 90.060 s without an individual failure; bounded default and enabled WASI baselines passed.
-Verdicts: 2 cannot-judge, 8 sacred, 1 subsumed, 1 witness. All verdicts and uniqueness are bounded.
+Verdicts: 2 cannot-judge, 9 sacred, 1 witness. All verdicts and uniqueness are bounded.
 17 production mutants, one witness weakening and 20 entry probes; all production mutants were killed.
 
 ```json
@@ -523,7 +523,7 @@ WASI's host passes env:{} to its module. This prevents a C getenv-based mutation
 
 The Go matrix covered nine default-enabled rows for every production mutant; M17 additionally ran the WASI family. The WASI harness uses its own fixed clang flags and links unsplit emitted C, so its runtime test does not directly call Flags, ValidateOptions, splitC or compileUnit. The relevant source/caller evidence is retained. C runtime coverage is a conservative source inventory, not measured coverage of native or WASI processes.
 
-TSGoFeatures deliberately checks that removing features makes compilation fail. It is judged as a witness: W01 disabled its compile check and the missing-feature assertion failed. Its production-mutant precondition failures do not count. UnitCacheFlagsHoldSanitizer checks the production cache via a signed-overflow program; M11 removed flags from the key and the runtime sanitizer observation failed. Header provenance is subsumed by that row on one observed mutant only, which is a small-matrix hint rather than a deletion recommendation.
+TSGoFeatures deliberately checks that removing features makes compilation fail. It is judged as a witness: W01 disabled its compile check and the missing-feature assertion failed. Its production-mutant precondition failures do not count. UnitCacheFlagsHoldSanitizer checks the production cache via a signed-overflow program; M11 removed flags from the key and the runtime sanitizer observation failed. The initial M10 result was excluded because clang rejects combined -EP. Corrected M10c uses valid separate -E and -P options and uniquely fails the header-provenance row in the bounded matrix. This row is sacred within that matrix.
 
 PSplit panicked in the literal-inspection row after returning no units. All nine default rows were rerun individually; their observed results replace the aborted run. Probe failures never count as production kills. Typed-array check_write's empty probe permits the normal-output comparisons and is caught by invalid-write probes; those positive portions are listed in vacuous_subcases. Range-error probes only require exit 70 and a panic prefix, so a different panic could satisfy them. No whole enabled row passed its own entry probe.
 
@@ -532,3 +532,5 @@ Warm setup script: 0 seconds; nproc=5. npm ci: 0.413s. SDK installation: 30.477s
 No survivors remain among the 17 valid production mutants. Not covered: the timed-out checker archive family, absent real clang benchmark corpus, package-wide or repo-wide uniqueness, and runtime function coverage outside the observed cases. Production and harness sources were restored; no PR or main push.
 
 W01 failure source maps to origin/main tsgo_features_test.go:65; the permitted scratch guard shifts its logged line to 68.
+
+CLI correction: original M10 is supplemental and excluded from verdicts; M10c removes line markers using valid separate clang options. Its standalone diff passes Go vet, and its bounded run failed only TestUnitSystemHeaderProvenance. The correction was chosen from clang option validity, not from a desired test outcome. M10c build/run wall 7.532900074999816 s; binary 1.26 s. Table row M10 is historical; M10c at units.go:300 changes `"-E", unit.name` to `"-E", "-P", unit.name`, failing only HeaderProvenance.
