@@ -251,9 +251,13 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 		}
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
+		contextError := ctx.Err()
+		cancel()
 		if err := log.Close(); err != nil {
-			cancel()
 			t.Fatal(err)
+		}
+		if contextError != nil {
+			t.Fatalf("P0: emitted JavaScript mutant subprocess cooked at 90s: %v", contextError)
 		}
 		data, err := os.ReadFile(log.Name())
 		if err != nil {
