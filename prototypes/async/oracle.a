@@ -1,4 +1,6 @@
-// Node oracle only. This is not accepted by Adamic today.
+// a-check: type error TS2304
+// Node oracle only. setTimeout is intentionally outside the Adamic prelude.
+// check.py copies this verbatim to .cjs, so ambient TypeScript declarations cannot go here.
 const fs = require('node:fs/promises');
 const mode = process.argv[2] ?? 'success';
 let cancelled = false;

@@ -1,3 +1,4 @@
+// a-check: refused a method read as a value (f would lose its object, and this with it)
 class C { async f(): Promise<void> {} }
 const c = new C();
 console.log(`${typeof c.f}`);
