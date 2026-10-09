@@ -1,0 +1,18 @@
+{
+  "reasons": [
+    {"kind": "Refused", "reason": "Object.entries", "bytes_revealed_if_fixed_alone": 60},
+    {"kind": "Refused", "reason": "Object.defineProperty", "bytes_revealed_if_fixed_alone": 40},
+    {"kind": "NotYet", "reason": "namespace declaration", "bytes_revealed_if_fixed_alone": 90}
+  ],
+  "mapping": [
+    {"kind": "Refused", "reason": "Object.entries", "step": 22},
+    {"kind": "Refused", "reason": "Object.defineProperty", "step": 22},
+    {"kind": "NotYet", "reason": "namespace declaration", "step": 15}
+  ],
+  "expected": [
+    {"step": 22, "hidden_bytes": 100, "reason_count": 2, "top_three": ["Object.entries", "Object.defineProperty"]},
+    {"step": 15, "hidden_bytes": 90, "reason_count": 1, "top_three": ["namespace declaration"]}
+  ],
+  "mutant": {"kind": "Refused", "reason": "Object.entries", "step": 30},
+  "expected_mutant_error": "reason mapped more than once"
+}

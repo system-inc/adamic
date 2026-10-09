@@ -1,0 +1,500 @@
+{
+  "hidden_bytes": 3654880,
+  "ranked_groups": [
+    {
+      "step": null,
+      "title": "unplaced",
+      "hidden_bytes": 2499741,
+      "reason_count": 1302,
+      "top_three": [
+        {
+          "kind": "checker",
+          "reason": "checker-rejected body",
+          "bytes_revealed_if_fixed_alone": 1613177,
+          "boundary_count": 147,
+          "raw_boundary_records": 176,
+          "contributing_boundary_count": 36,
+          "examples": [
+            "checker.ts:1486",
+            "program.ts:1515",
+            "watchPublic.ts:420"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a function returning CapturedThis",
+          "bytes_revealed_if_fixed_alone": 129056,
+          "boundary_count": 3,
+          "raw_boundary_records": 3,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "transformers/es2015.ts:488"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a value of type InitializedVariableDeclaration",
+          "bytes_revealed_if_fixed_alone": 117867,
+          "boundary_count": 5,
+          "raw_boundary_records": 5,
+          "contributing_boundary_count": 2,
+          "examples": [
+            "transformers/module/module.ts:174",
+            "transformers/generators.ts:336"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 30,
+      "title": "long tail",
+      "hidden_bytes": 394985,
+      "reason_count": 123,
+      "top_three": [
+        {
+          "kind": "Refused",
+          "reason": "overload 1 of writeTokenText result void cannot be served by implementation result number",
+          "bytes_revealed_if_fixed_alone": 62495,
+          "boundary_count": 10,
+          "raw_boundary_records": 10,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "emitter.ts:1211"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "Refused",
+          "reason": "overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem",
+          "bytes_revealed_if_fixed_alone": 59499,
+          "boundary_count": 4,
+          "raw_boundary_records": 4,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "transformers/declarations.ts:259"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "Refused",
+          "reason": "overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody",
+          "bytes_revealed_if_fixed_alone": 41822,
+          "boundary_count": 4,
+          "raw_boundary_records": 4,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "transformers/es2018.ts:154"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        }
+      ]
+    },
+    {
+      "step": 22,
+      "title": "object semantics",
+      "hidden_bytes": 299265,
+      "reason_count": 82,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+          "bytes_revealed_if_fixed_alone": 117289,
+          "boundary_count": 2466,
+          "raw_boundary_records": 3336,
+          "contributing_boundary_count": 584,
+          "examples": [
+            "factory/emitHelpers.ts:148",
+            "parser.ts:10625",
+            "transformers/module/system.ts:536"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a computed field name",
+          "bytes_revealed_if_fixed_alone": 113387,
+          "boundary_count": 4,
+          "raw_boundary_records": 4,
+          "contributing_boundary_count": 4,
+          "examples": [
+            "visitorPublic.ts:623",
+            "parser.ts:505",
+            "scanner.ts:135"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "Refused",
+          "reason": "a method in object destructuring",
+          "bytes_revealed_if_fixed_alone": 34480,
+          "boundary_count": 12,
+          "raw_boundary_records": 12,
+          "contributing_boundary_count": 12,
+          "examples": [
+            "sys.ts:593",
+            "sys.ts:991",
+            "utilities.ts:11316"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        }
+      ]
+    },
+    {
+      "step": 11,
+      "title": "branded types",
+      "hidden_bytes": 280930,
+      "reason_count": 16,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a value of type __String",
+          "bytes_revealed_if_fixed_alone": 168577,
+          "boundary_count": 401,
+          "raw_boundary_records": 428,
+          "contributing_boundary_count": 49,
+          "examples": [
+            "factory/nodeFactory.ts:492",
+            "binder.ts:509",
+            "transformers/typeSerializer.ts:450"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a value of type Path",
+          "bytes_revealed_if_fixed_alone": 61844,
+          "boundary_count": 156,
+          "raw_boundary_records": 183,
+          "contributing_boundary_count": 39,
+          "examples": [
+            "resolutionCache.ts:579",
+            "watchUtilities.ts:572",
+            "resolutionCache.ts:348"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a value of type ResolvedConfigFileName",
+          "bytes_revealed_if_fixed_alone": 20619,
+          "boundary_count": 17,
+          "raw_boundary_records": 56,
+          "contributing_boundary_count": 14,
+          "examples": [
+            "tsbuildPublic.ts:932",
+            "tsbuildPublic.ts:1890",
+            "tsbuildPublic.ts:608"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 16,
+      "title": "generics",
+      "hidden_bytes": 106161,
+      "reason_count": 70,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a function returning T | undefined",
+          "bytes_revealed_if_fixed_alone": 24802,
+          "boundary_count": 87,
+          "raw_boundary_records": 87,
+          "contributing_boundary_count": 62,
+          "examples": [
+            "moduleNameResolver.ts:1166",
+            "moduleSpecifiers.ts:713",
+            "utilities.ts:2923"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a function returning T",
+          "bytes_revealed_if_fixed_alone": 18006,
+          "boundary_count": 104,
+          "raw_boundary_records": 104,
+          "contributing_boundary_count": 48,
+          "examples": [
+            "transformer.ts:248",
+            "utilities.ts:12345",
+            "executeCommandLine.ts:983"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a generic function as a value",
+          "bytes_revealed_if_fixed_alone": 7647,
+          "boundary_count": 74,
+          "raw_boundary_records": 209,
+          "contributing_boundary_count": 31,
+          "examples": [
+            "factory/parenthesizerRules.ts:675",
+            "core.ts:1370",
+            "utilitiesPublic.ts:713"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 17,
+      "title": "counted and uncounted unions",
+      "hidden_bytes": 32976,
+      "reason_count": 113,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+          "bytes_revealed_if_fixed_alone": 6424,
+          "boundary_count": 21,
+          "raw_boundary_records": 108,
+          "contributing_boundary_count": 11,
+          "examples": [
+            "tsbuildPublic.ts:1212",
+            "tsbuildPublic.ts:2006",
+            "builder.ts:1597"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a value of type string | null",
+          "bytes_revealed_if_fixed_alone": 6421,
+          "boundary_count": 2,
+          "raw_boundary_records": 2,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "sourcemap.ts:36"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }",
+          "bytes_revealed_if_fixed_alone": 2295,
+          "boundary_count": 2,
+          "raw_boundary_records": 2,
+          "contributing_boundary_count": 2,
+          "examples": [
+            "factory/utilities.ts:362",
+            "factory/utilities.ts:472"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 20,
+      "title": "iteration",
+      "hidden_bytes": 28342,
+      "reason_count": 6,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "for...of over an object",
+          "bytes_revealed_if_fixed_alone": 16604,
+          "boundary_count": 128,
+          "raw_boundary_records": 159,
+          "contributing_boundary_count": 29,
+          "examples": [
+            "transformers/utilities.ts:194",
+            "moduleNameResolver.ts:2716",
+            "transformers/utilities.ts:304"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
+          "bytes_revealed_if_fixed_alone": 10540,
+          "boundary_count": 13,
+          "raw_boundary_records": 27,
+          "contributing_boundary_count": 9,
+          "examples": [
+            "moduleSpecifiers.ts:927",
+            "commandLineParser.ts:2788",
+            "moduleNameResolver.ts:2428"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a for...of destructuring an object",
+          "bytes_revealed_if_fixed_alone": 1106,
+          "boundary_count": 4,
+          "raw_boundary_records": 4,
+          "contributing_boundary_count": 2,
+          "examples": [
+            "program.ts:798",
+            "transformers/destructuring.ts:301"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 19,
+      "title": "Maps and Sets with any key",
+      "hidden_bytes": 6770,
+      "reason_count": 13,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+          "bytes_revealed_if_fixed_alone": 2739,
+          "boundary_count": 20,
+          "raw_boundary_records": 20,
+          "contributing_boundary_count": 1,
+          "examples": [
+            "transformers/es2017.ts:1064"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+          "bytes_revealed_if_fixed_alone": 2391,
+          "boundary_count": 209,
+          "raw_boundary_records": 313,
+          "contributing_boundary_count": 29,
+          "examples": [
+            "tsbuildPublic.ts:692",
+            "builder.ts:626",
+            "core.ts:606"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        },
+        {
+          "kind": "NotYet",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+          "bytes_revealed_if_fixed_alone": 931,
+          "boundary_count": 13,
+          "raw_boundary_records": 16,
+          "contributing_boundary_count": 3,
+          "examples": [
+            "builder.ts:647",
+            "builder.ts:667",
+            "builder.ts:696"
+          ],
+          "owner": null,
+          "disposition": null,
+          "owner_source": "exact reason absent from supplied tables"
+        }
+      ]
+    },
+    {
+      "step": 18,
+      "title": "optional calls",
+      "hidden_bytes": 5095,
+      "reason_count": 1,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)",
+          "bytes_revealed_if_fixed_alone": 5095,
+          "boundary_count": 151,
+          "raw_boundary_records": 371,
+          "contributing_boundary_count": 37,
+          "examples": [
+            "performance.ts:189",
+            "scanner.ts:3588",
+            "scanner.ts:3009"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 23,
+      "title": "regex",
+      "hidden_bytes": 615,
+      "reason_count": 1,
+      "top_three": [
+        {
+          "kind": "NotYet",
+          "reason": "RegExp with a nonconstant pattern",
+          "bytes_revealed_if_fixed_alone": 615,
+          "boundary_count": 7,
+          "raw_boundary_records": 7,
+          "contributing_boundary_count": 7,
+          "examples": [
+            "commandLineParser.ts:4127",
+            "moduleSpecifiers.ts:148",
+            "moduleSpecifiers.ts:138"
+          ],
+          "owner": null,
+          "disposition": "compiler lesson",
+          "owner_source": "notyet-summary.json: table contains no owner column"
+        }
+      ]
+    },
+    {
+      "step": 15,
+      "title": "namespaces",
+      "hidden_bytes": 0,
+      "reason_count": 0,
+      "top_three": []
+    },
+    {
+      "step": 21,
+      "title": "exceptions",
+      "hidden_bytes": 0,
+      "reason_count": 0,
+      "top_three": []
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+test_input_and_coverage_mutants (__main__.AttributionTests.test_input_and_coverage_mutants) ... ok
+test_known_answer_detects_wrong_bytes (__main__.AttributionTests.test_known_answer_detects_wrong_bytes) ... ok
+test_operation_precedence (__main__.AttributionTests.test_operation_precedence) ... ok
+test_real_ledger (__main__.AttributionTests.test_real_ledger) ... ok
+test_three_reason_known_answer (__main__.AttributionTests.test_three_reason_known_answer) ... ok
+test_two_step_mutant (__main__.AttributionTests.test_two_step_mutant) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.065s
+
+OK
+CAUGHT seven input/coverage mutants
+CAUGHT +1 credited-byte mutant by independent known answer
+PASS pinned ledger: 1,727 reasons; 3,654,880 bytes conserved
+CAUGHT two-step mutant: Object.entries assigned to both 22 and 30
