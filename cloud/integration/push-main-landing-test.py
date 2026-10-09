@@ -159,15 +159,20 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record, failing=(), kind='fast'):
+    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False):
         # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
         tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
         tree.mkdir()
         (tree / (kind + '.json')).write_text(json.dumps(record))
         (tree / 'status.txt').write_text('%s: %s %s gate\n' % ('red' if failing else 'green', sha, kind))
-        events = [{'Action': 'fail', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test} for package, test in failing]
-        events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
-        (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
+        if jsonOnly:
+            # A box's fast record: no test.jsonl.gz, the failing tests named in its json.
+            record = dict(record, failed_tests=['github.com/system-inc/adamic/%s %s' % pair for pair in failing])
+            (tree / (kind + '.json')).write_text(json.dumps(record))
+        else:
+            events = [{'Action': 'fail', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test} for package, test in failing]
+            events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
+            (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
         index = str(Path(self.tmp.name) / ('index-' + name))
         environment = dict(os.environ, GIT_INDEX_FILE=index, **identity)
         gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
@@ -195,19 +200,22 @@ class LandingTests(unittest.TestCase):
     def test_a_candidate_lands_with_only_the_reds_main_already_has(self):
         known = ('stage1/cohere/estree', 'TestScalarEdges')
         main = self.publish(self.main, 'main', {'sha': self.main, 'finished': True, 'fail': 1}, failing=[known], kind='full')
-        def candidate(text, failing):
+        def candidate(text, failing, jsonOnly=False):
             sha = self.change(self.main, 'other/b.go', 'package other\n\n// %s\n' % text, text)
             record = {'sha': sha, 'base': self.main, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': len(failing), 'pass': 10,
                       'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
                       'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
                       'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1 if failing else 0),
                       'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}
-            return sha, self.publish(sha, 'fast', record, failing=failing)
+            return sha, self.publish(sha, 'fast', record, failing=failing, jsonOnly=jsonOnly)
         sha, record = candidate('known', [known])
         self.assertIn('1 failures', self.push('--fast-gate', record, sha, 'known').stderr)
         landed = self.push('--fast-gate', record, '--main-reds', main, sha, 'known')
         self.assertLanded(landed, self.main, sha)
         self.assertIn('lands with 1 reds main already has', git(self.repository, 'log', '-1', '--format=%B', 'origin/main'))
+        # A box record names its reds in fast.json, not a test.jsonl.gz: the same diff applies.
+        boxed, boxedRecord = candidate('boxed', [known, ('code', 'TestBoxed')], jsonOnly=True)
+        self.assertIn('new reds against main: code TestBoxed', self.push('--fast-gate', boxedRecord, '--main-reds', main, boxed, 'boxed').stderr)
         fresh, freshRecord = candidate('fresh', [known, ('code', 'TestNew')])
         refused = self.push('--fast-gate', freshRecord, '--main-reds', main, fresh, 'fresh')
         self.assertIn('new reds against main: code TestNew', refused.stderr)

@@ -231,6 +231,11 @@ path, mainRef, records = sys.argv[1], sys.argv[3], [sys.argv[2]] + sys.argv[4:]
 def failing(ref):
     raw = subprocess.run(["git", "show", ref + ":test.jsonl.gz"], capture_output=True).stdout
     if not raw:
+        # A box's fast record carries no test.jsonl.gz; its json names the failing tests instead.
+        for name in ("fast.json", "full.json"):
+            record = subprocess.run(["git", "show", ref + ":" + name], capture_output=True, text=True).stdout
+            if record and "failed_tests" in json.loads(record):
+                return {entry.split("/adamic/")[-1] for entry in json.loads(record)["failed_tests"] or [] if "/" not in entry.split()[-1]}
         return None
     names = set()
     for line in gzip.decompress(raw).decode(errors="replace").splitlines():
