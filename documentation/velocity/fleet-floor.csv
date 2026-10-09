@@ -1268,3 +1268,15 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T09:41:14.433252Z,runtime,0,8,0,,,"gate_backpressure: 90 queued, 19 slots"
 2026-10-09T09:41:16.375894Z,library,0,8,0,,,"gate_backpressure: 90 queued, 19 slots"
 2026-10-09T09:41:26.704198Z,developer_tools,1,4,0,,,"gate_backpressure: 90 queued, 19 slots"
+2026-10-09T09:45:40.033084Z,compiler,2,30,3,11-optional-chain-after-call.dispatched-main,01a113e2-01c9-72f0-b65a-92ecfa072027,sent
+2026-10-09T09:45:49.716473Z,compiler,3,30,2,15-spread-shorthand.dispatched-main,01a113e3-3295-72cb-94c5-4b7eb4a2502d,sent
+2026-10-09T09:45:59.585249Z,compiler,4,30,1,30-borrow-containers.md,01a113e7-e19c-70f1-b07f-2330ae649014,sent
+2026-10-09T09:45:59.838442Z,compiler,5,30,0,,,queue_empty
+2026-10-09T09:46:42.052370Z,cohere_adamic,0,30,30,026-structure-next-require-page-default-export.txt,01a113d9-fee9-76fd-be54-4b36c0966024,sent
+2026-10-09T09:46:50.902688Z,cohere_adamic,1,30,29,027-structure-network-require-hook-variables-type.txt,01a11207-1191-70a8-a5c4-a696dba7701b,sent
+2026-10-09T09:47:00.001096Z,cohere_adamic,2,30,28,028-react-no-direct-mutation-state.txt,01a11206-c5cd-7311-89d7-77a3c2a2703c,sent
+2026-10-09T09:47:00.004556Z,cohere_adamic,3,30,27,,,pass_cap
+2026-10-09T09:47:03.575860Z,typescript,1,10,0,,,queue_empty
+2026-10-09T09:47:08.031007Z,runtime,0,8,0,,,queue_empty
+2026-10-09T09:47:10.131786Z,library,0,8,0,,,queue_empty
+2026-10-09T09:47:19.871420Z,developer_tools,1,4,0,,,queue_empty
