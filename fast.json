@@ -1,0 +1,17 @@
+{
+  "sha": "75473437eacc7be16cf50111f228e74b8491e45f",
+  "candidate": "75473437eacc7be16cf50111f228e74b8491e45f",
+  "base": "fc7252a6e30d5c36e27a774188928ec34887dd10",
+  "base_name": "main",
+  "branch": "cloud/land-stack-library-area-fixes-75473437",
+  "tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "status": "red",
+  "failure": {
+    "step": "merge",
+    "after_seconds": 0.0,
+    "detail": "conflicts with main fc7252a6e30d5c36e27a774188928ec34887dd10 in cloud/fast-gate/compiler-dependencies.json"
+  },
+  "merge_conflicts": [
+    "cloud/fast-gate/compiler-dependencies.json"
+  ]
+}
