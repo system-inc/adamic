@@ -26,7 +26,7 @@ adamic_heap *adamic_box_number(double number) {
 
 bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right) {
 	if (left == NULL || right == NULL) {
-		return left == right;
+		return adamic_reference_equal(left, right);
 	}
 	if (left->kind != right->kind) {
 		return false;
@@ -39,7 +39,7 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right) {
 		return adamic_string_equal((const adamic_string *)left, (const adamic_string *)right);
 	default:
 		// A boolean is one of two boxes, and an object, array, map or function is equal only to itself.
-		return left == right;
+		return adamic_reference_equal(left, right);
 	}
 }
 

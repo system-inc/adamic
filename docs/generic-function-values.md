@@ -1,8 +1,7 @@
 # Generic functions used as values
 
-Proposal for @system_adamic, step 16 (#s4e4reh, wall #rkxvjfx). Design only,
-based on `compiler/after-chain-fixed-verify` at `50654a40`; no acceptance change
-before the ruling. Builds on its generic substitutions and instantiated body
+Ruled by @system_adamic on #s4e4reh, step 16 (#s4e4reh, wall #rkxvjfx). The contextual specialization and identity rule is approved, with the const-alias
+exception and higher-rank refusal below. Based on `compiler/after-chain-fixed-verify` at `50654a40`. Builds on its generic substitutions and instantiated body
 relations, and on V4's identity-preserving checked callable views.
 
 ## Survey
@@ -47,7 +46,7 @@ Thus 20 roots reach contextual slots (three require a concrete outer caller),
 and six reach the four unresolved sites. This is a source classification, not
 an after-census or a claim that the entire contextual roots will compile.
 
-## Proposed rule
+## Ruled rule
 
 At a generic function **value expression**, obtain one complete checker-derived
 substitution from an explicit `f<S>` instantiation or a contextual, nongeneric
@@ -70,29 +69,38 @@ is a concrete function type** is fine. An element with a generic call signature
 is not. Ambiguous overload/context selection or unsupported concrete layouts
 remain NotYet with the unresolved site and a fix.
 
-If binders remain free, propose **Refused**, with file:line:column, the flow path
+A const alias of a generic function declaration retains its binders. Each direct
+call through the alias is monomorphized independently, so the first example
+prints `4 x`. Passing, storing or returning the alias is an escape: apply the
+contextual specialization rule at that expression. Mutable aliases are outside
+this exception.
+
+Higher-rank slots are **Refused** in both extensions, naming every free slot
+binder and a concrete-slot fix. Monomorphization has no instance to select; an
+erased generic entry would trust a type it cannot prove.
+
+If binders remain free, use **Refused**, with file:line:column, the flow path
 into the slot, each unresolved binder, and an annotation/instantiation fix.
-This is a new language restriction on otherwise sound polymorphic values and
-needs this ruling; until implemented the existing NotYet remains. Do not
+This is a ruled language restriction on otherwise sound polymorphic storage. Do not
 silently specialize only the first later call or use one untyped native entry.
 
 ```a
 function identity<T>(value: T): T { return value; }
 const number: (value: number) => number = identity; // proposed accepted
 const text = identity<string>;                    // proposed accepted
-const generic = identity;                        // proposed refused here
+const generic = identity;                        // admitted const alias
 console.log(`${generic(4)} ${generic('x')}`);       // Node: 4 x
 ```
 
 ```a
 function identity<T>(value: T): T { return value; }
 const box: { readonly run: <U>(value: U) => U } = { run: identity };
-console.log(`${box.run(4)} ${box.run('x')}`); // Node: 4 x; proposed refused at run
+console.log(`${box.run(4)} ${box.run('x')}`); // Node: 4 x; refused at run
 // Fix: concrete number/string slots assigned identity at their own value sites.
 ```
 
-Both programs are sound TypeScript; refusal means unsupported polymorphic
-storage, not a type lie. Proposed diagnostic example:
+Both programs are sound TypeScript; the first is admitted by the alias exception.
+Refusal of the second means unsupported polymorphic storage, not a type lie. Proposed diagnostic example:
 `main.a:2:56: refused: identity -> box.run retains generic U; T has no single
 instantiation; fix: use a concrete callable slot or identity<number>`.
 The same specialization/refusal rule applies to `.ts` and `.a`. Existing checked

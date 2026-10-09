@@ -155,6 +155,7 @@ struct adamic_closure {
 #endif
 	size_t count;
 	size_t source_length;
+	size_t source_identity;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_environment *canonical_owner;
 	adamic_closure *canonical_previous;
@@ -162,6 +163,19 @@ struct adamic_closure {
 #endif
 	adamic_cell *cells[];
 };
+// Module generic adapters carry the declaration identity, while ordinary closures
+// retain allocation identity. Low-bit tagging keeps these domains disjoint.
+static inline uintptr_t adamic_reference_identity(const void *value) {
+ if (value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_closure) {
+  size_t source = ((const adamic_closure *)value)->source_identity;
+  if (source != 0) return ((uintptr_t)source << 1) | 1;
+ }
+ return (uintptr_t)value;
+}
+static inline bool adamic_reference_equal(const void *left, const void *right) {
+ return adamic_reference_identity(left) == adamic_reference_identity(right);
+}
+
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);

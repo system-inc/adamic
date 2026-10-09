@@ -317,6 +317,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				}
 				closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
 				e.line("%s->source_length = %d;", closure, target.SourceLength)
+				e.line("%s->source_identity = %d;", closure, target.SourceIdentity)
 				return closure
 			}
 		}
@@ -326,6 +327,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
 		e.line("%s->source_length = %d;", closure, target.SourceLength)
+		e.line("%s->source_identity = %d;", closure, target.SourceIdentity)
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
 		}

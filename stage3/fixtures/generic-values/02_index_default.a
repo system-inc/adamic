@@ -1,0 +1,8 @@
+function equateValues<T>(left: T, right: T): boolean { return left === right; }
+function same<T>(left: readonly T[], right: readonly T[], compare: (left: T, right: T, index: number) => boolean = equateValues): boolean {
+ if (left.length !== right.length) return false;
+ for (let index = 0; index < left.length; index++) { const a = left[index], b = right[index]; if (a === undefined || b === undefined) throw "missing element"; if (!compare(a, b, index)) return false; }
+ return true;
+}
+const text = `v${4}`;
+console.log(`${same([1, 2], [1, 2])} ${same([1, 2], [2, 1])} ${same([text], [`v${4}`])} ${same([text], [`v${5}`])}`);

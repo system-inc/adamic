@@ -1,0 +1,5 @@
+function equateValues<T>(left: T, right: T): boolean { return left === right; }
+function equal<T>(left: T, right: T, compare: (left: T, right: T) => boolean = equateValues): boolean { return compare(left, right); }
+function outer<T>(value: T, other: T): boolean { return equal(value, other); }
+const text = `v${4}`;
+console.log(`${outer(4, 4)} ${outer(4, 5)} ${outer(text, `v${4}`)} ${outer(text, `v${5}`)}`);

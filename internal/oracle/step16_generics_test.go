@@ -16,7 +16,7 @@ var step16Outcomes = []struct{ name, kind, reason string }{
 	{"01_identity", "Lowered", ""},
 	{"02_optional_return", "Lowered", ""},
 	{"03_callback_return", "Lowered", ""},
-	{"04_function_value", "NotYet", "a generic function as a value"},
+	{"04_function_value", "Lowered", ""},
 	{"05_nested_class", "Lowered", ""},
 	{"06_polymorphic_recursion", "Refused", "polymorphic recursion"},
 	{"07_generic_cast", "Refused", "a cast the runtime can't check"},

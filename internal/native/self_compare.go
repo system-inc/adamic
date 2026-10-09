@@ -17,6 +17,13 @@ func (e *emitter) scalarEquality(operator ir.Operator, operandType ir.Type, left
 	case ir.Boolean:
 		name, representation = "boolean", "bool"
 	}
+	if name == "reference" {
+		comparison := fmt.Sprintf("adamic_reference_equal(%s, %s)", left, right)
+		if operator == ir.NotEqual {
+			return "(!" + comparison + ")"
+		}
+		return comparison
+	}
 	helper := "adamic_same_" + name
 	declaration := fmt.Sprintf("static inline bool %s(%s left, %s right) { return left == right; }", helper, representation, representation)
 	if !slices.Contains(e.declarations, declaration) {

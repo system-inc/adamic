@@ -239,7 +239,7 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 			break;
 		}
 		case adamic_equal_identity:
-			equal = element.reference == value.reference;
+			equal = adamic_reference_equal(element.reference, value.reference);
 			break;
 		case adamic_equal_maybe_numbers: {
 			// undefined finds undefined; a number is compared as numbers are, NaN found only by includes.

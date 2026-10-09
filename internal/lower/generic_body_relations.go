@@ -348,6 +348,12 @@ func (l *lowering) genericBodyAllows(source, target *checker.Type) bool {
 		}
 		from, to := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall), l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
 		if len(from) == 1 && len(to) == 1 {
+			// Specialize the source's fresh binders against the target's rigid
+			// outer binders before proving variance. Constraints never replace
+			// those rigid binders; the parameter/result proof below still runs.
+			if len(from[0].TypeParameters()) > 0 && len(to[0].TypeParameters()) == 0 {
+				from = []*checker.Signature{checker.Checker_instantiateSignatureInContextOf(l.checker, from[0], to[0], nil, nil)}
+			}
 			parameters, actual := to[0].Parameters(), from[0].Parameters()
 			for index, parameter := range parameters {
 				if index < len(actual) && !l.genericBodyAllows(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(actual[index])) {

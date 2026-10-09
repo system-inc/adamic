@@ -49,9 +49,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("process.on('uncaughtException', () => process.exit(1));\n")
 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
 	// object that happens to have fields of those names.
-	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false, length = 0) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t\tthis.length = length;\n\t}\n}\n")
+	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false, length = 0, identity = 0) {\n\t\tthis.code = code;\n\t\tthis.identity = identity;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t\tthis.length = length;\n\t}\n}\n")
 	builder.WriteString("const adamicCanonical = (identity, code, cells, length) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells, false, length)); return values.get(code); };\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(genericIdentityRuntime)
 	builder.WriteString(fieldReadinessRuntime)
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
@@ -542,7 +543,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			tests := []string{}
 			for _, test := range matched.Tests {
 				part++
-				tests = append(tests, e.marked(at, part, fmt.Sprintf("%s === %s", value, e.value(test))))
+				tests = append(tests, e.marked(at, part, fmt.Sprintf("adamicEqual(%s, %s)", value, e.value(test))))
 			}
 			prefix := "} else if"
 			if index == 0 {
@@ -804,6 +805,13 @@ func (e *emitter) value(expression ir.Expression) string {
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
+		if expression.Operator == ir.Equal || expression.Operator == ir.NotEqual {
+			comparison := "adamicEqual(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+			if expression.Operator == ir.NotEqual {
+				return "(!" + comparison + ")"
+			}
+			return comparison
+		}
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
@@ -1154,7 +1162,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.From != nil {
 			arguments = append(arguments, expression.From)
 		}
-		return e.value(expression.Array) + method + e.values(arguments) + ")"
+		return "adamicSearch(" + e.value(expression.Array) + ", " + quote(strings.TrimSuffix(strings.TrimPrefix(method, "."), "(")) + ", " + e.values(arguments) + ")"
 	case ir.ArrayFrom:
 		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
@@ -1208,7 +1216,7 @@ func (e *emitter) value(expression ir.Expression) string {
 				return fmt.Sprintf("adamicCanonical(%s, %s, [%s], %d)", e.cell(identity-1), functionName(e.program, expression.Function), strings.Join(cells, ", "), target.SourceLength)
 			}
 		}
-		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t, %d)", functionName(e.program, expression.Function), strings.Join(cells, ", "), target.Receiver, target.SourceLength)
+		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t, %d, %d)", functionName(e.program, expression.Function), strings.Join(cells, ", "), target.Receiver, target.SourceLength, target.SourceIdentity)
 	case ir.CallClosure:
 		if expression.Optional || expression.RequiredCallable {
 			return e.optionalMethodCall(expression)
@@ -1239,9 +1247,9 @@ func (e *emitter) value(expression ir.Expression) string {
 			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
 		}
 		if expression.Pairs != nil {
-			return "new Map(" + e.value(expression.Pairs) + ")"
+			return "new AdamicMap(" + e.value(expression.Pairs) + ")"
 		}
-		return "new Map([" + strings.Join(entries, ", ") + "])"
+		return "new AdamicMap([" + strings.Join(entries, ", ") + "])"
 	case ir.MapKeys:
 		return "[..." + e.value(expression.Map) + ".keys()]"
 	case ir.MapValues:
@@ -1256,9 +1264,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {
-			return "new Set()"
+			return "new AdamicSet()"
 		}
-		return "new Set(" + e.value(expression.Values) + ")"
+		return "new AdamicSet(" + e.value(expression.Values) + ")"
 	case ir.SetAdd:
 		return e.value(expression.Set) + ".add(" + e.value(expression.Value) + ")"
 	case ir.SetValues:

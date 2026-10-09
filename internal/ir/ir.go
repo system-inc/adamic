@@ -146,6 +146,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// SourceIdentity separates a module generic declaration from its concrete call ABIs.
+	SourceIdentity int
+	GenericSource  string
 	// SourceLength is ECMAScript length: parameters before the first default or rest.
 	SourceLength int
 	Generator    *GeneratorTypes

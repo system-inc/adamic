@@ -1,0 +1,18 @@
+function equateValues<T>(left: T, right: T): boolean { return left === right; }
+function contains<T>(values: readonly T[], value: T, compare: (left: T, right: T) => boolean = equateValues): boolean {
+ for (const candidate of values) { if (compare(candidate, value)) return true; }
+ return false;
+}
+const numberCompare: (left: number, right: number) => boolean = equateValues;
+const again: (left: number, right: number) => boolean = equateValues;
+const textCompare: (left: string, right: string) => boolean = equateValues;
+type Compare = ((left: number, right: number) => boolean) | ((left: string, right: string) => boolean);
+const versions: Compare[] = [numberCompare, textCompare];
+const text = `v${4}`;
+console.log(`${contains([3, 4], 4)} ${contains([3, 4], 5)} ${contains([text], `v${4}`)} ${contains([text], `v${5}`)}`);
+console.log(`${numberCompare === again} ${versions[0] === versions[1]} ${numberCompare(4, 5)} ${textCompare(text, `v${4}`)}`);
+const keys = new Map<Compare, number>();
+keys.set(numberCompare, 3); keys.set(textCompare, 4);
+console.log(`${keys.size} ${keys.get(numberCompare)} ${keys.get(textCompare)}`);
+const unique = new Set<Compare>(); unique.add(numberCompare); unique.add(textCompare);
+console.log(`${unique.size} ${unique.has(textCompare)} ${versions.indexOf(textCompare)} ${versions.includes(textCompare)}`);

@@ -79,7 +79,7 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	}
 	if (map->reference_keys) {
 		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
-		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
+		uint64_t bits = (uint64_t)adamic_reference_identity(key.reference);
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
 	return adamic_map_number_hash(key.number);
@@ -96,7 +96,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
-		return left.reference == right.reference;
+		return adamic_reference_equal(left.reference, right.reference);
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }

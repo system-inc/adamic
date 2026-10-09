@@ -75,11 +75,13 @@ adamic_array *adamic_plain_object_keys(const adamic_object *object) {
 // property reads through them. The kind still gives typeof and boxed identity comparisons their
 // real JavaScript answer, and a zero count makes them immortal.
 void *adamic_library_identity(size_t index) {
-	static adamic_heap identities[] = {
-		{0, adamic_kind_closure, 0}, {0, adamic_kind_closure, 0},
-		{0, adamic_kind_closure, 0}, {0, adamic_kind_closure, 0},
-		{0, adamic_kind_object, 0}, {0, adamic_kind_closure, 0},
-		{0, adamic_kind_closure, 0},
-	};
-	return &identities[index];
+	static adamic_closure number = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure string = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure boolean = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure object = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure json = {.heap = {0, adamic_kind_object, 0}};
+ static adamic_closure array = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure regexp = {.heap = {0, adamic_kind_closure, 0}};
+ static adamic_closure *const identities[] = {&number, &string, &boolean, &object, &json, &array, &regexp};
+	return identities[index];
 }
