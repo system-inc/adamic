@@ -100,6 +100,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		}
 		prologue = append(prologue, ir.Declare{Local: local, Value: ir.MakeClosure{Function: index}})
 	}
+	l.noteGenericAliases(nodes)
 	for position, node := range bodies {
 		index := functions[position]
 		// Ordinary declarations own their this. Dynamic receivers are not implemented.

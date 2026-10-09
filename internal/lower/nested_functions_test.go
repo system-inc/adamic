@@ -17,7 +17,7 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"block", `function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`, "block-scoped nested"},
-		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } const stored = inner; return stored(1); } console.log(String(run()));`, "generic function as a value"},
+		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } const stored: (value: number) => number = inner; return stored(1); } console.log(String(run()));`, "nested generic function as a value"},
 		{"dynamic this", `function run(): number { function a(this: { x: number }): number { return this.x; } return 1; } console.log(String(run()));`, "dynamic this"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

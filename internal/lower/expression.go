@@ -603,6 +603,12 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled := l.staticClassRead(node); handled {
 			return value, nil
 		}
+		if declaration := l.generics[l.symbol(node)]; declaration != nil {
+			if local, ok := l.locals[l.symbol(declaration.Name())]; ok && l.result.Locals[local].NestedFunction < 0 {
+				return nil, l.notYet(node, "a nested generic function as a value; use direct calls through a const alias")
+			}
+			return l.genericFunctionValue(node, declaration)
+		}
 		if value, handled, err := l.nestedReference(node); handled {
 			return value, err
 		}
@@ -615,9 +621,6 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
-		}
-		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
-			return l.genericFunctionValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
@@ -1249,11 +1252,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 				arguments = append(arguments, value)
 			}
 			value := ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}
-			return l.namespaceReadyCall(callee, value), nil
+			return l.genericAliasRead(callee, l.namespaceReadyCall(callee, value)), nil
 		}
 		value, err := l.callFunction(call, instance)
 		if err == nil {
-			value = l.namespaceReadyCall(callee, value)
+			value = l.genericAliasRead(callee, l.namespaceReadyCall(callee, value))
 		}
 		return value, err
 	}
@@ -1357,6 +1360,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
 	symbol := l.symbol(node)
+	if declaration := l.generics[symbol]; declaration != nil {
+		symbol = l.symbol(declaration.Name())
+	}
 	if node.Kind == ast.KindShorthandPropertyAssignment {
 		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
 		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {

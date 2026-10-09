@@ -1,0 +1,14 @@
+function identity<T>(value: T): T { return value; }
+const generic = identity;
+console.log(generic(4) + " " + generic("x"));
+const number: (value: number) => number = generic;
+const text: (value: string) => string = generic;
+console.log(number(5) + " " + text(`v${4}`));
+function apply(run: (value: number) => number, value: number): number { return run(value); }
+console.log(`${apply(generic, 6)}`);
+function nested(): string {
+ function inner<T>(value: T): T { return value; }
+ const alias = inner;
+ return alias(7) + " " + alias("y");
+}
+console.log(nested());

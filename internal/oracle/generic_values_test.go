@@ -1,6 +1,9 @@
 package oracle
 
 import (
+	"errors"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -11,7 +14,7 @@ import (
 const genericValuesDirectory = "stage3/fixtures/generic-values/"
 
 func init() {
-	for _, name := range []string{"01_comparer", "02_index_default", "03_utility_default"} {
+	for _, name := range []string{"01_comparer", "02_index_default", "03_utility_default", "04_alias"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -85,4 +88,58 @@ func TestGenericValueIndexWrongResult(t *testing.T) {
 func TestGenericValueUtilityWrongResult(t *testing.T) {
 	t.Parallel()
 	genericValueOracle(t, "03_utility_default", "result")
+}
+
+func TestGenericValueAlias(t *testing.T) { t.Parallel(); genericValueOracle(t, "04_alias", "") }
+
+// Plant an escape after the direct calls: no single type may be guessed from
+// the first call. The slot remains polymorphic and must be refused.
+func TestGenericValueAliasEscapeMutant(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "escaped.a")
+	source := `function identity<T>(value: T): T { return value; }
+const generic = identity;
+console.log(generic(4) + " " + generic("x"));
+const escaped: { readonly run: <U>(value: U) => U } = {run: generic};
+console.log(escaped.run(4) + " " + escaped.run("x"));`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	if expected.exitCode != 0 || string(expected.stdout) != "4 x\n4 x\n" || len(expected.stderr) != 0 {
+		t.Fatalf("Node control: %+v", expected)
+	}
+	_, err := lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "generic-function-values") {
+		t.Fatalf("escape was not checked/refused: %v", err)
+	}
+	t.Logf("planted polymorphic escape refused: %v", err)
+}
+
+func TestGenericValueAliasEarlyRead(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "early.a")
+	source := `function identity<T>(value: T): T { return value; }
+try { run(); } catch { console.log("early"); }
+const generic = identity;
+function run(): void { console.log("" + generic(4)); }
+run();`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual, binary := nativelyUncached(t, program)
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	for name, got := range map[string]run{"native": actual, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(expected, got); difference != "" {
+			t.Errorf("%s TDZ: %s; expected %+v got %+v", name, difference, expected, got)
+		}
+	}
 }

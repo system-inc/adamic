@@ -46,6 +46,25 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				return nil, &Refused{Where: l.program.Where(declaration), What: "repeated var assertion declarations", Fix: "use one declaration and subsequent assignments"}
 			}
 		}
+		// A const alias is a compile-time name for a generic declaration. Its
+		// direct calls select independently; its escapes are value expressions.
+		if list.Flags&ast.NodeFlagsConst != 0 && declaration.Type() == nil && declaration.Initializer() != nil {
+			initializer := ast.SkipParentheses(declaration.Initializer())
+			if ast.IsIdentifier(initializer) || l.namespaceMember(initializer) {
+				if generic := l.generics[l.symbol(initializer)]; generic != nil {
+					local, err := l.declareLocal(name)
+					if err != nil {
+						return nil, err
+					}
+					l.generics[l.symbol(name)] = generic
+					// The binding has readiness storage, but no erased callable
+					// entry. Reads only use this storage to preserve the TDZ.
+					value := l.genericAliasRead(initializer, ir.Undefined{Of: ir.Closure})
+					statements = append(statements, l.initializeLocal(local, value)...)
+					continue
+				}
+			}
+		}
 		local, err := l.declareLocal(name)
 		if err != nil {
 			return nil, err

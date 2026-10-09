@@ -90,7 +90,7 @@ func (l *lowering) genericAliasRead(node *ast.Node, value ir.Expression) ir.Expr
 		return value
 	}
 	l.touch(local)
-	if !l.checked(local) {
+	if true {
 		return value
 	}
 	check := ir.Read{Local: local, Of: ir.Closure, Checked: true}

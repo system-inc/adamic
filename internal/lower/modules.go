@@ -164,6 +164,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			declarations = append(declarations, statement)
 		}
 	}
+	l.noteGenericAliases(statements)
 	for _, declaration := range declarations {
 		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
 			return err
