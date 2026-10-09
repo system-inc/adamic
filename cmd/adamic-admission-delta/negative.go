@@ -97,6 +97,9 @@ func supportedLiteralLie(witness negativeWitness) bool {
 	return false
 }
 func validateWitnessSource(source []byte, witness negativeWitness) error {
+	if regexp.MustCompile(`\b(import|export)\b`).Match(source) {
+		return fmt.Errorf("negative witnesses must be self-contained")
+	}
 	if !supportedLiteralLie(witness) {
 		return fmt.Errorf("unsupported type lie or repair")
 	}

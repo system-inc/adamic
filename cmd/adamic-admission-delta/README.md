@@ -78,7 +78,8 @@ or an explicit `--negative-witnesses` path. This allows a separately delivered
 compiler branch to use this tool without merging its unlanded tool dependency.
 The valid JSON header is the `_comment` field; adding an entry is a ruling
 routed to @system_adamic. The map key is SHA-256 of exact program bytes,
-never a path. The declaration and ruling task are documentary evidence.
+never a path. The declaration and ruling task are documentary evidence. Imports and exports
+are refused for listed sources so a dependency edit cannot inherit a file hash.
 The tool validates the declaration's literal type contradiction and a pinned
 literal repair. Supported forms are declared string initialized with
 `undefined!` or `null!`, and the bounded speculative callback returning
@@ -96,5 +97,5 @@ in the ruled diagnostic expands only to the head checkout's absolute path.
 Compilation failures never qualify. The list size prints to stderr on every
 run that loads it, including empty lists; JSON records
 `negative_witness_count`, `node_agreements`, and `accepted_witnesses`.
-`agree` remains false on a accepted listed witness; `negative_witness` records
+`agree` remains false on an accepted listed witness; `negative_witness` records
 the separate exception. A wrong exit, diagnostic, or source repair fails.

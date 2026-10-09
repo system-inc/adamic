@@ -151,7 +151,7 @@ func TestNegativeValidProgramCannotBeListed(t *testing.T) {
 	t.Parallel()
 	_, witness, list := negativeFixture(t)
 	source := []byte("let value: string = \"ready\";\nconsole.log('42');\n")
-	for _, valid := range [][]byte{source, []byte("// let value: string = undefined!;\nconsole.log('42');\n")} {
+	for _, valid := range [][]byte{source, []byte("// let value: string = undefined!;\nconsole.log('42');\n"), []byte("let value: string = undefined!;\nimport './dependency.a';\n")} {
 		if err := validateWitnessSource(valid, witness); err == nil {
 			t.Fatal("valid source accepted as literal type lie")
 		}
