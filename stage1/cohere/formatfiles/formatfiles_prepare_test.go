@@ -28,7 +28,6 @@ type formatfilesShared struct {
 	casesPath, answers string
 	parts              []formatfilesPart
 	port               formatfilesPrepared
-	mutated            map[string]formatfilesPrepared
 }
 
 var formatfilesCorpusOnce sync.Once
@@ -71,19 +70,12 @@ func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
 	return prepared
 }
 
-func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
+func formatfilesPrepareShard(t *testing.T) *formatfilesShared {
 	t.Helper()
 	state := *formatfilesReady(t)
 	state.port = formatfilesPreparedPort(t)
 	if runtime.GOOS == "darwin" {
 		state.port.unsanitized = formatfilesUnsanitized(t)
-	}
-	state.mutated = make(map[string]formatfilesPrepared)
-	for index, mutant := range mutants {
-		if formatfilesShard("mutant/"+mutant.name) != selected {
-			continue
-		}
-		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
 	}
 	return &state
 }
