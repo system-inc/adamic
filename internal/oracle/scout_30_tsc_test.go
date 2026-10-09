@@ -22,6 +22,7 @@ func init() {
 }
 
 func TestScout30FamilyMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range scout30Families {
 		t.Run(family, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_30_tsc_"+family+".a"))
@@ -96,6 +97,7 @@ func TestScout30FamilyMutants(t *testing.T) {
 }
 
 func TestScout30Refusals(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, reason string }{
 		{"json_specs", "never"},
 		{"json_parse", "any"},
@@ -123,6 +125,7 @@ func TestScout30Refusals(t *testing.T) {
 
 // This old gap fixture closes when the proven prototype-query branch is merged.
 func TestScout30PrototypeObservationMatchesNode(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_30_refused/object_prototype.a"))
 	if err != nil {
 		t.Fatal(err)

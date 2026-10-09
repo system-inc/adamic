@@ -20,6 +20,7 @@ import (
 // The explicit Object prototype call now lowers. Unknown object receivers still need
 // dispatch across their differently held runtime members; retain that exact later blocker.
 func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
+	t.Parallel()
 	adapter, err := os.ReadFile(filepath.Join(repository, "stage3/adapt/47-host-errors/adapt.cjs"))
 	if err != nil {
 		t.Fatal(err)

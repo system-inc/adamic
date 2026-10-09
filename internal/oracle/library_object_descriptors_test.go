@@ -23,6 +23,7 @@ func init() {
 	}
 }
 func TestObjectDescriptorFixtures(t *testing.T) {
+	t.Parallel()
 	for _, name := range objectDescriptorFixtures {
 		t.Run(name, func(t *testing.T) {
 			fixture, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
@@ -54,6 +55,7 @@ func TestObjectDescriptorFixtures(t *testing.T) {
 }
 
 func TestObjectDescriptorNodeMutants(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/library_object_descriptors.c"))
 	if err != nil {
 		t.Fatal(err)

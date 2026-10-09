@@ -28,6 +28,7 @@ func init() {
 // These are source witnesses, not stubs. Acceptance trips the expected refusal
 // so the owning compiler proof can replace it with the three-backend oracle.
 func TestScout19Slice2ExpectedRefusals(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"create_set", "presence", "range", "brands", "path", "generator"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -83,6 +84,7 @@ func TestScout19Slice2ExpandoStaysRefused(t *testing.T) {
 }
 
 func TestScout19Slice2MultimapMutants(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"keep_empty_bucket", "skip_last_element_copy", "wrong_forEach_receiver"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

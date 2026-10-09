@@ -43,6 +43,7 @@ func init() {
 
 // Mutants run cleanly under sanitizers and leak checks. Only the source on Node catches them.
 func TestNodeFSDirectoryMutants(t *testing.T) {
+	t.Parallel()
 	cases := []struct{ name, fixture, from, to, helper, function string }{
 		{name: "resolve", fixture: "node_path_posix.a", from: "adamic_node_path_resolve(", to: "adamic_node_path_join("},
 		{name: "join", fixture: "node_path_posix.a", from: "adamic_node_path_join(", to: "adamic_node_path_resolve("},

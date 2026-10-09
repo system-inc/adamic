@@ -22,6 +22,7 @@ func init() {
 // Mutants preserve valid C, ownership, and successful execution. Source Node alone
 // decides whether the tsc excerpt's collection behavior changed.
 func TestScout19TSCCollectionMutants(t *testing.T) {
+	t.Parallel()
 	for _, name := range scout19Fixtures {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

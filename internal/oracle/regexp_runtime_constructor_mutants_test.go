@@ -25,6 +25,7 @@ func runtimeConstructorMutant(t *testing.T, source string) run {
 }
 
 func TestRuntimeConstructorFamilyMutants(t *testing.T) {
+	t.Parallel()
 	for _, row := range []struct{ name, file, old, new string }{
 		{"enums", "regexp_compile_bytecode.c", "base.assertion=node->kind;", "base.assertion=2;"},
 		{"option_errors", "regexp_compile_bytecode.c", "base.range_count=set.range_count;", "base.range_count=0;"},
@@ -68,6 +69,7 @@ func TestRuntimeConstructorFamilyMutants(t *testing.T) {
 }
 
 func TestRuntimeConstructorFailureMutants(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, runtimeConstructorsDirectory, "construction_failure.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -113,6 +115,7 @@ func TestRuntimeConstructorFailureMutants(t *testing.T) {
 }
 
 func TestRuntimeConstructorBudgetStop(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, runtimeConstructorsDirectory, "budget.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -174,6 +177,7 @@ func TestRuntimeConstructorBudgetStop(t *testing.T) {
 // parser cannot allocate a Node message. Fault injection makes each reachable
 // without asking the machine to exhaust memory or allocate INT_MAX opcodes.
 func TestRuntimeConstructorInternalFailurePaths(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, runtimeConstructorsDirectory, "construction_failure.a"))
 	program, err := lowered(t, path)
 	if err != nil {

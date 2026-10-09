@@ -21,6 +21,7 @@ func init() {
 }
 
 func TestDynamicRegExpRuntimeRefusals(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_dynamic/runtime_refusals.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -62,6 +63,7 @@ func TestDynamicRegExpRuntimeRefusals(t *testing.T) {
 }
 
 func TestDynamicRegExpConstructionMutants(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_dynamic/dynamic_gap.a"))
 	program, err := lowered(t, path)
 	if err != nil {

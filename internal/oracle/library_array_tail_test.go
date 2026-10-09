@@ -22,6 +22,7 @@ func init() {
 }
 
 func TestArrayTailSortAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_tail_sort.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -47,6 +48,7 @@ func TestArrayTailSortAgreesWithNode(t *testing.T) {
 }
 
 func TestArrayTailSortNodeOnlyMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_tail_sort.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -97,6 +99,7 @@ func TestArrayTailSortNodeOnlyMutant(t *testing.T) {
 }
 
 func TestArrayTailReduceRightAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_tail_reduce_right.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -122,6 +125,7 @@ func TestArrayTailReduceRightAgreesWithNode(t *testing.T) {
 }
 
 func TestArrayTailReduceRightNodeOnlyMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_tail_reduce_right.a"))
 	if err != nil {
 		t.Fatal(err)

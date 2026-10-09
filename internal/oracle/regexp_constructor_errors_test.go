@@ -20,6 +20,7 @@ func init() {
 }
 
 func TestRegExpConstructorErrorsWASI(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("WASI_SYSROOT") == "" {
 		t.Skip("WASI_SYSROOT is required")
 	}
@@ -35,6 +36,7 @@ func TestRegExpConstructorErrorsWASI(t *testing.T) {
 }
 
 func TestRegExpConstructorErrorsNodeMutants(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, regexpConstructorErrorsFixture))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -71,6 +73,7 @@ func TestRegExpConstructorErrorsNodeMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: updates the shared internal/oracle/counts.md file with -update-counts.
 func TestRegExpConstructorErrorsCounts(t *testing.T) {
 	row := counted(t, regexpConstructorErrorsFixture, false, nil, false, false)
 	t.Log(row)

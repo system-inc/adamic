@@ -18,6 +18,7 @@ func init() {
 // Restore comparison of the erased null pointers. It compiles and finishes leak-clean; only
 // Node's original source can expose the wrong SameValue result.
 func TestObjectIsNullUndefinedMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/object_is_null_undefined.a"))
 	if err != nil {
 		t.Fatal(err)

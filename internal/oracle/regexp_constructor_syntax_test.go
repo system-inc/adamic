@@ -20,6 +20,7 @@ func init() {
 }
 
 func TestRegExpConstructorSyntaxWASI(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("WASI_SYSROOT") == "" {
 		t.Skip("WASI_SYSROOT is required")
 	}
@@ -37,6 +38,7 @@ func TestRegExpConstructorSyntaxWASI(t *testing.T) {
 // Mutations are in each generated translation unit; the reference, JavaScript
 // backend and files used by concurrent directory surveys stay unchanged.
 func TestRegExpConstructorSyntaxNodeMutants(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, regexpConstructorSyntaxFixture))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -77,6 +79,7 @@ func TestRegExpConstructorSyntaxNodeMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: updates the shared internal/oracle/counts.md file with -update-counts.
 func TestRegExpConstructorSyntaxCounts(t *testing.T) {
 	row := counted(t, regexpConstructorSyntaxFixture, false, nil, false, false)
 	t.Log(row)

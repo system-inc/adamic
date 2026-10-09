@@ -129,10 +129,10 @@ func processOutputProgram(t *testing.T, source, mutation string) (string, string
 }
 
 func TestProcessExitOutput(t *testing.T) {
+	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux descriptor and Node pipe semantics")
 	}
-	t.Parallel()
 	large := "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.log(line); } process.exit(37);"
 	for _, one := range []struct {
 		name, source, destination, expected, mutant string
@@ -178,10 +178,10 @@ func TestProcessExitOutput(t *testing.T) {
 // Node may deliver all output or lose a suffix on immediate exit. Adamic must
 // deliver every byte on both backends regardless of the host's pipe behavior.
 func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
+	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux backpressured pipe semantics")
 	}
-	t.Parallel()
 	expected := []byte(strings.Repeat(strings.Repeat("x", 1023)+"\n", 200))
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	for _, immediate := range []bool{true, false} {
@@ -232,10 +232,10 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 }
 
 func TestProcessExitDrainsStderr(t *testing.T) {
+	t.Parallel()
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux backpressured pipe semantics")
 	}
-	t.Parallel()
 	expected := []byte(strings.Repeat(strings.Repeat("x", 1023)+"\n", 200))
 	path, binary, script := processOutputProgram(t, "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.error(line); } process.exit(37);", "")
 	runner := filepath.Join(repository, "oracle/node.mjs")

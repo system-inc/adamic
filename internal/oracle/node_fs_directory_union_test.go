@@ -12,6 +12,7 @@ import (
 )
 
 func TestNodeFSDirectoryUnionMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -53,6 +54,7 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 
 // Real special files exercise true results for the shared predicates too.
 func TestNodeFSDirectoryUnionSpecialKinds(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
 	if err != nil {
 		t.Fatal(err)

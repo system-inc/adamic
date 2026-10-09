@@ -23,6 +23,7 @@ func init() {
 // Every runtime mutant must compile, exit 0 and stay sanitizer-clean. Only source Node
 // decides whether its output is wrong; a native invariant failure does not kill these mutants.
 func TestLibraryIteratorProtocolMutants(t *testing.T) {
+	t.Parallel()
 	mutants := []struct{ name, fixture, file, before, after string }{
 		{"map_keys", "map_set_live", "map_set.c", "bool set = state->slots[4].boolean;", "bool set = state->slots[4].boolean;\n\tif (part == 1 && set == false && iterator->next == 0) { iterator->next = 1; }"},
 		{"map_values", "map_set_live", "map_set.c", "bool set = state->slots[4].boolean;", "bool set = state->slots[4].boolean;\n\tif (part == 2 && set == false && iterator->next == 0) { iterator->next = 1; }"},

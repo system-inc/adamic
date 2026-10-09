@@ -106,6 +106,7 @@ func startChild(t *testing.T, command *exec.Cmd, options childguard.Options) <-c
 }
 
 func TestLibraryChildguardHangWorker(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_LIBRARY_CHILD_HANG") != "1" {
 		return
 	}

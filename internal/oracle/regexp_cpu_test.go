@@ -43,6 +43,7 @@ func regExpCPUCommand(environment []string, name string, arguments []string, gua
 }
 
 func TestRegExpOracleStall(t *testing.T) {
+	t.Parallel()
 	source := `#include "adamic.h"
 int main(int argc, char **argv) {
  adamic_start(argc, argv);
@@ -62,6 +63,7 @@ int main(int argc, char **argv) {
 }
 
 func TestRegExpOracleCPUBudget(t *testing.T) {
+	t.Parallel()
 	source := `#include "adamic.h"
 #include <time.h>
 int main(int argc, char **argv) {

@@ -40,6 +40,7 @@ func init() {
 }
 
 func TestScout22AccessorSpreadRefusal(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_features_refused/class_features_accessors.a"))
 	if err != nil {
 		t.Fatal(err)

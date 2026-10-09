@@ -12,6 +12,7 @@ import (
 // This area predates the compiler's built-in Error classes. Probe the actual
 // host constructors and nominal runtime check against independent source Node.
 func TestWASIHostErrorIdentity(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

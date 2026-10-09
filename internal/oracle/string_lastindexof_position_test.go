@@ -16,6 +16,7 @@ func init() {
 }
 
 func TestStringLastIndexOfPositionMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/string_lastindexof_position.a"))
 	if err != nil {
 		t.Fatal(err)
