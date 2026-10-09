@@ -75,26 +75,6 @@ func nodeTableSourceInputsAt(t *testing.T, root string) []string {
 	return files
 }
 
-// Not parallel: prepares the shared lowering product before parallel comparison shards.
-func TestNodeTableIsLinkOnlySetupLowered(t *testing.T) { nodeTableSetupUnit(t, nodeTableLowered) }
-
-// Not parallel: prepares the shared C emission product before parallel comparison shards.
-func TestNodeTableIsLinkOnlySetupEmission(t *testing.T) { nodeTableSetupUnit(t, nodeTableEmitted) }
-
-// Not parallel: prepares the shared native product before parallel comparison shards.
-func TestNodeTableIsLinkOnlySetupNative(t *testing.T) { nodeTableSetupUnit(t, nodeTableNative) }
-
-func nodeTableSetupUnit(t *testing.T, build func(*testing.T) string) {
-	t.Helper()
-	started := time.Now()
-	build(t)
-	elapsed := time.Since(started)
-	t.Logf("%s: %.3fs cooked=%t", t.Name(), elapsed.Seconds(), elapsed >= 60*time.Second)
-	if elapsed >= 60*time.Second {
-		t.Fatal("cooked: split this setup unit smaller")
-	}
-}
-
 func nodeTableInputs(t *testing.T) buildcache.Inputs {
 	return buildcache.Inputs{Name: "lint-node-table-lowered-ir", Files: nodeTableSourceInputs(t), Flags: []string{"load.Load default", "lower.Lower default", "gob IR"}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 }
@@ -185,7 +165,7 @@ func nodeTableSetup(t *testing.T) {
 	nodeTableOnce.Do(func() {
 		started := time.Now()
 		defer func() {
-			t.Logf("TestNodeTableIsLinkOnly (setup): %.3fs cooked=%t", time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
+			t.Logf("TestNodeTableIsLinkOnly (setup corpus): %.3fs", time.Since(started).Seconds())
 		}()
 		prepareRegistry(t, packageDirectory)
 		// GoBuild is absent on this main: retain the original overlay builder.
@@ -216,7 +196,7 @@ func nodeTableSetup(t *testing.T) {
 			}
 			nodeTableRows = append(nodeTableRows, path)
 		}
-		captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "four workers", "go test -p=1 -count=1 -timeout=90s"}, Toolchain: []string{runtime.Version()}}
+		captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "three workers", "go test -p=1 -count=1 -timeout=90s"}, Toolchain: []string{runtime.Version()}}
 		// Registry descriptors decide which upstream assertions are in the live corpus.
 		for _, file := range portFiles(t) {
 			if strings.HasSuffix(file, "rule.json") {
@@ -276,9 +256,6 @@ func nodeTableSetup(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Logf("union: %d live cases, each exactly once across %d shards", len(nodeTableRows), testNodeTableIsLinkOnlyShards)
-		if time.Since(started) >= 60*time.Second {
-			t.Fatal("TestNodeTableIsLinkOnly (setup) cooked: split setup smaller")
-		}
 	})
 	if nodeTableAssignments == nil {
 		t.Fatal("node table setup incomplete")
@@ -329,9 +306,24 @@ func nodeTableRunShard(t *testing.T, shard int) {
 		}
 		return
 	}
+	// A filtered shard owns preparation: no other top-level test is a prerequisite.
+	// Corpus capture and native products are independent and share process-once
+	// builders. Loom's whole-unit 90s limit includes both; the leaf clock does not.
+	setupStarted := time.Now()
+	var products sync.WaitGroup
+	products.Add(1)
+	var binary string
+	go func() { defer products.Done(); binary = nodeTableNative(t) }()
+	defer products.Wait()
 	nodeTableSetup(t)
-	binary := nodeTableNative(t)
+	products.Wait()
+	if binary == "" {
+		t.Fatal("native preparation incomplete")
+	}
+	t.Logf("TestNodeTableIsLinkOnly (setup): %.3fs", time.Since(setupStarted).Seconds())
 	started := time.Now()
+	deadline := time.AfterFunc(60*time.Second, func() { panic(t.Name() + ": shard work exceeded 60s; split smaller") })
+	defer deadline.Stop()
 	rows := make([]string, 0, len(nodeTableAssignments[shard]))
 	for _, index := range nodeTableAssignments[shard] {
 		rows = append(rows, nodeTableRows[index])
@@ -445,11 +437,11 @@ func nodeTableCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		names = append(names, name)
 	}
 	sort.Strings(names)
-	// Capture independent rule packages concurrently, bounded to this instance's four CPUs.
+	// Reserve one of the instance's four CPUs for independent native emission.
 	jobs := make(chan string)
 	failures := make(chan error, len(names))
 	var workers sync.WaitGroup
-	for worker := 0; worker < 4; worker++ {
+	for worker := 0; worker < 3; worker++ {
 		workers.Add(1)
 		go func() {
 			defer workers.Done()
