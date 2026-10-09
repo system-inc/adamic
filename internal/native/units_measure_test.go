@@ -65,7 +65,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if err := os.WriteFile(filename, []byte(source), 0644); err != nil {
 				t.Fatal(err)
 			}
-			args := sourceFlags(source, options)
+			args := SourceFlags(source, options)
 			if trace {
 				args = append(args, "-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"), "-ftime-trace-granularity=500")
 			}

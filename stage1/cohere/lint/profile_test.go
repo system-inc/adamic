@@ -119,7 +119,8 @@ func buildProfile(t *testing.T, directory string) {
 	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0644); err != nil {
 		t.Fatal(err)
 	}
-	flags := append(native.Flags(native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
+	// The runtime units are compiled beside main.c, so they need the features its #defines turn on.
+	flags := append(native.SourceFlags(source, native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
 	flags = append(flags, archive, "-lm", "-lpthread", "-ldl")
 	if err := nativeBuild(func() error {
