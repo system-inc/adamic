@@ -1,0 +1,644 @@
+test_ordinary_apply_leaves_git_clean (__main__.ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean) ... Preparing worktree (detached HEAD c973457d20)
+Updating files:   9% (2203/24067)Updating files:  10% (2407/24067)Updating files:  11% (2648/24067)Updating files:  12% (2889/24067)Updating files:  13% (3129/24067)Updating files:  14% (3370/24067)Updating files:  15% (3611/24067)Updating files:  16% (3851/24067)Updating files:  17% (4092/24067)Updating files:  18% (4333/24067)Updating files:  19% (4573/24067)Updating files:  20% (4814/24067)Updating files:  20% (5036/24067)Updating files:  21% (5055/24067)Updating files:  22% (5295/24067)Updating files:  23% (5536/24067)Updating files:  24% (5777/24067)Updating files:  25% (6017/24067)Updating files:  26% (6258/24067)Updating files:  27% (6499/24067)Updating files:  27% (6686/24067)Updating files:  28% (6739/24067)Updating files:  29% (6980/24067)Updating files:  30% (7221/24067)Updating files:  31% (7461/24067)Updating files:  32% (7702/24067)Updating files:  33% (7943/24067)Updating files:  34% (8183/24067)Updating files:  35% (8424/24067)Updating files:  36% (8665/24067)Updating files:  37% (8905/24067)Updating files:  38% (9146/24067)Updating files:  39% (9387/24067)Updating files:  40% (9627/24067)Updating files:  41% (9868/24067)Updating files:  41% (10047/24067)Updating files:  42% (10109/24067)Updating files:  43% (10349/24067)Updating files:  44% (10590/24067)Updating files:  45% (10831/24067)Updating files:  46% (11071/24067)Updating files:  47% (11312/24067)Updating files:  48% (11553/24067)Updating files:  49% (11793/24067)Updating files:  50% (12034/24067)Updating files:  51% (12275/24067)Updating files:  52% (12515/24067)Updating files:  52% (12570/24067)Updating files:  53% (12756/24067)Updating files:  54% (12997/24067)Updating files:  55% (13237/24067)Updating files:  56% (13478/24067)Updating files:  57% (13719/24067)Updating files:  58% (13959/24067)Updating files:  59% (14200/24067)Updating files:  60% (14441/24067)Updating files:  61% (14681/24067)Updating files:  62% (14922/24067)Updating files:  63% (15163/24067)Updating files:  64% (15403/24067)Updating files:  65% (15644/24067)Updating files:  66% (15885/24067)Updating files:  67% (16125/24067)Updating files:  68% (16366/24067)Updating files:  69% (16607/24067)Updating files:  70% (16847/24067)Updating files:  71% (17088/24067)Updating files:  72% (17329/24067)Updating files:  73% (17569/24067)Updating files:  74% (17810/24067)Updating files:  75% (18051/24067)Updating files:  76% (18291/24067)Updating files:  77% (18532/24067)Updating files:  78% (18773/24067)Updating files:  78% (18808/24067)Updating files:  79% (19013/24067)Updating files:  80% (19254/24067)Updating files:  81% (19495/24067)Updating files:  82% (19735/24067)Updating files:  83% (19976/24067)Updating files:  84% (20217/24067)Updating files:  85% (20457/24067)Updating files:  86% (20698/24067)Updating files:  87% (20939/24067)Updating files:  88% (21179/24067)Updating files:  89% (21420/24067)Updating files:  89% (21550/24067)Updating files:  90% (21661/24067)Updating files:  91% (21901/24067)Updating files:  92% (22142/24067)Updating files:  92% (22313/24067)Updating files:  93% (22383/24067)Updating files:  94% (22623/24067)Updating files:  95% (22864/24067)Updating files:  96% (23105/24067)Updating files:  97% (23345/24067)Updating files:  98% (23586/24067)Updating files:  99% (23827/24067)Updating files: 100% (24067/24067)Updating files: 100% (24067/24067), done.
+HEAD is now at c973457d20 Gate merge of d0eed920b46b5b28e228a876be41b6e260414a69 onto b8bcadb2c493173855f19d7e5c508b34f5eeb5b6
+[detached HEAD fb676d9ae9] Seed the apply checkout test
+ 1 file changed, 2 insertions(+)
+stage3 product cache miss: 453ce96db9321fe35ff81bc313ecbde1ee8ac9f8ca167a1c412bde03146ef176; building adapted tree locally
+adapt through 70: signal: killed
+{"adaptation":41,"sites":23}
+{"adaptation":42,"edits":1}
+{"adapted":5,"declined":["convertToObject","tryParseJson"]}
+{"adaptation":44,"sites":12}
+{
+  "files": 5,
+  "edits": 10,
+  "evidence": [
+    {
+      "file": "parser.ts",
+      "line": 10731,
+      "original": "matchResult[2] || matchResult[3]",
+      "replacement": "(matchResult[2] || matchResult[3])!",
+      "reason": "authorized checked boundary; empty single quotes remain a latent bug"
+    },
+    {
+      "file": "semver.ts",
+      "line": 145,
+      "original": "const [, major, minor = \"0\", patch = \"0\", prerelease = \"\", build = \"\"] = match;",
+      "replacement": "const major = match[1]!;\r\n    const [, , minor = \"0\", patch = \"0\", prerelease = \"\", build = \"\"] = match;",
+      "reason": "mandatory major of /^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i; defaults unchanged"
+    },
+    {
+      "file": "semver.ts",
+      "line": 300,
+      "original": "const [, major, minor = \"*\", patch = \"*\", prerelease, build] = match;",
+      "replacement": "const major = match[1]!;\r\n    const [, , minor = \"*\", patch = \"*\", prerelease, build] = match;",
+      "reason": "mandatory major of /^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$/i; defaults unchanged"
+    },
+    {
+      "file": "semver.ts",
+      "line": 334,
+      "original": "string",
+      "replacement": "string | undefined",
+      "reason": "optional range operator already handled by case undefined"
+    },
+    {
+      "file": "checker.ts",
+      "line": 8062,
+      "original": "line",
+      "replacement": "line!",
+      "reason": "capture-free separator yields only strings"
+    },
+    {
+      "file": "utilities.ts",
+      "line": 1330,
+      "original": "line",
+      "replacement": "line!",
+      "reason": "capture-free separator yields only strings"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 4105,
+      "original": "text.split(/\\r\\n?|\\n/)",
+      "replacement": "text.split(/\\r\\n?|\\n/) as string[]",
+      "reason": "capture-free separator /\\r\\n?|\\n/ yields a dense string array"
+    },
+    {
+      "file": "emitter.ts",
+      "line": 4976,
+      "original": "text.split(/\\r\\n?|\\n/)",
+      "replacement": "text.split(/\\r\\n?|\\n/) as string[]",
+      "reason": "capture-free separator /\\r\\n?|\\n/ yields a dense string array"
+    },
+    {
+      "file": "parser.ts",
+      "line": 10784,
+      "original": "text.trim().split(/\\s+/)",
+      "replacement": "text.trim().split(/\\s+/) as string[]",
+      "reason": "capture-free separator /\\s+/ yields a dense string array"
+    },
+    {
+      "file": "semver.ts",
+      "line": 286,
+      "original": "range.split(whitespaceRegExp)",
+      "replacement": "range.split(whitespaceRegExp) as string[]",
+      "reason": "capture-free separator /\\s+/ yields a dense string array"
+    }
+  ],
+  "declined": [
+    {
+      "site": "XML value groups 2 and 3",
+      "reason": "alternative branches; whole-expression checked boundary authorized instead"
+    },
+    {
+      "site": "range operator group 1",
+      "reason": "optional; truthful parameter includes undefined"
+    }
+  ]
+}
+{
+  "files": 1,
+  "edits": 1,
+  "file": "parser.ts",
+  "line": 10731,
+  "before": "(matchResult[2] || matchResult[3])!",
+  "after": "(matchResult[2] ?? matchResult[3])!"
+}
+{
+  "files": 3,
+  "propertyReads": 2,
+  "byteReads": 7,
+  "helperAdded": true,
+  "evidence": [
+    {
+      "file": "sys.ts",
+      "line": 1553,
+      "before": "e.code",
+      "after": "errorCode(e)"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 66,
+      "before": "e.message",
+      "after": "errorMessage(e)"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1796,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1796,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1807,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1807,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[2]",
+      "after": "buffer[2]!"
+    }
+  ]
+}
+{"files":1,"edits":2,"status":"applied","javascriptIdentical":true}
+49 honest optionals: src/compiler/checker.ts; applied
+49 honest optionals: src/compiler/core.ts; applied
+49 honest optionals: src/compiler/emitter.ts; applied
+49 honest optionals: src/compiler/scanner.ts; applied
+{"files":1,"explicitUndefinedReturns":2,"declined":[]}
+{"files":0,"status":"deferred","reason":"13 scanner fallthrough continuations require individual control-flow review; no semantic rewrite validated"}
+adapted src/compiler/factory/nodeFactory.ts:createBaseDeclaration (runtime JavaScript identical)
+adapted src/compiler/factory/nodeFactory.ts:createJSDocTypeLikeTagWorker (runtime JavaScript identical)
+adapted src/compiler/tracing.ts:dumpTypes (runtime JavaScript identical)
+adapted src/compiler/tracing.ts:dumpLegend (runtime JavaScript identical)
+adapted src/compiler/core.ts:addRange (runtime JavaScript identical)
+{"files":[{"file":"src/compiler/core.ts","changed":false},{"file":"src/compiler/performanceCore.ts","changed":true},{"file":"src/compiler/tracing.ts","changed":true}],"javascript_identical":true}
+
+exit status 1
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 68, in restore_product
+    fetch(store, key + '.manifest', manifest_path)
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 53, in fetch
+    shutil.copyfile(Path(store) / name, destination)
+  File "/usr/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-stage3-cache/stage3-apply-tests/products/453ce96db9321fe35ff81bc313ecbde1ee8ac9f8ca167a1c412bde03146ef176.manifest'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 331, in main
+    restore_product(store, key, out)
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 70, in restore_product
+    raise ProductMissing(f'product {key} missing from {store}') from error
+ProductMissing: product 453ce96db9321fe35ff81bc313ecbde1ee8ac9f8ca167a1c412bde03146ef176 missing from /home/ahra/fast-gate/tree-stage3-cache/stage3-apply-tests/products
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 346, in <module>
+    main()
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 335, in main
+    fetch_product(out, cache)
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 272, in fetch_product
+    product = go_product()
+              ^^^^^^^^^^^^
+  File "/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.py", line 265, in go_product
+    result = subprocess.check_output(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', './stage3/applyproducts/fetch']' returned non-zero exit status 1.
+ERROR
+test_corrupt_product_never_builds (__main__.ProductTests.test_corrupt_product_never_builds) ... ok
+test_existing_output_is_refused (__main__.ProductTests.test_existing_output_is_refused) ... ok
+test_fetch_exposes_prepared_parser (__main__.ProductTests.test_fetch_exposes_prepared_parser) ... ok
+test_input_key_covers_all_inputs (__main__.ProductTests.test_input_key_covers_all_inputs) ... ok
+test_manifest_mutant_is_rejected (__main__.ProductTests.test_manifest_mutant_is_rejected) ... ok
+test_missing_product_builds_and_reports (__main__.ProductTests.test_missing_product_builds_and_reports) ... ok
+test_new_adaptation_directory_changes_hash (__main__.ProductTests.test_new_adaptation_directory_changes_hash) ... ok
+test_only_manifest_absence_is_a_cache_miss (__main__.ProductTests.test_only_manifest_absence_is_a_cache_miss) ... ok
+test_payload_manifest_mutant_is_rejected (__main__.ProductTests.test_payload_manifest_mutant_is_rejected) ... ok
+test_payload_mutant_is_rejected (__main__.ProductTests.test_payload_mutant_is_rejected) ... ok
+test_publish_hook_describes_local_payloads (__main__.ProductTests.test_publish_hook_describes_local_payloads) ... ok
+test_restore_fetches_verified_product (__main__.ProductTests.test_restore_fetches_verified_product) ... ok
+test_shards_partition_every_case (__main__.ProductTests.test_shards_partition_every_case) ... ok
+test_unconfigured_cold_cache_builds_without_remote_read (__main__.ProductTests.test_unconfigured_cold_cache_builds_without_remote_read) ... ok
+test_unkeyed_parser_override_is_refused (__main__.ProductTests.test_unkeyed_parser_override_is_refused) ... ok
+test_write_table_is_explicit (__main__.ProductTests.test_write_table_is_explicit) ... ok
+test_every_indexed_read_file_has_one_shard (__main__.ProofShardTests.test_every_indexed_read_file_has_one_shard) ... 30-indexed-reads/core.ts shard=0/1
+30-indexed-reads/utilities.ts shard=0/1
+30-indexed-reads/utilitiesPublic.ts shard=0/1
+30-indexed-reads/parser.ts shard=0/1
+30-indexed-reads/scanner.ts shard=0/1
+30-indexed-reads/factory/baseNodeFactory.ts shard=0/1
+30-indexed-reads/factory/emitHelpers.ts shard=0/1
+30-indexed-reads/factory/emitNode.ts shard=0/1
+30-indexed-reads/factory/nodeChildren.ts shard=0/1
+30-indexed-reads/factory/nodeConverters.ts shard=0/1
+30-indexed-reads/factory/nodeFactory.ts shard=0/1
+30-indexed-reads/factory/nodeTests.ts shard=0/1
+30-indexed-reads/factory/parenthesizerRules.ts shard=0/1
+30-indexed-reads/factory/utilities.ts shard=0/1
+30-indexed-reads/factory/utilitiesPublic.ts shard=0/1
+30-indexed-reads/debug.ts shard=0/1
+30-indexed-reads/path.ts shard=0/1
+30-indexed-reads/core.ts shard=0/2
+30-indexed-reads/utilities.ts shard=1/2
+30-indexed-reads/utilitiesPublic.ts shard=0/2
+30-indexed-reads/parser.ts shard=0/2
+30-indexed-reads/scanner.ts shard=0/2
+30-indexed-reads/factory/baseNodeFactory.ts shard=0/2
+30-indexed-reads/factory/emitHelpers.ts shard=1/2
+30-indexed-reads/factory/emitNode.ts shard=0/2
+30-indexed-reads/factory/nodeChildren.ts shard=1/2
+30-indexed-reads/factory/nodeConverters.ts shard=0/2
+30-indexed-reads/factory/nodeFactory.ts shard=1/2
+30-indexed-reads/factory/nodeTests.ts shard=0/2
+30-indexed-reads/factory/parenthesizerRules.ts shard=1/2
+30-indexed-reads/factory/utilities.ts shard=0/2
+30-indexed-reads/factory/utilitiesPublic.ts shard=1/2
+30-indexed-reads/debug.ts shard=1/2
+30-indexed-reads/path.ts shard=1/2
+30-indexed-reads/core.ts shard=0/3
+30-indexed-reads/utilities.ts shard=0/3
+30-indexed-reads/utilitiesPublic.ts shard=1/3
+30-indexed-reads/parser.ts shard=0/3
+30-indexed-reads/scanner.ts shard=2/3
+30-indexed-reads/factory/baseNodeFactory.ts shard=2/3
+30-indexed-reads/factory/emitHelpers.ts shard=0/3
+30-indexed-reads/factory/emitNode.ts shard=1/3
+30-indexed-reads/factory/nodeChildren.ts shard=2/3
+30-indexed-reads/factory/nodeConverters.ts shard=0/3
+30-indexed-reads/factory/nodeFactory.ts shard=1/3
+30-indexed-reads/factory/nodeTests.ts shard=2/3
+30-indexed-reads/factory/parenthesizerRules.ts shard=0/3
+30-indexed-reads/factory/utilities.ts shard=1/3
+30-indexed-reads/factory/utilitiesPublic.ts shard=2/3
+30-indexed-reads/debug.ts shard=1/3
+30-indexed-reads/path.ts shard=1/3
+30-indexed-reads/core.ts shard=0/17
+30-indexed-reads/utilities.ts shard=15/17
+30-indexed-reads/utilitiesPublic.ts shard=16/17
+30-indexed-reads/parser.ts shard=12/17
+30-indexed-reads/scanner.ts shard=14/17
+30-indexed-reads/factory/baseNodeFactory.ts shard=2/17
+30-indexed-reads/factory/emitHelpers.ts shard=3/17
+30-indexed-reads/factory/emitNode.ts shard=4/17
+30-indexed-reads/factory/nodeChildren.ts shard=5/17
+30-indexed-reads/factory/nodeConverters.ts shard=6/17
+30-indexed-reads/factory/nodeFactory.ts shard=7/17
+30-indexed-reads/factory/nodeTests.ts shard=8/17
+30-indexed-reads/factory/parenthesizerRules.ts shard=9/17
+30-indexed-reads/factory/utilities.ts shard=10/17
+30-indexed-reads/factory/utilitiesPublic.ts shard=11/17
+30-indexed-reads/debug.ts shard=1/17
+30-indexed-reads/path.ts shard=13/17
+30-indexed-reads/core.ts shard=0/18
+30-indexed-reads/utilities.ts shard=15/18
+30-indexed-reads/utilitiesPublic.ts shard=16/18
+30-indexed-reads/parser.ts shard=12/18
+30-indexed-reads/scanner.ts shard=14/18
+30-indexed-reads/factory/baseNodeFactory.ts shard=2/18
+30-indexed-reads/factory/emitHelpers.ts shard=3/18
+30-indexed-reads/factory/emitNode.ts shard=4/18
+30-indexed-reads/factory/nodeChildren.ts shard=5/18
+30-indexed-reads/factory/nodeConverters.ts shard=6/18
+30-indexed-reads/factory/nodeFactory.ts shard=7/18
+30-indexed-reads/factory/nodeTests.ts shard=8/18
+30-indexed-reads/factory/parenthesizerRules.ts shard=9/18
+30-indexed-reads/factory/utilities.ts shard=10/18
+30-indexed-reads/factory/utilitiesPublic.ts shard=11/18
+30-indexed-reads/debug.ts shard=1/18
+30-indexed-reads/path.ts shard=13/18
+31-indexed-reads-checker/checker.ts shard=0/1
+31-indexed-reads-checker/checker.ts shard=0/2
+31-indexed-reads-checker/checker.ts shard=0/3
+31-indexed-reads-checker/checker.ts shard=0/1
+31-indexed-reads-checker/checker.ts shard=0/2
+32-indexed-reads-program/corePublic.ts shard=0/1
+32-indexed-reads-program/performanceCore.ts shard=0/1
+32-indexed-reads-program/types.ts shard=0/1
+32-indexed-reads-program/expressionToTypeNode.ts shard=0/1
+32-indexed-reads-program/executeCommandLine.ts shard=0/1
+32-indexed-reads-program/builder.ts shard=0/1
+32-indexed-reads-program/builderPublic.ts shard=0/1
+32-indexed-reads-program/builderState.ts shard=0/1
+32-indexed-reads-program/builderStatePublic.ts shard=0/1
+32-indexed-reads-program/watch.ts shard=0/1
+32-indexed-reads-program/watchPublic.ts shard=0/1
+32-indexed-reads-program/watchUtilities.ts shard=0/1
+32-indexed-reads-program/resolutionCache.ts shard=0/1
+32-indexed-reads-program/tsbuild.ts shard=0/1
+32-indexed-reads-program/tsbuildPublic.ts shard=0/1
+32-indexed-reads-program/moduleNameResolver.ts shard=0/1
+32-indexed-reads-program/moduleSpecifiers.ts shard=0/1
+32-indexed-reads-program/sys.ts shard=0/1
+32-indexed-reads-program/program.ts shard=0/1
+32-indexed-reads-program/commandLineParser.ts shard=0/1
+32-indexed-reads-program/binder.ts shard=0/1
+32-indexed-reads-program/semver.ts shard=0/1
+32-indexed-reads-program/programDiagnostics.ts shard=0/1
+32-indexed-reads-program/tracing.ts shard=0/1
+32-indexed-reads-program/symbolWalker.ts shard=0/1
+32-indexed-reads-program/performance.ts shard=0/1
+32-indexed-reads-program/corePublic.ts shard=0/2
+32-indexed-reads-program/performanceCore.ts shard=0/2
+32-indexed-reads-program/types.ts shard=0/2
+32-indexed-reads-program/expressionToTypeNode.ts shard=0/2
+32-indexed-reads-program/executeCommandLine.ts shard=1/2
+32-indexed-reads-program/builder.ts shard=1/2
+32-indexed-reads-program/builderPublic.ts shard=0/2
+32-indexed-reads-program/builderState.ts shard=1/2
+32-indexed-reads-program/builderStatePublic.ts shard=0/2
+32-indexed-reads-program/watch.ts shard=1/2
+32-indexed-reads-program/watchPublic.ts shard=0/2
+32-indexed-reads-program/watchUtilities.ts shard=1/2
+32-indexed-reads-program/resolutionCache.ts shard=1/2
+32-indexed-reads-program/tsbuild.ts shard=0/2
+32-indexed-reads-program/tsbuildPublic.ts shard=1/2
+32-indexed-reads-program/moduleNameResolver.ts shard=1/2
+32-indexed-reads-program/moduleSpecifiers.ts shard=0/2
+32-indexed-reads-program/sys.ts shard=0/2
+32-indexed-reads-program/program.ts shard=1/2
+32-indexed-reads-program/commandLineParser.ts shard=1/2
+32-indexed-reads-program/binder.ts shard=0/2
+32-indexed-reads-program/semver.ts shard=0/2
+32-indexed-reads-program/programDiagnostics.ts shard=0/2
+32-indexed-reads-program/tracing.ts shard=1/2
+32-indexed-reads-program/symbolWalker.ts shard=1/2
+32-indexed-reads-program/performance.ts shard=1/2
+32-indexed-reads-program/corePublic.ts shard=0/3
+32-indexed-reads-program/performanceCore.ts shard=0/3
+32-indexed-reads-program/types.ts shard=1/3
+32-indexed-reads-program/expressionToTypeNode.ts shard=2/3
+32-indexed-reads-program/executeCommandLine.ts shard=1/3
+32-indexed-reads-program/builder.ts shard=1/3
+32-indexed-reads-program/builderPublic.ts shard=2/3
+32-indexed-reads-program/builderState.ts shard=0/3
+32-indexed-reads-program/builderStatePublic.ts shard=1/3
+32-indexed-reads-program/watch.ts shard=2/3
+32-indexed-reads-program/watchPublic.ts shard=0/3
+32-indexed-reads-program/watchUtilities.ts shard=1/3
+32-indexed-reads-program/resolutionCache.ts shard=0/3
+32-indexed-reads-program/tsbuild.ts shard=2/3
+32-indexed-reads-program/tsbuildPublic.ts shard=0/3
+32-indexed-reads-program/moduleNameResolver.ts shard=0/3
+32-indexed-reads-program/moduleSpecifiers.ts shard=1/3
+32-indexed-reads-program/sys.ts shard=0/3
+32-indexed-reads-program/program.ts shard=1/3
+32-indexed-reads-program/commandLineParser.ts shard=2/3
+32-indexed-reads-program/binder.ts shard=0/3
+32-indexed-reads-program/semver.ts shard=1/3
+32-indexed-reads-program/programDiagnostics.ts shard=2/3
+32-indexed-reads-program/tracing.ts shard=1/3
+32-indexed-reads-program/symbolWalker.ts shard=2/3
+32-indexed-reads-program/performance.ts shard=2/3
+32-indexed-reads-program/corePublic.ts shard=6/26
+32-indexed-reads-program/performanceCore.ts shard=12/26
+32-indexed-reads-program/types.ts shard=22/26
+32-indexed-reads-program/expressionToTypeNode.ts shard=8/26
+32-indexed-reads-program/executeCommandLine.ts shard=7/26
+32-indexed-reads-program/builder.ts shard=1/26
+32-indexed-reads-program/builderPublic.ts shard=2/26
+32-indexed-reads-program/builderState.ts shard=3/26
+32-indexed-reads-program/builderStatePublic.ts shard=4/26
+32-indexed-reads-program/watch.ts shard=23/26
+32-indexed-reads-program/watchPublic.ts shard=24/26
+32-indexed-reads-program/watchUtilities.ts shard=25/26
+32-indexed-reads-program/resolutionCache.ts shard=15/26
+32-indexed-reads-program/tsbuild.ts shard=20/26
+32-indexed-reads-program/tsbuildPublic.ts shard=21/26
+32-indexed-reads-program/moduleNameResolver.ts shard=9/26
+32-indexed-reads-program/moduleSpecifiers.ts shard=10/26
+32-indexed-reads-program/sys.ts shard=18/26
+32-indexed-reads-program/program.ts shard=13/26
+32-indexed-reads-program/commandLineParser.ts shard=5/26
+32-indexed-reads-program/binder.ts shard=0/26
+32-indexed-reads-program/semver.ts shard=16/26
+32-indexed-reads-program/programDiagnostics.ts shard=14/26
+32-indexed-reads-program/tracing.ts shard=19/26
+32-indexed-reads-program/symbolWalker.ts shard=17/26
+32-indexed-reads-program/performance.ts shard=11/26
+32-indexed-reads-program/corePublic.ts shard=6/27
+32-indexed-reads-program/performanceCore.ts shard=12/27
+32-indexed-reads-program/types.ts shard=22/27
+32-indexed-reads-program/expressionToTypeNode.ts shard=8/27
+32-indexed-reads-program/executeCommandLine.ts shard=7/27
+32-indexed-reads-program/builder.ts shard=1/27
+32-indexed-reads-program/builderPublic.ts shard=2/27
+32-indexed-reads-program/builderState.ts shard=3/27
+32-indexed-reads-program/builderStatePublic.ts shard=4/27
+32-indexed-reads-program/watch.ts shard=23/27
+32-indexed-reads-program/watchPublic.ts shard=24/27
+32-indexed-reads-program/watchUtilities.ts shard=25/27
+32-indexed-reads-program/resolutionCache.ts shard=15/27
+32-indexed-reads-program/tsbuild.ts shard=20/27
+32-indexed-reads-program/tsbuildPublic.ts shard=21/27
+32-indexed-reads-program/moduleNameResolver.ts shard=9/27
+32-indexed-reads-program/moduleSpecifiers.ts shard=10/27
+32-indexed-reads-program/sys.ts shard=18/27
+32-indexed-reads-program/program.ts shard=13/27
+32-indexed-reads-program/commandLineParser.ts shard=5/27
+32-indexed-reads-program/binder.ts shard=0/27
+32-indexed-reads-program/semver.ts shard=16/27
+32-indexed-reads-program/programDiagnostics.ts shard=14/27
+32-indexed-reads-program/tracing.ts shard=19/27
+32-indexed-reads-program/symbolWalker.ts shard=17/27
+32-indexed-reads-program/performance.ts shard=11/27
+33-indexed-reads-emit/emitter.ts shard=0/1
+33-indexed-reads-emit/sourcemap.ts shard=0/1
+33-indexed-reads-emit/transformers/declarations.ts shard=0/1
+33-indexed-reads-emit/transformers/es2015.ts shard=0/1
+33-indexed-reads-emit/transformers/ts.ts shard=0/1
+33-indexed-reads-emit/transformer.ts shard=0/1
+33-indexed-reads-emit/transformers/classFields.ts shard=0/1
+33-indexed-reads-emit/transformers/classThis.ts shard=0/1
+33-indexed-reads-emit/transformers/declarations/diagnostics.ts shard=0/1
+33-indexed-reads-emit/transformers/destructuring.ts shard=0/1
+33-indexed-reads-emit/transformers/es2017.ts shard=0/1
+33-indexed-reads-emit/transformers/es2018.ts shard=0/1
+33-indexed-reads-emit/transformers/es2020.ts shard=0/1
+33-indexed-reads-emit/transformers/esDecorators.ts shard=0/1
+33-indexed-reads-emit/transformers/esnext.ts shard=0/1
+33-indexed-reads-emit/transformers/generators.ts shard=0/1
+33-indexed-reads-emit/transformers/jsx.ts shard=0/1
+33-indexed-reads-emit/transformers/legacyDecorators.ts shard=0/1
+33-indexed-reads-emit/transformers/module/esnextAnd2015.ts shard=0/1
+33-indexed-reads-emit/transformers/module/module.ts shard=0/1
+33-indexed-reads-emit/transformers/module/system.ts shard=0/1
+33-indexed-reads-emit/transformers/namedEvaluation.ts shard=0/1
+33-indexed-reads-emit/transformers/taggedTemplate.ts shard=0/1
+33-indexed-reads-emit/transformers/typeSerializer.ts shard=0/1
+33-indexed-reads-emit/transformers/utilities.ts shard=0/1
+33-indexed-reads-emit/visitorPublic.ts shard=0/1
+33-indexed-reads-emit/transformers/es2016.ts shard=0/1
+33-indexed-reads-emit/transformers/es2019.ts shard=0/1
+33-indexed-reads-emit/transformers/es2021.ts shard=0/1
+33-indexed-reads-emit/transformers/module/impliedNodeFormatDependent.ts shard=0/1
+33-indexed-reads-emit/emitter.ts shard=0/2
+33-indexed-reads-emit/sourcemap.ts shard=1/2
+33-indexed-reads-emit/transformers/declarations.ts shard=1/2
+33-indexed-reads-emit/transformers/es2015.ts shard=0/2
+33-indexed-reads-emit/transformers/ts.ts shard=0/2
+33-indexed-reads-emit/transformer.ts shard=0/2
+33-indexed-reads-emit/transformers/classFields.ts shard=1/2
+33-indexed-reads-emit/transformers/classThis.ts shard=0/2
+33-indexed-reads-emit/transformers/declarations/diagnostics.ts shard=0/2
+33-indexed-reads-emit/transformers/destructuring.ts shard=1/2
+33-indexed-reads-emit/transformers/es2017.ts shard=0/2
+33-indexed-reads-emit/transformers/es2018.ts shard=1/2
+33-indexed-reads-emit/transformers/es2020.ts shard=1/2
+33-indexed-reads-emit/transformers/esDecorators.ts shard=1/2
+33-indexed-reads-emit/transformers/esnext.ts shard=0/2
+33-indexed-reads-emit/transformers/generators.ts shard=1/2
+33-indexed-reads-emit/transformers/jsx.ts shard=0/2
+33-indexed-reads-emit/transformers/legacyDecorators.ts shard=1/2
+33-indexed-reads-emit/transformers/module/esnextAnd2015.ts shard=0/2
+33-indexed-reads-emit/transformers/module/module.ts shard=0/2
+33-indexed-reads-emit/transformers/module/system.ts shard=1/2
+33-indexed-reads-emit/transformers/namedEvaluation.ts shard=0/2
+33-indexed-reads-emit/transformers/taggedTemplate.ts shard=1/2
+33-indexed-reads-emit/transformers/typeSerializer.ts shard=1/2
+33-indexed-reads-emit/transformers/utilities.ts shard=0/2
+33-indexed-reads-emit/visitorPublic.ts shard=1/2
+33-indexed-reads-emit/transformers/es2016.ts shard=1/2
+33-indexed-reads-emit/transformers/es2019.ts shard=0/2
+33-indexed-reads-emit/transformers/es2021.ts shard=0/2
+33-indexed-reads-emit/transformers/module/impliedNodeFormatDependent.ts shard=1/2
+33-indexed-reads-emit/emitter.ts shard=0/3
+33-indexed-reads-emit/sourcemap.ts shard=1/3
+33-indexed-reads-emit/transformers/declarations.ts shard=2/3
+33-indexed-reads-emit/transformers/es2015.ts shard=2/3
+33-indexed-reads-emit/transformers/ts.ts shard=2/3
+33-indexed-reads-emit/transformer.ts shard=2/3
+33-indexed-reads-emit/transformers/classFields.ts shard=0/3
+33-indexed-reads-emit/transformers/classThis.ts shard=1/3
+33-indexed-reads-emit/transformers/declarations/diagnostics.ts shard=0/3
+33-indexed-reads-emit/transformers/destructuring.ts shard=1/3
+33-indexed-reads-emit/transformers/es2017.ts shard=1/3
+33-indexed-reads-emit/transformers/es2018.ts shard=2/3
+33-indexed-reads-emit/transformers/es2020.ts shard=1/3
+33-indexed-reads-emit/transformers/esDecorators.ts shard=0/3
+33-indexed-reads-emit/transformers/esnext.ts shard=1/3
+33-indexed-reads-emit/transformers/generators.ts shard=2/3
+33-indexed-reads-emit/transformers/jsx.ts shard=0/3
+33-indexed-reads-emit/transformers/legacyDecorators.ts shard=1/3
+33-indexed-reads-emit/transformers/module/esnextAnd2015.ts shard=2/3
+33-indexed-reads-emit/transformers/module/module.ts shard=1/3
+33-indexed-reads-emit/transformers/module/system.ts shard=2/3
+33-indexed-reads-emit/transformers/namedEvaluation.ts shard=0/3
+33-indexed-reads-emit/transformers/taggedTemplate.ts shard=1/3
+33-indexed-reads-emit/transformers/typeSerializer.ts shard=0/3
+33-indexed-reads-emit/transformers/utilities.ts shard=1/3
+33-indexed-reads-emit/visitorPublic.ts shard=2/3
+33-indexed-reads-emit/transformers/es2016.ts shard=0/3
+33-indexed-reads-emit/transformers/es2019.ts shard=0/3
+33-indexed-reads-emit/transformers/es2021.ts shard=2/3
+33-indexed-reads-emit/transformers/module/impliedNodeFormatDependent.ts shard=0/3
+33-indexed-reads-emit/emitter.ts shard=0/30
+33-indexed-reads-emit/sourcemap.ts shard=1/30
+33-indexed-reads-emit/transformers/declarations.ts shard=5/30
+33-indexed-reads-emit/transformers/es2015.ts shard=8/30
+33-indexed-reads-emit/transformers/ts.ts shard=26/30
+33-indexed-reads-emit/transformer.ts shard=2/30
+33-indexed-reads-emit/transformers/classFields.ts shard=3/30
+33-indexed-reads-emit/transformers/classThis.ts shard=4/30
+33-indexed-reads-emit/transformers/declarations/diagnostics.ts shard=6/30
+33-indexed-reads-emit/transformers/destructuring.ts shard=7/30
+33-indexed-reads-emit/transformers/es2017.ts shard=10/30
+33-indexed-reads-emit/transformers/es2018.ts shard=11/30
+33-indexed-reads-emit/transformers/es2020.ts shard=13/30
+33-indexed-reads-emit/transformers/esDecorators.ts shard=15/30
+33-indexed-reads-emit/transformers/esnext.ts shard=16/30
+33-indexed-reads-emit/transformers/generators.ts shard=17/30
+33-indexed-reads-emit/transformers/jsx.ts shard=18/30
+33-indexed-reads-emit/transformers/legacyDecorators.ts shard=19/30
+33-indexed-reads-emit/transformers/module/esnextAnd2015.ts shard=20/30
+33-indexed-reads-emit/transformers/module/module.ts shard=22/30
+33-indexed-reads-emit/transformers/module/system.ts shard=23/30
+33-indexed-reads-emit/transformers/namedEvaluation.ts shard=24/30
+33-indexed-reads-emit/transformers/taggedTemplate.ts shard=25/30
+33-indexed-reads-emit/transformers/typeSerializer.ts shard=27/30
+33-indexed-reads-emit/transformers/utilities.ts shard=28/30
+33-indexed-reads-emit/visitorPublic.ts shard=29/30
+33-indexed-reads-emit/transformers/es2016.ts shard=9/30
+33-indexed-reads-emit/transformers/es2019.ts shard=12/30
+33-indexed-reads-emit/transformers/es2021.ts shard=14/30
+33-indexed-reads-emit/transformers/module/impliedNodeFormatDependent.ts shard=21/30
+33-indexed-reads-emit/emitter.ts shard=0/31
+33-indexed-reads-emit/sourcemap.ts shard=1/31
+33-indexed-reads-emit/transformers/declarations.ts shard=5/31
+33-indexed-reads-emit/transformers/es2015.ts shard=8/31
+33-indexed-reads-emit/transformers/ts.ts shard=26/31
+33-indexed-reads-emit/transformer.ts shard=2/31
+33-indexed-reads-emit/transformers/classFields.ts shard=3/31
+33-indexed-reads-emit/transformers/classThis.ts shard=4/31
+33-indexed-reads-emit/transformers/declarations/diagnostics.ts shard=6/31
+33-indexed-reads-emit/transformers/destructuring.ts shard=7/31
+33-indexed-reads-emit/transformers/es2017.ts shard=10/31
+33-indexed-reads-emit/transformers/es2018.ts shard=11/31
+33-indexed-reads-emit/transformers/es2020.ts shard=13/31
+33-indexed-reads-emit/transformers/esDecorators.ts shard=15/31
+33-indexed-reads-emit/transformers/esnext.ts shard=16/31
+33-indexed-reads-emit/transformers/generators.ts shard=17/31
+33-indexed-reads-emit/transformers/jsx.ts shard=18/31
+33-indexed-reads-emit/transformers/legacyDecorators.ts shard=19/31
+33-indexed-reads-emit/transformers/module/esnextAnd2015.ts shard=20/31
+33-indexed-reads-emit/transformers/module/module.ts shard=22/31
+33-indexed-reads-emit/transformers/module/system.ts shard=23/31
+33-indexed-reads-emit/transformers/namedEvaluation.ts shard=24/31
+33-indexed-reads-emit/transformers/taggedTemplate.ts shard=25/31
+33-indexed-reads-emit/transformers/typeSerializer.ts shard=27/31
+33-indexed-reads-emit/transformers/utilities.ts shard=28/31
+33-indexed-reads-emit/visitorPublic.ts shard=29/31
+33-indexed-reads-emit/transformers/es2016.ts shard=9/31
+33-indexed-reads-emit/transformers/es2019.ts shard=12/31
+33-indexed-reads-emit/transformers/es2021.ts shard=14/31
+33-indexed-reads-emit/transformers/module/impliedNodeFormatDependent.ts shard=21/31
+ok
+
+======================================================================
+ERROR: test_ordinary_apply_leaves_git_clean (__main__.ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ahra/fast-gate/tree/stage3/test_apply.py", line 81, in test_ordinary_apply_leaves_git_clean
+    subprocess.run(command, check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/tmp/adamic-gate/stage3-apply-checkout-wut136x8/source/stage3/apply.sh', '/tmp/adamic-gate/stage3-apply-checkout-wut136x8/adapted']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 18 tests in 218.469s
+
+FAILED (errors=1)
+/tmp/adamic-gate/tmpmfjxg08o/output
+ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean shard=0/18
+ProductTests.test_corrupt_product_never_builds shard=1/18
+ProductTests.test_existing_output_is_refused shard=2/18
+ProductTests.test_fetch_exposes_prepared_parser shard=3/18
+ProductTests.test_input_key_covers_all_inputs shard=4/18
+ProductTests.test_manifest_mutant_is_rejected shard=5/18
+ProductTests.test_missing_product_builds_and_reports shard=6/18
+ProductTests.test_new_adaptation_directory_changes_hash shard=7/18
+ProductTests.test_only_manifest_absence_is_a_cache_miss shard=8/18
+ProductTests.test_payload_manifest_mutant_is_rejected shard=9/18
+ProductTests.test_payload_mutant_is_rejected shard=10/18
+ProductTests.test_publish_hook_describes_local_payloads shard=11/18
+ProductTests.test_restore_fetches_verified_product shard=12/18
+ProductTests.test_shards_partition_every_case shard=13/18
+ProductTests.test_unconfigured_cold_cache_builds_without_remote_read shard=14/18
+ProductTests.test_unkeyed_parser_override_is_refused shard=15/18
+ProductTests.test_write_table_is_explicit shard=16/18
+ProofShardTests.test_every_indexed_read_file_has_one_shard shard=17/18
+/tmp/adamic-gate/tmpebg7avnj/output
+/tmp/adamic-gate/tmpxkbxafyc/output
