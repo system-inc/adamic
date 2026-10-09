@@ -1,0 +1,18 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+    oracle_test.go:937: gate cache node miss
+    oracle_test.go:937: gate cache node miss
+    oracle_test.go:820: gate cache native miss
+    oracle_test.go:801: gate cache native miss
+    oracle_test.go:813: gate cache native miss
+    oracle_test.go:827: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a (16.91s)
+PASS
+gate cache: native hits=1 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,21 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a
+    oracle_test.go:937: native: compiling runtime library_object.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-1883553575/library_object.c:169:84: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+          169 |  static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
+              |                                                                                    ^
+        /home/agent/.cache/adamic/runtime/.build-1883553575/library_object.c:170:84: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+          170 |  static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
+              |                                                                                    ^
+        2 errors generated.
+        
+--- FAIL: TestNativeAgreesWithNode (0.19s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/async_loop_body_capture.a (4.17s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
