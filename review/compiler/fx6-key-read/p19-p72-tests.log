@@ -1,0 +1,207 @@
+=== RUN   TestViewElementP19Control
+=== PAUSE TestViewElementP19Control
+=== RUN   TestViewElementP72Control
+=== PAUSE TestViewElementP72Control
+=== RUN   TestViewElementP19StringControl
+=== PAUSE TestViewElementP19StringControl
+=== RUN   TestViewElementP72NumberControl
+=== PAUSE TestViewElementP72NumberControl
+=== CONT  TestViewElementP19Control
+=== CONT  TestViewElementP72NumberControl
+=== CONT  TestViewElementP19StringControl
+=== CONT  TestViewElementP72Control
+--- PASS: TestViewElementP72Control (0.63s)
+--- PASS: TestViewElementP19StringControl (0.68s)
+--- PASS: TestViewElementP19Control (0.72s)
+--- PASS: TestViewElementP72NumberControl (0.77s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.868s
+=== RUN   TestReviewProgramsAgreeWithNode
+=== PAUSE TestReviewProgramsAgreeWithNode
+=== RUN   TestCheckedViewElementP19
+=== PAUSE TestCheckedViewElementP19
+=== RUN   TestCheckedViewElementP72
+=== PAUSE TestCheckedViewElementP72
+=== RUN   TestCheckedViewCorrectSpread
+=== PAUSE TestCheckedViewCorrectSpread
+=== RUN   TestCheckedViewCorrectIn
+=== PAUSE TestCheckedViewCorrectIn
+=== RUN   TestCheckedViewCorrectKeys
+=== PAUSE TestCheckedViewCorrectKeys
+=== RUN   TestCheckedViewCorrectKeysAlias
+=== PAUSE TestCheckedViewCorrectKeysAlias
+=== RUN   TestCheckedViewCorrectValues
+=== PAUSE TestCheckedViewCorrectValues
+=== RUN   TestCheckedViewCorrectEntries
+=== PAUSE TestCheckedViewCorrectEntries
+=== RUN   TestCheckedViewCorrectP19NumberRead
+=== PAUSE TestCheckedViewCorrectP19NumberRead
+=== RUN   TestCheckedViewCorrectP19StringRead
+=== PAUSE TestCheckedViewCorrectP19StringRead
+=== RUN   TestCheckedViewCorrectP72String
+=== PAUSE TestCheckedViewCorrectP72String
+=== RUN   TestCheckedViewCorrectP72Number
+=== PAUSE TestCheckedViewCorrectP72Number
+=== CONT  TestReviewProgramsAgreeWithNode
+=== CONT  TestCheckedViewCorrectP19StringRead
+=== CONT  TestCheckedViewCorrectValues
+=== CONT  TestCheckedViewCorrectP19NumberRead
+=== CONT  TestCheckedViewCorrectEntries
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    view_element_reads_test.go:130: gate cache node miss
+=== NAME  TestCheckedViewCorrectEntries
+    view_element_reads_test.go:125: gate cache node miss
+=== NAME  TestCheckedViewCorrectValues
+    view_element_reads_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewCorrectEntries
+    view_element_reads_test.go:125: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    view_element_reads_test.go:130: gate cache node miss
+=== NAME  TestCheckedViewCorrectValues
+    view_element_reads_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewCorrectEntries
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectEntries
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectEntries
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectEntries (0.70s)
+=== CONT  TestCheckedViewCorrectIn
+    view_element_reads_test.go:105: gate cache node miss
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectValues (0.75s)
+=== CONT  TestCheckedViewCorrectKeysAlias
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19NumberRead (0.80s)
+=== CONT  TestCheckedViewCorrectKeys
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    view_element_reads_test.go:115: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node miss
+=== NAME  TestCheckedViewCorrectIn
+    view_element_reads_test.go:105: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19StringRead (0.93s)
+=== CONT  TestCheckedViewCorrectP72Number
+=== NAME  TestCheckedViewCorrectKeysAlias
+    view_element_reads_test.go:115: gate cache node miss
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:596: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72Number
+    view_element_reads_test.go:145: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP72Number
+    view_element_reads_test.go:145: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeysAlias (0.59s)
+=== CONT  TestCheckedViewElementP72
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectIn (0.65s)
+=== CONT  TestCheckedViewCorrectSpread
+=== NAME  TestCheckedViewElementP72
+    view_element_reads_test.go:95: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectSpread
+    view_element_reads_test.go:100: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeys (0.68s)
+=== CONT  TestCheckedViewCorrectP72String
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectP72String
+    view_element_reads_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewElementP72
+    view_element_reads_test.go:95: gate cache node miss
+--- PASS: TestReviewProgramsAgreeWithNode (1.56s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a (0.91s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a (0.61s)
+=== CONT  TestCheckedViewElementP19
+=== NAME  TestCheckedViewCorrectSpread
+    view_element_reads_test.go:100: gate cache node miss
+=== NAME  TestCheckedViewElementP72
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72Number (0.71s)
+=== NAME  TestCheckedViewElementP19
+    view_element_reads_test.go:91: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72String
+    view_element_reads_test.go:140: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP19
+    view_element_reads_test.go:91: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP72
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectSpread (0.57s)
+--- PASS: TestCheckedViewElementP72 (0.59s)
+=== NAME  TestCheckedViewCorrectP72String
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72String (0.57s)
+=== NAME  TestCheckedViewElementP19
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewElementP19 (0.62s)
+PASS
+gate cache: native hits=10 misses=28
+gate cache: node hits=0 misses=28
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.198s

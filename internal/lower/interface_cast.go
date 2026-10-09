@@ -1,9 +1,6 @@
 package lower
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -32,10 +29,13 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 	return nil, nil
 }
 
-// view is the shared entry point. Checking by field name throughout the program is
-// conservative: aliases and function boundaries cannot lose a checked read.
-// More precise view propagation and erasure can reduce that set without trusting casts.
+// view registers checks by receiver type and member, including nested contracts.
+// An unrelated receiver with the same member name does not become a view.
+// Each read syntax must carry the checked member boundary or be refused.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+	if err := l.checkViewMembers(node, target); err != nil {
+		return nil, err
+	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
@@ -45,9 +45,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
-	}
-	for field := range fields {
-		l.result.CheckedFields[field] = true
 	}
 
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -60,9 +57,39 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if refused != nil {
 			return true
 		}
+		var members *ast.Node
+		switch part.Kind {
+		case ast.KindSpreadAssignment:
+			members = part.AsSpreadAssignment().Expression
+		case ast.KindBinaryExpression:
+			if part.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword {
+				members = part.AsBinaryExpression().Right
+			}
+		case ast.KindCallExpression:
+			call := part.AsCallExpression()
+			callee := ast.SkipParentheses(call.Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") && len(call.Arguments.Nodes) != 0 {
+				switch callee.Name().Text() {
+				case "keys", "values", "entries":
+					members = call.Arguments.Nodes[0]
+				}
+			}
+		}
+		if members != nil {
+			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(members))) {
+				if !fields[field.Name] {
+					continue
+				}
+				for _, declaration := range field.Declarations {
+					if declaration.Kind == ast.KindMethodDeclaration || declaration.Kind == ast.KindMethodSignature {
+						refused = l.notYet(part, "a checked view member operation on a method without an own data slot")
+					}
+				}
+			}
+		}
 		// Optional receivers and optional/accessor slots still need a representation
 		// conversion that the V1 checked read boundary cannot emit.
-		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
@@ -71,7 +98,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] && ast.IsAssignmentTarget(part) {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
 				if of == ir.Object {
@@ -107,171 +134,6 @@ func interfaceScalar(proven *checker.Type) bool {
 		return true
 	}
 	return proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
-}
-
-func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
-	if isClassInstance(proven) || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 {
-		return false
-	}
-	for _, property := range l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsOptional != 0 || !l.checker.IsReadonlySymbol(property) || !interfaceScalar(l.checker.GetTypeOfSymbol(property)) {
-			return false
-		}
-	}
-	return len(l.checker.GetPropertiesOfType(proven)) > 0
-}
-
-// Look at initializer types, never an asserted/contextual interface as evidence of payload.
-func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
-	fields := map[string]*ast.Node{}
-	for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
-			return nil, false
-		}
-		name := property.Name()
-		if name == nil || (name.Kind != ast.KindIdentifier && name.Kind != ast.KindStringLiteral) {
-			return nil, false
-		}
-		value := name
-		if property.Kind == ast.KindPropertyAssignment {
-			value = property.AsPropertyAssignment().Initializer
-		}
-		fields[name.Text()] = value
-	}
-	return fields, true
-}
-
-func (l *lowering) interfaceConstructions(cast *ast.Node, target *checker.Type, field string, literal *checker.Type) error {
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		return err
-	}
-	checked := map[string]*checker.Type{}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		checked[property.Name] = l.checker.GetTypeOfSymbol(property)
-	}
-	var found error
-	fail := func(node *ast.Node, reason string) {
-		found = &Refused{Where: l.program.Where(cast), What: "an unproven base interface construction", Fix: fmt.Sprintf("%s at %s; build the complete target in an immutable literal and preserve its fields (adamic/interface-construction)", reason, l.program.Where(node))}
-	}
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if found != nil {
-			return true
-		}
-		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
-			fail(node, "an ambient value has no construction body")
-			return true
-		}
-		switch node.Kind {
-		case ast.KindAnyKeyword, ast.KindTypeAssertionExpression:
-			fail(node, "an unproven type could forge a construction")
-		case ast.KindIdentifier:
-			if node.Text() == "Object" || node.Text() == "Reflect" || node.Text() == "JSON" {
-				fail(node, "reflection or host construction is outside the prototype")
-			}
-		case ast.KindClassDeclaration, ast.KindNewExpression, ast.KindSpreadAssignment, ast.KindGetAccessor, ast.KindSetAccessor:
-			fail(node, "opaque, staged or spread construction is outside the prototype")
-		case ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindArrowFunction, ast.KindMethodDeclaration:
-			if len(node.TypeParameters()) > 0 || node.Body() == nil {
-				fail(node, "a generic or bodyless factory is outside the prototype")
-			}
-		case ast.KindImportDeclaration, ast.KindExportDeclaration:
-			if specifier := node.ModuleSpecifier(); specifier != nil && !strings.HasPrefix(specifier.Text(), ".") {
-				fail(node, "an external module has no closed construction proof")
-			}
-		case ast.KindCallExpression:
-			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-			if callee.Kind == ast.KindPropertyAccessExpression {
-				base := callee.AsPropertyAccessExpression().Expression
-				if ast.IsIdentifier(base) && (base.Text() == "Object" || base.Text() == "Reflect" || base.Text() == "JSON") {
-					fail(node, "reflection or host construction is outside the prototype")
-				}
-			}
-		case ast.KindBinaryExpression:
-			binary := node.AsBinaryExpression()
-			if ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
-				l.interfaceWrite(binary.Left, checked, fail)
-			}
-		case ast.KindPrefixUnaryExpression:
-			unary := node.AsPrefixUnaryExpression()
-			if unary.Operator == ast.KindPlusPlusToken || unary.Operator == ast.KindMinusMinusToken {
-				l.interfaceWrite(unary.Operand, checked, fail)
-			}
-		case ast.KindPostfixUnaryExpression:
-			l.interfaceWrite(node.AsPostfixUnaryExpression().Operand, checked, fail)
-		case ast.KindAsExpression:
-			as := node.AsAsExpression()
-			if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
-				break
-			}
-			from, to := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
-			// Another base cast is checked by this same pass at its own lowering site.
-			baseCast := l.interfaceScalarShape(from) && l.interfaceScalarShape(to) && l.fieldLiteral(to, field) != nil && l.checker.IsTypeAssignableTo(to, from)
-			scalarUpcast := interfaceScalar(from) && interfaceScalar(to) && l.checker.IsTypeAssignableTo(from, to)
-			objectUpcast := l.interfaceScalarShape(to) && l.checker.IsTypeAssignableTo(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
-			if !baseCast && !scalarUpcast && !objectUpcast {
-				fail(node, "an assertion could forge a construction or scalar payload")
-			}
-		case ast.KindObjectLiteralExpression:
-			fields, complete := interfaceLiteralFields(node)
-			if !complete {
-				fail(node, "a literal has unproven field names or behavior")
-				break
-			}
-			kind := fields[field]
-			if kind == nil {
-				break // No write or spread can add a tag later in an admitted program.
-			}
-			kindType := l.checker.GetTypeAtLocation(kind)
-			if !interfaceScalar(kindType) {
-				fail(kind, "a tag has an unproven scalar type")
-				break
-			}
-			if !l.checker.IsTypeAssignableTo(literal, kindType) {
-				break // A precise different tag cannot select this target.
-			}
-			for name, wanted := range checked {
-				value := fields[name]
-				if value == nil {
-					fail(node, "matching kind lacks required field "+name)
-					break
-				}
-				actual := l.checker.GetTypeAtLocation(value)
-				// A broad tag needs the runtime comparison, so it need not be a target literal.
-				if !interfaceScalar(actual) || (name != field && !l.checker.IsTypeAssignableTo(actual, wanted)) {
-					fail(value, "matching kind has incompatible field "+name)
-					break
-				}
-			}
-		}
-		if found == nil {
-			node.ForEachChild(visit)
-		}
-		return found != nil
-	}
-	for _, module := range modules {
-		module.AsNode().ForEachChild(visit)
-		if found != nil {
-			return found
-		}
-	}
-	return nil
-}
-
-// Field names are deliberately global, including writes through wider or unrelated views.
-// Destructuring and computed destinations fail closed rather than guess their alias effects.
-func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Type, fail func(*ast.Node, string)) {
-	node = ast.SkipParentheses(node)
-	if ast.IsIdentifier(node) {
-		return
-	}
-	if node.Kind == ast.KindPropertyAccessExpression {
-		if _, needed := checked[node.AsPropertyAccessExpression().Name().Text()]; !needed {
-			return
-		}
-	}
-	fail(node, "a write may invalidate the kind-to-shape invariant")
 }
 
 // A finite literal contract is checked as well as its primitive representation.
@@ -321,6 +183,14 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		contract := l.result.ViewContracts[id-1]
 		for _, field := range contract.Fields {
 			fields[field.Name] = true
+			for typeID, contractID := range l.result.ViewContractTypes {
+				if contractID == id {
+					if l.result.CheckedFields == nil {
+						l.result.CheckedFields = map[string]bool{}
+					}
+					l.result.CheckedFields[checkedViewFieldKey(typeID, field.Name)] = true
+				}
+			}
 			visit(field.Contract)
 		}
 		for _, member := range contract.Members {
@@ -382,7 +252,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 				}
 			}
 		}
-		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
+		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
@@ -409,7 +279,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 		l.result.CheckedFields = map[string]bool{}
 	}
 	for field := range fields {
-		l.result.CheckedFields[field] = true
+		l.result.CheckedFields[checkedViewFieldKey(int(target.Id()), field)] = true
 	}
 	return value, nil
 }

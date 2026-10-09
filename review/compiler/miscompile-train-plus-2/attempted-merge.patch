@@ -1,0 +1,1398 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index a8bf9944..14db8bbb 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -837,7 +837,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 			for _, field := range expression.Fields {
+ 				elements = append(elements, e.value(field.Value))
+ 			}
+-			return "[" + strings.Join(elements, ", ") + "]"
++			return "adamicTuple([" + strings.Join(elements, ", ") + "])"
+ 		}
+ 		spreadValue := ""
+ 		fields := []string{}
+@@ -1106,6 +1106,15 @@ func (e *emitter) value(expression ir.Expression) string {
+ 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
+ 		}
+ 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
++			if property.View != "" {
++				property.Method = false
++				callee, checked := readUnionViewAt(e, property, "receiver")
++				if !checked {
++					panic("compiler bug: unavailable callable view read")
++				}
++				arguments := e.callValues(expression.Arguments, expression.Spread)
++				return "((receiver)=>((fn)=>adamicCall(fn,fn.receiver ? [receiver," + arguments + "] : [" + arguments + "]))(" + callee + "))(" + e.value(property.Object) + ")"
++			}
+ 			if property.Optional {
+ 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
+ 				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
+diff --git a/internal/javascript/readiness.go b/internal/javascript/readiness.go
+index e2769bbb..3ed8f9bd 100644
+--- a/internal/javascript/readiness.go
++++ b/internal/javascript/readiness.go
+@@ -3,7 +3,10 @@ package javascript
+ import "fmt"
+ 
+ // Hidden readiness state leaves own keys and object spread unchanged.
+-const fieldReadinessRuntime = `const adamicFieldReadiness = new WeakMap();
++const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
++const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
++const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
++const adamicFieldReadiness = new WeakMap();
+ const adamicFieldRepresentations = new WeakMap();
+ const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
+ const adamicViewWrite = (object, name, value, type, declared) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type, declared || adamicViewTypeNames[type] || "unknown"); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
+@@ -19,7 +22,7 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
+ const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
+ const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
+     const value = adamicReadField(object, name, expression, false, false, expected);
+-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
++    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
+     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
+     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
+     return value;
+diff --git a/internal/javascript/view_unions_callable_producers.go b/internal/javascript/view_unions_callable_producers.go
+index e60b6dea..587eccf4 100644
+--- a/internal/javascript/view_unions_callable_producers.go
++++ b/internal/javascript/view_unions_callable_producers.go
+@@ -3,6 +3,7 @@ package javascript
+ import (
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"slices"
+ 	"strings"
+ )
+ 
+@@ -64,11 +65,22 @@ func (e *emitter) unionCallableRecorded(value string) string {
+ 				parameters[i] = 0
+ 			}
+ 		}
++		masks := make([]uint16, len(parameters)+1)
++		// Exact checker identity certified these producer contracts in lowering.
++		for _, contract := range e.program.ViewContracts {
++			if contract.Kind != ir.ViewCallable || !contract.ProducerCertified || !slices.Contains(contract.Functions, index) {
++				continue
++			}
++			for i, child := range contract.Parameters {
++				parameters[i] = e.program.ViewContracts[child-1].Of
++				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
++			}
++		}
+ 		result := unionCallableProducerResult(function.Returns)
+ 		if result != ir.Number && result != ir.Boolean && result != ir.String && result != 254 {
+ 			result = 0
+ 		}
+-		choices = append(choices, fmt.Sprintf("code === %s ? ({...%s,function:%d}) : ", functionName(e.program, index), unionCallableSignature(parameters, result, function.Name), index))
++		choices = append(choices, fmt.Sprintf("code === %s ? ({...%s,function:%d}) : ", functionName(e.program, index), unionCallableSignature(parameters, result, function.Name, masks), index))
+ 	}
+ 	return "((code)=>" + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
+ }
+diff --git a/internal/javascript/view_unions_read.go b/internal/javascript/view_unions_read.go
+index 2ed4944c..7a26be66 100644
+--- a/internal/javascript/view_unions_read.go
++++ b/internal/javascript/view_unions_read.go
+@@ -8,6 +8,10 @@ import (
+ func init() { checkedViewReadAdapter = readUnionView }
+ 
+ func readUnionView(e *emitter, property ir.Property) (string, bool) {
++	return readUnionViewAt(e, property, "")
++}
++
++func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
+ 	id := property.ViewContract
+ 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+ 		return "", false
+@@ -19,7 +23,10 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
+ 	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
+ 		panic("compiler bug: unavailable checked union read")
+ 	}
+-	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", e.value(property.Object), quote(property.Name), quote(property.View), quote(contract.Name))
++	if object == "" {
++		object = e.value(property.Object)
++	}
++	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", object, quote(property.Name), quote(property.View), quote(contract.Name))
+ 	if contract.Of == ir.Closure {
+ 		recorded := e.unionCallableRecorded("v")
+ 		expected := e.untaggedCallableUnionExpected(property, recorded, e.unionCallableExpected(property))
+@@ -28,7 +35,7 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
+ 	}
+ 	checked := e.viewUntaggedObjectUnion(property, raw)
+ 	if property.Of != ir.Union {
+-		test := map[ir.Type]string{ir.Number: "typeof v==='number'", ir.Boolean: "typeof v==='boolean'", ir.MaybeNumber: "typeof v==='number'", ir.MaybeBoolean: "typeof v==='boolean'", ir.Object: "v!==null && typeof v==='object' && !Array.isArray(v) && !(v instanceof Map)", ir.Array: "Array.isArray(v)", ir.String: "typeof v==='string'", ir.Closure: "adamicTypeOf(v)==='function'"}[property.Of]
++		test := map[ir.Type]string{ir.Number: "typeof v==='number'", ir.Boolean: "typeof v==='boolean'", ir.MaybeNumber: "typeof v==='number'", ir.MaybeBoolean: "typeof v==='boolean'", ir.Object: "adamicViewObject(v)", ir.Array: "Array.isArray(v)", ir.String: "typeof v==='string'", ir.Closure: "adamicTypeOf(v)==='function'"}[property.Of]
+ 		if contract.FixedTuple {
+ 			test = "Array.isArray(v)"
+ 		}
+diff --git a/internal/javascript/view_unions_untagged.go b/internal/javascript/view_unions_untagged.go
+index 231d3e3f..c95f21ed 100644
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -90,8 +90,8 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
+   if(contract.Kind===6) return value===null;
+   if(contract.Kind===7) return value===undefined;
+   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
+-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (!contract.FixedTuple && Array.isArray(value)) || value instanceof Map) return false;
+-  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;
++  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
++  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
+   const fields=contract.Fields || [];
+   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
+   if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
+@@ -128,18 +128,20 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded,
+ 			continue
+ 		}
+ 		parameters := make([]ir.Type, len(contract.Parameters))
++		masks := make([]uint16, len(parameters)+1)
+ 		known := true
+ 		for i, parameter := range contract.Parameters {
+ 			parameters[i] = e.program.ViewContracts[parameter-1].Of
++			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
+ 			known = known && parameters[i] != 0
+ 		}
+ 		result := e.program.ViewContracts[contract.Result-1].Of
+ 		if !known || result == 0 {
+ 			continue
+ 		}
+-		choices = append(choices, unionCallableSignature(parameters, result, root.Name))
++		choices = append(choices, unionCallableSignature(parameters, result, root.Name, masks))
+ 	}
+-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
++	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" + recorded + ")"
+ }
+ 
+ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
+diff --git a/internal/lower/callable_contract_retention_test.go b/internal/lower/callable_contract_retention_test.go
+new file mode 100644
+index 00000000..8dce710f
+--- /dev/null
++++ b/internal/lower/callable_contract_retention_test.go
+@@ -0,0 +1,113 @@
++package lower
++
++import (
++	"github.com/system-inc/adamic/internal/javascript"
++	"github.com/system-inc/adamic/internal/native"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++func callableContractSource(t *testing.T, name string) string {
++	t.Helper()
++	source, err := os.ReadFile("testdata/fx7_wrong_aborts/" + name + ".a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	return string(source)
++}
++
++func TestCallableContractP18(t *testing.T) {
++	t.Parallel()
++	source := callableContractSource(t, "p18")
++	lowersAndAgreesWithNode(t, source)
++	// Native must check the stored callable before packing its argument.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestCallableContractP20(t *testing.T) {
++	t.Parallel()
++	source := callableContractSource(t, "p20")
++	lowersAndAgreesWithNode(t, source)
++	// Native combines the checked union field and the checked callable read.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestCallableContractWideProducer(t *testing.T) {
++	t.Parallel()
++	source := callableContractSource(t, "wide")
++	lowersAndAgreesWithNode(t, source)
++	// The implementation's argument is boxed even though the union signature takes a number.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestCallableContractReceiverBinding(t *testing.T) {
++	t.Parallel()
++	source := `interface Runner { factor: number; run(value: number): number; }
++const object: Runner = { factor: 2, run(value: number): number { return this.factor * value; } };
++console.log(String(object.run(4)));`
++	lowersAndAgreesWithNode(t, source)
++	// Native must pass the original receiver to ordinary receiver methods.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestCallableContractReceiverEvaluatedOnce(t *testing.T) {
++	t.Parallel()
++	source := strings.Replace(callableContractSource(t, "p18"), "console.log(`${view.value(4)}`);", `function receiver(): Receiver { console.log('receiver'); return view; }
++function argument(): number { console.log('argument'); return 4; }
++console.log(String(receiver().value(argument())));`, 1)
++	lowersAndAgreesWithNode(t, source)
++	// Native's checked member lookup must reuse the evaluated receiver.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestCallableContractChecksBeforeArguments(t *testing.T) {
++	t.Parallel()
++	source := callableContractSource(t, "bad_callable")
++	original := filepath.Join(t.TempDir(), "source.a")
++	if err := os.WriteFile(original, []byte(source), 0600); err != nil {
++		t.Fatal(err)
++	}
++	truth := runAgreementNode(t, original)
++	if truth.code != 0 || string(truth.stdout) != "before\nargument\n99\n" {
++		t.Fatalf("unexpected Node control: %+v", truth)
++	}
++	program, err := lowerSource(t, source)
++	if err != nil {
++		t.Fatal(err)
++	}
++	generated := filepath.Join(t.TempDir(), "generated.mjs")
++	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0600); err != nil {
++		t.Fatal(err)
++	}
++	observations := []nodeObservation{runAgreementNode(t, generated), runAgreementNative(t, native.C(program))}
++	for index, got := range observations {
++		t.Logf("backend %d: exit %d stdout %q stderr %q; Node stdout %q", index, got.code, got.stdout, got.stderr, truth.stdout)
++	}
++	for _, got := range observations {
++		if got.code != 70 || string(got.stdout) != "before\n" || !strings.Contains(string(got.stderr), "expected") {
++			t.Fatalf("callable contract must reject before argument effects: exit %d stdout %q stderr %q", got.code, got.stdout, got.stderr)
++		}
++	}
++}
++
++func TestCallableContractSpreadRefused(t *testing.T) {
++	t.Parallel()
++	source := strings.Replace(callableContractSource(t, "p18"), "view.value(4)", "view.value(...[4])", 1)
++	_, err := lowerSource(t, source)
++	if err == nil || !strings.Contains(err.Error(), "main.a:") || !strings.Contains(err.Error(), "spread arguments through a checked callable view") {
++		t.Fatalf("want located checked-callable spread refusal, got %v", err)
++	}
++}
++
++func TestCallableContractPlainSpread(t *testing.T) {
++	t.Parallel()
++	source, err := os.ReadFile("../oracle/testdata/closure_convention_receiver_rest.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	lowersAndAgreesWithNode(t, string(source))
++	// Native retains the ordinary receiver/rest ABI outside checked callable views.
++	lowersAndAgreesWithNodeNative(t, string(source))
++}
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..bc8d790d 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1318,6 +1318,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+ 	if err != nil {
+ 		return nil, err
+ 	}
++	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 {
++		contract := l.result.ViewContracts[property.ViewContract-1]
++		if contract.Of == ir.Closure && contract.Unsupported == "" && (contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewCallable) {
++			return nil, l.notYet(node, "spread arguments through a checked callable view")
++		}
++	}
+ 	var returns ir.Type
+ 	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+ 		var isKnown bool
+diff --git a/internal/lower/fx7_wrong_aborts_test.go b/internal/lower/fx7_wrong_aborts_test.go
+new file mode 100644
+index 00000000..15921ba0
+--- /dev/null
++++ b/internal/lower/fx7_wrong_aborts_test.go
+@@ -0,0 +1,17 @@
++package lower
++
++import (
++	"os"
++	"testing"
++)
++
++func TestFX7CheckedCastFieldTypes(t *testing.T) {
++	t.Parallel()
++	source, err := os.ReadFile("testdata/fx7_wrong_aborts/p18.a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	lowersAndAgreesWithNode(t, string(source))
++	// Only native exposes the field representation metadata used by CheckedCast.
++	lowersAndAgreesWithNodeNative(t, string(source))
++}
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index 40629a14..50a4f568 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -1,9 +1,6 @@
+ package lower
+ 
+ import (
+-	"fmt"
+-	"strings"
+-
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+@@ -139,171 +136,6 @@ func interfaceScalar(proven *checker.Type) bool {
+ 	return proven.Flags()&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral|checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0 && proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
+ }
+ 
+-func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
+-	if isClassInstance(proven) || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 {
+-		return false
+-	}
+-	for _, property := range l.checker.GetPropertiesOfType(proven) {
+-		if property.Flags&ast.SymbolFlagsOptional != 0 || !l.checker.IsReadonlySymbol(property) || !interfaceScalar(l.checker.GetTypeOfSymbol(property)) {
+-			return false
+-		}
+-	}
+-	return len(l.checker.GetPropertiesOfType(proven)) > 0
+-}
+-
+-// Look at initializer types, never an asserted/contextual interface as evidence of payload.
+-func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
+-	fields := map[string]*ast.Node{}
+-	for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+-		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+-			return nil, false
+-		}
+-		name := property.Name()
+-		if name == nil || (name.Kind != ast.KindIdentifier && name.Kind != ast.KindStringLiteral) {
+-			return nil, false
+-		}
+-		value := name
+-		if property.Kind == ast.KindPropertyAssignment {
+-			value = property.AsPropertyAssignment().Initializer
+-		}
+-		fields[name.Text()] = value
+-	}
+-	return fields, true
+-}
+-
+-func (l *lowering) interfaceConstructions(cast *ast.Node, target *checker.Type, field string, literal *checker.Type) error {
+-	modules, err := l.moduleOrder(l.program.Files()[0])
+-	if err != nil {
+-		return err
+-	}
+-	checked := map[string]*checker.Type{}
+-	for _, property := range l.checker.GetPropertiesOfType(target) {
+-		checked[property.Name] = l.checker.GetTypeOfSymbol(property)
+-	}
+-	var found error
+-	fail := func(node *ast.Node, reason string) {
+-		found = &Refused{Where: l.program.Where(cast), What: "an unproven base interface construction", Fix: fmt.Sprintf("%s at %s; build the complete target in an immutable literal and preserve its fields (adamic/interface-construction)", reason, l.program.Where(node))}
+-	}
+-	var visit ast.Visitor
+-	visit = func(node *ast.Node) bool {
+-		if found != nil {
+-			return true
+-		}
+-		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
+-			fail(node, "an ambient value has no construction body")
+-			return true
+-		}
+-		switch node.Kind {
+-		case ast.KindAnyKeyword, ast.KindTypeAssertionExpression:
+-			fail(node, "an unproven type could forge a construction")
+-		case ast.KindIdentifier:
+-			if node.Text() == "Object" || node.Text() == "Reflect" || node.Text() == "JSON" {
+-				fail(node, "reflection or host construction is outside the prototype")
+-			}
+-		case ast.KindClassDeclaration, ast.KindNewExpression, ast.KindSpreadAssignment, ast.KindGetAccessor, ast.KindSetAccessor:
+-			fail(node, "opaque, staged or spread construction is outside the prototype")
+-		case ast.KindFunctionDeclaration, ast.KindFunctionExpression, ast.KindArrowFunction, ast.KindMethodDeclaration:
+-			if len(node.TypeParameters()) > 0 || node.Body() == nil {
+-				fail(node, "a generic or bodyless factory is outside the prototype")
+-			}
+-		case ast.KindImportDeclaration, ast.KindExportDeclaration:
+-			if specifier := node.ModuleSpecifier(); specifier != nil && !strings.HasPrefix(specifier.Text(), ".") {
+-				fail(node, "an external module has no closed construction proof")
+-			}
+-		case ast.KindCallExpression:
+-			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+-			if callee.Kind == ast.KindPropertyAccessExpression {
+-				base := callee.AsPropertyAccessExpression().Expression
+-				if ast.IsIdentifier(base) && (base.Text() == "Object" || base.Text() == "Reflect" || base.Text() == "JSON") {
+-					fail(node, "reflection or host construction is outside the prototype")
+-				}
+-			}
+-		case ast.KindBinaryExpression:
+-			binary := node.AsBinaryExpression()
+-			if ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
+-				l.interfaceWrite(binary.Left, checked, fail)
+-			}
+-		case ast.KindPrefixUnaryExpression:
+-			unary := node.AsPrefixUnaryExpression()
+-			if unary.Operator == ast.KindPlusPlusToken || unary.Operator == ast.KindMinusMinusToken {
+-				l.interfaceWrite(unary.Operand, checked, fail)
+-			}
+-		case ast.KindPostfixUnaryExpression:
+-			l.interfaceWrite(node.AsPostfixUnaryExpression().Operand, checked, fail)
+-		case ast.KindAsExpression:
+-			as := node.AsAsExpression()
+-			if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+-				break
+-			}
+-			from, to := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+-			// Another base cast is checked by this same pass at its own lowering site.
+-			baseCast := l.interfaceScalarShape(from) && l.interfaceScalarShape(to) && l.fieldLiteral(to, field) != nil && l.checker.IsTypeAssignableTo(to, from)
+-			scalarUpcast := interfaceScalar(from) && interfaceScalar(to) && l.checker.IsTypeAssignableTo(from, to)
+-			objectUpcast := l.interfaceScalarShape(to) && l.checker.IsTypeAssignableTo(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
+-			if !baseCast && !scalarUpcast && !objectUpcast {
+-				fail(node, "an assertion could forge a construction or scalar payload")
+-			}
+-		case ast.KindObjectLiteralExpression:
+-			fields, complete := interfaceLiteralFields(node)
+-			if !complete {
+-				fail(node, "a literal has unproven field names or behavior")
+-				break
+-			}
+-			kind := fields[field]
+-			if kind == nil {
+-				break // No write or spread can add a tag later in an admitted program.
+-			}
+-			kindType := l.checker.GetTypeAtLocation(kind)
+-			if !interfaceScalar(kindType) {
+-				fail(kind, "a tag has an unproven scalar type")
+-				break
+-			}
+-			if !l.checker.IsTypeAssignableTo(literal, kindType) {
+-				break // A precise different tag cannot select this target.
+-			}
+-			for name, wanted := range checked {
+-				value := fields[name]
+-				if value == nil {
+-					fail(node, "matching kind lacks required field "+name)
+-					break
+-				}
+-				actual := l.checker.GetTypeAtLocation(value)
+-				// A broad tag needs the runtime comparison, so it need not be a target literal.
+-				if !interfaceScalar(actual) || (name != field && !l.checker.IsTypeAssignableTo(actual, wanted)) {
+-					fail(value, "matching kind has incompatible field "+name)
+-					break
+-				}
+-			}
+-		}
+-		if found == nil {
+-			node.ForEachChild(visit)
+-		}
+-		return found != nil
+-	}
+-	for _, module := range modules {
+-		module.AsNode().ForEachChild(visit)
+-		if found != nil {
+-			return found
+-		}
+-	}
+-	return nil
+-}
+-
+-// Field names are deliberately global, including writes through wider or unrelated views.
+-// Destructuring and computed destinations fail closed rather than guess their alias effects.
+-func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Type, fail func(*ast.Node, string)) {
+-	node = ast.SkipParentheses(node)
+-	if ast.IsIdentifier(node) {
+-		return
+-	}
+-	if node.Kind == ast.KindPropertyAccessExpression {
+-		if _, needed := checked[node.AsPropertyAccessExpression().Name().Text()]; !needed {
+-			return
+-		}
+-	}
+-	fail(node, "a write may invalidate the kind-to-shape invariant")
+-}
+-
+ // A finite literal contract is checked as well as its primitive representation.
+ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+ 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index bb002614..b63e2f96 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -285,7 +285,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+ 				}
+ 				node = expression
+ 			case ir.Property:
+-				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method {
++				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID]) {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil
+diff --git a/internal/lower/testdata/fx7_tuple_recognition/p68.a b/internal/lower/testdata/fx7_tuple_recognition/p68.a
+new file mode 100644
+index 00000000..b21aa0b7
+--- /dev/null
++++ b/internal/lower/testdata/fx7_tuple_recognition/p68.a
+@@ -0,0 +1,10 @@
++// A good view whose field is an object type with index-named fields, over a real tuple.
++interface Pair { readonly '0': string; readonly '1': number; }
++interface Root { readonly kind: 'Holder'; }
++interface View extends Root { readonly value: Pair; }
++const pair: [string, number] = ['first', 1];
++const raw = { kind: 'Holder' as const, value: pair };
++const base: Root = raw;
++const viewed = base as View;
++const value = viewed.value;
++console.log(`${value[0]}:${value[1]}`);
+diff --git a/internal/lower/testdata/fx7_tuple_recognition/p69.a b/internal/lower/testdata/fx7_tuple_recognition/p69.a
+new file mode 100644
+index 00000000..3fd19451
+--- /dev/null
++++ b/internal/lower/testdata/fx7_tuple_recognition/p69.a
+@@ -0,0 +1,14 @@
++// A fixed-tuple view in an untagged union with an object member.
++interface Named { readonly text: string; }
++interface Root { readonly kind: 'Holder'; }
++interface View extends Root { readonly value: readonly [string, number] | Named; }
++const pair: [string, number] = ['first', 1];
++const raw = { kind: 'Holder' as const, value: pair };
++const base: Root = raw;
++const viewed = base as View;
++const value = viewed.value;
++if (value === pair) {
++    console.log(`${value[0]}:${value[1]}`);
++} else {
++    console.log('other');
++}
+diff --git a/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a b/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a
+new file mode 100644
+index 00000000..7896033c
+--- /dev/null
++++ b/internal/lower/testdata/fx7_wrong_aborts/bad_callable.a
+@@ -0,0 +1,9 @@
++type Target = ((value: number) => number) | ((value: string | number) => number);
++interface Root { readonly kind: 'Receiver'; }
++interface Receiver extends Root { readonly value: Target; }
++const raw = { kind: 'Receiver' as const, value: (value: boolean): number => value ? 99 : 7 };
++const base: Root = raw;
++const view = base as Receiver;
++function argument(): number { console.log('argument'); return 4; }
++console.log('before');
++console.log(`${view.value(argument())}`);
+diff --git a/internal/lower/testdata/fx7_wrong_aborts/p18.a b/internal/lower/testdata/fx7_wrong_aborts/p18.a
+new file mode 100644
+index 00000000..a4d6d7c5
+--- /dev/null
++++ b/internal/lower/testdata/fx7_wrong_aborts/p18.a
+@@ -0,0 +1,6 @@
++type Target = ((value: number) => number) | ((value: string | number) => number);
++interface Receiver { readonly kind: 'Receiver'; readonly value: Target; }
++interface Box { readonly kind: 'Receiver'; value: Target; }
++const box: Box = { kind: 'Receiver', value: (value: number): number => value * 2 };
++const view = (box as { readonly kind: 'Receiver' }) as Receiver;
++console.log(`${view.value(4)}`);
+diff --git a/internal/lower/testdata/fx7_wrong_aborts/p20.a b/internal/lower/testdata/fx7_wrong_aborts/p20.a
+new file mode 100644
+index 00000000..8fc740ae
+--- /dev/null
++++ b/internal/lower/testdata/fx7_wrong_aborts/p20.a
+@@ -0,0 +1,8 @@
++type Target = ((value: number) => number) | ((value: string | number) => number);
++interface Root { readonly kind: 'Receiver'; }
++interface Receiver extends Root { readonly value: Target; readonly count: number | string; }
++const raw = { kind: 'Receiver' as const, value: (value: number): number => value * 3, count: 3 };
++const base: Root = raw;
++const view = base as Receiver;
++console.log(`${view.count}`);
++console.log(`${view.value(4)}`);
+diff --git a/internal/lower/testdata/fx7_wrong_aborts/wide.a b/internal/lower/testdata/fx7_wrong_aborts/wide.a
+new file mode 100644
+index 00000000..66ad71ab
+--- /dev/null
++++ b/internal/lower/testdata/fx7_wrong_aborts/wide.a
+@@ -0,0 +1,6 @@
++type Target = ((value: number) => number) | ((value: string | number) => number);
++interface Receiver { readonly kind: 'Receiver'; readonly value: Target; }
++interface Box { readonly kind: 'Receiver'; value: Target; }
++const box: Box = { kind: 'Receiver', value: (value: string | number): number => typeof value === "number" ? value * 2 : value.length };
++const view = (box as { readonly kind: 'Receiver' }) as Receiver;
++console.log(`${view.value(4)}`);
+diff --git a/internal/lower/testdata/view_diagnostics/oct9_views_p17.a b/internal/lower/testdata/view_diagnostics/oct9_views_p17.a
+new file mode 100644
+index 00000000..cc4275c1
+--- /dev/null
++++ b/internal/lower/testdata/view_diagnostics/oct9_views_p17.a
+@@ -0,0 +1,7 @@
++interface Root { readonly kind: 'box' | 'other' }
++interface View extends Root { readonly kind: 'box'; readonly values: ReadonlyMap<string, number> }
++const raw = { kind: 'box' as const, values: new Map<string, number>([["one", 1]]) };
++const base: Root = raw;
++const view = base as View;
++const values = view['values'];
++console.log(String(values.size));
+diff --git a/internal/lower/testdata/view_diagnostics/oct9_views_p48.a b/internal/lower/testdata/view_diagnostics/oct9_views_p48.a
+new file mode 100644
+index 00000000..f5bde029
+--- /dev/null
++++ b/internal/lower/testdata/view_diagnostics/oct9_views_p48.a
+@@ -0,0 +1,7 @@
++interface Root { readonly kind: 'box' | 'other' }
++interface View extends Root { readonly kind: 'box'; readonly values: ReadonlyMap<string, number> }
++const raw = { kind: 'box' as const, values: new Map<string, number>([["one", 1]]) };
++const base: Root = raw;
++const view = base as View;
++const { values } = view;
++console.log(String(values.size));
+diff --git a/internal/lower/testdata/view_diagnostics/oct9_views_p64.a b/internal/lower/testdata/view_diagnostics/oct9_views_p64.a
+new file mode 100644
+index 00000000..5d33d317
+--- /dev/null
++++ b/internal/lower/testdata/view_diagnostics/oct9_views_p64.a
+@@ -0,0 +1,8 @@
++interface Root { readonly kind: 'box' | 'other' }
++interface View extends Root { readonly kind: 'box'; readonly values: ReadonlyMap<string, number> }
++const raw = { kind: 'box' as const, values: new Map<string, number>([["one", 1]]) };
++const base: Root = raw;
++const view = base as View;
++const key = 'values';
++const values = view[key];
++console.log(String(values.size));
+diff --git a/internal/lower/tuple_recognition_test.go b/internal/lower/tuple_recognition_test.go
+new file mode 100644
+index 00000000..b2160195
+--- /dev/null
++++ b/internal/lower/tuple_recognition_test.go
+@@ -0,0 +1,81 @@
++package lower
++
++import (
++	"github.com/system-inc/adamic/internal/javascript"
++	"github.com/system-inc/adamic/internal/native"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++func tupleRecognitionSource(t *testing.T, name string) string {
++	t.Helper()
++	source, err := os.ReadFile("testdata/fx7_tuple_recognition/" + name + ".a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	return string(source)
++}
++
++func TestTupleRecognitionP68(t *testing.T) {
++	t.Parallel()
++	source := tupleRecognitionSource(t, "p68")
++	lowersAndAgreesWithNode(t, source)
++	// Native's object-backed tuple is the representation the JavaScript marker follows.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestTupleRecognitionP69(t *testing.T) {
++	t.Parallel()
++	source := tupleRecognitionSource(t, "p69")
++	lowersAndAgreesWithNode(t, source)
++	// The selected tuple member must still support subsequent indexed field reads.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestTupleRecognitionOrdinaryArray(t *testing.T) {
++	t.Parallel()
++	source := `const values: number[] = [1,2]; console.log(String(values[0]) + ':' + String(values.length));`
++	lowersAndAgreesWithNode(t, source)
++	// Array literals retain their array layout and are not branded as tuple objects.
++	lowersAndAgreesWithNodeNative(t, source)
++}
++
++func TestTupleRecognitionRejectsArrayObjectView(t *testing.T) {
++	t.Parallel()
++	source := `interface Named { readonly text: string; }
++interface Root { readonly kind: 'Holder'; }
++interface View extends Root { readonly value: readonly [string, number] | Named; }
++const pair: (string | number)[] = ['first',1];
++const raw = { kind: 'Holder' as const, value: pair };
++const base: Root = raw;
++const viewed = base as View;
++const value = viewed.value;
++console.log(typeof value);`
++	original := filepath.Join(t.TempDir(), "source.a")
++	if err := os.WriteFile(original, []byte(source), 0600); err != nil {
++		t.Fatal(err)
++	}
++	truth := runAgreementNode(t, original)
++	if truth.code != 0 || string(truth.stdout) != "object\n" {
++		t.Fatalf("unexpected Node control: %+v", truth)
++	}
++	program, err := lowerSource(t, source)
++	if err != nil {
++		t.Fatal(err)
++	}
++	generated := filepath.Join(t.TempDir(), "generated.mjs")
++	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0600); err != nil {
++		t.Fatal(err)
++	}
++	observations := []nodeObservation{runAgreementNode(t, generated), runAgreementNative(t, native.C(program))}
++	for index, got := range observations {
++		t.Logf("backend %d exit %d stdout %q stderr %q", index, got.code, got.stdout, got.stderr)
++	}
++	for _, got := range observations {
++		if got.code != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "field read failed") {
++			t.Fatalf("ordinary arrays must fail object-backed tuple membership: %+v", got)
++		}
++	}
++}
+diff --git a/internal/lower/view_adapters.go b/internal/lower/view_adapters.go
+index 4ee6c832..1632ecc1 100644
+--- a/internal/lower/view_adapters.go
++++ b/internal/lower/view_adapters.go
+@@ -16,14 +16,11 @@ var viewUnionContractHook viewContractHook
+ 
+ func init() { viewUnionContractHook = buildUnionReadContract }
+ 
++// Reserved attachment point for V5 dictionary contracts; no current caller.
+ var viewDictionaryContractHook = unavailableViewFamily("dictionary")
++
++// Reserved for V5 dictionary intersections; no current caller.
+ var viewIntersectionContractHook = unavailableViewFamily("intersection")
+ 
++// Reserved fail-closed attachment point for V6 erasure; no current caller.
+ func viewErasureProof(*ir.Program, ir.Property) bool { return false }
+-func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, _ map[*checker.Type]bool, _ bool) error {
+-	all, err := l.viewSchema(node, target)
+-	for field := range all {
+-		fields[field] = true
+-	}
+-	return err
+-}
+diff --git a/internal/lower/view_contracts.go b/internal/lower/view_contracts.go
+index df213614..e1761fa8 100644
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -7,12 +7,16 @@ import (
+ 	"reflect"
+ )
+ 
+-// Lane 2 registers these adapters from its new files. Until then an unsupported
+-// family stays NotYet/Refused, rather than silently lowering an incomplete contract.
++// Family adapters build child descriptors through the shared lazy builder.
+ type viewContractBuilder func(*checker.Type) (ir.ViewContractID, error)
+ type viewContractHook func(*lowering, *ast.Node, *checker.Type, viewContractBuilder) (ir.ViewContractID, error)
+ 
++// Reserved for the array adapter carried by compiler/views-v4.
++// This base routes array descriptors through unionAggregateContract first.
+ var viewArrayContractHook viewContractHook
++
++// Reserved attachment point for V4 standalone callable contracts.
++// Current callable obligations are recorded lazily before strict construction.
+ var viewCallableContractHook viewContractHook
+ 
+ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+@@ -35,6 +39,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
+ 		return id, nil
+ 	}
+ 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
++	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
+ 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+ 		if viewArrayContractHook == nil {
+ 			return 0, l.notYet(node, "an array checked-view contract")
+diff --git a/internal/lower/view_diagnostics_test.go b/internal/lower/view_diagnostics_test.go
+new file mode 100644
+index 00000000..909b96f8
+--- /dev/null
++++ b/internal/lower/view_diagnostics_test.go
+@@ -0,0 +1,60 @@
++package lower
++
++import (
++	"context"
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/system-inc/adamic/internal/ir"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/load"
++)
++
++func viewDiagnosticLocation(t *testing.T, name, location string) {
++	t.Helper()
++	path := filepath.Join("testdata", "view_diagnostics", "oct9_views_"+name+".a")
++	program, err := load.Load([]string{path})
++	if err != nil {
++		t.Fatal(err)
++	}
++	_, err = Lower(context.Background(), program)
++	if err == nil || !strings.Contains(err.Error(), "view type has an unsupported member: values") || !strings.Contains(err.Error(), "oct9_views_"+name+".a:5:14:") {
++		t.Fatalf("want creation-time collection refusal, got %v", err)
++	}
++	// Creation rejects this unsupported contract before its read is lowered.
++	// Isolate the read handoff so its source location remains independently tested.
++	var read *ast.Node
++	var visit ast.Visitor
++	visit = func(node *ast.Node) bool {
++		if strings.HasSuffix(program.Where(node), ":"+location) {
++			read = node
++			return true
++		}
++		return node.ForEachChild(visit)
++	}
++	program.Files()[0].AsNode().ForEachChild(visit)
++	if read == nil {
++		t.Fatalf("missing read node at %s", location)
++	}
++	l := &lowering{program: program, result: &ir.Program{}}
++	property := l.readViewMember(read, ir.Property{Name: "values", Of: ir.Map}, nil, nil).(ir.Property)
++	if !strings.HasSuffix(property.ViewWhere, ":"+location) {
++		t.Fatalf("want collection read source location %s, got %q", location, property.ViewWhere)
++	}
++}
++
++func TestViewDiagnosticP17(t *testing.T) {
++	t.Parallel()
++	viewDiagnosticLocation(t, "p17", "6:16")
++}
++
++func TestViewDiagnosticP48(t *testing.T) {
++	t.Parallel()
++	viewDiagnosticLocation(t, "p48", "6:9")
++}
++
++func TestViewDiagnosticP64(t *testing.T) {
++	t.Parallel()
++	viewDiagnosticLocation(t, "p64", "7:16")
++}
+diff --git a/internal/lower/view_interfaces.go b/internal/lower/view_interfaces.go
+deleted file mode 100644
+index 92fdfc26..00000000
+--- a/internal/lower/view_interfaces.go
++++ /dev/null
+@@ -1,13 +0,0 @@
+-package lower
+-
+-import (
+-	"github.com/microsoft/TypeScript/tsc/shim/ast"
+-	"github.com/microsoft/TypeScript/tsc/shim/checker"
+-)
+-
+-// Interface inheritance is a structural contract, never a construction proof.
+-// Re-enter the data walker with the same memo table so recursive interfaces keep
+-// checks without expanding their schema indefinitely.
+-func (l *lowering) viewInterfaceFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool) error {
+-	return l.viewObjectFields(node, target, fields, seen, false)
+-}
+diff --git a/internal/lower/view_lazy.go b/internal/lower/view_lazy.go
+index 7c1d6e21..907a08a3 100644
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -26,12 +26,6 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
+ 	if l.callableViewContract(target) {
+ 		family = "callable"
+ 	}
+-	if l.checker.IsArrayType(target) {
+-		family = "array"
+-	}
+-	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
+-		family = "union"
+-	}
+ 	if family == "" {
+ 		id, err := l.strictViewContract(node, target)
+ 		if err == nil {
+@@ -228,10 +222,6 @@ func viewAggregate(value ir.Expression) bool {
+ 	return false
+ }
+ 
+-func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+-	return &Refused{Where: l.program.Where(node), What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+-}
+-
+ // Every member must have a complete checked lowering, even if it is never read.
+ func (l *lowering) checkViewMembers(node *ast.Node, target *checker.Type) error {
+ 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+diff --git a/internal/lower/view_objects.go b/internal/lower/view_objects.go
+index 26141fa2..f2001402 100644
+--- a/internal/lower/view_objects.go
++++ b/internal/lower/view_objects.go
+@@ -6,22 +6,7 @@ import (
+ 	"github.com/system-inc/adamic/internal/ir"
+ )
+ 
+-// A read of a structural object checks its own heap kind. Register every descendant
+-// field too: returning or aliasing that object must not lose the checks on its reads.
+-// Interface descendants share the same data checks, including inherited fields.
+-
+-func viewDataType(target *checker.Type) bool {
+-	if target.Flags()&checker.TypeFlagsUnion != 0 {
+-		for _, member := range target.Types() {
+-			if !viewDataType(member) {
+-				return false
+-			}
+-		}
+-		return true
+-	}
+-	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
+-}
+-
++// The array adapter on compiler/views-v4 uses this interface classification.
+ func viewInterfaceType(target *checker.Type) bool {
+ 	if target.ObjectFlags()&checker.ObjectFlagsInterface != 0 {
+ 		return true
+diff --git a/internal/lower/view_unions_callable_members.go b/internal/lower/view_unions_callable_members.go
+index 717fb088..2cc762fa 100644
+--- a/internal/lower/view_unions_callable_members.go
++++ b/internal/lower/view_unions_callable_members.go
+@@ -19,6 +19,15 @@ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
+ 	}
+ 	for _, parameter := range signature.Parameters() {
+ 		of, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
++		if of == ir.Union && known {
++			primitive := true
++			for _, member := range l.checker.GetTypeOfSymbol(parameter).Types() {
++				primitive = primitive && interfaceScalar(member)
++			}
++			if primitive {
++				continue
++			}
++		}
+ 		if !known || !(of == ir.Number || of == ir.Boolean || of == ir.String || of == ir.MaybeNumber || of == ir.MaybeBoolean) {
+ 			return false
+ 		}
+@@ -47,6 +56,11 @@ func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker
+ 		if err != nil {
+ 			return 0, err
+ 		}
++		if members, ok := ir.PrimitiveViewMembers(l.result, child); ok {
++			for _, member := range members {
++				l.result.ViewContracts[child-1].RepresentationMask |= 1 << member.Of
++			}
++		}
+ 		contract.Parameters = append(contract.Parameters, child)
+ 	}
+ 	result := l.checker.GetReturnTypeOfSignature(signature)
+diff --git a/internal/lower/view_unions_mixed.go b/internal/lower/view_unions_mixed.go
+index 7b910c13..bbbc2f0d 100644
+--- a/internal/lower/view_unions_mixed.go
++++ b/internal/lower/view_unions_mixed.go
+@@ -6,11 +6,7 @@ import (
+ 	"github.com/system-inc/adamic/internal/ir"
+ )
+ 
+-// Lane 1 calls this hook only after wiring member selection at reads.
+-var viewMixedUnionContractHook viewContractHook = internMixedUnionViewContract
+-
+-// Intern a complete union graph using the shared member builder. This is not an
+-// admission hook until lane 1 wires selection and representation conversion.
++// Shared union read dispatch interns a complete graph with its member builder.
+ // Reserve before recursion, but discard every newly reserved id on failure:
+ // a later lookup must not mistake a partial graph for a complete contract.
+ func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {
+diff --git a/internal/lower/view_unions_untagged.go b/internal/lower/view_unions_untagged.go
+index 61a617b8..038011a9 100644
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -70,7 +70,7 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
+ 	return members, nil
+ }
+ 
+-// Shared lazy dispatch calls this only for a demanded union read. Tagged
++// Contract construction and completion use this to mark supported union reads. Tagged
+ // members defer unread descendants. Field-only membership needs a complete,
+ // recursive plain-data contract; unavailable adapters remain named obligations.
+ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
+diff --git a/internal/native/checked_cast_metadata_test.go b/internal/native/checked_cast_metadata_test.go
+new file mode 100644
+index 00000000..e327164a
+--- /dev/null
++++ b/internal/native/checked_cast_metadata_test.go
+@@ -0,0 +1,33 @@
++package native
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"os"
++	"path/filepath"
++	"testing"
++)
++
++func TestCheckedCastWithoutReadSummary(t *testing.T) {
++	t.Parallel()
++	// Hand-built IR isolates the cast metadata obligation from receiver summaries
++	// and Property.View, which now independently enable metadata in lowered p18.
++	value := ir.NumberConstant{Value: 8}
++	cast := ir.CheckedCast{CheckedFields: true, Value: ir.ObjectLiteral{Fields: []ir.Field{{Name: "value", Value: value}}}, Field: "value", FieldType: ir.Number, Allowed: []ir.Expression{value}, Message: "expected 8"}
++	program := &ir.Program{Source: "checked cast without read summary", Main: []ir.Statement{ir.WriteLine{Value: ir.NumberToString{Value: ir.Property{Object: cast, Name: "value", Of: ir.Number}}}}}
++	directory := t.TempDir()
++	path := filepath.Join(directory, "source.a")
++	if err := os.WriteFile(path, []byte("const object = { value: 8 }; console.log(String(object.value));\n"), 0600); err != nil {
++		t.Fatal(err)
++	}
++	want := runWithInput(t, "", "node", path)
++	generated := C(program)
++	for _, sanitize := range []bool{false, true} {
++		binary := filepath.Join(directory, "native")
++		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
++			t.Fatal(err)
++		}
++		if got := runWithInput(t, "", binary); got != want {
++			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
++		}
++	}
++}
+diff --git a/internal/native/emit_functions.go b/internal/native/emit_functions.go
+index 192faa8a..15141056 100644
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -306,10 +306,24 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
+ 			} else {
+ 				e.line("adamic_method %s = NULL;", method)
+ 			}
+-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
++			if property.View != "" {
++				property.Method = false
++				var checked bool
++				closure, checked = readUnionViewAt(e, property, receiver)
++				if !checked {
++					panic("compiler bug: unavailable callable view read")
++				}
++			} else {
++				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
++			}
+ 		}
+ 	}
+-	packed, count := e.closureArguments(expression)
++	var packed, count string
++	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
++		packed, count = e.checkedCallableArguments(expression, closure)
++	} else {
++		packed, count = e.closureArguments(expression)
++	}
+ 	call := e.packedClosureCall(expression, closure, packed, count)
+ 	if expression.Direct > 0 {
+ 		target := expression.Direct - 1
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 9b114e20..0fd33113 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -450,6 +450,9 @@ func (e *emitter) fieldTypesNeeded() bool {
+ 	}
+ 	needed := false
+ 	walkExpressions(e.program, func(expression ir.Expression) {
++		if cast, ok := expression.(ir.CheckedCast); ok && cast.CheckedFields {
++			needed = true
++		}
+ 		if property, ok := expression.(ir.Property); ok && property.View != "" {
+ 			needed = true
+ 		}
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index 1cf81a15..adb18cf8 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -153,6 +153,8 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const
+ 
+ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
+     adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
++    // Current callers pass false; a future optional reader can request undefined
++    // for a missing own slot. Required reads use the readiness failure below.
+     if (object != NULL && slot == NULL && absent) {
+         return (adamic_view_union_value){adamic_view_union_undefined, {0}};
+     }
+diff --git a/internal/native/runtime/view_unions_untagged.h b/internal/native/runtime/view_unions_untagged.h
+index a6e9973e..6d195a90 100644
+--- a/internal/native/runtime/view_unions_untagged.h
++++ b/internal/native/runtime/view_unions_untagged.h
+@@ -15,8 +15,9 @@ typedef struct adamic_view_untagged_member {
+     size_t count;
+ } adamic_view_untagged_member;
+ 
+-// The owning slot probe returns false for missing, uninitialized or unsupported
+-// storage. It must neither panic nor evaluate getters or user code. No new
++// The plain slot probe returns false for missing or uninitialized slots and
++// unsupported receivers. Present unsupported storage returns true with Unknown
++// kind. It neither panics nor evaluates getters or user code. No new
+ // readiness state is owned here. Returned normalized snapshots are borrowed.
+ typedef bool (*adamic_view_untagged_probe)(void *context, const adamic_view_union_value *object, const char *field, adamic_view_union_value *slot);
+ 
+diff --git a/internal/native/view_callable_arguments.go b/internal/native/view_callable_arguments.go
+new file mode 100644
+index 00000000..472c1e73
+--- /dev/null
++++ b/internal/native/view_callable_arguments.go
+@@ -0,0 +1,37 @@
++package native
++
++import (
++	"fmt"
++	"github.com/system-inc/adamic/internal/ir"
++	"strings"
++)
++
++// A callable union's synthesized signature describes legal arguments, not the
++// selected implementation's slots. Adapt each argument after checking the callee.
++func (e *emitter) checkedCallableArguments(call ir.CallClosure, closure string) (string, string) {
++	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
++	if len(call.Spread) != 0 {
++		panic("compiler bug: unavailable checked callable spread adapter")
++	}
++	slots := []string{}
++	for index, argument := range call.Arguments {
++		value := e.value(argument)
++		ordinary := fmt.Sprintf("(adamic_value){.%s = %s}", member(argument.Type()), slotted(argument.Type(), value))
++		tests := []string{}
++		for _, producer := range e.unionCallableProducers() {
++			function := e.program.Functions[producer.Function]
++			if index < len(function.Parameters) && e.program.Locals[function.Parameters[index]].Type == ir.Union {
++				tests = append(tests, e.unionClosureCodeIdentity(closure, producer.Function))
++			}
++		}
++		if len(tests) != 0 && argument.Type() != ir.Union {
++			boxed, fresh := converted(argument.Type(), ir.Union, value)
++			if fresh {
++				boxed = e.own(ir.Union, boxed)
++			}
++			ordinary = "(" + strings.Join(tests, " || ") + " ? (adamic_value){.reference = " + boxed + "} : " + ordinary + ")"
++		}
++		slots = append(slots, ordinary)
++	}
++	return e.closureSlots(call, slots, "", fmt.Sprint(len(slots))), fmt.Sprint(len(slots))
++}
+diff --git a/internal/native/view_unions_callable_producers.go b/internal/native/view_unions_callable_producers.go
+index 95723ecf..91bee27d 100644
+--- a/internal/native/view_unions_callable_producers.go
++++ b/internal/native/view_unions_callable_producers.go
+@@ -3,6 +3,7 @@ package native
+ import (
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"slices"
+ 	"strings"
+ )
+ 
+@@ -82,11 +83,22 @@ func (e *emitter) unionCallableProducers() []unionCallableProducer {
+ 				parameters[i] = 0
+ 			}
+ 		}
++		masks := make([]uint16, len(parameters)+1)
++		// Exact checker identity certified these producer contracts in lowering.
++		for _, contract := range e.program.ViewContracts {
++			if contract.Kind != ir.ViewCallable || !contract.ProducerCertified || !slices.Contains(contract.Functions, index) {
++				continue
++			}
++			for i, child := range contract.Parameters {
++				parameters[i] = e.program.ViewContracts[child-1].Of
++				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
++			}
++		}
+ 		result := unionCallableProducerResult(function.Returns)
+ 		if result != ir.Number && result != ir.Boolean && result != ir.String && result != 254 {
+ 			result = 0
+ 		}
+-		producers = append(producers, unionCallableProducer{index, e.unionCallableSignature(parameters, result, function.Name)})
++		producers = append(producers, unionCallableProducer{index, e.unionCallableSignature(parameters, result, function.Name, masks)})
+ 	}
+ 	return producers
+ }
+diff --git a/internal/native/view_unions_read.go b/internal/native/view_unions_read.go
+index 935aceb3..993e7749 100644
+--- a/internal/native/view_unions_read.go
++++ b/internal/native/view_unions_read.go
+@@ -10,6 +10,10 @@ func init() { checkedViewReadAdapter = readUnionView }
+ // Registration alone is not admission. Each handled read carries a complete
+ // contract and runs the selector before returning any payload to its caller.
+ func readUnionView(e *emitter, property ir.Property) (string, bool) {
++	return readUnionViewAt(e, property, "")
++}
++
++func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
+ 	id := property.ViewContract
+ 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+ 		return "", false
+@@ -23,7 +27,9 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
+ 	}
+ 	e.declarations = append(e.declarations, "#include \"view_unions_mixed.h\"")
+ 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
+-	object := e.value(property.Object)
++	if object == "" {
++		object = e.value(property.Object)
++	}
+ 	snapshot := e.temporary()
+ 	e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, false);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name))
+ 	// An unknown physical slot cannot be interpreted or counted as a reference.
+diff --git a/internal/native/view_unions_untagged.go b/internal/native/view_unions_untagged.go
+index 2f522661..12846217 100644
+--- a/internal/native/view_unions_untagged.go
++++ b/internal/native/view_unions_untagged.go
+@@ -101,7 +101,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
+ 	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
+ }
+ 
+-// Preserve the existing shared-discriminant dispatch.
++// Select field-based membership when no common literal discriminant exists.
+ func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
+ 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
+ }
+@@ -123,25 +123,25 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded,
+ 			continue
+ 		}
+ 		parameters := make([]ir.Type, len(contract.Parameters))
++		masks := make([]uint16, len(parameters)+1)
+ 		result := e.program.ViewContracts[contract.Result-1].Of
+ 		if result == 0 {
+ 			continue
+ 		}
+-		tests := []string{recorded + " != NULL", fmt.Sprintf("%s->arity == %d", recorded, len(parameters)), fmt.Sprintf("%s->result == %d", recorded, result)}
+ 		known := true
+ 		for i, parameter := range contract.Parameters {
+ 			parameters[i] = e.program.ViewContracts[parameter-1].Of
++			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
+ 			known = known && parameters[i] != 0
+-			tests = append(tests, fmt.Sprintf("%s->parameters != NULL && %s->parameters[%d] == %d", recorded, recorded, i, parameters[i]))
+ 		}
+ 		if !known {
+ 			continue
+ 		}
+-		expected := e.unionCallableSignature(parameters, result, root.Name)
++		expected := e.unionCallableSignature(parameters, result, root.Name, masks)
+ 		if first == "NULL" {
+ 			first = expected
+ 		}
+-		choices = append(choices, "("+strings.Join(tests, " && ")+") ? "+expected+" : ")
++		choices = append(choices, "adamic_view_callable_signatures_match("+recorded+", "+expected+") ? "+expected+" : ")
+ 	}
+ 	return "(" + strings.Join(choices, "") + first + ")"
+ }
+diff --git a/internal/oracle/counts.md b/internal/oracle/counts.md
+index beb11881..0f9d5679 100644
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@ -589,12 +589,27 @@ Generated by TestCountsAreRecorded; after a change that moves them, run
+ | internal/lower/testdata/fx6/p51.a | 4 | 4 | 8 | 15 | 4 | 0 |
+ | internal/lower/testdata/fx6/p53.a | 5 | 5 | 9 | 16 | 4 | 0 |
+ | internal/lower/testdata/fx6/p49.a | 2 | 0 | 6 | 4 | 2 | 0 |
++<<<<<<< HEAD
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 8 | 17 | 3 | 0 |
++=======
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a | 4 | 4 | 5 | 9 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a | 7 | 7 | 6 | 14 | 5 | 0 |
++| internal/lower/testdata/fx7_wrong_aborts/wide.a | 5 | 5 | 6 | 11 | 5 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a | 11 | 11 | 14 | 19 | 9 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a | 5 | 5 | 8 | 16 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a | 4 | 4 | 12 | 18 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a | 4 | 4 | 9 | 15 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a | 4 | 4 | 10 | 16 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 10 | 17 | 3 | 0 |
++>>>>>>> origin/compiler/fx6-cleanup
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a | 8 | 8 | 6 | 17 | 4 | 0 |
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a | 9 | 9 | 9 | 21 | 5 | 0 |
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a | 8 | 8 | 6 | 15 | 5 | 0 |
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a | 6 | 6 | 5 | 12 | 4 | 0 |
+ | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a | 5 | 5 | 5 | 11 | 3 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a | 4 | 4 | 8 | 14 | 4 | 0 |
++| internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a | 3 | 3 | 8 | 13 | 3 | 0 |
++| internal/lower/testdata/fx7_tuple_recognition/p69.a | 4 | 4 | 9 | 15 | 4 | 0 |
+ | internal/oracle/testdata/host_unknown_error_code.a | 33 | 33 | 41 | 71 | 4 | 0 |
+ | internal/oracle/testdata/host_array_unknown_predicate.a | 50 | 50 | 27 | 83 | 8 | 0 |
+ | internal/oracle/testdata/host_map_iterator_union.a | 184 | 184 | 264 | 335 | 23 | 0 |
+diff --git a/internal/oracle/fx7_callable_contract_test.go b/internal/oracle/fx7_callable_contract_test.go
+new file mode 100644
+index 00000000..b0e76eb8
+--- /dev/null
++++ b/internal/oracle/fx7_callable_contract_test.go
+@@ -0,0 +1,20 @@
++package oracle
++
++func init() {
++	for _, path := range []string{
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a",
++		"internal/lower/testdata/fx7_wrong_aborts/wide.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a",
++	} {
++		fixtures = append(fixtures, struct {
++			path    string
++			lowers  bool
++			checked bool
++		}{path, true, false})
++	}
++}
+diff --git a/internal/oracle/fx7_tuple_recognition_test.go b/internal/oracle/fx7_tuple_recognition_test.go
+new file mode 100644
+index 00000000..11bb722b
+--- /dev/null
++++ b/internal/oracle/fx7_tuple_recognition_test.go
+@@ -0,0 +1,15 @@
++package oracle
++
++func init() {
++	for _, path := range []string{
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a",
++		"internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
++		"internal/lower/testdata/fx7_tuple_recognition/p69.a",
++	} {
++		fixtures = append(fixtures, struct {
++			path    string
++			lowers  bool
++			checked bool
++		}{path, true, false})
++	}
++}
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.pending
+deleted file mode 100644
+index 6851b71c..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.pending
+deleted file mode 100644
+index 803a355f..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object
+diff --git a/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.pending b/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.pending
+deleted file mode 100644
+index 803a355f..00000000
+--- a/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.pending
++++ /dev/null
+@@ -1 +0,0 @@
+-awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object

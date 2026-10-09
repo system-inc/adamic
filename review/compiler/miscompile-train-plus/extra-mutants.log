@@ -1,0 +1,14 @@
+spread-method-original-masked: control passed
+FINDING: original spread-method mutant survives because creation admission independently refuses it; the adapted fx6 run removes both guards and is caught
+constructor-revert: caught
+error: patch failed: internal/lower/interface_cast.go:36
+error: internal/lower/interface_cast.go: patch does not apply
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/miscompile-train-plus/run-extra.py", line 41, in <module>
+    unsupported=patch_changes('review/compiler/fx7-unsupported-view/revert.diff')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/miscompile-train-plus/run-extra.py", line 33, in patch_changes
+    subprocess.run(['git','apply','--unidiff-zero',patch],check=True,timeout=10)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'apply', '--unidiff-zero', 'review/compiler/fx7-unsupported-view/revert.diff']' returned non-zero exit status 1.

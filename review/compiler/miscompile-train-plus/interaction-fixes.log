@@ -1,0 +1,33 @@
+=== RUN   TestFX7TextP32
+=== PAUSE TestFX7TextP32
+=== RUN   TestFX7TextP33
+=== PAUSE TestFX7TextP33
+=== RUN   TestFX7DeclaredWriteText
+=== PAUSE TestFX7DeclaredWriteText
+=== CONT  TestFX7TextP32
+=== CONT  TestFX7DeclaredWriteText
+=== CONT  TestFX7TextP33
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:69: gate cache node miss
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:70: gate cache node miss
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:69: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n"
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:70: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: value.name is not a string; expected string, found number\n"
+=== NAME  TestFX7DeclaredWriteText
+    fx7_depth_texts_test.go:94: gate cache node miss
+--- PASS: TestFX7DeclaredWriteText (0.42s)
+--- PASS: TestFX7TextP32 (0.44s)
+--- PASS: TestFX7TextP33 (0.47s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.489s
+=== RUN   TestViewSpreadMethodRefused
+=== PAUSE TestViewSpreadMethodRefused
+=== CONT  TestViewSpreadMethodRefused
+--- PASS: TestViewSpreadMethodRefused (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.044s

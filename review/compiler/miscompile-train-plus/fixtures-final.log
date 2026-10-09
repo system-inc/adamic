@@ -1,0 +1,2029 @@
+=== RUN   TestCallableUnionResultNumber
+=== PAUSE TestCallableUnionResultNumber
+=== RUN   TestCallableUnionResultString
+=== PAUSE TestCallableUnionResultString
+=== RUN   TestCallableUnionResultZero
+=== PAUSE TestCallableUnionResultZero
+=== RUN   TestCallableUnionResultBoth
+=== PAUSE TestCallableUnionResultBoth
+=== RUN   TestCheckedViewFlagDowncast
+=== PAUSE TestCheckedViewFlagDowncast
+=== RUN   TestCheckedViewInterfaces
+=== PAUSE TestCheckedViewInterfaces
+=== RUN   TestCheckedViewObjects
+=== PAUSE TestCheckedViewObjects
+=== RUN   TestCheckedViewOptionalReadBoundary
+=== PAUSE TestCheckedViewOptionalReadBoundary
+=== RUN   TestCheckedViewV2ReadsAfterWrites
+=== PAUSE TestCheckedViewV2ReadsAfterWrites
+=== RUN   TestCheckedViewV2ArrayArmBoundary
+=== PAUSE TestCheckedViewV2ArrayArmBoundary
+=== RUN   TestCheckedViewV2WrongFamilyMutant
+=== PAUSE TestCheckedViewV2WrongFamilyMutant
+=== RUN   TestCheckedViewV2RepresentationMutants
+=== PAUSE TestCheckedViewV2RepresentationMutants
+=== RUN   TestCheckedViewV2MembershipMutant
+=== PAUSE TestCheckedViewV2MembershipMutant
+=== RUN   TestCheckedViewV2TupleIdentityMutant
+=== PAUSE TestCheckedViewV2TupleIdentityMutant
+=== RUN   TestCheckedViewV2CallableProducerMutant
+=== PAUSE TestCheckedViewV2CallableProducerMutant
+=== RUN   TestCheckedViewV2MovedStage3Results
+=== PAUSE TestCheckedViewV2MovedStage3Results
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== PAUSE TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewUntaggedSourceDispatch
+=== PAUSE TestCheckedViewUntaggedSourceDispatch
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== PAUSE TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedOptionalCallableControl
+=== PAUSE TestCheckedViewUntaggedOptionalCallableControl
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== PAUSE TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== RUN   TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== RUN   TestCheckedViewUntaggedRecursive
+=== PAUSE TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedArrayGoodRefused
+=== PAUSE TestCheckedViewUntaggedArrayGoodRefused
+=== RUN   TestCheckedViewUntaggedArrayWrongRefused
+=== PAUSE TestCheckedViewUntaggedArrayWrongRefused
+=== RUN   TestCheckedViewUntaggedArrayNestedRefused
+=== PAUSE TestCheckedViewUntaggedArrayNestedRefused
+=== RUN   TestCheckedViewUntaggedArrayEmptyRefused
+=== PAUSE TestCheckedViewUntaggedArrayEmptyRefused
+=== RUN   TestCheckedViewUntaggedArrayMixedRefused
+=== PAUSE TestCheckedViewUntaggedArrayMixedRefused
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P49
+=== PAUSE TestFX6P49
+=== RUN   TestFX6P51Wrong
+=== PAUSE TestFX6P51Wrong
+=== RUN   TestFX6P38Number
+=== PAUSE TestFX6P38Number
+=== RUN   TestFX7Depth65
+=== PAUSE TestFX7Depth65
+=== RUN   TestFX7Depth200
+=== PAUSE TestFX7Depth200
+=== RUN   TestFX7Depth2000
+=== PAUSE TestFX7Depth2000
+=== RUN   TestFX7TextP09
+=== PAUSE TestFX7TextP09
+=== RUN   TestFX7TextP32
+=== PAUSE TestFX7TextP32
+=== RUN   TestFX7TextP33
+=== PAUSE TestFX7TextP33
+=== RUN   TestFX7TextP67
+=== PAUSE TestFX7TextP67
+=== RUN   TestFX7TextP72
+=== PAUSE TestFX7TextP72
+=== RUN   TestFX7TextScalarTuple
+=== PAUSE TestFX7TextScalarTuple
+=== RUN   TestFX7DeclaredWriteText
+=== PAUSE TestFX7DeclaredWriteText
+=== RUN   TestReviewProgramsAgreeWithNode
+=== PAUSE TestReviewProgramsAgreeWithNode
+=== RUN   TestReviewProgramsRefuse
+=== PAUSE TestReviewProgramsRefuse
+=== RUN   TestScalarUnionViewMisfitNumber
+=== PAUSE TestScalarUnionViewMisfitNumber
+=== RUN   TestScalarUnionViewMisfitBoolean
+=== PAUSE TestScalarUnionViewMisfitBoolean
+=== RUN   TestCheckedViewElementP01
+=== PAUSE TestCheckedViewElementP01
+=== RUN   TestCheckedViewElementP05
+=== PAUSE TestCheckedViewElementP05
+=== RUN   TestCheckedViewElementP06
+=== PAUSE TestCheckedViewElementP06
+=== RUN   TestCheckedViewElementP07
+=== PAUSE TestCheckedViewElementP07
+=== RUN   TestCheckedViewLiteralTypedKey
+=== PAUSE TestCheckedViewLiteralTypedKey
+=== RUN   TestCheckedViewDestructuredMember
+=== PAUSE TestCheckedViewDestructuredMember
+=== RUN   TestCheckedViewDestructuredUnion
+=== PAUSE TestCheckedViewDestructuredUnion
+=== RUN   TestCheckedViewSpread
+=== PAUSE TestCheckedViewSpread
+=== RUN   TestCheckedViewIn
+=== PAUSE TestCheckedViewIn
+=== RUN   TestCheckedViewKeys
+=== PAUSE TestCheckedViewKeys
+=== RUN   TestCheckedViewKeysAlias
+=== PAUSE TestCheckedViewKeysAlias
+=== RUN   TestCheckedViewValues
+=== PAUSE TestCheckedViewValues
+=== RUN   TestCheckedViewEntries
+=== PAUSE TestCheckedViewEntries
+=== RUN   TestCheckedViewElementP19
+=== PAUSE TestCheckedViewElementP19
+=== RUN   TestCheckedViewElementP72
+=== PAUSE TestCheckedViewElementP72
+=== RUN   TestCheckedViewCorrectSpread
+=== PAUSE TestCheckedViewCorrectSpread
+=== RUN   TestCheckedViewCorrectIn
+=== PAUSE TestCheckedViewCorrectIn
+=== RUN   TestCheckedViewCorrectKeys
+=== PAUSE TestCheckedViewCorrectKeys
+=== RUN   TestCheckedViewCorrectKeysAlias
+=== PAUSE TestCheckedViewCorrectKeysAlias
+=== RUN   TestCheckedViewCorrectValues
+=== PAUSE TestCheckedViewCorrectValues
+=== RUN   TestCheckedViewCorrectEntries
+=== PAUSE TestCheckedViewCorrectEntries
+=== RUN   TestCheckedViewCorrectP19NumberRead
+=== PAUSE TestCheckedViewCorrectP19NumberRead
+=== RUN   TestCheckedViewCorrectP19StringRead
+=== PAUSE TestCheckedViewCorrectP19StringRead
+=== RUN   TestCheckedViewCorrectP72String
+=== PAUSE TestCheckedViewCorrectP72String
+=== RUN   TestCheckedViewCorrectP72Number
+=== PAUSE TestCheckedViewCorrectP72Number
+=== RUN   TestCheckedViewElementP19Read
+=== PAUSE TestCheckedViewElementP19Read
+=== RUN   TestRequiredViewFieldPrimitive
+=== PAUSE TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldOperandOnce
+=== PAUSE TestRequiredViewFieldOperandOnce
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== PAUSE TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestViewFieldInheritedStaticReadiness
+=== PAUSE TestViewFieldInheritedStaticReadiness
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== RUN   TestViewSnapshotTypedArrayReference
+=== PAUSE TestViewSnapshotTypedArrayReference
+=== CONT  TestCallableUnionResultNumber
+=== CONT  TestFX7TextP33
+=== CONT  TestCheckedViewElementP19
+=== CONT  TestViewFieldInheritedStaticReadiness
+=== CONT  TestCheckedViewCorrectP72Number
+    view_element_reads_test.go:145: gate cache node miss
+=== NAME  TestCheckedViewElementP19
+    view_element_reads_test.go:91: gate cache node miss
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:72: gate cache node miss
+=== NAME  TestViewFieldInheritedStaticReadiness
+    view_fields_test.go:157: gate cache node miss
+=== NAME  TestCallableUnionResultNumber
+    callable_union_result_test.go:43: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72Number
+    view_element_reads_test.go:145: gate cache node miss
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:72: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: value.name is not a string; expected string, found number\n"
+=== NAME  TestCheckedViewElementP19
+    view_element_reads_test.go:91: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP19
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestViewFieldInheritedStaticReadiness
+    view_fields_test.go:157: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCallableUnionResultNumber
+    callable_union_result_test.go:43: gate cache node miss
+=== NAME  TestCheckedViewElementP19
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestViewFieldInheritedStaticReadiness (1.33s)
+=== CONT  TestCheckedViewCorrectP72String
+--- PASS: TestFX7TextP33 (1.33s)
+=== CONT  TestCheckedViewCorrectP19StringRead
+--- PASS: TestCallableUnionResultNumber (1.36s)
+=== CONT  TestCheckedViewCorrectP19NumberRead
+=== NAME  TestCheckedViewCorrectP72Number
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72Number (1.37s)
+=== CONT  TestCheckedViewCorrectEntries
+=== NAME  TestCheckedViewCorrectP72String
+    view_element_reads_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewCorrectEntries
+    view_element_reads_test.go:125: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    view_element_reads_test.go:130: gate cache node miss
+--- PASS: TestCheckedViewElementP19 (1.58s)
+=== CONT  TestCheckedViewCorrectValues
+=== NAME  TestCheckedViewCorrectP72String
+    view_element_reads_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewCorrectValues
+    view_element_reads_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewCorrectP72String
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectEntries
+    view_element_reads_test.go:125: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    view_element_reads_test.go:130: gate cache node miss
+=== NAME  TestCheckedViewCorrectEntries
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectValues
+    view_element_reads_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP72String
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectEntries
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectEntries (1.07s)
+=== CONT  TestCheckedViewCorrectKeysAlias
+=== NAME  TestCheckedViewCorrectP72String
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72String (1.11s)
+=== CONT  TestCheckedViewCorrectKeys
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    view_element_reads_test.go:115: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectValues
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectValues (1.15s)
+=== CONT  TestCheckedViewCorrectIn
+=== NAME  TestCheckedViewCorrectKeysAlias
+    view_element_reads_test.go:115: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node miss
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19NumberRead (1.51s)
+=== CONT  TestCheckedViewCorrectSpread
+=== NAME  TestCheckedViewCorrectIn
+    view_element_reads_test.go:105: gate cache node miss
+=== NAME  TestCheckedViewCorrectSpread
+    view_element_reads_test.go:100: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19StringRead (1.69s)
+=== CONT  TestCheckedViewElementP72
+=== NAME  TestCheckedViewCorrectIn
+    view_element_reads_test.go:105: gate cache node miss
+=== NAME  TestCheckedViewElementP72
+    view_element_reads_test.go:95: gate cache node miss
+=== NAME  TestCheckedViewCorrectSpread
+    view_element_reads_test.go:100: gate cache node miss
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP72
+    view_element_reads_test.go:95: gate cache node miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP72
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeys (1.21s)
+=== CONT  TestViewSnapshotMaybeBoolean
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: gate cache node hit
+    view_snapshot_test.go:39: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+=== NAME  TestCheckedViewCorrectKeysAlias
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeysAlias (1.34s)
+=== CONT  TestViewSnapshotTypedArrayReference
+=== NAME  TestCheckedViewCorrectIn
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectIn (1.05s)
+=== CONT  TestViewSnapshotMaybeNumber
+=== NAME  TestViewSnapshotTypedArrayReference
+    view_snapshot_test.go:70: gate cache node hit
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: gate cache node miss
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP72
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: Node: exit=0 stdout="7\n0\nundefined\n" stderr=""
+=== NAME  TestCheckedViewCorrectSpread
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectSpread (1.46s)
+=== CONT  TestRequiredViewFieldOperandOnce
+--- PASS: TestCheckedViewElementP72 (1.39s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldPrimitive/number
+=== PAUSE TestRequiredViewFieldPrimitive/number
+=== RUN   TestRequiredViewFieldPrimitive/boolean
+=== PAUSE TestRequiredViewFieldPrimitive/boolean
+=== RUN   TestRequiredViewFieldPrimitive/string
+=== PAUSE TestRequiredViewFieldPrimitive/string
+=== RUN   TestRequiredViewFieldPrimitive/wrong_string
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_string
+=== RUN   TestRequiredViewFieldPrimitive/missing
+=== PAUSE TestRequiredViewFieldPrimitive/missing
+=== RUN   TestRequiredViewFieldPrimitive/uninitialized
+=== PAUSE TestRequiredViewFieldPrimitive/uninitialized
+=== RUN   TestRequiredViewFieldPrimitive/wrong_type
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_type
+=== CONT  TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== NAME  TestRequiredViewFieldOperandOnce
+    view_fields_test.go:111: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOwnClassDataWrongRefused
+    checked_views_v2_source_test.go:160: gate cache node hit
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: gate cache node hit
+    view_snapshot_test.go:39: native: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:39: native-sanitized: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:39: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+--- PASS: TestCheckedViewUntaggedOwnClassDataWrongRefused (0.17s)
+=== CONT  TestFX7TextP32
+--- PASS: TestViewSnapshotMaybeBoolean (0.97s)
+=== CONT  TestFX7TextP09
+=== NAME  TestViewSnapshotTypedArrayReference
+    view_snapshot_test.go:77: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+    view_snapshot_test.go:77: native: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:71: gate cache node miss
+=== NAME  TestFX7TextP09
+    fx7_depth_texts_test.go:70: gate cache node miss
+    fx7_depth_texts_test.go:70: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:71: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n"
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: gate cache node miss
+    view_snapshot_test.go:44: native: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:44: native-sanitized: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:44: javascript: exit=0 stdout="7\n0\nundefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeNumber (1.27s)
+=== CONT  TestFX7Depth2000
+--- PASS: TestViewSnapshotTypedArrayReference (1.39s)
+=== CONT  TestFX7Depth200
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:25: gate cache node hit
+=== NAME  TestRequiredViewFieldOperandOnce
+    view_fields_test.go:116: gate cache node miss
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:24: gate cache node miss
+--- PASS: TestFX7TextP32 (0.95s)
+=== CONT  TestFX7Depth65
+--- PASS: TestRequiredViewFieldOperandOnce (1.23s)
+=== CONT  TestFX6P38Number
+--- PASS: TestFX7TextP09 (0.96s)
+=== CONT  TestFX6P51Wrong
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:23: gate cache node hit
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:221: gate cache node miss
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: gate cache node miss
+    fx6_valid_test.go:209: Node: exit=0 stdout="undefined\n" stderr=""
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:222: Node: exit=0 stdout="3\n5\n" stderr=""
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:25: gate cache node miss
+--- PASS: TestFX7Depth2000 (1.18s)
+=== CONT  TestFX6P49
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:24: gate cache node miss
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:23: gate cache node hit
+--- PASS: TestFX7Depth65 (0.83s)
+=== CONT  TestFX6P53
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: gate cache node miss
+--- PASS: TestFX7Depth200 (1.31s)
+=== CONT  TestFX6P51
+=== NAME  TestFX6P53
+    fx6_valid_test.go:166: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestFX6P51
+    fx6_valid_test.go:146: gate cache node miss
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: gate cache node miss
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:223: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:167: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:224: native: exit=0 stdout="3\n5\n" stderr=""
+    fx6_valid_test.go:224: sanitized: exit=0 stdout="3\n5\n" stderr=""
+    fx6_valid_test.go:224: javascript: exit=0 stdout="3\n5\n" stderr=""
+--- PASS: TestFX6P38Number (1.17s)
+=== CONT  TestFX6P38
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+    fx6_valid_test.go:209: sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+    fx6_valid_test.go:209: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestFX6P51Wrong (1.17s)
+=== CONT  TestFX6P37
+=== NAME  TestFX6P51
+    fx6_valid_test.go:147: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P38
+    fx6_valid_test.go:126: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:106: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:127: Node: exit=0 stdout="3\nundefined\n" stderr=""
+=== NAME  TestFX6P37
+    fx6_valid_test.go:107: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: gate cache node miss
+    fx6_valid_test.go:204: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+    fx6_valid_test.go:204: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+    fx6_valid_test.go:204: sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+--- PASS: TestFX6P49 (0.99s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P51
+    fx6_valid_test.go:148: gate cache node miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:86: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:149: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:149: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:149: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P51 (0.95s)
+=== CONT  TestFX6P35
+=== NAME  TestFX6P36
+    fx6_valid_test.go:87: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:66: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:128: gate cache node miss
+    fx6_valid_test.go:129: native: exit=0 stdout="3\nundefined\n" stderr=""
+    fx6_valid_test.go:129: sanitized: exit=0 stdout="3\nundefined\n" stderr=""
+    fx6_valid_test.go:129: javascript: exit=0 stdout="3\nundefined\n" stderr=""
+--- PASS: TestFX6P38 (1.01s)
+=== CONT  TestCheckedViewUntaggedArrayMixedRefused
+=== NAME  TestFX6P35
+    fx6_valid_test.go:67: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestFX6P37
+    fx6_valid_test.go:108: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:168: gate cache node miss
+--- PASS: TestCheckedViewUntaggedArrayMixedRefused (0.10s)
+=== CONT  TestCheckedViewUntaggedArrayEmptyRefused
+=== NAME  TestFX6P37
+    fx6_valid_test.go:109: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:109: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:109: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestFX6P53
+    fx6_valid_test.go:169: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:169: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:169: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P53 (1.56s)
+=== CONT  TestCheckedViewUntaggedArrayNestedRefused
+--- PASS: TestFX6P37 (1.18s)
+=== CONT  TestCheckedViewUntaggedArrayWrongRefused
+--- PASS: TestCheckedViewUntaggedArrayEmptyRefused (0.15s)
+=== CONT  TestCheckedViewUntaggedArrayGoodRefused
+--- PASS: TestCheckedViewUntaggedArrayNestedRefused (0.12s)
+=== CONT  TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/good
+=== PAUSE TestCheckedViewUntaggedRecursive/good
+=== RUN   TestCheckedViewUntaggedRecursive/absent
+=== PAUSE TestCheckedViewUntaggedRecursive/absent
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+=== PAUSE TestCheckedViewUntaggedRecursive/wrong
+=== RUN   TestCheckedViewUntaggedRecursive/nested
+=== PAUSE TestCheckedViewUntaggedRecursive/nested
+=== CONT  TestCheckedViewV2RepresentationMutants
+=== RUN   TestCheckedViewV2RepresentationMutants/null
+=== PAUSE TestCheckedViewV2RepresentationMutants/null
+=== RUN   TestCheckedViewV2RepresentationMutants/undefined
+=== PAUSE TestCheckedViewV2RepresentationMutants/undefined
+=== RUN   TestCheckedViewV2RepresentationMutants/uint8
+=== PAUSE TestCheckedViewV2RepresentationMutants/uint8
+=== RUN   TestCheckedViewV2RepresentationMutants/int32
+=== PAUSE TestCheckedViewV2RepresentationMutants/int32
+=== RUN   TestCheckedViewV2RepresentationMutants/float64
+=== PAUSE TestCheckedViewV2RepresentationMutants/float64
+=== CONT  TestCheckedViewUntaggedOwnClassDataGoodRefused
+--- PASS: TestCheckedViewUntaggedArrayWrongRefused (0.15s)
+=== CONT  TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== CONT  TestCheckedViewUntaggedOptionalCallableControl
+--- PASS: TestCheckedViewUntaggedArrayGoodRefused (0.11s)
+=== CONT  TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-number
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-string
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+=== PAUSE TestCheckedViewUntaggedCallableUnion/wrong
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+=== PAUSE TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedSourceDispatch
+=== NAME  TestCheckedViewUntaggedOwnClassDataGoodRefused
+    checked_views_v2_source_test.go:155: gate cache node hit
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:116: gate cache node miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:88: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-absent
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-absent
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== RUN   TestCheckedViewObjectPrimitiveSource/required-missing
+=== PAUSE TestCheckedViewObjectPrimitiveSource/required-missing
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== CONT  TestCheckedViewV2MovedStage3Results
+=== RUN   TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== RUN   TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewV2CallableProducerMutant
+--- PASS: TestCheckedViewUntaggedOwnClassDataGoodRefused (0.22s)
+=== NAME  TestFX6P35
+    fx6_valid_test.go:68: gate cache node miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:89: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:89: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:89: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+--- PASS: TestFX6P36 (1.14s)
+=== CONT  TestCheckedViewV2TupleIdentityMutant
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:225: gate cache node miss
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:194: gate cache node miss
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== CONT  TestCheckedViewV2MembershipMutant
+=== NAME  TestFX6P35
+    fx6_valid_test.go:69: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:69: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:69: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+--- PASS: TestFX6P35 (1.14s)
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== PAUSE TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== PAUSE TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+=== PAUSE TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestCheckedViewElementP19Read
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:163: gate cache node miss
+=== NAME  TestCheckedViewElementP19Read
+    view_element_reads_test.go:175: gate cache node hit
+    view_element_reads_test.go:175: gate cache node miss
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:231: gate cache node miss
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:199: gate cache node miss
+=== NAME  TestCheckedViewElementP19Read
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:168: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:120: gate cache node miss
+=== NAME  TestCheckedViewElementP19Read
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:214: gate cache node miss
+--- PASS: TestCheckedViewUntaggedOptionalCallableControl (1.60s)
+=== CONT  TestCheckedViewObjects
+=== RUN   TestCheckedViewObjects/objects-good
+=== PAUSE TestCheckedViewObjects/objects-good
+=== RUN   TestCheckedViewObjects/objects-untagged-good
+=== PAUSE TestCheckedViewObjects/objects-untagged-good
+=== RUN   TestCheckedViewObjects/objects-untagged-wrong
+=== PAUSE TestCheckedViewObjects/objects-untagged-wrong
+=== RUN   TestCheckedViewObjects/objects-wrong-nested
+=== PAUSE TestCheckedViewObjects/objects-wrong-nested
+=== RUN   TestCheckedViewObjects/objects-missing-nested
+=== PAUSE TestCheckedViewObjects/objects-missing-nested
+=== RUN   TestCheckedViewObjects/objects-uninitialized-nested
+=== PAUSE TestCheckedViewObjects/objects-uninitialized-nested
+=== CONT  TestCheckedViewV2WrongFamilyMutant
+=== NAME  TestCheckedViewV2TupleIdentityMutant
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by native: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by native-sanitized: exit 0 stdout "first\n"
+    checked_views_v2_migration_test.go:218: tuple flag removal caught by javascript: exit 0 stdout "first\n"
+--- PASS: TestCheckedViewV2TupleIdentityMutant (1.38s)
+=== CONT  TestCheckedViewV2ArrayArmBoundary
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:247: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:55: gate cache node miss
+--- PASS: TestCheckedViewElementP19Read (1.32s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites
+=== RUN   TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/representation-read-write
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/representation-read-write
+=== RUN   TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+=== RUN   TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== PAUSE TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== CONT  TestCheckedViewOptionalReadBoundary
+=== NAME  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:251: producer certificate removal caught by native: exit 70 stdout ""
+    checked_views_v2_migration_test.go:251: producer certificate removal caught by native-sanitized: exit 70 stdout ""
+    checked_views_v2_migration_test.go:251: producer certificate removal caught by javascript: exit 70 stdout ""
+--- PASS: TestCheckedViewV2CallableProducerMutant (1.67s)
+=== CONT  TestCheckedViewElementP06
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:183: gate cache node miss
+=== NAME  TestCheckedViewV2ArrayArmBoundary
+    checked_views_v2_migration_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:22: gate cache node miss
+=== NAME  TestCheckedViewOptionalReadBoundary
+    checked_views_optional_read_test.go:23: gate cache node hit
+=== RUN   TestCheckedViewOptionalReadBoundary/ordinary_control
+=== PAUSE TestCheckedViewOptionalReadBoundary/ordinary_control
+=== RUN   TestCheckedViewOptionalReadBoundary/native
+=== PAUSE TestCheckedViewOptionalReadBoundary/native
+=== RUN   TestCheckedViewOptionalReadBoundary/JavaScript
+=== PAUSE TestCheckedViewOptionalReadBoundary/JavaScript
+=== CONT  TestCheckedViewEntries
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:187: membership check removal caught by javascript: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:187: membership check removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:187: membership check removal caught by native-sanitized: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2MembershipMutant (1.59s)
+=== CONT  TestCheckedViewValues
+    view_element_reads_test.go:81: gate cache node hit
+    view_element_reads_test.go:81: gate cache node miss
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:22: gate cache node miss
+--- PASS: TestCheckedViewV2ArrayArmBoundary (0.48s)
+=== CONT  TestCheckedViewKeysAlias
+=== NAME  TestCheckedViewEntries
+    view_element_reads_test.go:86: gate cache node hit
+    view_element_reads_test.go:86: gate cache node miss
+=== NAME  TestCheckedViewValues
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewEntries
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewKeysAlias
+    view_element_reads_test.go:76: gate cache node hit
+    view_element_reads_test.go:76: gate cache node miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewKeysAlias
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewValues
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewEntries
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewValues (0.70s)
+=== CONT  TestCheckedViewKeys
+=== NAME  TestCheckedViewKeysAlias
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewEntries (0.85s)
+=== CONT  TestCheckedViewIn
+--- PASS: TestCheckedViewElementP06 (1.01s)
+=== CONT  TestCheckedViewSpread
+=== NAME  TestCheckedViewKeys
+    view_element_reads_test.go:71: gate cache node hit
+    view_element_reads_test.go:71: gate cache node miss
+=== NAME  TestCheckedViewIn
+    view_element_reads_test.go:66: gate cache node hit
+--- PASS: TestCheckedViewKeysAlias (0.81s)
+=== CONT  TestCheckedViewDestructuredUnion
+=== NAME  TestCheckedViewIn
+    view_element_reads_test.go:66: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewKeys
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewSpread
+    view_element_reads_test.go:61: gate cache node hit
+    view_element_reads_test.go:61: gate cache node miss
+=== NAME  TestCheckedViewDestructuredUnion
+    view_element_reads_test.go:43: gate cache node hit
+    view_element_reads_test.go:43: gate cache node miss
+=== NAME  TestCheckedViewSpread
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:81: gate cache node miss
+=== NAME  TestCheckedViewDestructuredUnion
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2WrongFamilyMutant
+    checked_views_v2_migration_test.go:85: wrong family caught by javascript: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_migration_test.go:85: wrong family caught by native: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+    checked_views_v2_migration_test.go:85: wrong family caught by native-sanitized: exit 70 stderr "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\n"
+--- PASS: TestCheckedViewV2WrongFamilyMutant (1.77s)
+=== CONT  TestCheckedViewDestructuredMember
+    view_element_reads_test.go:38: gate cache node miss
+=== NAME  TestCheckedViewIn
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewKeys
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewDestructuredMember
+    view_element_reads_test.go:38: gate cache node miss
+=== NAME  TestCheckedViewSpread
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewIn (0.85s)
+=== CONT  TestCheckedViewLiteralTypedKey
+--- PASS: TestCheckedViewKeys (1.01s)
+=== CONT  TestCheckedViewElementP07
+=== NAME  TestCheckedViewDestructuredMember
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewDestructuredUnion
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:33: gate cache node miss
+--- PASS: TestCheckedViewSpread (0.93s)
+=== CONT  TestCallableUnionResultBoth
+=== NAME  TestCheckedViewElementP07
+    view_element_reads_test.go:27: gate cache node miss
+=== NAME  TestCallableUnionResultBoth
+    callable_union_result_test.go:58: gate cache node miss
+--- PASS: TestCheckedViewDestructuredUnion (1.04s)
+=== CONT  TestCheckedViewInterfaces
+=== RUN   TestCheckedViewInterfaces/interfaces-good
+=== PAUSE TestCheckedViewInterfaces/interfaces-good
+=== RUN   TestCheckedViewInterfaces/interfaces-missing-inherited
+=== PAUSE TestCheckedViewInterfaces/interfaces-missing-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== PAUSE TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-uninitialized-object
+=== PAUSE TestCheckedViewInterfaces/interfaces-uninitialized-object
+=== CONT  TestCheckedViewFlagDowncast
+=== RUN   TestCheckedViewFlagDowncast/tsc_source
+=== PAUSE TestCheckedViewFlagDowncast/tsc_source
+=== RUN   TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+=== PAUSE TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+=== CONT  TestCallableUnionResultZero
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:33: gate cache node miss
+=== NAME  TestCallableUnionResultZero
+    callable_union_result_test.go:53: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP07
+    view_element_reads_test.go:27: gate cache node miss
+=== NAME  TestCheckedViewDestructuredMember
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:596: gate cache native miss
+--- PASS: TestCheckedViewDestructuredMember (1.08s)
+=== CONT  TestCallableUnionResultString
+    callable_union_result_test.go:48: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewLiteralTypedKey (1.19s)
+=== CONT  TestReviewProgramsRefuse
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a
+=== NAME  TestCallableUnionResultZero
+    callable_union_result_test.go:53: gate cache node miss
+--- PASS: TestCallableUnionResultZero (0.98s)
+=== CONT  TestCheckedViewElementP05
+=== NAME  TestCallableUnionResultBoth
+    callable_union_result_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a
+=== NAME  TestCheckedViewElementP05
+    view_element_reads_test.go:17: gate cache node hit
+    view_element_reads_test.go:17: gate cache node miss
+--- PASS: TestCallableUnionResultBoth (1.32s)
+=== CONT  TestCheckedViewElementP01
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:12: gate cache node miss
+--- PASS: TestCheckedViewElementP07 (1.45s)
+=== CONT  TestScalarUnionViewMisfitBoolean
+=== NAME  TestCheckedViewElementP05
+    oracle_test.go:596: gate cache native miss
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p59_union_member_method_shorthand.a
+=== NAME  TestScalarUnionViewMisfitBoolean
+    scalar_union_views_test.go:50: gate cache node hit
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:12: gate cache node miss
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p62_union_member_arrow_inferred.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCallableUnionResultString
+    callable_union_result_test.go:48: gate cache node miss
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p70_length_view_over_tuple.a
+--- PASS: TestCallableUnionResultString (1.29s)
+=== CONT  TestScalarUnionViewMisfitNumber
+=== NAME  TestCheckedViewElementP05
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a
+=== NAME  TestScalarUnionViewMisfitNumber
+    scalar_union_views_test.go:45: gate cache node hit
+--- PASS: TestCheckedViewElementP05 (0.98s)
+=== CONT  TestFX7TextScalarTuple
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestReviewProgramsRefuse (1.18s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a (0.16s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a (0.12s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p59_union_member_method_shorthand.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p62_union_member_arrow_inferred.a (0.13s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a (0.13s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p70_length_view_over_tuple.a (0.11s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a (0.16s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a (0.11s)
+=== CONT  TestReviewProgramsAgreeWithNode
+=== NAME  TestFX7TextScalarTuple
+    fx7_depth_texts_test.go:76: gate cache node hit
+    fx7_depth_texts_test.go:76: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n"
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p01_maybe_boolean_spread.a
+    review_test.go:86: awaits #aecx10a: fifth reading 143, a maybe-boolean snapshot after a spread retains a stale reference
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+=== NAME  TestScalarUnionViewMisfitBoolean
+    scalar_union_views_test.go:50: gate cache node hit
+    scalar_union_views_test.go:50: native exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of boolean | undefined; expected boolean | undefined, found string\n"
+    scalar_union_views_test.go:50: sanitized exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of boolean | undefined; expected boolean | undefined, found string\n"
+    scalar_union_views_test.go:50: javascript exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of boolean | undefined; expected boolean | undefined, found string\n"
+--- PASS: TestScalarUnionViewMisfitBoolean (0.88s)
+=== CONT  TestFX7DeclaredWriteText
+--- PASS: TestCheckedViewElementP01 (1.07s)
+=== CONT  TestFX7TextP72
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:74: gate cache node hit
+    fx7_depth_texts_test.go:74: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestScalarUnionViewMisfitNumber
+    scalar_union_views_test.go:45: gate cache node hit
+    scalar_union_views_test.go:45: native exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of number | undefined; expected number | undefined, found string\n"
+    scalar_union_views_test.go:45: sanitized exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of number | undefined; expected number | undefined, found string\n"
+    scalar_union_views_test.go:45: javascript exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of number | undefined; expected number | undefined, found string\n"
+--- PASS: TestScalarUnionViewMisfitNumber (0.81s)
+=== CONT  TestFX7TextP67
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:73: gate cache node hit
+    fx7_depth_texts_test.go:73: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+--- PASS: TestFX7TextScalarTuple (0.84s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier
+=== NAME  TestFX7DeclaredWriteText
+    fx7_depth_texts_test.go:100: gate cache node hit
+--- PASS: TestFX7DeclaredWriteText (0.78s)
+=== CONT  TestRequiredViewFieldPrimitive/number
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/number
+    view_fields_test.go:56: gate cache node miss
+--- PASS: TestFX7TextP72 (0.86s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestRequiredViewFieldPrimitive/number
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+--- PASS: TestFX7TextP67 (1.03s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== CONT  TestRequiredViewFieldPrimitive/missing
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== CONT  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number
+    view_fields_test.go:146: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+    view_fields_test.go:146: gate cache node miss
+=== CONT  TestRequiredViewFieldPrimitive/string
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/string
+    view_fields_test.go:56: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:596: gate cache native miss
+--- PASS: TestNarrowedFieldUsesSharedReadiness (0.00s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (1.17s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (1.10s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (1.07s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (1.09s)
+=== CONT  TestRequiredViewFieldPrimitive/wrong_string
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/string
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+=== CONT  TestRequiredViewFieldPrimitive/boolean
+    view_fields_test.go:56: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:70: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/boolean
+    view_fields_test.go:60: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestCheckedViewUntaggedRecursive/good
+=== CONT  TestCheckedViewUntaggedRecursive/wrong
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+    view_fields_test.go:82: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p14_callable_union_no_view.a
+    review_test.go:86: awaits #aecx10a: fifth reading 154, calling a union of two function types reads the raw result as a union
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p17_callable_call_first_half.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p20_callable_member_call_good.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a
+    review_test.go:86: awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p23_tuple_from_map_entries.a
+    review_test.go:86: awaits #aecx10a: fifth reading 150, runtime-made pairs aren't tuples to a view (Map and Object entries)
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p24_tuple_from_object_entries.a
+    review_test.go:86: awaits #aecx10a: fifth reading 150, runtime-made pairs aren't tuples to a view (Map and Object entries)
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p26_callable_or_undefined.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p32_fs_rm_force_undefined.a
+    review_test.go:86: awaits #aecx10a: fifth reading 155 (library), rmSync with force undefined removes the directory where Node throws
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p33_map_in_union.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p34_typed_array_in_union.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p35_class_in_union.a
+    review_test.go:86: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a
+    review_test.go:86: awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+=== NAME  TestCheckedViewUntaggedRecursive/good
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:87: drop initialization tracking mutant caught by pinned exit/message
+=== CONT  TestCheckedViewUntaggedRecursive/nested
+--- PASS: TestRequiredViewFieldPrimitive (0.00s)
+    --- PASS: TestRequiredViewFieldPrimitive/number (1.12s)
+    --- PASS: TestRequiredViewFieldPrimitive/missing (0.81s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_type (1.10s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_string (0.67s)
+    --- PASS: TestRequiredViewFieldPrimitive/string (0.96s)
+    --- PASS: TestRequiredViewFieldPrimitive/uninitialized (1.49s)
+    --- PASS: TestRequiredViewFieldPrimitive/boolean (1.03s)
+=== CONT  TestCheckedViewUntaggedRecursive/absent
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:189: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:197: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedRecursive/wrong
+    checked_views_v2_source_test.go:198: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewV2RepresentationMutants/null
+=== NAME  TestCheckedViewUntaggedRecursive/good
+    checked_views_v2_source_test.go:197: gate cache node miss
+    checked_views_v2_source_test.go:198: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewV2RepresentationMutants/int32
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:197: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:197: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/absent
+    checked_views_v2_source_test.go:198: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:198: native: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewV2RepresentationMutants/float64
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedRecursive/nested
+    checked_views_v2_source_test.go:198: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:198: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedRecursive (0.00s)
+    --- PASS: TestCheckedViewUntaggedRecursive/wrong (1.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/good (1.39s)
+    --- PASS: TestCheckedViewUntaggedRecursive/absent (1.28s)
+    --- PASS: TestCheckedViewUntaggedRecursive/nested (1.42s)
+=== CONT  TestCheckedViewV2RepresentationMutants/uint8
+=== NAME  TestCheckedViewV2RepresentationMutants/null
+    checked_views_v2_migration_test.go:126: old-layout null caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-2489397695/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2489397695/typed_array.c:88:46 \n"
+=== CONT  TestCheckedViewV2RepresentationMutants/undefined
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2RepresentationMutants/int32
+    checked_views_v2_migration_test.go:126: old-layout int32 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewV2RepresentationMutants/uint8
+    checked_views_v2_migration_test.go:126: old-layout uint8 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_s.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2RepresentationMutants/float64
+    checked_views_v2_migration_test.go:126: old-layout float64 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewV2RepresentationMutants/undefined
+    checked_views_v2_migration_test.go:126: old-layout undefined caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-2489397695/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2489397695/typed_array.c:88:46 \n"
+--- PASS: TestCheckedViewV2RepresentationMutants (0.00s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/null (0.73s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/int32 (1.14s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/uint8 (1.00s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/float64 (1.16s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/undefined (1.09s)
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_s.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_s.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_s.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:135: gate cache node hit
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:135: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-number
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:86: gate cache node hit
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:141: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:142: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:142: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedCallableUnion/wrong
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:142: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:142: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedSourceFlows (0.01s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (1.06s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (1.32s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (1.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (1.26s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (1.43s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (1.01s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (1.31s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (1.55s)
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-string
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:86: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:90: gate cache node hit
+    checked_views_v2_source_test.go:91: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: native: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-absent
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+    checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-absent.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== CONT  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== NAME  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:90: gate cache node miss
+    checked_views_v2_source_test.go:91: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:90: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:90: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:91: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:91: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-good
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:91: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_v2_source_test.go:91: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.00s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (1.04s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (1.47s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (1.15s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (1.33s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p61_method_value_producer.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p61_method_value_producer.a
+    oracle_test.go:596: gate cache native miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:274: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-good
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-good
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p61_method_value_producer.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p67_static_class_union_member.a
+    review_test.go:86: awaits #aecx10a: fifth reading 152, native and JavaScript stderr disagree on a checked failure, so it can't be pinned yet
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p69_deep_recursive_union.a
+    review_test.go:86: awaits #aecx10a: fifth reading 151, a recursive union chain past the depth bound fails membership
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-good
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-false
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_70.a
+    review_test.go:86: awaits #aecx10a: fifth reading 151, a recursive union chain past the depth bound fails membership
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p72_tuple_count_mismatch.a
+    review_test.go:86: awaits #aecx10a: fifth reading 152, native and JavaScript stderr disagree on a checked failure, so it can't be pinned yet
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/node-indicator-false
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-boolean
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-good
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-boolean
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-good
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/required-missing
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:46: gate cache node hit
+=== NAME  TestCheckedViewObjectPrimitiveSource/required-missing
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-boolean
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== NAME  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/literal-good
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a
+=== NAME  TestCheckedViewObjectPrimitiveSource/required-missing
+    checked_views_v2_object_primitive_test.go:70: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a
+    review_test.go:153: gate cache node miss
+--- PASS: TestCheckedViewObjectPrimitiveSource (0.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-absent (0.46s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-wrong (1.05s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-good (1.25s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-wrong (1.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-good (1.18s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong (1.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong (1.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-boolean (1.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-false (1.20s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-text-wrong (1.40s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.00s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.00s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-good (0.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-negative-wrong (1.38s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-boolean (1.17s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-receiver (0.21s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-good (1.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/required-missing (1.14s)
+=== CONT  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:274: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:272: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:274: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:274: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:274: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+--- PASS: TestCheckedViewV2MovedStage3Results (0.00s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a (2.20s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a (1.74s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a (1.87s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a (1.78s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a (2.56s)
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/good
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:56: gate cache node hit
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:58: gate cache node hit
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+    checked_views_v2_source_test.go:49: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:56: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:57: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p09_tuple_destructure_wrong.a
+    review_test.go:86: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestDefaultTaggedSourceViews/default-staged
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-staged
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:59: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:59: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:58: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+=== CONT  TestDefaultTaggedSourceViews/default-read-before-set
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:59: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:59: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceDispatch (0.45s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/absent (0.55s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/nested (1.43s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/wrong (0.92s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/nested (1.75s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/absent (0.48s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/absent (0.50s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/good (1.33s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/good (3.41s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/wrong (1.27s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/good (1.34s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (1.55s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/wrong (1.25s)
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-write
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-read-before-set
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-staged
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestDefaultTaggedSourceViews/default-literal
+    view_fields_test.go:194: gate cache node miss
+=== CONT  TestDefaultTaggedSourceViews/default-destructure
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-boolean
+=== NAME  TestDefaultTaggedSourceViews/default-destructure
+    view_fields_test.go:186: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-read-before-set
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-write
+    view_fields_test.go:180: gate cache node miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-string
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-string
+    view_fields_test.go:186: gate cache node miss
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-type
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestDefaultTaggedSourceViews/default-wrong-boolean
+    view_fields_test.go:194: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-destructure
+    view_fields_test.go:194: gate cache node miss
+=== CONT  TestCheckedViewObjects/objects-good
+=== CONT  TestCheckedViewObjects/objects-wrong-nested
+=== NAME  TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:24: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-string
+    view_fields_test.go:194: gate cache node miss
+=== CONT  TestCheckedViewObjects/objects-uninitialized-nested
+=== NAME  TestDefaultTaggedSourceViews/default-wrong-type
+    view_fields_test.go:194: gate cache node miss
+--- PASS: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (0.97s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (0.85s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (0.93s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-write (1.05s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (0.85s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (0.89s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (1.03s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (0.98s)
+=== CONT  TestCheckedViewObjects/objects-missing-nested
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== CONT  TestCheckedViewObjects/objects-untagged-wrong
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewObjects/objects-missing-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-uninitialized-nested
+    checked_views_objects_test.go:32: gate cache node miss
+=== CONT  TestCheckedViewObjects/objects-untagged-good
+=== NAME  TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:24: gate cache node miss
+=== CONT  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+=== NAME  TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:46: skip transitive view caught by pinned exit/message with valid C
+=== CONT  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewObjects/objects-untagged-wrong
+    checked_views_objects_test.go:32: gate cache node miss
+=== CONT  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p32_boxed_slot_string_good.a
+    review_test.go:86: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p33_boxed_slot_union_member.a
+    review_test.go:86: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:32: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    review_test.go:153: gate cache node miss
+--- PASS: TestCheckedViewObjects (0.00s)
+    --- PASS: TestCheckedViewObjects/objects-good (1.02s)
+    --- PASS: TestCheckedViewObjects/objects-missing-nested (0.70s)
+    --- PASS: TestCheckedViewObjects/objects-uninitialized-nested (0.94s)
+    --- PASS: TestCheckedViewObjects/objects-wrong-nested (1.42s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-wrong (0.86s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-good (1.07s)
+=== CONT  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/mixed-read-write
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/representation-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+=== CONT  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== CONT  TestCheckedViewV2ReadsAfterWrites/null-read-write
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/null-read-write
+    checked_views_v2_migration_test.go:21: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/fs-option-boxing
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== CONT  TestCheckedViewOptionalReadBoundary/ordinary_control
+=== CONT  TestCheckedViewOptionalReadBoundary/JavaScript
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+=== NAME  TestCheckedViewV2ReadsAfterWrites/undefined-read-write
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewOptionalReadBoundary/ordinary_control
+    checked_views_optional_read_test.go:29: gate cache node hit
+=== CONT  TestCheckedViewOptionalReadBoundary/native
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/null-read-write
+    checked_views_v2_migration_test.go:23: gate cache node miss
+=== CONT  TestCheckedViewInterfaces/interfaces-good
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewV2ReadsAfterWrites/null-read-write
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewInterfaces/interfaces-good
+    checked_views_interfaces_test.go:18: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    oracle_test.go:596: gate cache native miss
+=== CONT  TestCheckedViewFlagDowncast/tsc_source
+    checked_views_flag_downcast_test.go:24: gate cache node hit
+=== NAME  TestCheckedViewOptionalReadBoundary/ordinary_control
+    checked_views_optional_read_test.go:33: gate cache node hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewOptionalReadBoundary (0.19s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/JavaScript (0.16s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/native (0.11s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/ordinary_control (0.84s)
+=== CONT  TestCheckedViewInterfaces/interfaces-uninitialized-object
+--- PASS: TestCheckedViewV2ReadsAfterWrites (0.00s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/mixed-read-write (1.74s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/representation-read-write (2.06s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good (1.73s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/fs-option-boxing (2.29s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/undefined-read-write (1.54s)
+    --- PASS: TestCheckedViewV2ReadsAfterWrites/null-read-write (1.46s)
+=== CONT  TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+=== NAME  TestCheckedViewInterfaces/interfaces-good
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    review_test.go:153: gate cache node miss
+=== CONT  TestCheckedViewInterfaces/interfaces-missing-inherited
+=== NAME  TestCheckedViewFlagDowncast/tsc_source
+    checked_views_flag_downcast_test.go:29: gate cache node hit
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+=== NAME  TestCheckedViewInterfaces/interfaces-wrong-inherited
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:41: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewInterfaces/interfaces-wrong-inherited
+    checked_views_interfaces_test.go:33: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-uninitialized-object
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestCheckedViewInterfaces/interfaces-missing-inherited
+    checked_views_interfaces_test.go:26: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewInterfaces (0.00s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-good (1.05s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-wrong-inherited (0.97s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-uninitialized-object (1.04s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-missing-inherited (0.70s)
+=== NAME  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:46: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure_value.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:65: gate cache node miss
+    checked_views_flag_downcast_test.go:72: native release field-check mutant caught: exit 0 stdout "5e-324\n" stderr ""
+    checked_views_flag_downcast_test.go:72: JavaScript field-check mutant caught: exit 0 stdout "true\n" stderr ""
+--- PASS: TestCheckedViewFlagDowncast (0.00s)
+    --- PASS: TestCheckedViewFlagDowncast/tsc_source (0.86s)
+    --- PASS: TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal (0.97s)
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure_value.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_maybe_number.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_object_union.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_string_undefined.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p49_union_destructure_wrong.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p53_callable_union_destructure_good.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    review_test.go:86: awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    review_test.go:86: awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestReviewProgramsAgreeWithNode (34.67s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p01_maybe_boolean_spread.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a (1.13s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a (1.30s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a (1.34s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p14_callable_union_no_view.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p17_callable_call_first_half.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p18_cast_kind_no_field_types.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p20_callable_member_call_good.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p23_tuple_from_map_entries.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p24_tuple_from_object_entries.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p26_callable_or_undefined.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p32_fs_rm_force_undefined.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p33_map_in_union.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p34_typed_array_in_union.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p35_class_in_union.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_b.a (1.36s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_n.a (1.38s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p54_maybe_s.a (1.35s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a (1.37s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p60_named_function_producer.a (1.56s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p61_method_value_producer.a (1.43s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p67_static_class_union_member.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p69_deep_recursive_union.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_40.a (1.08s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p70_recursive_depth_70.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p72_tuple_count_mismatch.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a (1.16s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a (1.17s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p01_element_access_wrong.a (1.18s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p05_element_access_number_wrong.a (1.47s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p06_element_access_boolean_wrong.a (1.30s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p07_element_access_union_wrong.a (1.12s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p09_tuple_destructure_wrong.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p19_callable_union_call_element.a (1.30s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p21_callable_union_function_declaration.a (1.38s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p23_callable_union_literal_result.a (1.32s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p32_boxed_slot_string_good.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p33_boxed_slot_union_member.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a (1.10s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a (1.10s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a (1.17s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a (0.91s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure_value.a (0.73s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_maybe_number.a (0.66s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_object_union.a (0.63s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_string_undefined.a (0.62s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p49_union_destructure_wrong.a (0.75s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a (0.77s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p53_callable_union_destructure_good.a (0.86s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p68_object_view_over_tuple.a (0.00s)
+    --- SKIP: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a (0.00s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p72_mixed_element_access_wrong.a (0.66s)
+PASS
+gate cache: native hits=35 misses=125
+gate cache: node hits=36 misses=307
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	48.873s

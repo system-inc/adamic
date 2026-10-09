@@ -1,0 +1,17 @@
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh
+source /workspace/adamic-tools/env.sh
+nproc
+Full lowering: timeout 360 go test ./internal/lower -count=1 -timeout 300s
+Checked-view oracle and fx6/review witnesses: timeout 420 go test ./internal/oracle -run 'TestCheckedView|TestRequiredView|TestNarrowedField|TestViewField|TestDefaultTagged|TestFX[67]|TestScalarUnion|TestCallableProducer|TestReviewProgramsAgreeWithNode/fxspptb_oct9_(views|native)_' -count=1 -timeout 360s
+Registered fx7 fixtures: timeout 180 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/lower/testdata/callable_producers|TestNativeAgreesWithNode/internal/lower/testdata/scalar_union_views|TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p(04|06|08|54|59|75|77)' -count=1 -v -timeout 150s
+Node prerequisite: timeout 120 npm ci (in stage3/api)
+Restored oracle prerequisite: timeout 180 go test ./internal/oracle -run TestCheckedViewV2ReadsAfterWrites -count=1 -timeout 150s
+Reader guard: timeout 120 go test ./internal/ir -run TestCallTargetReaders -count=1 -timeout 90s
+Stage3 assertions: timeout 180 go test ./stage3/fixtures -run TestFixturesAssertions -count=1 -timeout 150s
+Counts: timeout 420 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 360s
+Mutants: timeout 900 python3 review/compiler/fx6-candidates-3/run-mutants.py (each child go test has -timeout 90s and a subprocess hard limit)
+Final constructor controls: timeout 180 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a|TestNativeAgreesWithNode/internal/lower/testdata/callable_producers/p135_tagged_unread.a' -count=1 -v -timeout 150s
+Final counts: timeout 240 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 210s
+Supplemental constructor revert: apply constructor-revert.patch; go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a' -count=1 -v -timeout 90s (subprocess timeout 120s); restore original source in finally.
+Lane: git fetch -q origin main devtools/fast-gate cloud/merge-tree; timeout 180 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'

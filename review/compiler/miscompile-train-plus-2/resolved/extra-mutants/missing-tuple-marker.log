@@ -1,0 +1,8 @@
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== CONT  TestTupleRecognitionP68
+    tuple_recognition_test.go:24: JavaScript backend stdout = "", source Node = "first:1\n"
+--- FAIL: TestTupleRecognitionP68 (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.145s
+FAIL

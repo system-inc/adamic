@@ -1,0 +1,21 @@
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTupleRecognitionP69
+=== PAUSE TestTupleRecognitionP69
+=== RUN   TestTupleRecognitionOrdinaryArray
+=== PAUSE TestTupleRecognitionOrdinaryArray
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== CONT  TestTupleRecognitionP68
+=== CONT  TestTupleRecognitionOrdinaryArray
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+=== CONT  TestTupleRecognitionP69
+=== NAME  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- PASS: TestTupleRecognitionRejectsArrayObjectView (0.38s)
+--- PASS: TestTupleRecognitionP68 (0.84s)
+--- PASS: TestTupleRecognitionOrdinaryArray (0.85s)
+--- PASS: TestTupleRecognitionP69 (0.87s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.887s

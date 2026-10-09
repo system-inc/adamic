@@ -1,0 +1,13 @@
+=== RUN   TestFX7DeclaredWriteText
+=== PAUSE TestFX7DeclaredWriteText
+=== CONT  TestFX7DeclaredWriteText
+    fx7_depth_texts_test.go:100: gate cache node miss
+    fx7_depth_texts_test.go:102: native: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found number\n"
+    fx7_depth_texts_test.go:102: sanitized: stderr differs; stderr "adamic: panic: field read failed: <write>.name is not a ; expected , found number\n"
+--- FAIL: TestFX7DeclaredWriteText (0.34s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.351s
+FAIL

@@ -1,0 +1,11 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -53,7 +53,7 @@
+ 	held := b.read(b.parameters[0])
+ 	checks := []ir.Statement{}
+ 	for _, field := range l.checker.GetPropertiesOfType(receiver) {
+-		if member != nil && field.Name != member.Text() {
++		if member != nil && member.Text() != "" && field.Name != member.Text() {
+ 			continue
+ 		}
+ 		if accessorSymbol(field) {

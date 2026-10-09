@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerCertificatesUseClosureThunks
+=== PAUSE TestCallableProducerCertificatesUseClosureThunks
+=== CONT  TestCallableProducerCertificatesUseClosureThunks
+    callable_producers_test.go:70: producer certificate includes direct function increment
+--- FAIL: TestCallableProducerCertificatesUseClosureThunks (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.159s
+FAIL

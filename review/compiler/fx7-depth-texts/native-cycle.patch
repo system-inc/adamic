@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -86,7 +86,7 @@
+     bool reference = value->kind == adamic_view_union_object || value->kind == adamic_view_union_array;
+     if (reference && value->payload.reference != NULL) {
+         for (const plain_match_path *seen = path; seen != NULL; seen = seen->previous) {
+-            if (seen->contract == id && seen->reference == value->payload.reference) { return true; }
++            if (seen->contract == id && seen->reference == value->payload.reference) { return false; }
+         }
+     }
+     plain_match_path current = {id, reference ? value->payload.reference : NULL, path};

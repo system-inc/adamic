@@ -1,0 +1,80 @@
+[
+  {
+    "name": "omit-creation-admission",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestTrainPlusRefusalP(26|33|34|35)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "source_paths": [
+      ".a",
+      ".ts"
+    ],
+    "catchers": [
+      "TestTrainPlusRefusalP26",
+      "TestTrainPlusRefusalP33",
+      "TestTrainPlusRefusalP34",
+      "TestTrainPlusRefusalP35"
+    ]
+  },
+  {
+    "name": "wrong-creation-location",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestTrainPlusRefusalP(26|33|34|35)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "source_paths": [
+      ".a",
+      ".ts"
+    ],
+    "catchers": [
+      "TestTrainPlusRefusalP26",
+      "TestTrainPlusRefusalP33",
+      "TestTrainPlusRefusalP34",
+      "TestTrainPlusRefusalP35"
+    ]
+  },
+  {
+    "name": "wrong-unsupported-member",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestTrainPlusRefusalP(26|33|34|35)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "source_paths": [
+      ".a",
+      ".ts"
+    ],
+    "catchers": [
+      "TestTrainPlusRefusalP26",
+      "TestTrainPlusRefusalP33",
+      "TestTrainPlusRefusalP34",
+      "TestTrainPlusRefusalP35"
+    ]
+  }
+]

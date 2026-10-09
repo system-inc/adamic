@@ -1,0 +1,29 @@
+Every Go/Node/compiler command sources /workspace/adamic-tools/env.sh.
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh (initial log setup-initial.log; stable rerun setup-stable.log)
+timeout 120 npm ci --prefix stage3/api (node-types.log)
+nproc: 5; cpu.max: 400000 100000
+Base: 2a570424, explicitly fetched cloud/land-stack-miscompile-train-0ff31e41.
+Merge order: 2fa2a97f, a5e685cf. Only counts.md conflicts; temporary mechanical union preserved both inputs pending one regeneration.
+timeout 600 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 9m -args -update-counts (counts.log; exactly one invocation)
+timeout 420 go test ./internal/lower -count=1 -timeout 360s (lower.log)
+timeout 180 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s (readers.log)
+timeout 420 go test ./internal/oracle -run 'TestCheckedView|TestRequiredView|TestNarrowedField|TestViewField|TestDefaultTagged|TestFX[67]|TestScalarUnion|TestCallableProducer|TestCallableUnionResult|TestViewSnapshot|TestReviewPrograms(AgreeWithNode|Refuse)/fxspptb_oct9_(views|native)_' -count=1 -v -timeout 360s (fixtures.log)
+timeout 240 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/lower/testdata/(callable_producers|scalar_union_views)|TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p(04|06|08|54|59|75|77)|TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a' -count=1 -v -timeout 210s (registered.log)
+timeout 180 go test ./stage3/fixtures -run TestFixturesAssertions -count=1 -v -timeout 150s (stage3.log)
+timeout 180 go test ./internal/native ./internal/javascript -run 'View|Untagged' -count=1 -v -timeout 150s (view-runtime.log)
+timeout 120 go test ./internal/oracle ./internal/lower -run 'TestFX7(TextP32|TextP33|DeclaredWriteText)|TestViewSpreadMethodRefused' -count=1 -v -timeout 90s (interaction-fixes.log)
+timeout 780 python3 review/compiler/miscompile-train-plus/run-fx6.py (fx6-mutants.log; 29 adapted member obligations)
+timeout 420 python3 review/compiler/miscompile-train-plus/run-depth.py (depth-mutants.log; declared-name obligations now use TestFX7DeclaredWriteText)
+Original train attribution: detached /tmp/train-plus-baseline at 2a570424, cohere linked to the session submodule.
+timeout 180 go build -buildvcs=false -o /tmp/train-plus-baseline-adamic ./cmd/adamic (baseline-build-retry.log; initial VCS stamp failure in baseline-build.log)
+timeout 300 python3 review/compiler/miscompile-train-plus/measure-train.py (train-measurements.log; seven direct counted builds, no counts table update)
+timeout 600 python3 review/compiler/miscompile-train-plus/run-extra.py (extra-mutants.log; historical patch-application failure preserved)
+timeout 600 python3 review/compiler/miscompile-train-plus/run-extra.py (extra-mutants-retry.log; recorded completed obligations skipped on retry)
+timeout 420 python3 review/compiler/miscompile-train-plus/attribute-counts.py (count-attribution.log; direct counterfactual builds, no table regeneration)
+timeout 300 go test ./internal/lower -count=1 -timeout 240s (lower-final.log)
+timeout 240 go test ./internal/oracle -run 'TestCheckedView|TestRequiredView|TestNarrowedField|TestViewField|TestDefaultTagged|TestFX[67]|TestScalarUnion|TestCallableProducer|TestCallableUnionResult|TestViewSnapshot|TestReviewPrograms(AgreeWithNode|Refuse)/fxspptb_oct9_(views|native)_' -count=1 -v -timeout 210s (fixtures-final.log)
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s (readers-final.log)
+timeout 180 bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -' (lane.log)
+timeout 120 go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle (vet.log)
+Saved review p19/p70 probe commands and results: review-probes.json; each command bounded to 90s.
