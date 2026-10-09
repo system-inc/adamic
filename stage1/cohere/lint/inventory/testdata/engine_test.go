@@ -67,6 +67,7 @@ func fixtureAnalyzer(t *testing.T) (*analyzer, *declaration) {
 	return a, a.byName[rulesPrefix+"core.Probe"]
 }
 func TestTransitiveSiblingAndMethodDependencies(t *testing.T) {
+	t.Parallel()
 	a, d := fixtureAnalyzer(t)
 	deps, questions, fix, _ := a.trace(d)
 	observed := map[string]dependency{}
@@ -86,6 +87,7 @@ func TestTransitiveSiblingAndMethodDependencies(t *testing.T) {
 	}
 }
 func TestHelperRankingCountsRulesOnce(t *testing.T) {
+	t.Parallel()
 	d := dependency{Symbol: "shared.h", Package: "shared", Kind: "sibling"}
 	rows := rankings([]entry{{Name: "a", Dependencies: []dependency{d, d}}, {Name: "b", Dependencies: []dependency{d}}})
 	if len(rows) != 1 || rows[0].Count != 2 || strings.Join(rows[0].Rules, ",") != "a,b" {
@@ -93,6 +95,7 @@ func TestHelperRankingCountsRulesOnce(t *testing.T) {
 	}
 }
 func TestUnknownFrequencyIsNotZero(t *testing.T) {
+	t.Parallel()
 	if countText(emptyFrequency()) != "unknown" {
 		t.Fatal("unmeasured count printed as zero")
 	}
@@ -102,6 +105,7 @@ func TestUnknownFrequencyIsNotZero(t *testing.T) {
 	}
 }
 func TestRegisteredCorpusControl(t *testing.T) {
+	t.Parallel()
 	// Actual Go rule, independent of the static call extractor.
 	source := `debugger;`
 	file := parseControl(source)
@@ -133,6 +137,7 @@ func findRegistration(name string) rule.Registration {
 }
 
 func TestBranchEvidenceRequiresExecutableSelector(t *testing.T) {
+	t.Parallel()
 	for _, text := range []string{"this.enabled('no-debugger')", "this.selected === \"no-debugger\"", "this.enabled(\n'no-debugger')"} {
 		if !hasSelector(text, "no-debugger") {
 			t.Fatalf("missed selector: %s", text)
@@ -146,6 +151,7 @@ func TestBranchEvidenceRequiresExecutableSelector(t *testing.T) {
 }
 
 func TestAdamicCorpusUsesCompleteProgram(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	check := func(extension string) error {
 		source := filepath.Join(directory, "control"+extension)
@@ -190,6 +196,7 @@ func TestAdamicCorpusUsesCompleteProgram(t *testing.T) {
 }
 
 func TestFailedFamilyCannotBeMarkedPassed(t *testing.T) {
+	t.Parallel()
 	for _, log := range []string{"FAIL\t" + rulesPrefix + "core\t1s", "ok  \t" + rulesPrefix + "tailwind\t1s", "    fake: ok  \t" + rulesPrefix + "core\t1s"} {
 		if familyPassed([]byte(log), "core") {
 			t.Fatalf("failed or unrun family marked passed: %q", log)
@@ -201,6 +208,7 @@ func TestFailedFamilyCannotBeMarkedPassed(t *testing.T) {
 }
 
 func TestInventoryFileNameBytes(t *testing.T) {
+	t.Parallel()
 	file := parseControl("const value = 1;")
 	subject := rule.Registration{Rule: rule.Rule{Run: func(rule.Context, any) rule.Listeners {
 		panic("path probe")

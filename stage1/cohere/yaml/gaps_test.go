@@ -92,6 +92,7 @@ func TestClosedLexerGaps(t *testing.T) {
 		{"prefixIncrement.ts", "1\n"},
 		{"emptyAlternative.ts", "1\n"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(gap.file, func(t *testing.T) {
 			closedGap(t, filepath.Join("gaps", gap.file), gap.output)
 		})
