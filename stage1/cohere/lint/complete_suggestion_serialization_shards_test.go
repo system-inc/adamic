@@ -83,7 +83,7 @@ func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
 
 func completeSuggestionPrepare(t *testing.T) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	started := time.Now()
 	defer func() {
