@@ -3,6 +3,7 @@ package cssstrings
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -198,8 +200,8 @@ func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
 	return selected
 }
 
-// Keep inputs beside each builder. This base has no internal/buildcache: there is
-// no package cache; the parent calls each builder once and shares its directory.
+// Normal products use the shared cache. Overlay oracles and temporary mutants
+// remain private builds, once per parent; published products are never modified.
 type stringsInputs struct {
 	Name      string
 	Files     []string
@@ -209,13 +211,69 @@ type stringsInputs struct {
 
 func stringsProduct(t *testing.T, inputs stringsInputs, build func(dir string) error) string {
 	t.Helper()
+	if keyed, ok := stringsCacheInputs(t, inputs); ok {
+		return buildcache.Product(t, keyed, build)
+	}
 	dir := t.TempDir()
 	start := time.Now()
 	if err := build(dir); err != nil {
 		t.Fatalf("build %s: %v", inputs.Name, err)
 	}
-	t.Logf("build cold %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
+	t.Logf("private build %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
 	return dir
+}
+
+// Generated C is an input by content, not its temporary filename. Every other
+// cached file must be repository-relative; temporary source overlays stay local.
+func stringsCacheInputs(t *testing.T, inputs stringsInputs) (buildcache.Inputs, bool) {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keyed := buildcache.Inputs{Name: "cssstrings " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
+	keyed.Files = append(keyed.Files, "stage1/cohere/cssstrings/shards_test.go", "stage1/cohere/cssstrings/port_test.go")
+	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	for _, flag := range inputs.Flags {
+		if flag == "overlay" {
+			return keyed, false
+		}
+	}
+
+	for _, name := range inputs.Files {
+		absolute, err := filepath.Abs(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			if filepath.Base(name) != "program.c" {
+				return keyed, false
+			}
+			content, err := os.ReadFile(name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256(content)))
+		} else {
+			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
+		}
+	}
+	if strings.Contains(inputs.Name, "lowering and backends") {
+		// The compiler's transitive Go dependencies include cohere's rule runner.
+		// GoInputs resolves their files, module pins, build environment and tools.
+		compiler, err := buildcache.GoInputs("css lowering compiler", "./cmd/adamic", nil, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		keyed.Files = append(keyed.Files, compiler.Files...)
+		keyed.Flags = append(keyed.Flags, compiler.Flags...)
+		keyed.Toolchain = append(keyed.Toolchain, compiler.Toolchain...)
+	}
+	return keyed, true
 }
 
 type stringsProgram struct{ dir, main, c, javascript string }
@@ -223,7 +281,7 @@ type stringsProgram struct{ dir, main, c, javascript string }
 func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
 	t.Helper()
 	dir := stringsProduct(t, stringsInputs{
-		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "strings.ts"), repository + "/internal/load", repository + "/internal/lower", repository + "/internal/native", repository + "/internal/javascript", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
+		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "strings.ts"), repository + "/internal", repository + "/go.mod", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
 		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
 	}, func(dir string) error {
 		loaded, err := load.Load([]string{main})
@@ -252,7 +310,11 @@ func stringsClangToolchain(t *testing.T) string {
 func buildStringsNative(t *testing.T, name string, program stringsProgram, sanitize bool) string {
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
-	dir := stringsProduct(t, stringsInputs{Name: name, Files: []string{program.c, repository + "/internal/native/runtime"}, Flags: native.Flags(options), Toolchain: stringsClangToolchain(t)}, func(dir string) error {
+	flags := native.Flags(options)
+	if name != "sanitized" && name != "native-fast" {
+		flags = append(flags, "overlay")
+	}
+	dir := stringsProduct(t, stringsInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: stringsClangToolchain(t)}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err

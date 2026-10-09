@@ -151,11 +151,15 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	selected := selectedCSSParserShards(t, units)
 	// C emission annotates the IR. Finish both backends sequentially before the
 	// independent native builds and parallel unit readers use immutable products.
-	programs := []cssParserProgram{buildCSSParserProgram(t, "parser", portDirectory(t, nil))}
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	programs := []cssParserProgram{buildCSSParserProgram(t, "parser", filepath.Dir(main))}
 	for i := range mutants {
 		programs = append(programs, buildCSSParserProgram(t, fmt.Sprintf("mutant-%d", i), portDirectory(t, &mutants[i])))
 	}
-	binaries := buildCSSParserBinaries(t, programs)
+	binaries := buildCSSParserBinaries(t, programs[:1])
 	leakBinary := binaries[0]
 	if runtime.GOOS == "darwin" {
 		leakBinary = buildCSSParserUnsanitized(t, programs[0])
@@ -163,7 +167,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	library := os.Getenv("ADAMIC_CSS_LIBRARY")
 	script, _ := filepath.Abs("testdata/library.mjs")
 	setupElapsed := time.Since(setupStarted)
-	t.Logf("setup before shards %.6fs, including once-per-run builds until internal/buildcache lands", setupElapsed.Seconds())
+	t.Logf("setup before shards %.6fs, including cached normal products and private overlay builds", setupElapsed.Seconds())
 	if setupElapsed > 30*time.Second {
 		t.Fatalf("invalid test setup: wall %s exceeds 30s", setupElapsed)
 	}
@@ -204,11 +208,14 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 				}
 				checkCSSParserPostCSS(t, unit, corpus.inputs[unit.lo:unit.hi], want, string(result.stdout))
 			} else {
+				// Private overlay products belong only to this mutant unit. Build once
+				// and share the binary between its two original full-corpus checks.
+				mutantBinary := buildCSSParserBinaries(t, programs[unit.mutation+1:unit.mutation+2])[0]
 				for _, side := range []struct {
 					name   string
 					result run
 				}{
-					{"native", execute(t, cssParserASAN(false), binaries[unit.mutation+1], cases)},
+					{"native", execute(t, cssParserASAN(false), mutantBinary, cases)},
 					{"Node", onNode(t, programs[unit.mutation+1].main, cases)},
 				} {
 					if side.result.exitCode != 0 {

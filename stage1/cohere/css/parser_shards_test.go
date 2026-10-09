@@ -2,6 +2,7 @@ package css
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -13,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -203,8 +205,8 @@ func checkCSSParserPostCSS(t *testing.T, unit cssParserShard, inputs []string, w
 	t.Logf("PostCSS: %d exact agreements, %d occurrences of proved surrogate gap", len(inputs)-gaps, gaps)
 }
 
-// No package cache: internal/buildcache is absent from this base. Each adjacent
-// builder is called once during setup, writing into dir; readers share products.
+// Normal products use the shared cache. Overlay oracles and temporary mutants
+// remain private builds, once per parent; published products are never modified.
 type cssParserInputs struct {
 	Name         string
 	Files, Flags []string
@@ -213,14 +215,71 @@ type cssParserInputs struct {
 
 func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir string) error) string {
 	t.Helper()
+	if keyed, ok := cssParserCacheInputs(t, inputs); ok {
+		return buildcache.Product(t, keyed, build)
+	}
 	dir := t.TempDir()
 	start := time.Now()
 	if err := build(dir); err != nil {
 		t.Fatalf("build %s: %v", inputs.Name, err)
 	}
-	t.Logf("build cold %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
+	t.Logf("private build %s %.6fs; inputs=%+v", inputs.Name, time.Since(start).Seconds(), inputs)
 	return dir
 }
+
+// Generated C is an input by content, not its temporary filename. Every other
+// cached file must be repository-relative; temporary source overlays stay local.
+func cssParserCacheInputs(t *testing.T, inputs cssParserInputs) (buildcache.Inputs, bool) {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	keyed := buildcache.Inputs{Name: "css " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
+	keyed.Files = append(keyed.Files, "stage1/cohere/css/parser_shards_test.go", "stage1/cohere/css/css_test.go")
+	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	for _, flag := range inputs.Flags {
+		if flag == "overlay" {
+			return keyed, false
+		}
+	}
+
+	for _, name := range inputs.Files {
+		absolute, err := filepath.Abs(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			if filepath.Base(name) != "program.c" {
+				return keyed, false
+			}
+			content, err := os.ReadFile(name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256(content)))
+		} else {
+			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
+		}
+	}
+	if strings.Contains(inputs.Name, "lowering and backends") {
+		// The compiler's transitive Go dependencies include cohere's rule runner.
+		// GoInputs resolves their files, module pins, build environment and tools.
+		compiler, err := buildcache.GoInputs("css lowering compiler", "./cmd/adamic", nil, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		keyed.Files = append(keyed.Files, compiler.Files...)
+		keyed.Flags = append(keyed.Flags, compiler.Flags...)
+		keyed.Toolchain = append(keyed.Toolchain, compiler.Toolchain...)
+	}
+	return keyed, true
+}
+
 func cssParserOracle(t *testing.T) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
@@ -258,6 +317,7 @@ func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgra
 		}
 		files = append(files, paths...)
 	}
+	files = append(files, repository+"/internal", repository+"/go.mod", repository+"/cohere/TypeScript", repository+"/cohere/TypeScript-shim")
 	dir := cssParserProduct(t, cssParserInputs{Name: name + " lowering and backends", Files: files, Flags: []string{"lower", "C", "JavaScript"}, Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit}, func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
@@ -285,11 +345,17 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 		dir     string
 		inputs  cssParserInputs
 		elapsed time.Duration
+		keyed   buildcache.Inputs
+		cached  bool
 		err     error
 	}
 	jobs := make([]job, len(programs))
 	for i, program := range programs {
-		jobs[i] = job{dir: t.TempDir(), inputs: cssParserInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native/runtime"}, Flags: native.Flags(options), Toolchain: strings.TrimSpace(string(version.stdout))}}
+		jobs[i] = job{dir: t.TempDir(), inputs: cssParserInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: strings.TrimSpace(string(version.stdout))}}
+		if program.name != "parser" {
+			jobs[i].inputs.Flags = append(jobs[i].inputs.Flags, "overlay")
+		}
+		jobs[i].keyed, jobs[i].cached = cssParserCacheInputs(t, jobs[i].inputs)
 	}
 	var workers sync.WaitGroup
 	for i, program := range programs {
@@ -304,7 +370,11 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 				return native.Build(string(source), filepath.Join(dir, "parser"), options)
 			}
 			start := time.Now()
-			jobs[i].err = build(jobs[i].dir)
+			if jobs[i].cached {
+				jobs[i].dir, jobs[i].err = buildcache.Get(jobs[i].keyed, build)
+			} else {
+				jobs[i].err = build(jobs[i].dir)
+			}
 			jobs[i].elapsed = time.Since(start)
 		}()
 	}
@@ -314,7 +384,7 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 		if job.err != nil {
 			t.Fatalf("build %s: %v", job.inputs.Name, job.err)
 		}
-		t.Logf("build cold %s %.6fs; inputs=%+v", job.inputs.Name, job.elapsed.Seconds(), job.inputs)
+		t.Logf("build elapsed %s %.6fs; cached=%t; inputs=%+v", job.inputs.Name, job.elapsed.Seconds(), job.cached, job.inputs)
 		binaries = append(binaries, filepath.Join(job.dir, "parser"))
 	}
 	return binaries
@@ -322,7 +392,7 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 func buildCSSParserUnsanitized(t *testing.T, program cssParserProgram) string {
 	t.Helper()
 	options := native.Options{}
-	dir := cssParserProduct(t, cssParserInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native/runtime"}, Flags: native.Flags(options), Toolchain: "clang " + runtime.GOOS + "/" + runtime.GOARCH}, func(dir string) error {
+	dir := cssParserProduct(t, cssParserInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
