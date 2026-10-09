@@ -16,6 +16,7 @@ once (landings pause on it) and the rest keeps running for triage only; full.jso
 the run ends.
 """
 
+from concurrent.futures import ThreadPoolExecutor
 import fcntl
 import heapq
 import math
@@ -424,7 +425,7 @@ class Gate:
                    # size. Hangs belong to stall guards that count from output; a package over an hour is
                    # named in the status line as slow, so it never reads as a quiet pass.
                    self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", "^TestWASI$"] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
-                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-run", "^TestWASI$", "./internal/native"], log, wasi),
+                   self.guarded("wasi", self.wasiSplit, log, wasi),
                    self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
                    self.guarded("catalog", self.catalogFull),
@@ -737,25 +738,107 @@ class Gate:
             self.steps["catalog"] = 0.0
             self.result["catalog"] = "not in this tree"
             return
-        # check.sh takes the commit whose bugs it reintroduces and proves caught. Its verdict per entry:
-        # applies-and-fails-as-recorded (caught), skipped (with its reason), no-longer-applies (the undo
-        # patch went stale as the code moved: the catalog's upkeep, recorded, not main's red), or
-        # applies-but-failure-not-as-recorded (a reintroduced bug no longer caught as recorded: red).
-        started = time.monotonic()
-        with open(os.path.join(self.arguments.out, "catalog.log"), "w") as output:
-            code = self.spawn(["bash", "verify/catalog/check.sh", self.arguments.sha], output).wait()
-        self.steps["catalog"] = round(time.monotonic() - started, 1)
-        with open(os.path.join(self.arguments.out, "catalog.log")) as handle:
-            lines = handle.read().splitlines()
-        uncaught = [line for line in lines if "applies-but-failure-not-as-recorded" in line]
-        stale = [line.split(":")[0] for line in lines if "no-longer-applies" in line]
-        caught = [line for line in lines if "applies-and-fails-as-recorded" in line]
-        self.result["catalog"] = {"exit": code, "caught": len(caught), "stale": stale, "uncaught": uncaught}
-        if uncaught or (code != 0 and not stale) or not caught:
+        with open(os.path.join(self.arguments.tree, "verify/catalog/catalog.json")) as handle:
+            entries = json.load(handle)
+        names = ["%02d %s" % (entry["number"], entry["name"]) for entry in entries]
+        if not names or len(set(names)) != len(names) or len({entry["number"] for entry in entries}) != len(entries):
+            raise ValueError("empty or duplicate catalog entries")
+        commands = [["bash", "verify/catalog/check.sh", "--entry", str(entry["number"]),
+                     "--jobs", "1", self.arguments.sha] for entry in entries]
+        def execute(name, command, scratch):
+            path = os.path.join(scratch, "catalog.log")
+            with open(path, "w") as output:
+                code = self.spawn(command, output, environment={"TMPDIR": scratch,
+                    "GOMAXPROCS": "1", "GOFLAGS": "-p=1"}).wait()
+            with open(path) as handle:
+                lines = handle.read().splitlines()
+            verdicts = [line for line in lines if line.startswith(name + ": ")]
+            caught = any("applies-and-fails-as-recorded" in line for line in verdicts)
+            stale = any("no-longer-applies" in line for line in verdicts)
+            skipped = any(": skipped (" in line for line in verdicts)
+            # A stale patch is upkeep; an error or a missing verdict is always red.
+            ok = (caught and code == 0) or (stale and code == 1) or (skipped and code == 0)
+            return {"exit": code, "ok": ok, "caught": caught, "stale": stale,
+                    "skipped": skipped, "verdicts": verdicts, "log": path}
+        self.phaseUnits("catalog", names, commands, execute)
+        rows = self.result["catalog_units"]
+        if not any(row.get("caught") and row.get("ok") for row in rows):
             self.exits["catalog"] = 1
-            self.fail("catalog", "the bug catalog: %s" % ("; ".join(uncaught) if uncaught else "check.sh exited %d with no entry caught or stale (see catalog.log)" % code))
-        else:
-            self.exits["catalog"] = 0
+            self.fail("catalog", "no catalog entry caught its mutation (see catalog_units)")
+        self.result["catalog"] = {"exit": self.exits["catalog"],
+            "caught": sum(row.get("caught", False) for row in rows),
+            "stale": [row["name"] for row in rows if row.get("stale")],
+            "uncaught": [row["name"] for row in rows if not row.get("ok")]}
+        with open(os.path.join(self.arguments.out, "catalog.log"), "w") as output:
+            for row in rows:
+                output.write("%s wall=%.3fs\n" % (row["name"], row["wall_seconds"]))
+                if row.get("log"):
+                    with open(row["log"]) as handle:
+                        shutil.copyfileobj(handle, output)
+
+    def wasiSplit(self, log, environment=None):
+        names = wasiFixtures(self.arguments.tree)
+        commands = [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
+                     "-p", "1", "-parallel", "1", "-run", fixturePattern(["TestWASI"], [name]),
+                     "./internal/native"] for name in names]
+        def execute(name, command, scratch):
+            events = []
+            class UnitLog:
+                def write(self, line):
+                    log.write(line)
+                    try:
+                        events.append(json.loads(line))
+                    except ValueError:
+                        pass
+            variables = dict(environment or {}, TMPDIR=scratch, GOMAXPROCS="1", GOFLAGS="-p=1")
+            code = self.stream("wasi/" + name, command, UnitLog(), environment=variables)
+            wanted = "TestWASI/" + name
+            passed = any(event.get("Test") == wanted and event.get("Action") == "pass" for event in events)
+            unexpected = sorted({event["Test"] for event in events if event.get("Action") == "run"
+                                 and event.get("Test", "").startswith("TestWASI/")
+                                 and event["Test"] != wanted and not wanted.startswith(event["Test"] + "/")})
+            return {"exit": code, "ok": code == 0 and passed and not unexpected, "test": wanted,
+                    "unexpected": unexpected,
+                    "passed": passed}
+        self.phaseUnits("wasi", names, commands, execute)
+
+    def phaseUnits(self, phase, names, commands, execute):
+        """One scratch and result per unit, with at most the slot's CPUs in flight.
+
+        Wall includes process startup and compilation. A unit over the 30 s budget is recorded (over_budget, and
+        the phase's slowest unit) and never disappears into an aggregate timing, but it isn't red: the budget's
+        ruling makes only a new unit over it red, and these phases' units are over it until their builds are
+        products by hash (#2q61kg9: the first catalog and WASI units pay the compiler's cold build).
+        """
+        started = time.monotonic()
+        slots = max(1, min(self.arguments.parallel, slotCPUs()))
+        rows = [{"name": name, "command": command, "status": "not run"}
+                for name, command in zip(names, commands)]
+        self.result[phase + "_units"] = rows
+        self.result[phase + "_unit_count"] = len(rows)
+        self.result[phase + "_unit_budget_seconds"] = 30
+        root = os.path.join(os.path.abspath(self.arguments.out), phase + "-units")
+        os.makedirs(root, exist_ok=True)
+        def work(item):
+            index, row = item
+            before = time.monotonic()
+            scratch = tempfile.mkdtemp(prefix="%02d-" % index, dir=root)
+            row["scratch"] = scratch
+            try:
+                row.update(execute(row["name"], row["command"], scratch))
+            except BaseException:
+                row.update(ok=False, error=traceback.format_exc())
+            elapsed = time.monotonic() - before
+            row["wall_seconds"] = round(elapsed, 6)
+            row["over_budget"] = elapsed > 30
+            row["status"] = "passed" if row["ok"] else "failed"
+            if row["status"] == "failed":
+                self.fail(phase + "/" + row["name"], json.dumps(row))
+        with ThreadPoolExecutor(max_workers=slots) as pool:
+            list(pool.map(work, enumerate(rows)))
+        self.result[phase + "_slowest_unit_seconds"] = max((row["wall_seconds"] for row in rows), default=0)
+        self.steps[phase] = round(time.monotonic() - started, 3)
+        self.exits[phase] = 0 if rows and all(row["status"] == "passed" for row in rows) else 1
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
@@ -1445,7 +1528,7 @@ class Gate:
     def stream(self, name, command, log, directory=None, environment=None):
         """Runs one go test (or test2json) process, copying its events to the log; the first failing
         event fails the gate. Returns the exit code, or None if the gate failed."""
-        stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (name, threading.get_ident()))
+        stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (re.sub(r"[^A-Za-z0-9_.-]", "_", name), threading.get_ident()))
         stderr = open(stderrPath, "w")
         try:
             process = self.spawn(command, subprocess.PIPE, stderr, directory, environment)
@@ -1715,6 +1798,7 @@ class Gate:
         outcomes = self.result.get("test_outcomes", [])
         self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
                                                for status in ("passed", "failed", "not run")}
+        self.result["gate_kind"] = self.kind
         with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
@@ -1865,6 +1949,38 @@ def longTests(units):
     """The units (testUnits) over longTestSeconds, longest first: (package, unit, seconds, action)."""
     return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > longTestSeconds),
                   key=lambda row: (-row[2], row[0], row[1]))
+
+
+def slotCPUs():
+    cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
+    try:
+        with open("/sys/fs/cgroup/cpu.max") as handle:
+            quota, period = handle.read().split()
+        if quota != "max":
+            cpus = min(cpus, max(1, int(quota) // int(period)))
+    except (OSError, ValueError):
+        pass
+    return cpus
+
+
+def wasiFixtures(tree):
+    """Read the compiler-owned fixture inventory; refuse changes we cannot enumerate."""
+    with open(os.path.join(tree, "internal/native/wasm_test.go")) as handle:
+        source = handle.read()
+    body = source.split("func TestWASI(t *testing.T) {", 1)[1].split("\nfunc ", 1)[0]
+    inventory = re.search(r'fixtures := \[\]string\{(.*?)\n\t\}', body, re.S)
+    if inventory is None:
+        raise ValueError("cannot enumerate TestWASI fixtures")
+    fixtures = re.findall(r'"([^"\n]+)"', inventory[1])
+    remainder = re.sub(r'"[^"\n]*"|\s|,', '', inventory[1])
+    runs = re.findall(r't\.Run\(([^,]+),', body)
+    if remainder or runs.count("fixture") != 1 or any(
+            name != "fixture" and not re.fullmatch(r'"[^"\n]+"', name) for name in runs):
+        raise ValueError("unrecognized TestWASI fixture registration")
+    fixtures += [json.loads(name) for name in runs if name != "fixture"]
+    if not fixtures or len(set(fixtures)) != len(fixtures):
+        raise ValueError("empty or duplicate TestWASI fixtures")
+    return fixtures
 
 
 def fixturePattern(prefix, fixtures):
