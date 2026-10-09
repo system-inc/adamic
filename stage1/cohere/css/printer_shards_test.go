@@ -1,7 +1,6 @@
 package css
 
 import (
-	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
@@ -14,7 +13,6 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
@@ -64,9 +62,9 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
-			ctx, cancel := context.WithTimeout(t.Context(), 60*time.Second)
-			defer cancel()
-			cmd := exec.CommandContext(ctx, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
+			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
+			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
+			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
 			cmd.Dir = filepath.Join(repo, "cohere")
 			output, err := cmd.CombinedOutput()
 			if err != nil {
@@ -76,6 +74,11 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 		})
 		cssOracles[index] = filepath.Join(directory, "oracle")
 	})
+	// A build that failed inside the Once leaves the path empty for every later caller in this process.
+	// Say so, rather than running an empty command.
+	if cssOracles[index] == "" {
+		t.Fatalf("css oracle product %d unavailable: its build failed earlier in this process (see that test's log)", index)
+	}
 	return cssOracles[index]
 }
 
@@ -121,6 +124,9 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 		})
 		cssExecutables[index] = cssExecutable{filepath.Join(directory, "native"), filepath.Join(directory, "main.mjs"), filepath.Join(directory, "sources/css/print_main.ts")}
 	})
+	if cssExecutables[index].binary == "" {
+		t.Fatalf("css printer product %d unavailable: its build failed earlier in this process (see that test's log)", variant)
+	}
 	return cssExecutables[index]
 }
 
