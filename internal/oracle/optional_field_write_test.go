@@ -203,8 +203,10 @@ func TestOptionalFieldCheckedViewPending(t *testing.T) {
 	}
 	_, err = lowered(t, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "checked view field slot") {
+	// Before views-v1 the target shape refuses the optional field. With views-v1,
+	// the checked alias pass refuses its optional representation conversion earlier.
+	if !errors.As(err, &notYet) || (notYet.What != "checked view field slot of type number | undefined" && notYet.What != "a checked field alias requiring an optional, accessor, or representation conversion") {
 		t.Fatalf("pending boundary changed: %v", err)
 	}
-	t.Skip("awaits views-v1: checked-view optional-write integration; v1 retains source-slot refusal, v2 selectors and v3 array hooks do not provide it")
+	t.Skip("checked-view optional-field conversion remains pending; landed views-v1 admits required scalar writes, not optional slots")
 }
