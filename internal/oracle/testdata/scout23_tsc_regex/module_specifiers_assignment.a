@@ -1,0 +1,29 @@
+// moduleSpecifiers.ts:133-160; memoization omitted to isolate the constructor contract.
+function stringToRegex(pattern: string): RegExp | undefined {
+    try {
+        let slash = pattern.indexOf("/");
+        if (slash !== 0) return new RegExp(pattern);
+        const lastSlash = pattern.lastIndexOf("/");
+        if (slash === lastSlash) return new RegExp(pattern);
+        while ((slash = pattern.indexOf("/", slash + 1)) !== lastSlash) {
+            if (pattern[slash - 1] !== "\\") return new RegExp(pattern);
+        }
+        const flags = pattern.substring(lastSlash + 1).replace(/[^iu]/g, "");
+        pattern = pattern.substring(1, lastSlash);
+        return new RegExp(pattern, flags);
+    } catch {
+        return undefined;
+    }
+}
+for (const pattern of ["^a", "/^a/i", "/^.$/u", "/^.$/", "/a\\/b/i", "/a/b/i", "/^a(?=b)/", "/(a)\\1/", "/foo/ii", "[", "/a/gyms", "/./"]) {
+    const expression = stringToRegex(pattern);
+    if (expression === undefined) {
+        console.log('invalid');
+    } else {
+        console.log(expression.source);
+        console.log(expression.flags);
+        for (const subject of ['a', 'A', 'ab', 'aa', 'a/b', '/a/b/i', 'foo', '😀', '\ud800']) {
+            console.log(`${expression.test(subject)}`);
+        }
+    }
+}

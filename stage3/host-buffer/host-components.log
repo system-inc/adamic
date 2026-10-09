@@ -1,0 +1,24 @@
+=== RUN   TestNodeBufferHostSHA256Component
+=== PAUSE TestNodeBufferHostSHA256Component
+=== RUN   TestNodeBufferHostFallbackComponent
+=== PAUSE TestNodeBufferHostFallbackComponent
+=== RUN   TestNodeBufferHostUTF16Components
+=== RUN   TestNodeBufferHostUTF16Components/02_readFile_utf16le.a
+=== PAUSE TestNodeBufferHostUTF16Components/02_readFile_utf16le.a
+=== RUN   TestNodeBufferHostUTF16Components/03_readFile_utf16be.a
+=== PAUSE TestNodeBufferHostUTF16Components/03_readFile_utf16be.a
+=== CONT  TestNodeBufferHostUTF16Components/02_readFile_utf16le.a
+=== CONT  TestNodeBufferHostUTF16Components/03_readFile_utf16be.a
+--- PASS: TestNodeBufferHostUTF16Components (0.00s)
+    --- PASS: TestNodeBufferHostUTF16Components/02_readFile_utf16le.a (0.33s)
+    --- PASS: TestNodeBufferHostUTF16Components/03_readFile_utf16be.a (0.38s)
+=== RUN   TestNodeBufferRuntimeWithoutDeclarations
+=== PAUSE TestNodeBufferRuntimeWithoutDeclarations
+=== CONT  TestNodeBufferHostSHA256Component
+=== CONT  TestNodeBufferRuntimeWithoutDeclarations
+=== CONT  TestNodeBufferHostFallbackComponent
+--- PASS: TestNodeBufferHostSHA256Component (0.35s)
+--- PASS: TestNodeBufferHostFallbackComponent (0.39s)
+--- PASS: TestNodeBufferRuntimeWithoutDeclarations (0.78s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.167s

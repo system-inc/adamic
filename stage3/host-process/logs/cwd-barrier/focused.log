@@ -1,0 +1,14 @@
+=== RUN   TestNodeProcessCwdErrorRuntime
+=== PAUSE TestNodeProcessCwdErrorRuntime
+=== RUN   TestNodeProcessCachedDirectory
+=== PAUSE TestNodeProcessCachedDirectory
+=== CONT  TestNodeProcessCwdErrorRuntime
+=== CONT  TestNodeProcessCachedDirectory
+=== NAME  TestNodeProcessCwdErrorRuntime
+    node_process_errors_test.go:232: removed cwd own code/message match Node; clean code mutant caught by Node stdout
+--- PASS: TestNodeProcessCwdErrorRuntime (0.78s)
+=== NAME  TestNodeProcessCachedDirectory
+    node_process_test.go:242: uncached cwd mutant compiled and ran without sanitizer errors; Node keeps its cached path, mutant panics with ENOENT
+--- PASS: TestNodeProcessCachedDirectory (1.28s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	1.288s

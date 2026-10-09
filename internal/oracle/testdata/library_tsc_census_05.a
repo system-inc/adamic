@@ -1,0 +1,3 @@
+// Reduced from debug.ts:407
+const result = ['Export', 'Ambient'];
+console.log(result.join('|'));

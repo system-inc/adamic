@@ -1,0 +1,3 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+parallelMap(items, (item) => Math.random() + item);

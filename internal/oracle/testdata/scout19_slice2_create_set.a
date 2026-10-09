@@ -1,0 +1,193 @@
+// Step 19 ruling 2. Original createSet body and protocol, not a built-in Set.
+// Compiler-owned expected refusal; core.ts:1622-1743, snapshot at 1713.
+type EqualityComparer<T> = (left: T, right: T) => boolean;
+interface Set<T> extends Iterable<T> {
+    has(element: T): boolean;
+    add(element: T): Set<T>;
+    delete(element: T): boolean;
+    clear(): void;
+    readonly size: number;
+    forEach(action: (value: T, key: T, set: Set<T>) => void): void;
+    keys(): SetIterator<T>;
+    values(): SetIterator<T>;
+    entries(): SetIterator<[T, T]>;
+    readonly [Symbol.toStringTag]: string;
+}
+export function createSet<TElement, THash = number>(getHashCode: (element: TElement) => THash, equals: EqualityComparer<TElement>): Set<TElement> {
+    const multiMap = new Map<THash, TElement | TElement[]>();
+    let size = 0;
+
+    function* getElementIterator(): SetIterator<TElement> {
+        for (const value of multiMap.values()) {
+            if (isArray(value)) {
+                yield* value;
+            }
+            else {
+                yield value;
+            }
+        }
+    }
+
+    const set: Set<TElement> = {
+        has(element: TElement): boolean {
+            const hash = getHashCode(element);
+            if (!multiMap.has(hash)) return false;
+            const candidates = multiMap.get(hash)!;
+            if (isArray(candidates)) return contains(candidates, element, equals);
+
+            return equals(candidates, element);
+        },
+        add(element: TElement): Set<TElement> {
+            const hash = getHashCode(element);
+            if (multiMap.has(hash)) {
+                const values = multiMap.get(hash)!;
+                if (isArray(values)) {
+                    if (!contains(values, element, equals)) {
+                        values.push(element);
+                        size++;
+                    }
+                }
+                else {
+                    const value = values;
+                    if (!equals(value, element)) {
+                        multiMap.set(hash, [value, element]);
+                        size++;
+                    }
+                }
+            }
+            else {
+                multiMap.set(hash, element);
+                size++;
+            }
+
+            return this;
+        },
+        delete(element: TElement): boolean {
+            const hash = getHashCode(element);
+            if (!multiMap.has(hash)) return false;
+            const candidates = multiMap.get(hash)!;
+            if (isArray(candidates)) {
+                for (let i = 0; i < candidates.length; i++) {
+                    if (equals(candidates[i], element)) {
+                        if (candidates.length === 1) {
+                            multiMap.delete(hash);
+                        }
+                        else if (candidates.length === 2) {
+                            multiMap.set(hash, candidates[1 - i]);
+                        }
+                        else {
+                            unorderedRemoveItemAt(candidates, i);
+                        }
+                        size--;
+                        return true;
+                    }
+                }
+            }
+            else {
+                const candidate = candidates;
+                if (equals(candidate, element)) {
+                    multiMap.delete(hash);
+                    size--;
+                    return true;
+                }
+            }
+
+            return false;
+        },
+        clear(): void {
+            multiMap.clear();
+            size = 0;
+        },
+        get size() {
+            return size;
+        },
+        forEach(action: (value: TElement, key: TElement, set: Set<TElement>) => void): void {
+            // NOTE: arrayFrom means that if the callback mutates the underlying collection,
+            //       we won't have an accurate set of values
+            for (const elements of arrayFrom(multiMap.values())) {
+                if (isArray(elements)) {
+                    for (const element of elements) {
+                        action(element, element, set);
+                    }
+                }
+                else {
+                    const element = elements;
+                    action(element, element, set);
+                }
+            }
+        },
+        keys(): SetIterator<TElement> {
+            return getElementIterator();
+        },
+        values(): SetIterator<TElement> {
+            return getElementIterator();
+        },
+        *entries(): SetIterator<[TElement, TElement]> {
+            for (const value of getElementIterator()) {
+                yield [value, value];
+            }
+        },
+        [Symbol.iterator]: () => {
+            return getElementIterator();
+        },
+        [Symbol.toStringTag]: multiMap[Symbol.toStringTag],
+    };
+
+    return set;
+}
+
+// Harness dependencies keep the upstream bodies, independently of the set protocol.
+function equateValues<T>(a: T, b: T): boolean { return a === b; }
+export function contains<T>(array: readonly T[] | undefined, value: T, equalityComparer: EqualityComparer<T> = equateValues): boolean {
+    if (array !== undefined) {
+        for (let i = 0; i < array.length; i++) {
+            if (equalityComparer(array[i], value)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+export function arrayFrom<T, U>(iterator: Iterable<T>, map: (t: T) => U): U[];
+export function arrayFrom<T>(iterator: Iterable<T>): T[];
+export function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
+    const result: (T | U)[] = [];
+    for (const value of iterator) {
+        result.push(map ? map(value) : value);
+    }
+    return result;
+}
+function unorderedRemoveItemAt<T>(array: T[], index: number): void {
+    // Fill in the "hole" left at `index`.
+    array[index] = array[array.length - 1];
+    array.pop();
+}
+function isArray<T>(value: T | T[]): value is T[] { return Array.isArray(value); }
+
+// Collision buckets are hash ordered, not global Set insertion order.
+interface Element { readonly span: number; readonly label: string; }
+const set = createSet<Element>(element => element.span % 2, (a, b) => a.span === b.span);
+for (const element of [{span: 1, label: 'a'}, {span: 2, label: 'b'}, {span: 3, label: 'c'}, {span: 1, label: 'duplicate'}]) set.add(element);
+console.log(`size ${set.size} custom ${set.has({span: 1, label: 'different'})}`);
+console.log(`order ${Array.from(set).map(element => element.label).join(',')}`);
+console.log(`keys ${Array.from(set.keys()).map(element => element.label).join(',')}`);
+console.log(`entries ${Array.from(set.entries()).map(pair => `${pair[0].label}:${pair[0] === pair[1]}`).join(',')}`);
+console.log(`tag ${String(set)}`);
+console.log(`delete ${set.delete({span: 1, label: 'different'})} ${set.delete({span: 99, label: 'absent'})}`);
+console.log(`remaining ${Array.from(set).map(element => element.label).join(',')}`);
+set.clear();
+set.add({span: 1, label: 'first'}).add({span: 2, label: 'second'}).add({span: 3, label: 'third'});
+const visited: string[] = [];
+set.forEach((value, key, receiver) => {
+    visited.push(`${value.label}:${value === key}:${receiver === set}`);
+    if (value.label === 'first') {
+        // The outer snapshot is shallow. Its existing bucket is still live.
+        set.add({span: 5, label: 'same-bucket'});
+        set.add({span: 4, label: 'new-collision'});
+        set.add({span: 6, label: 'later-collision'});
+    }
+});
+console.log(`snapshot ${visited.join(',')}`);
+console.log(`after ${Array.from(set.values()).map(element => element.label).join(',')}`);
+set.clear();
+console.log(`clear ${set.size}`);

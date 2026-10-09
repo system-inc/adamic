@@ -1,0 +1,34 @@
+function jsonDate(time: number): string | null {
+ return new Date(time).toJSON();
+}
+for (const time of [-8640000000000000, -62198755200000, -1, 0, 1, 951782400123, 253402300800000, 8640000000000000, NaN, Infinity]) {
+ const date = new Date(time);
+ const value = date.toJSON();
+ console.log(`${value} ${value === null} ${value === undefined} ${typeof value} ${String(value)} ${value ?? 'missing'}`);
+ console.log(`${value + '!'} ${JSON.stringify(value)} ${jsonDate(time)}`);
+ console.log(`${JSON.stringify(date)} ${JSON.stringify({date: date})} ${JSON.stringify([date])}`);
+ console.log(`${Date.prototype.toJSON.call(date, 'ignored')}`);
+ const array: (string | null)[] = [value, null, 'present'];
+ console.log(`${JSON.stringify(array)} ${array.join(',')}`);
+ if (value !== null) console.log(`${value.length} ${value.slice(0, 4)}`);
+}
+console.log(`${Number(new Date(NaN).toJSON())}`);
+let calls = 0;
+function ignored(): string { calls += 1; return 'key'; }
+const date = new Date(0);
+console.log(`${date.toJSON(ignored())} ${calls}`);
+function mutateForSpace(): string { date.setTime(1000); return ''; }
+console.log(`${JSON.stringify(date, null, mutateForSpace())}`);
+
+function tag<T>(value: T): string {return typeof value;}
+function serialize<T>(value: T): string {return JSON.stringify(value) ?? 'missing';}
+console.log(tag('present'));
+console.log(tag(new Date(NaN).toJSON()));
+console.log(serialize('present'));
+console.log(serialize(new Date(NaN).toJSON()));
+class Box<T> {
+ readonly value: T;
+ constructor(value: T) {this.value = value;}
+ tag(): string {return typeof this.value;}
+}
+console.log(new Box(new Date(NaN).toJSON()).tag());

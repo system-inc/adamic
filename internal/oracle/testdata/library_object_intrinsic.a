@@ -1,0 +1,36 @@
+console.log(Object.prototype.toString.call(null));
+console.log(Object.prototype.toString.call(undefined));
+console.log(Object.prototype.toString.call(42));
+console.log(Object.prototype.toString.call(false));
+console.log(Object.prototype.toString.call('A🌍'));
+const array: number[] = [1, 2];
+console.log(Object.prototype.toString.call(array));
+console.log(Object.prototype.toString.call((): number => 1));
+const object = { toString: (): string => 'override', own: undefined };
+console.log(Object.prototype.toString.call(object));
+for (const key of ['own', 'missing', 'toString', 'constructor']) {
+ console.log(`${key}: ${Object.prototype.hasOwnProperty.call(object, key)} ${Object.prototype.propertyIsEnumerable.call(object, key)}`);
+}
+for (const key of ['0', '1', '2', 'length', '01', '-0', '1x', 'constructor']) {
+ console.log(`${key}: ${Object.prototype.hasOwnProperty.call('A🌍', key)} ${Object.prototype.propertyIsEnumerable.call('A🌍', key)}`);
+ console.log(`${Object.prototype.hasOwnProperty.call(array, key)} ${Object.prototype.propertyIsEnumerable.call(array, key)}`);
+}
+console.log(`${Object.prototype.hasOwnProperty.call(42, 'toString')} ${Object.prototype.propertyIsEnumerable.call(false, 'valueOf')}`);
+let order = '';
+function receiver(): string { order += 'receiver '; return 'ab'; }
+function key(): string { order += 'key '; return '1'; }
+console.log(`${Object.prototype.hasOwnProperty.call(receiver(), key())} ${order}`);
+console.log(typeof Object.prototype.toString);
+console.log(`${Object.prototype.toString.length} ${Object.prototype.hasOwnProperty.length}`);
+console.log(Object.prototype.propertyIsEnumerable.name);
+console.log(`${Object.prototype.valueOf.prototype === undefined} ${!!Object.prototype.valueOf}`);
+console.log(`${Object.prototype.toString.hasOwnProperty('length')} ${Object.prototype.toString.hasOwnProperty('prototype')}`);
+console.log(`${Object.prototype.propertyIsEnumerable.propertyIsEnumerable('length')}`);
+console.log(`${Object.hasOwnProperty('prototype')} ${Object.hasOwnProperty('toString')} ${Object.propertyIsEnumerable('prototype')}`);
+console.log(`${Object.prototype.hasOwnProperty('constructor')} ${Object.prototype.hasOwnProperty('__proto__')} ${Object.prototype.hasOwnProperty('missing')}`);
+console.log(Object.prototype.toString());
+console.log(`${typeof Object.create} ${typeof Object.hasOwn} ${typeof Object.keys}`);
+console.log(`${Object.create.length} ${Object.defineProperty.length} ${Object.getOwnPropertyDescriptors.length} ${Object.hasOwn.length}`);
+console.log(Object.getOwnPropertyNames.name);
+console.log(`${Object.keys.prototype === undefined} ${Object.freeze.hasOwnProperty('length')} ${Object.defineProperty.hasOwnProperty('prototype')}`);
+console.log(`${Object.hasOwn(Object, 'hasOwn')} ${Object.hasOwn(Object.prototype, 'constructor')} ${Object.hasOwn(Object.keys, 'prototype')}`);

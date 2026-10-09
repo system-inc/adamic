@@ -1,0 +1,3 @@
+// compiler/debug.ts:554,594. Object intrinsic observation admitted by the merged step 22 family.
+console.log(`${typeof Object.setPrototypeOf === "function"}`);
+console.log(`${typeof Object.setPrototypeOf === "function"}`);
