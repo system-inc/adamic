@@ -49,6 +49,7 @@ codex/regex-	library
 codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
 # Stage 3
 codex/stage3-	stage3
+codex/stage3-parser-proof	hold	@system_adamic_typescript: step 24's parser rehearsal on an old train tip, evidence not for landing; step 24 is parked behind step 80 and typescript sends a landing-shaped branch when it reopens
 codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
 codex/step12-	hold	@system_adamic_typescript: step 12, the native scanner proof; typescript decides where each lands
 codex/tsc-cycle-	hold	@system_adamic_runtime: step 06, the census of tsc's cycle slots
