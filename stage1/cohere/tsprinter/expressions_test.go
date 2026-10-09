@@ -162,5 +162,11 @@ func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir str
 		}
 	}
 	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	return buildcache.Product(t, key, build)
+	digest, err := buildcache.Key(root, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return printerGateOnce(t, "expression-product-"+digest, func() string {
+		return buildcache.Product(t, key, build)
+	})
 }
