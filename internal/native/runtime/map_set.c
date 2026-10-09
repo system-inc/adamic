@@ -44,9 +44,55 @@ uint64_t adamic_map_number_hash(double number) {
 	return hash & 0x3fffffffu;
 }
 
-static const char *const iterator_names[] = {"next"};
+// Inherited method tables are immutable and shared by each iterator family. The bound closure
+// is private state, not the public next property; reflection and copying are refused.
+static adamic_value iterator_next(adamic_object *self, adamic_value *arguments) {
+	adamic_closure *next = self->slots[0].reference;
+	return next->code(next, arguments);
+}
+
+static adamic_value iterator_identity(adamic_object *self, adamic_value *arguments) {
+	(void)arguments;
+	return (adamic_value){.reference = adamic_retain(self)};
+}
+
+// Symbol.toStringTag belongs to the immutable shared family prototype, not
+// an iterator's own slots. The internal getter exposes that prototype data.
+static const adamic_string iterator_tags[] = {
+ ADAMIC_STRING("Map Iterator"), ADAMIC_STRING("Set Iterator"),
+ ADAMIC_STRING("Array Iterator"), ADAMIC_STRING("String Iterator")
+};
+static adamic_value map_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[0]}; }
+static adamic_value set_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[1]}; }
+static adamic_value array_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[2]}; }
+static adamic_value string_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[3]}; }
+static const char *const iterator_method_names[] = {"next", "__adamic_symbol_iterator", "__adamic_iterator_tag"};
+// V8 has one next method per family, with a common inherited Symbol.iterator.
+static adamic_value array_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+static adamic_value set_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+static adamic_value string_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define ITERATOR_METHOD(function) {.counted = false, .code = function}
+#else
+#define ITERATOR_METHOD(function) function
+#endif
+static const adamic_method_entry iterator_method_code[][3] = {
+	{ITERATOR_METHOD(iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(map_iterator_tag)}, {ITERATOR_METHOD(set_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(set_iterator_tag)},
+	{ITERATOR_METHOD(array_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(array_iterator_tag)}, {ITERATOR_METHOD(string_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(string_iterator_tag)}
+};
+#undef ITERATOR_METHOD
+static const adamic_methods iterator_prototypes[] = {
+	{3, iterator_method_names, iterator_method_code[0]}, {3, iterator_method_names, iterator_method_code[1]},
+	{3, iterator_method_names, iterator_method_code[2]}, {3, iterator_method_names, iterator_method_code[3]}
+};
+static const char *const iterator_names[] = {"__adamic_iterator_state"};
 static const bool iterator_references[] = {true};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL};
+static const adamic_shape iterator_shapes[] = {
+	{1, iterator_names, iterator_references, &iterator_prototypes[0]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[1]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[2]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[3]}
+};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
 static const adamic_shape state_shape = {5, state_names, state_references, NULL};
@@ -110,7 +156,76 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	return (adamic_value){.reference = result};
 }
 
-adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set) {
+// Port of V8's ArrayIteratorPrototypeNext and StringIteratorPrototypeNext (Node 24.19.0).
+// Dense arrays read length and the current element on every call. An explicit exhaustion
+// flag is the equivalent of V8's terminal Array next index, so later growth cannot revive it.
+static adamic_value sequence_next(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	adamic_object *state = self->cells[0]->value.reference;
+	adamic_heap *source = state->slots[0].reference;
+	int part = (int)state->slots[1].number;
+	int type = (int)state->slots[3].number;
+	size_t position = (size_t)state->slots[2].number;
+	bool string = source->kind == adamic_kind_string;
+	size_t length = string ? (size_t)adamic_string_length((adamic_string *)source) : ((adamic_array *)source)->length;
+	bool reference = string || part == 3 || (part != 1 && collection_reference(type));
+	adamic_object *result = adamic_object_new(&result_shapes[reference ? 1 : 0]);
+	bool done = state->slots[4].boolean || position >= length;
+	result->slots[0].boolean = done;
+	if (done) {
+		state->slots[4].boolean = true;
+		if (!reference) { result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0}); }
+		return (adamic_value){.reference = result};
+	}
+	if (string) {
+		// V8 LoadSurrogatePairAt consumes exactly one valid pair or one lone unit.
+		adamic_string *text = (adamic_string *)source;
+		size_t width = 1;
+		double first = adamic_string_char_code_at(text, (double)position);
+		if (first >= 0xd800 && first <= 0xdbff && position + 1 < length) {
+			double second = adamic_string_char_code_at(text, (double)(position + 1));
+			if (second >= 0xdc00 && second <= 0xdfff) { width = 2; }
+		}
+		state->slots[2].number = (double)(position + width);
+		result->slots[1].reference = adamic_string_slice(text, (double)position, (double)(position + width), true);
+	} else {
+		state->slots[2].number = (double)(position + 1);
+		adamic_value element = ((adamic_array *)source)->elements[position];
+		if (part == 3) {
+			adamic_object *pair = adamic_object_new(&pair_shapes[collection_reference(type) ? 1 : 0]);
+			pair->slots[0].number = (double)position;
+			pair->slots[1] = element;
+			if (collection_reference(type)) { adamic_retain(element.reference); }
+			result->slots[1].reference = pair;
+		} else if (part == 1) {
+			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){true, (double)position});
+		} else {
+			if (collection_reference(type)) { adamic_retain(element.reference); }
+			if (type == 1) { element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number}); }
+			result->slots[1] = element;
+		}
+	}
+	return (adamic_value){.reference = result};
+}
+
+static adamic_object *sequence_iterator(void *collection, int part, int value) {
+	adamic_object *state = adamic_object_new(&state_shape);
+	state->slots[0].reference = adamic_retain(collection);
+	state->slots[1].number = part;
+	state->slots[2].number = 0;
+	state->slots[3].number = value;
+	state->slots[4].boolean = false;
+	adamic_closure *next = adamic_closure_new(sequence_next, 1);
+	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
+	adamic_object *object = adamic_object_new(&iterator_shapes[((adamic_heap *)collection)->kind == adamic_kind_string ? 3 : 2]);
+	object->slots[0].reference = next;
+	return object;
+}
+
+adamic_object *adamic_collection_iterator(void *collection, int part, int key, int value, bool set) {
+	if (((adamic_heap *)collection)->kind != adamic_kind_map) {
+		return sequence_iterator(collection, part, value);
+	}
 	adamic_object *state = adamic_object_new(&state_shape);
 	state->slots[0].reference = adamic_map_iterate(collection);
 	state->slots[1].number = part;
@@ -119,7 +234,7 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	state->slots[4].boolean = set;
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
-	adamic_object *object = adamic_object_new(&iterator_shape);
+	adamic_object *object = adamic_object_new(&iterator_shapes[set ? 1 : 0]);
 	object->slots[0].reference = next;
 	return object;
 }

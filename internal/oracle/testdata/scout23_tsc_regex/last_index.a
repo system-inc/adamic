@@ -1,0 +1,12 @@
+// utilities.ts:12178-12181; AST lookup replaced by observing its UTF-16 position argument.
+function positions(text: string): void {
+    const r = /import|require/g;
+    while (r.exec(text) !== null) {
+        console.log(`${r.lastIndex}`);
+    }
+    console.log(`${r.lastIndex}`);
+}
+positions('import "a"; require("b");');
+positions('😀 import "a"; require("b"); import');
+positions('IMPORT REQuire');
+positions('');

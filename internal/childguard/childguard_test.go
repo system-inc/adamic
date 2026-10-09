@@ -128,3 +128,25 @@ func TestNoFirstOutput(t *testing.T) {
 		t.Fatalf("first-output stall took %s", elapsed)
 	}
 }
+
+// File descriptor type is part of the oracle observation. Wrapping this output
+// in a pipe would make the otherwise valid child print the wrong answer.
+func TestKeepFilesReportsRealOutput(t *testing.T) {
+	file, err := os.CreateTemp(t.TempDir(), "stdout")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer file.Close()
+	command := exec.Command("sh", "-c", `if [ -f /dev/stdout ]; then printf 'regular\n'; else printf 'pipe\n'; fi; sleep 3600`)
+	command.Stdout = file
+	started := false
+	err = Run(command, Options{KeepFiles: true, Started: func() { started = true }, FirstOutput: 5 * time.Second, Stall: 300 * time.Millisecond})
+	var stopped *Error
+	if !errors.As(err, &stopped) || stopped.FirstOutput || stopped.Reason != "stalled" || !started {
+		t.Fatalf("file output escaped stall guard: %v", err)
+	}
+	data, err := os.ReadFile(file.Name())
+	if err != nil || string(data) != "regular\n" {
+		t.Fatalf("descriptor semantics changed: %q %v", data, err)
+	}
+}

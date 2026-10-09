@@ -1,0 +1,13 @@
+// core.ts:2170-2175: spelling-suggestion length and distance thresholds.
+function thresholds(name: string, candidateName: string): string {
+    const maximumLengthDifference = Math.max(2, Math.floor(name.length * 0.34));
+    let bestDistance = Math.floor(name.length * 0.4) + 1;
+    return `${maximumLengthDifference}:${bestDistance}:${Math.abs(candidateName.length - name.length) <= maximumLengthDifference}`;
+}
+for (const name of ['', 'x', 'abcdefgh', 'abcdefghijklmnopqrstuvwxyz']) console.log(thresholds(name, 'candidate'));
+// semver.ts:169: common prefix length.
+function commonLength(left: string, right: string): number { return Math.min(left.length, right.length); }
+console.log(`${commonLength('a', 'abc')} ${commonLength('abc', 'a')}`);
+// watch.ts:308: error-count column width.
+const numberLength = (num: number) => Math.log(num) * Math.LOG10E + 1;
+for (const value of [1, 2, 10, 0, -1]) console.log(`${numberLength(value)}`);

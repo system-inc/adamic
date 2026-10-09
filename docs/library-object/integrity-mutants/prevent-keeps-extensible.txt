@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a (10.73s)
+        oracle_test.go:580: stdout differs
+            node:   exit 0, stdout "false\ntrue true true\n3 false\ntrue true true true\nfalse false\nfalse\n1 true abc true\ntrue true false false\n9 built-sealed\ntrue false\ntrue true false\ntrue false false\ntrue false true true\nfalse false false\n2\nfalse true 4\ntrue\ntrue true true true true\nfalse false false false false\nfalse true false true\ntrue 1 abc true 1\ntrue true\n", stderr ""
+            native: exit 0, stdout "false\ntrue true true\n3 false\ntrue true true true\nfalse false\nfalse\n1 true abc true\ntrue false false true\n9 built-sealed\nfalse false\ntrue true false\ntrue false false\ntrue true false false\nfalse false true\n2\nfalse true 4\ntrue\ntrue true true true true\nfalse false false false false\nfalse true false true\ntrue 1 abc true 1\ntrue true\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.741s
+FAIL

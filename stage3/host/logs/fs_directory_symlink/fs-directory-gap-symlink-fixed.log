@@ -1,0 +1,37 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectorySymlinkMutants
+=== PAUSE TestNodeFSDirectorySymlinkMutants
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodeFSDirectorySymlinkMutants
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestNodeFSDirectorySymlinkMutants/target
+=== RUN   TestNodeFSDirectorySymlinkMutants/code
+=== PAUSE TestNodeFSDirectorySymlinkMutants/code
+=== RUN   TestNodeFSDirectorySymlinkMutants/message
+=== PAUSE TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/code
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestNodeFSDirectorySymlinkMutants/message
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== NAME  TestNodeFSDirectorySymlinkMutants/code
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== NAME  TestNodeFSDirectorySymlinkMutants/target
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+--- PASS: TestNodeFSDirectorySymlinkMutants (0.00s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/message (2.32s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/code (2.34s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/target (2.97s)
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (3.03s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	3.064s

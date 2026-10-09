@@ -20,7 +20,6 @@ type refusal struct {
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
@@ -56,6 +55,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
 	var contractError error
@@ -82,6 +84,18 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.dateRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "toPrimitive" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol") {
+			found = l.notYet(node, "Symbol.toPrimitive hooks need verified intrinsic provenance and tagged callable dispatch")
+			return true
+		}
+		if err := l.errorStackSyntaxRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}
@@ -101,7 +115,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+		if node.Kind == ast.KindUnionType {
+			proven := l.checker.GetTypeAtLocation(node)
+			if l.includesNull(proven) && l.includesUndefined(proven) {
+				found = l.notYet(node, nullableTagReason)
+				return true
+			}
+		}
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
@@ -120,7 +141,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		checkedCast := false
-		if node.Kind == ast.KindAsExpression {
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" && !(node.Parent != nil && l.errorCaptureRead(node.Parent)) {
 			proof, err := l.castProof(node)
 			if err != nil {
 				found = err
@@ -151,10 +174,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
 			return true
 		}
-		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
-			return true
-		}
+		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
+		// operations get specific NotYet there; permanent refusals above still apply.
+
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
@@ -180,7 +202,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				}
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.borrowedOwnReadAllowed(node) && !l.libraryMethodReadAllowed(node) && !l.libraryNumberBoundMethod(node) && !l.dateMethodRead(node) && !l.libraryObjectBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {
@@ -212,6 +234,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		// Preserve the library optional-field explanation before the mutable-view check.
+		if err := l.refuseOptionalWidening(node); err != nil {
+			found = err
+			return true
+		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
 		// A checked cast relates only members selected by its tag, not excluded source members.
 		if !checkedCast {
@@ -219,10 +246,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-		}
-		if err := l.refuseOptionalWidening(node); err != nil {
-			found = err
-			return true
 		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err

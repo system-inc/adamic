@@ -81,10 +81,10 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 func onWASI(t *testing.T, source string) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
-	}
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	buildWASI(t, source, binary)
+	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	wasiRuntimeRefusal(t, actual)
+	return actual
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
@@ -123,7 +123,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		command := bounded(t, compiler, "--target=wasm32-wasi", "--sysroot="+sysroot, "-O2", "-mexec-model=command", source, "-o", binary)
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedChildOutput(command); err != nil {
 			t.Fatalf("probe build: %v\n%s", err, output)
 		}
 		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
@@ -170,7 +170,7 @@ func TestWASIEmission(t *testing.T) {
 				t.Fatal(err)
 			}
 			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
-			if output, err := bounded(t, compiler, flags...).CombinedOutput(); err != nil {
+			if output, err := combinedChildOutput(boundedCompile(t, compiler, flags...)); err != nil {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}
 		})
