@@ -258,3 +258,34 @@ func TestPinnedRepositoryCorpusUnavailable(t *testing.T) {
 		t.Log(err)
 	}
 }
+
+func TestPinnedRepositoryCorpusShallowFetch(t *testing.T) {
+	t.Parallel()
+	fixture := newRepositoryFixture(t)
+	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pin := strings.TrimSpace(string(head))
+	before, err := repositoryCasesAtPin(fixture.root, pin)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// An empty checkout has neither the pin nor any working-tree JSON. Exercise
+	// the same exact-SHA fetch the reader uses on a shallow gate checkout.
+	shallow := t.TempDir()
+	fixtureGit(t, shallow, "init", "-q")
+	fixtureGit(t, shallow, "remote", "add", "origin", fixture.root)
+	after, err := repositoryCasesAtPin(shallow, pin)
+	if err != nil {
+		t.Fatal(err)
+	}
+	state, err := gitCorpus(shallow, "rev-parse", "--is-shallow-repository")
+	if err != nil || strings.TrimSpace(string(state)) != "true" {
+		t.Fatalf("fetch did not create a shallow checkout: %s %v", state, err)
+	}
+	if fmt.Sprint(before) != fmt.Sprint(after) {
+		t.Fatal("fresh shallow fetch changed pinned names or bytes")
+	}
+	t.Logf("fresh shallow checkout fetched pin %s: %d identical inputs, without working-tree files", pin, len(after))
+}
