@@ -543,4 +543,4 @@ Timing evidence:
 - P01 standalone native rebuild: emission 83.617 s, clang 5.401 s; statuses 0/0.
 - M03 standalone native rebuild: emission 89.970 s, clang 13.739 s; statuses 0/0.
 
-Not covered: whole-package mutant replay, repository uniqueness, complete snapshot agreement, exhaustive runtime paths, primary empty probes for Lower/C/JavaScript/Native.Build, and a permitted weakening of the nested module-loader witness. Production source restored; final restored runnable-slice check is logged. Total work about 33 minutes, exceeding the approximate 30-minute port budget to finish independent diff compilation and publish complete evidence.
+Not covered: whole-package mutant replay, repository uniqueness, complete snapshot agreement, exhaustive runtime paths, primary empty probes for Lower/C/JavaScript/Native.Build, and a permitted weakening of the nested module-loader witness. Production source restored; final restored runnable-slice check is logged. Total work about 38 minutes, exceeding the approximate 30-minute port budget to finish independent diff compilation and publish complete evidence.
