@@ -1,0 +1,15 @@
+// A last case with no body matches and runs nothing; it doesn't fall to the default.
+function kind(code: number): string {
+	let said = 'nothing';
+	switch (code) {
+		default:
+			said = 'default';
+			break;
+		case 1:
+			said = 'one';
+			break;
+		case 2:
+	}
+	return said;
+}
+console.log(`${kind(1)} ${kind(2)} ${kind(3)}`);

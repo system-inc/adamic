@@ -1,0 +1,14 @@
+interface Room {
+	readonly name: string;
+	readonly doors: Map<string, Room>;
+}
+const attach = (hall: Room): void => {
+	hall.doors.set('a', { name: 'fresh', doors: new Map<string, Room>() }).set('b', hall); // closes the cycle
+};
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	const hall: Room = { name: `h${i}`, doors: new Map<string, Room>() };
+	attach(hall);
+	total += hall.doors.size;
+}
+console.log(`${total}`);

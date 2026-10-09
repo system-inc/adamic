@@ -1,0 +1,9 @@
+interface Named { name: string; }
+interface Aged { name: string; age: number; }
+class Writer {
+ raw(value: { pets: Named[] }): void { value.pets.push({ name: 'stray' }); }
+}
+const kennel: { pets: Aged[] } = { pets: [{ name: 'rex', age: 3 }] };
+new Writer().raw(kennel);
+console.log(`${kennel.pets.length}`);
+for (const pet of kennel.pets) { console.log(`${pet.name} ${pet.age + 1}`); }

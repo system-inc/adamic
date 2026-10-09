@@ -1,0 +1,31 @@
+// The field and captured-variable forms of defined_lent.a: a narrowed field, and a narrowed captured
+// variable, each lent through ir.Defined to a call whose next argument frees what was read.
+interface Box {
+	v: string;
+}
+interface Holder {
+	box: Box | undefined;
+}
+const holder: Holder = { box: { v: `a${1}` } };
+function replace(): number {
+	holder.box = { v: `b${2}` };
+	return 0;
+}
+function show(box: Box, n: number): string {
+	return `${box.v}${n}`;
+}
+if (holder.box !== undefined) {
+	console.log(show(holder.box, replace()));
+}
+function captured(): string {
+	let local: Box | undefined = { v: `c${3}` };
+	const drop = (): number => {
+		local = { v: `d${4}` };
+		return 1;
+	};
+	if (local !== undefined) {
+		return show(local, drop());
+	}
+	return "none";
+}
+console.log(captured());
