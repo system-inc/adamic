@@ -139,6 +139,8 @@ const testCommentMutantsShards = 5
 // ADAMIC_TEST_SHARD=i/n (zero-based i) selects deterministic mutant shards; unset runs all.
 // Builds are inputs, prepared once before the parallel units. Every unit runs
 // the entire witness corpus under the original sanitizers and leak checks.
+// The fixed mutant list determines shard identity; growing testdata/witnesses.json
+// never moves an existing case to another shard.
 func TestCommentMutants(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
 	// The runtime archive is a separate hashed input shared by all mutant builds.
@@ -393,6 +395,9 @@ func checkCommentMutantUnion(t *testing.T, ids []string, path string) {
 	var rows []struct{ Name string }
 	if err := json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
+	}
+	if len(rows) == 0 {
+		t.Fatal("comment mutant corpus must be non-empty")
 	}
 	expected := make(map[string]bool)
 	for _, id := range ids {

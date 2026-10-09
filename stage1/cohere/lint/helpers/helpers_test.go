@@ -154,7 +154,9 @@ const testHelperMutantsShards = 4
 
 // ADAMIC_TEST_SHARD=i/n selects units locally; unset runs all. The gate can
 // select shard-NNN directly. Every unit keeps the entire case corpus and original
-// sanitizer/leak checks. Build inputs are shared until internal/buildcache lands.
+// sanitizer/leak checks. The fixed mutant list determines shard identity; growing
+// testdata/cases.json.gz never moves an existing case to another shard.
+// Build inputs are shared until internal/buildcache lands.
 func TestHelperMutants(t *testing.T) {
 	cases := fixture(t)
 	catalog, _ := filepath.Abs("testdata/catalog.json")
@@ -321,6 +323,9 @@ func checkHelperMutantUnion(t *testing.T, ids []string, cases string) {
 	var corpus struct{ Cases []json.RawMessage }
 	if err := json.Unmarshal(data, &corpus); err != nil {
 		t.Fatal(err)
+	}
+	if len(corpus.Cases) == 0 {
+		t.Fatal("helper mutant corpus must be non-empty")
 	}
 	expected := map[string]bool{}
 	for _, id := range ids {

@@ -12,6 +12,9 @@ import (
 	"time"
 )
 
+// Generated table.json and shapes/fixtures.json are fixed by cohere commit
+// 7945d102a6c18dd36adf9114a758ce646e8b2359 (testdata/shapes/CENSUS.md).
+// Their pinned fixture count guards corpus loss; sample totals are enumerated live.
 const testShapeFixturesShards = 107
 
 // ADAMIC_TEST_SHARD=i/n (zero-based i) selects units locally; unset runs all.
