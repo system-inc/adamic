@@ -139,7 +139,9 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 				checks = append(checks, check{"leaks", binary, []string{cases}, []string{"ASAN_OPTIONS=detect_leaks=1"}, 1})
 			} else {
 				report := malformedEventsExecute(t, ctx, nil, "leaks", "--atExit", "--", fast, cases)
-				clean(t, "leaks", report)
+				if report.exitCode != 0 {
+					t.Fatalf("leaks: exit %d\n%s", report.exitCode, report.stdout)
+				}
 			}
 			// Independent sides share read-only products and case transport. Four
 			// shared process slots bound the group on a four-CPU instance.

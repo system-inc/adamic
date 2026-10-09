@@ -7,16 +7,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"sort"
+	"sync"
+	"testing"
+
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"os"
-	"os/exec"
-	"sort"
-	"sync"
-
-	"path/filepath"
-	"testing"
 )
 
 func TestProduct_MarkdownTextLowered(t *testing.T) {
