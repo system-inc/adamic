@@ -145,3 +145,19 @@ func TestPhantomRealPathRefusal(t *testing.T) {
 		t.Fatalf("got %v, want %s", err, want)
 	}
 }
+
+func TestPhantomOverloadOnlyBrandsKeepMainProof(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("../oracle/testdata/overload_ancestor_directory.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := lowerSource(t, string(source)); err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, `type Path = string & { readonly pathBrand: true };
+ function read(path: Path): string { return path; }`)
+	if err == nil || !strings.Contains(err.Error(), "whose type is not void") {
+		t.Fatalf("want non-phantom runtime brand refusal, got %v", err)
+	}
+}

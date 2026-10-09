@@ -121,7 +121,7 @@ func (l *lowering) phantomRefusal(node *ast.Node) error {
 			objects = append(objects, proven)
 		}
 	}
-	if primitive == nil {
+	if primitive == nil || l.phantomOverloadOnly(node) {
 		return nil
 	}
 	for _, object := range objects {
@@ -267,4 +267,44 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 func (l *lowering) phantomSpelling(value ir.Expression) ir.Expression {
 	text := ir.StringConstant{Index: l.constant("undefined")}
 	return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}
+}
+
+// Main already admits brands mentioned only in erased overload signatures. They
+// never reach a runtime slot, so the new primitive representation is not needed.
+// Any reference outside a bodyless function declaration keeps the refusal.
+func (l *lowering) phantomOverloadOnly(node *ast.Node) bool {
+	alias := node.Parent
+	if alias == nil || alias.Kind != ast.KindTypeAliasDeclaration {
+		return false
+	}
+	symbol := l.symbol(alias.Name())
+	if symbol == nil {
+		return false
+	}
+	seen, safe := false, true
+	var visit ast.Visitor
+	visit = func(use *ast.Node) bool {
+		if !safe {
+			return false
+		}
+		if ast.IsIdentifier(use) && use != alias.Name() && l.symbol(use) == symbol {
+			seen = true
+			var declaration *ast.Node
+			for parent := use.Parent; parent != nil; parent = parent.Parent {
+				if parent.Kind == ast.KindFunctionDeclaration {
+					declaration = parent
+					break
+				}
+			}
+			if declaration == nil || declaration.Body() != nil {
+				safe = false
+				return false
+			}
+		}
+		return use.ForEachChild(visit)
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		file.Node.ForEachChild(visit)
+	}
+	return seen && safe
 }
