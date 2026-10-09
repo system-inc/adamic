@@ -1,0 +1,10 @@
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -24,6 +24,7 @@
+ 	return nil
+ }
+ func (l *lowering) needsStatics(declaration *ast.Node) bool {
++	if true { return false }
+ 	// A class is in the temporal dead zone even when it has no static members.
+ 	// Cyclic graphs and namespace classes need the same ready storage for
+ 	// construction and extends, including classes without static members.

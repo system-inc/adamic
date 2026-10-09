@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:36.907305002Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:36.913713761Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals"}
+{"Time":"2026-10-09T10:13:36.913763216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Output":"=== RUN   TestClassFeaturesAccessorRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:36.913783847Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Output":"=== PAUSE TestClassFeaturesAccessorRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:36.91378605Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals"}
+{"Time":"2026-10-09T10:13:36.913788153Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals"}
+{"Time":"2026-10-09T10:13:36.913789716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Output":"=== CONT  TestClassFeaturesAccessorRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:37.009064322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Output":"    class_features_test.go:87: want throwing spread diagnosed, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:37.009156571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Output":"--- FAIL: TestClassFeaturesAccessorRefusals (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:37.009160407Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorRefusals","Elapsed":0.1}
+{"Time":"2026-10-09T10:13:37.009180818Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:37.010643372Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.103s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:37.010683312Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.103}

@@ -1,0 +1,17 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -395,14 +395,6 @@
+ 			queue = append(queue, f.libraryIteratorCaptures(proven)...)
+ 		case f.isFunction(proven):
+ 			// Construct signatures can hide constructor objects behind an interface.
+-			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+-				for symbol := range f.l.statics {
+-					actual := f.l.checker.GetTypeOfSymbol(symbol)
+-					if f.l.checker.IsTypeAssignableTo(actual, proven) {
+-						queue = append(queue, cycleNode{proven: actual})
+-					}
+-				}
+-			}
+ 			// What a function value holds is what it captured: the cells of every function value the
+ 			// program makes that can be seen as this type.
+ 			for _, closure := range f.l.closureRecords {

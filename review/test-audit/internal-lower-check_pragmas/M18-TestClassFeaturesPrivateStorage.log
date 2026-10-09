@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:35.229828778Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:35.237200079Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T10:13:35.237278216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== RUN   TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.237301101Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== PAUSE TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.237303514Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T10:13:35.237305818Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T10:13:35.237308943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== CONT  TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.268693107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"    class_features_test.go:69: private storage lost its visibility metadata: 1\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:35.268777304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"--- FAIL: TestClassFeaturesPrivateStorage (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.268784855Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Elapsed":0.03}
+{"Time":"2026-10-09T10:13:35.268804335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.268941872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.039s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:35.268958748Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.039}

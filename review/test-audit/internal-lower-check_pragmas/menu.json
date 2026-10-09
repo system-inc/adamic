@@ -1,0 +1,162 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/refusals.go",
+    "line": 54,
+    "old": "pragma.Name == \"ts-nocheck\" || pragma.Name == \"ts-check\"",
+    "new": "pragma.Name == \"ts-nocheck\" || pragma.Name != \"ts-check\"",
+    "change": "flip ts-check condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/refusals.go",
+    "line": 56,
+    "old": "line+1, column+1), What: \"@\" + pragma.Name",
+    "new": "line+2, column+1), What: \"@\" + pragma.Name",
+    "change": "off-by-one pragma line"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/refusals.go",
+    "line": 53,
+    "old": "\tfor _, pragma := range module.Pragmas {\n\t\tif pragma.Name == \"ts-nocheck\" || pragma.Name == \"ts-check\" {\n\t\t\tline, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())\n\t\t\treturn &Refused{Where: fmt.Sprintf(\"%s:%d:%d\", l.program.FileName(module), line+1, column+1), What: \"@\" + pragma.Name + \" checking pragma\", Fix: \"remove it and fix any type errors\"}\n\t\t}\n\t}\n",
+    "new": "",
+    "change": "drop whole pragma loop"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 253,
+    "old": "Private: member.Name().Kind == ast.KindPrivateIdentifier",
+    "new": "Private: false",
+    "change": "change private metadata constant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/class_static.go",
+    "line": 90,
+    "old": "Constructor: -1, Static: true",
+    "new": "Constructor: -1, Static: false",
+    "change": "change static metadata constant"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 48,
+    "old": "func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {",
+    "new": "func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/class_accessors.go",
+    "line": 367,
+    "old": "func (l *lowering) checkAccessorSpreads() error {",
+    "new": "func (l *lowering) checkAccessorSpreads() error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/class_static.go",
+    "line": 347,
+    "old": "func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {",
+    "new": "func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/object.go",
+    "line": 508,
+    "old": "if !l.classAssignable(declared, observed) {",
+    "new": "if l.classAssignable(declared, observed) {",
+    "change": "flip narrowed accessor condition"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/cycles.go",
+    "line": 63,
+    "old": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {",
+    "new": "func (l *lowering) findCycles(modules []*ast.SourceFile) error {\n\tif true { return nil }",
+    "change": "return early: nil"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/cycles.go",
+    "line": 426,
+    "old": "\t\t\tfor _, accessor := range f.l.accessorCaptures {\n\t\t\t\tif f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {\n\t\t\t\t\tfor _, local := range f.l.result.Functions[accessor.function].Environment {\n\t\t\t\t\t\tqueue = append(queue, cycleNode{cell: local + 1})\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n",
+    "new": "",
+    "change": "drop accessor capture traversal loop"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/cycles.go",
+    "line": 421,
+    "old": "\t\t\tif f.l.isStaticType(proven) {\n\t\t\t\tif parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {\n\t\t\t\t\tqueue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})\n\t\t\t\t}\n\t\t\t}\n",
+    "new": "",
+    "change": "drop static parent traversal block"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/cycles.go",
+    "line": 398,
+    "old": "\t\t\tif len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {\n\t\t\t\tfor symbol := range f.l.statics {\n\t\t\t\t\tactual := f.l.checker.GetTypeOfSymbol(symbol)\n\t\t\t\t\tif f.l.checker.IsTypeAssignableTo(actual, proven) {\n\t\t\t\t\t\tqueue = append(queue, cycleNode{proven: actual})\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n",
+    "new": "",
+    "change": "drop construct-signature traversal block"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/class_static.go",
+    "line": 26,
+    "old": "func (l *lowering) needsStatics(declaration *ast.Node) bool {",
+    "new": "func (l *lowering) needsStatics(declaration *ast.Node) bool {\n\tif true { return false }",
+    "change": "return early: false"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/class_static.go",
+    "line": 331,
+    "old": "\t\tstatements = append(statements, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{object}}})\n",
+    "new": "",
+    "change": "drop static initializer call statement"
+  },
+  {
+    "id": "M16",
+    "file": "internal/load/load.go",
+    "line": 233,
+    "old": "\t\tall = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)\n",
+    "new": "",
+    "change": "drop semantic diagnostic collection"
+  },
+  {
+    "id": "M17",
+    "file": "internal/load/load.go",
+    "line": 255,
+    "old": "\"error TS%d: %s\"",
+    "new": "\"diagnostic TS%d: %s\"",
+    "change": "change diagnostic label constant"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/lower.go",
+    "line": 59,
+    "old": "\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n",
+    "new": "",
+    "change": "drop whole module-body lowering loop to avoid unused body local"
+  },
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }",
+    "change": "return early: nil, nil"
+  },
+  {
+    "id": "P2",
+    "file": "internal/load/load.go",
+    "line": 80,
+    "old": "func Load(paths []string) (*Program, error) {",
+    "new": "func Load(paths []string) (*Program, error) {\n\tif true { return nil, nil }",
+    "change": "return early: nil, nil"
+  }
+]

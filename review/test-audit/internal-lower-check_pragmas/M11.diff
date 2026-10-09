@@ -1,0 +1,16 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -423,13 +423,6 @@
+ 					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
+ 				}
+ 			}
+-			for _, accessor := range f.l.accessorCaptures {
+-				if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+-					for _, local := range f.l.result.Functions[accessor.function].Environment {
+-						queue = append(queue, cycleNode{cell: local + 1})
+-					}
+-				}
+-			}
+ 			for _, field := range f.fields(proven) {
+ 				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
+ 			}

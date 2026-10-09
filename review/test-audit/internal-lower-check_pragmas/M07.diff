@@ -1,0 +1,10 @@
+--- a/internal/lower/class_accessors.go
++++ b/internal/lower/class_accessors.go
+@@ -365,6 +365,7 @@
+ 
+ // Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
+ func (l *lowering) checkAccessorSpreads() error {
++	if true { return nil }
+ 	setterOnly := false
+ 	for _, class := range l.result.Classes {
+ 		for _, accessor := range class.Accessors {

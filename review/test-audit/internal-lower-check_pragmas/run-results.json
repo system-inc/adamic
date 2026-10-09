@@ -1,0 +1,452 @@
+{
+  "clean-switch": {
+    "exit": 0,
+    "wall_seconds": 7.758,
+    "log": "clean-switch.log",
+    "run": "^(TestCheckPragmasAreRefused|TestCheckPragmaNeighborsCompile|TestTsgoHonorsNoCheckInAdamicFiles|TestClassFeaturesReadonlyChecker|TestClassFeaturesPrivateChecker|TestClassFeaturesPrivateStorage|TestClassFeaturesAccessorRefusals|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesStaticSoundness|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesNarrowedAccessor|TestClassFeaturesStaticParentCycle|TestClassFeaturesStaticInterfaceCycle)$"
+  },
+  "M01": {
+    "exit": 1,
+    "wall_seconds": 23.772,
+    "log": "M01.log",
+    "run": "."
+  },
+  "M02": {
+    "exit": 1,
+    "wall_seconds": 27.573,
+    "log": "M02.log",
+    "run": "."
+  },
+  "M03": {
+    "exit": 1,
+    "wall_seconds": 23.482,
+    "log": "M03.log",
+    "run": "."
+  },
+  "M04": {
+    "exit": 1,
+    "wall_seconds": 24.847,
+    "log": "M04.log",
+    "run": "."
+  },
+  "M05": {
+    "exit": 1,
+    "wall_seconds": 22.848,
+    "log": "M05.log",
+    "run": "."
+  },
+  "M06": {
+    "exit": 1,
+    "wall_seconds": 23.007,
+    "log": "M06.log",
+    "run": "."
+  },
+  "M07": {
+    "exit": 1,
+    "wall_seconds": 22.76,
+    "log": "M07.log",
+    "run": "."
+  },
+  "M08": {
+    "exit": 1,
+    "wall_seconds": 23.339,
+    "log": "M08.log",
+    "run": "."
+  },
+  "M09": {
+    "exit": 1,
+    "wall_seconds": 22.681,
+    "log": "M09.log",
+    "run": "."
+  },
+  "M10": {
+    "exit": 1,
+    "wall_seconds": 23.346,
+    "log": "M10.log",
+    "run": "."
+  },
+  "M11": {
+    "exit": 1,
+    "wall_seconds": 26.77,
+    "log": "M11.log",
+    "run": "."
+  },
+  "M12": {
+    "exit": 1,
+    "wall_seconds": 23.113,
+    "log": "M12.log",
+    "run": "."
+  },
+  "M13": {
+    "exit": 1,
+    "wall_seconds": 23.079,
+    "log": "M13.log",
+    "run": "."
+  },
+  "M14": {
+    "exit": 1,
+    "wall_seconds": 26.07,
+    "log": "M14.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestCheckPragmasAreRefused": {
+        "exit": 0,
+        "wall_seconds": 1.877,
+        "log": "M14-TestCheckPragmasAreRefused.log",
+        "run": "^TestCheckPragmasAreRefused$"
+      },
+      "TestCheckPragmaNeighborsCompile": {
+        "exit": 0,
+        "wall_seconds": 1.831,
+        "log": "M14-TestCheckPragmaNeighborsCompile.log",
+        "run": "^TestCheckPragmaNeighborsCompile$"
+      },
+      "TestTsgoHonorsNoCheckInAdamicFiles": {
+        "exit": 0,
+        "wall_seconds": 1.729,
+        "log": "M14-TestTsgoHonorsNoCheckInAdamicFiles.log",
+        "run": "^TestTsgoHonorsNoCheckInAdamicFiles$"
+      },
+      "TestClassFeaturesReadonlyChecker": {
+        "exit": 0,
+        "wall_seconds": 1.866,
+        "log": "M14-TestClassFeaturesReadonlyChecker.log",
+        "run": "^TestClassFeaturesReadonlyChecker$"
+      },
+      "TestClassFeaturesPrivateChecker": {
+        "exit": 0,
+        "wall_seconds": 1.602,
+        "log": "M14-TestClassFeaturesPrivateChecker.log",
+        "run": "^TestClassFeaturesPrivateChecker$"
+      },
+      "TestClassFeaturesPrivateStorage": {
+        "exit": 0,
+        "wall_seconds": 1.643,
+        "log": "M14-TestClassFeaturesPrivateStorage.log",
+        "run": "^TestClassFeaturesPrivateStorage$"
+      },
+      "TestClassFeaturesAccessorRefusals": {
+        "exit": 0,
+        "wall_seconds": 1.718,
+        "log": "M14-TestClassFeaturesAccessorRefusals.log",
+        "run": "^TestClassFeaturesAccessorRefusals$"
+      },
+      "TestClassFeaturesStaticDeclarationsExecute": {
+        "exit": 1,
+        "wall_seconds": 1.689,
+        "log": "M14-TestClassFeaturesStaticDeclarationsExecute.log",
+        "run": "^TestClassFeaturesStaticDeclarationsExecute$"
+      },
+      "TestClassFeaturesStaticSoundness": {
+        "exit": 0,
+        "wall_seconds": 1.98,
+        "log": "M14-TestClassFeaturesStaticSoundness.log",
+        "run": "^TestClassFeaturesStaticSoundness$"
+      },
+      "TestClassFeaturesAccessorCaptureCycle": {
+        "exit": 0,
+        "wall_seconds": 1.641,
+        "log": "M14-TestClassFeaturesAccessorCaptureCycle.log",
+        "run": "^TestClassFeaturesAccessorCaptureCycle$"
+      },
+      "TestClassFeaturesNarrowedAccessor": {
+        "exit": 0,
+        "wall_seconds": 1.63,
+        "log": "M14-TestClassFeaturesNarrowedAccessor.log",
+        "run": "^TestClassFeaturesNarrowedAccessor$"
+      },
+      "TestClassFeaturesStaticParentCycle": {
+        "exit": 1,
+        "wall_seconds": 1.647,
+        "log": "M14-TestClassFeaturesStaticParentCycle.log",
+        "run": "^TestClassFeaturesStaticParentCycle$"
+      },
+      "TestClassFeaturesStaticInterfaceCycle": {
+        "exit": 1,
+        "wall_seconds": 1.64,
+        "log": "M14-TestClassFeaturesStaticInterfaceCycle.log",
+        "run": "^TestClassFeaturesStaticInterfaceCycle$"
+      }
+    }
+  },
+  "M15": {
+    "exit": 0,
+    "wall_seconds": 23.196,
+    "log": "M15.log",
+    "run": "."
+  },
+  "M16": {
+    "exit": 1,
+    "wall_seconds": 11.112,
+    "log": "M16.log",
+    "run": "."
+  },
+  "M17": {
+    "exit": 0,
+    "wall_seconds": 23.566,
+    "log": "M17.log",
+    "run": "."
+  },
+  "M18": {
+    "exit": 1,
+    "wall_seconds": 3.911,
+    "log": "M18.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestCheckPragmasAreRefused": {
+        "exit": 0,
+        "wall_seconds": 1.752,
+        "log": "M18-TestCheckPragmasAreRefused.log",
+        "run": "^TestCheckPragmasAreRefused$"
+      },
+      "TestCheckPragmaNeighborsCompile": {
+        "exit": 0,
+        "wall_seconds": 1.785,
+        "log": "M18-TestCheckPragmaNeighborsCompile.log",
+        "run": "^TestCheckPragmaNeighborsCompile$"
+      },
+      "TestTsgoHonorsNoCheckInAdamicFiles": {
+        "exit": 0,
+        "wall_seconds": 1.741,
+        "log": "M18-TestTsgoHonorsNoCheckInAdamicFiles.log",
+        "run": "^TestTsgoHonorsNoCheckInAdamicFiles$"
+      },
+      "TestClassFeaturesReadonlyChecker": {
+        "exit": 0,
+        "wall_seconds": 1.76,
+        "log": "M18-TestClassFeaturesReadonlyChecker.log",
+        "run": "^TestClassFeaturesReadonlyChecker$"
+      },
+      "TestClassFeaturesPrivateChecker": {
+        "exit": 0,
+        "wall_seconds": 1.703,
+        "log": "M18-TestClassFeaturesPrivateChecker.log",
+        "run": "^TestClassFeaturesPrivateChecker$"
+      },
+      "TestClassFeaturesPrivateStorage": {
+        "exit": 1,
+        "wall_seconds": 1.79,
+        "log": "M18-TestClassFeaturesPrivateStorage.log",
+        "run": "^TestClassFeaturesPrivateStorage$"
+      },
+      "TestClassFeaturesAccessorRefusals": {
+        "exit": 1,
+        "wall_seconds": 1.743,
+        "log": "M18-TestClassFeaturesAccessorRefusals.log",
+        "run": "^TestClassFeaturesAccessorRefusals$"
+      },
+      "TestClassFeaturesStaticDeclarationsExecute": {
+        "exit": 1,
+        "wall_seconds": 1.591,
+        "log": "M18-TestClassFeaturesStaticDeclarationsExecute.log",
+        "run": "^TestClassFeaturesStaticDeclarationsExecute$"
+      },
+      "TestClassFeaturesStaticSoundness": {
+        "exit": 1,
+        "wall_seconds": 1.893,
+        "log": "M18-TestClassFeaturesStaticSoundness.log",
+        "run": "^TestClassFeaturesStaticSoundness$"
+      },
+      "TestClassFeaturesAccessorCaptureCycle": {
+        "exit": 0,
+        "wall_seconds": 1.703,
+        "log": "M18-TestClassFeaturesAccessorCaptureCycle.log",
+        "run": "^TestClassFeaturesAccessorCaptureCycle$"
+      },
+      "TestClassFeaturesNarrowedAccessor": {
+        "exit": 1,
+        "wall_seconds": 1.75,
+        "log": "M18-TestClassFeaturesNarrowedAccessor.log",
+        "run": "^TestClassFeaturesNarrowedAccessor$"
+      },
+      "TestClassFeaturesStaticParentCycle": {
+        "exit": 1,
+        "wall_seconds": 1.661,
+        "log": "M18-TestClassFeaturesStaticParentCycle.log",
+        "run": "^TestClassFeaturesStaticParentCycle$"
+      },
+      "TestClassFeaturesStaticInterfaceCycle": {
+        "exit": 1,
+        "wall_seconds": 1.642,
+        "log": "M18-TestClassFeaturesStaticInterfaceCycle.log",
+        "run": "^TestClassFeaturesStaticInterfaceCycle$"
+      }
+    }
+  },
+  "P1": {
+    "exit": 1,
+    "wall_seconds": 1.699,
+    "log": "P1.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestCheckPragmasAreRefused": {
+        "exit": 1,
+        "wall_seconds": 1.732,
+        "log": "P1-TestCheckPragmasAreRefused.log",
+        "run": "^TestCheckPragmasAreRefused$"
+      },
+      "TestCheckPragmaNeighborsCompile": {
+        "exit": 0,
+        "wall_seconds": 1.772,
+        "log": "P1-TestCheckPragmaNeighborsCompile.log",
+        "run": "^TestCheckPragmaNeighborsCompile$"
+      },
+      "TestTsgoHonorsNoCheckInAdamicFiles": {
+        "exit": 1,
+        "wall_seconds": 1.71,
+        "log": "P1-TestTsgoHonorsNoCheckInAdamicFiles.log",
+        "run": "^TestTsgoHonorsNoCheckInAdamicFiles$"
+      },
+      "TestClassFeaturesReadonlyChecker": {
+        "exit": 0,
+        "wall_seconds": 1.764,
+        "log": "P1-TestClassFeaturesReadonlyChecker.log",
+        "run": "^TestClassFeaturesReadonlyChecker$"
+      },
+      "TestClassFeaturesPrivateChecker": {
+        "exit": 0,
+        "wall_seconds": 1.692,
+        "log": "P1-TestClassFeaturesPrivateChecker.log",
+        "run": "^TestClassFeaturesPrivateChecker$"
+      },
+      "TestClassFeaturesPrivateStorage": {
+        "exit": 1,
+        "wall_seconds": 1.65,
+        "log": "P1-TestClassFeaturesPrivateStorage.log",
+        "run": "^TestClassFeaturesPrivateStorage$"
+      },
+      "TestClassFeaturesAccessorRefusals": {
+        "exit": 1,
+        "wall_seconds": 1.622,
+        "log": "P1-TestClassFeaturesAccessorRefusals.log",
+        "run": "^TestClassFeaturesAccessorRefusals$"
+      },
+      "TestClassFeaturesStaticDeclarationsExecute": {
+        "exit": 1,
+        "wall_seconds": 1.622,
+        "log": "P1-TestClassFeaturesStaticDeclarationsExecute.log",
+        "run": "^TestClassFeaturesStaticDeclarationsExecute$"
+      },
+      "TestClassFeaturesStaticSoundness": {
+        "exit": 1,
+        "wall_seconds": 1.94,
+        "log": "P1-TestClassFeaturesStaticSoundness.log",
+        "run": "^TestClassFeaturesStaticSoundness$"
+      },
+      "TestClassFeaturesAccessorCaptureCycle": {
+        "exit": 1,
+        "wall_seconds": 1.796,
+        "log": "P1-TestClassFeaturesAccessorCaptureCycle.log",
+        "run": "^TestClassFeaturesAccessorCaptureCycle$"
+      },
+      "TestClassFeaturesNarrowedAccessor": {
+        "exit": 1,
+        "wall_seconds": 1.621,
+        "log": "P1-TestClassFeaturesNarrowedAccessor.log",
+        "run": "^TestClassFeaturesNarrowedAccessor$"
+      },
+      "TestClassFeaturesStaticParentCycle": {
+        "exit": 1,
+        "wall_seconds": 1.758,
+        "log": "P1-TestClassFeaturesStaticParentCycle.log",
+        "run": "^TestClassFeaturesStaticParentCycle$"
+      },
+      "TestClassFeaturesStaticInterfaceCycle": {
+        "exit": 1,
+        "wall_seconds": 1.669,
+        "log": "P1-TestClassFeaturesStaticInterfaceCycle.log",
+        "run": "^TestClassFeaturesStaticInterfaceCycle$"
+      }
+    }
+  },
+  "P2": {
+    "exit": 1,
+    "wall_seconds": 1.73,
+    "log": "P2.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestCheckPragmasAreRefused": {
+        "exit": 1,
+        "wall_seconds": 1.619,
+        "log": "P2-TestCheckPragmasAreRefused.log",
+        "run": "^TestCheckPragmasAreRefused$"
+      },
+      "TestCheckPragmaNeighborsCompile": {
+        "exit": 1,
+        "wall_seconds": 1.729,
+        "log": "P2-TestCheckPragmaNeighborsCompile.log",
+        "run": "^TestCheckPragmaNeighborsCompile$"
+      },
+      "TestTsgoHonorsNoCheckInAdamicFiles": {
+        "exit": 1,
+        "wall_seconds": 1.657,
+        "log": "P2-TestTsgoHonorsNoCheckInAdamicFiles.log",
+        "run": "^TestTsgoHonorsNoCheckInAdamicFiles$"
+      },
+      "TestClassFeaturesReadonlyChecker": {
+        "exit": 1,
+        "wall_seconds": 1.633,
+        "log": "P2-TestClassFeaturesReadonlyChecker.log",
+        "run": "^TestClassFeaturesReadonlyChecker$"
+      },
+      "TestClassFeaturesPrivateChecker": {
+        "exit": 1,
+        "wall_seconds": 1.656,
+        "log": "P2-TestClassFeaturesPrivateChecker.log",
+        "run": "^TestClassFeaturesPrivateChecker$"
+      },
+      "TestClassFeaturesPrivateStorage": {
+        "exit": 1,
+        "wall_seconds": 1.635,
+        "log": "P2-TestClassFeaturesPrivateStorage.log",
+        "run": "^TestClassFeaturesPrivateStorage$"
+      },
+      "TestClassFeaturesAccessorRefusals": {
+        "exit": 1,
+        "wall_seconds": 1.672,
+        "log": "P2-TestClassFeaturesAccessorRefusals.log",
+        "run": "^TestClassFeaturesAccessorRefusals$"
+      },
+      "TestClassFeaturesStaticDeclarationsExecute": {
+        "exit": 1,
+        "wall_seconds": 1.611,
+        "log": "P2-TestClassFeaturesStaticDeclarationsExecute.log",
+        "run": "^TestClassFeaturesStaticDeclarationsExecute$"
+      },
+      "TestClassFeaturesStaticSoundness": {
+        "exit": 1,
+        "wall_seconds": 1.56,
+        "log": "P2-TestClassFeaturesStaticSoundness.log",
+        "run": "^TestClassFeaturesStaticSoundness$"
+      },
+      "TestClassFeaturesAccessorCaptureCycle": {
+        "exit": 1,
+        "wall_seconds": 1.584,
+        "log": "P2-TestClassFeaturesAccessorCaptureCycle.log",
+        "run": "^TestClassFeaturesAccessorCaptureCycle$"
+      },
+      "TestClassFeaturesNarrowedAccessor": {
+        "exit": 1,
+        "wall_seconds": 1.606,
+        "log": "P2-TestClassFeaturesNarrowedAccessor.log",
+        "run": "^TestClassFeaturesNarrowedAccessor$"
+      },
+      "TestClassFeaturesStaticParentCycle": {
+        "exit": 1,
+        "wall_seconds": 1.587,
+        "log": "P2-TestClassFeaturesStaticParentCycle.log",
+        "run": "^TestClassFeaturesStaticParentCycle$"
+      },
+      "TestClassFeaturesStaticInterfaceCycle": {
+        "exit": 1,
+        "wall_seconds": 1.637,
+        "log": "P2-TestClassFeaturesStaticInterfaceCycle.log",
+        "run": "^TestClassFeaturesStaticInterfaceCycle$"
+      }
+    }
+  }
+}

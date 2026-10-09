@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:14:06.217105796Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:14:06.223562187Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle"}
+{"Time":"2026-10-09T10:14:06.22361749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Output":"=== RUN   TestClassFeaturesAccessorCaptureCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.22363756Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Output":"=== PAUSE TestClassFeaturesAccessorCaptureCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.223639864Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle"}
+{"Time":"2026-10-09T10:14:06.223642638Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle"}
+{"Time":"2026-10-09T10:14:06.223646204Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Output":"=== CONT  TestClassFeaturesAccessorCaptureCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.253765421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Output":"    class_features_test.go:137: want captured-cell cycle refused, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:14:06.253821716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Output":"--- FAIL: TestClassFeaturesAccessorCaptureCycle (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.253827545Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesAccessorCaptureCycle","Elapsed":0.03}
+{"Time":"2026-10-09T10:14:06.253863239Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.254030681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.037s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:06.254072754Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.037}

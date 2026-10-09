@@ -1,0 +1,23 @@
+package main
+
+import (
+ "context"
+ "fmt"
+ "os"
+ "os/exec"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+ "github.com/system-inc/adamic/internal/javascript"
+)
+
+func main() {
+ path := "/tmp/u028-static-witness.a"
+ if err := os.WriteFile(path, []byte("class Box { static { console.log('static side effect'); } } console.log('done');"), 0644); err != nil { panic(err) }
+ checked, err := load.Load([]string{path}); if err != nil { panic(err) }
+ program, err := lower.Lower(context.Background(), checked); if err != nil { panic(err) }
+ generated := "/tmp/u028-static-witness.mjs"
+ if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil { panic(err) }
+ command := exec.Command("node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", generated)
+ output, err := command.CombinedOutput()
+ fmt.Print(string(output)); if err != nil { panic(err) }
+}

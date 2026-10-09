@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:47.219780846Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:47.225902564Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:13:47.225972229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== RUN   TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.225992249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== PAUSE TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.225994452Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:13:47.225998338Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:13:47.226000681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== CONT  TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.252649869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"    class_features_test.go:161: constructor interface cycle accepted: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:47.252722549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"--- FAIL: TestClassFeaturesStaticInterfaceCycle (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.252725834Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Elapsed":0.03}
+{"Time":"2026-10-09T10:13:47.252740886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.252863406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.033s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:47.252904357Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.033}

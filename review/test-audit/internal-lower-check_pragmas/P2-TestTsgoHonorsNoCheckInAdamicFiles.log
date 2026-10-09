@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:14:18.031204777Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:14:18.038232215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles"}
+{"Time":"2026-10-09T10:14:18.038319436Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Output":"=== RUN   TestTsgoHonorsNoCheckInAdamicFiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.038346738Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Output":"=== PAUSE TestTsgoHonorsNoCheckInAdamicFiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.038349151Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles"}
+{"Time":"2026-10-09T10:14:18.038356933Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles"}
+{"Time":"2026-10-09T10:14:18.038358646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Output":"=== CONT  TestTsgoHonorsNoCheckInAdamicFiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.038361229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Output":"    check_pragmas_test.go:65: checker accepted boolean = 2 without pragma\n","OutputType":"error"}
+{"Time":"2026-10-09T10:14:18.038370183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Output":"--- FAIL: TestTsgoHonorsNoCheckInAdamicFiles (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.038372306Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTsgoHonorsNoCheckInAdamicFiles","Elapsed":0}
+{"Time":"2026-10-09T10:14:18.038382902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.03853058Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:18.038554977Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.007}

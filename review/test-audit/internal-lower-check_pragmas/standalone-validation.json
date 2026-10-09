@@ -1,0 +1,122 @@
+{
+  "M01": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.207,
+    "command": "go vet -overlay=/tmp/u028/validation/M01.json ./internal/lower/"
+  },
+  "M02": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.866,
+    "command": "go vet -overlay=/tmp/u028/validation/M02.json ./internal/lower/"
+  },
+  "M03": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.919,
+    "command": "go vet -overlay=/tmp/u028/validation/M03.json ./internal/lower/"
+  },
+  "M04": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.061,
+    "command": "go vet -overlay=/tmp/u028/validation/M04.json ./internal/lower/"
+  },
+  "M05": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.051,
+    "command": "go vet -overlay=/tmp/u028/validation/M05.json ./internal/lower/"
+  },
+  "M06": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.951,
+    "command": "go vet -overlay=/tmp/u028/validation/M06.json ./internal/lower/"
+  },
+  "M07": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.894,
+    "command": "go vet -overlay=/tmp/u028/validation/M07.json ./internal/lower/"
+  },
+  "M08": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.993,
+    "command": "go vet -overlay=/tmp/u028/validation/M08.json ./internal/lower/"
+  },
+  "M09": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.053,
+    "command": "go vet -overlay=/tmp/u028/validation/M09.json ./internal/lower/"
+  },
+  "M10": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.058,
+    "command": "go vet -overlay=/tmp/u028/validation/M10.json ./internal/lower/"
+  },
+  "M11": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.238,
+    "command": "go vet -overlay=/tmp/u028/validation/M11.json ./internal/lower/"
+  },
+  "M12": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.104,
+    "command": "go vet -overlay=/tmp/u028/validation/M12.json ./internal/lower/"
+  },
+  "M13": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.959,
+    "command": "go vet -overlay=/tmp/u028/validation/M13.json ./internal/lower/"
+  },
+  "M14": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.888,
+    "command": "go vet -overlay=/tmp/u028/validation/M14.json ./internal/lower/"
+  },
+  "M15": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.935,
+    "command": "go vet -overlay=/tmp/u028/validation/M15.json ./internal/lower/"
+  },
+  "M16": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.254,
+    "command": "go vet -overlay=/tmp/u028/validation/M16.json ./internal/load/"
+  },
+  "M17": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.345,
+    "command": "go vet -overlay=/tmp/u028/validation/M17.json ./internal/load/"
+  },
+  "M18": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.878,
+    "command": "go vet -overlay=/tmp/u028/validation/M18.json ./internal/lower/"
+  },
+  "P1": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.989,
+    "command": "go vet -overlay=/tmp/u028/validation/P1.json ./internal/lower/"
+  },
+  "P2": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.398,
+    "command": "go vet -overlay=/tmp/u028/validation/P2.json ./internal/load/"
+  }
+}

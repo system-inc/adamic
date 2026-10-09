@@ -1,0 +1,16 @@
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -55,13 +55,6 @@
+ 	}
+ 	if err := lowering.declareModule(declarations); err != nil {
+ 		return nil, err
+-	}
+-	for _, module := range modules {
+-		body, err := lowering.statements(module.Statements.Nodes)
+-		if err != nil {
+-			return nil, err
+-		}
+-		lowering.result.Main = append(lowering.result.Main, body...)
+ 	}
+ 	if lowering.unlowerable != nil {
+ 		return nil, lowering.unlowerable

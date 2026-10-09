@@ -1,0 +1,10 @@
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -345,6 +345,7 @@
+ // JavaScript leaves future fields undefined. A nonnullable native slot cannot pretend that
+ // value is its declared type, including when an initializer calls a helper that reads it.
+ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {
++	if true { return nil }
+ 	pending := false
+ 	for _, member := range declaration.Members() {
+ 		if member.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) && !available[member.Name().Text()] {

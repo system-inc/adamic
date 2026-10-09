@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:12:22.89931788Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:12:22.905978135Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:12:22.906068551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== RUN   TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.906222183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== PAUSE TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.906224796Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:12:22.906232278Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T10:12:22.906235322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== CONT  TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.93651356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"    class_features_test.go:161: constructor interface cycle accepted: /tmp/adamic-gate/TestClassFeaturesStaticInterfaceCycle1204763793/001/main.a:1:235: stage 0 can't lower reading Base yet\n","OutputType":"error"}
+{"Time":"2026-10-09T10:12:22.936587291Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"--- FAIL: TestClassFeaturesStaticInterfaceCycle (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.936590736Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Elapsed":0.03}
+{"Time":"2026-10-09T10:12:22.936622735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.93679226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.037s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:12:22.936803788Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.037}

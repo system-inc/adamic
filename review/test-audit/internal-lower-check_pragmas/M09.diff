@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -505,7 +505,7 @@
+ 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && (accessorSymbol(field) || (l.accessorNames[node.Name().Text()] && !isClassInstance(l.checker.GetTypeAtLocation(access.Expression)) && ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword)) {
+ 			declared := l.checker.GetTypeOfSymbol(field)
+ 			observed := l.checker.GetTypeAtLocation(node)
+-			if !l.classAssignable(declared, observed) {
++			if l.classAssignable(declared, observed) {
+ 				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
+ 			}
+ 		}

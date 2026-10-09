@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:38.568373304Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:38.57515775Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute"}
+{"Time":"2026-10-09T10:13:38.575229008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Output":"=== RUN   TestClassFeaturesStaticDeclarationsExecute\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.575250861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Output":"=== PAUSE TestClassFeaturesStaticDeclarationsExecute\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.575254226Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute"}
+{"Time":"2026-10-09T10:13:38.575257781Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute"}
+{"Time":"2026-10-09T10:13:38.575261707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Output":"=== CONT  TestClassFeaturesStaticDeclarationsExecute\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.603292988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Output":"    class_features_test.go:102: static initialization was dropped\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:38.603365307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Output":"--- FAIL: TestClassFeaturesStaticDeclarationsExecute (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.603368782Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticDeclarationsExecute","Elapsed":0.03}
+{"Time":"2026-10-09T10:13:38.603386829Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.603506645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.035s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:38.603525604Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.035}

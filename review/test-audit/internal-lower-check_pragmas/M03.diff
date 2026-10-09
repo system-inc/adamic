@@ -1,0 +1,15 @@
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -50,12 +50,6 @@
+ 	}
+ 	// File-level checking pragmas are separate from line-suppression directives. Use every
+ 	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
+-	for _, pragma := range module.Pragmas {
+-		if pragma.Name == "ts-nocheck" || pragma.Name == "ts-check" {
+-			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
+-			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
+-		}
+-	}
+ 	// Validate arguments before visiting their annotations, so a failed contract
+ 	// names the actual argument and parameter even for an inline arrow.
+ 	var contractError error

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:43.913944626Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:43.920909294Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor"}
+{"Time":"2026-10-09T10:13:43.920995323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Output":"=== RUN   TestClassFeaturesNarrowedAccessor\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.921018629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Output":"=== PAUSE TestClassFeaturesNarrowedAccessor\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.921021273Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor"}
+{"Time":"2026-10-09T10:13:43.921023666Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor"}
+{"Time":"2026-10-09T10:13:43.921025259Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Output":"=== CONT  TestClassFeaturesNarrowedAccessor\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.947183306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Output":"    class_features_test.go:145: want changing getter reread refused, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:43.947270938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Output":"--- FAIL: TestClassFeaturesNarrowedAccessor (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.947275174Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesNarrowedAccessor","Elapsed":0.03}
+{"Time":"2026-10-09T10:13:43.947295064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.948657002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.034s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:43.948675099Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}

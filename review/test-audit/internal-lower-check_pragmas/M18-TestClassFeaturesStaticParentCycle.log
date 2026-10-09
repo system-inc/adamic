@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:13:45.57708468Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:13:45.583339283Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle"}
+{"Time":"2026-10-09T10:13:45.583402919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Output":"=== RUN   TestClassFeaturesStaticParentCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.583429109Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Output":"=== PAUSE TestClassFeaturesStaticParentCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.583431312Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle"}
+{"Time":"2026-10-09T10:13:45.583433686Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle"}
+{"Time":"2026-10-09T10:13:45.583435488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Output":"=== CONT  TestClassFeaturesStaticParentCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.611536083Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Output":"    class_features_test.go:153: constructor parent cycle accepted: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:13:45.611603094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Output":"--- FAIL: TestClassFeaturesStaticParentCycle (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.611606349Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticParentCycle","Elapsed":0.03}
+{"Time":"2026-10-09T10:13:45.611624917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.611808584Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.034s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:13:45.61182603Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.035}

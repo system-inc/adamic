@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:14:19.664860133Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:14:19.671750293Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker"}
+{"Time":"2026-10-09T10:14:19.671836223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Output":"=== RUN   TestClassFeaturesReadonlyChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.67186093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Output":"=== PAUSE TestClassFeaturesReadonlyChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.671863404Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker"}
+{"Time":"2026-10-09T10:14:19.671887951Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker"}
+{"Time":"2026-10-09T10:14:19.671889654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Output":"=== CONT  TestClassFeaturesReadonlyChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.671892348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Output":"    class_features_test.go:29: want tsc readonly diagnostic, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:14:19.671901592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Output":"--- FAIL: TestClassFeaturesReadonlyChecker (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.671903795Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesReadonlyChecker","Elapsed":0}
+{"Time":"2026-10-09T10:14:19.671915422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.671963355Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:14:19.671971938Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.007}
