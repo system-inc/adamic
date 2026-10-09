@@ -132,3 +132,65 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 		t.Fatal("corrupt log accepted")
 	}
 }
+
+// A test its owner split into shards declares the count; the planner names each shard a unit, and Go runs
+// exactly the shards a pattern selects. A count that isn't a positive literal refuses, and widths grow past 999.
+func TestShardChildren(t *testing.T) {
+	directory := t.TempDir()
+	files := map[string]string{
+		"go.mod": "module shardprobe\n\ngo 1.27.0\n",
+		"probe_test.go": `package shardprobe
+import (
+	"fmt"
+	"testing"
+)
+const testWideShards = 12
+const testHugeShards = 1001
+const shardCount = 2
+const testBadShards = shardCount
+func TestWide(t *testing.T) {
+	for index := 0; index < testWideShards; index++ {
+		t.Run(fmt.Sprintf("shard-%03d", index), func(t *testing.T) {})
+	}
+}
+func TestWideExtra(t *testing.T) {}
+`,
+	}
+	for name, content := range files {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	wide, err := shardChildren(directory, "TestWide")
+	if err != nil || len(wide) != 12 || wide[0] != "shard-000" || wide[11] != "shard-011" {
+		t.Fatalf("TestWide's shards: %v, %v", wide, err)
+	}
+	if extra, err := shardChildren(directory, "TestWideExtra"); err != nil || extra != nil {
+		t.Fatalf("an unsharded test got shards: %v, %v", extra, err)
+	}
+	if huge, err := shardChildren(directory, "TestHuge"); err != nil || len(huge) != 1001 || huge[0] != "shard-0000" || huge[1000] != "shard-1000" {
+		t.Fatalf("1,001 shards: first %q, last %q, %v", huge[0], huge[len(huge)-1], err)
+	}
+	if _, err := shardChildren(directory, "TestBad"); err == nil || !strings.Contains(err.Error(), "positive integer literal") {
+		t.Fatalf("a count that isn't a literal was accepted: %v", err)
+	}
+	asked := []unit{{Package: "shardprobe", Test: "TestWide/" + wide[3]}, {Package: "shardprobe", Test: "TestWide/" + wide[10]}}
+	var leaves []string
+	for _, pattern := range patterns(asked) {
+		command := exec.Command("go", "test", "-count=1", "-v", "-run", pattern, ".")
+		command.Dir = directory
+		command.Env = append(os.Environ(), "GOWORK=off")
+		out, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("%v\n%s", err, out)
+		}
+		for _, line := range strings.Split(string(out), "\n") {
+			if strings.HasPrefix(strings.TrimSpace(line), "--- PASS: TestWide/") {
+				leaves = append(leaves, strings.Fields(line)[2])
+			}
+		}
+	}
+	if want := []string{"TestWide/shard-003", "TestWide/shard-010"}; !reflect.DeepEqual(leaves, want) {
+		t.Fatalf("Go ran %v, want exactly %v", leaves, want)
+	}
+}

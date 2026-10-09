@@ -310,7 +310,7 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	}
 	return names, nil
 }
-func children(pkg, parent string) ([]string, error) {
+func children(pkg, directory, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
 		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
 	}
@@ -348,6 +348,61 @@ func children(pkg, parent string) ([]string, error) {
 			return literalChildren("internal/native/normalize_test.go", parent)
 		case "TestStringIndexMatchesNode":
 			return literalChildren("internal/native/string_index_test.go", parent)
+		}
+	}
+	return shardChildren(directory, parent)
+}
+
+// A test split by its owner into numbered shards declares how many in its package's test files, as
+// const <testName>Shards = N with the test's name lowercased at its first letter (TestCSSNumbers declares
+// testCSSNumbersShards), and runs its children shard-000 to shard-(N-1), zero-padded to three digits or to the
+// width of N-1 when wider. Each is a unit, selected as ^TestX$/^shard-NNN$. A declaration that isn't a positive
+// integer literal is an error, never a silent whole test.
+func shardChildren(directory, parent string) ([]string, error) {
+	if directory == "" {
+		return nil, nil
+	}
+	name := strings.ToLower(parent[:1]) + parent[1:] + "Shards"
+	files, err := filepath.Glob(filepath.Join(directory, "*_test.go"))
+	if err != nil {
+		return nil, err
+	}
+	for _, file := range files {
+		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+		if err != nil {
+			return nil, err
+		}
+		for _, declaration := range tree.Decls {
+			general, ok := declaration.(*ast.GenDecl)
+			if !ok || general.Tok != token.CONST {
+				continue
+			}
+			for _, spec := range general.Specs {
+				value, ok := spec.(*ast.ValueSpec)
+				if !ok {
+					continue
+				}
+				for i, identifier := range value.Names {
+					if identifier.Name != name {
+						continue
+					}
+					var count int
+					if i < len(value.Values) {
+						if literal, ok := value.Values[i].(*ast.BasicLit); ok && literal.Kind == token.INT {
+							count, _ = strconv.Atoi(literal.Value)
+						}
+					}
+					if count < 1 {
+						return nil, fmt.Errorf("%s: %s must be a positive integer literal", file, name)
+					}
+					width := max(3, len(strconv.Itoa(count-1)))
+					shards := make([]string, count)
+					for index := range shards {
+						shards[index] = fmt.Sprintf("shard-%0*d", width, index)
+					}
+					return shards, nil
+				}
+			}
 		}
 	}
 	return nil, nil
@@ -416,9 +471,16 @@ func makePlan(count int) (plan, error) {
 	if err := loadJSON(timingPath, &weights); err != nil {
 		return p, err
 	}
-	packages, err := output("go", "list", "./...")
+	packageListing, err := output("go", "list", "-f", "{{.ImportPath}}\t{{.Dir}}", "./...")
 	if err != nil {
 		return p, err
+	}
+	var packages []string
+	directories := map[string]string{}
+	for _, line := range strings.Split(packageListing, "\n") {
+		pkg, directory, _ := strings.Cut(line, "\t")
+		packages = append(packages, pkg)
+		directories[pkg] = directory
 	}
 	listing, err := output("go", "test", "-json", "-list", ".", "./...")
 	if err != nil {
@@ -436,9 +498,9 @@ func makePlan(count int) (plan, error) {
 			tests[e.Package] = append(tests[e.Package], name)
 		}
 	}
-	for _, pkg := range strings.Split(packages, "\n") {
+	for _, pkg := range packages {
 		for _, test := range tests[pkg] {
-			names, err := children(pkg, test)
+			names, err := children(pkg, directories[pkg], test)
 			if err != nil {
 				return p, err
 			}
