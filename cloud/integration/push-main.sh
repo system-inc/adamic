@@ -34,6 +34,7 @@ set -euo pipefail
 
 fastGate=""
 alsoGates=()
+mainReds=""
 gateKind=fast
 smokeReviewed=no
 pauseException=""
@@ -50,6 +51,11 @@ while [ "$#" -gt 0 ]; do
 	# build, vet, smoke and census stages; a stage that ran on another runner counts when it ran on the
 	# same sha). Every record must be green and finished, and together they must cover every stage.
 	--also-gate) alsoGates+=("${2#origin/}"); shift 2 ;;
+	# --main-reds <gate-logs ref of a finished whole gate of main>: the candidate lands on 'no new reds against
+	# main' (@system_adamic, Oct 9 05:28Z): every top-level test its records fail must fail in that record of
+	# main too. Those reds are named in the landing and stay owned on main's red list; one red main doesn't
+	# have refuses it, by name. It never lands a red main doesn't already carry.
+	--main-reds) mainReds=${2#origin/}; shift 2 ;;
 	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
 	# --test-only <sha> "<branches>": a change that touches only tests goes to main with no gate in front of it;
 	# Loom's next whole-suite run of main is its check (Kirk, Oct 8). The merged diff must be tests only.
@@ -213,6 +219,59 @@ json.dump(first, open(path, "w"))
 		fi
 		fastGate="${fastGate} + ${also}"
 	done
+	if [ -n "$mainReds" ]; then
+		if ! git fetch -q origin "+refs/heads/${mainReds}:refs/remotes/origin/${mainReds}" 2>/dev/null; then
+			echo "refused: no gate log ${mainReds} on origin" >&2
+			exit 1
+		fi
+		# The candidate's failing top-level tests, from every record it lands on, against main's.
+		known=$(python3 - "$fastJSON" "origin/${fastGate%% + *}" "origin/${mainReds}" ${alsoGates[@]+"${alsoGates[@]/#/origin/}"} 2>&1 <<'MAINREDS'
+import gzip, json, subprocess, sys
+path, mainRef, records = sys.argv[1], sys.argv[3], [sys.argv[2]] + sys.argv[4:]
+def failing(ref):
+    raw = subprocess.run(["git", "show", ref + ":test.jsonl.gz"], capture_output=True).stdout
+    if not raw:
+        return None
+    names = set()
+    for line in gzip.decompress(raw).decode(errors="replace").splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        if event.get("Action") == "fail" and event.get("Test") and "/" not in event["Test"]:
+            names.add(event["Package"].split("/adamic/")[-1] + " " + event["Test"])
+    return names
+mainStatus = subprocess.run(["git", "show", mainRef + ":status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
+mainFull = json.loads(subprocess.run(["git", "show", mainRef + ":full.json"], capture_output=True, text=True).stdout or "{}")
+onMain = failing(mainRef)
+if not mainStatus.startswith(("green", "red")) or mainFull.get("finished") is not True or onMain is None:
+    sys.exit("main's record %s isn't a finished whole gate with a test record (%s)" % (mainRef, mainStatus[:60]))
+if subprocess.run(["git", "merge-base", "--is-ancestor", mainFull.get("sha", ""), "origin/main"]).returncode != 0:
+    sys.exit("main's record gated %s, which isn't on main" % mainFull.get("sha"))
+ours = set()
+for ref in records:
+    names = failing(ref)
+    if names is None and ref == records[0]:
+        sys.exit("%s has no test record to compare" % ref)
+    ours |= names or set()
+new = sorted(ours - onMain)
+if new:
+    sys.exit("new reds against main: " + "; ".join(new[:8]))
+fast = json.load(open(path))
+expected = len(ours)
+if (fast.get("fail") or 0) > expected:
+    sys.exit("%s failures recorded but only %d failing top-level tests named" % (fast.get("fail"), expected))
+# Every red is main's own: the verdict judges the rest.
+fast["fail"] = 0
+fast["main_reds"] = sorted(ours)
+fast["stages_exit"] = {stage: (0 if stage == "tests" else code) for stage, code in (fast.get("stages_exit") or {}).items()}
+json.dump(fast, open(path, "w"))
+print(len(ours))
+MAINREDS
+) || { echo "refused: --main-reds ${mainReds}: ${known}" >&2; exit 1; }
+		statusLine="green: ${sha} with ${known} reds main already has (${mainReds})"
+		branches="${branches}; lands with ${known} reds main already has (${mainReds}), owned on main's red list"
+	fi
 	if ! verdict=$(GATE_KIND="$gateKind" RERUN_MERGE="$(dirname "${BASH_SOURCE[0]}")/rerun_merge.py" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
 import json, os, subprocess, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -430,6 +489,10 @@ red\ *)
 	if [ "$pauseException" = revert ]; then
 		echo "Landing a revert while main's whole gate is red (${redLog})."
 		branches="${branches}; revert while main is red (${redLog})"
+	elif [ -n "$mainReds" ] && [ "$mainReds" = "$redLog" ]; then
+		# Compared against this very red record and adding none of its own (--main-reds), it can't make main
+		# worse; the reds stay main's, owned on its red list (@system_adamic, Oct 9 05:28Z).
+		echo "Landing over main's red whole gate (${redLog}) with no new reds against it."
 	elif [ "$pauseException" = "fix-forward ${redLog}" ]; then
 		echo "Landing a fix-forward for main's red whole gate (${redLog})."
 		branches="${branches}; fix-forward for ${redLog}"

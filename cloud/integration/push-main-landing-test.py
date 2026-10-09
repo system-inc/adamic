@@ -7,6 +7,7 @@ gate unless they touch a package where the candidate changes code.
 usage: python3 cloud/integration/push-main-landing-test.py
 """
 import csv
+import gzip
 import io
 import json
 import os
@@ -158,18 +159,21 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record):
-        # A gate-logs record on origin: status.txt and fast.json in a commit of their own.
-        tree = Path(self.tmp.name) / ('record-' + name)
+    def publish(self, sha, name, record, failing=(), kind='fast'):
+        # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
+        tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
         tree.mkdir()
-        (tree / 'fast.json').write_text(json.dumps(record))
-        (tree / 'status.txt').write_text('green: %s fast gate\n' % sha)
+        (tree / (kind + '.json')).write_text(json.dumps(record))
+        (tree / 'status.txt').write_text('%s: %s %s gate\n' % ('red' if failing else 'green', sha, kind))
+        events = [{'Action': 'fail', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test} for package, test in failing]
+        events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
+        (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
         index = str(Path(self.tmp.name) / ('index-' + name))
         environment = dict(os.environ, GIT_INDEX_FILE=index, **identity)
         gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
         subprocess.run(['git', '--git-dir', gitDirectory, '--work-tree', str(tree), 'add', '-A', '.'], env=environment, check=True)
         treeSha = subprocess.run(['git', '--git-dir', gitDirectory, 'write-tree'], env=environment, check=True, capture_output=True, text=True).stdout.strip()
-        reference = 'gate-logs/%s/20261009T000000Z/%s' % (sha[:12], name)
+        reference = 'gate-logs/%s/20261009T000000Z/%s' % (sha[:12], 'full-main' if name == 'main' else name)
         git(self.repository, 'push', '-q', 'origin', '%s:refs/heads/%s' % (git(self.repository, 'commit-tree', treeSha, '-m', 'record'), reference))
         return reference
 
@@ -186,6 +190,27 @@ class LandingTests(unittest.TestCase):
         self.assertNotEqual(alone.returncode, 0)
         self.assertIn('go build or go vet failed', alone.stderr)
         self.assertLanded(self.push('--fast-gate', tests, '--also-gate', stages, sha, 'pooled'), self.main, sha)
+
+
+    def test_a_candidate_lands_with_only_the_reds_main_already_has(self):
+        known = ('stage1/cohere/estree', 'TestScalarEdges')
+        main = self.publish(self.main, 'main', {'sha': self.main, 'finished': True, 'fail': 1}, failing=[known], kind='full')
+        def candidate(text, failing):
+            sha = self.change(self.main, 'other/b.go', 'package other\n\n// %s\n' % text, text)
+            record = {'sha': sha, 'base': self.main, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': len(failing), 'pass': 10,
+                      'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                      'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                      'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1 if failing else 0),
+                      'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}
+            return sha, self.publish(sha, 'fast', record, failing=failing)
+        sha, record = candidate('known', [known])
+        self.assertIn('1 failures', self.push('--fast-gate', record, sha, 'known').stderr)
+        landed = self.push('--fast-gate', record, '--main-reds', main, sha, 'known')
+        self.assertLanded(landed, self.main, sha)
+        self.assertIn('lands with 1 reds main already has', git(self.repository, 'log', '-1', '--format=%B', 'origin/main'))
+        fresh, freshRecord = candidate('fresh', [known, ('code', 'TestNew')])
+        refused = self.push('--fast-gate', freshRecord, '--main-reds', main, fresh, 'fresh')
+        self.assertIn('new reds against main: code TestNew', refused.stderr)
 
 
 if __name__ == '__main__':
