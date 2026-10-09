@@ -1,0 +1,10 @@
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -896,6 +896,7 @@
+ 
+ // write judges a write of held into the field (or elements) of holder, and makes it.
+ func (a *analysis) write(kind WriteKind, site int, name string, holder value, held value, field string) {
++	site = 0
+ 	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
+ 	a.writeCount++
+ 	if a.judging {

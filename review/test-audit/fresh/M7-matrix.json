@@ -1,0 +1,2473 @@
+{
+  "label": "M7-matrix",
+  "command": "ADAMIC_MUTANT=M7 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .",
+  "seconds": 24.136603124999965,
+  "exit": 1,
+  "failures": [
+    "TestRegexOperationsDoNotPoisonTreeWrites",
+    "TestFreshWrites____oracle_testdata_regexp_unicode_a_cc7b389cb8e7",
+    "TestFreshWrites____oracle_testdata_regexp_split_pair_pattern_a_72de0cf8dafc",
+    "TestFreshWrites____oracle_testdata_regexp_cycle_weak_a_99eed7157850",
+    "TestFreshWrites____oracle_testdata_regexp_cycle_closures_a_be4dc5def303"
+  ],
+  "lines": {
+    "TestFreshCorpusUnitsCoverEveryProgram": [
+      "corpus_coverage_test.go:63: 801 programs, 801 selectable write-proof units"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_order_a_7cbe6675733e": [
+      "corpus_units_test.go:5255: 14 writes, 14 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_writes_past_end_a_ed0c7a882f8b": [
+      "corpus_units_test.go:6401: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_too_long_a_97bc6a7682ad": [
+      "corpus_units_test.go:5933: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_modules_main_a_ba3df876e9c3": [
+      "corpus_units_test.go:6407: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestRegexOperationsDoNotPoisonTreeWrites": [
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:2 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:3 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:5 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:4 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]"
+    ],
+    "TestFreshWrites____oracle_testdata_string_positions_a_72a5cf673e93": [
+      "corpus_units_test.go:5927: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_limits_a_42770ef14a44": [
+      "corpus_units_test.go:5921: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_writes_in_try_a_5e1358003bdb": [
+      "corpus_units_test.go:6395: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_repeat_a_70a4f3c0e637": [
+      "corpus_units_test.go:5909: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_index_a_bb369e888bac": [
+      "corpus_units_test.go:5915: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_writes_a_109e66cc6533": [
+      "corpus_units_test.go:6389: 6 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1": [
+      "corpus_units_test.go:5903: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_calls_a_1173fac828f5": [
+      "corpus_units_test.go:5891: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_write_stdout_order_a_2a1720251e0d": [
+      "corpus_units_test.go:6383: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_join_a_b51a006d7e49": [
+      "corpus_units_test.go:5897: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_write_stderr_order_a_b59a33edcfb6": [
+      "corpus_units_test.go:6377: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_status_of_stdout_a_25bb9ae69b20": [
+      "corpus_units_test.go:5861: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_caches_a_5cf84e1b9cd4": [
+      "corpus_units_test.go:5885: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_boundaries_a_e8488e7b77d4": [
+      "corpus_units_test.go:5873: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_append_a_7e2fde82cadc": [
+      "corpus_units_test.go:5867: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_build_cached_reads_a_d8a0e653b678": [
+      "corpus_units_test.go:5879: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_statements_small_throw_a_bcdfb04aef89": [
+      "corpus_units_test.go:5855: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_stack_tail_call_a_45d5d63aade5": [
+      "corpus_units_test.go:5837: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_statements_small_prefix_a_6b40e6ac18aa": [
+      "corpus_units_test.go:5849: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_statements_small_parameters_a_6191a41a2979": [
+      "corpus_units_test.go:5843: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_stack_over_a_c20143678933": [
+      "corpus_units_test.go:5825: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_stack_forever_a_5af94da4d124": [
+      "corpus_units_test.go:5819: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_stack_overflow_a_ab1067a40927": [
+      "corpus_units_test.go:5831: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_spreads_a_5a2975febeda": [
+      "corpus_units_test.go:5813: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_spread_calls_a_244f94af44d5": [
+      "corpus_units_test.go:5795: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_spread_undefined_a_f127e87bdaa5": [
+      "corpus_units_test.go:5807: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_splice_empty_a_8c67aaad11c3": [
+      "corpus_units_test.go:5783: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_splices_a_6085e329fed7": [
+      "corpus_units_test.go:5789: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_spread_snapshot_a_efff9d00d565": [
+      "corpus_units_test.go:5801: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_sorting_a_9ed4a9cefb66": [
+      "corpus_units_test.go:5771: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_sorts_a_b38364d9571e": [
+      "corpus_units_test.go:5777: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_sort_releases_a_19727aa21b8a": [
+      "corpus_units_test.go:5759: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_sort_top_level_a_182ae9b79eef": [
+      "corpus_units_test.go:5765: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_size_class_churn_a_11e068aa0821": [
+      "corpus_units_test.go:5753: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_shared_slices_a_2c2766481379": [
+      "corpus_units_test.go:5747: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_shadowing_a_4aaf07a94278": [
+      "corpus_units_test.go:5735: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_sets_a_a232afbac078": [
+      "corpus_units_test.go:5729: 14 writes, 14 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_shared_slice_append_a_48b3259ed6b5": [
+      "corpus_units_test.go:5741: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_undefined_a_daab784ae932": [
+      "corpus_units_test.go:5723: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_maybe_numbers_a_2994d99a4b00": [
+      "corpus_units_test.go:5717: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_objects_a_a1e5c28042af": [
+      "corpus_units_test.go:5711: 11 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_numbers_a_d29f5c6e6448": [
+      "corpus_units_test.go:5705: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_named_objects_a_e0eef205c5e3": [
+      "corpus_units_test.go:5699: 9 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_named_more_a_0e1af8e45b43": [
+      "corpus_units_test.go:5693: 10 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_keys_a_3f42e11b988c": [
+      "corpus_units_test.go:5675: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_named_keys_a_b587f9fc2b3f": [
+      "corpus_units_test.go:5687: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_named_closures_a_4d7f8a532171": [
+      "corpus_units_test.go:5681: 9 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_keep_a_530cbf9edae7": [
+      "corpus_units_test.go:5669: 12 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_fnexpr_a_5274ff11a316": [
+      "corpus_units_test.go:5663: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_closures_a_6985f8cc2887": [
+      "corpus_units_test.go:5657: 11 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_self_assignments_a_f01f4fcd8052": [
+      "corpus_units_test.go:5645: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_set_foreach_arrays_a_d79ce9b71745": [
+      "corpus_units_test.go:5651: 8 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_searches_a_3320a4d5854b": [
+      "corpus_units_test.go:5639: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_search_halves_a_0e568cf9d95c": [
+      "corpus_units_test.go:5633: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_long_a_842a465d8244": [
+      "corpus_units_test.go:4865: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_search_from_a_3f7ed12fe182": [
+      "corpus_units_test.go:5621: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_search_from_sweep_a_1876d4e58442": [
+      "corpus_units_test.go:5627: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_scanner_nested_overload_a_68711c42ec08": [
+      "corpus_units_test.go:5615: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_unknown_a_154d528571c3": [
+      "corpus_units_test.go:5597: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_runtime_last_index_of_a_c79d6619dc98": [
+      "corpus_units_test.go:5609: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_virtual_fresh_a_1510856b5bfc": [
+      "corpus_units_test.go:5603: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_try_loop_a_65c5f731b801": [
+      "corpus_units_test.go:5591: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_sort_values_a_04a0d81bac7a": [
+      "corpus_units_test.go:5585: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_callbacks_a_262859ca71d2": [
+      "corpus_units_test.go:5573: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_recursive_a_c587e21a3c66": [
+      "corpus_units_test.go:5579: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_bound_method_a_3a35e3cfc1c0": [
+      "corpus_units_test.go:5567: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_weak_during_spread_a_e91110387a29": [
+      "corpus_units_test.go:5555: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_route_targets_accessor_a_13de0554670e": [
+      "corpus_units_test.go:5561: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_weak_after_reuse_a_0b3c209306f6": [
+      "corpus_units_test.go:5549: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_throw_a_39c0d2b55e07": [
+      "corpus_units_test.go:5543: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_spread_method_alias_a_4dc9f9e3036f": [
+      "corpus_units_test.go:5537: 3 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_oct6_subclass_holder_a_2ea64004bf74": [
+      "corpus_units_test.go:2537: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_spread_method_a_24cba8d12084": [
+      "corpus_units_test.go:5531: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_oct6_release_a_6218283f07a9": [
+      "corpus_units_test.go:2531: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_oct6_parameters_a_b659c8580942": [
+      "corpus_units_test.go:2525: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_narrowed_a_7a0b7e23f65d": [
+      "corpus_units_test.go:5525: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_lent_global_a_ba5456cae94b": [
+      "corpus_units_test.go:5519: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_oct6_deep_a_26cc00583b60": [
+      "corpus_units_test.go:2519: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_global_sibling_a_a5c41c24c342": [
+      "corpus_units_test.go:5513: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_layouts_a_6a6b073b72b1": [
+      "corpus_units_test.go:2513: 26 writes, 25 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_forward_a_bde02d0d60c2": [
+      "corpus_units_test.go:5507: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_instance_key_throw_a_922bfd33c5b8": [
+      "corpus_units_test.go:2507: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_instance_key_region_alias_a_48af3a15220c": [
+      "corpus_units_test.go:2501: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_instance_key_region_a_3e0b73e57200": [
+      "corpus_units_test.go:2495: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_arrays_a_3ff53b71963d": [
+      "corpus_units_test.go:5495: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_foreach_global_a_1916b0bb2e75": [
+      "corpus_units_test.go:5501: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_instance_key_consume_a_62473910e3c6": [
+      "corpus_units_test.go:2489: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_reuse_a_2cc650c3d9c7": [
+      "corpus_units_test.go:5489: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_return_panic_fires_a_df292c7b9a1a": [
+      "corpus_units_test.go:5483: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_order_a_dc61682c47c1": [
+      "corpus_units_test.go:2483: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_return_panic_a_61fc52873c16": [
+      "corpus_units_test.go:5477: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_memory_a_50705ce9ff10": [
+      "corpus_units_test.go:2477: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_random_a_b4521f07e8c2": [
+      "corpus_units_test.go:4709: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_representation_clock_source_a_a0325ac1aa9c": [
+      "corpus_units_test.go:5471: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_interface_a_d33a68e22386": [
+      "corpus_units_test.go:2471: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_exceptions_a_1f658267c125": [
+      "corpus_units_test.go:2459: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_replace_all_large_a_1337b7d6d51e": [
+      "corpus_units_test.go:5465: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regions_throw_a_ebabaf7416bf": [
+      "corpus_units_test.go:5459: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regions_constructor_capture_a_69358bc8d64e": [
+      "corpus_units_test.go:5453: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_generic_a_03c89c9548bb": [
+      "corpus_units_test.go:2465: 25 writes, 25 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_conditional_a_74851a6f1965": [
+      "corpus_units_test.go:2453: 26 writes, 26 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regions_a_2905b027f268": [
+      "corpus_units_test.go:5447: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_unicode_a_cc7b389cb8e7": [
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: ../oracle/testdata/regexp_unicode.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5441: 32 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_split_a_406c3e8dcaa7": [
+      "corpus_units_test.go:5429: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_split_pair_pattern_a_72de0cf8dafc": [
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: ../oracle/testdata/regexp_split_pair_pattern.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5435: 8 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_inheritance_a_5a095abe1b1e": [
+      "corpus_units_test.go:2447: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_replaceall_nonglobal_a_8c19fae91971": [
+      "corpus_units_test.go:5417: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_search_a_9f27ae607d00": [
+      "corpus_units_test.go:5423: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_identity_a_e99a20f6b2aa": [
+      "corpus_units_test.go:2441: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_twice_a_8063af6b1344": [
+      "corpus_units_test.go:2435: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_replace_a_b36ba4e7a099": [
+      "corpus_units_test.go:5411: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575": [
+      "corpus_units_test.go:5405: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_static_private_a_e3a6a0e5b7a4": [
+      "corpus_units_test.go:2429: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_matchall_nonglobal_a_3ef4de834048": [
+      "corpus_units_test.go:5399: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_static_a_0190a11face8": [
+      "corpus_units_test.go:2423: 25 writes, 25 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_retained_a_24e1e35f75e9": [
+      "corpus_units_test.go:2417: 13 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_match_a_58d57156403d": [
+      "corpus_units_test.go:5393: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_cycle_weak_a_99eed7157850": [
+      "corpus_units_test.go:5381: ../oracle/testdata/regexp_cycle_weak.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5381: 2 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_private_a_2b0dce4d9967": [
+      "corpus_units_test.go:2411: 14 writes, 14 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_exec_a_8bc32a578b30": [
+      "corpus_units_test.go:5387: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_distinct_a_b74e5579e7ba": [
+      "corpus_units_test.go:2405: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_cycle_fields_a_1db903f0b9b4": [
+      "corpus_units_test.go:5375: Lower declined: /workspace/adamic/internal/oracle/testdata/regexp_cycle_fields.a:25:5: Adamic 0.1 refuses Chain.next, a mutable field of type Chain | undefined, which can reach back to the Chain holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it next: Weak<Chain> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)"
+    ],
+    "TestFreshWrites____oracle_testdata_class_features_accessors_a_c021ae465538": [
+      "corpus_units_test.go:2399: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_unary_truthiness_a_ab0f673ee625": [
+      "corpus_units_test.go:2387: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_small_rest_a_4bc7f2bbd21e": [
+      "corpus_units_test.go:2375: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_unary_numeric_a_3464205aea1d": [
+      "corpus_units_test.go:2381: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_cycle_collections_a_a567f81deeb4": [
+      "corpus_units_test.go:5369: Lower declined: /workspace/adamic/internal/oracle/testdata/regexp_cycle_collections.a:27:5: Adamic 0.1 refuses Shelf.next, a mutable field of type Shelf | undefined, which can reach back to the Shelf holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it next: Weak<Shelf> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)"
+    ],
+    "TestFreshWrites____oracle_testdata_census_small_overload_a_cb04e3228698": [
+      "corpus_units_test.go:2369: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_as_interface_a_2957402bcf44": [
+      "corpus_units_test.go:2393: 16 writes, 13 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_small_boolean_a_0ad905276d8e": [
+      "corpus_units_test.go:2363: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_cycle_closures_a_be4dc5def303": [
+      "corpus_units_test.go:5363: ../oracle/testdata/regexp_cycle_closures.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5363: ../oracle/testdata/regexp_cycle_closures.a: ir.RegExpCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:5363: 6 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_read_order_a_712115255057": [
+      "corpus_units_test.go:5351: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_read_files_a_c1a7c40605bf": [
+      "corpus_units_test.go:5345: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_predicate_marker_live_a_8eae4982f574": [
+      "corpus_units_test.go:2357: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_read_arguments_a_a216a8cee653": [
+      "corpus_units_test.go:5339: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_predicate_marker_a_b87e51448cbd": [
+      "corpus_units_test.go:2351: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_radix_range_a_21f4cdea2a93": [
+      "corpus_units_test.go:5327: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_radixes_a_5c2c5c54e766": [
+      "corpus_units_test.go:5333: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_overload_lie_a_09b8cdfddf02": [
+      "corpus_units_test.go:2345: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_regexp_a_1e9f6427ce63": [
+      "corpus_units_test.go:5357: Lower declined: bundled:///libs/lib.es2018.regexp.d.ts:24:5: Adamic 0.1 refuses RegExpExecArray.groups, a mutable field of type { [key: string]: string | undefined; } | undefined, which can reach back to the RegExpExecArray holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it groups: Weak<{ [key: string]: string | undefined; }> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)"
+    ],
+    "TestFreshWrites____oracle_testdata_proven_upcasts_a_3f8a27eb186c": [
+      "corpus_units_test.go:5321: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_overload_contracts_a_73048b746972": [
+      "corpus_units_test.go:2339: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_overload_binders_a_abe165c6c13e": [
+      "corpus_units_test.go:2333: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_proven_satisfies_a_30acf979d9f9": [
+      "corpus_units_test.go:5315: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_proven_guards_a_a7b288800354": [
+      "corpus_units_test.go:5309: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_proven_class_guards_a_7c9e2f5949c8": [
+      "corpus_units_test.go:5303: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_optional_values_system_a_73618e359986": [
+      "corpus_units_test.go:2327: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_proven_assertions_a_28b36612a4c7": [
+      "corpus_units_test.go:5297: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_prompt_then_read_a_abd035a8ae5e": [
+      "corpus_units_test.go:5291: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_optional_values_receivers_a_34aac92e1a34": [
+      "corpus_units_test.go:2321: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_optional_values_padding_a_4cb6f5544e71": [
+      "corpus_units_test.go:2315: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_power_of_two_string_a_67e4d6dc75d2": [
+      "corpus_units_test.go:5279: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_precision_range_a_c6657d5b856f": [
+      "corpus_units_test.go:5285: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_types_a_e3c4f314ea6d": [
+      "corpus_units_test.go:5267: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_optional_values_forms_a_1575752575a4": [
+      "corpus_units_test.go:2309: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_values_a_dee45db331a0": [
+      "corpus_units_test.go:5273: 23 writes, 23 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_write_after_shrink_a_9635c2b57836": [
+      "corpus_units_test.go:6365: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_write_files_a_4c0ee970226c": [
+      "corpus_units_test.go:6371: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_weak_narrowed_a_a50a92663174": [
+      "corpus_units_test.go:6353: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_weak_parent_a_1d7a247ab5a4": [
+      "corpus_units_test.go:6359: 6 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_overrides_a_2098a8ab6b5e": [
+      "corpus_units_test.go:5261: 14 writes, 14 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_utf8_view_a_91b9e1d3108f": [
+      "corpus_units_test.go:6329: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_walk_a_71c3d6a56150": [
+      "corpus_units_test.go:6347: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_utf8_sweep_a_08861559554a": [
+      "corpus_units_test.go:6323: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_utf8_view_fails_a_f022be275d0a": [
+      "corpus_units_test.go:6335: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_visits_a_d4c097845f4f": [
+      "corpus_units_test.go:6341: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_updates_a_201eb96d42d9": [
+      "corpus_units_test.go:6305: 22 writes, 22 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_unused_parameters_a_6be8eb25fedd": [
+      "corpus_units_test.go:6299: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_user_iterators_rest_tdz_a_802b89df8a09": [
+      "corpus_units_test.go:6317: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_unknown_narrowing_a_c08645578b93": [
+      "corpus_units_test.go:6287: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_undefined_strings_a_c4d196b67efd": [
+      "corpus_units_test.go:6275: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_unions_a_6b2449b70737": [
+      "corpus_units_test.go:6281: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_undefined_keys_a_2b04b182db29": [
+      "corpus_units_test.go:6263: 9 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_undefined_references_a_52fd1317866e": [
+      "corpus_units_test.go:6269: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_undefined_elements_a_9c2402fdf62e": [
+      "corpus_units_test.go:6257: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_string_literal_a_b83d8b5a72ba": [
+      "corpus_units_test.go:6251: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_null_switch_a_3a3d35b58909": [
+      "corpus_units_test.go:6245: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_null_slots_a_665eb623bccd": [
+      "corpus_units_test.go:6239: 3 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_null_a_0a0384a027c9": [
+      "corpus_units_test.go:6221: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_null_compare_a_4e1203dd84c5": [
+      "corpus_units_test.go:6227: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_null_roll_a_15f3027a2705": [
+      "corpus_units_test.go:6233: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typeof_dispatch_a_079ca2fbcd3d": [
+      "corpus_units_test.go:6215: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_workers_stats_a_4dbde1ee8cf8": [
+      "corpus_units_test.go:6209: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_uint8array_a_4cd127390046": [
+      "corpus_units_test.go:6197: 1 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_views_a_6b5268740c48": [
+      "corpus_units_test.go:6203: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_stop_a_1044e793bcc9": [
+      "corpus_units_test.go:6191: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_stats_a_6b830b9fa28a": [
+      "corpus_units_test.go:6185: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_primes_large_a_1e0825d84199": [
+      "corpus_units_test.go:6179: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5": [
+      "corpus_units_test.go:6293: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_primes_a_db708dbaeb88": [
+      "corpus_units_test.go:6173: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_order_a_e4ab2c6efb74": [
+      "corpus_units_test.go:6167: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_int32array_a_669a5c290186": [
+      "corpus_units_test.go:6161: 1 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_tuples_kept_a_eb9368961b9a": [
+      "corpus_units_test.go:6149: 2 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_typed_arrays_float64array_a_d4c1eaf64ecc": [
+      "corpus_units_test.go:6155: 1 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_try_assignments_a_fa66f2a15b65": [
+      "corpus_units_test.go:6137: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_tuple_values_a_1a7b35830fd0": [
+      "corpus_units_test.go:6143: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_trig_reduction_a_4f6ac2d2fc3c": [
+      "corpus_units_test.go:6131: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_timsort_a_63f1305dfb95": [
+      "corpus_units_test.go:6125: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_throw_keeps_old_value_variants_a_75bc8d7ff710": [
+      "corpus_units_test.go:6119: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_throw_keeps_old_value_a_2b16f5decd05": [
+      "corpus_units_test.go:6113: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_throw_in_writes_a_2d21396fb7ad": [
+      "corpus_units_test.go:6107: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_throw_global_move_a_442463129ad2": [
+      "corpus_units_test.go:6101: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_truthiness_a_52ea73a24411": [
+      "corpus_units_test.go:6089: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_void_a_e94c912b0fa0": [
+      "corpus_units_test.go:6095: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_stage3_representations_a_26b3f5707966": [
+      "corpus_units_test.go:6083: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_optional_join_a_1fdbcaa7461c": [
+      "corpus_units_test.go:6077: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_logical_assignment_a_beb871943f17": [
+      "corpus_units_test.go:6071: 10 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_comma_a_6b7eea899f33": [
+      "corpus_units_test.go:6059: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_taste_labels_a_32a4808e11e8": [
+      "corpus_units_test.go:6065: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_call_cycle_a_217f8cf70a9b": [
+      "corpus_units_test.go:4265: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_syntax_substr_a_7070d8ab2cb7": [
+      "corpus_units_test.go:6053: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_syntax_module_declarations_a_a91b8713ed55": [
+      "corpus_units_test.go:6047: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_switch_empty_neighbors_a_dbff2f5aa404": [
+      "corpus_units_test.go:6041: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_static_a_4d59cce78ca9": [
+      "corpus_units_test.go:6035: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_optional_a_16aa66ef69e3": [
+      "corpus_units_test.go:6029: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_instance_a_89f9b61fbc64": [
+      "corpus_units_test.go:6017: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_mixed_a_bba3c31fe54f": [
+      "corpus_units_test.go:6023: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_generic_a_f09d5b885c18": [
+      "corpus_units_test.go:6005: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_structural_statics_inherited_a_91eabcb97d79": [
+      "corpus_units_test.go:6011: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_strings_more_a_79fb961a7af4": [
+      "corpus_units_test.go:5999: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_strings_a_233ff93a99b4": [
+      "corpus_units_test.go:5993: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_surrogates_a_612f419818ee": [
+      "corpus_units_test.go:5981: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_policy_a_6fccd9703ae4": [
+      "corpus_units_test.go:5975: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_throw_a_44087e068f41": [
+      "corpus_units_test.go:5987: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_lifetime_a_9681bee1607a": [
+      "corpus_units_test.go:5957: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_loops_a_7f7c2e980f94": [
+      "corpus_units_test.go:5963: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_methods_a_aef97f4e430b": [
+      "corpus_units_test.go:5969: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_characters_a_09248968f63b": [
+      "corpus_units_test.go:5945: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_holders_a_ea447c367ed5": [
+      "corpus_units_test.go:5951: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_a_184d62c5efbf": [
+      "corpus_units_test.go:4259: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_string_views_calls_a_701b47255107": [
+      "corpus_units_test.go:5939: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespace_class_registration_a_228d79ad2e7f": [
+      "corpus_units_test.go:4247: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespace_callable_properties_a_39ccf30b6a51": [
+      "corpus_units_test.go:4241: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespace_method_receiver_a_2270867a46c8": [
+      "corpus_units_test.go:4253: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_valueof_a_09b8a0ac3699": [
+      "corpus_units_test.go:4223: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_named_function_values_a_568e82af49b7": [
+      "corpus_units_test.go:4235: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_trimstart_a_586de1803335": [
+      "corpus_units_test.go:4217: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_move_throw_a_59e55e7d3c9b": [
+      "corpus_units_test.go:4229: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_trimend_a_31ad3eae0d5e": [
+      "corpus_units_test.go:4211: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_trim_a_f4a36d392481": [
+      "corpus_units_test.go:4205: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_tostring_a_e944135bf4b5": [
+      "corpus_units_test.go:4193: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_touppercase_a_e6547116139f": [
+      "corpus_units_test.go:4199: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_substring_a_40507812d875": [
+      "corpus_units_test.go:4181: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_tolowercase_a_37be9ba7adfa": [
+      "corpus_units_test.go:4187: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_startswith_a_213f933cd332": [
+      "corpus_units_test.go:4175: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_slice_a_7b714abc5155": [
+      "corpus_units_test.go:4169: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_repeat_a_36308cab6277": [
+      "corpus_units_test.go:4163: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_padstart_a_a0904450f5cb": [
+      "corpus_units_test.go:4157: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_normalize_a_9d922a29fe72": [
+      "corpus_units_test.go:4139: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_padend_a_ed51845bd9a5": [
+      "corpus_units_test.go:4151: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_overloads_a_7f7bdec8f351": [
+      "corpus_units_test.go:4145: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_lastindexof_a_2f6a3b45a648": [
+      "corpus_units_test.go:4133: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_indexof_a_a0894a5712c2": [
+      "corpus_units_test.go:4127: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_endswith_a_012409f899a6": [
+      "corpus_units_test.go:4115: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_includes_a_8ae0391ddc1b": [
+      "corpus_units_test.go:4121: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_concat_a_9d7beaf5f023": [
+      "corpus_units_test.go:4109: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_charcodeat_a_ea64257a6852": [
+      "corpus_units_test.go:4097: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_codepointat_a_24a2754ab140": [
+      "corpus_units_test.go:4103: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_undefined_value_a_68763062b65c": [
+      "corpus_units_test.go:3317: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_at_a_0e02d11e98e9": [
+      "corpus_units_test.go:4085: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_receiver_order_a_89e6440b486c": [
+      "corpus_units_test.go:4079: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_object_tags_a_d1f60fa2100c": [
+      "corpus_units_test.go:4073: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_object_statics_a_e3b7a2c0e8db": [
+      "corpus_units_test.go:4067: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_object_descriptors_a_8156063e2faa": [
+      "corpus_units_test.go:4061: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_number_statics_a_1f7e1e3b7bc0": [
+      "corpus_units_test.go:4055: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_number_formats_a_4553a9505487": [
+      "corpus_units_test.go:4049: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_map_strings_a_97d230febd01": [
+      "corpus_units_test.go:4037: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_map_parsers_a_50523eb5e320": [
+      "corpus_units_test.go:4031: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_math_a_68fabd6e5b96": [
+      "corpus_units_test.go:4043: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_format_failure_a_c2e53f962252": [
+      "corpus_units_test.go:4025: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_numbers_a_79b4c868c22b": [
+      "corpus_units_test.go:3911: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_conversions_a_2aeafc2ad3ac": [
+      "corpus_units_test.go:4013: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_empty_alias_tdz_a_6a60823f3c55": [
+      "corpus_units_test.go:4019: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_bound_strings_a_03dfdacc6b92": [
+      "corpus_units_test.go:4001: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_codes_a_8de5afaccce4": [
+      "corpus_units_test.go:4007: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_array_values_a_3c758c97a8d3": [
+      "corpus_units_test.go:3995: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_array_mutations_a_c8cdf8a10b95": [
+      "corpus_units_test.go:3989: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_closures_a_817dc94554de": [
+      "corpus_units_test.go:3977: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_alias_order_a_fed4dc9817bc": [
+      "corpus_units_test.go:3983: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maybe_numbers_a_050414322c60": [
+      "corpus_units_test.go:3971: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maybe_collections_a_371054e5d401": [
+      "corpus_units_test.go:3959: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maybe_number_slots_a_f8a9111712d9": [
+      "corpus_units_test.go:3965: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maybe_booleans_a_d7fad10be472": [
+      "corpus_units_test.go:3953: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maybe_boolean_panic_a_2983f084c4d6": [
+      "corpus_units_test.go:3947: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_maps_and_text_a_fa07dd901503": [
+      "corpus_units_test.go:3941: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_shrinks_a_310bd6acda06": [
+      "corpus_units_test.go:3929: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_iteration_a_80f456e0fdbc": [
+      "corpus_units_test.go:3923: 10 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_zero_keys_a_2dd15e1a8cbb": [
+      "corpus_units_test.go:3935: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_named_objects_a_0dda40d1712e": [
+      "corpus_units_test.go:3905: 12 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_objects_a_89337f01e876": [
+      "corpus_units_test.go:3917: 16 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_named_more_a_80bab16ee7d2": [
+      "corpus_units_test.go:3893: 13 writes, 13 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_named_numbers_a_67ca4681df6b": [
+      "corpus_units_test.go:3899: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_named_keys_a_8c9b643645ba": [
+      "corpus_units_test.go:3887: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_named_closures_a_002fcf49b650": [
+      "corpus_units_test.go:3881: 8 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_keys_a_56d3e12b7201": [
+      "corpus_units_test.go:3875: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_keep_a_9be9ec8571a7": [
+      "corpus_units_test.go:3869: 13 writes, 12 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_fnexpr_a_7ae0d6f95d6e": [
+      "corpus_units_test.go:3863: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_closures_a_55dbe9b18e37": [
+      "corpus_units_test.go:3857: 12 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_loops_a_cf741d097b34": [
+      "corpus_units_test.go:3845: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_map_foreach_arrays_a_81e0264868ff": [
+      "corpus_units_test.go:3851: 9 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_long_literals_a_6541a4221a5e": [
+      "corpus_units_test.go:3839: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_long_chain_a_2c0a4de29dc2": [
+      "corpus_units_test.go:3833: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lone_surrogates_a_2e135535b43c": [
+      "corpus_units_test.go:3827: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_logical_and_reference_maybe_a_6ee87760d5a5": [
+      "corpus_units_test.go:3821: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_local_console_a_785920846ddf": [
+      "corpus_units_test.go:3815: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lint_runtime_search_calls_a_4835b52db528": [
+      "corpus_units_test.go:3803: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_literal_optional_shapes_a_0d66a67bb24d": [
+      "corpus_units_test.go:3809: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lint_runtime_search_boundaries_a_1de04c6795f8": [
+      "corpus_units_test.go:3797: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lint_runtime_release_shared_a_5790f557f50c": [
+      "corpus_units_test.go:3791: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lint_runtime_release_chain_a_25496e0c53dc": [
+      "corpus_units_test.go:3785: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lint_runtime_equal_headers_a_6d6a30398477": [
+      "corpus_units_test.go:3779: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_string_raw_a_5ca0f0c7ccb8": [
+      "corpus_units_test.go:3773: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_string_prototype_a_aed14d9aec1b": [
+      "corpus_units_test.go:3767: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_user_iterators_a_c4fa97d41bf3": [
+      "corpus_units_test.go:6311: 53 writes, 52 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_string_indices_a_295bbe2298c8": [
+      "corpus_units_test.go:3761: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_string_conversion_a_9bada4c60929": [
+      "corpus_units_test.go:3749: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_string_existing_a_a39efa06bdec": [
+      "corpus_units_test.go:3755: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_same_a_d18f9368393e": [
+      "corpus_units_test.go:3743: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_own_a_026ec04cfac3": [
+      "corpus_units_test.go:3737: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_order_a_680c90fea281": [
+      "corpus_units_test.go:3731: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_keys_a_b1f76b50cc6b": [
+      "corpus_units_test.go:3725: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_has_own_a_75d02e38b655": [
+      "corpus_units_test.go:3713: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_is_a_bd460d90e8b5": [
+      "corpus_units_test.go:3719: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_freeze_assign_a_8c70b47fdb38": [
+      "corpus_units_test.go:3701: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_freeze_write_a_838e472e9c86": [
+      "corpus_units_test.go:3707: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_freeze_alias_a_c3d65020edda": [
+      "corpus_units_test.go:3695: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_freeze_a_a08b611e075d": [
+      "corpus_units_test.go:3689: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_assign_a_620eafcc76f7": [
+      "corpus_units_test.go:3677: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_method_values_dead_zone_a_a9aa9198bfda": [
+      "corpus_units_test.go:3671: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_object_assign_fields_a_d5a1fb2e91bd": [
+      "corpus_units_test.go:3683: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_math_number_prototype_a_e60b89e5693d": [
+      "corpus_units_test.go:3659: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_math_number_math_a_0ef964f11a56": [
+      "corpus_units_test.go:3653: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_math_number_convert_a_741e8e403a77": [
+      "corpus_units_test.go:3647: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_method_values_a_cc811fe2fb94": [
+      "corpus_units_test.go:3665: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_zeros_a_35862e6a0ab3": [
+      "corpus_units_test.go:3641: 10 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_setops_a_890363aa7192": [
+      "corpus_units_test.go:3629: 21 writes, 21 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_visit_a_bc35449014ae": [
+      "corpus_units_test.go:3635: 17 writes, 17 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_next_a_ffc71820734c": [
+      "corpus_units_test.go:3623: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_iterator_number_hash_a_1fa7ab647356": [
+      "corpus_units_test.go:3605: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_iterators_a_8f24c8fec870": [
+      "corpus_units_test.go:3611: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_keys_a_4c1f891b1381": [
+      "corpus_units_test.go:3617: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_iterator_exhausted_a_335bac79a545": [
+      "corpus_units_test.go:3599: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_groupby_keys_a_30710b8e237c": [
+      "corpus_units_test.go:3593: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_globals_typeof_a_5128afee9bfa": [
+      "corpus_units_test.go:3569: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_construct_a_dc8f8eae2779": [
+      "corpus_units_test.go:3581: 10 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_group_by_a_4ff4ed6f9bd1": [
+      "corpus_units_test.go:3587: 16 writes, 16 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_globals_a_efbafb5dc834": [
+      "corpus_units_test.go:3563: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_map_set_a_f4d220f1355d": [
+      "corpus_units_test.go:3575: 46 writes, 46 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_for_in_keys_a_8a2f3bc15c5c": [
+      "corpus_units_test.go:3545: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_for_in_live_a_0b6ae711514a": [
+      "corpus_units_test.go:3551: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_function_expressions_a_f31e2f243db3": [
+      "corpus_units_test.go:3557: 2 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_for_in_a_2f8868909da9": [
+      "corpus_units_test.go:3539: 2 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_fnexpr_store_a_ecf4184d75be": [
+      "corpus_units_test.go:3533: 2 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_fnexpr_recurse_a_0c6091c2660c": [
+      "corpus_units_test.go:3527: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_with_a_0f3982a8a29c": [
+      "corpus_units_test.go:3515: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_fnexpr_loops_a_738cef33acae": [
+      "corpus_units_test.go:3521: 12 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_spliced_a_9629fdca699d": [
+      "corpus_units_test.go:3509: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_search_a_f96f34612316": [
+      "corpus_units_test.go:3503: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_metadata_a_882499ae7166": [
+      "corpus_units_test.go:3497: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_join_a_00ecfc649e9c": [
+      "corpus_units_test.go:3491: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_flat_map_a_c47a9643d907": [
+      "corpus_units_test.go:3479: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_iterators_a_a44efcbf14ab": [
+      "corpus_units_test.go:3485: 3 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_flat_a_ddd3e915c073": [
+      "corpus_units_test.go:3473: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_find_last_a_00f39b3c7faa": [
+      "corpus_units_test.go:3467: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_copy_within_a_1813fd32dbfc": [
+      "corpus_units_test.go:3461: 5 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_library_array_copy_a_12248a20833f": [
+      "corpus_units_test.go:3455: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_large_output_a_b212a89559eb": [
+      "corpus_units_test.go:3443: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_killed_after_output_a_3448a1764f60": [
+      "corpus_units_test.go:3437: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_values_a_98be2ebe5835": [
+      "corpus_units_test.go:3431: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_undefined_a_ba0587d4321b": [
+      "corpus_units_test.go:3425: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_lent_reads_a_8184e3180a49": [
+      "corpus_units_test.go:3449: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_options_a_551de6007701": [
+      "corpus_units_test.go:3407: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_numbers_a_1e060b31c168": [
+      "corpus_units_test.go:3401: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_keys_a_cb31a650a860": [
+      "corpus_units_test.go:3395: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_replacer_a_0e769f64d99e": [
+      "corpus_units_test.go:3413: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_scalars_a_6408a7ebd4a8": [
+      "corpus_units_test.go:3419: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_invariance_readonly_a_07123670caa9": [
+      "corpus_units_test.go:3377: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_escapes_a_6f9833b114bf": [
+      "corpus_units_test.go:3383: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_interleaved_a_9a03fd7296a7": [
+      "corpus_units_test.go:3371: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_integer_format_a_af6f4a148d65": [
+      "corpus_units_test.go:3365: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_json_stringify_indent_a_9d8fc288c321": [
+      "corpus_units_test.go:3389: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_input_spread_ordinary_a_57a84a194620": [
+      "corpus_units_test.go:3359: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_indexing_a_971afca4a436": [
+      "corpus_units_test.go:3341: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_input_spread_local_a_c9fe3ebb7e5e": [
+      "corpus_units_test.go:3353: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_inherited_static_field_read_a_1ff91c69b3a4": [
+      "corpus_units_test.go:3347: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_implicit_returns_a_dd7fe4a921d4": [
+      "corpus_units_test.go:3335: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_void_method_a_c3441af8323f": [
+      "corpus_units_test.go:3329: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_unknown_error_code_a_c286c84bb17e": [
+      "corpus_units_test.go:3323: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_private_generic_a_f8c80f486eab": [
+      "corpus_units_test.go:2543: 20 writes, 20 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_scanner_never_a_bf70dc800492": [
+      "corpus_units_test.go:3311: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_rest_union_a_bceb1120e248": [
+      "corpus_units_test.go:3305: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_optional_intrinsic_a_1e811b6d0454": [
+      "corpus_units_test.go:3299: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_map_union_a_fd63aa81fa9f": [
+      "corpus_units_test.go:3287: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_never_branches_a_9485c0a214c9": [
+      "corpus_units_test.go:3293: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_map_iterator_probe_a_6dfc4841826d": [
+      "corpus_units_test.go:3275: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_generic_functions_a_b17731b49843": [
+      "corpus_units_test.go:3221: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_map_iterator_union_a_e7c7b36f2b4a": [
+      "corpus_units_test.go:3281: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_map_generic_union_a_04abcf0b9ae3": [
+      "corpus_units_test.go:3269: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_empty_object_slots_a_50492e4f05e0": [
+      "corpus_units_test.go:3263: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_array_unknown_predicate_a_f60c222c6d51": [
+      "corpus_units_test.go:3257: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_host_array_predicate_a_6710bf5f1b4c": [
+      "corpus_units_test.go:3251: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_has_own_a_9d389ee6f06f": [
+      "corpus_units_test.go:3245: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_generic_method_return_a_c66b03b77339": [
+      "corpus_units_test.go:3233: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_generic_instance_key_typeof_a_74ca963c45b0": [
+      "corpus_units_test.go:3227: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_gaps_a_e762e0d14908": [
+      "corpus_units_test.go:3215: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_functions_a_a4fc048877b5": [
+      "corpus_units_test.go:3209: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_generic_values_a_09b2b2b9967f": [
+      "corpus_units_test.go:3239: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_return_a_3030c9b3866e": [
+      "corpus_units_test.go:3197: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_options_a_60ce3a5ca0e6": [
+      "corpus_units_test.go:3191: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_signature_a_3e8aebe840e7": [
+      "corpus_units_test.go:3203: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_chain_a_2902ab6408d0": [
+      "corpus_units_test.go:3179: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_diagnostic_a_11b728a7dcde": [
+      "corpus_units_test.go:3185: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_array_a_a0ea0adc6050": [
+      "corpus_units_test.go:3167: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_from_codes_a_240b9bd14b72": [
+      "corpus_units_test.go:3161: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_from_code_point_fails_a_aa76048a0e74": [
+      "corpus_units_test.go:3155: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_function_values_boundary_a_3bb9f27b7c44": [
+      "corpus_units_test.go:3173: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_find_index_shrinks_a_9d4e0197a00c": [
+      "corpus_units_test.go:3125: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fresh_calls_a_bce003538103": [
+      "corpus_units_test.go:3137: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_find_shrinks_a_bf54ce873bd9": [
+      "corpus_units_test.go:3131: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fresh_writes_a_4d992dd4da5c": [
+      "corpus_units_test.go:3149: 24 writes, 23 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fresh_parser_a_1d011b0f459a": [
+      "corpus_units_test.go:3143: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fill_length_a_819200b7cd43": [
+      "corpus_units_test.go:3107: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_finally_leaves_a_dca83b87191f": [
+      "corpus_units_test.go:3119: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fills_a_5f9ff923d599": [
+      "corpus_units_test.go:3113: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_field_access_paths_a_3e8a708d7b27": [
+      "corpus_units_test.go:3095: 11 writes, 11 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_field_write_paths_a_d8e337edcefe": [
+      "corpus_units_test.go:3101: 14 writes, 14 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fallthrough_probe_a_596ed66fbafe": [
+      "corpus_units_test.go:3089: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fallthrough_ownership_a_f0d7325ec4eb": [
+      "corpus_units_test.go:3083: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fallthrough_nested_a_d5961eb3d924": [
+      "corpus_units_test.go:3077: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fallthrough_labels_a_d05de22a78a6": [
+      "corpus_units_test.go:3071: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_fallthrough_exceptions_a_bfa281d59406": [
+      "corpus_units_test.go:3065: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_exceptions_uncaught_a_b8656ec8c8fc": [
+      "corpus_units_test.go:3059: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_exceptions_empty_a_359cd69cbdec": [
+      "corpus_units_test.go:3053: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_exceptions_a_ee24fc04a281": [
+      "corpus_units_test.go:3047: 12 writes, 12 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_return_a_da7b7d1609fa": [
+      "corpus_units_test.go:3035: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_update_a_48f47af5218e": [
+      "corpus_units_test.go:3041: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_index_a_3e775ba1d423": [
+      "corpus_units_test.go:3029: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_implicit_a_1b6cc44d5c56": [
+      "corpus_units_test.go:3023: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_field_a_30b523f0f89e": [
+      "corpus_units_test.go:3011: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_if_a_59625fe37ada": [
+      "corpus_units_test.go:3017: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_never_a_d5455890f859": [
+      "corpus_units_test.go:3005: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_members_a_801350425d7d": [
+      "corpus_units_test.go:2999: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_flags_never_default_a_cffa6a24da16": [
+      "corpus_units_test.go:2981: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_names_a_ce79a83a6af5": [
+      "corpus_units_test.go:2987: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_open_a_b8f4eb7f84dd": [
+      "corpus_units_test.go:2993: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_const_a_a507f4373b68": [
+      "corpus_units_test.go:2969: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_flags_a_9b2bd2447d6d": [
+      "corpus_units_test.go:2975: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_record_misfit_a_f91f625f9e60": [
+      "corpus_units_test.go:2951: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_scanner_a_b85eebe6bf95": [
+      "corpus_units_test.go:2957: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_proven_import_source_a_8de8cf08d090": [
+      "corpus_units_test.go:2939: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_record_alias_a_e1b54d2f549a": [
+      "corpus_units_test.go:2945: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_enums_a_dbb6b6d81dc4": [
+      "corpus_units_test.go:2963: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_proven_import_a_36639843a86d": [
+      "corpus_units_test.go:2933: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_proven_a_df7862b75138": [
+      "corpus_units_test.go:2927: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_element_access_presence_a_0209850b7579": [
+      "corpus_units_test.go:2873: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_checked_misfit_a_72575237ceae": [
+      "corpus_units_test.go:2921: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_checked_literal_a_bc97e8df3a83": [
+      "corpus_units_test.go:2915: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_checked_boxed_a_4e9a55ab7de2": [
+      "corpus_units_test.go:2903: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_checked_fit_a_f6ea10a362f3": [
+      "corpus_units_test.go:2909: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_entries_checked_boolean_a_09c37b0fc917": [
+      "corpus_units_test.go:2897: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_empty_path_a_eea404c89ea5": [
+      "corpus_units_test.go:2891: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_element_access_reads_a_3a6edee3f6fe": [
+      "corpus_units_test.go:2879: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_element_access_tuple_a_b93404b4af6b": [
+      "corpus_units_test.go:2885: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_element_access_boolean_a_747534e1dd1c": [
+      "corpus_units_test.go:2861: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_effects_a_0b69a1a33258": [
+      "corpus_units_test.go:2855: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_element_access_optional_a_d4e40d3cb3bf": [
+      "corpus_units_test.go:2867: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_u02_optional_absent_a_37eebbecd565": [
+      "corpus_units_test.go:2843: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_u03_discriminated_undefined_a_01b5d1b2fe84": [
+      "corpus_units_test.go:2849: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_u01_undefined_field_widened_a_50566af394fd": [
+      "corpus_units_test.go:2837: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f2_union_narrow_call_a_3342f5a4339a": [
+      "corpus_units_test.go:2825: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f2b_union_narrow_number_a_d4b3506dc3af": [
+      "corpus_units_test.go:2831: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f1_field_narrowed_a_e46bd0ec46cd": [
+      "corpus_units_test.go:2813: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f1_field_present_a_c2c37926f9e2": [
+      "corpus_units_test.go:2819: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f1_class_narrowed_a_8a2fa17b4347": [
+      "corpus_units_test.go:2807: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_e4eec87_f1_alias_narrowed_a_b62b4c179146": [
+      "corpus_units_test.go:2801: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_receivers_a_bd2b15b55be4": [
+      "corpus_units_test.go:2789: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_generic_a_7cc62f5c4835": [
+      "corpus_units_test.go:2777: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_interfaces_a_876ee24b05dd": [
+      "corpus_units_test.go:2783: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_doubly_linked_a_51bb775aa56a": [
+      "corpus_units_test.go:2795: 19 writes, 17 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_factory_a_94fce1cf52b2": [
+      "corpus_units_test.go:2765: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_function_field_a_dc83de7cf8e2": [
+      "corpus_units_test.go:2771: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_accessors_a_a86ecb79dd98": [
+      "corpus_units_test.go:2759: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_abstract_a_2b9a79a41412": [
+      "corpus_units_test.go:2753: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_defaults_a_ff20ffad378d": [
+      "corpus_units_test.go:2735: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirt_borrow_doc_claim_a_08c308f4d09e": [
+      "corpus_units_test.go:2741: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_devirtualize_a_08ae1764ccb1": [
+      "corpus_units_test.go:2747: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_debugger_fail_a_cd4511693cb4": [
+      "corpus_units_test.go:2723: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_union_a_5c8fbed52c97": [
+      "corpus_units_test.go:2711: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_declared_later_a_240a35197d4b": [
+      "corpus_units_test.go:2729: 12 writes, 12 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_dead_zone_a_b9864e3f2842": [
+      "corpus_units_test.go:2717: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_string_a_8092aac7d598": [
+      "corpus_units_test.go:2705: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_optional_string_a_0d8f9e5e356d": [
+      "corpus_units_test.go:2693: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_sites_a_cbf28e232794": [
+      "corpus_units_test.go:2699: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_optional_reference_a_dca6028d8791": [
+      "corpus_units_test.go:2687: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_optional_boolean_a_96e767f923c2": [
+      "corpus_units_test.go:2675: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_optional_number_a_84fba617e12e": [
+      "corpus_units_test.go:2681: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_number_a_dcf679c92741": [
+      "corpus_units_test.go:2663: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_null_a_0c49daa0649f": [
+      "corpus_units_test.go:2657: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_object_a_a3a1643cded8": [
+      "corpus_units_test.go:2669: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_function_a_f23968d8c776": [
+      "corpus_units_test.go:2645: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_array_a_c3d24526e3f2": [
+      "corpus_units_test.go:2633: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_evaluation_a_35461b81e18d": [
+      "corpus_units_test.go:2639: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_concat_too_long_a_203368cb0a38": [
+      "corpus_units_test.go:2627: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closures_throw_uncaught_a_88b44c0a9a06": [
+      "corpus_units_test.go:2615: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closures_a_9b4b3957187f": [
+      "corpus_units_test.go:2603: 3 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_collections_a_7cba4afb4ec4": [
+      "corpus_units_test.go:2621: 34 writes, 25 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closures_throw_a_18cd1444970a": [
+      "corpus_units_test.go:2609: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_conditions_ledger78_a_977b4ef434f4": [
+      "corpus_units_test.go:2651: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closure_convention_regexp_count_a_8a71f83ec698": [
+      "corpus_units_test.go:2597: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closure_convention_plain_a_085fab2714df": [
+      "corpus_units_test.go:2585: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closure_convention_receiver_rest_a_7581087d502d": [
+      "corpus_units_test.go:2591: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closure_convention_nested_a_765381075cf2": [
+      "corpus_units_test.go:2579: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_clock_generic_returns_t_01_a_15300d2ec198": [
+      "corpus_units_test.go:2567: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_classes_a_9f80a324fa9b": [
+      "corpus_units_test.go:2561: 12 writes, 12 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_private_members_a_e40bb06094f8": [
+      "corpus_units_test.go:2549: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_class_super_closure_a_a199630acb6b": [
+      "corpus_units_test.go:2555: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_never_rest_marker_a_5844b743479e": [
+      "corpus_units_test.go:2303: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_adversarial_exits_a_4b0474bafd0b": [
+      "corpus_units_test.go:1769: 2 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_boolean_operators_a_aa3b45e7f4ba": [
+      "corpus_units_test.go:2291: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_boolean_sieve_a_f7272e8b71f2": [
+      "corpus_units_test.go:2297: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_boolean_negation_a_f135f99f7d14": [
+      "corpus_units_test.go:2285: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_boolean_dead_branch_a_d8c6a1ca6613": [
+      "corpus_units_test.go:2279: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_census_append_overload_a_784908a1410a": [
+      "corpus_units_test.go:2273: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_casts_a_dec7fdb88a0f": [
+      "corpus_units_test.go:2267: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_subunion_fails_a_5efcb386f7d3": [
+      "corpus_units_test.go:2255: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_subunion_string_fails_a_950fbce9996d": [
+      "corpus_units_test.go:2261: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_subunion_const_string_fails_a_c6febb11045d": [
+      "corpus_units_test.go:2249: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_subunion_const_numeric_fails_a_80df6194d19a": [
+      "corpus_units_test.go:2243: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_operand_once_a_bc7faa8b256d": [
+      "corpus_units_test.go:2237: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_fails_a_d056539cc6d3": [
+      "corpus_units_test.go:2231: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_string_fails_a_87ca06e749b6": [
+      "corpus_units_test.go:2225: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_string_a_e4a46d0d01f4": [
+      "corpus_units_test.go:2219: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_numeric_fails_a_5378566dcbc6": [
+      "corpus_units_test.go:2213: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_numeric_a_6ea96339a685": [
+      "corpus_units_test.go:2207: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_const_string_fails_a_be039fea8b66": [
+      "corpus_units_test.go:2201: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_const_numeric_fails_a_17e46c39730b": [
+      "corpus_units_test.go:2195: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_enum_const_a_4960b21b6fac": [
+      "corpus_units_test.go:2189: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_class_union_fails_a_b678b17c379d": [
+      "corpus_units_test.go:2183: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_class_generic_fails_a_cc4d63aeef36": [
+      "corpus_units_test.go:2177: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_class_fails_a_c59010ffbc56": [
+      "corpus_units_test.go:2171: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_cast_class_a_b574b7049cdf": [
+      "corpus_units_test.go:2165: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_closure_convention_host24_a_c6da27a08c9b": [
+      "corpus_units_test.go:2573: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_case_mapping_a_bfce1a08dfea": [
+      "corpus_units_test.go:2159: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_call_targets_sort_a_4dd0bc447fba": [
+      "corpus_units_test.go:2153: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_call_targets_reuse_a_0dc582f1bf89": [
+      "corpus_units_test.go:2147: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_call_targets_region_a_2fb7199ebf87": [
+      "corpus_units_test.go:2141: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c": [
+      "corpus_units_test.go:4691: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_input_a_4833f31fa3f3": [
+      "corpus_units_test.go:4703: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6": [
+      "corpus_units_test.go:4697: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_call_targets_element_a_2f6f471d7628": [
+      "corpus_units_test.go:2135: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_call_targets_closure_a_eb889fade84a": [
+      "corpus_units_test.go:2129: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_crypto_a_edd0dd804f10": [
+      "corpus_units_test.go:4685: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3": [
+      "corpus_units_test.go:4673: Lower declined: /workspace/adamic/internal/oracle/testdata/new_expression_uint16_notyet.a:1:16: stage 0 can't lower typed array element type Uint16Array yet"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_reassigned_a_1f6dac5be97b": [
+      "corpus_units_test.go:2123: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_uint16_a_f98ef2da22a9": [
+      "corpus_units_test.go:4667: Lower declined: /workspace/adamic/internal/oracle/testdata/new_expression_uint16.a:1:23: stage 0 can't lower typed array facility Uint16Array yet"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_bom_a_e668b0027d17": [
+      "corpus_units_test.go:4679: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_map_overwrite_a_862c1842e603": [
+      "corpus_units_test.go:2117: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_loop_calls_a_525dafd72329": [
+      "corpus_units_test.go:2111: 6 writes, 6 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_class_value_a_f485e42005f2": [
+      "corpus_units_test.go:4661: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_global_call_a_0fb884280626": [
+      "corpus_units_test.go:2099: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec": [
+      "corpus_units_test.go:4655: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_loop_a_7d36ee6cc78a": [
+      "corpus_units_test.go:2105: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_weak_a_ea30b5d1249d": [
+      "corpus_units_test.go:4637: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_class_cache_capture_notyet_a_8c4f9ea77e38": [
+      "corpus_units_test.go:4643: Lower declined: /workspace/adamic/internal/oracle/testdata/new_expression_class_cache_capture_notyet.a:8:52: stage 0 can't lower a lexical constructor-cache initializer needing additional captures yet"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_element_virtual_store_a_f76e7aafe3d4": [
+      "corpus_units_test.go:2093: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_new_expression_class_cache_local_a_e14cda186ec9": [
+      "corpus_units_test.go:4649: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_element_virtual_move_a_ddab692c3663": [
+      "corpus_units_test.go:2087: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_element_throw_a_780338691c11": [
+      "corpus_units_test.go:2081: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_three_levels_a_073564b2f7c7": [
+      "corpus_units_test.go:4631: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_element_super_move_a_375a2e446f94": [
+      "corpus_units_test.go:2075: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_tdz_write_a_5d9245abffb0": [
+      "corpus_units_test.go:4625: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_tdz_a_ba0cab5a5b72": [
+      "corpus_units_test.go:4619: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_returned_a_bbe8a3a839ba": [
+      "corpus_units_test.go:4613: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_element_a_ddc5a46e8764": [
+      "corpus_units_test.go:2069: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_defined_lent_field_a_2c1af2183ddd": [
+      "corpus_units_test.go:2063: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_reference_identity_a_bffaad5098f2": [
+      "corpus_units_test.go:4607: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_defined_lent_a_fd090933a476": [
+      "corpus_units_test.go:2057: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_write_a_2c6588032ef5": [
+      "corpus_units_test.go:2051: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_reduced_parameter_unused_a_75f02eb42d61": [
+      "corpus_units_test.go:4601: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_walk_a_4b2581eb5dbc": [
+      "corpus_units_test.go:2045: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_reduced_parameter_unreachable_a_03ac8295935a": [
+      "corpus_units_test.go:4595: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_pattern_parameter_a_952031a83c6e": [
+      "corpus_units_test.go:4583: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_unknown_a_d062012ae07d": [
+      "corpus_units_test.go:2039: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_reduced_parameter_escaped_a_cfedcd170182": [
+      "corpus_units_test.go:4589: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_owned_parameter_a_4ec7cfdc8d94": [
+      "corpus_units_test.go:4577: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_mixed_a_9b047ee9e42b": [
+      "corpus_units_test.go:4565: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_mutual_a_c67e2a3ea3e5": [
+      "corpus_units_test.go:4571: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_reassigned_a_ef70efd96ec0": [
+      "corpus_units_test.go:2027: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_store_a_13461c4c1982": [
+      "corpus_units_test.go:2033: 3 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_override_a_3bea572b0075": [
+      "corpus_units_test.go:2021: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_listener_a_f7f7edb96140": [
+      "corpus_units_test.go:2015: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_hoisting_a_ea436a2ba737": [
+      "corpus_units_test.go:4553: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_generic_capture_a_c1cbbe1139f7": [
+      "corpus_units_test.go:4547: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_minimal_a_424d9a4b073f": [
+      "corpus_units_test.go:4559: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_values_a_a4c355510e63": [
+      "corpus_units_test.go:2009: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_destructured_a_c7171d02951c": [
+      "corpus_units_test.go:4535: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_destructured_tdz_a_eb57ef2994b7": [
+      "corpus_units_test.go:4541: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_captures_a_1a0b4ddf977e": [
+      "corpus_units_test.go:4529: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_callback_recursive_a_136b132c080e": [
+      "corpus_units_test.go:4523: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_callback_levels_a_be19b3dc9c02": [
+      "corpus_units_test.go:4517: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_callback_escaped_a_e2960096579d": [
+      "corpus_units_test.go:4505: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_callback_late_capture_a_6d896f62bd64": [
+      "corpus_units_test.go:4511: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_assignment_return_a_5ff0d4b88934": [
+      "corpus_units_test.go:4499: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_write_read_order_a_1d9c16fe208d": [
+      "corpus_units_test.go:4487: 6 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nested_array_a_91fc9c3b991d": [
+      "corpus_units_test.go:4493: 2 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_slot_kinds_a_91a3938b65ae": [
+      "corpus_units_test.go:4469: 9 writes, 9 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_spread_fields_a_f8c96bc07375": [
+      "corpus_units_test.go:4475: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_optional_references_a_e2753e9534af": [
+      "corpus_units_test.go:4457: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_static_collision_a_3f35fd2317a3": [
+      "corpus_units_test.go:4481: 12 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_narrowed_receiver_a_028ad58408d4": [
+      "corpus_units_test.go:4451: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_runtime_fields_a_bdf2baf76b51": [
+      "corpus_units_test.go:4463: 4 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_field_values_a_8cfb4fd7fa07": [
+      "corpus_units_test.go:4445: 17 writes, 10 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_base_writes_a_8bc50b4ecbca": [
+      "corpus_units_test.go:4433: 8 writes, 8 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_navigation_a_2d523b33d948": [
+      "corpus_units_test.go:4427: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_nbody_collection_fields_a_2f78c3e5e22a": [
+      "corpus_units_test.go:4439: 6 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_native_arguments_length_value_a_2bad3df6a142": [
+      "corpus_units_test.go:4421: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_writes_a_8d04a57f2196": [
+      "corpus_units_test.go:4415: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_union_valid_a_c203ac498591": [
+      "corpus_units_test.go:4409: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_methods_a_0adbd2c74bec": [
+      "corpus_units_test.go:4391: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_numbers_a_27bdbba03a02": [
+      "corpus_units_test.go:4397: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_fields_a_c7b0e204549b": [
+      "corpus_units_test.go:4385: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_reads_a_52f71cc82d23": [
+      "corpus_units_test.go:4403: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_narrowed_compared_a_412f437dff29": [
+      "corpus_units_test.go:4379: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unknown_write_before_a_4b34845b4a1f": [
+      "corpus_units_test.go:4367: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unready_a_dc0edbd01b55": [
+      "corpus_units_test.go:4373: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unknown_function_before_a_cc6cca74e04c": [
+      "corpus_units_test.go:4355: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unknown_void_before_a_50580d7a3ef4": [
+      "corpus_units_test.go:4361: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unknown_enum_before_a_4afd9c408602": [
+      "corpus_units_test.go:4349: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_unknown_before_a_171a0e76259b": [
+      "corpus_units_test.go:4343: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_safe_initialization_a_fb9ebbad2238": [
+      "corpus_units_test.go:4337: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_repeated_var_a_6d321a58e59a": [
+      "corpus_units_test.go:4331: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_parser_factory_a_dbf072544e1b": [
+      "corpus_units_test.go:4319: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_parser_enums_a_035ef73e0135": [
+      "corpus_units_test.go:4313: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_parser_state_a_29806618b428": [
+      "corpus_units_test.go:4325: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_parser_body_a_dc585a94df97": [
+      "corpus_units_test.go:4307: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_map_before_a_a37784daeb9e": [
+      "corpus_units_test.go:4289: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_observed_narrowing_a_d70d2d8d2074": [
+      "corpus_units_test.go:4301: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_nested_a_6c5aa5374fd2": [
+      "corpus_units_test.go:4295: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_debug_probe_a_22274a633d95": [
+      "corpus_units_test.go:4277: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_debug_state_a_8e2f6ee845da": [
+      "corpus_units_test.go:4283: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_namespaces_call_graph_a_db837f044496": [
+      "corpus_units_test.go:4271: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_callbacks_a_d41baf187148": [
+      "corpus_units_test.go:5243: 5 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_params_namespaces_dotted_a_d2354c344e36": [
+      "corpus_units_test.go:5249: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_number_a_ff5e401188e3": [
+      "corpus_units_test.go:4979: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_parameter_properties_ownership_a_b126dbeda4ae": [
+      "corpus_units_test.go:5237: 6 writes, 5 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_parameter_properties_levels_a_efa6e5227c46": [
+      "corpus_units_test.go:5231: 18 writes, 18 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_parameter_properties_kinds_a_45eea5a5d11f": [
+      "corpus_units_test.go:5225: 16 writes, 16 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_panic_in_try_a_d780dcf587b9": [
+      "corpus_units_test.go:5207: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_param_assigned_in_try_a_5ae6a50f17fe": [
+      "corpus_units_test.go:5213: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_parameter_properties_a_451127d9cdd5": [
+      "corpus_units_test.go:5219: 18 writes, 18 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_panic_a_430c4b74b322": [
+      "corpus_units_test.go:5201: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_trailing_comment_range_a_a6939e07f270": [
+      "corpus_units_test.go:5183: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_pad_too_long_a_bb0b49f17b72": [
+      "corpus_units_test.go:5195: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_override_same_representation_a_c81a780900e1": [
+      "corpus_units_test.go:5189: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_resolve_type_names_a_6a7bd6dd5ea3": [
+      "corpus_units_test.go:5171: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_sort_deduplicate_a_535defbbdaa3": [
+      "corpus_units_test.go:5177: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_mutate_map_skipping_new_a_fa50e8a98c52": [
+      "corpus_units_test.go:5159: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_original_node_a_e9beb558d244": [
+      "corpus_units_test.go:5165: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_leading_comment_range_a_29fe5fcf579f": [
+      "corpus_units_test.go:5147: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_mutate_map_a_a888944b136f": [
+      "corpus_units_test.go:5153: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_array_to_numeric_map_a_11370d4720f2": [
+      "corpus_units_test.go:5135: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_inference_contracts_a_a4a8487833aa": [
+      "corpus_units_test.go:5141: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_array_to_map_a_c0e5843fa018": [
+      "corpus_units_test.go:5123: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_widening_fresh_a_2a36674f417c": [
+      "corpus_units_test.go:5105: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_ancestor_directory_a_00f49ff230ae": [
+      "corpus_units_test.go:5117: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_overload_array_to_multimap_a_f98610fa7b51": [
+      "corpus_units_test.go:5129: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_output_then_panic_a_4552429efef1": [
+      "corpus_units_test.go:5111: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_widening_declared_a_d8362341aa56": [
+      "corpus_units_test.go:5099: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_strings_a_bd5a7a2d9635": [
+      "corpus_units_test.go:5087: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_typed_array_a_5be536b024e7": [
+      "corpus_units_test.go:5075: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_numbers_a_071730bb3253": [
+      "corpus_units_test.go:5081: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_widening_class_a_a7fcca916902": [
+      "corpus_units_test.go:5093: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_string_gap_a_c06dc3205484": [
+      "corpus_units_test.go:5069: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_string_a_58aefed4749c": [
+      "corpus_units_test.go:5063: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_map_a_3ada5a1d3d6b": [
+      "corpus_units_test.go:5057: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_array_a_63aeafff3aad": [
+      "corpus_units_test.go:5045: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_class_method_a_23a03068d3ff": [
+      "corpus_units_test.go:5039: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_string_a_b234309b54a5": [
+      "corpus_units_test.go:5033: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_optional_indexing_chain_a_d7214c02e85e": [
+      "corpus_units_test.go:5051: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_scanner_required_a_e7f8dc7878ed": [
+      "corpus_units_test.go:5027: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_scanner_explicit_a_43ab201ade1d": [
+      "corpus_units_test.go:5021: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_scanner_a_157ee4d1ccb8": [
+      "corpus_units_test.go:5015: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_reader_a_57f255b042ea": [
+      "corpus_units_test.go:4991: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_reader_string_a_1640e0175a18": [
+      "corpus_units_test.go:5009: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_reader_override_a_edffb9705a35": [
+      "corpus_units_test.go:5003: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_method_a_b561975fbcdc": [
+      "corpus_units_test.go:1811: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_object_a_d59b80242ed3": [
+      "corpus_units_test.go:4985: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_scope_a_4ed23e39a985": [
+      "corpus_units_test.go:1997: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_reader_direct_a_1924a4d36d7c": [
+      "corpus_units_test.go:4997: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_return_a_d5648fd74c6d": [
+      "corpus_units_test.go:1991: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_method_a_a292362b0d68": [
+      "corpus_units_test.go:1979: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_exclusions_a_a6b0561d9d1a": [
+      "corpus_units_test.go:1961: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_finally_a_886c7d807965": [
+      "corpus_units_test.go:1967: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_guards_a_718b43f4cdad": [
+      "corpus_units_test.go:1973: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_parents_a_026f41cc9938": [
+      "corpus_units_test.go:1985: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_depths_a_5208517e3287": [
+      "corpus_units_test.go:1955: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_capture_a_eb7c35a13410": [
+      "corpus_units_test.go:1937: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_bounded_a_01bdd94e1be1": [
+      "corpus_units_test.go:1943: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_callbacks_a_663e801157f1": [
+      "corpus_units_test.go:1949: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_argument_a_80bd83ed99f6": [
+      "corpus_units_test.go:1931: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_booleans_a_4cdba3872462": [
+      "corpus_units_test.go:1925: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_bitwise_sweep_a_837e11918768": [
+      "corpus_units_test.go:1919: 24 writes, 24 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_bitwise_a_5d18476014ae": [
+      "corpus_units_test.go:1913: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_literal_empty_union_a_843a43edeb29": [
+      "corpus_units_test.go:1901: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_ascii_scan_a_0501ba7ebffe": [
+      "corpus_units_test.go:1907: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_literal_empty_typed_a_62beb79da62c": [
+      "corpus_units_test.go:1895: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_literal_empty_first_a_2ce6ca1d4a48": [
+      "corpus_units_test.go:1883: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_literal_empty_last_a_1455100a9bfa": [
+      "corpus_units_test.go:1889: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_from_length_a_d54d0c78d69c": [
+      "corpus_units_test.go:1871: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_from_undefined_a_6c03ed3f3e9a": [
+      "corpus_units_test.go:1877: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_value_a_7490222b425a": [
+      "corpus_units_test.go:1853: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_value_count_a_1240a71545a3": [
+      "corpus_units_test.go:1859: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_array_from_a_cd1caadc0cb6": [
+      "corpus_units_test.go:1865: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_unrelated_type_a_f4a54a3923d3": [
+      "corpus_units_test.go:1847: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_static_constructor_a_a2459353246b": [
+      "corpus_units_test.go:1841: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_spread_a_2f14e9aa6334": [
+      "corpus_units_test.go:1829: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_reduce_left_a_9b3b07f59abe": [
+      "corpus_units_test.go:1823: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_no_reader_a_a53f49fb1ae9": [
+      "corpus_units_test.go:1817: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_static_a_a8e044c8ce96": [
+      "corpus_units_test.go:1835: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_element_method_a_a1e0ddfdf610": [
+      "corpus_units_test.go:1709: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_a_73559f2a77b0": [
+      "corpus_units_test.go:1793: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_callbacks_a_b508801ed8f1": [
+      "corpus_units_test.go:1799: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_length_extended_a_75ebfc899c2e": [
+      "corpus_units_test.go:1805: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_arguments_a_ea096886a8b8": [
+      "corpus_units_test.go:1787: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_adversarial_order_a_7c92a9b6884d": [
+      "corpus_units_test.go:1781: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_adversarial_iteration_a_07b5dc628b96": [
+      "corpus_units_test.go:1775: 7 writes, 7 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_93122fa_s2_a_2b84ee113f5f": [
+      "corpus_units_test.go:1763: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_93122fa_s1_a_b15dd938baa6": [
+      "corpus_units_test.go:1757: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_typeof_a_fc319abec399": [
+      "corpus_units_test.go:1751: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_template_a_d58012491e1f": [
+      "corpus_units_test.go:1745: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_param_a_1f78d10b9409": [
+      "corpus_units_test.go:1733: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_optional_a_a2af90c3eb1a": [
+      "corpus_units_test.go:1727: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_paren_a_048092a9694b": [
+      "corpus_units_test.go:1739: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_numparam_a_583966c5b8fd": [
+      "corpus_units_test.go:1721: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_element_plain_a_79f6246b31e1": [
+      "corpus_units_test.go:1715: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_08_results_ts_93a33fa4d82e": [
+      "corpus_units_test.go:1661: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_coalesce_a_0dff83d5518d": [
+      "corpus_units_test.go:1691: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_conditional_a_51698d762a71": [
+      "corpus_units_test.go:1697: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_element_a_21af997bd191": [
+      "corpus_units_test.go:1703: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_047cb0d_n_arrayindex_a_961148726e38": [
+      "corpus_units_test.go:1685: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_10_unicode_ts_258bee085835": [
+      "corpus_units_test.go:1673: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_07_modules_main_ts_b045c38bbd40": [
+      "corpus_units_test.go:1679: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_03_shapes_ts_8c1c1dde768b": [
+      "corpus_units_test.go:1637: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_06_stack_ts_3051102e7887": [
+      "corpus_units_test.go:1655: 2 writes, 2 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_04_closures_ts_e00c7d9c50b2": [
+      "corpus_units_test.go:1643: 1 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_09_tree_ts_1391d32dcb51": [
+      "corpus_units_test.go:1667: 1 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_01_hello_ts_525fab25b749": [
+      "corpus_units_test.go:1625: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_05_wordcount_ts_e485501a0a59": [
+      "corpus_units_test.go:1649: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____load_testdata_0_1_compile_02_fizzbuzz_ts_44ab101c5f9c": [
+      "corpus_units_test.go:1631: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_methods_a_8067d5e6b513": [
+      "corpus_units_test.go:4973: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_undefined_a_7b36c538740b": [
+      "corpus_units_test.go:4841: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_defaults_a_f048220e5aba": [
+      "corpus_units_test.go:4967: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_omitted_boolean_a_a15b1547af36": [
+      "corpus_units_test.go:4961: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_objects_a_f5288582f5d4": [
+      "corpus_units_test.go:4955: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_numbers_a_9cab67029846": [
+      "corpus_units_test.go:4943: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_number_parsing_a_56df9ff00dcd": [
+      "corpus_units_test.go:4937: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_object_prototype_a_be20a7e71c55": [
+      "corpus_units_test.go:4949: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_number_formats_a_f741c95ae6a5": [
+      "corpus_units_test.go:4931: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_notyet_library_string_bounds_a_9c00f0aef799": [
+      "corpus_units_test.go:4919: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_number_edges_a_3715cf18ebf9": [
+      "corpus_units_test.go:4925: 4 writes, 4 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_notyet_library_object_entries_const_a_0579c055b740": [
+      "corpus_units_test.go:4901: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_notyet_library_regex_offset_a_6f0bd55e412d": [
+      "corpus_units_test.go:4913: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_notyet_library_regex_callback_a_10bbb0dd528d": [
+      "corpus_units_test.go:4907: 3 writes, 3 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_form_a_1e62eebe89d6": [
+      "corpus_units_test.go:4889: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_long_marks_a_9757219db254": [
+      "corpus_units_test.go:4895: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_stream_a_266eb0d8826f": [
+      "corpus_units_test.go:4883: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_quick_a_245c40269a42": [
+      "corpus_units_test.go:4871: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_method_coverage_string_charat_a_5ed698cee4c3": [
+      "corpus_units_test.go:4091: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_limit_a_5b4a20c3aad5": [
+      "corpus_units_test.go:4859: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_repeat_a_4206ab88ce53": [
+      "corpus_units_test.go:4877: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_return_a_835892235f21": [
+      "corpus_units_test.go:4829: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_return.a:1:35: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_coverage_cache_a_6cafd4572235": [
+      "corpus_units_test.go:4853: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_normalize_a_b4c3474ee5d4": [
+      "corpus_units_test.go:4847: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_argument_a_5044636ebaa9": [
+      "corpus_units_test.go:4775: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_argument.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_spread_a_3f0140d4d4aa": [
+      "corpus_units_test.go:4835: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_spread.a:1:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_expression_a_fd86ddc65e92": [
+      "corpus_units_test.go:4811: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_expression.a:2:9: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_null_a_bc3f0b62bf50": [
+      "corpus_units_test.go:4823: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_null.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_element_a_642d760771d2": [
+      "corpus_units_test.go:4805: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_element.a:1:17: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_logical_a_d8ec7fe16365": [
+      "corpus_units_test.go:4817: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_logical.a:1:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_default_a_98ccbac0f2da": [
+      "corpus_units_test.go:4799: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_default.a:1:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshCorpusRemainder": [
+      "corpus_coverage_test.go:85: remainder ran 0 programs"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_conditional_a_9e4099a84016": [
+      "corpus_units_test.go:4793: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_conditional.a:1:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_comparison_a_af272e60c968": [
+      "corpus_units_test.go:4787: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_comparison.a:1:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f": [
+      "corpus_units_test.go:1619: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_refuse_checked_a_15fb80217f3b": [
+      "corpus_units_test.go:4781: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_refuse_checked.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____flow_testdata_joins_a_9385adb647b7": [
+      "corpus_units_test.go:6413: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_possible_read_a_03dbf385a467": [
+      "corpus_units_test.go:4763: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_possible_read.a:3:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____oracle_testdata_node_fs_file_date_a_e4096c088001": [
+      "corpus_units_test.go:4739: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_non_null_possible_typeerror_a_6a25b0740445": [
+      "corpus_units_test.go:4769: Lower declined: /workspace/adamic/internal/oracle/testdata/non_null_possible_typeerror.a:3:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    ],
+    "TestFreshWrites____flow_testdata_mutations_a_5514557d1b47": [
+      "corpus_units_test.go:6419: 13 writes, 13 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_fs_file_write_buffer_a_bab39c7b6026": [
+      "corpus_units_test.go:4751: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_fs_file_write_file_a_1f61ee3992e2": [
+      "corpus_units_test.go:4757: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_fs_file_close_a_93025b0d712c": [
+      "corpus_units_test.go:4733: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_utf8_a_48a5e29c1ac9": [
+      "corpus_units_test.go:4721: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728": [
+      "corpus_units_test.go:4745: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_borrow_chain_coverage_spread_a_917f2abbf589": [
+      "corpus_units_test.go:2003: 0 writes, 0 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_writes_a_04c9d4399aec": [
+      "corpus_units_test.go:4727: 1 writes, 1 proven not to close a cycle"
+    ],
+    "TestFreshWrites____oracle_testdata_node_buffer_utf16_a_2529b6f186b9": [
+      "corpus_units_test.go:4715: 0 writes, 0 proven not to close a cycle"
+    ]
+  }
+}

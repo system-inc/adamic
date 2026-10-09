@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestNodeFSFileResultsAreFresh",
+  "command": "go test -json -run ^TestNodeFSFileResultsAreFresh$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 3.0114698279994627,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

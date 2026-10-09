@@ -1,0 +1,14 @@
+{
+  "label": "M8-catch",
+  "command": "ADAMIC_MUTANT=M8 go test -json -run ^TestRegexOperandsStillJudgeCycleWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 3.638287248000779,
+  "exit": 1,
+  "failures": [
+    "TestRegexOperandsStillJudgeCycleWrites"
+  ],
+  "lines": {
+    "TestRegexOperandsStillJudgeCycleWrites": [
+      "regexp_test.go:68: ir.RegExpCall lost the cycle-closing operand write"
+    ]
+  }
+}

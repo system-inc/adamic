@@ -1,0 +1,11 @@
+--- a/internal/fresh/library_node_buffer.go
++++ b/internal/fresh/library_node_buffer.go
+@@ -11,7 +11,7 @@
+ 		var receiver value
+ 		for index, argument := range call.Arguments {
+ 			held := a.value(argument)
+-			if index == 0 {
++			if index == 1 {
+ 				receiver = held
+ 			}
+ 		}

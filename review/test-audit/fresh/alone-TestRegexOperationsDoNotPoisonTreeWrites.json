@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestRegexOperationsDoNotPoisonTreeWrites",
+  "command": "go test -json -run ^TestRegexOperationsDoNotPoisonTreeWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 3.6374569300005533,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

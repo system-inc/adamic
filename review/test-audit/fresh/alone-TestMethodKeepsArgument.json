@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestMethodKeepsArgument",
+  "command": "go test -json -run ^TestMethodKeepsArgument$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.9856410630000028,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

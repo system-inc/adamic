@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestNodeBufferHashUpdateKeepsAlias",
+  "command": "go test -json -run ^TestNodeBufferHashUpdateKeepsAlias$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.8766252170007647,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

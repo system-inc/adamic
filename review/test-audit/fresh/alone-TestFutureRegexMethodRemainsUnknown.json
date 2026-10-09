@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestFutureRegexMethodRemainsUnknown",
+  "command": "go test -json -run ^TestFutureRegexMethodRemainsUnknown$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.8308473080014664,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

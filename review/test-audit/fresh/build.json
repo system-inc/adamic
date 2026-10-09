@@ -1,0 +1,8 @@
+{
+  "label": "build",
+  "command": "go test -c -o /tmp/fresh-audit-v4/fresh.test ./internal/fresh/",
+  "seconds": 20.225491179000528,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

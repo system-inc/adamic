@@ -1,0 +1,11 @@
+--- a/internal/fresh/library_node_buffer.go
++++ b/internal/fresh/library_node_buffer.go
+@@ -7,7 +7,7 @@
+ // receiver, so preserve that alias instead of treating it as a fresh hash.
+ func (a *analysis) nodeBufferCall(call ir.NodeBufferCall) value {
+ 	switch call.Function {
+-	case "buffer_from", "buffer_copy", "buffer_string", "buffer_set", "hash_new", "hash_update", "hash_digest":
++	case "buffer_from", "buffer_copy", "buffer_string", "buffer_set", "hash_new", "hash_update", "hash_digests":
+ 		var receiver value
+ 		for index, argument := range call.Arguments {
+ 			held := a.value(argument)

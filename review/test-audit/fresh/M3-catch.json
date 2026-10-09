@@ -1,0 +1,14 @@
+{
+  "label": "M3-catch",
+  "command": "ADAMIC_MUTANT=M3 go test -json -run ^TestNodeFSFileOperandsStillJudgeWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.433780110000953,
+  "exit": 1,
+  "failures": [
+    "TestNodeFSFileOperandsStillJudgeWrites"
+  ],
+  "lines": {
+    "TestNodeFSFileOperandsStillJudgeWrites": [
+      "node_fs_file_test.go:54: fs argument evaluation lost the cycle-closing write"
+    ]
+  }
+}

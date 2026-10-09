@@ -1,0 +1,14 @@
+{
+  "label": "M18-catch",
+  "command": "ADAMIC_MUTANT=M18 go test -json -run ^TestFutureRegexMethodRemainsUnknown$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 3.4016980870001134,
+  "exit": 1,
+  "failures": [
+    "TestFutureRegexMethodRemainsUnknown"
+  ],
+  "lines": {
+    "TestFutureRegexMethodRemainsUnknown": [
+      "regexp_test.go:81: a regex method without a proved effect became silently safe"
+    ]
+  }
+}

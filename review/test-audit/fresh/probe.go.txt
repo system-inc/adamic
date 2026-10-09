@@ -1,0 +1,11 @@
+package main
+import("encoding/json";"fmt";"github.com/system-inc/adamic/internal/fresh";"github.com/system-inc/adamic/internal/ir")
+func main(){
+ cases:=map[string]*ir.Program{}
+ cases["stat-atime-self-cycle"]=&ir.Program{Locals:[]ir.Local{{Type:ir.Object,Function:-1},{Type:ir.Object,Function:-1}},Main:[]ir.Statement{ir.Declare{Local:0,Value:ir.NodeFSFile{Operation:"stat",Of:ir.Object}},ir.Declare{Local:1,Value:ir.Property{Object:ir.Read{Local:0,Of:ir.Object},Name:"atime",Of:ir.Object}},ir.SetProperty{Object:ir.Read{Local:1,Of:ir.Object},Name:"next",Value:ir.Read{Local:1,Of:ir.Object},Site:1}}}
+ cases["replacement-callback-escapes"]=&ir.Program{Locals:[]ir.Local{{Type:ir.Object,Function:0},{Type:ir.Object,Function:0}},Functions:[]ir.Function{{Name:"callback",Closure:true,Parameters:[]int{0},Body:[]ir.Statement{ir.Declare{Local:1,Value:ir.ObjectLiteral{}},ir.Evaluate{Value:ir.RegExpCall{Value:ir.Read{Local:1,Of:ir.Object},Method:"replace",Returns:ir.String,Replacement:&ir.RegExpReplacement{}}},ir.SetProperty{Object:ir.Read{Local:1,Of:ir.Object},Name:"saved",Value:ir.Read{Local:0,Of:ir.Object},Site:1},ir.Return{}}}}}
+ cases["future-buffer-operation"]=&ir.Program{Main:[]ir.Statement{ir.Evaluate{Value:ir.NodeBufferCall{Function:"future_buffer",Returns:ir.Object}}}}
+ cases["hash-digest-operation"]=&ir.Program{Main:[]ir.Statement{ir.Evaluate{Value:ir.NodeBufferCall{Function:"hash_digest",Returns:ir.String}}}}
+ cases["class-method-outside-parameter"]=&ir.Program{Classes:[]ir.Class{{Methods:[]int{0}}},Locals:[]ir.Local{{Type:ir.Object,Function:0}},Functions:[]ir.Function{{Name:"method",Parameters:[]int{0},Body:[]ir.Statement{ir.SetProperty{Object:ir.Read{Local:0,Of:ir.Object},Name:"saved",Value:ir.Read{Local:0,Of:ir.Object},Site:1},ir.Return{}}}}}
+ for _,name:=range []string{"stat-atime-self-cycle","replacement-callback-escapes","future-buffer-operation","hash-digest-operation","class-method-outside-parameter"}{b,_:=json.Marshal(fresh.ProveWrites(cases[name]));fmt.Printf("%s %s\n",name,b)}
+}

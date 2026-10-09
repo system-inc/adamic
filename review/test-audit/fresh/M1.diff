@@ -1,0 +1,11 @@
+--- a/internal/fresh/library_node_buffer.go
++++ b/internal/fresh/library_node_buffer.go
+@@ -19,7 +19,7 @@
+ 		case "buffer_from", "buffer_copy", "hash_new":
+ 			return a.fresh(anyField, value{})
+ 		case "hash_update":
+-			return receiver
++			return a.fresh(anyField, value{})
+ 		}
+ 		return value{}
+ 	default:

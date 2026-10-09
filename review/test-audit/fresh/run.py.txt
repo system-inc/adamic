@@ -1,0 +1,33 @@
+import subprocess,time,json,os,signal,re,pathlib
+root='/workspace/adamic'; out=pathlib.Path('/tmp/fresh-audit-v4')
+env=os.environ.copy(); e=subprocess.check_output(['bash','-c','source /workspace/adamic-tools/env.sh; env -0']).split(b'\0')
+for x in e:
+ if b'=' in x:
+  k,v=x.split(b'=',1); env[k.decode()]=v.decode()
+def run(label,args,mutant=''):
+ ee=env.copy(); ee['ADAMIC_MUTANT']=mutant; start=time.monotonic(); log=out/(label+'.log')
+ with log.open('w') as f:
+  p=subprocess.Popen(args,cwd=root,env=ee,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
+  try: code=p.wait(timeout=90)
+  except subprocess.TimeoutExpired: os.killpg(p.pid,signal.SIGKILL); p.wait(); code=124
+ result={'label':label,'command':('ADAMIC_MUTANT='+mutant+' ' if mutant else '')+' '.join(args),'seconds':time.monotonic()-start,'exit':code,'failures':[],'lines':{}}
+ for line in log.read_text().splitlines():
+  try: o=json.loads(line)
+  except: continue
+  t=o.get('Test','')
+  if o.get('Action')=='fail' and t and '/' not in t: result['failures'].append(t)
+  if t and re.search(r'\w+_test.go:\d+:',o.get('Output','')):
+   result['lines'].setdefault(t.split('/')[0],[]).append(o['Output'].strip())
+ json.dump(result,open(out/(label+'.json'),'w'),indent=2)
+ print(label,round(result['seconds'],3),code,len(result['failures']),flush=True)
+ return result
+run('build',['go','test','-c','-o',str(out/'fresh.test'),'./internal/fresh/'])
+tests=[x.strip() for x in (out/'list.log').read_text().splitlines() if x.startswith('Test')]
+focused=[x for x in tests if not x.startswith('TestFresh')]
+for t in focused: run('alone-'+t,['go','test','-json','-run','^'+t+'$','-count=1','-timeout','90s','./internal/fresh/'])
+run('alone-family',['go','test','-json','-run','^(TestFreshWrites_.*|TestFreshCorpusUnitsCoverEveryProgram|TestFreshCorpusRemainder)$','-count=1','-timeout','90s','./internal/fresh/'])
+for i in range(1,19):
+ m='M'+str(i)
+ r=run(m+'-matrix',['go','test','-json','-count=1','-timeout','90s','./internal/fresh/','-run','.'],m)
+ if r['failures']:
+  t=r['failures'][0]; run(m+'-catch',['go','test','-json','-run','^'+t+'$','-count=1','-timeout','90s','./internal/fresh/'],m)

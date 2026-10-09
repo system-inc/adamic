@@ -1,0 +1,20 @@
+{
+  "label": "M16-catch",
+  "command": "ADAMIC_MUTANT=M16 go test -json -run ^TestFreshWrites____oracle_testdata_parameter_properties_ownership_a_b126dbeda4ae$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.681678668001041,
+  "exit": 1,
+  "failures": [
+    "TestFreshWrites____oracle_testdata_parameter_properties_ownership_a_b126dbeda4ae"
+  ],
+  "lines": {
+    "TestFreshWrites____oracle_testdata_parameter_properties_ownership_a_b126dbeda4ae": [
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 1",
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 2",
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 2",
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 4",
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 4",
+      "corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 4",
+      "corpus_units_test.go:5237: 6 writes, 5 proven not to close a cycle"
+    ]
+  }
+}

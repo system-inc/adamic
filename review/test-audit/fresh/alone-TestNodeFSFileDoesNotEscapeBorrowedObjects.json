@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestNodeFSFileDoesNotEscapeBorrowedObjects",
+  "command": "go test -json -run ^TestNodeFSFileDoesNotEscapeBorrowedObjects$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 4.824082921000809,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

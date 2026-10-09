@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestNodeFSFileOperationsAreKnown",
+  "command": "go test -json -run ^TestNodeFSFileOperationsAreKnown$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.983932133000053,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

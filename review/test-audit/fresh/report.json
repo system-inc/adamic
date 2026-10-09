@@ -1,0 +1,208 @@
+[
+  {
+    "test": "TestFreshCorpus family (801 units + coverage + remainder)",
+    "package": "internal/fresh",
+    "file": "internal/fresh/corpus_units_test.go:1616; internal/fresh/corpus_coverage_test.go:32; internal/fresh/corpus_coverage_test.go:68; internal/fresh/fresh_test.go:43",
+    "seconds": 29.641,
+    "oracle": "handwritten known-kind/nonzero-site corpus assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M7",
+      "M12",
+      "M16"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M16 corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 1",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M16 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M16-matrix.log 2>&1; corpus_units_test.go:5237: ../oracle/testdata/parameter_properties_ownership.a: a write lowering didn't record, in function 1"
+  },
+  {
+    "test": "TestMethodKeepsArgument",
+    "package": "internal/fresh",
+    "file": "internal/fresh/fresh_test.go:76",
+    "seconds": 2.986,
+    "oracle": "handwritten lowering refusal and source location",
+    "oracle_kind": "self",
+    "kills": [
+      "M16",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18 fresh_test.go:89: method-kept argument closes a cycle: want refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": "TestNodeFSFileOperandsStillJudgeWrites",
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; fresh_test.go:89: method-kept argument closes a cycle: want refusal, got <nil>"
+  },
+  {
+    "test": "TestNodeBufferHashUpdateKeepsAlias",
+    "package": "internal/fresh",
+    "file": "internal/fresh/library_node_buffer_test.go:9",
+    "seconds": 2.877,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M13",
+      "M18"
+    ],
+    "unique_kills": [
+      "M1",
+      "M13"
+    ],
+    "last_proven_fail": "M18 library_node_buffer_test.go:22: Hash.update lost its receiver alias: []",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; library_node_buffer_test.go:22: Hash.update lost its receiver alias: []"
+  },
+  {
+    "test": "TestNodeFSFileOperationsAreKnown",
+    "package": "internal/fresh",
+    "file": "internal/fresh/node_fs_file_test.go:10",
+    "seconds": 2.984,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2 node_fs_file_test.go:32: unhandled host expression: ir.NodeFSFile is a node the cycle finder doesn't know",
+    "verdict": "cannot-judge",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M2 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M2-matrix.log 2>&1; node_fs_file_test.go:32: unhandled host expression: ir.NodeFSFile is a node the cycle finder doesn't know",
+    "verdict_reason": "Only the supplemental, non-menu M2 made this test fail. A strict v4 verdict is unresolved."
+  },
+  {
+    "test": "TestNodeFSFileOperandsStillJudgeWrites",
+    "package": "internal/fresh",
+    "file": "internal/fresh/node_fs_file_test.go:39",
+    "seconds": 2.776,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M3",
+      "M16",
+      "M18"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M18 node_fs_file_test.go:54: fs argument evaluation lost the cycle-closing write",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; node_fs_file_test.go:54: fs argument evaluation lost the cycle-closing write"
+  },
+  {
+    "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+    "package": "internal/fresh",
+    "file": "internal/fresh/node_fs_file_test.go:57",
+    "seconds": 4.824,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18 node_fs_file_test.go:63: is_file: borrowed argument poisoned a fresh tree write: []",
+    "verdict": "subsumed",
+    "subsumed_by": "TestNodeFSFileResultsAreFresh",
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; node_fs_file_test.go:63: is_file: borrowed argument poisoned a fresh tree write: []"
+  },
+  {
+    "test": "TestNodeFSFileResultsAreFresh",
+    "package": "internal/fresh",
+    "file": "internal/fresh/node_fs_file_test.go:68",
+    "seconds": 3.011,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M4",
+      "M5",
+      "M18"
+    ],
+    "unique_kills": [
+      "M4",
+      "M5"
+    ],
+    "last_proven_fail": "M18 node_fs_file_test.go:81: stat: result must be confined even when its stored value is outside: []",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; node_fs_file_test.go:81: stat: result must be confined even when its stored value is outside: []"
+  },
+  {
+    "test": "TestRegexOperationsDoNotPoisonTreeWrites",
+    "package": "internal/fresh",
+    "file": "internal/fresh/regexp_test.go:13",
+    "seconds": 3.637,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M7",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18 regexp_test.go:29: ir.RegExpNew {Index:0 Source:0 Flags:0 Arguments:[]}: want one proven tree write, got []",
+    "verdict": "cannot-judge",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; regexp_test.go:29: ir.RegExpNew {Index:0 Source:0 Flags:0 Arguments:[]}: want one proven tree write, got []",
+    "verdict_reason": "Provided verdicts have no category for a caught, nonunique test without one no-slower subsumer."
+  },
+  {
+    "test": "TestRegexOperandsStillJudgeCycleWrites",
+    "package": "internal/fresh",
+    "file": "internal/fresh/regexp_test.go:46",
+    "seconds": 3.685,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M8",
+      "M16",
+      "M18"
+    ],
+    "unique_kills": [
+      "M8"
+    ],
+    "last_proven_fail": "M18 regexp_test.go:68: ir.RegExpNew lost the cycle-closing operand write",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; regexp_test.go:68: ir.RegExpNew lost the cycle-closing operand write"
+  },
+  {
+    "test": "TestFutureRegexMethodRemainsUnknown",
+    "package": "internal/fresh",
+    "file": "internal/fresh/regexp_test.go:73",
+    "seconds": 2.831,
+    "oracle": "handwritten IR proof assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M9",
+      "M10",
+      "M17",
+      "M18"
+    ],
+    "unique_kills": [
+      "M9",
+      "M10",
+      "M17"
+    ],
+    "last_proven_fail": "M18 regexp_test.go:81: a regex method without a proved effect became silently safe",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 18,
+    "evidence": "ADAMIC_MUTANT=M18 go test -json -count=1 -timeout 90s ./internal/fresh/ -run . > M18-matrix.log 2>&1; regexp_test.go:81: a regex method without a proved effect became silently safe"
+  }
+]

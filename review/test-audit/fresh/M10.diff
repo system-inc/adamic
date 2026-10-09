@@ -1,0 +1,11 @@
+--- a/internal/fresh/regexp.go
++++ b/internal/fresh/regexp.go
+@@ -27,7 +27,7 @@
+ 	default:
+ 		// A future method might call user code or store an argument. It must
+ 		// remain unknown until its effects have been proved too.
+-		a.unknown(expression)
++		_ = expression
+ 		return a.call(a.operands(expression), expression.Type())
+ 	}
+ }

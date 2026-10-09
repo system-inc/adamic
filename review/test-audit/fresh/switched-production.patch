@@ -1,0 +1,189 @@
+diff --git a/internal/fresh/fresh.go b/internal/fresh/fresh.go
+index f89bca77..d91034d9 100644
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -52,6 +52,9 @@ import (
+ // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
+ // recursion included, and fall back to "returns something outside" if that takes too long.
+ func ProveWrites(program *ir.Program) []Write {
++	if auditMutant("M18") {
++		return nil
++	}
+ 	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program)}
+ 	functions := []int{}
+ 	for index := range program.Functions {
+@@ -149,7 +152,11 @@ func directlyCalled(program *ir.Program) map[int]bool {
+ 	}
+ 	for _, class := range program.Classes {
+ 		for _, method := range class.Methods {
+-			delete(direct, method)
++			if auditMutant("M15") {
++				_ = method
++			} else {
++				delete(direct, method)
++			}
+ 		}
+ 	}
+ 	walk(reflect.ValueOf(program.Main))
+@@ -896,6 +903,9 @@ func (a *analysis) define(local int, held value) {
+ 
+ // write judges a write of held into the field (or elements) of holder, and makes it.
+ func (a *analysis) write(kind WriteKind, site int, name string, holder value, held value, field string) {
++	if auditMutant("M16") {
++		site = 0
++	}
+ 	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
+ 	a.writeCount++
+ 	if a.judging {
+@@ -950,6 +960,9 @@ func (proof *freshness) unproven(key writeKey, write Write, why string) {
+ 
+ // unknown records a write this pass can't judge: an IR node it doesn't know.
+ func (a *analysis) unknown(node any) {
++	if auditMutant("M17") {
++		return
++	}
+ 	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
+ 	a.writeCount++
+ 	if a.judging {
+diff --git a/internal/fresh/library_node_buffer.go b/internal/fresh/library_node_buffer.go
+index 554ba03c..f5a275b5 100644
+--- a/internal/fresh/library_node_buffer.go
++++ b/internal/fresh/library_node_buffer.go
+@@ -6,12 +6,15 @@ import "github.com/system-inc/adamic/internal/ir"
+ // cannot capture a user reference or call user code. Hash.update returns its
+ // receiver, so preserve that alias instead of treating it as a fresh hash.
+ func (a *analysis) nodeBufferCall(call ir.NodeBufferCall) value {
++	if auditMutant("M12") && call.Function == "hash_digest" {
++		call.Function = "hash_digests"
++	}
+ 	switch call.Function {
+ 	case "buffer_from", "buffer_copy", "buffer_string", "buffer_set", "hash_new", "hash_update", "hash_digest":
+ 		var receiver value
+ 		for index, argument := range call.Arguments {
+ 			held := a.value(argument)
+-			if index == 0 {
++			if (!auditMutant("M13") && index == 0) || (auditMutant("M13") && index == 1) {
+ 				receiver = held
+ 			}
+ 		}
+@@ -19,11 +22,19 @@ func (a *analysis) nodeBufferCall(call ir.NodeBufferCall) value {
+ 		case "buffer_from", "buffer_copy", "hash_new":
+ 			return a.fresh(anyField, value{})
+ 		case "hash_update":
+-			return receiver
++			if auditMutant("M1") {
++				return a.fresh(anyField, value{})
++			} else {
++				return receiver
++			}
+ 		}
+ 		return value{}
+ 	default:
+-		a.unknown(call)
++		if auditMutant("M14") {
++			_ = call
++		} else {
++			a.unknown(call)
++		}
+ 		return a.call(a.operands(call), call.Type())
+ 	}
+ }
+diff --git a/internal/fresh/node_fs_file.go b/internal/fresh/node_fs_file.go
+index b6913f40..70317156 100644
+--- a/internal/fresh/node_fs_file.go
++++ b/internal/fresh/node_fs_file.go
+@@ -6,18 +6,36 @@ import "github.com/system-inc/adamic/internal/ir"
+ // none of them, writes no reference into them, and returns independently owned
+ // Stats/Date objects or primitive values. Stats.mtime is independently owned too.
+ func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {
++	if auditMutant("M4") {
++		return a.call(a.operands(expression), expression.Type())
++	}
++	if auditMutant("M2") {
++		a.unknown(expression)
++	}
+ 	for _, argument := range expression.Arguments {
+-		a.value(argument)
++		if auditMutant("M3") {
++			_ = argument
++		} else {
++			a.value(argument)
++		}
+ 	}
+ 	if expression.Operation == "stat" {
+ 		mtime := a.fresh(anyField, value{})
+ 		atime := a.fresh(anyField, value{})
+ 		result := a.fresh("mtime", mtime)
+-		a.state.store(newestOf(result), "atime", atime)
++		if auditMutant("M6") {
++			_ = atime
++		} else {
++			a.state.store(newestOf(result), "atime", atime)
++		}
+ 		return result
+ 	}
+ 	if mutable(expression.Type()) {
+-		return a.fresh(anyField, value{})
++		if auditMutant("M5") {
++			return outsideValue()
++		} else {
++			return a.fresh(anyField, value{})
++		}
+ 	}
+ 	return value{}
+ }
+diff --git a/internal/fresh/regexp.go b/internal/fresh/regexp.go
+index dd6d9083..bb6164a8 100644
+--- a/internal/fresh/regexp.go
++++ b/internal/fresh/regexp.go
+@@ -7,7 +7,13 @@ import "github.com/system-inc/adamic/internal/ir"
+ // lowering excludes overriding regex properties. These methods can update lastIndex or an iterator's done
+ // flag, but cannot store a reference to a user object. Their operands still run.
+ func (a *analysis) regexCall(expression ir.RegExpCall) value {
+-	if expression.Replacement != nil {
++	if auditMutant("M9") {
++		return a.call(a.operands(expression), expression.Type())
++	}
++	if auditMutant("M7") && expression.Method == "test" {
++		expression.Method = "tests"
++	}
++	if !auditMutant("M11") && expression.Replacement != nil {
+ 		return a.call(a.operands(expression), expression.Type())
+ 	}
+ 	switch expression.Method {
+@@ -15,7 +21,11 @@ func (a *analysis) regexCall(expression ir.RegExpCall) value {
+ 		"replace", "replaceAll", "split", "search":
+ 		a.value(expression.Value)
+ 		for _, argument := range expression.Arguments {
+-			a.value(argument)
++			if auditMutant("M8") {
++				_ = argument
++			} else {
++				a.value(argument)
++			}
+ 		}
+ 		if mutable(expression.Type()) {
+ 			// A fresh result container can acquire user references later. Its
+@@ -27,7 +37,11 @@ func (a *analysis) regexCall(expression ir.RegExpCall) value {
+ 	default:
+ 		// A future method might call user code or store an argument. It must
+ 		// remain unknown until its effects have been proved too.
+-		a.unknown(expression)
++		if auditMutant("M10") {
++			_ = expression
++		} else {
++			a.unknown(expression)
++		}
+ 		return a.call(a.operands(expression), expression.Type())
+ 	}
+ }
+--- /dev/null
++++ b/internal/fresh/audit_mutant.go
+@@ -0,0 +1,7 @@
++package fresh
++
++import "os"
++
++var auditSelector = os.Getenv("ADAMIC_MUTANT")
++
++func auditMutant(id string) bool { return auditSelector == id }

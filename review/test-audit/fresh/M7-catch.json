@@ -1,0 +1,17 @@
+{
+  "label": "M7-catch",
+  "command": "ADAMIC_MUTANT=M7 go test -json -run ^TestRegexOperationsDoNotPoisonTreeWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.527695811999365,
+  "exit": 1,
+  "failures": [
+    "TestRegexOperationsDoNotPoisonTreeWrites"
+  ],
+  "lines": {
+    "TestRegexOperationsDoNotPoisonTreeWrites": [
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:2 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:3 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:5 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]",
+      "regexp_test.go:29: ir.RegExpCall {Value:{Index:0 Source:0 Flags:0 Arguments:[]} Arguments:[] Method:test Returns:4 Replacement:<nil>}: want one proven tree write, got [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.RegExpCall is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]"
+    ]
+  }
+}

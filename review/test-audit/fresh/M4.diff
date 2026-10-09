@@ -1,0 +1,10 @@
+--- a/internal/fresh/node_fs_file.go
++++ b/internal/fresh/node_fs_file.go
+@@ -6,6 +6,7 @@
+ // none of them, writes no reference into them, and returns independently owned
+ // Stats/Date objects or primitive values. Stats.mtime is independently owned too.
+ func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {
++	return a.call(a.operands(expression), expression.Type())
+ 	for _, argument := range expression.Arguments {
+ 		a.value(argument)
+ 	}

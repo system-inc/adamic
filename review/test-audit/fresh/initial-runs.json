@@ -1,0 +1,30 @@
+[
+  {
+    "label": "list",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./internal/fresh/"
+    ],
+    "seconds": 16.241,
+    "exit": 0
+  },
+  {
+    "label": "baseline-package",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/fresh/",
+      "-run",
+      "."
+    ],
+    "seconds": 23.651,
+    "exit": 1
+  }
+]

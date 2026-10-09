@@ -1,0 +1,14 @@
+{
+  "label": "M1-catch",
+  "command": "ADAMIC_MUTANT=M1 go test -json -run ^TestNodeBufferHashUpdateKeepsAlias$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.8482077260014194,
+  "exit": 1,
+  "failures": [
+    "TestNodeBufferHashUpdateKeepsAlias"
+  ],
+  "lines": {
+    "TestNodeBufferHashUpdateKeepsAlias": [
+      "library_node_buffer_test.go:22: Hash.update lost its receiver alias: [{Kind:1 Site:1 Name:next Function:-1 Proven:true Why:}]"
+    ]
+  }
+}

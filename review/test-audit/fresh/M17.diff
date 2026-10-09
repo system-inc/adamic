@@ -1,0 +1,10 @@
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -950,6 +950,7 @@
+ 
+ // unknown records a write this pass can't judge: an IR node it doesn't know.
+ func (a *analysis) unknown(node any) {
++	return
+ 	key := writeKey{function: a.function, instruction: a.instruction, ordinal: a.writeCount}
+ 	a.writeCount++
+ 	if a.judging {

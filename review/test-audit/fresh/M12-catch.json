@@ -1,0 +1,15 @@
+{
+  "label": "M12-catch",
+  "command": "ADAMIC_MUTANT=M12 go test -json -run ^TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.9354493690007075,
+  "exit": 1,
+  "failures": [
+    "TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6"
+  ],
+  "lines": {
+    "TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6": [
+      "corpus_units_test.go:4697: ../oracle/testdata/node_buffer_finalized.a: ir.NodeBufferCall is a node the cycle finder doesn't know",
+      "corpus_units_test.go:4697: 1 writes, 0 proven not to close a cycle"
+    ]
+  }
+}

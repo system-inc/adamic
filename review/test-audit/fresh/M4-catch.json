@@ -1,0 +1,15 @@
+{
+  "label": "M4-catch",
+  "command": "ADAMIC_MUTANT=M4 go test -json -run ^TestNodeFSFileResultsAreFresh$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.375109992999569,
+  "exit": 1,
+  "failures": [
+    "TestNodeFSFileResultsAreFresh"
+  ],
+  "lines": {
+    "TestNodeFSFileResultsAreFresh": [
+      "node_fs_file_test.go:81: stat: result must be confined even when its stored value is outside: [{Kind:1 Site:1 Name:saved Function:0 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here}]",
+      "node_fs_file_test.go:81: date_new: result must be confined even when its stored value is outside: [{Kind:1 Site:1 Name:saved Function:0 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here}]"
+    ]
+  }
+}

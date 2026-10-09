@@ -1,0 +1,11 @@
+--- a/internal/fresh/regexp.go
++++ b/internal/fresh/regexp.go
+@@ -15,7 +15,7 @@
+ 		"replace", "replaceAll", "split", "search":
+ 		a.value(expression.Value)
+ 		for _, argument := range expression.Arguments {
+-			a.value(argument)
++			_ = argument
+ 		}
+ 		if mutable(expression.Type()) {
+ 			// A fresh result container can acquire user references later. Its

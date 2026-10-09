@@ -1,0 +1,11 @@
+--- a/internal/fresh/regexp.go
++++ b/internal/fresh/regexp.go
+@@ -11,7 +11,7 @@
+ 		return a.call(a.operands(expression), expression.Type())
+ 	}
+ 	switch expression.Method {
+-	case "test", "exec", "match", "matchAll", "next", "iteratorDone",
++	case "tests", "exec", "match", "matchAll", "next", "iteratorDone",
+ 		"replace", "replaceAll", "split", "search":
+ 		a.value(expression.Value)
+ 		for _, argument := range expression.Arguments {

@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestRegexOperandsStillJudgeCycleWrites",
+  "command": "go test -json -run ^TestRegexOperandsStillJudgeCycleWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 3.6854024389995175,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}

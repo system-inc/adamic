@@ -1,0 +1,15 @@
+{
+  "label": "M2-catch",
+  "command": "ADAMIC_MUTANT=M2 go test -json -run ^TestNodeFSFileResultsAreFresh$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.4318177069999365,
+  "exit": 1,
+  "failures": [
+    "TestNodeFSFileResultsAreFresh"
+  ],
+  "lines": {
+    "TestNodeFSFileResultsAreFresh": [
+      "node_fs_file_test.go:81: stat: result must be confined even when its stored value is outside: [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.NodeFSFile is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:saved Function:0 Proven:true Why:}]",
+      "node_fs_file_test.go:81: date_new: result must be confined even when its stored value is outside: [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.NodeFSFile is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:saved Function:0 Proven:true Why:}]"
+    ]
+  }
+}

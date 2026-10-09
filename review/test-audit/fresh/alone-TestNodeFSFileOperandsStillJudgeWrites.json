@@ -1,0 +1,8 @@
+{
+  "label": "alone-TestNodeFSFileOperandsStillJudgeWrites",
+  "command": "go test -json -run ^TestNodeFSFileOperandsStillJudgeWrites$ -count=1 -timeout 90s ./internal/fresh/",
+  "seconds": 2.7756689069992717,
+  "exit": 0,
+  "failures": [],
+  "lines": {}
+}
