@@ -23,11 +23,11 @@ func init() {
 
 // Restore the old numeric read and the zero bits of an undefined reference slot. This is valid
 // C and runs cleanly under the sanitizers; only Node's output exposes the lost undefined.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestLiteralUndefinedOracleCatchesMutant(t *testing.T) {
+	t.Parallel()
 	for _, fixture := range []string{"e4eec87_u03_discriminated_undefined.a", "e4eec87_u01_undefined_field_widened.a"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(fixture, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 			if err != nil {
 				t.Fatal(err)

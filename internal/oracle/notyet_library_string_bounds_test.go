@@ -16,11 +16,11 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_string_bounds.a", true, false})
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
+	t.Parallel()
 	for _, rule := range []string{"slice", "substring", "position"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(rule, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_library_string_bounds.a"))
 			if err != nil {
 				t.Fatal(err)

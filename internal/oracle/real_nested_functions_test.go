@@ -35,8 +35,8 @@ func errorText(err error) string {
 
 // The newly closed recursive constituent gap must retain the source's count,
 // not merely compile. This mutant produces valid C and has no leak or sanitizer failure.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestClosedNestedConstituentMutant(t *testing.T) {
+	t.Parallel()
 	path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts"))
 	if pathErr != nil {
 		t.Fatal(pathErr)

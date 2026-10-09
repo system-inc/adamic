@@ -6,11 +6,11 @@ import (
 	"testing"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestNamespaceRuledMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"live-write", "repeat-initializer", "primitive-tag"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(family, func(t *testing.T) {
+			t.Parallel()
 			fixture := "stage3/namespace-live-export/live.a"
 			if family == "repeat-initializer" {
 				fixture = "internal/oracle/testdata/namespaces_repeated_var.a"

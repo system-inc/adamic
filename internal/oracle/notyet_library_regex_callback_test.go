@@ -12,10 +12,12 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_regex_callback.a", true, false})
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestNotYetLibraryRegexCallbackMutants(t *testing.T) {
+	t.Parallel()
 	for _, rule := range []string{"match", "literal", "unicode", "global", "offset", "reset", "collection-order"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
-		t.Run(rule, func(t *testing.T) { librarySmallRuntimeMutant(t, "notyet_library_regex_callback.a", rule) })
+		t.Run(rule, func(t *testing.T) {
+			t.Parallel()
+			librarySmallRuntimeMutant(t, "notyet_library_regex_callback.a", rule)
+		})
 	}
 }

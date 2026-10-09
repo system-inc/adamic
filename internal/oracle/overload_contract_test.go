@@ -11,15 +11,15 @@ import (
 
 // Node observes these contracts; Adamic must retain its strict proof obligation.
 // A refused contract cannot reach either backend or a sanitizer run.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestOverloadContractRulings(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ name, output, refusal string }{
 		{"token", "undefined\n", "overload 1 of createToken result"},
 		{"trampoline", "node\n", "overload 1 of createBinaryExpressionTrampoline result"},
 		{"serializer", "node/arg\n", "overload 2 of setSerializerContextAnd parameter cb"},
 	} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_contracts/"+test.name+".a"))
 			if pathErr != nil {
 				t.Fatal(pathErr)

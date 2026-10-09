@@ -14,8 +14,8 @@ func init() {
 	}{"internal/oracle/testdata/scanner_nested_overload.a", true, false})
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestScannerNestedOverloadImplementationMutantIsCaught(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scanner_nested_overload.a"))
 	if err != nil {
 		t.Fatal(err)
