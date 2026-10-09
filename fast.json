@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "green",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T122549-b77b05a3",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "b852fb166e835272e9e4de5df15d0767f4f057d2",
+  "branch": "devtools/audit-childguard-progress",
+  "base": "f91994f019703ba25d2918cf529c0e0b0c05d93c",
+  "candidate": "b852fb166e835272e9e4de5df15d0767f4f057d2",
+  "gated": "9875adb4e921db0c5d660036e7ea491dbd6da9e4",
+  "unplanned_packages_not_run": 58
+}
