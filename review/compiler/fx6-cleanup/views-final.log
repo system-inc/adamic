@@ -1,0 +1,648 @@
+=== RUN   TestCheckedCastProofAndElision
+=== PAUSE TestCheckedCastProofAndElision
+=== RUN   TestInheritanceRefusesFalseNominalViews
+=== PAUSE TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestFunctionValueUnionViewsStayNotYet
+=== PAUSE TestFunctionValueUnionViewsStayNotYet
+=== RUN   TestFX7CheckedCastFieldTypes
+=== PAUSE TestFX7CheckedCastFieldTypes
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== PAUSE TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceNeedsNoFlag
+=== PAUSE TestDefaultTaggedInterfaceNeedsNoFlag
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestIteratorViewsCannotEraseReceivers
+=== PAUSE TestIteratorViewsCannotEraseReceivers
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestAViewThatCantWriteIsNotRefused
+=== PAUSE TestAViewThatCantWriteIsNotRefused
+=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== RUN   TestScalarUnionViewMaybeNumber
+=== PAUSE TestScalarUnionViewMaybeNumber
+=== RUN   TestScalarUnionViewMaybeBoolean
+=== PAUSE TestScalarUnionViewMaybeBoolean
+=== RUN   TestScalarUnionViewMaybeString
+=== PAUSE TestScalarUnionViewMaybeString
+=== RUN   TestScalarUnionViewMaybeNumberTransitions
+=== PAUSE TestScalarUnionViewMaybeNumberTransitions
+=== RUN   TestScalarUnionViewMaybeBooleanTransitions
+=== PAUSE TestScalarUnionViewMaybeBooleanTransitions
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== RUN   TestViewStringElementReadControl
+=== PAUSE TestViewStringElementReadControl
+=== RUN   TestViewLiteralTypedElementReadControl
+=== PAUSE TestViewLiteralTypedElementReadControl
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== RUN   TestViewElementDestructuredControl
+=== PAUSE TestViewElementDestructuredControl
+=== RUN   TestViewElementDestructuredUnionControl
+=== PAUSE TestViewElementDestructuredUnionControl
+=== RUN   TestViewSpreadControl
+=== PAUSE TestViewSpreadControl
+=== RUN   TestViewSpreadMethodRefused
+=== PAUSE TestViewSpreadMethodRefused
+=== RUN   TestViewInControl
+=== PAUSE TestViewInControl
+=== RUN   TestViewKeysControl
+=== PAUSE TestViewKeysControl
+=== RUN   TestViewKeysAliasControl
+=== PAUSE TestViewKeysAliasControl
+=== RUN   TestViewValuesControl
+=== PAUSE TestViewValuesControl
+=== RUN   TestViewEntriesControl
+=== PAUSE TestViewEntriesControl
+=== RUN   TestViewElementP19Control
+=== PAUSE TestViewElementP19Control
+=== RUN   TestViewElementP72Control
+=== PAUSE TestViewElementP72Control
+=== RUN   TestViewElementP19StringControl
+=== PAUSE TestViewElementP19StringControl
+=== RUN   TestViewElementP72NumberControl
+=== PAUSE TestViewElementP72NumberControl
+=== RUN   TestViewInEmptyKeyControl
+=== PAUSE TestViewInEmptyKeyControl
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+=== PAUSE TestViewObjectContractsAreAvailableToEraser
+=== RUN   TestViewObjectWritesNeedSourceCertificate
+=== PAUSE TestViewObjectWritesNeedSourceCertificate
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== RUN   TestTupleObjectViewCopiedLength
+=== PAUSE TestTupleObjectViewCopiedLength
+=== RUN   TestTupleObjectViewOrdinaryTuple
+=== PAUSE TestTupleObjectViewOrdinaryTuple
+=== RUN   TestMixedUnionContractGraph
+=== PAUSE TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractFailureDoesNotCertifyRetry
+=== PAUSE TestMixedUnionContractFailureDoesNotCertifyRetry
+=== RUN   TestMixedUnionContractUnknownMemberFails
+=== PAUSE TestMixedUnionContractUnknownMemberFails
+=== RUN   TestMixedUnionContractRecursiveMember
+=== PAUSE TestMixedUnionContractRecursiveMember
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== RUN   TestUntaggedViewMemberTags
+=== PAUSE TestUntaggedViewMemberTags
+=== RUN   TestUntaggedViewStructuralFallback
+=== PAUSE TestUntaggedViewStructuralFallback
+=== CONT  TestCheckedCastProofAndElision
+=== RUN   TestCheckedCastProofAndElision/enum_member
+=== PAUSE TestCheckedCastProofAndElision/enum_member
+=== RUN   TestCheckedCastProofAndElision/invariant_mutable_payload
+=== PAUSE TestCheckedCastProofAndElision/invariant_mutable_payload
+=== RUN   TestCheckedCastProofAndElision/sub-union
+=== PAUSE TestCheckedCastProofAndElision/sub-union
+=== RUN   TestCheckedCastProofAndElision/class_downcast
+=== PAUSE TestCheckedCastProofAndElision/class_downcast
+=== RUN   TestCheckedCastProofAndElision/empty_subclass
+=== PAUSE TestCheckedCastProofAndElision/empty_subclass
+=== RUN   TestCheckedCastProofAndElision/generic_ancestry
+=== PAUSE TestCheckedCastProofAndElision/generic_ancestry
+=== RUN   TestCheckedCastProofAndElision/class_upcast
+=== PAUSE TestCheckedCastProofAndElision/class_upcast
+=== RUN   TestCheckedCastProofAndElision/flow_narrowing
+=== PAUSE TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestCheckedCastProofAndElision/enum_member
+=== CONT  TestViewLiteralTypedElementReadControl
+=== CONT  TestViewElementP19StringControl
+=== CONT  TestUntaggedViewStructuralFallback
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestUntaggedViewMemberTags
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.19s)
+=== CONT  TestMixedUnionContractRecursiveMember
+=== CONT  TestMixedUnionContractUnknownMemberFails
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.23s)
+=== CONT  TestMixedUnionContractFailureDoesNotCertifyRetry
+--- PASS: TestMixedUnionContractRecursiveMember (0.09s)
+=== CONT  TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== PAUSE TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== RUN   TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== PAUSE TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== RUN   TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== PAUSE TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestTupleObjectViewOrdinaryTuple
+--- PASS: TestMixedUnionContractUnknownMemberFails (0.10s)
+=== CONT  TestTupleObjectViewCopiedLength
+--- PASS: TestMixedUnionContractFailureDoesNotCertifyRetry (0.15s)
+=== CONT  TestTupleObjectViewRefused
+--- PASS: TestViewLiteralTypedElementReadControl (0.56s)
+=== CONT  TestViewObjectWritesNeedSourceCertificate
+--- PASS: TestViewElementP19StringControl (0.61s)
+=== CONT  TestViewObjectContractsAreAvailableToEraser
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.12s)
+=== CONT  TestViewInEmptyKeyControl
+=== NAME  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:38: /tmp/adamic-gate/TestTupleObjectViewRefused1136934006/001/main.a:9:15: stage 0 can't lower a tuple through an object view with a length field; expose a scalar length field on the view and copy pair.length into that field yet
+--- PASS: TestTupleObjectViewRefused (0.40s)
+=== CONT  TestViewElementP72NumberControl
+--- PASS: TestViewObjectWritesNeedSourceCertificate (0.25s)
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+--- PASS: TestTupleObjectViewOrdinaryTuple (0.54s)
+=== CONT  TestViewStringElementReadControl
+--- PASS: TestTupleObjectViewCopiedLength (0.73s)
+=== CONT  TestViewDiagnosticP64
+--- PASS: TestViewDiagnosticP64 (0.10s)
+=== CONT  TestViewDiagnosticP48
+--- PASS: TestViewStringElementReadControl (0.35s)
+=== CONT  TestViewDiagnosticP17
+--- PASS: TestViewElementP72NumberControl (0.42s)
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.45s)
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+--- PASS: TestViewDiagnosticP48 (0.14s)
+=== CONT  TestScalarUnionViewMaybeBooleanTransitions
+--- PASS: TestViewDiagnosticP17 (0.16s)
+=== CONT  TestScalarUnionViewMaybeNumberTransitions
+--- PASS: TestViewInEmptyKeyControl (0.69s)
+=== CONT  TestScalarUnionViewMaybeString
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.42s)
+=== CONT  TestScalarUnionViewMaybeBoolean
+=== NAME  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- PASS: TestTupleRecognitionRejectsArrayObjectView (0.62s)
+=== CONT  TestScalarUnionViewMaybeNumber
+--- PASS: TestScalarUnionViewMaybeString (0.46s)
+=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet
+--- PASS: TestScalarUnionViewMaybeNumberTransitions (0.88s)
+=== CONT  TestAViewThatCantWriteIsNotRefused
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+--- PASS: TestScalarUnionViewMaybeBooleanTransitions (0.95s)
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis
+--- PASS: TestScalarUnionViewMaybeBoolean (0.74s)
+=== CONT  TestViewSpreadMethodRefused
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (0.20s)
+=== CONT  TestViewElementP72Control
+--- PASS: TestViewSpreadMethodRefused (0.17s)
+=== CONT  TestViewElementP19Control
+--- PASS: TestScalarUnionViewMaybeNumber (0.70s)
+=== CONT  TestViewEntriesControl
+--- PASS: TestLiteralMethodSignatureViewsDoNotLoseThis (0.35s)
+=== CONT  TestViewValuesControl
+--- PASS: TestViewElementP72Control (0.33s)
+=== CONT  TestViewKeysAliasControl
+--- PASS: TestViewValuesControl (0.21s)
+=== CONT  TestViewKeysControl
+--- PASS: TestViewEntriesControl (0.25s)
+=== CONT  TestViewInControl
+--- PASS: TestViewElementP19Control (0.32s)
+=== CONT  TestViewElementP07CorrectControl
+--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (1.02s)
+=== CONT  TestViewSpreadControl
+=== CONT  TestViewElementDestructuredUnionControl
+--- PASS: TestViewKeysAliasControl (0.23s)
+--- PASS: TestViewKeysControl (0.20s)
+=== CONT  TestViewElementDestructuredControl
+--- PASS: TestViewSpreadControl (0.20s)
+=== CONT  TestViewElementP06CorrectControl
+--- PASS: TestViewElementP07CorrectControl (0.30s)
+=== CONT  TestViewElementP01CorrectControl
+--- PASS: TestViewInControl (0.31s)
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+--- PASS: TestViewElementDestructuredControl (0.19s)
+=== CONT  TestIteratorViewsCannotEraseReceivers
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.08s)
+=== CONT  TestIteratorViewsCannotHideReturn
+--- PASS: TestViewElementDestructuredUnionControl (0.24s)
+=== CONT  TestDefaultTaggedInterfaceNeedsNoFlag
+--- PASS: TestIteratorViewsCannotEraseReceivers (0.07s)
+=== CONT  TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestFX7CheckedCastFieldTypes
+--- PASS: TestIteratorViewsCannotHideReturn (0.06s)
+=== CONT  TestFunctionValueUnionViewsStayNotYet
+--- PASS: TestViewElementP06CorrectControl (0.20s)
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestCheckedCastProofAndElision/generic_ancestry
+=== CONT  TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceRefusesFalseNominalViews/weak_structural
+=== PAUSE TestInheritanceRefusesFalseNominalViews/weak_structural
+=== RUN   TestInheritanceRefusesFalseNominalViews/source_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/source_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/target_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/target_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/nested_array
+=== PAUSE TestInheritanceRefusesFalseNominalViews/nested_array
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== RUN   TestInheritanceRefusesFalseNominalViews/structural_object
+=== PAUSE TestInheritanceRefusesFalseNominalViews/structural_object
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestCheckedCastProofAndElision/flow_narrowing
+--- PASS: TestViewElementP01CorrectControl (0.27s)
+=== CONT  TestCheckedCastProofAndElision/class_upcast
+=== CONT  TestViewElementP05CorrectControl
+--- PASS: TestDefaultTaggedInterfaceNeedsNoFlag (0.21s)
+=== CONT  TestViewElementFixAgreesWithNode
+=== CONT  TestCheckedCastProofAndElision/class_downcast
+=== CONT  TestCheckedCastProofAndElision/empty_subclass
+--- PASS: TestFunctionValueUnionViewsStayNotYet (0.28s)
+=== CONT  TestCheckedCastProofAndElision/sub-union
+=== CONT  TestCheckedCastProofAndElision/invariant_mutable_payload
+=== CONT  TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== CONT  TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+--- PASS: TestCheckedCastProofAndElision (0.00s)
+    --- PASS: TestCheckedCastProofAndElision/enum_member (0.22s)
+    --- PASS: TestCheckedCastProofAndElision/generic_ancestry (0.07s)
+    --- PASS: TestCheckedCastProofAndElision/flow_narrowing (0.04s)
+    --- PASS: TestCheckedCastProofAndElision/class_upcast (0.08s)
+    --- PASS: TestCheckedCastProofAndElision/class_downcast (0.08s)
+    --- PASS: TestCheckedCastProofAndElision/empty_subclass (0.06s)
+    --- PASS: TestCheckedCastProofAndElision/sub-union (0.08s)
+    --- PASS: TestCheckedCastProofAndElision/invariant_mutable_payload (0.09s)
+=== CONT  TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+    view_unions_mixed_test.go:45: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+--- PASS: TestViewElementP05CorrectControl (0.33s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+--- PASS: TestViewElementFixAgreesWithNode (0.38s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+--- PASS: TestMixedUnionContractGraph (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier; (0.06s)
+    --- PASS: TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right; (0.04s)
+    --- SKIP: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression; (0.06s)
+    --- PASS: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node; (0.08s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+--- PASS: TestFX7CheckedCastFieldTypes (0.73s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.09s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.21s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.29s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.20s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.24s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.22s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.07s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.29s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.33s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.24s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.06s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.09s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.26s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.27s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.25s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.24s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.06s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.17s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.27s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.25s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.06s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.21s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.34s)
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestInheritanceRefusesFalseNominalViews/weak_structural
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/structural_object
+=== CONT  TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestInheritanceRefusesFalseNominalViews/source_union
+--- PASS: TestInheritanceRefusesFalseNominalViews (0.00s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/weak_structural (0.11s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_override (0.11s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_class (0.14s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/target_union (0.07s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/structural_object (0.08s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/nested_array (0.08s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/source_union (0.04s)
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/object_assign (0.05s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.08s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.08s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.06s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.06s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.09s)
+    --- PASS: TestEnumSlotViews/variable (0.22s)
+    --- PASS: TestEnumSlotViews/optional_union (0.24s)
+    --- PASS: TestEnumSlotViews/map_alias (0.27s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.28s)
+    --- PASS: TestEnumSlotViews/class_field (0.21s)
+    --- PASS: TestEnumSlotViews/override (0.26s)
+    --- PASS: TestEnumSlotViews/array_alias (0.21s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.23s)
+    --- PASS: TestEnumSlotViews/array_literal (0.26s)
+    --- PASS: TestEnumSlotViews/function_view (0.26s)
+    --- PASS: TestEnumSlotViews/compound (0.31s)
+    --- PASS: TestEnumSlotViews/increment (0.33s)
+    --- PASS: TestEnumSlotViews/argument (0.39s)
+    --- PASS: TestEnumSlotViews/literal_property (0.41s)
+    --- PASS: TestEnumSlotViews/assignment (0.39s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.34s)
+    --- PASS: TestEnumSlotViews/initializer (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	6.737s
+=== RUN   TestCheckedCastWithoutReadSummary
+=== PAUSE TestCheckedCastWithoutReadSummary
+=== RUN   TestStringViewAfterAppendMatchesNode
+=== PAUSE TestStringViewAfterAppendMatchesNode
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestCheckedCastWithoutReadSummary
+=== CONT  TestRuntimeStringViews
+=== CONT  TestStringViewAfterAppendMatchesNode
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/5
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true
+=== NAME  TestStringViewAfterAppendMatchesNode
+    string_index_test.go:406: 43 lines match Node, including literal, stack and in-place append views
+--- PASS: TestStringViewAfterAppendMatchesNode (0.55s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/0
+--- PASS: TestCheckedCastWithoutReadSummary (0.60s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/5
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.62s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/false (0.31s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/0 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/1 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/2 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/3 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/4 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/5 (0.00s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/true (0.31s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/0 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/1 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/2 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/3 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/4 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/5 (0.00s)
+--- PASS: TestRuntimeStringViews (0.63s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.686s
+=== RUN   TestViewMixedUnionSelectsNumber
+=== PAUSE TestViewMixedUnionSelectsNumber
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestViewMixedUnionSelectsNumber
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/unknown
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_adapter
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_contract
+--- PASS: TestViewMixedUnionSelectsNumber (0.17s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/literal_false
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.36s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/unknown (0.04s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_adapter (0.05s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_contract (0.09s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined (0.08s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/literal_false (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.369s

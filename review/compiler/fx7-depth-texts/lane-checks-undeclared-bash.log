@@ -1,0 +1,1 @@
+internal/native/fx7_view_runtime_test.go:63 runs bash, which cloud/fast-gate/tools.txt doesn't declare (declare it on devtools/fast-gate, or don't shell out)

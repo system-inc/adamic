@@ -1,0 +1,1788 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/route_targets_virtual_fresh.a",
+    "before": [
+      56,
+      52,
+      22,
+      60,
+      10,
+      4
+    ],
+    "after": [
+      54,
+      50,
+      20,
+      64,
+      10,
+      4
+    ],
+    "delta": [
+      -2,
+      -2,
+      -2,
+      4,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      56,
+      52,
+      22,
+      60,
+      10,
+      4
+    ],
+    "fixed_measured": [
+      54,
+      50,
+      20,
+      64,
+      10,
+      4
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/route_targets_sort_values.a",
+    "before": [
+      84,
+      84,
+      99,
+      149,
+      17,
+      0
+    ],
+    "after": [
+      84,
+      84,
+      92,
+      142,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -7,
+      -7,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      84,
+      84,
+      99,
+      149,
+      17,
+      0
+    ],
+    "fixed_measured": [
+      84,
+      84,
+      92,
+      142,
+      17,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_chain_coverage_spread.a",
+    "before": [
+      12,
+      12,
+      4,
+      11,
+      7,
+      0
+    ],
+    "after": [
+      12,
+      12,
+      3,
+      10,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      12,
+      12,
+      4,
+      11,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      12,
+      12,
+      3,
+      10,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/call_targets_reuse.a",
+    "before": [
+      16,
+      13,
+      10,
+      19,
+      7,
+      3
+    ],
+    "after": [
+      15,
+      12,
+      9,
+      21,
+      6,
+      3
+    ],
+    "delta": [
+      -1,
+      -1,
+      -1,
+      2,
+      -1,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      16,
+      13,
+      10,
+      19,
+      7,
+      3
+    ],
+    "fixed_measured": [
+      15,
+      12,
+      9,
+      21,
+      6,
+      3
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/call_targets_sort.a",
+    "before": [
+      11,
+      11,
+      10,
+      16,
+      7,
+      0
+    ],
+    "after": [
+      11,
+      11,
+      9,
+      15,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      11,
+      11,
+      10,
+      16,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      11,
+      11,
+      9,
+      15,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_object_freeze.a",
+    "before": [
+      16,
+      16,
+      11,
+      28,
+      5,
+      0
+    ],
+    "after": [
+      16,
+      16,
+      10,
+      27,
+      5,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      16,
+      16,
+      11,
+      28,
+      5,
+      0
+    ],
+    "fixed_measured": [
+      16,
+      16,
+      10,
+      27,
+      5,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "before": [
+      33,
+      33,
+      73,
+      76,
+      16,
+      0
+    ],
+    "after": [
+      19,
+      19,
+      28,
+      69,
+      16,
+      0
+    ],
+    "delta": [
+      -14,
+      -14,
+      -45,
+      -7,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      33,
+      33,
+      73,
+      76,
+      16,
+      0
+    ],
+    "fixed_measured": [
+      19,
+      19,
+      28,
+      69,
+      16,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 2,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/maybe_number_slots.a",
+    "before": [
+      484,
+      484,
+      313,
+      806,
+      16,
+      0
+    ],
+    "after": [
+      484,
+      484,
+      304,
+      797,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -9,
+      -9,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      484,
+      484,
+      313,
+      806,
+      16,
+      0
+    ],
+    "fixed_measured": [
+      484,
+      484,
+      304,
+      797,
+      16,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/spread_snapshot.a",
+    "before": [
+      22,
+      22,
+      4,
+      25,
+      11,
+      0
+    ],
+    "after": [
+      22,
+      22,
+      3,
+      24,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      22,
+      22,
+      4,
+      25,
+      11,
+      0
+    ],
+    "fixed_measured": [
+      22,
+      22,
+      3,
+      24,
+      11,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse.a",
+    "before": [
+      85,
+      85,
+      75,
+      136,
+      16,
+      0
+    ],
+    "after": [
+      76,
+      76,
+      55,
+      120,
+      16,
+      0
+    ],
+    "delta": [
+      -9,
+      -9,
+      -20,
+      -16,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      85,
+      85,
+      75,
+      136,
+      16,
+      0
+    ],
+    "fixed_measured": [
+      76,
+      76,
+      55,
+      120,
+      16,
+      0
+    ],
+    "removed_member_helper_calls": 6,
+    "new_uniqueness_checks": 4,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_global_sibling.a",
+    "before": [
+      6,
+      6,
+      3,
+      8,
+      4,
+      0
+    ],
+    "after": [
+      6,
+      6,
+      2,
+      7,
+      4,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      6,
+      6,
+      3,
+      8,
+      4,
+      0
+    ],
+    "fixed_measured": [
+      6,
+      6,
+      2,
+      7,
+      4,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_weak_during_spread.a",
+    "before": [
+      10,
+      10,
+      9,
+      17,
+      8,
+      0
+    ],
+    "after": [
+      10,
+      10,
+      8,
+      16,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      10,
+      10,
+      9,
+      17,
+      8,
+      0
+    ],
+    "fixed_measured": [
+      10,
+      10,
+      8,
+      16,
+      8,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_weak_after_reuse.a",
+    "before": [
+      9,
+      9,
+      7,
+      14,
+      7,
+      0
+    ],
+    "after": [
+      9,
+      9,
+      6,
+      13,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      9,
+      9,
+      7,
+      14,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      9,
+      9,
+      6,
+      13,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_element.a",
+    "before": [
+      113,
+      113,
+      69,
+      130,
+      15,
+      0
+    ],
+    "after": [
+      113,
+      113,
+      67,
+      128,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      113,
+      113,
+      69,
+      130,
+      15,
+      0
+    ],
+    "fixed_measured": [
+      113,
+      113,
+      67,
+      128,
+      15,
+      0
+    ],
+    "removed_member_helper_calls": 3,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_loop.a",
+    "before": [
+      128,
+      126,
+      109,
+      180,
+      14,
+      2
+    ],
+    "after": [
+      128,
+      126,
+      110,
+      181,
+      14,
+      2
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      128,
+      126,
+      109,
+      180,
+      14,
+      2
+    ],
+    "fixed_measured": [
+      128,
+      126,
+      110,
+      181,
+      14,
+      2
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/throw_keeps_old_value.a",
+    "before": [
+      18,
+      18,
+      10,
+      22,
+      6,
+      0
+    ],
+    "after": [
+      18,
+      18,
+      9,
+      21,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      18,
+      18,
+      10,
+      22,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      18,
+      18,
+      9,
+      21,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/throw_keeps_old_value_variants.a",
+    "before": [
+      26,
+      26,
+      13,
+      34,
+      6,
+      0
+    ],
+    "after": [
+      26,
+      26,
+      11,
+      32,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      26,
+      26,
+      13,
+      34,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      26,
+      26,
+      11,
+      32,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/throw_in_writes.a",
+    "before": [
+      22,
+      22,
+      10,
+      24,
+      8,
+      0
+    ],
+    "after": [
+      22,
+      22,
+      8,
+      22,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      22,
+      22,
+      10,
+      24,
+      8,
+      0
+    ],
+    "fixed_measured": [
+      22,
+      22,
+      8,
+      22,
+      8,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/throw_global_move.a",
+    "before": [
+      18,
+      18,
+      10,
+      24,
+      6,
+      0
+    ],
+    "after": [
+      18,
+      18,
+      12,
+      26,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      18,
+      18,
+      10,
+      24,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      18,
+      18,
+      12,
+      26,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 2,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/spread_undefined.a",
+    "before": [
+      47,
+      47,
+      34,
+      72,
+      10,
+      0
+    ],
+    "after": [
+      45,
+      45,
+      26,
+      64,
+      10,
+      0
+    ],
+    "delta": [
+      -2,
+      -2,
+      -8,
+      -8,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      47,
+      47,
+      34,
+      72,
+      10,
+      0
+    ],
+    "fixed_measured": [
+      45,
+      45,
+      26,
+      64,
+      10,
+      0
+    ],
+    "removed_member_helper_calls": 5,
+    "new_uniqueness_checks": 2,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_lent_global.a",
+    "before": [
+      10,
+      10,
+      7,
+      14,
+      7,
+      0
+    ],
+    "after": [
+      10,
+      10,
+      8,
+      15,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      10,
+      10,
+      7,
+      14,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      10,
+      10,
+      8,
+      15,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_spread_method.a",
+    "before": [
+      10,
+      10,
+      8,
+      13,
+      8,
+      0
+    ],
+    "after": [
+      10,
+      10,
+      7,
+      12,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      10,
+      10,
+      8,
+      13,
+      8,
+      0
+    ],
+    "fixed_measured": [
+      10,
+      10,
+      7,
+      12,
+      8,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_spread_method_alias.a",
+    "before": [
+      8,
+      8,
+      8,
+      15,
+      6,
+      0
+    ],
+    "after": [
+      8,
+      8,
+      7,
+      14,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      8,
+      8,
+      8,
+      15,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      8,
+      8,
+      7,
+      14,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_features_private.a",
+    "before": [
+      47,
+      47,
+      31,
+      59,
+      15,
+      0
+    ],
+    "after": [
+      47,
+      47,
+      29,
+      57,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      47,
+      47,
+      31,
+      59,
+      15,
+      0
+    ],
+    "fixed_measured": [
+      47,
+      47,
+      29,
+      57,
+      15,
+      0
+    ],
+    "removed_member_helper_calls": 6,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_inheritance_exceptions.a",
+    "before": [
+      30,
+      30,
+      20,
+      40,
+      8,
+      0
+    ],
+    "after": [
+      29,
+      29,
+      19,
+      39,
+      8,
+      0
+    ],
+    "delta": [
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      30,
+      30,
+      20,
+      40,
+      8,
+      0
+    ],
+    "fixed_measured": [
+      29,
+      29,
+      19,
+      39,
+      8,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_identity.a",
+    "before": [
+      12,
+      12,
+      7,
+      18,
+      7,
+      0
+    ],
+    "after": [
+      11,
+      11,
+      6,
+      17,
+      7,
+      0
+    ],
+    "delta": [
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      12,
+      12,
+      7,
+      18,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      11,
+      11,
+      6,
+      17,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_inheritance_memory.a",
+    "before": [
+      48,
+      42,
+      18,
+      56,
+      11,
+      6
+    ],
+    "after": [
+      48,
+      42,
+      20,
+      58,
+      11,
+      6
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      48,
+      42,
+      18,
+      56,
+      11,
+      6
+    ],
+    "fixed_measured": [
+      48,
+      42,
+      20,
+      58,
+      11,
+      6
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_instance_key_consume.a",
+    "before": [
+      8,
+      7,
+      4,
+      11,
+      6,
+      1
+    ],
+    "after": [
+      8,
+      7,
+      5,
+      12,
+      6,
+      1
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      8,
+      7,
+      4,
+      11,
+      6,
+      1
+    ],
+    "fixed_measured": [
+      8,
+      7,
+      5,
+      12,
+      6,
+      1
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_checked_fit.a",
+    "before": [
+      54,
+      54,
+      25,
+      47,
+      12,
+      0
+    ],
+    "after": [
+      54,
+      54,
+      20,
+      42,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -5,
+      -5,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      54,
+      54,
+      25,
+      47,
+      12,
+      0
+    ],
+    "fixed_measured": [
+      54,
+      54,
+      20,
+      42,
+      12,
+      0
+    ],
+    "removed_member_helper_calls": 5,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_checked_misfit.a",
+    "before": [
+      7,
+      1,
+      4,
+      2,
+      6,
+      0
+    ],
+    "after": [
+      7,
+      1,
+      3,
+      2,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      7,
+      1,
+      4,
+      2,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      7,
+      1,
+      3,
+      2,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_checked_boolean.a",
+    "before": [
+      18,
+      18,
+      7,
+      20,
+      7,
+      0
+    ],
+    "after": [
+      18,
+      18,
+      5,
+      18,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      18,
+      18,
+      7,
+      20,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      18,
+      18,
+      5,
+      18,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_checked_literal.a",
+    "before": [
+      6,
+      0,
+      6,
+      1,
+      6,
+      0
+    ],
+    "after": [
+      6,
+      0,
+      5,
+      1,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      6,
+      0,
+      6,
+      1,
+      6,
+      0
+    ],
+    "fixed_measured": [
+      6,
+      0,
+      5,
+      1,
+      6,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_checked_boxed.a",
+    "before": [
+      40,
+      40,
+      16,
+      40,
+      11,
+      0
+    ],
+    "after": [
+      40,
+      40,
+      12,
+      36,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -4,
+      -4,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      40,
+      40,
+      16,
+      40,
+      11,
+      0
+    ],
+    "fixed_measured": [
+      40,
+      40,
+      12,
+      36,
+      11,
+      0
+    ],
+    "removed_member_helper_calls": 4,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/fallthrough_ownership.a",
+    "before": [
+      74,
+      74,
+      27,
+      76,
+      7,
+      0
+    ],
+    "after": [
+      71,
+      71,
+      24,
+      76,
+      7,
+      0
+    ],
+    "delta": [
+      -3,
+      -3,
+      -3,
+      0,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      74,
+      74,
+      27,
+      76,
+      7,
+      0
+    ],
+    "fixed_measured": [
+      71,
+      71,
+      24,
+      76,
+      7,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 2,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "internal/oracle/testdata/notyet_library_object_entries_const.a",
+    "before": [
+      40,
+      40,
+      38,
+      37,
+      23,
+      0
+    ],
+    "after": [
+      40,
+      40,
+      36,
+      35,
+      23,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -2,
+      -2,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      40,
+      40,
+      38,
+      37,
+      23,
+      0
+    ],
+    "fixed_measured": [
+      40,
+      40,
+      36,
+      35,
+      23,
+      0
+    ],
+    "removed_member_helper_calls": 2,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "internal/oracle/testdata/unknown_narrowing.a",
+    "before": [
+      31,
+      31,
+      43,
+      64,
+      3,
+      0
+    ],
+    "after": [
+      31,
+      31,
+      42,
+      63,
+      3,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      31,
+      31,
+      43,
+      64,
+      3,
+      0
+    ],
+    "fixed_measured": [
+      31,
+      31,
+      42,
+      63,
+      3,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 0,
+    "cause": "Removed no-check identity helper calls and their temporary ownership operations; remaining spread constraints stay in force."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/snapshot-maybe-boolean.a",
+    "before": [
+      9,
+      9,
+      9,
+      27,
+      3,
+      0
+    ],
+    "after": [
+      6,
+      6,
+      9,
+      24,
+      2,
+      0
+    ],
+    "delta": [
+      -3,
+      -3,
+      0,
+      -3,
+      -1,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      9,
+      9,
+      9,
+      27,
+      3,
+      0
+    ],
+    "fixed_measured": [
+      6,
+      6,
+      9,
+      24,
+      2,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/v2/snapshot-maybe-number.a",
+    "before": [
+      13,
+      13,
+      9,
+      24,
+      5,
+      0
+    ],
+    "after": [
+      10,
+      10,
+      9,
+      21,
+      4,
+      0
+    ],
+    "delta": [
+      -3,
+      -3,
+      0,
+      -3,
+      -1,
+      0
+    ],
+    "cause_commit": "6a056842ff91f8d260aa086675050a61a5e2f2f4",
+    "base_measured": [
+      13,
+      13,
+      9,
+      24,
+      5,
+      0
+    ],
+    "fixed_measured": [
+      10,
+      10,
+      9,
+      21,
+      4,
+      0
+    ],
+    "removed_member_helper_calls": 1,
+    "new_uniqueness_checks": 1,
+    "cause": "Restored ordinary-source spread reuse, including consumed argument conventions and reference transfers, after removing no-check identity helper calls."
+  }
+]

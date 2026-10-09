@@ -1,0 +1,13 @@
+diff --git a/internal/lower/view_member_read.go b/internal/lower/view_member_read.go
+index 7674e695..57300c9c 100644
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -13,7 +13,7 @@ func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *a
+ 	if property.View == "" {
+ 		property.View = sourceExpression(node)
+ 	}
+-	property.ViewWhere = l.program.Where(node)
++	property.ViewWhere = ""
+ 	if receiver != nil {
+ 		property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
+ 	}

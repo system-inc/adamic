@@ -1,0 +1,14 @@
+=== RUN   TestFX7P08
+=== PAUSE TestFX7P08
+=== RUN   TestFX7P59
+=== PAUSE TestFX7P59
+=== CONT  TestFX7P08
+=== CONT  TestFX7P59
+    fx7_name_family_test.go:46: Native backend stdout = "3\n", source Node = "3\n0\n"
+--- FAIL: TestFX7P59 (0.83s)
+=== NAME  TestFX7P08
+    fx7_name_family_test.go:38: Native backend stdout = "3\n", source Node = "3\n2\ntrue\n"
+--- FAIL: TestFX7P08 (0.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.917s
+FAIL

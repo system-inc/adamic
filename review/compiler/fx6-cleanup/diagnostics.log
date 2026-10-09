@@ -1,0 +1,14 @@
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP17
+=== CONT  TestViewDiagnosticP48
+=== CONT  TestViewDiagnosticP64
+--- PASS: TestViewDiagnosticP17 (0.13s)
+--- PASS: TestViewDiagnosticP64 (0.13s)
+--- PASS: TestViewDiagnosticP48 (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.156s

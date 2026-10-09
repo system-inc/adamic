@@ -1,0 +1,24 @@
+[
+  [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/internal/oracle/testdata/(route_targets_virtual_fresh\\.a|route_targets_sort_values\\.a|borrow_chain_coverage_spread\\.a|call_targets_reuse\\.a|call_targets_sort\\.a|library_object_freeze\\.a|maybe_number_slots\\.a|spread_snapshot\\.a|reuse\\.a|reuse_global_sibling\\.a|reuse_weak_during_spread\\.a|reuse_weak_after_reuse\\.a|borrow_element\\.a|borrow_loop\\.a|throw_keeps_old_value\\.a|throw_keeps_old_value_variants\\.a|throw_in_writes\\.a|throw_global_move\\.a|spread_undefined\\.a|reuse_lent_global\\.a|reuse_spread_method\\.a|reuse_spread_method_alias\\.a|class_features_private\\.a|class_inheritance_exceptions\\.a|class_identity\\.a|class_inheritance_memory\\.a|class_instance_key_consume\\.a|entries_checked_fit\\.a|entries_checked_misfit\\.a|entries_checked_boolean\\.a|entries_checked_literal\\.a|entries_checked_boxed\\.a|fallthrough_ownership\\.a|notyet_library_object_entries_const\\.a|unknown_narrowing\\.a)$",
+    "-count=1",
+    "-v",
+    "-timeout",
+    "80s"
+  ],
+  [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/internal/load/testdata/0.1/compile/09_tree.ts$",
+    "-count=1",
+    "-v",
+    "-timeout",
+    "80s"
+  ]
+]

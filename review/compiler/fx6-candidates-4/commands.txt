@@ -1,0 +1,30 @@
+All test commands source /workspace/adamic-tools/env.sh and write stdout/stderr to the corresponding .log file in this directory.
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh (initial census failed while checkout changed the file list)
+timeout 480 bash cloud/setup.sh (stable tree passed)
+nproc: 5; cpu.max: 400000 100000
+timeout 120 npm ci --prefix stage3/api
+timeout 480 go test ./internal/lower -count=1 -timeout 420s
+timeout 480 go test ./internal/oracle -run 'TestCheckedView|TestRequiredView|TestNarrowedField|TestViewField|TestDefaultTagged|TestFX[67]|TestScalarUnion|TestCallableProducer|TestReviewProgramsAgreeWithNode/fxspptb_oct9_(views|native)_' -count=1 -v -timeout 420s
+timeout 180 go test ./stage3/fixtures -run TestFixturesAssertions -count=1 -timeout 150s
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s (two cold outer-limit attempts, then passing retry)
+timeout 540 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 480s
+timeout 150 python3 review/compiler/fx6-candidates-4/run-named.py (temporarily removes five pending sidecars, restores in finally)
+timeout 180 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/lower/testdata/(callable_producers|scalar_union_views|fx7_wrong_aborts|fx7_tuple_recognition)|TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_(native_p(04|06|08|17|18|20|26|33|34|35|54|59|75|77)|views_p(68|69))' -count=1 -v -timeout 150s
+timeout 420 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 360s -args -update-counts
+timeout 180 go vet ./internal/lower ./internal/oracle ./internal/javascript ./internal/native
+timeout 840 python3 review/compiler/fx6-candidates-4/run-members.py
+timeout 600 python3 review/compiler/fx6-candidates-4/run-extra.py
+Every mutant child has a Go test timeout and a subprocess outer limit; sources restored in finally.
+timeout 240 git fetch -q origin main devtools/fast-gate cloud/merge-tree
+The checkout's fetch refspec tracks only main, so explicit refs/heads/...:refs/remotes/origin/... fetches populated the two lane refs.
+timeout 240 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'
+git diff --check
+
+timeout 120 go test ./internal/native -run '^TestCheckedCastWithoutReadSummary$' -count=1 -v -timeout 90s
+timeout 300 python3 review/compiler/fx6-candidates-4/run-isolated.py
+timeout 120 go test ./internal/native ./internal/lower -run 'TestCheckedCastWithoutReadSummary|TestFX7CheckedCastFieldTypes|TestCallableContract|TestTupleRecognition' -count=1 -v -timeout 90s
+timeout 180 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a' -count=1 -v -timeout 150s
+timeout 240 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 210s
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s
+Final lane: timeout 240 git fetch -q origin main devtools/fast-gate cloud/merge-tree; timeout 240 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'

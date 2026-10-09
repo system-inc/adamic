@@ -1,0 +1,53 @@
+[
+  {
+    "name": "constructor-revert",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "reject-tuple-objects",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "missing-tuple-marker",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "admit-arbitrary-arrays",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "clear-contract",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "source-argument-layout",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "missing-producer-mask",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "spread-refusal",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "name": "checked-cast-metadata",
+    "exit": 0,
+    "caught": false
+  },
+  {
+    "name": "historical-single-filter",
+    "exit": 0,
+    "caught": false,
+    "historically_masked": true
+  }
+]

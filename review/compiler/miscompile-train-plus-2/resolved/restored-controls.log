@@ -1,0 +1,116 @@
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractChecksBeforeArguments
+=== PAUSE TestCallableContractChecksBeforeArguments
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== RUN   TestTrainPlusRefusalP26
+=== PAUSE TestTrainPlusRefusalP26
+=== RUN   TestTrainPlusRefusalP33
+=== PAUSE TestTrainPlusRefusalP33
+=== RUN   TestTrainPlusRefusalP34
+=== PAUSE TestTrainPlusRefusalP34
+=== RUN   TestTrainPlusRefusalP35
+=== PAUSE TestTrainPlusRefusalP35
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTupleRecognitionP69
+=== PAUSE TestTupleRecognitionP69
+=== RUN   TestTupleRecognitionOrdinaryArray
+=== PAUSE TestTupleRecognitionOrdinaryArray
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== RUN   TestUnsupportedViewMapMember
+=== PAUSE TestUnsupportedViewMapMember
+=== RUN   TestUnsupportedViewCallableMember
+=== PAUSE TestUnsupportedViewCallableMember
+=== RUN   TestUnsupportedViewUnreadMember
+=== PAUSE TestUnsupportedViewUnreadMember
+=== RUN   TestSupportedCallableViewMember
+=== PAUSE TestSupportedCallableViewMember
+=== CONT  TestCallableContractP18
+=== CONT  TestCallableContractSpreadRefused
+=== CONT  TestTrainPlusRefusalP33
+=== CONT  TestViewDiagnosticP64
+=== CONT  TestTupleRecognitionP68
+--- PASS: TestViewDiagnosticP64 (0.09s)
+=== CONT  TestViewDiagnosticP48
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: .a: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a:7:16: view type has an unsupported member: value
+--- PASS: TestCallableContractSpreadRefused (0.11s)
+=== CONT  TestViewDiagnosticP17
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: .ts: /tmp/adamic-gate/TestTrainPlusRefusalP331376884354/001/fxspptb_oct9_native_p33_map_in_union.ts:7:16: view type has an unsupported member: value
+--- PASS: TestTrainPlusRefusalP33 (0.19s)
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+--- PASS: TestViewDiagnosticP48 (0.10s)
+=== CONT  TestTupleRecognitionOrdinaryArray
+--- PASS: TestViewDiagnosticP17 (0.12s)
+=== CONT  TestTupleRecognitionP69
+=== NAME  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- PASS: TestTupleRecognitionRejectsArrayObjectView (0.24s)
+=== CONT  TestTrainPlusRefusalP34
+    train_plus_refusals_test.go:59: .a: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a:5:16: view type has an unsupported member: value
+    train_plus_refusals_test.go:59: .ts: /tmp/adamic-gate/TestTrainPlusRefusalP342388488521/001/fxspptb_oct9_native_p34_typed_array_in_union.ts:5:16: view type has an unsupported member: value
+--- PASS: TestTrainPlusRefusalP34 (0.10s)
+=== CONT  TestTrainPlusRefusalP35
+    train_plus_refusals_test.go:64: .a: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a:6:16: view type has an unsupported member: value
+    train_plus_refusals_test.go:64: .ts: /tmp/adamic-gate/TestTrainPlusRefusalP352408925994/001/fxspptb_oct9_native_p35_class_in_union.ts:6:16: view type has an unsupported member: value
+--- PASS: TestTrainPlusRefusalP35 (0.11s)
+=== CONT  TestCallableContractReceiverBinding
+--- PASS: TestTupleRecognitionP68 (0.70s)
+=== CONT  TestCallableContractChecksBeforeArguments
+--- PASS: TestCallableContractP18 (0.73s)
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+--- PASS: TestTupleRecognitionOrdinaryArray (0.59s)
+=== CONT  TestCallableContractWideProducer
+--- PASS: TestTupleRecognitionP69 (0.61s)
+=== CONT  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: .a: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a:7:14: view type has an unsupported member: value
+    train_plus_refusals_test.go:49: .ts: /tmp/adamic-gate/TestTrainPlusRefusalP262884973467/001/fxspptb_oct9_native_p26_callable_or_undefined.ts:7:14: view type has an unsupported member: value
+--- PASS: TestTrainPlusRefusalP26 (0.09s)
+=== CONT  TestCallableContractP20
+=== NAME  TestCallableContractChecksBeforeArguments
+    callable_contract_retention_test.go:86: backend 0: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:86: backend 1: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+--- PASS: TestCallableContractChecksBeforeArguments (0.27s)
+=== CONT  TestUnsupportedViewUnreadMember
+--- PASS: TestUnsupportedViewUnreadMember (0.07s)
+=== CONT  TestSupportedCallableViewMember
+--- PASS: TestCallableContractReceiverBinding (0.56s)
+=== CONT  TestUnsupportedViewCallableMember
+--- PASS: TestUnsupportedViewCallableMember (0.08s)
+=== CONT  TestUnsupportedViewMapMember
+--- PASS: TestUnsupportedViewMapMember (0.05s)
+=== CONT  TestCallableContractPlainSpread
+--- PASS: TestCallableContractWideProducer (0.56s)
+--- PASS: TestCallableContractReceiverEvaluatedOnce (0.63s)
+--- PASS: TestCallableContractP20 (0.52s)
+--- PASS: TestSupportedCallableViewMember (0.52s)
+--- PASS: TestCallableContractPlainSpread (0.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.757s
+=== RUN   TestCheckedCastWithoutReadSummary
+=== PAUSE TestCheckedCastWithoutReadSummary
+=== CONT  TestCheckedCastWithoutReadSummary
+--- PASS: TestCheckedCastWithoutReadSummary (0.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.458s

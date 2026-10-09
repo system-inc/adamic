@@ -1,0 +1,138 @@
+=== RUN   TestCaseMappingMatchesNode
+=== PAUSE TestCaseMappingMatchesNode
+=== RUN   TestDecodeASCIIUnit04
+=== PAUSE TestDecodeASCIIUnit04
+=== RUN   TestDecodeASCIIUnit20
+=== PAUSE TestDecodeASCIIUnit20
+=== RUN   TestDecodeASCIIUnit36
+=== PAUSE TestDecodeASCIIUnit36
+=== RUN   TestDecodeASCIIWASIUnit07
+=== PAUSE TestDecodeASCIIWASIUnit07
+=== RUN   TestDecodeASCIIWASIUnit23
+=== PAUSE TestDecodeASCIIWASIUnit23
+=== RUN   TestDecodeASCIIWASIUnit39
+=== PAUSE TestDecodeASCIIWASIUnit39
+=== RUN   TestRegexProgramsKeepCheckedFieldReads
+=== PAUSE TestRegexProgramsKeepCheckedFieldReads
+=== RUN   TestLoopBorrowPlan
+=== PAUSE TestLoopBorrowPlan
+=== RUN   TestNormalizeMatchesNodePoints04
+=== PAUSE TestNormalizeMatchesNodePoints04
+=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes
+=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes
+=== RUN   TestRegExpNativeStepLimit
+=== PAUSE TestRegExpNativeStepLimit
+=== RUN   TestRegExpBytecodeRandomNodeUnit12
+=== PAUSE TestRegExpBytecodeRandomNodeUnit12
+=== RUN   TestRegExpBytecodeRandomNodeUnit28
+=== PAUSE TestRegExpBytecodeRandomNodeUnit28
+=== RUN   TestRetainedSplitCoverage
+=== PAUSE TestRetainedSplitCoverage
+=== RUN   TestUnitSystemHeaderProvenance
+    units_test.go:158: system-header extension accepted; changed header observed cached and uncached; user-header extension rejected
+--- PASS: TestUnitSystemHeaderProvenance (0.26s)
+=== RUN   TestWASIUnit11
+    wasm_test.go:356: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit11 (0.00s)
+=== RUN   TestWASIUnit27
+    wasm_test.go:436: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit27 (0.00s)
+=== CONT  TestCaseMappingMatchesNode
+=== CONT  TestLoopBorrowPlan
+=== CONT  TestRegExpBytecodeRandomNodeUnit12
+=== CONT  TestDecodeASCIIWASIUnit07
+=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes
+=== NAME  TestDecodeASCIIWASIUnit07
+    decode_ascii_test.go:397: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit07 (0.00s)
+=== CONT  TestRegexProgramsKeepCheckedFieldReads
+--- PASS: TestLoopBorrowPlan (0.11s)
+=== CONT  TestDecodeASCIIUnit36
+    decode_ascii_test.go:317: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:317: compile phase 0.006s (including cache wait)
+=== RUN   TestCaseMappingMatchesNode/points
+=== PAUSE TestCaseMappingMatchesNode/points
+=== RUN   TestCaseMappingMatchesNode/contexts
+=== PAUSE TestCaseMappingMatchesNode/contexts
+=== CONT  TestDecodeASCIIUnit20
+    decode_ascii_test.go:237: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:237: compile phase 0.001s (including cache wait)
+=== NAME  TestPowersOfTwoFormatAsJavaScriptDoes
+    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches
+--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (0.37s)
+=== CONT  TestDecodeASCIIWASIUnit39
+    decode_ascii_test.go:557: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit39 (0.00s)
+=== CONT  TestDecodeASCIIUnit04
+    decode_ascii_test.go:157: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:157: compile phase 0.004s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit12
+    regexp_test.go:431: compiling 249 patterns, 250 executions, 734890 C bytes
+--- PASS: TestRegexProgramsKeepCheckedFieldReads (0.84s)
+=== CONT  TestDecodeASCIIWASIUnit23
+    decode_ascii_test.go:477: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit23 (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit28
+=== NAME  TestRegExpBytecodeRandomNodeUnit12
+    regexp_test.go:431: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:431: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit12 (1.57s)
+=== CONT  TestRetainedSplitCoverage
+=== RUN   TestRetainedSplitCoverage/shard_union
+=== RUN   TestRetainedSplitCoverage/decode_targets
+=== RUN   TestRetainedSplitCoverage/WASI
+=== RUN   TestRetainedSplitCoverage/split_cache
+=== RUN   TestRetainedSplitCoverage/record_mutants
+--- PASS: TestRetainedSplitCoverage (0.03s)
+    --- PASS: TestRetainedSplitCoverage/shard_union (0.03s)
+    --- PASS: TestRetainedSplitCoverage/decode_targets (0.00s)
+    --- PASS: TestRetainedSplitCoverage/WASI (0.00s)
+    --- PASS: TestRetainedSplitCoverage/split_cache (0.00s)
+    --- PASS: TestRetainedSplitCoverage/record_mutants (0.00s)
+=== CONT  TestRegExpNativeStepLimit
+=== NAME  TestRegExpBytecodeRandomNodeUnit28
+    regexp_test.go:511: compiling 249 patterns, 250 executions, 697109 C bytes
+--- PASS: TestRegExpNativeStepLimit (0.22s)
+=== CONT  TestNormalizeMatchesNodePoints04
+=== NAME  TestRegExpBytecodeRandomNodeUnit28
+    regexp_test.go:511: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:511: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit28 (2.09s)
+=== CONT  TestCaseMappingMatchesNode/contexts
+=== NAME  TestDecodeASCIIUnit04
+    decode_ascii_test.go:157: run phase 4.804s
+=== NAME  TestCaseMappingMatchesNode/contexts
+    case_test.go:234: 245410 lines, 0 mismatches
+=== NAME  TestDecodeASCIIUnit04
+    decode_ascii_test.go:157: prefixes=2048 cases=2129920 Node and baseline identical
+        
+=== CONT  TestCaseMappingMatchesNode/points
+=== NAME  TestDecodeASCIIUnit04
+    split_units_test.go:293: unit elapsed 4.810s
+--- PASS: TestDecodeASCIIUnit04 (4.81s)
+=== NAME  TestDecodeASCIIUnit20
+    decode_ascii_test.go:237: run phase 5.025s
+    decode_ascii_test.go:237: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 5.028s
+--- PASS: TestDecodeASCIIUnit20 (5.03s)
+=== NAME  TestDecodeASCIIUnit36
+    decode_ascii_test.go:317: run phase 5.336s
+    decode_ascii_test.go:317: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 5.441s
+--- PASS: TestDecodeASCIIUnit36 (5.44s)
+=== NAME  TestNormalizeMatchesNodePoints04
+    normalize_test.go:268: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 4.606s
+--- PASS: TestNormalizeMatchesNodePoints04 (4.61s)
+=== NAME  TestCaseMappingMatchesNode/points
+    case_test.go:234: 1114112 lines, 0 mismatches
+--- PASS: TestCaseMappingMatchesNode (0.33s)
+    --- PASS: TestCaseMappingMatchesNode/contexts (2.25s)
+    --- PASS: TestCaseMappingMatchesNode/points (13.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	18.556s

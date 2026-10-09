@@ -1,0 +1,8 @@
+=== RUN   TestInheritanceMemoryPlans
+=== PAUSE TestInheritanceMemoryPlans
+=== CONT  TestInheritanceMemoryPlans
+    class_inheritance_test.go:37: hierarchy lost every reused spread
+--- FAIL: TestInheritanceMemoryPlans (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.077s
+FAIL

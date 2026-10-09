@@ -1,0 +1,10 @@
+constructor-revert {'name': 'constructor-revert', 'exit': 1, 'caught': True}
+reject-tuple-objects {'name': 'reject-tuple-objects', 'exit': 1, 'caught': True}
+missing-tuple-marker {'name': 'missing-tuple-marker', 'exit': 1, 'caught': True}
+admit-arbitrary-arrays {'name': 'admit-arbitrary-arrays', 'exit': 1, 'caught': True}
+clear-contract {'name': 'clear-contract', 'exit': 1, 'caught': True}
+source-argument-layout {'name': 'source-argument-layout', 'exit': 1, 'caught': True}
+missing-producer-mask {'name': 'missing-producer-mask', 'exit': 1, 'caught': True}
+spread-refusal {'name': 'spread-refusal', 'exit': 1, 'caught': True}
+{'name': 'checked-cast-metadata', 'exit': 0, 'caught': False}
+{'name': 'historical-single-filter', 'exit': 0, 'caught': False, 'historically_masked': True}

@@ -1,0 +1,222 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P49
+=== PAUSE TestFX6P49
+=== RUN   TestFX6P51Wrong
+=== PAUSE TestFX6P51Wrong
+=== RUN   TestFX6P38Number
+=== PAUSE TestFX6P38Number
+=== RUN   TestReviewProgramsAgreeWithNode
+=== PAUSE TestReviewProgramsAgreeWithNode
+=== CONT  TestFX6P35
+=== CONT  TestReviewProgramsAgreeWithNode
+=== CONT  TestFX6P38Number
+=== CONT  TestFX6P51Wrong
+=== CONT  TestFX6P49
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: gate cache node miss
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:221: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestFX6P35
+    fx6_valid_test.go:66: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: gate cache node miss
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: Node: exit=0 stdout="undefined\n" stderr=""
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:222: Node: exit=0 stdout="3\n5\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:67: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:223: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: gate cache node miss
+=== NAME  TestFX6P35
+    fx6_valid_test.go:68: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:204: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+    fx6_valid_test.go:204: sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+    fx6_valid_test.go:204: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"
+--- PASS: TestFX6P49 (1.67s)
+=== CONT  TestFX6P53
+=== NAME  TestFX6P35
+    fx6_valid_test.go:69: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:69: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:69: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+--- PASS: TestFX6P35 (1.75s)
+=== CONT  TestFX6P51
+=== NAME  TestFX6P38Number
+    fx6_valid_test.go:224: native: exit=0 stdout="3\n5\n" stderr=""
+    fx6_valid_test.go:224: sanitized: exit=0 stdout="3\n5\n" stderr=""
+    fx6_valid_test.go:224: javascript: exit=0 stdout="3\n5\n" stderr=""
+--- PASS: TestFX6P38Number (1.76s)
+=== CONT  TestFX6P38
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:166: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:126: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:146: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:167: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P51
+    fx6_valid_test.go:147: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P38
+    fx6_valid_test.go:127: Node: exit=0 stdout="3\nundefined\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestFX6P51Wrong
+    fx6_valid_test.go:209: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+    fx6_valid_test.go:209: sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+    fx6_valid_test.go:209: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestFX6P51Wrong (2.25s)
+=== CONT  TestFX6P37
+    fx6_valid_test.go:106: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:107: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestFX6P38
+    fx6_valid_test.go:128: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:148: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:168: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:129: native: exit=0 stdout="3\nundefined\n" stderr=""
+    fx6_valid_test.go:129: sanitized: exit=0 stdout="3\nundefined\n" stderr=""
+    fx6_valid_test.go:129: javascript: exit=0 stdout="3\nundefined\n" stderr=""
+--- PASS: TestFX6P38 (1.35s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P51
+    fx6_valid_test.go:149: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:149: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:149: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P51 (1.40s)
+=== NAME  TestFX6P53
+    fx6_valid_test.go:169: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:169: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:169: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P53 (1.52s)
+=== NAME  TestFX6P36
+    fx6_valid_test.go:86: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+=== NAME  TestFX6P37
+    fx6_valid_test.go:108: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    review_test.go:153: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:109: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:109: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:109: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+--- PASS: TestFX6P37 (1.21s)
+=== NAME  TestFX6P36
+    fx6_valid_test.go:87: Node: exit=0 stdout="3\nnumber 5\n" stderr=""
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:88: gate cache node miss
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:89: native: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:89: sanitized: exit=0 stdout="3\nnumber 5\n" stderr=""
+    fx6_valid_test.go:89: javascript: exit=0 stdout="3\nnumber 5\n" stderr=""
+--- PASS: TestFX6P36 (1.05s)
+=== NAME  TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure_value.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_maybe_number.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_object_union.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_string_undefined.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p49_union_destructure_wrong.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p53_callable_union_destructure_good.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestReviewProgramsAgreeWithNode (11.26s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p35_write_after_view_valid.a (1.92s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p36_write_unrelated_same_name.a (1.20s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p37_union_field_same_name.a (0.97s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure.a (0.90s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_closure_value.a (0.73s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_maybe_number.a (0.89s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_object_union.a (0.79s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p38_same_name_string_undefined.a (0.96s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p49_union_destructure_wrong.a (0.79s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a (0.94s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_views_p53_callable_union_destructure_good.a (1.03s)
+PASS
+gate cache: native hits=9 misses=22
+gate cache: node hits=0 misses=40
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.325s

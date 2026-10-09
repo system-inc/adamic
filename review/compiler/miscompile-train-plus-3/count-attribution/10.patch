@@ -1,0 +1,29 @@
+--- 51aa3a96
++++ 6a056842
+@@ -40,13 +40,15 @@
+ 
+ static adamic_object * adamic_function_1_insert(adamic_object * adamic_local_1_node, double adamic_local_2_extra) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_6 = adamic_function_2_checked_view_members(adamic_local_1_node);
+-	adamic_object * adamic_temporary_7 = adamic_object_copy(adamic_temporary_6);
++	bool adamic_temporary_6 = ((adamic_local_1_node->heap.references == 1 && !adamic_weak_held(adamic_local_1_node)) && !adamic_local_1_node->frozen);
++	adamic_object * adamic_temporary_7 = (adamic_temporary_6 ? adamic_retain(adamic_local_1_node) : adamic_object_copy(adamic_local_1_node));
+ 	double adamic_temporary_9 = adamic_object_data_field(adamic_local_1_node, "value", &adamic_cache_8)->number;
+ 	adamic_value *adamic_temporary_10 = adamic_object_field(adamic_temporary_7, "value", &adamic_cache_11);
+ 	adamic_temporary_10->number = (adamic_temporary_9 + adamic_local_2_extra);
++	adamic_temporary_7->class = NULL;
++	adamic_temporary_7->tuple = false;
+ 	adamic_object * adamic_temporary_12 = adamic_temporary_7;
+-	adamic_release(adamic_temporary_6);
++	adamic_release(adamic_local_1_node);
+ 	return adamic_temporary_12;
+ 	adamic_unreachable();
+ }
+@@ -80,7 +82,6 @@
+ 	adamic_object * adamic_temporary_24 = adamic_global_0_tree;
+ 	adamic_global_0_tree = adamic_temporary_23;
+ 	adamic_release(adamic_temporary_24);
+-	adamic_release(adamic_temporary_21);
+ 	adamic_object * adamic_temporary_25 = adamic_global_0_tree;
+ 	double adamic_temporary_27 = adamic_object_data_field(adamic_temporary_25, "value", &adamic_cache_26)->number;
+ 	double adamic_temporary_28 = adamic_temporary_27;

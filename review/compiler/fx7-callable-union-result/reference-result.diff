@@ -1,0 +1,7 @@
+diff --git a/internal/native/emit_functions.go b/internal/native/emit_functions.go
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -380,3 +380,0 @@
+-	if expression.Returns == ir.Union {
+-		return e.callableUnionResult(result, closure, method)
+-	}

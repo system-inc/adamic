@@ -1,0 +1,10 @@
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 0 stdout "object\n" stderr ""
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:78: ordinary arrays must fail object-backed tuple membership: {stdout:[111 98 106 101 99 116 10] stderr:[] code:0}
+--- FAIL: TestTupleRecognitionRejectsArrayObjectView (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.160s
+FAIL

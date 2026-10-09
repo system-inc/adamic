@@ -1,0 +1,11 @@
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -236,7 +236,7 @@
+ 		declared := l.checker.GetTypeOfSymbol(property)
+ 		id, err := l.viewContract(node, declared)
+ 		if err != nil || l.unsupportedViewContract(id, map[ir.ViewContractID]bool{}) {
+-			return &Refused{Where: l.program.Where(node), What: "view type has an unsupported member: " + property.Name, Fix: "use a supported, checked type for " + property.Name + " (currently " + l.checker.TypeToString(declared) + ") before creating this view"}
++			return &Refused{Where: "wrong:1:1", What: "view type has an unsupported member: " + property.Name, Fix: "use a supported, checked type for " + property.Name + " (currently " + l.checker.TypeToString(declared) + ") before creating this view"}
+ 		}
+ 	}
+ 	return nil

@@ -1,0 +1,10 @@
+// A good untagged union view whose member's function-valued field holds an arrow with an inferred
+// literal-free result and an extra optional parameter.
+interface Left { readonly run: (value: number) => number; readonly text: string; }
+interface Right { readonly count: number; }
+interface Holder { readonly kind: 'Holder'; readonly value: Left | Right; }
+const inner = { run: (value: number): number => value * 2, text: 'left' };
+const raw = { kind: 'Holder' as const, value: inner };
+const base: { readonly kind: 'Holder' } = raw;
+const value = (base as Holder).value;
+console.log(`${value === inner}`);

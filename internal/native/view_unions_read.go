@@ -10,6 +10,10 @@ func init() { checkedViewReadAdapter = readUnionView }
 // Registration alone is not admission. Each handled read carries a complete
 // contract and runs the selector before returning any payload to its caller.
 func readUnionView(e *emitter, property ir.Property) (string, bool) {
+	return readUnionViewAt(e, property, "")
+}
+
+func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
 		return "", false
@@ -23,7 +27,9 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_mixed.h\"")
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
-	object := e.value(property.Object)
+	if object == "" {
+		object = e.value(property.Object)
+	}
 	snapshot := e.temporary()
 	e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, false);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name))
 	// An unknown physical slot cannot be interpreted or counted as a reference.
@@ -35,7 +41,8 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	e.line("if (%s.kind == adamic_view_union_number) %s = adamic_box_number(%s.payload.number);", snapshot, boxed, snapshot)
 	e.line("else if (%s.kind == adamic_view_union_boolean) %s = %s.payload.boolean ? (adamic_heap *)&adamic_box_true : (adamic_heap *)&adamic_box_false;", snapshot, boxed, snapshot)
 	e.line("else if (%s.kind == adamic_view_union_null) %s = &adamic_null;", snapshot, boxed)
-	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)
+	e.line("else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);", snapshot, snapshot, boxed, snapshot)
+	e.line("else %s = NULL;", boxed)
 	value := e.own(ir.Union, boxed)
 	if contract.Of == ir.Closure {
 		recorded := e.temporary()
@@ -47,6 +54,16 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 		e.certifyUntaggedCallableRecorded(property, "((adamic_closure *)"+value+")", recorded, expected)
 		e.line("(void)adamic_view_callable_shape(%s, %s, %s, %s, false);", value, recorded, expected, cString(property.View))
 		return fmt.Sprintf("((adamic_closure *)%s)", value), true
+	}
+	if property.Of.IsMaybe() {
+		e.checkMaybeUnionView(property, value, snapshot)
+		kind, payload := "adamic_view_union_number", "number"
+		if property.Of == ir.MaybeBoolean {
+			kind, payload = "adamic_view_union_boolean", "boolean"
+		}
+		// Select the payload only after checking its kind. A missing value has
+		// its own presence bit, distinct from a present zero or false.
+		return e.snapshot(property.Of, fmt.Sprintf("(%s.kind == %s ? %s : %s)", snapshot, kind, maybe(property.Of, snapshot+".payload."+payload), zero(property.Of))), true
 	}
 	e.viewUntaggedObjectUnion(property, value)
 	if property.Of == ir.Union {
@@ -63,4 +80,17 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 		return fmt.Sprintf("((%s)%s)", cType(property.Of), value), true
 	}
 	panic("compiler bug: narrowed scalar union view requires a checked conversion")
+}
+
+// Membership proves the declared union; the kind check also protects a read
+// whose checker representation has narrowed that union to one maybe scalar.
+func (e *emitter) checkMaybeUnionView(property ir.Property, value, snapshot string) {
+	e.viewUntaggedObjectUnion(property, value)
+	contract := e.program.ViewContracts[property.ViewContract-1]
+	kind := "adamic_view_union_number"
+	if property.Of == ir.MaybeBoolean {
+		kind = "adamic_view_union_boolean"
+	}
+	allowUndefined := contract.Undefined && property.Of == contract.Of
+	e.line("if (%s.kind != %s && !(%t && %s.kind == adamic_view_union_undefined)) { (void)adamic_view_mixed_union_select(&%s, NULL, 0, NULL, NULL, %s, %s); }", snapshot, kind, allowUndefined, snapshot, snapshot, cString(property.View), cString(contract.Name))
 }

@@ -1,0 +1,179 @@
+[
+  {
+    "name": "spread-method-original-masked",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestViewSpreadMethodRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "catcher": "PASS"
+  },
+  {
+    "name": "constructor-revert",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "exit codes differ"
+  },
+  {
+    "name": "unsupported-view-revert",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "./internal/oracle",
+      "-run",
+      "TestUnsupportedView|TestCheckedViewUntaggedOwnClassData.*Refused|TestCheckedViewUntaggedArray.*Refused|TestCheckedViewV2ArrayArmBoundary",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "FAIL"
+  },
+  {
+    "name": "unsupported-stage3-revert",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesAssertions$/assertions/09_interface_kind.a",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "FAIL"
+  },
+  {
+    "name": "snapshot-runtime-alone",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewSnapshotMaybeBoolean$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "catcher": null
+  },
+  {
+    "name": "snapshot-compiler-alone",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewSnapshotMaybeBoolean$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "catcher": null
+  },
+  {
+    "name": "snapshot-runtime-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewSnapshotMaybeBoolean$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "native:"
+  },
+  {
+    "name": "snapshot-compiler-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewSnapshotMaybeBoolean$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "native:"
+  },
+  {
+    "name": "snapshot-reference-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestViewSnapshotTypedArrayReference$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "catcher": "view_snapshot_test.go:109: exit codes differ"
+  },
+  {
+    "name": "callable-zero-reference",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableUnionResultReferenceMutant$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "catcher": "Native backend stdout"
+  },
+  {
+    "name": "callable-six-reference",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableUnionResultReferenceMutant$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "catcher": "Native backend"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/testdata/view_element_reads/p19.a
++++ b/internal/lower/testdata/view_element_reads/p19.a
+@@ -1,7 +1,7 @@
+ // A wrong producer-certified callable union read by a string-literal key, then called.
+ type Target = ((value: number) => number) | ((value: number) => string);
+ interface Receiver { readonly kind: 'Receiver'; readonly value: Target; }
+-const raw = { kind: 'Receiver' as const, value: (value: string): number => value.length };
++const raw = { kind: 'Receiver' as const, value: (value: number): number => value + 1 };
+ const base: { readonly kind: 'Receiver' } = raw;
+ const view = base as Receiver;
+ const callable = view['value'];

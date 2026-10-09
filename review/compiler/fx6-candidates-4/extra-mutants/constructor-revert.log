@@ -1,0 +1,76 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "instance2!/instance2!/true\nparent1/false\nupdated4/false\nlater6/false|child5/true|child5/true\nlater6/false|child8/true|grand7/true\nshared,flag/shared,flag\n", stderr ""
+        native: exit 70, stdout "instance2!/instance2!/true\nparent1/false\nupdated4/false\nlater6/false|child5/true|child5/true\nlater6/false|child8/true|grand7/true\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "11 22\n14 23\n15 26\n107 -1\n109 208\n110 211\n1012 1014\n31 18 17\n39\n23 22\ncount\n", stderr ""
+        native: exit 70, stdout "11 22\n14 23\n15 26\n107 -1\n109 208\n110 211\n1012 1014\n31 18 17\n39\n23 22\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "a1block\nb2\na1block\n/\nTypeError:Cannot read private member #value from an object whose class did not declare it\nTypeError:Receiver must be class PrivateStaticBase\nTypeError:Receiver must be class PrivateStaticBase\nTypeError:Cannot write private member #value to an object whose class did not declare it\nTypeError:Receiver must be class PrivateStaticBase\ns5/abwss\ns5\n", stderr ""
+        native: exit 70, stdout "a1block\nb2\na1block\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "abicdef\nbase:a1base:child:c4a1base:leaf:e6c4a1base\nfunction\nx8/x8\nz10/y9/y9\n2/4/8/abicdefxyzgsg\ntext,second,number/own,summary,text,number/last\nunused static block\nfrom empty base\nh14\n1/one\nbase:a1base:child:c4a1base\nq15fail\nq15get\nr16q15\nt17/z10/z10\nn18\nn18\nz10!\n", stderr ""
+        native: exit 70, stdout "abicdef\nbase:a1base:child:c4a1base:leaf:e6c4a1base\nfunction\nx8/x8\nz10/y9/y9\n2/4/8/abicdefxyzgsg\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.08s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a (1.46s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/field_write_paths.a (1.53s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a (1.55s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a (1.93s)
+FAIL
+gate cache: native hits=4 misses=8
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.060s
+FAIL

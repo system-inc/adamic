@@ -1,0 +1,48 @@
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -321,12 +321,12 @@
+ 		contract := l.result.ViewContracts[id-1]
+ 		for _, field := range contract.Fields {
+ 			fields[field.Name] = true
+-			for typeID, contractID := range l.result.ViewContractTypes {
++			for _, contractID := range l.result.ViewContractTypes {
+ 				if contractID == id {
+ 					if l.result.CheckedFields == nil {
+ 						l.result.CheckedFields = map[string]bool{}
+ 					}
+-					l.result.CheckedFields[checkedViewFieldKey(typeID, field.Name)] = true
++					l.result.CheckedFields[field.Name] = true
+ 				}
+ 			}
+ 			visit(field.Contract)
+@@ -420,7 +420,7 @@
+ 		l.result.CheckedFields = map[string]bool{}
+ 	}
+ 	for field := range fields {
+-		l.result.CheckedFields[checkedViewFieldKey(int(target.Id()), field)] = true
++		l.result.CheckedFields[field] = true
+ 	}
+ 	return value, nil
+ }
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -285,7 +285,7 @@
+ 				}
+ 				node = expression
+ 			case ir.Property:
+-				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method {
++				if !program.CheckedFields[expression.Name] || expression.Method {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -165,7 +165,7 @@
+ 
+ 		switch read := node.(type) {
+ 		case ir.Property:
+-			if !(program.CheckedFields[checkedViewFieldKey(read.ViewReceiverTypeID, read.Name)] || program.CheckedFields[read.Name]) {
++			if !program.CheckedFields[read.Name] {
+ 				return true
+ 			}
+ 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
