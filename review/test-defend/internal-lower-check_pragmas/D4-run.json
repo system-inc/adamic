@@ -1,0 +1,1 @@
+{"command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .", "exit": 1, "wall": 40.47116708755493}

@@ -1,0 +1,30 @@
+[
+  [
+    "D2",
+    "internal/load/load.go",
+    "\"error TS%d: %s\"",
+    "\"error TS%d: %.80s\"",
+    "change constant, keep the complete 80-character spread fragment but cut the private fragment"
+  ],
+  [
+    "D3",
+    "internal/lower/class_inheritance.go",
+    "\t\tstatements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())})\n",
+    "",
+    "drop ordinary field initializer store"
+  ],
+  [
+    "D4",
+    "internal/lower/class_inheritance.go",
+    "\t\twrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)\n",
+    "",
+    "drop combined fresh-object construction and constructor body statement"
+  ],
+  [
+    "D5",
+    "internal/lower/class.go",
+    "ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value,",
+    "ir.SetProperty{Object: value, Name: l.fieldName(target.Name()), Value: object,",
+    "swap receiver and value arguments of property store"
+  ]
+]

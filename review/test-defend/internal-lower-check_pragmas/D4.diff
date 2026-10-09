@@ -1,0 +1,12 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..92fac82e 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -339,7 +339,6 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
+ 		wrapper.ArgumentsCount = body.ArgumentsCount
+ 		wrapper.ForwardsArguments = body.ForwardsArguments
+ 		wrapper.RestElement = body.RestElement
+-		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
+ 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
+ 		l.result.Functions[index] = wrapper
+ 		l.result.Functions[initializer] = ir.Function{Name: body.Name}

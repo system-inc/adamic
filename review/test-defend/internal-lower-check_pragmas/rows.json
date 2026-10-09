@@ -1,0 +1,116 @@
+[
+  {
+    "test": "TestCheckPragmaNeighborsCompile",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "No meaningful menu-compliant pragma-neighbor-specific mutation was built. No exclusive covered blocks against all other current rows. Empty-answer probe only: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCheckPragmaNeighborsCompile$'; --- PASS: TestCheckPragmaNeighborsCompile (0.15s), despite Lower returning nil,nil."
+  },
+  {
+    "test": "TestClassFeaturesReadonlyChecker",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateChecker"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/class_inheritance.go:435",
+        "change": "Drop the ordinary field-initializer store statement.",
+        "rows_failed": [
+          "TestUndecidedCycleReadsUseReadyChecks",
+          "TestInheritanceKeepsNominalTupleDestructuring",
+          "TestInheritanceAllowsSoundOverrides",
+          "TestClassFeaturesPrivateStorage",
+          "TestClassFeaturesReadonlyChecker",
+          "TestAgreementInheritedFieldWitness",
+          "TestDefiniteAssignmentSoundNeighbors"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/class_inheritance.go:342",
+        "change": "Drop the fresh-object construction and constructor-body emission statement.",
+        "rows_failed": [
+          "TestUndecidedCycleReadsUseReadyChecks",
+          "TestParameterPropertyValueMatchesNode",
+          "TestParameterPropertyCheckerContracts",
+          "TestReadinessErrorIncludesReceiverExpression",
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+          "TestClassFeaturesPrivateStorage",
+          "TestClassFeaturesReadonlyChecker",
+          "TestDefiniteAssignmentSoundNeighbors",
+          "TestDefiniteAssignmentUsesReadiness",
+          "TestClassWrongOutputPrivateRepair",
+          "TestClassWrongOutputKeysRepair",
+          "TestPredicateOverloadRuntime",
+          "TestInheritanceKeepsNominalTupleDestructuring",
+          "TestAgreementParameterPropertyWitness",
+          "TestEnumSlotViews",
+          "TestAMethodReadAsAValueIsRefused",
+          "TestAViewThatCantWriteIsNotRefused",
+          "TestClassArgumentsUseCheckerIdentity"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/class.go:448",
+        "change": "Swap the receiver and value arguments of the property store.",
+        "rows_failed": [
+          "TestParameterPropertyCheckerContracts",
+          "TestInheritanceGenericMonomorphizations",
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+          "TestClassFeaturesPrivateStorage",
+          "TestClassFeaturesReadonlyChecker",
+          "TestDefiniteAssignmentUsesReadiness",
+          "TestDefiniteAssignmentSoundNeighbors",
+          "TestClassWrongOutputPrivateRepair",
+          "TestFlagEnumsDomain",
+          "TestInheritanceGenericFactoryLayouts",
+          "TestAMethodReadAsAValueIsRefused",
+          "TestAViewThatCantWriteIsNotRefused",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix",
+          "TestDefaultTaggedInterfaceAdmission",
+          "TestEnumSlotViews"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; class_features_test.go:31: JavaScript backend stdout = \"\", source Node = \"again:changed\\n\". TestClassFeaturesPrivateStorage caught all three attempts."
+  },
+  {
+    "test": "TestClassFeaturesPrivateChecker",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestTsgoHonorsNoCheckInAdamicFiles"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/load/load.go:255",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/load/load.go:255",
+        "change": "Change format constant to truncate diagnostic messages at 70 characters.",
+        "rows_failed": [
+          "TestClassFeaturesPrivateChecker",
+          "TestInputSpreadCoverage"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/load/load.go:255",
+        "change": "Change format constant to truncate messages at 80 characters, preserving the array-spread fragment but cutting private identifier.",
+        "rows_failed": [
+          "TestClassFeaturesPrivateChecker"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; class_features_test.go:42: want tsc private scope diagnostic, got ... error TS18013: Property ... because it has a private. No other enabled top-level row failed."
+  }
+]

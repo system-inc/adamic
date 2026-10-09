@@ -1,0 +1,12 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..681d341f 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -432,7 +432,6 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
+ 		} else if of.IsReference() {
+ 			value = ir.Undefined{Of: of}
+ 		}
+-		statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())})
+ 		available[l.fieldName(member.Name())] = true
+ 	}
+ 	return statements, nil

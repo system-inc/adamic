@@ -1,0 +1,4 @@
+Checked in this session against pinned upstream cohere/TypeScript/tsc/internal/diagnostics/diagnostics_generated.go:
+1413: TS2540: Cannot assign to '{0}' because it is a read-only property.
+3713: TS18013: Property '{0}' is not accessible outside class '{1}' because it has a private identifier.
+The exact test fragments read-only and private identifier occur in these authoritative diagnostic definitions. No external authority supplied for other rows.

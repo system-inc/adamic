@@ -1,0 +1,571 @@
+[
+  {
+    "test": "TestCheckPragmasAreRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/check_pragmas_test.go:13",
+    "seconds": 0.179,
+    "oracle": "Self-written Refused type, source location, pragma name, removal instruction and fix fragments.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M03: check_pragmas_test.go:22: got <nil>, want pragma refusal",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-check_pragmas/M03.log 2>&1; check_pragmas_test.go:22: got <nil>, want pragma refusal",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestCheckPragmaNeighborsCompile",
+    "package": "internal/lower",
+    "file": "internal/lower/check_pragmas_test.go:41",
+    "seconds": 0.146,
+    "oracle": "Self-written expectation of nil error only; never inspects the returned program. Empty Lower passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "No production mutant killed this row. P1 isolated run passed; see P1-TestCheckPragmaNeighborsCompile.log",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+    "package": "internal/lower",
+    "file": "internal/lower/check_pragmas_test.go:57",
+    "seconds": 0.095,
+    "oracle": "Self-written acceptance/rejection expectations for in-process tsgo through Load, plus Adamic Refused type. First loader rejection accepts any error.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: check_pragmas_test.go:65: checker accepted boolean = 2 without pragma",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestCheckPragmasAreRefused",
+      "TestClassFeaturesPrivateChecker"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-check_pragmas/M16.log 2>&1; check_pragmas_test.go:65: checker accepted boolean = 2 without pragma",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesReadonlyChecker",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:14",
+    "seconds": 0.187,
+    "oracle": "tsgo TS2540 read-only diagnostic fragment, checked against pinned upstream definition this session; nil-error expectation for positive lowering subcase. Does not assert exact diagnostic code or positive IR.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "kills": [
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: class_features_test.go:29: want tsc readonly diagnostic, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateChecker"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.034,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "positive readonly/mutable-content lowering subcase passes P1; Lower entry is vacuous"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-check_pragmas/M16.log 2>&1; class_features_test.go:29: want tsc readonly diagnostic, got <nil>",
+    "subsumption_mutant_count": 1
+  },
+  {
+    "test": "TestClassFeaturesPrivateChecker",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:38",
+    "seconds": 0.034,
+    "oracle": "tsgo TS18013 private identifier diagnostic fragment, checked against pinned upstream definition this session. Does not assert exact code.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: class_features_test.go:46: want tsc private scope diagnostic, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestTsgoHonorsNoCheckInAdamicFiles"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.095,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-check_pragmas/M16.log 2>&1; class_features_test.go:46: want tsc private scope diagnostic, got <nil>",
+    "subsumption_mutant_count": 1
+  },
+  {
+    "test": "TestClassFeaturesPrivateStorage",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:50",
+    "seconds": 0.04,
+    "oracle": "Self-written private-field count >= 2. Counts visibility metadata, not field identity or native privacy.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M18"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M18: class_features_test.go:69: private storage lost its visibility metadata: 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesPrivateStorage$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesPrivateStorage.log 2>&1; class_features_test.go:69: private storage lost its visibility metadata: 1",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesAccessorRefusals",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:73",
+    "seconds": 0.118,
+    "oracle": "Self-written accessor override and getter may throw diagnostic fragments; no exact code/location.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M07",
+      "M09",
+      "M18"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M18: class_features_test.go:87: want throwing spread diagnosed, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesAccessorRefusals$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesAccessorRefusals.log 2>&1; class_features_test.go:87: want throwing spread diagnosed, got <nil>",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesStaticDeclarationsExecute",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:91",
+    "seconds": 0.067,
+    "oracle": "Self-written Classes nonempty, first class Static flag, Main length >= 2. Does not execute; survives M15 removal of initializer calls.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M14",
+      "M18"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M18: class_features_test.go:102: static initialization was dropped",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesStaticDeclarationsExecute$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesStaticDeclarationsExecute.log 2>&1; class_features_test.go:102: static initialization was dropped",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesStaticSoundness",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:107",
+    "seconds": 0.304,
+    "oracle": "Self-written non-nil-error expectation only for ten unsafe sources; any unrelated lowering error also satisfies it.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M08",
+      "M10",
+      "M18"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M18: class_features_test.go:123: unsafe static program accepted: class Box { static first = this.read(); static later = 'ready'; static read(): string { return this.later; } } console.log(Box.first);",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesStaticSoundness$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesStaticSoundness.log 2>&1; class_features_test.go:123: unsafe static program accepted: class Box { static first = this.read(); static later = 'ready'; static read(): string { return this.later; } } console.log(Box.first);",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesAccessorCaptureCycle",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:128",
+    "seconds": 0.034,
+    "oracle": "Self-written cycle diagnostic fragment; no exact location/code.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11: class_features_test.go:137: want captured-cell cycle refused, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-check_pragmas/M11.log 2>&1; class_features_test.go:137: want captured-cell cycle refused, got <nil>",
+    "subsumption_mutant_count": null
+  },
+  {
+    "test": "TestClassFeaturesNarrowedAccessor",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:141",
+    "seconds": 0.037,
+    "oracle": "Self-written narrowed accessor reread fragment. M09 still passes when refusal moves from column 207 to the earlier read at 167; witness logs prove wrong-read rejection.",
+    "oracle_kind": "self",
+    "kills": [
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18: class_features_test.go:145: want changing getter reread refused, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.036,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesNarrowedAccessor$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesNarrowedAccessor.log 2>&1; class_features_test.go:145: want changing getter reread refused, got <nil>",
+    "subsumption_mutant_count": 1
+  },
+  {
+    "test": "TestClassFeaturesStaticParentCycle",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:149",
+    "seconds": 0.036,
+    "oracle": "Self-written cycle diagnostic fragment; no exact location/code.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M12",
+      "M14",
+      "M18"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M18: class_features_test.go:153: constructor parent cycle accepted: <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.036,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesStaticParentCycle$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesStaticParentCycle.log 2>&1; class_features_test.go:153: constructor parent cycle accepted: <nil>",
+    "subsumption_mutant_count": 4
+  },
+  {
+    "test": "TestClassFeaturesStaticInterfaceCycle",
+    "package": "internal/lower",
+    "file": "internal/lower/class_features_test.go:157",
+    "seconds": 0.036,
+    "oracle": "Self-written cycle diagnostic fragment; no exact location/code.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M12",
+      "M13",
+      "M14",
+      "M18"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M18: class_features_test.go:161: constructor interface cycle accepted: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 18,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesStaticDeclarationsExecute",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticInterfaceCycle"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 ADAMIC_BUILD_CACHE_DIR=/tmp/u028/cache/M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClassFeaturesStaticInterfaceCycle$ > review/test-audit/internal-lower-check_pragmas/M18-TestClassFeaturesStaticInterfaceCycle.log 2>&1; class_features_test.go:161: constructor interface cycle accepted: <nil>",
+    "subsumption_mutant_count": null
+  }
+]
