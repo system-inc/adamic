@@ -19,6 +19,7 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	}
 	contract := l.result.ViewContracts[id-1]
 	contract.Undefined = l.includesUndefined(target)
+	contract.Null = l.includesNull(target)
 	for _, member := range contract.Members {
 		child := l.result.ViewContracts[member-1]
 		if child.Kind == ir.ViewArray {

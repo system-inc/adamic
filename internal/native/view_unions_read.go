@@ -55,7 +55,11 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	if property.Of == ir.Object || property.Of == ir.Array || property.Of == ir.Closure || property.Of == ir.String {
 		kind := map[ir.Type]string{ir.Object: "adamic_view_union_object", ir.Array: "adamic_view_union_array", ir.Closure: "adamic_view_union_function", ir.String: "adamic_view_union_string"}[property.Of]
 		allowUndefined := contract.Undefined && property.Of == contract.Of
-		e.line("if (%s.kind != %s && !(%t && %s.kind == adamic_view_union_undefined)) { (void)adamic_view_mixed_union_select(&%s, NULL, 0, NULL, NULL, %s, %s); }", snapshot, kind, allowUndefined, snapshot, snapshot, cString(property.View), cString(contract.Name))
+		allowNull := contract.Null && property.Of == contract.Of
+		e.line("if (%s.kind != %s && !(%t && %s.kind == adamic_view_union_undefined) && !(%t && %s.kind == adamic_view_union_null)) { (void)adamic_view_mixed_union_select(&%s, NULL, 0, NULL, NULL, %s, %s); }", snapshot, kind, allowUndefined, snapshot, allowNull, snapshot, snapshot, cString(property.View), cString(contract.Name))
+		if allowNull {
+			return fmt.Sprintf("((%s)(%s == &adamic_null ? NULL : %s))", cType(property.Of), value, value), true
+		}
 		return fmt.Sprintf("((%s)%s)", cType(property.Of), value), true
 	}
 	panic("compiler bug: narrowed scalar union view requires a checked conversion")

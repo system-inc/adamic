@@ -17,7 +17,7 @@ func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.T
 	if target.Flags()&checker.TypeFlagsUnion == 0 {
 		return 0, l.notYet(node, "a mixed union contract for a non-union type")
 	}
-	of, known := l.representation(target)
+	of, known := l.viewRepresentation(target)
 	if !known {
 		return 0, l.notYet(node, "checked union representation for "+l.checker.TypeToString(target))
 	}

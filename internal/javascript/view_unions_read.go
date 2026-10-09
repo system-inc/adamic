@@ -32,6 +32,9 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 		if contract.FixedTuple {
 			test = "Array.isArray(v)"
 		}
+		if contract.Null && property.Of == contract.Of {
+			test = "v===null || (" + test + ")"
+		}
 		if contract.Undefined && property.Of == contract.Of {
 			test = "v===undefined || (" + test + ")"
 		}
