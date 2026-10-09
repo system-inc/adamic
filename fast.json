@@ -1,0 +1,30 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T202021-cb02feae",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "0925e22ff379bcf70b56af24430b0d934f492191",
+  "branch": "cloud/land-stack-views-v4-ef14787c",
+  "base": "de1a2dc60ab9d0a29724dece7277e90cba80c258",
+  "candidate": "ef14787cc355301447767b013c753c5281fef031",
+  "gated": "0925e22ff379bcf70b56af24430b0d934f492191",
+  "unplanned_packages_not_run": 4,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "loom_tools": "beeb8a1ddc13d76c7eb732ae9bb708dc05e478c6f449b9eab6f2fb2a45bb857f",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 167,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 758.1,
+  "steps_seconds": {
+    "tests": 758.1
+  }
+}
