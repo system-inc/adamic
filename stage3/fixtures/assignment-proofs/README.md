@@ -83,3 +83,12 @@ the seven implementation fixtures. Counts are recorded in
 The acceptance follow-up is documented in
 `cloud/reports/assignment-proofs/acceptance.md`, including the emitted-C proof
 inspection and the existing RHS/dereference checks that remain.
+
+## Rebuilt on main
+
+The compiler/assignment-proofs-main rebuild omits ccf8c172: all six requested
+acceptance outcomes already pass on main. The fixture-only cherry-pick uses six
+top-level oracle tests and six top-level mutant tests, with counts registered
+through the existing additionalFixtureCounts hook. No compiler or runtime file
+changes. See cloud/reports/assignment-proofs-main/report.md for current-main
+results, each test's setup-inclusive seconds and integration lane output.
