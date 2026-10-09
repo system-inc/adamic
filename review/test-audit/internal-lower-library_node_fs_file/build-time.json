@@ -1,0 +1,5 @@
+{
+  "command": "timeout 90 go test -c -o /tmp/u035-lower.test ./internal/lower/",
+  "exit": 0,
+  "wall": 3.5239229660001
+}

@@ -1,0 +1,39 @@
+{
+  "setup_seconds": 0,
+  "npm_reported_seconds": 0.494,
+  "clean_baseline_binary_seconds": 28.26,
+  "inactive_selector_binary_seconds": 33.908,
+  "matrix_wall_seconds": 696.7059324979928,
+  "matrix_binary_seconds": 648.526,
+  "max_production_binary_seconds": 48.965,
+  "isolated_timing_command_wall_seconds": 175.61836640699403,
+  "build": {
+    "command": "timeout 90 go test -c -o /tmp/u035-lower.test ./internal/lower/",
+    "exit": 0,
+    "wall": 3.5239229660001
+  },
+  "binary_seconds": {
+    "M01": 29.602,
+    "M02": 41.123,
+    "M03": 27.686,
+    "M04": 30.328,
+    "M05": 33.205,
+    "M06": 30.736,
+    "M07": 31.869,
+    "M08": 34.741,
+    "M09": 29.079,
+    "M10": 27.241,
+    "M11": 26.596,
+    "M12": 29.809,
+    "M13": 35.11,
+    "M14": 48.965,
+    "M15": 29.207,
+    "M16": 28.387,
+    "M17": 29.028,
+    "M18": 24.692,
+    "M19": 27.712,
+    "M20": 26.105,
+    "P01": 0.05,
+    "P02": 27.255
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "TestNodeFSFileOptionsBorrow": [
+    0.927,
+    0.922,
+    0.946
+  ],
+  "TestNodeFSFileDoesNotAuthorizeMutableWidening": [
+    0.912,
+    0.349,
+    0.295
+  ],
+  "TestNodeFSFileRefusesOptionEffects": [
+    0.444,
+    0.579,
+    0.504
+  ],
+  "TestNodeFSFileRefusesVoidValues": [
+    0.569,
+    0.48,
+    0.599
+  ],
+  "TestNodeFSFileRefusesPinnedUnsupportedOverloads": [
+    1.538,
+    1.487,
+    1.108
+  ],
+  "TestNodeFSFileNamespaceImport": [
+    0.433,
+    0.448,
+    0.44
+  ],
+  "TestNodeFSFileQualifiedErrorType": [
+    0.67,
+    0.478,
+    0.531
+  ],
+  "TestNodeFSFileKeepsDetachedMethodRefusal": [
+    0.59,
+    0.509,
+    0.28
+  ],
+  "TestNodeFSFileBufferBorrow": [
+    0.292,
+    0.652,
+    0.437
+  ],
+  "TestNodeFSFileScratchOptionsBorrow": [
+    1.087,
+    1.089,
+    0.745
+  ],
+  "TestNodeFSFileScratchOverloadsAreNamed": [
+    1.491,
+    1.144,
+    0.758
+  ],
+  "TestNodeLibraryNamesUnimplementedMembers": [
+    2.224,
+    2.182,
+    2.144
+  ],
+  "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames": [
+    0.952,
+    1.12,
+    0.85
+  ],
+  "TestNodeLibraryDistinguishesReceiverOwners": [
+    0.404,
+    0.328,
+    0.321
+  ],
+  "TestNodeLibraryQualifiedTypeAssertion": [
+    0.566,
+    0.623,
+    0.697
+  ]
+}

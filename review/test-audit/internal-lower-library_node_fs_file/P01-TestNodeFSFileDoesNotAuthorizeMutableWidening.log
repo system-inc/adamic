@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:17.127955371Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:17.138291493Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T10:23:17.138390249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.138437749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== PAUSE TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.138441434Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T10:23:17.138444859Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T10:23:17.138447463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== CONT  TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.632783532Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"    library_node_fs_file_test.go:25: want mutable widening refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:17.632819606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"--- FAIL: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.632823121Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Elapsed":0.49}
+{"Time":"2026-10-09T10:23:17.632840016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.641794219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.513s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:17.641831484Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.514}

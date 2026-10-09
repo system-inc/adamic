@@ -1,0 +1,112 @@
+{
+  "M01": {
+    "exit": 1,
+    "wall": 31.67104115500115,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M02": {
+    "exit": 1,
+    "wall": 43.363832570998056,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M03": {
+    "exit": 1,
+    "wall": 29.771038693001174,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M04": {
+    "exit": 1,
+    "wall": 32.3826891389981,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M05": {
+    "exit": 1,
+    "wall": 35.253052522999496,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M06": {
+    "exit": 1,
+    "wall": 33.338360542999,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M07": {
+    "exit": 1,
+    "wall": 33.928549811000266,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M08": {
+    "exit": 1,
+    "wall": 36.922245547000784,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M09": {
+    "exit": 0,
+    "wall": 31.57064493800135,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M10": {
+    "exit": 1,
+    "wall": 29.289279612999962,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M11": {
+    "exit": 0,
+    "wall": 29.112706501000503,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M12": {
+    "exit": 0,
+    "wall": 31.909072981001373,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M13": {
+    "exit": 0,
+    "wall": 37.20914882899888,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M14": {
+    "exit": 1,
+    "wall": 51.0637795449984,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M15": {
+    "exit": 1,
+    "wall": 32.23546664299647,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M16": {
+    "exit": 1,
+    "wall": 30.462625870997726,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M17": {
+    "exit": 1,
+    "wall": 31.07543282900224,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M18": {
+    "exit": 1,
+    "wall": 26.833991641000466,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M19": {
+    "exit": 1,
+    "wall": 29.63710740299939,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "M20": {
+    "exit": 1,
+    "wall": 28.201543351999135,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "P01": {
+    "exit": 1,
+    "wall": 2.0930635959994106,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  },
+  "P02": {
+    "exit": 1,
+    "wall": 29.381258773999434,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ."
+  }
+}

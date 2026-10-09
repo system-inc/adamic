@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -463,7 +463,7 @@
+ 	if parent == nil || (parent.Name().Text() != "node:fs" && parent.Name().Text() != "fs") {
+ 		return false
+ 	}
+-	index := 1
++	index := 0
+ 	switch symbol.Name {
+ 	case "statSync", "mkdirSync", "readFileSync", "rmSync", "mkdtempSync":
+ 	case "writeFileSync":

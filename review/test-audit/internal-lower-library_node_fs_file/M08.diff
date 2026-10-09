@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -189,7 +189,7 @@
+ 		if _, ok := value.(ir.Null); ok {
+ 			return nil
+ 		}
+-		if text, ok := value.(ir.StringConstant); ok && (l.result.Strings[text.Index] == "utf8" || l.result.Strings[text.Index] == "utf-8") {
++		if text, ok := value.(ir.StringConstant); ok && (l.result.Strings[text.Index] == "ascii" || l.result.Strings[text.Index] == "utf-8") {
+ 			return nil
+ 		}
+ 		return l.notYet(node, memberName+": "+"fs encodings other than constant utf8/utf-8")

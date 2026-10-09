@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:04.49875278Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:24:04.538472392Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T10:24:04.538587091Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== RUN   TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:04.538662863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== PAUSE TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:04.538666358Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T10:24:04.538669693Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T10:24:04.538672287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== CONT  TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.103320644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"    library_node_test.go:75: missing distinct member node:fs.StatsBase.isFile in map[:true]\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:05.103464908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"--- FAIL: TestNodeLibraryDistinguishesReceiverOwners (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.103519348Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Elapsed":0.56}
+{"Time":"2026-10-09T10:24:05.103561641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.129780304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.609s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.129842285Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.631}

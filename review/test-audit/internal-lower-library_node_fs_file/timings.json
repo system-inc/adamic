@@ -1,0 +1,257 @@
+{
+  "TestNodeFSFileOptionsBorrow": [
+    {
+      "exit": 0,
+      "wall": 4.252293424000527,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileOptionsBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.363297691998014,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileOptionsBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.976003698997374,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileOptionsBorrow$"
+    }
+  ],
+  "TestNodeFSFileDoesNotAuthorizeMutableWidening": [
+    {
+      "exit": 0,
+      "wall": 4.130609381998511,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileDoesNotAuthorizeMutableWidening$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.8213926579992403,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileDoesNotAuthorizeMutableWidening$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.342892788001336,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileDoesNotAuthorizeMutableWidening$"
+    }
+  ],
+  "TestNodeFSFileRefusesOptionEffects": [
+    {
+      "exit": 0,
+      "wall": 2.856598036996729,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesOptionEffects$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.854887117002363,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesOptionEffects$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.9874396230006823,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesOptionEffects$"
+    }
+  ],
+  "TestNodeFSFileRefusesVoidValues": [
+    {
+      "exit": 0,
+      "wall": 3.4261937070004933,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesVoidValues$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.083774975999404,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesVoidValues$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.7181965809977555,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesVoidValues$"
+    }
+  ],
+  "TestNodeFSFileRefusesPinnedUnsupportedOverloads": [
+    {
+      "exit": 0,
+      "wall": 4.740234929002327,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesPinnedUnsupportedOverloads$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.843001984998409,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesPinnedUnsupportedOverloads$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.6216540970017377,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesPinnedUnsupportedOverloads$"
+    }
+  ],
+  "TestNodeFSFileNamespaceImport": [
+    {
+      "exit": 0,
+      "wall": 2.587078651999036,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileNamespaceImport$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.537829128003068,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileNamespaceImport$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.658826525999757,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileNamespaceImport$"
+    }
+  ],
+  "TestNodeFSFileQualifiedErrorType": [
+    {
+      "exit": 0,
+      "wall": 4.017105361999711,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileQualifiedErrorType$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.821488032997877,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileQualifiedErrorType$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.6437617360024888,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileQualifiedErrorType$"
+    }
+  ],
+  "TestNodeFSFileKeepsDetachedMethodRefusal": [
+    {
+      "exit": 0,
+      "wall": 3.5734171780022734,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileKeepsDetachedMethodRefusal$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.001306334997935,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileKeepsDetachedMethodRefusal$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.333269026999915,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileKeepsDetachedMethodRefusal$"
+    }
+  ],
+  "TestNodeFSFileBufferBorrow": [
+    {
+      "exit": 0,
+      "wall": 2.460302240000601,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileBufferBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.644757080997806,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileBufferBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.9695984829995723,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileBufferBorrow$"
+    }
+  ],
+  "TestNodeFSFileScratchOptionsBorrow": [
+    {
+      "exit": 0,
+      "wall": 4.227862255000218,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOptionsBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.254342969998106,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOptionsBorrow$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.011451192996901,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOptionsBorrow$"
+    }
+  ],
+  "TestNodeFSFileScratchOverloadsAreNamed": [
+    {
+      "exit": 0,
+      "wall": 4.571099005999713,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOverloadsAreNamed$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.618331877001765,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOverloadsAreNamed$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.3925081209999917,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOverloadsAreNamed$"
+    }
+  ],
+  "TestNodeLibraryNamesUnimplementedMembers": [
+    {
+      "exit": 0,
+      "wall": 4.4506932650001545,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryNamesUnimplementedMembers$"
+    },
+    {
+      "exit": 0,
+      "wall": 5.254984216000594,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryNamesUnimplementedMembers$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.949231974002032,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryNamesUnimplementedMembers$"
+    }
+  ],
+  "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames": [
+    {
+      "exit": 0,
+      "wall": 5.42817665199982,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.425101954002457,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.938455599000008,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames$"
+    }
+  ],
+  "TestNodeLibraryDistinguishesReceiverOwners": [
+    {
+      "exit": 0,
+      "wall": 3.6715974760008976,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDistinguishesReceiverOwners$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.0627859709966287,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDistinguishesReceiverOwners$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.7004949180009135,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDistinguishesReceiverOwners$"
+    }
+  ],
+  "TestNodeLibraryQualifiedTypeAssertion": [
+    {
+      "exit": 0,
+      "wall": 3.1206385609984864,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryQualifiedTypeAssertion$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.608982660000038,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryQualifiedTypeAssertion$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.6644172630003595,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryQualifiedTypeAssertion$"
+    }
+  ]
+}

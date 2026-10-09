@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:09.455640755Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:24:09.481383353Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T10:24:09.481505484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== RUN   TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:09.481546394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== PAUSE TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:09.481549559Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T10:24:09.481556669Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T10:24:09.481562197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== CONT  TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:10.360078783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"    library_node_test.go:85: want the qualified name checked without inventing optional fields, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:10.360152502Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"--- FAIL: TestNodeLibraryQualifiedTypeAssertion (0.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:10.360167835Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Elapsed":0.88}
+{"Time":"2026-10-09T10:24:10.360195376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:10.366369027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.906s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:10.366403658Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.911}

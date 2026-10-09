@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node.go
++++ b/internal/lower/library_node.go
+@@ -65,7 +65,7 @@
+ 		return nil
+ 	}
+ 	name := l.nodeLibraryMember(node)
+-	if name != "" && !implementedNodeMembers[name] {
++	if name != "" && implementedNodeMembers[name] {
+ 		return l.notYet(node, name)
+ 	}
+ 	return nil

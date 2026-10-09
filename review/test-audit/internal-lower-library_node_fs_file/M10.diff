@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -355,7 +355,7 @@
+ 			if e != nil {
+ 				return nil, true, e
+ 			}
+-			if b, ok := bigint.(ir.BooleanConstant); !ok || b.Value {
++			if b, ok := bigint.(ir.BooleanConstant); !ok || !b.Value {
+ 				return nil, true, l.notYet(node, memberName+": "+"bigint fs Stats")
+ 			}
+ 		}

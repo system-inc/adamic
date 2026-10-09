@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -63,7 +63,7 @@
+ 	case "mkdtempSync":
+ 		operation, of = "mkdtemp", ir.String
+ 	case "rmSync":
+-		operation = "rm"
++		operation = "unlink"
+ 	case "openSync":
+ 		operation = "open"
+ 	case "readSync":

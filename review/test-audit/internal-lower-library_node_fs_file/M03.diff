@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node.go
++++ b/internal/lower/library_node.go
+@@ -32,7 +32,7 @@
+ 	}
+ 	for _, declaration := range symbol.Declarations {
+ 		file := ast.GetSourceFileOfNode(declaration)
+-		if !load.IsNodeLibrary(file) {
++		if load.IsNodeLibrary(file) {
+ 			continue
+ 		}
+ 		if declaration.Kind == ast.KindModuleDeclaration {

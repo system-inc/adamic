@@ -1,0 +1,92 @@
+{
+  "TestNodeFSFileOptionsBorrow": {
+    "probe": "P01",
+    "exit": 0,
+    "wall": 5.345814915999654,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileOptionsBorrow$"
+  },
+  "TestNodeFSFileDoesNotAuthorizeMutableWidening": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 3.8843526119999296,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileDoesNotAuthorizeMutableWidening$"
+  },
+  "TestNodeFSFileRefusesOptionEffects": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 4.039367133998894,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesOptionEffects$"
+  },
+  "TestNodeFSFileRefusesVoidValues": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 2.686253902000317,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesVoidValues$"
+  },
+  "TestNodeFSFileRefusesPinnedUnsupportedOverloads": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 3.5954588929998863,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileRefusesPinnedUnsupportedOverloads$"
+  },
+  "TestNodeFSFileNamespaceImport": {
+    "probe": "P01",
+    "exit": 0,
+    "wall": 3.7292497150010604,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileNamespaceImport$"
+  },
+  "TestNodeFSFileQualifiedErrorType": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 4.214508123000996,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileQualifiedErrorType$"
+  },
+  "TestNodeFSFileKeepsDetachedMethodRefusal": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 4.64955234199806,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileKeepsDetachedMethodRefusal$"
+  },
+  "TestNodeFSFileBufferBorrow": {
+    "probe": "P01",
+    "exit": 0,
+    "wall": 3.965310474002763,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileBufferBorrow$"
+  },
+  "TestNodeFSFileScratchOptionsBorrow": {
+    "probe": "P01",
+    "exit": 0,
+    "wall": 4.74917504199766,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOptionsBorrow$"
+  },
+  "TestNodeFSFileScratchOverloadsAreNamed": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 3.735760012998071,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeFSFileScratchOverloadsAreNamed$"
+  },
+  "TestNodeLibraryNamesUnimplementedMembers": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 5.8065723390027415,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryNamesUnimplementedMembers$"
+  },
+  "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames": {
+    "probe": "P01",
+    "exit": 0,
+    "wall": 3.0458733920022496,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames$"
+  },
+  "TestNodeLibraryDistinguishesReceiverOwners": {
+    "probe": "P02",
+    "exit": 1,
+    "wall": 3.2681379429996014,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryDistinguishesReceiverOwners$"
+  },
+  "TestNodeLibraryQualifiedTypeAssertion": {
+    "probe": "P01",
+    "exit": 1,
+    "wall": 5.232762563999131,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNodeLibraryQualifiedTypeAssertion$"
+  }
+}

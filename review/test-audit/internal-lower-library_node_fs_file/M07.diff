@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -168,7 +168,7 @@
+ 			switch literalValue(field.Value).(type) {
+ 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
+ 			default:
+-				return nil, l.notYet(node, memberName+": "+"fs option literals containing evaluated expressions; bind a plain options object first")
++				return nil, l.notYet(node, memberName+": "+"unsupported options")
+ 			}
+ 		}
+ 		for _, field := range literal.Fields {

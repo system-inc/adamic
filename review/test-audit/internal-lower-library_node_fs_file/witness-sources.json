@@ -1,0 +1,7 @@
+{
+  "M09": "import {openSync} from 'node:fs'; openSync('x','r');",
+  "M11": "import {rmSync} from 'node:fs'; rmSync('x',{retryDelay:100});",
+  "M12": "import {existsSync} from 'node:fs'; existsSync('x');",
+  "M13": "import {statSync} from 'node:fs'; statSync('x');",
+  "M19": "import {rmSync} from 'node:fs'; rmSync('x',{recursive:true,force:true});"
+}

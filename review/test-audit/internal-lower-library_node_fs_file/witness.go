@@ -1,0 +1,3 @@
+package main
+import("context";"encoding/json";"fmt";"os";"path/filepath";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func main(){source:=os.Args[1];dir,err:=os.MkdirTemp("","u035-witness-");if err!=nil{panic(err)};defer os.RemoveAll(dir);file:=filepath.Join(dir,"main.a");if err=os.WriteFile(file,[]byte(source),0600);err!=nil{panic(err)};p,err:=load.Load([]string{file});if err!=nil{fmt.Println("Load:",err);return};out,err:=lower.Lower(context.Background(),p);if err!=nil{fmt.Println("Lower:",err);return};b,err:=json.Marshal(out);if err!=nil{panic(err)};fmt.Println(string(b))}

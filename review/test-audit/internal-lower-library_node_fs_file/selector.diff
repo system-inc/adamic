@@ -1,0 +1,240 @@
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 877ae171..6cc1b4d2 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -44,7 +44,7 @@ type widening struct {
+ // written something it can't hold, or returns nil.
+ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+ 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
+-	if from == to || visited[[2]*checker.Type{from, to}] {
++	if auditValue("M14", from == to, from != to) || visited[[2]*checker.Type{from, to}] {
+ 		return nil
+ 	}
+ 	visited[[2]*checker.Type{from, to}] = true
+diff --git a/internal/lower/library_node.go b/internal/lower/library_node.go
+index 75239e08..bc7ff325 100644
+--- a/internal/lower/library_node.go
++++ b/internal/lower/library_node.go
+@@ -19,6 +19,9 @@ func RegisterNodeLibraryMembers(names ...string) {
+ }
+ 
+ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
++	if auditMutant("P02") {
++		return ""
++	}
+ 	node = ast.SkipParentheses(node)
+ 	if node.Kind == ast.KindCallExpression {
+ 		node = ast.SkipParentheses(node.AsCallExpression().Expression)
+@@ -32,7 +35,7 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
+ 	}
+ 	for _, declaration := range symbol.Declarations {
+ 		file := ast.GetSourceFileOfNode(declaration)
+-		if !load.IsNodeLibrary(file) {
++		if auditValue("M03", !load.IsNodeLibrary(file), load.IsNodeLibrary(file)) {
+ 			continue
+ 		}
+ 		if declaration.Kind == ast.KindModuleDeclaration {
+@@ -42,7 +45,9 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
+ 		owners := []string{}
+ 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
+ 			if (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindInterfaceDeclaration) && parent.Name() != nil {
+-				owners = append([]string{parent.Name().Text()}, owners...)
++				if !auditMutant("M04") {
++					owners = append([]string{parent.Name().Text()}, owners...)
++				}
+ 			}
+ 			if parent.Kind == ast.KindModuleDeclaration && parent.Name() != nil && parent.Name().Kind == ast.KindStringLiteral {
+ 				module = parent.Name().Text()
+@@ -65,7 +70,7 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+ 		return nil
+ 	}
+ 	name := l.nodeLibraryMember(node)
+-	if name != "" && !implementedNodeMembers[name] {
++	if name != "" && auditValue("M05", !implementedNodeMembers[name], implementedNodeMembers[name]) {
+ 		return l.notYet(node, name)
+ 	}
+ 	return nil
+diff --git a/internal/lower/library_node_fs_buffer.go b/internal/lower/library_node_fs_buffer.go
+index c5598f53..ef4252d5 100644
+--- a/internal/lower/library_node_fs_buffer.go
++++ b/internal/lower/library_node_fs_buffer.go
+@@ -31,7 +31,7 @@ func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+ 	if symbol == nil || (symbol.Name != "readSync" && symbol.Name != "writeFileSync") {
+ 		return false
+ 	}
+-	if symbol.Name == "readSync" && len(call.Arguments.Nodes) != 5 {
++	if symbol.Name == "readSync" && auditValue("M02", len(call.Arguments.Nodes) != 5, len(call.Arguments.Nodes) != 4) {
+ 		return false
+ 	}
+ 	if symbol.Name == "writeFileSync" && len(call.Arguments.Nodes) > 3 {
+@@ -39,7 +39,7 @@ func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+ 	}
+ 	for _, declaration := range symbol.Declarations {
+ 		file := ast.GetSourceFileOfNode(declaration)
+-		if load.IsNodeLibrary(file) && strings.HasSuffix(file.FileName().AsString(), "/fs.d.ts") {
++		if auditValue("M20", load.IsNodeLibrary(file), !load.IsNodeLibrary(file)) && strings.HasSuffix(file.FileName().AsString(), "/fs.d.ts") {
+ 			return true
+ 		}
+ 	}
+diff --git a/internal/lower/library_node_fs_file.go b/internal/lower/library_node_fs_file.go
+index f9c6cde2..fb124b2b 100644
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -63,11 +63,11 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 	case "mkdtempSync":
+ 		operation, of = "mkdtemp", ir.String
+ 	case "rmSync":
+-		operation = "rm"
++		operation = auditValue("M19", "rm", "unlink")
+ 	case "openSync":
+ 		operation = "open"
+ 	case "readSync":
+-		if len(call.Arguments.Nodes) != 5 || !l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
++		if auditValue("M18", len(call.Arguments.Nodes) != 5, len(call.Arguments.Nodes) != 4) || !l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
+ 			return nil, true, l.notYet(node, "node:fs.readSync outside the five-argument Buffer overload")
+ 		}
+ 		operation = "read_sync"
+@@ -78,7 +78,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 	case "writeFileSync":
+ 		operation = "write_file"
+ 	case "existsSync":
+-		operation, of = "exists", ir.Boolean
++		operation, of = auditValue("M12", "exists", "stat"), ir.Boolean
+ 	case "statSync":
+ 		operation, of = "stat", ir.Object
+ 	case "mkdirSync":
+@@ -98,7 +98,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 		}
+ 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
+ 		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+-		if !discarded && !returned {
++		if auditValue("M06", !discarded && !returned, !discarded || !returned) {
+ 			return nil, true, l.notYet(node, memberName+": "+"fs void calls used as values")
+ 		}
+ 	}
+@@ -168,7 +168,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 			switch literalValue(field.Value).(type) {
+ 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
+ 			default:
+-				return nil, l.notYet(node, memberName+": "+"fs option literals containing evaluated expressions; bind a plain options object first")
++				return nil, l.notYet(node, memberName+": "+auditValue("M07", "fs option literals containing evaluated expressions; bind a plain options object first", "unsupported options"))
+ 			}
+ 		}
+ 		for _, field := range literal.Fields {
+@@ -189,7 +189,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 		if _, ok := value.(ir.Null); ok {
+ 			return nil
+ 		}
+-		if text, ok := value.(ir.StringConstant); ok && (l.result.Strings[text.Index] == "utf8" || l.result.Strings[text.Index] == "utf-8") {
++		if text, ok := value.(ir.StringConstant); ok && (auditValue("M08", l.result.Strings[text.Index] == "utf8", l.result.Strings[text.Index] == "ascii") || l.result.Strings[text.Index] == "utf-8") {
+ 			return nil
+ 		}
+ 		return l.notYet(node, memberName+": "+"fs encodings other than constant utf8/utf-8")
+@@ -227,7 +227,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 			for _, name := range []string{"maxRetries", "retryDelay"} {
+ 				fallback := number(0)
+ 				if name == "retryDelay" {
+-					fallback = number(100)
++					fallback = number(auditValue("M11", 100.0, 101.0))
+ 				}
+ 				value, e := option(args[1], name, fallback)
+ 				if e != nil {
+@@ -267,7 +267,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 			operation, of = "read_buffer", ir.Array
+ 		}
+ 	case "open":
+-		if args[1].Type() != ir.String {
++		if auditValue("M09", args[1].Type() != ir.String, args[1].Type() == ir.String) {
+ 			return nil, true, l.notYet(node, memberName+": "+"numeric fs open flags")
+ 		}
+ 		if len(args) < 3 {
+@@ -345,7 +345,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 		}
+ 		args = []ir.Expression{args[0], args[1], flag, mode, flush}
+ 	case "stat":
+-		throws := ir.Expression(ir.BooleanConstant{Value: true})
++		throws := ir.Expression(ir.BooleanConstant{Value: !auditMutant("M13")})
+ 		if len(args) > 1 {
+ 			throws, err = option(args[1], "throwIfNoEntry", throws)
+ 			if err != nil {
+@@ -355,7 +355,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 			if e != nil {
+ 				return nil, true, e
+ 			}
+-			if b, ok := bigint.(ir.BooleanConstant); !ok || b.Value {
++			if b, ok := bigint.(ir.BooleanConstant); !ok || auditValue("M10", b.Value, !b.Value) {
+ 				return nil, true, l.notYet(node, memberName+": "+"bigint fs Stats")
+ 			}
+ 		}
+@@ -463,7 +463,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+ 	if parent == nil || (parent.Name().Text() != "node:fs" && parent.Name().Text() != "fs") {
+ 		return false
+ 	}
+-	index := 1
++	index := auditValue("M01", 1, 0)
+ 	switch symbol.Name {
+ 	case "statSync", "mkdirSync", "readFileSync", "rmSync", "mkdtempSync":
+ 	case "writeFileSync":
+@@ -471,7 +471,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+ 	default:
+ 		return false
+ 	}
+-	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer
++	return auditValue("M17", len(call.Arguments.Nodes) > index, len(call.Arguments.Nodes) > index+1) && call.Arguments.Nodes[index] == outer
+ }
+ 
+ func init() {
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..005862ec 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant("P01") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/optional_widening.go b/internal/lower/optional_widening.go
+index 6d61eb6c..d2841e26 100644
+--- a/internal/lower/optional_widening.go
++++ b/internal/lower/optional_widening.go
+@@ -193,7 +193,7 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
+ 	}
+ 	return &Refused{Where: l.program.Where(node),
+ 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
+-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
++		Fix:  auditValue("M15", "declare "+found.property+" on the source type, or build a fresh object with known fields (adamic/no-optional-widening)", "declare "+found.property)}
+ }
+ 
+ // Resolve the import binding rather than trusting the callee's spelling.
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index e9909dfa..d49a0fc2 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -202,7 +202,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 					}
+ 					parameters = strings.Join(names, ", ")
+ 				}
+-				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
++				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + auditValue("M16", symbol.Name, "method") + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
+ 				return true
+ 			}
+ 		}
+--- /dev/null
++++ b/internal/lower/audit_selector.go
+@@ -0,0 +1,11 @@
++package lower
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func auditValue[T any](id string, normal, mutant T) T {
++	if auditMutant(id) {
++		return mutant
++	}
++	return normal
++}

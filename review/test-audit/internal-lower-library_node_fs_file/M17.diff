@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -471,7 +471,7 @@
+ 	default:
+ 		return false
+ 	}
+-	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer
++	return len(call.Arguments.Nodes) > index+1 && call.Arguments.Nodes[index] == outer
+ }
+ 
+ func init() {

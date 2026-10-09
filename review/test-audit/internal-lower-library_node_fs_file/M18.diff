@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -67,7 +67,7 @@
+ 	case "openSync":
+ 		operation = "open"
+ 	case "readSync":
+-		if len(call.Arguments.Nodes) != 5 || !l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
++		if len(call.Arguments.Nodes) != 4 || !l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
+ 			return nil, true, l.notYet(node, "node:fs.readSync outside the five-argument Buffer overload")
+ 		}
+ 		operation = "read_sync"

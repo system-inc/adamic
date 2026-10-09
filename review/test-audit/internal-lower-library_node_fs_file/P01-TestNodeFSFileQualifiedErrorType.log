@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:35.251474375Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:35.261448196Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T10:23:35.261534874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== RUN   TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.261598669Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== PAUSE TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.261601523Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T10:23:35.261627041Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T10:23:35.261629024Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== CONT  TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.881477649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"    library_node_fs_file_test.go:77: want optional host fields proven before the qualified cast, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:35.88164776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"--- FAIL: TestNodeFSFileQualifiedErrorType (0.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.881697274Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Elapsed":0.62}
+{"Time":"2026-10-09T10:23:35.881719056Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.893411168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.642s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:35.893452519Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.642}

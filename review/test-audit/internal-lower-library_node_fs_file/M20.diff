@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_buffer.go
++++ b/internal/lower/library_node_fs_buffer.go
+@@ -39,7 +39,7 @@
+ 	}
+ 	for _, declaration := range symbol.Declarations {
+ 		file := ast.GetSourceFileOfNode(declaration)
+-		if load.IsNodeLibrary(file) && strings.HasSuffix(file.FileName().AsString(), "/fs.d.ts") {
++		if !load.IsNodeLibrary(file) && strings.HasSuffix(file.FileName().AsString(), "/fs.d.ts") {
+ 			return true
+ 		}
+ 	}

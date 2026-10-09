@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:39.981497656Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:40.022311871Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T10:23:40.022421282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== RUN   TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.022457977Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== PAUSE TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.022461151Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T10:23:40.022464546Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T10:23:40.02246723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== CONT  TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.555395964Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"    library_node_fs_file_test.go:86: want existing unbound-method refusal naming isFile, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:40.556796035Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"--- FAIL: TestNodeFSFileKeepsDetachedMethodRefusal (0.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.55681965Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Elapsed":0.53}
+{"Time":"2026-10-09T10:23:40.556844777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.564384848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.580s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:40.564442042Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.583}

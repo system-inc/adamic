@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_buffer.go
++++ b/internal/lower/library_node_fs_buffer.go
+@@ -31,7 +31,7 @@
+ 	if symbol == nil || (symbol.Name != "readSync" && symbol.Name != "writeFileSync") {
+ 		return false
+ 	}
+-	if symbol.Name == "readSync" && len(call.Arguments.Nodes) != 5 {
++	if symbol.Name == "readSync" && len(call.Arguments.Nodes) != 4 {
+ 		return false
+ 	}
+ 	if symbol.Name == "writeFileSync" && len(call.Arguments.Nodes) > 3 {

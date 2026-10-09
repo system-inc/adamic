@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:52.473296547Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:52.485472655Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T10:23:52.485595727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== RUN   TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.485633713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== PAUSE TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.485637508Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T10:23:52.485642856Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed"}
+{"Time":"2026-10-09T10:23:52.48564551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"=== CONT  TestNodeFSFileScratchOverloadsAreNamed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.996477648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"    library_node_fs_file_test.go:119: mkdtempSync: want named NotYet, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:52.99654654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Output":"--- FAIL: TestNodeFSFileScratchOverloadsAreNamed (0.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.996549965Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileScratchOverloadsAreNamed","Elapsed":0.51}
+{"Time":"2026-10-09T10:23:52.996583715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.996646087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.523s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:52.996664715Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.523}

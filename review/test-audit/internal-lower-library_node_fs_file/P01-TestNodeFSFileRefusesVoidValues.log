@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:23:24.090355884Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:23:24.098893525Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues"}
+{"Time":"2026-10-09T10:23:24.098994725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Output":"=== RUN   TestNodeFSFileRefusesVoidValues\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.099019572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Output":"=== PAUSE TestNodeFSFileRefusesVoidValues\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.099021915Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues"}
+{"Time":"2026-10-09T10:23:24.099027223Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues"}
+{"Time":"2026-10-09T10:23:24.099028976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Output":"=== CONT  TestNodeFSFileRefusesVoidValues\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.370719893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Output":"    library_node_fs_file_test.go:41: want void value refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:23:24.370802054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Output":"--- FAIL: TestNodeFSFileRefusesVoidValues (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.370981179Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileRefusesVoidValues","Elapsed":0.27}
+{"Time":"2026-10-09T10:23:24.373114575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.374725341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.284s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:23:24.374782306Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.284}

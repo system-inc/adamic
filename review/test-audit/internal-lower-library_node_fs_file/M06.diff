@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -98,7 +98,7 @@
+ 		}
+ 		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
+ 		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+-		if !discarded && !returned {
++		if !discarded || !returned {
+ 			return nil, true, l.notYet(node, memberName+": "+"fs void calls used as values")
+ 		}
+ 	}
