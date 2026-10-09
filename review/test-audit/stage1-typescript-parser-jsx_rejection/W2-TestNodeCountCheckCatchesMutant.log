@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:57:27.111054999Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:57:27.119554771Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:57:27.119626549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== RUN   TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:27.119643998Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== PAUSE TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:27.119646151Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:57:27.119649845Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:57:27.119651518Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== CONT  TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:55.02199049Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"    performance_test.go:181: native count mutant survived count comparison\n","OutputType":"error"}
+{"Time":"2026-10-09T13:57:55.02372788Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"--- FAIL: TestNodeCountCheckCatchesMutant (27.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:55.023735852Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Elapsed":27.9}
+{"Time":"2026-10-09T13:57:55.023992591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:55.02579863Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t27.914s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:57:55.025953618Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":27.915}

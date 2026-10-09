@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:49:54.030683779Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:49:54.040202722Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative"}
+{"Time":"2026-10-09T13:49:54.040288228Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"=== RUN   TestJsxNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:50:07.798339741Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:105: /tmp/adamic-gate/TestJsxNative3655103671/005/scanner [--manifest /tmp/adamic-gate/TestJsxNative3655103671/001/manifest --whole]: exit status 70\n","OutputType":"error"}
+{"Time":"2026-10-09T13:50:07.798600327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        adamic: panic: JSX expected name at 11 in /tmp/adamic-gate/TestJsxNative3655103671/001/jsx-0-0.tsx\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:50:07.801103759Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"--- FAIL: TestJsxNative (13.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:50:07.801195936Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Elapsed":13.76}
+{"Time":"2026-10-09T13:50:07.801251373Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:50:07.801800448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t13.771s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:50:07.801810164Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":13.771}

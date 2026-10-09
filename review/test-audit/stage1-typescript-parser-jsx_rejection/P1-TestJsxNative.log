@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T13:56:04.625786797Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:56:04.636161882Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative"}
+{"Time":"2026-10-09T13:56:04.636218948Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"=== RUN   TestJsxNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:12.720942894Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:107: case 0 line 2: port \"case 1\", Go \"file\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:56:12.721117103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        Go context:\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721121508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        case 0\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721145614Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        file\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721147985Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        0 SourceFile 0 17 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721151238Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        1 VariableStatement 0 17 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721153323Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        2 VariableDeclarationList 0 16 0 0 -1 0 0\t\t\t\t2\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.721155429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"        3 VariableDeclaration 5 16 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:12.722431826Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"--- FAIL: TestJsxNative (8.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:12.722463195Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Elapsed":8.09}
+{"Time":"2026-10-09T13:56:12.72252347Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:12.724274307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t8.098s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:12.724301866Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":8.099}

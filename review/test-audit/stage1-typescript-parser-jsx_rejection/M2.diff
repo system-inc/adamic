@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -33,7 +33,7 @@
+         if(this.parser.kind() !== 'Identifier' && !this.parser.kind().endsWith('Keyword')) {
+             panic(`JSX expected name at ${this.parser.scanner.start} in ${this.parser.path}`);
+         }
+-        if((this.parser.scanner.flags & 1032) !== 0) {
++        if((this.parser.scanner.flags & 0) !== 0) {
+             panic(`JSX Unicode escape not allowed at ${this.parser.scanner.start} in ${this.parser.path}`);
+         }
+         return this.parser.identifier();

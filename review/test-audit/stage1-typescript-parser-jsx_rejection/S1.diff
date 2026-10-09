@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/compiler_expressions_shards_test.go
++++ b/stage1/typescript/parser/compiler_expressions_shards_test.go
+@@ -103,7 +103,7 @@
+ 		}
+ 		compilerExpressionsProducts.oracle = wholeMutantBuildOracleProduct(t)
+ 		compilerExpressionsProducts.absolute = absolute
+-		compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)
++		compilerExpressionsProducts.binary = ""
+ 		t.Logf("TestCompilerExpressionsAgree_Setup: %.3fs", time.Since(started).Seconds())
+ 	})
+ 	return compilerExpressionsProducts.oracle, compilerExpressionsProducts.binary, compilerExpressionsProducts.absolute

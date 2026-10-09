@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:47:27.906830493Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:47:27.915975435Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:47:27.916048833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== RUN   TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:27.91606884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== PAUSE TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:27.916071014Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:47:27.916077582Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:47:27.91607927Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"=== CONT  TestNodeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:57.055517346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"    performance_test.go:183: native count mutant finished with identical AST bytes; count \"0\\n\" differs from Go \"18\\n\"\n"}
+{"Time":"2026-10-09T13:47:57.055622018Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"    performance_test.go:183: Node count mutant finished with identical AST bytes; count \"0\\n\" differs from Go \"18\\n\"\n"}
+{"Time":"2026-10-09T13:47:57.057229658Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Output":"--- PASS: TestNodeCountCheckCatchesMutant (29.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:57.057257437Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestNodeCountCheckCatchesMutant","Elapsed":29.14}
+{"Time":"2026-10-09T13:47:57.057334783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:57.059486353Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t29.152s\n"}
+{"Time":"2026-10-09T13:47:57.059553994Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":29.153}

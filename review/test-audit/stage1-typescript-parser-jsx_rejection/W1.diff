@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser_test.go
++++ b/stage1/typescript/parser/parser_test.go
+@@ -139,7 +139,7 @@
+ }
+ 
+ func difference(got, want []byte) string {
+-	if bytes.Equal(got, want) {
++	if len(got) >= 0 {
+ 		return ""
+ 	}
+ 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")

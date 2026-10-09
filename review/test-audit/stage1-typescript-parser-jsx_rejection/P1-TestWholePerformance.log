@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T13:56:24.612479662Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:56:24.624824071Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance"}
+{"Time":"2026-10-09T13:56:24.624895395Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"=== RUN   TestWholePerformance\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:32.477815664Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"    performance_test.go:40: Node preflight: case 0 line 2: port \"case 1\", Go \"file\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:56:32.47802226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        Go context:\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478029505Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        case 0\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478031639Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        file\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478033663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        0 SourceFile 0 111 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478035672Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        1 ExportDeclaration 0 109 0 0 -1 0 0\t\t\t\t0\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478037709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        2 StringLiteral 83 108 0 0 -1 0 0\t\t../moduleSpecifiers.js\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.478039932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"        1 EndOfFile 109 111 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:32.480025201Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Output":"--- FAIL: TestWholePerformance (7.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:32.480034028Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholePerformance","Elapsed":7.86}
+{"Time":"2026-10-09T13:56:32.480058265Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:32.485864268Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t7.871s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:32.485898824Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":7.873}

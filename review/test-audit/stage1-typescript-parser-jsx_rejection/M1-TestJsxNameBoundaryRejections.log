@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:49:33.279133882Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:49:33.288420176Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections"}
+{"Time":"2026-10-09T13:49:33.288480412Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"=== RUN   TestJsxNameBoundaryRejections\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:49:48.115187602Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically\n"}
+{"Time":"2026-10-09T13:49:48.241874265Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"    jsx_rejection_test.go:102: Node accepted escaped tag: 70 adamic: panic: JSX expected name at 11 in /tmp/adamic-gate/TestJsxNameBoundaryRejections3964794712/008/name.tsx\n","OutputType":"error"}
+{"Time":"2026-10-09T13:49:48.242758694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"--- FAIL: TestJsxNameBoundaryRejections (14.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:49:48.242765069Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Elapsed":14.95}
+{"Time":"2026-10-09T13:49:48.242861132Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:49:48.244329025Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t14.965s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:49:48.24437789Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":14.965}

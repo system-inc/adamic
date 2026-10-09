@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:55:39.829964836Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:55:39.840675224Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxMemberNameRejection"}
+{"Time":"2026-10-09T13:55:39.840787068Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxMemberNameRejection","Output":"=== RUN   TestJsxMemberNameRejection\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:48.158413217Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxMemberNameRejection","Output":"    jsx_rejection_test.go:49: expected parser rejection from node: \u003cnil\u003e \n","OutputType":"error"}
+{"Time":"2026-10-09T13:55:48.159396336Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxMemberNameRejection","Output":"--- FAIL: TestJsxMemberNameRejection (8.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:48.159462539Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxMemberNameRejection","Elapsed":8.32}
+{"Time":"2026-10-09T13:55:48.159524643Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:48.160940962Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t8.330s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:48.160986311Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":8.331}

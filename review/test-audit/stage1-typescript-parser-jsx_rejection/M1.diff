@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -30,7 +30,7 @@
+         return this.parser.make(kind, pos, children);
+     }
+     identifier(): number {
+-        if(this.parser.kind() !== 'Identifier' && !this.parser.kind().endsWith('Keyword')) {
++        if(this.parser.kind() === 'Identifier' && !this.parser.kind().endsWith('Keyword')) {
+             panic(`JSX expected name at ${this.parser.scanner.start} in ${this.parser.path}`);
+         }
+         if((this.parser.scanner.flags & 1032) !== 0) {

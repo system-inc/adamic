@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:53:33.025260322Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:53:33.035944457Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance"}
+{"Time":"2026-10-09T13:53:33.036219016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"=== RUN   TestPerformance\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:41.123881845Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:45: machine: linux/amd64 logical processors=5\n"}
+{"Time":"2026-10-09T13:53:41.124087549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:61: machine /proc/cpuinfo: model name\t: INTEL(R) XEON(R) PLATINUM 8573C\n"}
+{"Time":"2026-10-09T13:53:41.124151253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:61: machine /sys/fs/cgroup/cpu.max: 400000 100000\n"}
+{"Time":"2026-10-09T13:53:41.124170891Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:61: machine /sys/fs/cgroup/memory.max: 17179869184\n"}
+{"Time":"2026-10-09T13:53:41.124197955Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:61: machine /proc/loadavg: 1.23 1.14 1.23 1/272 178042\n"}
+{"Time":"2026-10-09T13:53:42.042216309Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"    performance_test.go:95: Node warm-up count \"1114020\\n\" differs from \"557010\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:53:42.043296223Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Output":"--- FAIL: TestPerformance (9.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:42.0433187Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPerformance","Elapsed":9.01}
+{"Time":"2026-10-09T13:53:42.043415928Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:42.044780313Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t9.017s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:42.044810239Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":9.02}

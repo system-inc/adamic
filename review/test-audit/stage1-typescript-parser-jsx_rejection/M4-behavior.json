@@ -1,0 +1,16 @@
+[
+  {
+    "id": "clean",
+    "command": "/tmp/u156/bin/clean --manifest /tmp/u156/count.manifest --count",
+    "exit": 0,
+    "stdout": "7\n",
+    "stderr": ""
+  },
+  {
+    "id": "M4",
+    "command": "/tmp/u156/bin/M4 --manifest /tmp/u156/count.manifest --count",
+    "exit": 0,
+    "stdout": "14\n",
+    "stderr": ""
+  }
+]

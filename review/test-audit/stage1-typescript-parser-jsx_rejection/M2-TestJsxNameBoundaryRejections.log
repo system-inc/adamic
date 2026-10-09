@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:50:51.4041363Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:50:51.412887158Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections"}
+{"Time":"2026-10-09T13:50:51.412959988Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"=== RUN   TestJsxNameBoundaryRejections\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:51:05.272806796Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"    jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically\n"}
+{"Time":"2026-10-09T13:51:05.406025518Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"    jsx_rejection_test.go:100: expected parser rejection from node: \u003cnil\u003e \n","OutputType":"error"}
+{"Time":"2026-10-09T13:51:05.407371782Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"--- FAIL: TestJsxNameBoundaryRejections (13.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:51:05.407383386Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Elapsed":13.99}
+{"Time":"2026-10-09T13:51:05.407628209Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:51:05.409839573Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t14.005s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:51:05.409936556Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":14.006}

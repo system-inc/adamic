@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/performance_test.go
++++ b/stage1/typescript/parser/performance_test.go
+@@ -177,7 +177,7 @@
+ 		if !bytes.Equal(runner.tree.output, wantTree) {
+ 			t.Fatalf("%s count mutant also changed AST output", runner.name)
+ 		}
+-		if bytes.Equal(runner.count.output, wantCount) {
++		if len(runner.count.output) >= 0 {
+ 			t.Fatalf("%s count mutant survived count comparison", runner.name)
+ 		}
+ 		t.Logf("%s count mutant finished with identical AST bytes; count %q differs from Go %q", runner.name, runner.count.output, wantCount)

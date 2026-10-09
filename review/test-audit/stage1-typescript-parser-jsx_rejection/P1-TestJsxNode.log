@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T13:56:02.08096077Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:56:02.095110683Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode"}
+{"Time":"2026-10-09T13:56:02.095185843Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"=== RUN   TestJsxNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.095223717Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"=== PAUSE TestJsxNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.095226397Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode"}
+{"Time":"2026-10-09T13:56:02.095229262Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode"}
+{"Time":"2026-10-09T13:56:02.095233446Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"=== CONT  TestJsxNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.639549155Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"    jsx_test.go:89: all 13 Go JSX AST kinds covered\n"}
+{"Time":"2026-10-09T13:56:02.767047205Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"    jsx_test.go:92: case 0 line 2: port \"case 1\", Go \"file\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:56:02.767086073Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        Go context:\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.767089618Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        case 0\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.767092384Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        file\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.76709449Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        0 SourceFile 0 17 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.767103614Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        1 VariableStatement 0 17 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.767105649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        2 VariableDeclarationList 0 16 0 0 -1 0 0\t\t\t\t2\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.767107947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"        3 VariableDeclaration 5 16 0 0 -1 0 0\t\t\t\t\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T13:56:02.76905264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Output":"--- FAIL: TestJsxNode (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.769115552Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNode","Elapsed":0.68}
+{"Time":"2026-10-09T13:56:02.769137106Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.769855082Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.688s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:56:02.769907125Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.689}

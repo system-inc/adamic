@@ -1,0 +1,15 @@
+panic: /workspace/adamic/stage1/typescript/parser/main.ts:11:38: error TS2339: Property 'text' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+	  Property 'text' does not exist on type '{ readonly kind: "Error"; readonly message: string; }'.
+	/workspace/adamic/stage1/typescript/parser/main.ts:17:43: error TS2339: Property 'text' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+	  Property 'text' does not exist on type '{ readonly kind: "Error"; readonly message: string; }'.
+	/workspace/adamic/stage1/typescript/parser/main.ts:18:33: error TS2339: Property 'text' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+	  Property 'text' does not exist on type '{ readonly kind: "Error"; readonly message: string; }'.
+	/workspace/adamic/stage1/typescript/parser/main.ts:26:40: error TS2339: Property 'text' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+	  Property 'text' does not exist on type '{ readonly kind: "Error"; readonly message: string; }'.
+	/workspace/adamic/stage1/typescript/parser/main.ts:9:22: error TS2339: Property 'message' does not exist on type '{ readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }'.
+	  Property 'message' does not exist on type '{ readonly kind: "Ok"; readonly text: string; }'.
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/review/test-audit/stage1-typescript-parser-jsx_rejection/build_probe.go:16 +0x545
+exit status 2

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "clean",
+    "command": "/tmp/u156/bin/clean /tmp/u156/escaped.tsx --whole",
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: JSX Unicode escape not allowed at 11 in /tmp/u156/escaped.tsx\n"
+  },
+  {
+    "id": "M2",
+    "command": "/tmp/u156/bin/M2 /tmp/u156/escaped.tsx --whole",
+    "exit": 0,
+    "stdout": "file\n0 SourceFile 0 22 0 0 -1 0 0\t\t\t\t\n1 VariableStatement 0 22 0 0 -1 0 0\t\t\t\t\n2 VariableDeclarationList 0 21 0 0 -1 0 0\t\t\t\t2\n3 VariableDeclaration 5 21 0 0 -1 0 0\t\t\t\t\n4 Identifier 5 7 0 0 -1 0 0\t\tx\t\t\n4 JsxSelfClosingElement 9 21 0 0 -1 0 0\t\t\t\t-1:0\n5 Identifier 11 19 0 0 -1 0 0\t\tFoo\t\t\n5 JsxAttributes 19 19 0 0 0 0 0\t\t\t\t\n1 EndOfFile 22 22 0 0 -1 0 0\t\t\t\t\n",
+    "stderr": ""
+  }
+]

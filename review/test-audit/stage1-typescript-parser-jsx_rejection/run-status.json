@@ -1,0 +1,194 @@
+[
+  {
+    "id": "M1",
+    "test": "TestJsxMemberNameRejection",
+    "exit": 1,
+    "wall": 30.149583101272583,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$",
+    "cache": "/tmp/u156/cache/M1"
+  },
+  {
+    "id": "M1",
+    "test": "TestJsxNameBoundaryRejections",
+    "exit": 1,
+    "wall": 18.629318475723267,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$",
+    "cache": "/tmp/u156/cache/M1"
+  },
+  {
+    "id": "M1",
+    "test": "TestJsxNode",
+    "exit": 1,
+    "wall": 3.6797759532928467,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$",
+    "cache": "/tmp/u156/cache/M1"
+  },
+  {
+    "id": "M1",
+    "test": "TestJsxNative",
+    "exit": 1,
+    "wall": 15.876154899597168,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$",
+    "cache": "/tmp/u156/cache/M1"
+  },
+  {
+    "id": "M2",
+    "test": "TestJsxMemberNameRejection",
+    "exit": 0,
+    "wall": 28.707990169525146,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$",
+    "cache": "/tmp/u156/cache/M2"
+  },
+  {
+    "id": "M2",
+    "test": "TestJsxNameBoundaryRejections",
+    "exit": 1,
+    "wall": 15.662588834762573,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$",
+    "cache": "/tmp/u156/cache/M2"
+  },
+  {
+    "id": "M2",
+    "test": "TestJsxNode",
+    "exit": 0,
+    "wall": 2.3735101222991943,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$",
+    "cache": "/tmp/u156/cache/M2"
+  },
+  {
+    "id": "M2",
+    "test": "TestJsxNative",
+    "exit": 0,
+    "wall": 22.767924308776855,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$",
+    "cache": "/tmp/u156/cache/M2"
+  },
+  {
+    "id": "M3",
+    "test": "TestJsxMemberNameRejection",
+    "exit": 0,
+    "wall": 30.184103965759277,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$",
+    "cache": "/tmp/u156/cache/M3"
+  },
+  {
+    "id": "M3",
+    "test": "TestJsxNameBoundaryRejections",
+    "exit": 0,
+    "wall": 45.1109733581543,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$",
+    "cache": "/tmp/u156/cache/M3"
+  },
+  {
+    "id": "M3",
+    "test": "TestJsxNode",
+    "exit": 1,
+    "wall": 3.184849977493286,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$",
+    "cache": "/tmp/u156/cache/M3"
+  },
+  {
+    "id": "M3",
+    "test": "TestJsxNative",
+    "exit": 1,
+    "wall": 15.38107419013977,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$",
+    "cache": "/tmp/u156/cache/M3"
+  },
+  {
+    "id": "M4",
+    "test": "TestPerformance",
+    "exit": 1,
+    "wall": 10.918058633804321,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPerformance$",
+    "cache": "/tmp/u156/cache/M4"
+  },
+  {
+    "id": "M4",
+    "test": "TestWholePerformance",
+    "exit": 1,
+    "wall": 15.083813905715942,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestWholePerformance$",
+    "cache": "/tmp/u156/cache/M4"
+  },
+  {
+    "id": "P1",
+    "test": "TestJsxMemberNameRejection",
+    "exit": 1,
+    "wall": 11.595035791397095,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "P1",
+    "test": "TestJsxNameBoundaryRejections",
+    "exit": 1,
+    "wall": 11.074173927307129,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "P1",
+    "test": "TestJsxNode",
+    "exit": 1,
+    "wall": 3.5304787158966064,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "P1",
+    "test": "TestJsxNative",
+    "exit": 1,
+    "wall": 9.954325199127197,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "P1",
+    "test": "TestPerformance",
+    "exit": 1,
+    "wall": 9.740199089050293,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPerformance$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "P1",
+    "test": "TestWholePerformance",
+    "exit": 1,
+    "wall": 10.02011752128601,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestWholePerformance$",
+    "cache": "/tmp/u156/cache/P1"
+  },
+  {
+    "id": "W1",
+    "test": "TestJsxScannerMutants",
+    "exit": 1,
+    "wall": 44.89564776420593,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxScannerMutants$",
+    "cache": null
+  },
+  {
+    "id": "W1",
+    "test": "TestExpressionsAgree",
+    "exit": 1,
+    "wall": 4.515618324279785,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestExpressionsAgree$",
+    "cache": null
+  },
+  {
+    "id": "W2",
+    "test": "TestNodeCountCheckCatchesMutant",
+    "exit": 1,
+    "wall": 32.71743726730347,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestNodeCountCheckCatchesMutant$",
+    "cache": null
+  },
+  {
+    "id": "S1",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "exit": 0,
+    "wall": 5.860023021697998,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree_Setup$",
+    "cache": null
+  }
+]

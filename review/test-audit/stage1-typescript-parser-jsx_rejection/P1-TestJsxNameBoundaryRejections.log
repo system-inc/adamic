@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:55:50.711947165Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:55:50.723182578Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections"}
+{"Time":"2026-10-09T13:55:50.72324882Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"=== RUN   TestJsxNameBoundaryRejections\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:59.233462333Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"    jsx_rejection_test.go:100: expected parser rejection from node: \u003cnil\u003e \n","OutputType":"error"}
+{"Time":"2026-10-09T13:55:59.233671067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Output":"--- FAIL: TestJsxNameBoundaryRejections (8.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:59.233676105Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNameBoundaryRejections","Elapsed":8.51}
+{"Time":"2026-10-09T13:55:59.23373101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:59.235444561Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t8.523s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:55:59.235526168Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":8.524000000000001}

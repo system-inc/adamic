@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:58:00.828268654Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:58:00.838950962Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup"}
+{"Time":"2026-10-09T13:58:00.839096286Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup","Output":"=== RUN   TestCompilerExpressionsAgree_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:01.173699839Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup","Output":"    compiler_expressions_shards_test.go:104: build typescript-parser-oracle 609de97f7b6f hit 0.22\n"}
+{"Time":"2026-10-09T13:58:01.173754782Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup","Output":"    compiler_expressions_shards_test.go:107: TestCompilerExpressionsAgree_Setup: 0.335s\n"}
+{"Time":"2026-10-09T13:58:01.173811454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup","Output":"--- PASS: TestCompilerExpressionsAgree_Setup (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:01.173818236Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgree_Setup","Elapsed":0.33}
+{"Time":"2026-10-09T13:58:01.173845614Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:01.174803211Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.346s\n"}
+{"Time":"2026-10-09T13:58:01.174836923Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.347}

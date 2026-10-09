@@ -1,0 +1,82 @@
+{
+  "TestJsxMemberNameRejection": {
+    "samples_seconds": [
+      32.98,
+      33.41,
+      32.44
+    ],
+    "median_seconds": 32.98
+  },
+  "TestJsxNameBoundaryRejections": {
+    "samples_seconds": [
+      47.95,
+      40.84,
+      43.57
+    ],
+    "median_seconds": 43.57
+  },
+  "TestJsxScannerMutants": {
+    "samples_seconds": [
+      43.13,
+      40.07,
+      41.12
+    ],
+    "median_seconds": 41.12
+  },
+  "TestJsxNode": {
+    "samples_seconds": [
+      0.72,
+      0.66,
+      0.65
+    ],
+    "median_seconds": 0.66
+  },
+  "TestJsxNative": {
+    "samples_seconds": [
+      22.1,
+      21.77,
+      22.5
+    ],
+    "median_seconds": 22.1
+  },
+  "TestExpressionsAgree": {
+    "samples_seconds": [
+      57.59,
+      2.97,
+      3
+    ],
+    "median_seconds": 3
+  },
+  "TestCompilerExpressionsAgree_Setup": {
+    "samples_seconds": [
+      22.24,
+      2.77,
+      2.46
+    ],
+    "median_seconds": 2.77
+  },
+  "TestPerformance": {
+    "samples_seconds": [
+      20.02,
+      18.29,
+      18.28
+    ],
+    "median_seconds": 18.29
+  },
+  "TestWholePerformance": {
+    "samples_seconds": [
+      23.71,
+      23.97,
+      24.22
+    ],
+    "median_seconds": 23.97
+  },
+  "TestNodeCountCheckCatchesMutant": {
+    "samples_seconds": [
+      28.2,
+      29.14,
+      27.47
+    ],
+    "median_seconds": 28.2
+  }
+}
