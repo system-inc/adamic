@@ -357,3 +357,13 @@ The requested converted-row mutation proofs are inapplicable: there are no accep
 | TestUnrepresentedPrototypeCallsAreNotYet | 8: const value = new Error('message'); value.toString(); | refuse | Preserved unchanged | Requires NotYet. |
 | TestIsPrototypeOfReadsExplainThePrototypeRefusal | 1: const value = {}; const detached = value.isPrototypeOf; | refuse | Preserved unchanged | Requires Refused with the specified explanation. |
 | TestIsPrototypeOfReadsExplainThePrototypeRefusal | 2: const value = {}; const detached = value['isPrototypeOf']; | refuse | Preserved unchanged | Requires Refused with the specified explanation. |
+
+## Authorized regex acceptance additions
+
+Three new acceptance rows live beside the existing regex tests in internal/lower/regexp_test.go. Each prints source, flags and a slash-match result, runs lowersAndAgreesWithNode, and compares sanitized native output with source Node. The prototype census above stays unchanged.
+
+| test | row | class | what you did | why |
+|---|---|---|---|---|
+| TestRegExpUnicodeClassSourceAgreesWithNode | const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}&#124;${regex.flags}&#124;${regex.test('//')}`); | accept | Added Node agreement and sanitized native behavior comparison | JavaScript recomputes source metadata; native output exposes M20 and overescaping. |
+| TestRegExpSlashClassSourceAgreesWithNode | const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}&#124;${regex.flags}&#124;${regex.test('//')}`); | accept | Added Node agreement and sanitized native behavior comparison | JavaScript recomputes source metadata; native output exposes M20 and overescaping. |
+| TestRegExpEscapedSlashSourceAgreesWithNode | const regex = new RegExp('\\/', 'u'); console.log(`${regex.source}&#124;${regex.flags}&#124;${regex.test('/')}`); | accept | Added Node agreement and sanitized native behavior comparison | JavaScript recomputes source metadata; native output exposes M20 and overescaping. |

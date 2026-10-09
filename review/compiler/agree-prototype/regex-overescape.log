@@ -1,0 +1,20 @@
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestRegExpEscapedSlashSourceAgreesWithNode
+=== PAUSE TestRegExpEscapedSlashSourceAgreesWithNode
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+=== CONT  TestRegExpEscapedSlashSourceAgreesWithNode
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+    regexp_test.go:75: native regex stdout = "[\\/]\\/|u|true\n", source Node = "[/]\\/|u|true\n"; stderr ""
+--- FAIL: TestRegExpSlashClassSourceAgreesWithNode (0.40s)
+=== NAME  TestRegExpUnicodeClassSourceAgreesWithNode
+    regexp_test.go:68: native regex stdout = "[[\\/]\\/|u|true\n", source Node = "[[/]\\/|u|true\n"; stderr ""
+--- FAIL: TestRegExpUnicodeClassSourceAgreesWithNode (0.41s)
+=== NAME  TestRegExpEscapedSlashSourceAgreesWithNode
+    regexp_test.go:82: native regex stdout = "\\\\/|u|true\n", source Node = "\\/|u|true\n"; stderr ""
+--- FAIL: TestRegExpEscapedSlashSourceAgreesWithNode (0.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.418s
+FAIL

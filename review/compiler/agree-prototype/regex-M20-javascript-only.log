@@ -1,0 +1,14 @@
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestRegExpEscapedSlashSourceAgreesWithNode
+=== PAUSE TestRegExpEscapedSlashSourceAgreesWithNode
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+=== CONT  TestRegExpEscapedSlashSourceAgreesWithNode
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+--- PASS: TestRegExpEscapedSlashSourceAgreesWithNode (0.15s)
+--- PASS: TestRegExpUnicodeClassSourceAgreesWithNode (0.16s)
+--- PASS: TestRegExpSlashClassSourceAgreesWithNode (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.167s

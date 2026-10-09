@@ -1,0 +1,9 @@
+regex-M20 exit 0
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/agree-prototype/run-regex-mutants.py", line 21, in <module>
+    text = test('regex-M20')
+           ^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/agree-prototype/run-regex-mutants.py", line 14, in test
+    assert result.returncode == 1
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

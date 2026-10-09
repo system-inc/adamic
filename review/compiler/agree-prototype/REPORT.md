@@ -1,8 +1,13 @@
-Built: source-row census for #41bkfdw, wave 2; all 345 rows are refusals, so zero conversions apply.
-Commits: base 62286991694debbb14fdb981d8f0957636c90dbc; audit authority e7d2a4ed92c0f49668243ace1017bffc33bb338e.
-Commands and outputs: focused six-test baseline passed, 13.496s; setup passed, 280.851s; lane evidence is in lane-checks.log.
-Mutants: exact audit M20 survived this scope; own one-line refusal-explanation mutant failed both member-access rows at prototype_test.go:204.
-Not covered: converted acceptance behavior or a converted-row mutant kill, because prototype_test.go has no acceptance rows; regex acceptance tests are outside this territory.
+Built: three regex acceptance rows in internal/lower/regexp_test.go, each held to source Node through the agreement helper and sanitized native behavior; preserved all 345 prototype refusal rows.
+Commits: previous delivery 402f3310; merged current main 12e77e89 for this addition; final delivery SHA is reported with the push.
+Commands and outputs: focused regex baseline passed in 5.739s; restored focus, TestCallTargetReaders, and lane results are recorded below and in their logs.
+Mutants: audit M20 fails the new Unicode row on native stdout; one-line overescaping fails all three new rows; both restored.
+Not covered: production changes, new oracle fixtures, or general regex coverage beyond these witnesses. JavaScript recomputes source metadata and cannot alone kill M20.
+
+## Initial census and verification
+
+The following preserves the original refusal-only scope and its evidence. The authorized regex addition below extends that scope and supplies the previously missing M20 behavioral guard.
+
 
 The ruling classifies a source by its assertion. Successful declaration lowering inside the inherited-member sweep is setup; its final assertion requires Refused and a nil expression. It is not an acceptance assertion or an IR-only ownership assertion. The five legacy members absent from es2024 require checker rejection when load rejects them. All of those rows belong to the refuse class.
 
@@ -52,3 +57,24 @@ Delivery verification: review commit e8165410 was merged with current main 60397
 The first lane attempt printed `fatal: invalid object name 'origin/cloud/merge-tree'`; the requested fetch populated FETCH_HEAD but not that remote-tracking ref. The original pipeline's final Python process exited zero despite the missing script, so that attempt is not a successful check. Explicitly fetched `refs/heads/cloud/merge-tree:refs/remotes/origin/cloud/merge-tree` and the corresponding fast-gate ref, then reran with bash pipefail. Actual lane output: `lane checks 0.4 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`, exit 0. This is a review-only diff, so there are no changed Go packages to vet.
 
 Additional requested guard: `timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s` initially failed in 17.970s on the existing `internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function` reader. Fetched and merged current main cf79ecec, which contains the compiler-owned allowlist entry with reason `names the function under test`. No local allowlist entry was invented. Reran the exact guard: pass, 0.805s. Before/after logs are call-target-readers-before-main.log and call-target-readers.log. Repeated the six focused unit tests on that main; final-main.log records the result. Lane checks were repeated before updating the pushed branch.
+
+## Authorized regex acceptance addition
+
+Added three separate parallel top-level leaves beside the existing regex lowering tests in internal/lower/regexp_test.go. Each program constructs a regex with flag u, prints source and flags and a test result on slash-containing input, and calls lowersAndAgreesWithNode. Cases: `[[/]/` on `//`, `[/]/` on `//`, and an escaped slash on `/`. rows.md records the three acceptance rows in addition to the unchanged prototype census. No IR assertions or snapshots were added. No checked-in oracle fixture was added, so counts.md needs no new row.
+
+Observation: the first JavaScript-only version of the three rows passed under M20 (regex-M20-javascript-only.log). JavaScript emission builds `new RegExp` from the original arguments or pattern and flags, and never uses RegExpNew.Source; JavaScript recomputes its metadata. Therefore the requested helper alone cannot expose the lowering error. Added a sanitized native run of the same lowered program against an independent source Node observation. This compares stdout, requires successful exit, and rejects stderr, including sanitizer reports. The test helper's comment explains why both backends are necessary. There are no hard-coded expected regex strings in test assertions.
+
+Applied the authoritative M20 patch from e7d2a4ed, preserved as regex-M20.patch. The new TestRegExpUnicodeClassSourceAgreesWithNode fails with native stdout `[[/]/|u|true` versus Node `[[/]\/|u|true`, which has one backslash before the final slash. It exits 1, and the other two rows pass. The one-line own mutant changes the slash escape condition from `!escaped && depth == 0` to `depth <= 1`; all three new rows fail native stdout comparison. Native processes exit successfully, with empty stderr; neither mutant is a build or sanitizer kill. The driver verifies the intended failures and restores regexp.go byte for byte in finally blocks. Logs and patches are regex-M20.log, regex-overescape.log, regex-overescape.patch, and regex-mutant-driver.log.
+
+Exact focused commands, each with an outer hard limit and output sent straight to a log:
+
+```sh
+timeout 120 go test ./internal/lower -run '^TestRegExp' -count=1 -timeout 90s -v
+timeout 300 python3 review/compiler/agree-prototype/run-regex-mutants.py
+timeout 120 go test ./internal/lower -run '^(TestRegExp.*|TestInheritedLibraryReadsNeverLoadOwnFields|TestPrototypeMethodsAreRefusedWithReasons|TestNullishPrototypeReadsAreRejectedByChecker|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestUnrepresentedPrototypeCallsAreNotYet|TestIsPrototypeOfReadsExplainThePrototypeRefusal)$' -count=1 -timeout 90s -json
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s
+```
+
+The mutant driver runs only the three new leaves, with -count=1, -timeout 90s, -v and an outer timeout 120 per invocation. Baseline new leaf times, including the agreement calls and native build: Unicode class 5.72s, slash class 5.73s, escaped slash 5.73s. M20's failing leaf is 0.39s; the overescape leaves are 0.40s, 0.41s, and 0.41s. Native runtime build caching explains the lower later costs; no performance improvement is inferred. No new leaf approaches 60 seconds.
+
+Merged current main 12e77e89 before final verification. The main update adds a native test and review evidence; the regex lowering production source is unchanged. The new tests read none of Call.Function, CallClosure.Closure, or ArraySort.Comparator, and add no allowlist entry. Final guard output is in regex-call-target-readers.log. Final focused clean output is in regex-restored.jsonl. No whole package or full gate was run.
