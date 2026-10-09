@@ -1,0 +1,489 @@
+[
+  {
+    "test": "TestStage3EnumFallthrough",
+    "package": "internal/oracle",
+    "file": "internal/oracle/stage3_front_test.go",
+    "seconds": 0.559,
+    "oracle": "Node executes source; self-written unmatched numeric-enum panic and exit 70 pin",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M03"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03: stage3_front_test.go:68: native: exit codes differ: {stdout:[65 68 66 10 66 10 65 68 10 50 10 68 66 10] stderr:[] exitCode:0}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M03 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M03.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M03.log 2>&1; stage3_front_test.go:68: native: exit codes differ: {stdout:[65 68 66 10 66 10 65 68 10 50 10 68 66 10] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "package": "internal/oracle",
+    "file": "internal/oracle/stage3_hook_test.go",
+    "seconds": 0.289,
+    "oracle": "Subprocess protocol and self leak/sanitizer checks; parent TestFixtures family performs agreement",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": null,
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestStage3FixtureHook$: three clean passes; subprocess helper for stage3/fixtures TestFixtures family",
+    "parent": "stage3/fixtures TestFixtures family",
+    "role": "helper"
+  },
+  {
+    "test": "TestStatementsSmallRulings",
+    "package": "internal/oracle",
+    "file": "internal/oracle/statements_small_rulings_test.go",
+    "seconds": 0.575,
+    "oracle": "Node stdout plus self-written Refused/NotYet type and reason substring; M11 shows version prefix is unchecked",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M05: statements_small_rulings_test.go:45: want preserved stop \"the non-null assertion !\", got /workspace/adamic/internal/oracle/testdata/statements_small_stopped/nonnull.a:2:1: Adamic 0.1 refuses a non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M05 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M05.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M05.log 2>&1; statements_small_rulings_test.go:45: want preserved stop \"the non-null assertion !\", got /workspace/adamic/internal/oracle/testdata/statements_small_stopped/nonnull.a:2:1: Adamic 0.1 refuses a non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+  },
+  {
+    "test": "TestStatementsSmallTypeScriptIncrement",
+    "package": "internal/oracle",
+    "file": "internal/oracle/statements_small_typescript_test.go",
+    "seconds": 1.018,
+    "oracle": "Node plus self-written checked-site count, location and missing-value panic",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M06",
+      "M07"
+    ],
+    "last_proven_fail": "M07: statements_small_typescript_test.go:78: stdout differs: got exit 0 stdout \"3\\n1\\n-2\\n2:2\\nNaN\\n\" stderr \"\"; want exit 0 stdout \"2\\n1\\n-1\\n1:2\\nNaN\\n\" stderr \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M07 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M07.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M07.log 2>&1; statements_small_typescript_test.go:78: stdout differs: got exit 0 stdout \"3\\n1\\n-2\\n2:2\\nNaN\\n\" stderr \"\"; want exit 0 stdout \"2\\n1\\n-1\\n1:2\\nNaN\\n\" stderr \"\""
+  },
+  {
+    "test": "TestSwitchCaseDeadZoneStop",
+    "package": "internal/oracle",
+    "file": "internal/oracle/switch_case_declaration_test.go",
+    "seconds": 0.148,
+    "oracle": "Node stdout/stderr/exit 70, hand-written pin; no Adamic execution",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestSwitchCaseDeadZoneStop$: three clean passes; Node-only body; no permitted Adamic mutant reaches it",
+    "reason": "Only the external Node oracle runs; mutating it is prohibited."
+  },
+  {
+    "test": "TestSwitchCaseDeclarationMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/switch_case_declaration_test.go",
+    "seconds": 0.615,
+    "oracle": "Node source versus planted native changes; disagreement must detect each change",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: switch_case_declaration_test.go:120: mutant survived the Node oracle",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/W01 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-W01.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > W01.log 2>&1; switch_case_declaration_test.go:120: mutant survived the Node oracle"
+  },
+  {
+    "test": "TestSwitchCaseOverloadIsNotYet",
+    "package": "internal/oracle",
+    "file": "internal/oracle/switch_case_declaration_test.go",
+    "seconds": 0.396,
+    "oracle": "Self-written exact NotYet message, no outside authority",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: switch_case_declaration_test.go:143: got /workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body now; want /workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M04 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M04.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M04.log 2>&1; switch_case_declaration_test.go:143: got /workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body now; want /workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body yet"
+  },
+  {
+    "test": "TestSwitchTrailingEmptyMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/switch_empty_test.go",
+    "seconds": 0.373,
+    "oracle": "Node source versus inserted planted early exits",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: switch_empty_test.go:60: mutant caught by \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/W01 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-W01.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > W01.log 2>&1; switch_empty_test.go:60: mutant caught by \"\""
+  },
+  {
+    "test": "TestSyntaxModuleDeclarationMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/syntax_module_declarations_test.go",
+    "seconds": 0.406,
+    "oracle": "Node source versus planted native output changes",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: syntax_module_declarations_test.go:79: JavaScript mutant: \"\":",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/W01 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-W01.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > W01.log 2>&1; syntax_module_declarations_test.go:79: JavaScript mutant: \"\":"
+  },
+  {
+    "test": "TestSyntaxSubstrMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/syntax_substr_test.go",
+    "seconds": 1.129,
+    "oracle": "Node source versus planted native substring changes",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: syntax_substr_test.go:102: JavaScript mutant must fail only output comparison, got \"\":",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/W01 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-W01.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > W01.log 2>&1; syntax_substr_test.go:102: JavaScript mutant must fail only output comparison, got \"\":"
+  },
+  {
+    "test": "TestTypedArrayWriteStopIsPinned",
+    "package": "internal/oracle",
+    "file": "internal/oracle/typed_arrays_test.go",
+    "seconds": 0.441,
+    "oracle": "Node silently drops out-of-bounds write; self-written Adamic stdout/stderr/exit 70 pins",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M08",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: typed_arrays_test.go:37: native: stdout differs: exit 70 stdout \"before 3 7 undefined\\n\" stderr \"adamic: panic: index 2 is outside an array of length 2\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": 2.089,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M12 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M12.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M12.log 2>&1; typed_arrays_test.go:37: native: stdout differs: exit 70 stdout \"before 3 7 undefined\\n\" stderr \"adamic: panic: index 2 is outside an array of length 2\\n\"",
+    "subsumer_scope": "Selected 15 fixture subcases only; full TestNativeAgreesWithNode median unknown; hint based on 2 mutants."
+  },
+  {
+    "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+    "package": "internal/oracle",
+    "file": "internal/oracle/typed_arrays_test.go",
+    "seconds": 0.751,
+    "oracle": "Independent original Platforms statistics functions on Node; compares source, native, release, JavaScript",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M09",
+      "M10",
+      "M12"
+    ],
+    "unique_kills": [
+      "M09",
+      "M10"
+    ],
+    "last_proven_fail": "M12: typed_arrays_test.go:68: native: exit codes differ: exit 70 stdout \"{\\\"count\\\":5,\\\"sum\\\":10,\\\"minimum\\\":1,\\\"maximum\\\":4}\\n\" stderr \"adamic: panic: stats index out of bounds\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStage3EnumFallthrough",
+      "TestStage3FixtureHook",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseDeadZoneStop",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestSwitchTrailingEmptyMutant",
+      "TestSyntaxModuleDeclarationMutants",
+      "TestSyntaxSubstrMutants",
+      "TestTypedArrayWriteStopIsPinned",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/M12 ADAMIC_STAGE3_FIXTURE=/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a ADAMIC_STAGE3_RESULT=/tmp/u070/hook-M12.json timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestStage3EnumFallthrough|TestStage3FixtureHook|TestStatementsSmallRulings|TestStatementsSmallTypeScriptIncrement|TestSwitchCaseDeadZoneStop|TestSwitchCaseDeclarationMutants|TestSwitchCaseOverloadIsNotYet|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypedArrayWriteStopIsPinned|TestTypedArrayWorkersStatsMatchesPlatforms)$' > M12.log 2>&1; typed_arrays_test.go:68: native: exit codes differ: exit 70 stdout \"{\\\"count\\\":5,\\\"sum\\\":10,\\\"minimum\\\":1,\\\"maximum\\\":4}\\n\" stderr \"adamic: panic: stats index out of bounds\\n\""
+  }
+]

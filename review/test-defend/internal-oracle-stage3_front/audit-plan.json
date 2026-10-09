@@ -1,0 +1,162 @@
+{
+  "origin_commit": "09fe4b54913753188a9357982bfd47cdf36ef97c",
+  "mutants": [
+    {
+      "id": "M01",
+      "file": "internal/lower/switch.go",
+      "line": 59,
+      "old": "Operator: ir.LessOrEqual",
+      "new": "Operator: ir.Equal",
+      "menu": "change an option",
+      "kind": "production"
+    },
+    {
+      "id": "M02",
+      "file": "internal/lower/switch.go",
+      "line": 17,
+      "old": "if len(body) == 0 {\n\t\treturn false",
+      "new": "if len(body) == 0 {\n\t\treturn true",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M03",
+      "file": "internal/lower/switch.go",
+      "line": 44,
+      "old": "dispatch.Default = []ir.Statement{unmatchedCheck}",
+      "new": "/* dropped unmatched enum check */",
+      "menu": "drop a statement",
+      "kind": "production"
+    },
+    {
+      "id": "M04",
+      "file": "internal/lower/diagnostics.go",
+      "line": 17,
+      "old": "%s: stage 0 can't lower %s yet",
+      "new": "%s: stage 0 can't lower %s now",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M05",
+      "file": "internal/lower/refusals.go",
+      "line": 22,
+      "old": "\"the non-null assertion !\"",
+      "new": "\"a non-null assertion !\"",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M06",
+      "file": "internal/lower/non_null.go",
+      "line": 114,
+      "old": "counts.Checked++",
+      "new": "/* dropped checked counter increment */",
+      "menu": "drop a statement",
+      "kind": "production"
+    },
+    {
+      "id": "M07",
+      "file": "internal/lower/assignments.go",
+      "line": 216,
+      "old": "updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}",
+      "new": "updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 2}}",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M08",
+      "file": "internal/native/runtime/typed_array.c",
+      "line": 101,
+      "old": "index %.*s is outside an array of length %.*s",
+      "new": "index %.*s is beyond an array of length %.*s",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M09",
+      "file": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "line": 12,
+      "old": "let sum = 0;",
+      "new": "let sum = 1;",
+      "menu": "change a constant",
+      "kind": "port"
+    },
+    {
+      "id": "M10",
+      "file": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "line": 43,
+      "old": "Math.ceil(0.95 * count)",
+      "new": "Math.ceil(0.50 * count)",
+      "menu": "change a constant",
+      "kind": "port"
+    },
+    {
+      "id": "M11",
+      "file": "internal/lower/diagnostics.go",
+      "line": 29,
+      "old": "%s: Adamic 0.1 refuses %s; %s",
+      "new": "%s: Adamic 0.2 refuses %s; %s",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "M12",
+      "file": "internal/native/runtime/typed_array.c",
+      "line": 111,
+      "old": "return (double)array->length;",
+      "new": "return (double)array->length + 1;",
+      "menu": "off-by-one a bound",
+      "kind": "production"
+    },
+    {
+      "id": "M13",
+      "file": "internal/lower/switch_bindings.go",
+      "line": 50,
+      "old": "Value: ir.BooleanConstant{Value: false}",
+      "new": "Value: ir.BooleanConstant{Value: true}",
+      "menu": "change a constant",
+      "kind": "production"
+    },
+    {
+      "id": "W01",
+      "file": "internal/oracle/oracle_test.go",
+      "line": 716,
+      "old": "disagreement body",
+      "new": "return \"\"",
+      "kind": "witness-check"
+    }
+  ],
+  "probes": [
+    {
+      "id": "P01",
+      "file": "internal/lower/lower.go",
+      "line": 20,
+      "entry": "Lower"
+    },
+    {
+      "id": "P02",
+      "file": "internal/oracle/oracle_test.go",
+      "line": 716,
+      "entry": "disagreement"
+    },
+    {
+      "id": "P03",
+      "file": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "line": 11,
+      "entry": "function stats(values: Float64Array): StatsInterface {"
+    },
+    {
+      "id": "P04",
+      "file": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "line": 35,
+      "entry": "function summarize(values: Float64Array): StatsBody {"
+    },
+    {
+      "id": "P05",
+      "file": "internal/native/runtime/typed_array.c",
+      "line": 106,
+      "entry": "adamic_typed_array_set"
+    }
+  ]
+}

@@ -1,0 +1,2883 @@
+{
+  "reached_go_functions": [
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:9:",
+      "function": "builtinArguments",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:18:",
+      "function": "isArgumentsLength",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:67:",
+      "function": "callArguments",
+      "coverage": "31.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:122:",
+      "function": "resolveCountTypes",
+      "coverage": "67.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:205:",
+      "function": "fitCallArguments",
+      "coverage": "70.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/arguments_length.go:226:",
+      "function": "resolveStructuralMethodThunks",
+      "coverage": "65.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/assignments.go:12:",
+      "function": "assignment",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/assignments.go:164:",
+      "function": "increment",
+      "coverage": "71.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/borrow.go:18:",
+      "function": "borrow",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/borrow.go:38:",
+      "function": "findAssigned",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/case_label.go:12:",
+      "function": "caseLabel",
+      "coverage": "18.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cast.go:79:",
+      "function": "literalConstant",
+      "coverage": "70.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_overload_proof.go:226:",
+      "function": "censusCallReturnsUndefined",
+      "coverage": "14.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:110:",
+      "function": "censusFieldSlotless",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:115:",
+      "function": "censusImplementation",
+      "coverage": "77.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:137:",
+      "function": "censusOverloads",
+      "coverage": "69.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:273:",
+      "function": "censusOverloadResult",
+      "coverage": "17.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:333:",
+      "function": "censusCallableSlotless",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:361:",
+      "function": "censusBooleanCondition",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:368:",
+      "function": "censusBooleanLogical",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:402:",
+      "function": "censusCondition",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/census_small.go:411:",
+      "function": "censusNeverRestSignature",
+      "coverage": "92.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:44:",
+      "function": "methodList",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:67:",
+      "function": "instantiate",
+      "coverage": "63.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:244:",
+      "function": "thisLocal",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:254:",
+      "function": "constructor",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:259:",
+      "function": "zeroValue",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:290:",
+      "function": "construct",
+      "coverage": "53.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:312:",
+      "function": "callOrMethod",
+      "coverage": "17.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:410:",
+      "function": "setProperty",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:456:",
+      "function": "absentOptionalWrite",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:511:",
+      "function": "plainPropertyName",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:570:",
+      "function": "noteOmittedOptionals",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:584:",
+      "function": "noteOmittedOptionalsOf",
+      "coverage": "80.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:681:",
+      "function": "classOf",
+      "coverage": "69.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:702:",
+      "function": "nodesOf",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:753:",
+      "function": "useOfThis",
+      "coverage": "30.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:782:",
+      "function": "classKeyPrefix",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class.go:798:",
+      "function": "classInstanceKey",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:13:",
+      "function": "accessorMember",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:16:",
+      "function": "classFunction",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:19:",
+      "function": "methodKey",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:53:",
+      "function": "superAccessor",
+      "coverage": "7.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:132:",
+      "function": "accessorLiteral",
+      "coverage": "11.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:207:",
+      "function": "finishAccessors",
+      "coverage": "4.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:349:",
+      "function": "accessorSymbol",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:367:",
+      "function": "checkAccessorSpreads",
+      "coverage": "23.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:408:",
+      "function": "noteAccessorNames",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_accessors.go:422:",
+      "function": "validateAccessorSignature",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_features.go:14:",
+      "function": "memberKey",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_features.go:65:",
+      "function": "objectKeys",
+      "coverage": "7.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_generic_calls.go:14:",
+      "function": "classGenericCall",
+      "coverage": "13.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_generic_calls.go:103:",
+      "function": "nominalTypeArguments",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:14:",
+      "function": "baseInstance",
+      "coverage": "12.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:40:",
+      "function": "checkOverrides",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:193:",
+      "function": "inheritanceConstructor",
+      "coverage": "41.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:374:",
+      "function": "fieldInitializers",
+      "coverage": "45.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:507:",
+      "function": "finishClassCalls",
+      "coverage": "18.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:527:",
+      "function": "noteInheritance",
+      "coverage": "90.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:546:",
+      "function": "classViewRefusal",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:613:",
+      "function": "initializerReads",
+      "coverage": "41.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:672:",
+      "function": "fieldName",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:690:",
+      "function": "nominalMismatch",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:867:",
+      "function": "classDefinition",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:895:",
+      "function": "classView",
+      "coverage": "36.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:917:",
+      "function": "classBases",
+      "coverage": "64.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:938:",
+      "function": "literalParts",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_inheritance.go:945:",
+      "function": "nominalLiteralTarget",
+      "coverage": "44.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:12:",
+      "function": "staticBase",
+      "coverage": "25.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:26:",
+      "function": "needsStatics",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:41:",
+      "function": "staticClass",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:223:",
+      "function": "staticDeclaration",
+      "coverage": "3.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:337:",
+      "function": "isStaticType",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:477:",
+      "function": "staticProperty",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:493:",
+      "function": "staticClassDeclaration",
+      "coverage": "26.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:550:",
+      "function": "staticClassRead",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static.go:562:",
+      "function": "staticConstruct",
+      "coverage": "17.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static_private.go:8:",
+      "function": "privateStaticMember",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static_private.go:21:",
+      "function": "privateStaticReceiver",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_static_private.go:46:",
+      "function": "privateStaticStore",
+      "coverage": "22.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/class_super.go:180:",
+      "function": "conditionalSuper",
+      "coverage": "8.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/control.go:30:",
+      "function": "forStatement",
+      "coverage": "83.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/control.go:76:",
+      "function": "whileStatement",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/control.go:96:",
+      "function": "condition",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/control.go:106:",
+      "function": "initializerIsLet",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:38:",
+      "function": "counters",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:76:",
+      "function": "markCounter",
+      "coverage": "65.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:161:",
+      "function": "boundRange",
+      "coverage": "31.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:231:",
+      "function": "neverNegativeZero",
+      "coverage": "15.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:273:",
+      "function": "constantOf",
+      "coverage": "12.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:307:",
+      "function": "whole",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:314:",
+      "function": "stepOf",
+      "coverage": "69.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:334:",
+      "function": "perIteration",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:343:",
+      "function": "declaredIn",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:353:",
+      "function": "findDeclared",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:363:",
+      "function": "eachBlock",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/counters.go:373:",
+      "function": "eachNested",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:63:",
+      "function": "findCycles",
+      "coverage": "86.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:126:",
+      "function": "made",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:146:",
+      "function": "shape",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:161:",
+      "function": "use",
+      "coverage": "88.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:206:",
+      "function": "declaredAt",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:216:",
+      "function": "template",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:232:",
+      "function": "fields",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:246:",
+      "function": "isFunction",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:251:",
+      "function": "weak",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:258:",
+      "function": "slotsOf",
+      "coverage": "34.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:352:",
+      "function": "reaches",
+      "coverage": "50.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:463:",
+      "function": "related",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/cycles.go:473:",
+      "function": "literalMethod",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/diagnostics.go:16:",
+      "function": "Error",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/diagnostics.go:28:",
+      "function": "Error",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/diagnostics.go:32:",
+      "function": "notYet",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:11:",
+      "function": "constantStringKey",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:57:",
+      "function": "entriesLiteralOrigin",
+      "coverage": "68.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:82:",
+      "function": "entriesRecordLiteral",
+      "coverage": "84.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:120:",
+      "function": "entriesRecordWrite",
+      "coverage": "36.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:152:",
+      "function": "enumerationDescriptorRefusal",
+      "coverage": "22.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:168:",
+      "function": "entriesProgramHasRecords",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:187:",
+      "function": "entriesStringIndexed",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/entries_records.go:198:",
+      "function": "enumerationIndexedWriteRefusal",
+      "coverage": "90.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_flags.go:12:",
+      "function": "flagEnum",
+      "coverage": "47.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_flags.go:80:",
+      "function": "flagTarget",
+      "coverage": "77.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_flags.go:213:",
+      "function": "flagMemberWidened",
+      "coverage": "37.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_flags.go:228:",
+      "function": "flagValueSymbol",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_initialization.go:9:",
+      "function": "enumInitialization",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_never.go:10:",
+      "function": "enumStoredType",
+      "coverage": "44.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_never.go:28:",
+      "function": "enumNeverIdentity",
+      "coverage": "38.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_never.go:62:",
+      "function": "enumMemberOrigin",
+      "coverage": "91.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enum_never.go:84:",
+      "function": "enumNeverCheck",
+      "coverage": "76.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:15:",
+      "function": "enumAssignable",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:43:",
+      "function": "openNumericEnumType",
+      "coverage": "41.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:70:",
+      "function": "numericEnum",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:85:",
+      "function": "enumObjectSymbol",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:95:",
+      "function": "enumObjectView",
+      "coverage": "76.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:115:",
+      "function": "enumIdentity",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:129:",
+      "function": "enumMember",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:141:",
+      "function": "enumObject",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:153:",
+      "function": "enumConstant",
+      "coverage": "55.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:171:",
+      "function": "enumFields",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:210:",
+      "function": "enumLocal",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:220:",
+      "function": "enumDeclaration",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:235:",
+      "function": "enumExpression",
+      "coverage": "23.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:353:",
+      "function": "enumRefusal",
+      "coverage": "68.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:436:",
+      "function": "enumSwitch",
+      "coverage": "16.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:474:",
+      "function": "enumDefaultUnreachable",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/enums.go:480:",
+      "function": "enumSwitchCovered",
+      "coverage": "85.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/evolving_local.go:12:",
+      "function": "evolvingObject",
+      "coverage": "13.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:23:",
+      "function": "throwStatement",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:87:",
+      "function": "tryStatement",
+      "coverage": "19.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:140:",
+      "function": "exceptions",
+      "coverage": "61.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:177:",
+      "function": "throwsOut",
+      "coverage": "38.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:331:",
+      "function": "walk",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/exceptions.go:340:",
+      "function": "walkValue",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:15:",
+      "function": "typeOf",
+      "coverage": "46.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:43:",
+      "function": "representation",
+      "coverage": "53.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:159:",
+      "function": "isLibraryType",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:172:",
+      "function": "includesUndefined",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:184:",
+      "function": "includesNull",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:198:",
+      "function": "expression",
+      "coverage": "41.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:279:",
+      "function": "sameKeeping",
+      "coverage": "78.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:344:",
+      "function": "tupleSeenAsArray",
+      "coverage": "75.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:395:",
+      "function": "present",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:424:",
+      "function": "kept",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:433:",
+      "function": "typeArguments",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:445:",
+      "function": "weakTarget",
+      "coverage": "15.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:467:",
+      "function": "value",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:478:",
+      "function": "enumNeverValue",
+      "coverage": "53.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:676:",
+      "function": "fit",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:712:",
+      "function": "numericLiteral",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:724:",
+      "function": "prefix",
+      "coverage": "24.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:809:",
+      "function": "combine",
+      "coverage": "36.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:928:",
+      "function": "spelled",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:936:",
+      "function": "template",
+      "coverage": "81.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:974:",
+      "function": "conditional",
+      "coverage": "40.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1075:",
+      "function": "slotless",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1080:",
+      "function": "call",
+      "coverage": "28.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1146:",
+      "function": "callFunction",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1157:",
+      "function": "coalesce",
+      "coverage": "63.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1200:",
+      "function": "closure",
+      "coverage": "81.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1286:",
+      "function": "optionalCall",
+      "coverage": "28.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/expression.go:1300:",
+      "function": "callClosure",
+      "coverage": "68.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/fresh.go:24:",
+      "function": "writeSite",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/functions.go:11:",
+      "function": "functionBody",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/functions.go:44:",
+      "function": "lowerFunction",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/functions.go:60:",
+      "function": "signature",
+      "coverage": "60.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/functions.go:197:",
+      "function": "lowerBody",
+      "coverage": "43.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/functions.go:328:",
+      "function": "permitsImplicitReturn",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/input.go:16:",
+      "function": "input",
+      "coverage": "19.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/instantiate.go:27:",
+      "function": "typeMapperOf",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/instantiate.go:52:",
+      "function": "concrete",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/instantiate.go:60:",
+      "function": "classNodeFor",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/interface_cast.go:278:",
+      "function": "viewLiterals",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:45:",
+      "function": "widened",
+      "coverage": "51.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:162:",
+      "function": "widenedProperties",
+      "coverage": "61.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:241:",
+      "function": "containers",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:320:",
+      "function": "structured",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:326:",
+      "function": "withoutUndefined",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:334:",
+      "function": "definedMembers",
+      "coverage": "88.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:351:",
+      "function": "isClassInstance",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:365:",
+      "function": "viewSite",
+      "coverage": "90.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:404:",
+      "function": "refuseWidening",
+      "coverage": "46.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:524:",
+      "function": "freshOrWidened",
+      "coverage": "43.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:576:",
+      "function": "freshValue",
+      "coverage": "84.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:601:",
+      "function": "isExpression",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:608:",
+      "function": "impliedTarget",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:651:",
+      "function": "destructuringTarget",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/invariance.go:694:",
+      "function": "genericFunction",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration.go:13:",
+      "function": "symbolIterator",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration.go:18:",
+      "function": "methodName",
+      "coverage": "81.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration.go:37:",
+      "function": "iteratorMember",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration.go:167:",
+      "function": "planIteration",
+      "coverage": "4.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration.go:427:",
+      "function": "userMethodCall",
+      "coverage": "15.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration_origin.go:30:",
+      "function": "iterationShapeFits",
+      "coverage": "54.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration_origin.go:51:",
+      "function": "erasedLiteralMethod",
+      "coverage": "87.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/iteration_origin.go:64:",
+      "function": "erasedMethodField",
+      "coverage": "62.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:18:",
+      "function": "libraryArrayMethod",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:22:",
+      "function": "libraryArrayMethodArguments",
+      "coverage": "7.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:145:",
+      "function": "libraryArrayBuilder",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:152:",
+      "function": "local",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:157:",
+      "function": "read",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:165:",
+      "function": "finish",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:425:",
+      "function": "libraryArrayMethodName",
+      "coverage": "61.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:445:",
+      "function": "libraryArrayObservation",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:465:",
+      "function": "libraryArrayObservedMethod",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array.go:484:",
+      "function": "libraryArrayForOf",
+      "coverage": "5.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array_predicate.go:11:",
+      "function": "isArrayPredicateCall",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array_predicate.go:21:",
+      "function": "arrayIsArray",
+      "coverage": "22.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array_predicate.go:70:",
+      "function": "arrayPredicateDomain",
+      "coverage": "76.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array_predicate.go:94:",
+      "function": "arrayPredicateType",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_array_predicate.go:126:",
+      "function": "arrayPredicateObservedType",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_function_expressions.go:11:",
+      "function": "functionExpression",
+      "coverage": "63.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_globals.go:11:",
+      "function": "libraryGlobalValue",
+      "coverage": "28.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_json_stringify.go:12:",
+      "function": "jsonCall",
+      "coverage": "34.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_json_stringify.go:72:",
+      "function": "jsonInput",
+      "coverage": "60.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_json_stringify.go:155:",
+      "function": "jsonIndex",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_json_stringify.go:159:",
+      "function": "jsonType",
+      "coverage": "41.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_map_set.go:220:",
+      "function": "libraryIteratorElement",
+      "coverage": "30.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_map_set.go:466:",
+      "function": "libraryIteratorMade",
+      "coverage": "90.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_map_set.go:495:",
+      "function": "libraryIteratorUnsupportedUse",
+      "coverage": "56.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_math_number.go:17:",
+      "function": "libraryMathNumberProperty",
+      "coverage": "44.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_math_number.go:35:",
+      "function": "numberPrototype",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_math_number.go:42:",
+      "function": "libraryNumber",
+      "coverage": "42.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_math_number.go:69:",
+      "function": "libraryMathNumberCall",
+      "coverage": "15.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_math_number.go:186:",
+      "function": "libraryNumberBoundMethod",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_method_values.go:17:",
+      "function": "libraryMethod",
+      "coverage": "86.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_method_values.go:71:",
+      "function": "libraryMethodReadAllowed",
+      "coverage": "18.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_method_values.go:106:",
+      "function": "libraryMethodValue",
+      "coverage": "15.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_method_values.go:162:",
+      "function": "libraryMethodCall",
+      "coverage": "8.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_method_values.go:540:",
+      "function": "libraryEmptyMap",
+      "coverage": "17.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node.go:15:",
+      "function": "RegisterNodeLibraryMembers",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node.go:21:",
+      "function": "nodeLibraryMember",
+      "coverage": "46.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node.go:63:",
+      "function": "nodeLibraryRefusal",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:14:",
+      "function": "nodeBufferModule",
+      "coverage": "63.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:34:",
+      "function": "nodeBufferSymbol",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:38:",
+      "function": "nodeBufferType",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:48:",
+      "function": "nodeBufferUnsupportedUse",
+      "coverage": "62.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:94:",
+      "function": "nodeBufferReadArgument",
+      "coverage": "88.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:107:",
+      "function": "nodeBufferView",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_buffer.go:135:",
+      "function": "libraryNodeBuffer",
+      "coverage": "17.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_buffer.go:11:",
+      "function": "init",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_buffer.go:18:",
+      "function": "nodeFSFileBufferArgument",
+      "coverage": "35.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:11:",
+      "function": "nodeFSFile",
+      "coverage": "4.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:422:",
+      "function": "nodeFSFileDate",
+      "coverage": "27.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:442:",
+      "function": "nodeFSFileReadOnlyArgument",
+      "coverage": "54.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_fs_file.go:477:",
+      "function": "init",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_host.go:10:",
+      "function": "nodeHost",
+      "coverage": "13.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_node_host.go:57:",
+      "function": "init",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_regex_callback_shape.go:69:",
+      "function": "regexCallbackIntrinsicView",
+      "coverage": "53.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_regexp_replace.go:70:",
+      "function": "regexReplacementArgument",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:14:",
+      "function": "stringPrototypeMethod",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:28:",
+      "function": "stringMethodObservation",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:98:",
+      "function": "libraryString",
+      "coverage": "37.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:155:",
+      "function": "libraryStringMethod",
+      "coverage": "3.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:271:",
+      "function": "stringHelper",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:285:",
+      "function": "stringInteger",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:371:",
+      "function": "stringReadOnlyArgument",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/library_string.go:388:",
+      "function": "refuseStringWidening",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/literal_callable_branch.go:10:",
+      "function": "literalCallableBranch",
+      "coverage": "28.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/load_time_reads.go:101:",
+      "function": "checkedModuleRead",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:12:",
+      "function": "variables",
+      "coverage": "41.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:111:",
+      "function": "declareLocal",
+      "coverage": "77.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:153:",
+      "function": "noteLocal",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:165:",
+      "function": "symbol",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:178:",
+      "function": "local",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:195:",
+      "function": "touch",
+      "coverage": "93.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:224:",
+      "function": "checked",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:228:",
+      "function": "constant",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/locals.go:241:",
+      "function": "localRead",
+      "coverage": "13.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/logical_assignment.go:9:",
+      "function": "logicalAssignment",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/lower.go:20:",
+      "function": "Lower",
+      "coverage": "86.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/module_namespace.go:10:",
+      "function": "moduleNamespace",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/module_namespace.go:23:",
+      "function": "moduleNamespaceRefusal",
+      "coverage": "23.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/modules.go:14:",
+      "function": "moduleOrder",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/modules.go:27:",
+      "function": "esmModuleOrder",
+      "coverage": "69.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/modules.go:75:",
+      "function": "declareModule",
+      "coverage": "55.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/modules.go:189:",
+      "function": "runtimeModuleStatement",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespace_callable.go:5:",
+      "function": "namespaceMergedFunction",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:8:",
+      "function": "namespaceStatements",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:19:",
+      "function": "namespaceRuntime",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:41:",
+      "function": "namespaceDeclarations",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:53:",
+      "function": "namespaceDeclaration",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:66:",
+      "function": "namespaceMember",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:90:",
+      "function": "namespaceExpression",
+      "coverage": "52.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:117:",
+      "function": "namespaceValueNode",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:135:",
+      "function": "namespaceRefusal",
+      "coverage": "35.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:245:",
+      "function": "namespaceInitialization",
+      "coverage": "71.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:344:",
+      "function": "namespaceCallable",
+      "coverage": "76.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:389:",
+      "function": "namespaceReadyLocal",
+      "coverage": "90.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:404:",
+      "function": "namespaceReadyReads",
+      "coverage": "94.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:426:",
+      "function": "namespaceReadyValue",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:437:",
+      "function": "namespaceReadyCall",
+      "coverage": "30.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:454:",
+      "function": "namespaceVariable",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:458:",
+      "function": "namespaceBody",
+      "coverage": "39.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces.go:525:",
+      "function": "namespaceReadyStatements",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:24:",
+      "function": "reach",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:28:",
+      "function": "discover",
+      "coverage": "71.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces_call_graph.go:147:",
+      "function": "namespaceRuntimeEnum",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/namespaces_returns.go:11:",
+      "function": "namespaceReturnAssignment",
+      "coverage": "17.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/narrowed.go:24:",
+      "function": "narrowedAway",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/narrowed.go:47:",
+      "function": "defined",
+      "coverage": "8.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/narrowed.go:87:",
+      "function": "comparedWithUndefined",
+      "coverage": "53.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/narrowed.go:110:",
+      "function": "acceptsUndefined",
+      "coverage": "38.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/nested_functions.go:12:",
+      "function": "nestedDeclarations",
+      "coverage": "9.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/nested_functions.go:146:",
+      "function": "nestedSibling",
+      "coverage": "23.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/nested_functions.go:203:",
+      "function": "nestedReference",
+      "coverage": "30.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/nested_functions.go:249:",
+      "function": "finishNestedEnvironment",
+      "coverage": "4.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/never_branch.go:9:",
+      "function": "isNever",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/non_null.go:24:",
+      "function": "nonNullValue",
+      "coverage": "51.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/non_null.go:105:",
+      "function": "checkedAssertionSource",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/non_null.go:109:",
+      "function": "recordNonNullCheck",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:17:",
+      "function": "objectLiteral",
+      "coverage": "34.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:152:",
+      "function": "typeOfSymbol",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:162:",
+      "function": "declaredField",
+      "coverage": "36.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:207:",
+      "function": "arrayLiteral",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:281:",
+      "function": "elementType",
+      "coverage": "41.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:341:",
+      "function": "property",
+      "coverage": "37.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:576:",
+      "function": "readObjectField",
+      "coverage": "88.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:646:",
+      "function": "isLibraryGlobal",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:673:",
+      "function": "builtin",
+      "coverage": "52.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:918:",
+      "function": "forOf",
+      "coverage": "34.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1089:",
+      "function": "switchStatement",
+      "coverage": "91.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1194:",
+      "function": "arrayMethod",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1198:",
+      "function": "arrayMethodArguments",
+      "coverage": "25.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1497:",
+      "function": "newExpression",
+      "coverage": "11.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1627:",
+      "function": "stringMethod",
+      "coverage": "58.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1656:",
+      "function": "shorthand",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:1960:",
+      "function": "tupleType",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:2018:",
+      "function": "hasSpread",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/object.go:2077:",
+      "function": "tupleWhereArrayGoes",
+      "coverage": "72.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional.go:25:",
+      "function": "orDefault",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional.go:36:",
+      "function": "mayBeUndefined",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_indexing_map.go:10:",
+      "function": "optionalMapGet",
+      "coverage": "17.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_intrinsic.go:12:",
+      "function": "optionalIntrinsic",
+      "coverage": "10.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_join.go:10:",
+      "function": "isOptionalJoin",
+      "coverage": "77.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_widening.go:17:",
+      "function": "optionalWidened",
+      "coverage": "72.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_widening.go:111:",
+      "function": "optionalValue",
+      "coverage": "44.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_widening.go:131:",
+      "function": "optionalAtSite",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_widening.go:189:",
+      "function": "refuseOptionalWidening",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/optional_widening.go:200:",
+      "function": "optionalNodeHostCall",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/parameter_properties.go:8:",
+      "function": "parameterProperty",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/parameter_properties.go:14:",
+      "function": "classMembersWithParameters",
+      "coverage": "57.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/parameter_properties.go:67:",
+      "function": "parameterPropertyResets",
+      "coverage": "13.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/predicates.go:475:",
+      "function": "predicateArguments",
+      "coverage": "19.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:11:",
+      "function": "console",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:32:",
+      "function": "isPanicCall",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:39:",
+      "function": "isPreludeFunction",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:49:",
+      "function": "isConsole",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:59:",
+      "function": "consoleStream",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prelude.go:79:",
+      "function": "isPreludeConsole",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:13:",
+      "function": "memberSymbol",
+      "coverage": "42.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:25:",
+      "function": "libraryMember",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:31:",
+      "function": "inheritedLibraryMember",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:35:",
+      "function": "inheritedLibrarySymbol",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:49:",
+      "function": "librarySymbol",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:77:",
+      "function": "objectPrototypeCall",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:81:",
+      "function": "objectPrototypeCallArguments",
+      "coverage": "7.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/prototype.go:269:",
+      "function": "exactPlainObject",
+      "coverage": "94.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:13:",
+      "function": "sourceExpression",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:20:",
+      "function": "uninitializedInitializer",
+      "coverage": "35.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:42:",
+      "function": "uninitializedDeclaration",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:55:",
+      "function": "readiness",
+      "coverage": "31.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:250:",
+      "function": "readinessStatement",
+      "coverage": "68.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:353:",
+      "function": "readinessObject",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:384:",
+      "function": "assertionInitializer",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/readiness.go:389:",
+      "function": "lazyAssertionInitializer",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/refusals.go:39:",
+      "function": "refuse",
+      "coverage": "47.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/refusals.go:240:",
+      "function": "called",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/regexp.go:123:",
+      "function": "regexBuiltin",
+      "coverage": "22.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/regexp.go:277:",
+      "function": "regexGroups",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/regexp.go:290:",
+      "function": "regexUnsupportedUse",
+      "coverage": "23.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/regexp.go:313:",
+      "function": "regexRuntimeProperty",
+      "coverage": "31.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/statements.go:13:",
+      "function": "statements",
+      "coverage": "88.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/statements.go:29:",
+      "function": "statement",
+      "coverage": "64.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/statements.go:119:",
+      "function": "expressionStatement",
+      "coverage": "44.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/statements.go:198:",
+      "function": "returnStatement",
+      "coverage": "46.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/string_substr.go:10:",
+      "function": "stringSubstr",
+      "coverage": "92.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/switch.go:16:",
+      "function": "switchBodyLeaves",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/switch.go:37:",
+      "function": "fallthroughSwitch",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/switch_bindings.go:10:",
+      "function": "initializeLocal",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/switch_bindings.go:28:",
+      "function": "switchBindings",
+      "coverage": "76.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/tsgo.go:15:",
+      "function": "tsgo",
+      "coverage": "11.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:9:",
+      "function": "typedArrayName",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:21:",
+      "function": "typedArrayKind",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:31:",
+      "function": "typedArrayUnsupported",
+      "coverage": "64.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:72:",
+      "function": "typedArrayExpression",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:236:",
+      "function": "typedArrayWrite",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:259:",
+      "function": "typedArrayForOf",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/typed_arrays.go:292:",
+      "function": "typedArraySetArgument",
+      "coverage": "88.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/unknown.go:11:",
+      "function": "dynamicObjectType",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/unknown.go:136:",
+      "function": "unknownView",
+      "coverage": "7.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/view_adapters.go:9:",
+      "function": "unavailableViewFamily",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/view_adapters.go:17:",
+      "function": "init",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/view_lazy.go:93:",
+      "function": "checkLazyViewReads",
+      "coverage": "6.1%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/view_unions_untagged.go:170:",
+      "function": "completeUntaggedRecursiveContracts",
+      "coverage": "25.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/lower/view_unions_untagged.go:254:",
+      "function": "certifyUntaggedCallableProducers",
+      "coverage": "14.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/arguments_length.go:12:",
+      "function": "closureArguments",
+      "coverage": "41.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/arguments_length.go:30:",
+      "function": "closureSlots",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/arguments_length.go:177:",
+      "function": "packedClosureCall",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:29:",
+      "function": "value",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:54:",
+      "function": "lendable",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:66:",
+      "function": "consumes",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:79:",
+      "function": "pure",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:93:",
+      "function": "pureKind",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:108:",
+      "function": "eachOperand",
+      "coverage": "92.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:138:",
+      "function": "lentArgument",
+      "coverage": "76.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:165:",
+      "function": "chainRoot",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/borrow.go:241:",
+      "function": "borrowChain",
+      "coverage": "36.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/class_features.go:19:",
+      "function": "prepareClassShapes",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/class_inheritance.go:12:",
+      "function": "classDeclarations",
+      "coverage": "8.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/class_inheritance.go:46:",
+      "function": "callCode",
+      "coverage": "8.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:24:",
+      "function": "planElementBorrows",
+      "coverage": "76.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:75:",
+      "function": "borrowable",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:100:",
+      "function": "assignedLocals",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:117:",
+      "function": "changingFunctions",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:133:",
+      "function": "changes",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:156:",
+      "function": "unchanging",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:252:",
+      "function": "loopBorrowable",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/element_borrow.go:262:",
+      "function": "borrowableChain",
+      "coverage": "38.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit.go:22:",
+      "function": "C",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit.go:26:",
+      "function": "cProgram",
+      "coverage": "84.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit.go:247:",
+      "function": "line",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit.go:253:",
+      "function": "temporary",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_arrays.go:190:",
+      "function": "joinKind",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:13:",
+      "function": "aside",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:18:",
+      "function": "asideWith",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:34:",
+      "function": "logical",
+      "coverage": "48.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:81:",
+      "function": "conditional",
+      "coverage": "88.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:118:",
+      "function": "unwrap",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_branches.go:139:",
+      "function": "coalesce",
+      "coverage": "84.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_expressions.go:13:",
+      "function": "evaluate",
+      "coverage": "24.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_expressions.go:732:",
+      "function": "binary",
+      "coverage": "27.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:10:",
+      "function": "functionName",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:14:",
+      "function": "signature",
+      "coverage": "90.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:50:",
+      "function": "functionBody",
+      "coverage": "65.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:129:",
+      "function": "returnStatement",
+      "coverage": "75.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:193:",
+      "function": "arguments",
+      "coverage": "40.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_functions.go:292:",
+      "function": "callThrough",
+      "coverage": "38.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:11:",
+      "function": "localName",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:20:",
+      "function": "readyName",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:28:",
+      "function": "store",
+      "coverage": "95.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:63:",
+      "function": "checkReady",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:65:",
+      "function": "localReady",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:75:",
+      "function": "checkReadyRead",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:89:",
+      "function": "read",
+      "coverage": "96.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:138:",
+      "function": "declareLocal",
+      "coverage": "84.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:167:",
+      "function": "makeCell",
+      "coverage": "70.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:182:",
+      "function": "cellName",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:188:",
+      "function": "cellSlot",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:196:",
+      "function": "cellReference",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_locals.go:212:",
+      "function": "allocateEnvironment",
+      "coverage": "25.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_numbers.go:41:",
+      "function": "mathCall",
+      "coverage": "58.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:18:",
+      "function": "fieldSlot",
+      "coverage": "30.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:53:",
+      "function": "staticFieldName",
+      "coverage": "28.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:72:",
+      "function": "writeFieldSlot",
+      "coverage": "92.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:118:",
+      "function": "objectLiteral",
+      "coverage": "39.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:226:",
+      "function": "shape",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:237:",
+      "function": "literalShape",
+      "coverage": "28.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:250:",
+      "function": "shapeOf",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:256:",
+      "function": "shapeWith",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:419:",
+      "function": "cache",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:427:",
+      "function": "dynamicProperties",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:447:",
+      "function": "fieldTypesNeeded",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_objects.go:461:",
+      "function": "fieldReadinessNeeded",
+      "coverage": "71.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:12:",
+      "function": "releaseScopes",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:28:",
+      "function": "hold",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:33:",
+      "function": "end",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:45:",
+      "function": "releaseGlobals",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:58:",
+      "function": "snapshot",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:66:",
+      "function": "retained",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:82:",
+      "function": "kept",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:92:",
+      "function": "taken",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:102:",
+      "function": "own",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_ownership.go:118:",
+      "function": "borrowed",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:29:",
+      "function": "block",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:43:",
+      "function": "decide",
+      "coverage": "42.9%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:55:",
+      "function": "statementAt",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:64:",
+      "function": "statement",
+      "coverage": "55.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:352:",
+      "function": "nested",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:361:",
+      "function": "loop",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:428:",
+      "function": "forOf",
+      "coverage": "73.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_statements.go:563:",
+      "function": "switchStatement",
+      "coverage": "91.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_strings.go:14:",
+      "function": "appendsTo",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_strings.go:31:",
+      "function": "appendTo",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_strings.go:40:",
+      "function": "stringCall",
+      "coverage": "34.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_values.go:9:",
+      "function": "cType",
+      "coverage": "69.2%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_values.go:38:",
+      "function": "member",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_values.go:52:",
+      "function": "zero",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/emit_values.go:70:",
+      "function": "cNumber",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/entries_records.go:32:",
+      "function": "hasRecordStorage",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/exceptions.go:86:",
+      "function": "closureThrown",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/exceptions.go:102:",
+      "function": "finallies",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/exceptions.go:118:",
+      "function": "innerHandlers",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/fields.go:12:",
+      "function": "uniformFieldSlot",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/fields.go:28:",
+      "function": "uniformFieldOffsets",
+      "coverage": "67.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/labels.go:21:",
+      "function": "linkLabels",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:28:",
+      "function": "RuntimeLibrary",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:32:",
+      "function": "RuntimeLibraryForSource",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:46:",
+      "function": "featureFlags",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:56:",
+      "function": "runtimeLibrary",
+      "coverage": "80.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:102:",
+      "function": "readRuntime",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:121:",
+      "function": "runtimeKey",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:143:",
+      "function": "cachedRuntime",
+      "coverage": "18.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:212:",
+      "function": "RuntimeLinkFlags",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library.go:219:",
+      "function": "slicesContain",
+      "coverage": "50.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library_json_stringify.go:9:",
+      "function": "jsonSchema",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library_json_stringify.go:28:",
+      "function": "jsonSlot",
+      "coverage": "62.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library_json_stringify.go:39:",
+      "function": "jsonStringify",
+      "coverage": "78.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library_math_number.go:10:",
+      "function": "libraryMathCall",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/library_math_number.go:23:",
+      "function": "libraryNumberCall",
+      "coverage": "19.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/maybe.go:11:",
+      "function": "maybe",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/maybe.go:33:",
+      "function": "maybeToString",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/native.go:26:",
+      "function": "cString",
+      "coverage": "81.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/native.go:78:",
+      "function": "Flags",
+      "coverage": "86.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/native.go:110:",
+      "function": "Build",
+      "coverage": "71.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:43:",
+      "function": "planRegions",
+      "coverage": "91.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:101:",
+      "function": "returnsFresh",
+      "coverage": "32.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:153:",
+      "function": "freshValue",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:250:",
+      "function": "feedsRegion",
+      "coverage": "85.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:299:",
+      "function": "regionVariants",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:307:",
+      "function": "regionFunctionName",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:313:",
+      "function": "regionFor",
+      "coverage": "66.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:322:",
+      "function": "regionValue",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:334:",
+      "function": "handRegion",
+      "coverage": "37.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:347:",
+      "function": "regionStatement",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/region.go:382:",
+      "function": "regionTarget",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:61:",
+      "function": "planReuse",
+      "coverage": "45.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:308:",
+      "function": "touches",
+      "coverage": "69.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:351:",
+      "function": "variableRead",
+      "coverage": "75.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:408:",
+      "function": "evaluated",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:419:",
+      "function": "forEachInstruction",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:428:",
+      "function": "spreadsOf",
+      "coverage": "83.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:453:",
+      "function": "walk",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:459:",
+      "function": "walkStatement",
+      "coverage": "91.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:502:",
+      "function": "walkExpressions",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:526:",
+      "function": "reused",
+      "coverage": "7.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:622:",
+      "function": "take",
+      "coverage": "15.4%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:663:",
+      "function": "handedOver",
+      "coverage": "33.3%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:675:",
+      "function": "arraysTaken",
+      "coverage": "35.7%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:742:",
+      "function": "spreadArray",
+      "coverage": "10.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/reuse.go:780:",
+      "function": "callConsumes",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/slots.go:13:",
+      "function": "slotted",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/slots.go:24:",
+      "function": "unslotted",
+      "coverage": "80.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/switch_tests.go:10:",
+      "function": "switchTests",
+      "coverage": "95.5%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/target.go:10:",
+      "function": "ValidateOptions",
+      "coverage": "18.8%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/target.go:37:",
+      "function": "compilerName",
+      "coverage": "40.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/typed_arrays.go:9:",
+      "function": "typedArrayKind",
+      "coverage": "60.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/typed_arrays.go:22:",
+      "function": "typedArrayOffset",
+      "coverage": "100.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/typed_arrays.go:30:",
+      "function": "typedArrayValue",
+      "coverage": "69.6%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/union.go:12:",
+      "function": "converted",
+      "coverage": "20.0%"
+    },
+    {
+      "location": "github.com/system-inc/adamic/internal/native/view_unions_read.go:8:",
+      "function": "init",
+      "coverage": "100.0%"
+    }
+  ],
+  "runtime_functions": [
+    "width",
+    "allocate",
+    "read_element",
+    "write_element",
+    "valid_index",
+    "adamic_typed_array_from_numbers",
+    "adamic_typed_array_get",
+    "adamic_typed_array_check_write",
+    "adamic_typed_array_set",
+    "adamic_typed_array_length",
+    "relative",
+    "adamic_typed_array_set_from",
+    "adamic_typed_array_subarray",
+    "adamic_typed_array_iterate",
+    "adamic_typed_array_iterator_next"
+  ],
+  "port_functions": [
+    "stats",
+    "numberAt",
+    "summarize",
+    "sortedCopy"
+  ],
+  "comparison": "internal/oracle/oracle_test.go:716 disagreement"
+}

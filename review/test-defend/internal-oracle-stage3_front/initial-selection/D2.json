@@ -1,0 +1,35 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestTypedArray.*|TestStage3Enum.*|TestNativeAgreesWithNode)$/(internal/oracle/testdata/(typed_arrays_.*|writes_past_end.a|write_after_shrink.a)|stage3/fixtures/enums/.*)$"
+  ],
+  "cache": "/tmp/defend-typed/cache/D2",
+  "uncached": true,
+  "wall_seconds": 17.461703180000768,
+  "exit": 1,
+  "binary_seconds": 11.456,
+  "statuses": {
+    "TestStage3EnumBoundaries": "pass",
+    "TestStage3EnumFallthrough": "pass",
+    "TestNativeAgreesWithNode": "pass",
+    "TestStage3EnumSparseArrayBoundary": "fail",
+    "TestTypedArrayWriteStopIsPinned": "fail",
+    "TestTypedArrayWorkersStatsMatchesPlatforms": "pass"
+  },
+  "failing_output": [
+    "enums_stage3_test.go:82: native: stderr differs; {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 105 110 100 101 120 32 49 32 105 115 32 98 101 121 111 110 100 32 97 110 32 97 114 114 97 121 32 111 102 32 108 101 110 103 116 104 32 48 10] exitCode:70}",
+    "enums_stage3_test.go:82: javascript: stderr differs; {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 105 110 100 101 120 32 49 32 105 115 32 98 101 121 111 110 100 32 97 110 32 97 114 114 97 121 32 111 102 32 108 101 110 103 116 104 32 48 10] exitCode:70}",
+    "typed_arrays_test.go:37: native: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is beyond an array of length 2\\n\"",
+    "typed_arrays_test.go:37: release: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is beyond an array of length 2\\n\"",
+    "typed_arrays_test.go:37: JavaScript: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is beyond an array of length 2\\n\""
+  ]
+}

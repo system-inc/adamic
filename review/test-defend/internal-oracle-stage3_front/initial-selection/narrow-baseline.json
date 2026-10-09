@@ -1,0 +1,29 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestTypedArray.*|TestStage3Enum.*|TestNativeAgreesWithNode)$/(internal/oracle/testdata/(typed_arrays_.*|writes_past_end.a|write_after_shrink.a)|stage3/fixtures/enums/.*)$"
+  ],
+  "cache": "/tmp/defend-typed/cache/narrow-baseline",
+  "uncached": true,
+  "wall_seconds": 2.3382283370010555,
+  "exit": 0,
+  "binary_seconds": 0.607,
+  "statuses": {
+    "TestStage3EnumBoundaries": "pass",
+    "TestStage3EnumFallthrough": "pass",
+    "TestNativeAgreesWithNode": "pass",
+    "TestStage3EnumSparseArrayBoundary": "pass",
+    "TestTypedArrayWriteStopIsPinned": "pass",
+    "TestTypedArrayWorkersStatsMatchesPlatforms": "pass"
+  },
+  "failing_output": []
+}

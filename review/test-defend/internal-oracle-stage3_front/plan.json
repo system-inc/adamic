@@ -1,0 +1,53 @@
+[
+  {
+    "mutant": "D1",
+    "menu": "change constant",
+    "change": "Change typed-array native panic wording, preserving stdout and exit 70.",
+    "edits": [
+      {
+        "file": "internal/native/runtime/typed_array.c",
+        "line": 101,
+        "before": "is outside an array of length",
+        "after": "is beyond an array of length"
+      }
+    ]
+  },
+  {
+    "mutant": "D2",
+    "menu": "change constant",
+    "change": "Change shared write-stop wording consistently in both native array runtimes and emitted JavaScript.",
+    "edits": [
+      {
+        "file": "internal/native/runtime/typed_array.c",
+        "line": 101,
+        "before": "is outside an array of length",
+        "after": "is beyond an array of length"
+      },
+      {
+        "file": "internal/native/runtime/array.c",
+        "line": 407,
+        "before": "is outside an array of length",
+        "after": "is beyond an array of length"
+      },
+      {
+        "file": "internal/javascript/javascript.go",
+        "line": 91,
+        "before": "is outside an array of length",
+        "after": "is beyond an array of length"
+      }
+    ]
+  },
+  {
+    "mutant": "D3",
+    "menu": "off-by-one bound",
+    "change": "Write one byte fewer from the typed-array panic message.",
+    "edits": [
+      {
+        "file": "internal/native/runtime/typed_array.c",
+        "line": 102,
+        "before": "adamic_panic(message, (size_t)written);",
+        "after": "adamic_panic(message, (size_t)written - 1);"
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+# u070 test audit
+
+Starting commit: 09fe4b54913753188a9357982bfd47cdf36ef97c. All 12 requested names exist in the starting package list, in the requested files. No rows moved or vanished. No family grouping changes these 12 rows.
+
+Code under test: Adamic lowering, typed-array native runtime, and the stats and summarize port functions in typed_arrays_workers_stats.a. The four witnesses additionally exercise the disagreement comparison. Oracles: Node executes source and the independent original Platforms reference; diagnostic and deliberate-stop pins are self-written. The reference .mjs and Node harness were never mutated. These names were stated before planting mutants. The planned operations and origin line numbers are in plan.json. functions.json and coverage-functions.txt inventory reached Go functions; the coverage run predates mutations. The C inventory lists typed-array functions, but does not exhaustively trace transitive allocator and runtime support.
+
+report.json is the full requested per-row JSON. mutant-table.json preserves actual failed rows and separately verdict-eligible rows. M01 and M13 failures in TestSwitchCaseDeclarationMutants break witness prerequisites and do not establish witness validity. W01 alone establishes all four witnesses. Helpers have no verdict. P01-P05 are probes and never establish sacred or subsumed.
+
+The full baseline ran to its 90-second timeout, with no individual test fail event before the timeout. Every scoped row passed three separate -count=1 runs with ADAMIC_GATE_UNCACHED=1. TestStage3FixtureHook was explicitly enabled with a fixture and result file. Timing values are medians of the binary's package ok line, not Go command wall time or a parallel parent's 0.00-second line. nproc was 5. The matrix includes all 12 rows plus 15 reached fixture subcases of TestNativeAgreesWithNode, enumerated in matrix-subcases.json. Other package rows and packages are unknown. All sacred results are bounded, not proven package-wide uniqueness. The subsumption hint rests on two production mutants; its 2.089-second subsumer cost is for the selected fixture subset only, not the full top-level TestNativeAgreesWithNode.
+
+Standalone M01-M13, W01, P01-P05 diffs apply to the starting origin/main. validation.json records patch application and build checks. Go diffs were checked with go vet and an overlay containing otherwise exact origin source. C diffs used the runtime's strict clang and sanitizer flags. Port diffs used Load, Lower and native.Build, with independent cache directories. The switched source is preserved in switch.patch, then reverted from production. Port selection reads /tmp/u070-selector; matrix.py records how it was set. M09 native standalone rebuild was 0.299317 seconds and M10 0.248524 seconds; load/lower times were 0.051632 and 0.046757 seconds. P03/P04 validation logs record their corresponding rebuild times. The switched Go test binary build cost 13.166 seconds. P05 was added after the main matrix to probe the actual native setter entry, compiled with the same clang flags, and tested alone; its run took 14.351 binary seconds, including a cold runtime rebuild.
+
+## Survivors
+
+M02 is unguarded within this matrix: survivor-switch.a prints AB on Node and control native, and A on mutant native. The empty alternative of an if is wrongly considered terminating. Commands, rebuild costs and outputs are in survivors.json and survivor-M02-*.log.
+
+M11 is unguarded within this matrix: the direct Refused.Error probe changes `Adamic 0.1 refuses` to `Adamic 0.2 refuses`, while all matrix rows pass. TestStatementsSmallRulings checks the error type and a reason substring, not the complete diagnostic. Both diagnostic outputs are in survivor-M11-*.log. No equivalent candidates remain.
+
+## Brief issues and costs
+
+The brief's reference commit 8de93800f4 was stale relative to fetched origin/main. The mandated fresh starting commit is recorded rather than treating stale line numbers as authoritative.
+
+The whole package is too large for the stated baseline budget. Its timeout is not a red semantic baseline. The bounded matrix and the additional reached fixtures permit useful comparisons, but cannot establish global or package-wide uniqueness. The full TestNativeAgreesWithNode median cannot be inferred from its selected fixture subset. Its shared catches are a two-mutant subsumption hint, not a deletion recommendation.
+
+The requested hook is a subprocess entry rather than a standalone agreement check. Without its parent environment it skips. Its enabled cost is measured here, while its parent TestFixtures family in stage3/fixtures was not run because the brief excludes other packages. The Node dead-zone row never runs Adamic. A meaningful permitted production mutant cannot reach it; changing Node or its translation harness would violate the oracle restriction.
+
+The four named mutant tests are witnesses. Treating their failed production prerequisites as kills would give false evidence about comparison strength. A single weakened disagreement comparison makes all four fail; these are recorded as W01, outside the 13 production mutants. The same empty comparator is also P02, recorded only as a probe in probe_kills.
+
+P01 returns no lowered program and panics in consumers. The matrix reran each unfinished requested row separately; no unexecuted row was inferred to fail. Probes must follow the actual code under test: WorkersStats uses P03/P04 port entries and TypedWrite uses P05 native setter rather than only a preparatory Lower probe. Positive and negative subcases were not independently proven vacuous where their entry probe aborted consumption; all applicable full rows failed their own probe.
+
+There are two checked-property increment constant sites. The M07 planting script initially rejected an ambiguous match before writing it; the specific updated-expression prefix was used without changing the planned operation. This cost a short editing retry, not an adaptive mutant chosen after failures.
+
+The package baseline skipped WASI opt-in rows and TestEntriesAcceptance outside this unit. They were not enabled for this bounded slice. TestStage3FixtureHook, the only scoped default skip, was enabled. baseline-skips.json lists all observed defaults; package rows after the timeout remain unknown. This does not assert every package skip was inspected or enabled.
+
+Warm tool setup was skipped (0 seconds); npm ci took 0.650 seconds. The full baseline command took 92.555 wall seconds and timed out at 90.126 binary seconds. The 39 timing commands took 111.401 wall seconds; the recorded matrix commands took 215.051 wall seconds; standalone validation took 22.364 wall seconds. These are command sums, not elapsed session duration, and some work overlapped. See summary.json, timing.json, matrix.json, validation.json and survivors.json for exact commands and separate build/run times. Inspection, coverage, logs, runtime cache preparation, report generation and push add session time. No repo-wide replay, full-package mutant replay, parent fixture package run, or complete transitive C call-graph proof was performed.

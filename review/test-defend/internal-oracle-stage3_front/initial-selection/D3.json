@@ -1,0 +1,32 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestTypedArray.*|TestStage3Enum.*|TestNativeAgreesWithNode)$/(internal/oracle/testdata/(typed_arrays_.*|writes_past_end.a|write_after_shrink.a)|stage3/fixtures/enums/.*)$"
+  ],
+  "cache": "/tmp/defend-typed/cache/D3",
+  "uncached": true,
+  "wall_seconds": 18.037882681001065,
+  "exit": 1,
+  "binary_seconds": 11.692,
+  "statuses": {
+    "TestStage3EnumBoundaries": "pass",
+    "TestStage3EnumFallthrough": "pass",
+    "TestNativeAgreesWithNode": "pass",
+    "TestStage3EnumSparseArrayBoundary": "pass",
+    "TestTypedArrayWriteStopIsPinned": "fail",
+    "TestTypedArrayWorkersStatsMatchesPlatforms": "pass"
+  },
+  "failing_output": [
+    "typed_arrays_test.go:37: native: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is outside an array of length \\n\"",
+    "typed_arrays_test.go:37: release: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is outside an array of length \\n\""
+  ]
+}

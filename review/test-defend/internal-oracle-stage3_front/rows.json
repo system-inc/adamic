@@ -1,0 +1,45 @@
+[
+  {
+    "test": "TestTypedArrayWriteStopIsPinned",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode",
+      "TestStage3EnumSparseArrayBoundary"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/typed_array.c:101",
+        "change": "Change typed-array native panic wording, preserving stdout and exit 70.",
+        "rows_failed": [
+          "TestTypedArrayWriteStopIsPinned",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/typed_array.c:101; internal/native/runtime/array.c:407; internal/javascript/javascript.go:91",
+        "change": "Change shared write-stop wording consistently in both native array runtimes and emitted JavaScript.",
+        "rows_failed": [
+          "TestStage3EnumSparseArrayBoundary",
+          "TestTypedArrayWriteStopIsPinned"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/typed_array.c:102",
+        "change": "Write one byte fewer from the typed-array panic message.",
+        "rows_failed": [
+          "TestTypedArrayWriteStopIsPinned",
+          "TestNativeAgreesWithNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-typed/cache/corrected-D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestTypedArray.*|TestStage3Enum.*|TestNativeAgreesWithNode)$/^(internal|stage3)$/^(oracle|fixtures)$/^(testdata|enums)$/^(typed_arrays_.*|writes_past_end.a|write_after_shrink.a|[0-9].*)$' > D2.log 2>&1; typed_arrays_test.go:37: native: stderr differs: exit 70 stdout \"before 2 7 undefined\\n\" stderr \"adamic: panic: index 2 is beyond an array of length 2\\n\"",
+    "bounded": true,
+    "finding": "D2 survives general agreement but fails both independent pins. Original sole-subsumer claim is disproved in this matrix; no single row catches all three attempts."
+  }
+]
