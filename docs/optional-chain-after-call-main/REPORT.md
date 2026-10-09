@@ -39,3 +39,7 @@ Counts regeneration adds six rows and changes eleven existing rows, enumerated w
 The original optional-stop mutant is preserved by restoring a narrowing check only when optionalReceiver is true, leaving main's other acceptsUndefined exemptions active. Seed 79 then disagrees with Node. Independent JavaScript/native mutants replace a catchable failed required read with the old invariant panic. Removing lowering's throw propagation changes the propagation fixture's output. The first flow-edge mutant experiment survived the execution fixture, so a separate flow test selects the actual inserted required-read error in the fixture and requires CanThrow. That test fails when its edge is removed. This independent selection uses encoding/json rather than copying CanThrow's reflective walk.
 
 Source fixture bytes are unchanged; native and JavaScript emit the same semantics. No compiler/runtime dependency beyond main was carried. Setup cumulative timing lines: Go 0.022s, Node 0.023s, submodules 0.065s, markdown dependencies 0.074s, clang 0.157s, Go build 40.350s, cache 40.523s, done 40.550s. nproc=5, cgroup CPU quota=4. Go 1.27.1, Node 24.19.0, clang 20.1.8. All commands sent test output to logs. evidence/ holds compressed logs and mutant command/results.
+
+Final lane replay on committed delivery: exit 0.
+lane checks 1.7 s: gofmt and tools on 8 Go files, t.Parallel on 2 test packages; vet 2 packages
+All six fixture byte comparisons against 611f6e09 passed.
