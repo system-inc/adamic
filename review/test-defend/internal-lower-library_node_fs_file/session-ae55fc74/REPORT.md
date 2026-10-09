@@ -24,3 +24,5 @@ Scope and costs:
 - Default sandbox is read-only. One coverage-diff write initially failed and was rerun with approved write permission. Tests and production mutations were executed only after approved escalation.
 - The whole-package baseline remained below 90 seconds, so no narrowing was necessary. Four mutants fit the near-minute matrix budget. Three attempts were not needed for any row because each obtained a unique kill.
 - No non-defended rows remain, so no missing-name-promise finding is asserted. The positive test's oracle was strengthened since the audit, which materially changes its prior empty-answer finding.
+
+Publication: the existing remote defense branch contains earlier sessions and unrelated lint test changes. This session is isolated under session-ae55fc74. Earlier evidence is preserved unchanged; unrelated test changes are not incorporated into this origin/main-based defense.
