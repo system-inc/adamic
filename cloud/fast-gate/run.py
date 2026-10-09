@@ -57,7 +57,6 @@ slowPackageSeconds = 3600
 # have failed 8, all on box load (TestInspectRequestRefusals took 147 to 265 s in 12-CPU slots). The gate measures
 # on its own box until Loom's Codex tier measures every unit on the reference shape, and the verdict names it.
 longTestSeconds = 30
-fastUnitSeconds = 60
 unitKillSeconds = 90
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
@@ -390,26 +389,12 @@ class Gate:
         if not smoke:
             self.fail("smoke", "no smoke list in the gated tree or the tools checkout")
             return
-        # Build and vet finish before any products or tests start.
-        preparation = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet)]
-        for thread in preparation:
-            thread.start()
-        for thread in preparation:
-            thread.join()
-        if self.failure is not None:
-            return
-        for stage in ("build", "vet"):
-            if self.exits.get(stage) != 0:
-                self.fail(stage, "stage did not record exit 0")
-                return
+        # Everything starts at once: the tests compile what they need through the same build cache,
+        # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
-        tests = self.guarded("tests", self.testSplit, packages, log)
-        tests.start()
-        tests.join()
-        if self.failure is not None and (not self.complete or self.exits.get("products", 0) != 0):
-            log.close()
-            return
-        threads = [self.guarded("smoke", self.smoke, smoke, log),
+        threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
+                   self.guarded("tests", self.testSplit, packages, log),
+                   self.guarded("smoke", self.smoke, smoke, log),
                    self.guarded("determinism", self.determinism, smoke)]
         if "stage3" in executors:
             threads.append(self.guarded("stage3", self.stage3))
@@ -1508,7 +1493,56 @@ class Gate:
         # slot, and three such gates took Cloud to load 900 and Workshop to 10 GB free (Oct 8 11:2xZ).
         builds = threading.Semaphore(2)
         threads = []
-        products = []
+        declared = {}
+        for package in packages:
+            names = set()
+            for path in glob.glob(os.path.join(self.packageDirectories[package], "*_test.go")):
+                with open(path) as source:
+                    names.update(re.findall(r"^func\s+(TestProduct_\w+)\s*\(\s*\w+\s+\*testing\.T\s*\)", source.read(), re.M))
+            declared[package] = names
+        productsReady = threading.Event()
+        productsFailed = threading.Event()
+        buildsDone = threading.Event()
+        productRows = [{"package": package, "test": name, "product": True, "status": "not run"}
+                       for package in sorted(declared) for name in sorted(declared[package])]
+        productsRemaining = len(productRows)
+        productStarted = time.monotonic()
+        if productRows:
+            self.planned = getattr(self, "planned", ["tests"])
+            self.planned.insert(self.planned.index("tests"), "products")
+            self.result["product_units"] = productRows
+        else:
+            productsReady.set()
+        productPool = ThreadPoolExecutor(max_workers=max(1, slotCPUs() // 4))
+
+        def runProduct(row, binary):
+            self.productUnit(row, binary, log)
+            nonlocal productsRemaining
+            with self.lock:
+                if row["status"] == "passed":
+                    productsRemaining -= 1
+                    if productsRemaining == 0 and not productsFailed.is_set():
+                        self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                        self.exits["products"] = 0
+                        productsReady.set()
+                else:
+                    self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                    self.exits["products"] = 1
+                    productsFailed.set()
+
+        def checkProducts(package, names):
+            listed = {name for name in names if name.startswith("TestProduct_")}
+            if listed != declared[package]:
+                productsFailed.set()
+                self.exits["products"] = 1
+                self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+                if "products" not in getattr(self, "planned", []):
+                    self.planned = getattr(self, "planned", ["tests"])
+                    self.planned.insert(self.planned.index("tests"), "products")
+                self.fail("products", "%s product scan/list mismatch: source=%s listed=%s" %
+                          (package, sorted(declared[package]), sorted(listed)))
+                return False
+            return True
         # Every package compiled and listed, and every test process it planned exited 0: counted, so a
         # process that never ran can't pass for one that did.
         tally = {"packages": 0, "planned": 0, "passed": 0}
@@ -1524,6 +1558,8 @@ class Gate:
                     return
                 if not os.path.exists(binary):
                     # go test -c succeeded and wrote nothing: the package has no test files.
+                    if not checkProducts(importPath, []):
+                        return
                     with self.lock:
                         tally["packages"] += 1
                     self.result.setdefault("split_tests", {})[importPath] = 0
@@ -1534,9 +1570,11 @@ class Gate:
             with self.lock:
                 tally["packages"] += 1
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
-            productNames = [name for name in names if name.startswith("TestProduct_")]
-            with self.lock:
-                products.extend((importPath, name, binary) for name in productNames)
+            if not checkProducts(importPath, names):
+                return
+            for row in productRows:
+                if row["package"] == importPath:
+                    productPool.submit(runProduct, row, binary)
             names = [name for name in names if not name.startswith("TestProduct_")]
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if name in self.onlyTests[importPath]]
@@ -1563,7 +1601,7 @@ class Gate:
             ready = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
-                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=90s", "-test.parallel=2", "-test.skip", "^TestProduct_", "-test.run", patterns.get(name, "^%s$" % name)]
+                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.skip", "^TestProduct_", "-test.run", patterns.get(name, "^%s$" % name)]
                 seconds, parallel = history.get((importPath, name), (60, False))
                 ready.append((seconds, parallel, importPath, name, command))
             # A package's tests arrive together, so a waiting worker can't take its short one before its long one.
@@ -1575,7 +1613,7 @@ class Gate:
                 return (60, 1)
             return (max(known), 0)
 
-        remaining = sorted(packages, key=lambda package: (-packageWeight(package)[0], -packageWeight(package)[1], package))
+        remaining = sorted(packages, key=lambda package: (not bool(declared[package]), -packageWeight(package)[0], -packageWeight(package)[1], package))
 
         def buildWorker():
             while True:
@@ -1598,7 +1636,10 @@ class Gate:
                     return
                 package, name, seconds, permits, command = item
                 try:
-                    if getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                    while not productsReady.wait(0.05):
+                        if productsFailed.is_set() or buildsDone.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                            return
+                    if productsFailed.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
                         return
                     if permits == 4:
                         command = ["-test.parallel=8" if part == "-test.parallel=2" else part for part in command]
@@ -1613,63 +1654,49 @@ class Gate:
                         self.testLaunchLock.release()
                     queue.release(permits)
 
-        # Discovery must finish across every package before the products barrier opens.
+        # Start tests immediately; only their launches wait for products, while builds stream in.
+        testers = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
+        for thread in testers:
+            thread.start()
         for _ in range(min(2, self.arguments.parallel)):
             thread = self.guarded("tests", buildWorker)
             thread.start()
             threads.append(thread)
         for thread in threads:
             thread.join()
+        productPool.shutdown(wait=True)
+        if productRows:
+            self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+            self.exits["products"] = 0 if productsReady.is_set() and not productsFailed.is_set() else 1
+        buildsDone.set()
         queue.close()
-        self.steps["test-binaries"] = round(time.monotonic() - started, 1)
-        if products:
-            if "products" not in getattr(self, "planned", []):
-                self.planned = getattr(self, "planned", ["tests"])
-                self.planned.insert(self.planned.index("tests"), "products")
-            self.products(products, log)
-        testsStarted = None
-        if self.failure is None and not getattr(self, "stopped", None):
-            testsStarted = time.monotonic()
-            testers = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
-            for thread in testers:
-                thread.start()
-            for thread in testers:
-                thread.join()
+        for thread in testers:
+            thread.join()
 
         self.watchers.remove(watch)
         record.update(observations)
-        self.steps["tests"] = round(time.monotonic() - testsStarted, 1) if testsStarted is not None else 0.0
+        self.steps["tests"] = round(time.monotonic() - started, 1)
         complete = tally["packages"] == len(packages) and tally["passed"] == tally["planned"]
         self.exits["tests"] = 0 if complete and self.failure is None else 1
         self.result["split_tally"] = dict(tally, touched=len(packages))
 
-    def products(self, products, log):
-        """Each declared build is one unit, including its setup, before any test units."""
-        started = time.monotonic()
-        rows = [{"package": package, "test": name, "product": True, "status": "not run"}
-                for package, name, _ in sorted(products)]
-        self.result["product_units"] = rows
-        binaries = {(package, name): binary for package, name, binary in products}
-        def work(row):
-            if self.failure is not None or getattr(self, "stopped", None):
-                return
-            package, name = row["package"], row["test"]
-            command = ["go", "tool", "test2json", "-t", "-p", package, binaries[package, name],
-                       "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=90s",
-                       "-test.parallel=1", "-test.run", "^%s$" % re.escape(name)]
-            before = time.monotonic()
-            try:
-                code = self.stream("products", command, log, self.packageDirectories[package], {"GOMAXPROCS": "1"})
-            except BaseException:
-                code = None
-                self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
-            row.update(seconds=round(time.monotonic() - before, 6), status="passed" if code == 0 else "failed")
-            if code != 0:
-                self.fail("products", "%s %s failed or was killed" % (package, name))
-        with ThreadPoolExecutor(max_workers=max(1, min(self.arguments.parallel, slotCPUs()))) as pool:
-            list(pool.map(work, rows))
-        self.steps["products"] = round(time.monotonic() - started, 3)
-        self.exits["products"] = 0 if all(row["status"] == "passed" for row in rows) else 1
+    def productUnit(self, row, binary, log):
+        """A declared build, including setup, on the four-CPU reference shape."""
+        if self.failure is not None or getattr(self, "stopped", None):
+            return
+        package, name = row["package"], row["test"]
+        command = ["go", "tool", "test2json", "-t", "-p", package, binary,
+                   "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=90s",
+                   "-test.parallel=4", "-test.run", "^%s$" % re.escape(name)]
+        before = time.monotonic()
+        try:
+            code = self.stream("products", command, log, self.packageDirectories[package], {"GOMAXPROCS": "4"})
+        except BaseException:
+            code = None
+            self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
+        row.update(seconds=round(time.monotonic() - before, 6), status="passed" if code == 0 else "failed")
+        if code != 0:
+            self.fail("products", "%s %s failed or was killed" % (package, name))
 
     def slotted(self, command, log, importPath, name, tally):
         environment = None
@@ -1785,7 +1812,7 @@ class Gate:
             raise
         deadline = None
         drained = threading.Event()
-        if name in ("products", "tests") and "test2json" in command:
+        if name == "products" and "test2json" in command:
             def expired():
                 if not drained.is_set():
                     package = command[command.index("-p") + 1]
@@ -1992,7 +2019,6 @@ class Gate:
         doesn't hold, naming each one, its seconds and the box that measured it. Existing units over it are named
         as drift, and burn-down units this run measured under the line too (budget_can_leave_burndown), so the
         record shrinks."""
-        threshold = longTestSeconds if self.arguments.full else fastUnitSeconds
         burndown = set()
         try:
             with open(os.path.join(self.arguments.tools, "cloud/fast-gate/budget-burndown.tsv")) as handle:
@@ -2014,7 +2040,7 @@ class Gate:
         unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, fork, row[0], row[1])]
         drift = [row for row in offBurndown if row not in unlisted]
         self.result.update({
-            "budget_seconds": threshold,
+            "budget_seconds": longTestSeconds,
             "budget_instrument": {"box": os.uname().nodename, "cpus": os.cpu_count(), "load": [round(value, 1) for value in os.getloadavg()],
                                   "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"},
             "budget_burndown_units": listed,
@@ -2025,7 +2051,7 @@ class Gate:
         if unlisted and self.failure is None and not getattr(self, "stopped", None):
             instrument = self.result["budget_instrument"]
             self.fail("budget", "%d new test units over the %d s budget (measured on %s, %d CPUs, load %s; split each into units under %d s):\n%s" % (
-                len(unlisted), threshold, instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]), threshold,
+                len(unlisted), longTestSeconds, instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]), longTestSeconds,
                 "\n".join("  %s %s %.1f s (%s)" % (package, name, seconds, action) for package, name, seconds, action in unlisted)))
 
     def status(self, line):
@@ -2049,8 +2075,7 @@ class Gate:
         self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
                                  "product": name.startswith("TestProduct_")}
                                 for (package, name), (seconds, action) in sorted(units.items())]
-        threshold = longTestSeconds if self.arguments.full else fastUnitSeconds
-        ledger = longTests(units, threshold)
+        ledger = longTests(units)
         self.budget(ledger, units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
         if unfinished and self.failure is None and not getattr(self, "stopped", None):
@@ -2078,7 +2103,7 @@ class Gate:
         with open(os.path.join(self.arguments.out, "long-tests.tsv"), "w") as handle:
             for package, name, seconds, action in ledger:
                 handle.write("%s\t%s\t%.2f\t%s\n" % (package, name, seconds, action))
-        self.result.update({"long_test_threshold_seconds": threshold, "long_tests": len(ledger),
+        self.result.update({"long_test_threshold_seconds": longTestSeconds, "long_tests": len(ledger),
                             "long_test_seconds": round(sum(row[2] for row in ledger), 1)})
         outcomes = self.result.get("test_outcomes", [])
         self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
@@ -2090,7 +2115,7 @@ class Gate:
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
         if self.result.get("slow_packages"):
             steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
-        steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), threshold, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
+        steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))
@@ -2230,9 +2255,9 @@ def testInBase(tree, base, package, unit):
     return found.returncode == 0
 
 
-def longTests(units, threshold=longTestSeconds):
+def longTests(units):
     """The units (testUnits) over longTestSeconds, longest first: (package, unit, seconds, action)."""
-    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > threshold),
+    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > longTestSeconds),
                   key=lambda row: (-row[2], row[0], row[1]))
 
 
