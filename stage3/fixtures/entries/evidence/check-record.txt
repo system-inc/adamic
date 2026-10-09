@@ -1,0 +1,8 @@
+PASS 01_scanner_keywords.a Node golden and source mutant; Refused
+PASS 02_hidden_same_type.a Node golden and source mutant; NotYet
+PASS 03_hidden_other_type.a Node golden and source mutant; NotYet
+PASS 04_alias_add_key.a Node golden and source mutant; Refused
+PASS 05_getter.a Node golden and source mutant; NotYet
+PASS 06_symbol_key.a Node golden and source mutant; NotYet
+PASS exact scanner spans and all 84 keyword rows
+PASS six fixtures and six source mutants; current observations held independently of future contracts

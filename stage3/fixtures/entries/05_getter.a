@@ -1,0 +1,15 @@
+// a-check: checked
+// Step 12: Object.entries invokes the getter on Node; Adamic's first version refuses accessors.
+interface Visible { readonly visible: number; }
+let getterReads = 0;
+const source = {
+    visible: 1,
+    get hidden(): number { getterReads += 1; return 2; },
+};
+const view: Visible = source;
+console.log('before entries');
+const entries: [string, number][] = Object.entries(view);
+console.log('count:' + entries.length);
+entries.forEach(entry => console.log(entry[0] + ':' + entry[1]));
+console.log('getter reads:' + getterReads);
+console.log('after entries');

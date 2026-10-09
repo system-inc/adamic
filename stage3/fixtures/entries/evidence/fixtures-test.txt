@@ -1,0 +1,58 @@
+=== RUN   TestFixtures
+=== PAUSE TestFixtures
+=== CONT  TestFixtures
+=== RUN   TestFixtures/entries
+=== PAUSE TestFixtures/entries
+=== CONT  TestFixtures/entries
+=== RUN   TestFixtures/entries/01_scanner_keywords.a
+=== PAUSE TestFixtures/entries/01_scanner_keywords.a
+=== RUN   TestFixtures/entries/02_hidden_same_type.a
+=== PAUSE TestFixtures/entries/02_hidden_same_type.a
+=== RUN   TestFixtures/entries/03_hidden_other_type.a
+=== PAUSE TestFixtures/entries/03_hidden_other_type.a
+=== RUN   TestFixtures/entries/04_alias_add_key.a
+=== PAUSE TestFixtures/entries/04_alias_add_key.a
+=== RUN   TestFixtures/entries/05_getter.a
+=== PAUSE TestFixtures/entries/05_getter.a
+=== RUN   TestFixtures/entries/06_symbol_key.a
+=== PAUSE TestFixtures/entries/06_symbol_key.a
+=== CONT  TestFixtures/entries/01_scanner_keywords.a
+=== CONT  TestFixtures/entries/03_hidden_other_type.a
+=== CONT  TestFixtures/entries/06_symbol_key.a
+=== CONT  TestFixtures/entries/04_alias_add_key.a
+=== CONT  TestFixtures/entries/05_getter.a
+=== RUN   TestFixtures/entries/05_getter.a/node
+=== RUN   TestFixtures/entries/03_hidden_other_type.a/node
+=== RUN   TestFixtures/entries/05_getter.a/stage0
+=== CONT  TestFixtures/entries/02_hidden_same_type.a
+=== RUN   TestFixtures/entries/04_alias_add_key.a/node
+=== RUN   TestFixtures/entries/06_symbol_key.a/node
+=== RUN   TestFixtures/entries/01_scanner_keywords.a/node
+=== RUN   TestFixtures/entries/03_hidden_other_type.a/stage0
+=== RUN   TestFixtures/entries/04_alias_add_key.a/stage0
+=== RUN   TestFixtures/entries/06_symbol_key.a/stage0
+=== RUN   TestFixtures/entries/01_scanner_keywords.a/stage0
+=== RUN   TestFixtures/entries/02_hidden_same_type.a/node
+=== RUN   TestFixtures/entries/02_hidden_same_type.a/stage0
+--- PASS: TestFixtures (25.42s)
+    --- PASS: TestFixtures/entries (0.00s)
+        --- PASS: TestFixtures/entries/05_getter.a (0.55s)
+            --- PASS: TestFixtures/entries/05_getter.a/node (0.00s)
+            --- PASS: TestFixtures/entries/05_getter.a/stage0 (0.00s)
+        --- PASS: TestFixtures/entries/03_hidden_other_type.a (1.42s)
+            --- PASS: TestFixtures/entries/03_hidden_other_type.a/node (0.00s)
+            --- PASS: TestFixtures/entries/03_hidden_other_type.a/stage0 (0.00s)
+        --- PASS: TestFixtures/entries/04_alias_add_key.a (1.44s)
+            --- PASS: TestFixtures/entries/04_alias_add_key.a/node (0.00s)
+            --- PASS: TestFixtures/entries/04_alias_add_key.a/stage0 (0.00s)
+        --- PASS: TestFixtures/entries/06_symbol_key.a (1.50s)
+            --- PASS: TestFixtures/entries/06_symbol_key.a/node (0.00s)
+            --- PASS: TestFixtures/entries/06_symbol_key.a/stage0 (0.00s)
+        --- PASS: TestFixtures/entries/01_scanner_keywords.a (1.71s)
+            --- PASS: TestFixtures/entries/01_scanner_keywords.a/node (0.00s)
+            --- PASS: TestFixtures/entries/01_scanner_keywords.a/stage0 (0.00s)
+        --- PASS: TestFixtures/entries/02_hidden_same_type.a (1.45s)
+            --- PASS: TestFixtures/entries/02_hidden_same_type.a/node (0.00s)
+            --- PASS: TestFixtures/entries/02_hidden_same_type.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	27.476s

@@ -1,0 +1,100 @@
+[
+  {
+    "file": "01_scanner_keywords.a",
+    "tsc": [
+      "src/compiler/scanner.ts:136",
+      "src/compiler/scanner.ts:222",
+      "src/compiler/corePublic.ts:13"
+    ],
+    "reason": "Upstream scanner exact keyword allocation and Map(Object.entries) expression.",
+    "node": {
+      "stdout": "count:84\nabstract:128\naccessor:129\nany:133\nas:130\nasserts:131\nassert:132\nbigint:163\nboolean:136\nbreak:83\ncase:84\ncatch:85\nclass:86\ncontinue:88\nconst:87\nconstructor:137\ndebugger:89\ndeclare:138\ndefault:90\ndefer:166\ndelete:91\ndo:92\nelse:93\nenum:94\nexport:95\nextends:96\nfalse:97\nfinally:98\nfor:99\nfrom:161\nfunction:100\nget:139\nif:101\nimplements:119\nimport:102\nin:103\ninfer:140\ninstanceof:104\ninterface:120\nintrinsic:141\nis:142\nkeyof:143\nlet:121\nmodule:144\nnamespace:145\nnever:146\nnew:105\nnull:106\nnumber:150\nobject:151\npackage:122\nprivate:123\nprotected:124\npublic:125\noverride:164\nout:147\nreadonly:148\nrequire:149\nglobal:162\nreturn:107\nsatisfies:152\nset:153\nstatic:126\nstring:154\nsuper:108\nswitch:109\nsymbol:155\nthis:110\nthrow:111\ntrue:112\ntry:113\ntype:156\ntypeof:114\nundefined:157\nunique:158\nunknown:159\nusing:160\nvar:115\nvoid:116\nwhile:117\nwith:118\nyield:127\nasync:134\nawait:135\nof:165\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/entries/01_scanner_keywords.a:95:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "02_hidden_same_type.a",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "reason": "Fresh const literal narrowed to Visible; enumerate the hidden number without a reflection check.",
+    "node": {
+      "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\nafter entries\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/entries/02_hidden_same_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+    }
+  },
+  {
+    "file": "03_hidden_other_type.a",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "reason": "Open view hides an incompatible value; checked reflection stops before exposing any entries.",
+    "node": {
+      "stdout": "before entries\ncount:2\nvisible:1\nhidden:wrong\nafter entries\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/entries/03_hidden_other_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+    }
+  },
+  {
+    "file": "04_alias_add_key.a",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "reason": "An alias writes a new data property before entries; checked reflection succeeds and includes it.",
+    "node": {
+      "stdout": "before entries\ncount:2\nvisible:1\nlate:2\nafter entries\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/entries/04_alias_add_key.a:4:34: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+    }
+  },
+  {
+    "file": "05_getter.a",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "reason": "Accessors are outside the first version, even when the getter returns the right value type.",
+    "node": {
+      "stdout": "before entries\ncount:2\nvisible:1\nhidden:2\ngetter reads:1\nafter entries\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/entries/05_getter.a:11:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+    }
+  },
+  {
+    "file": "06_symbol_key.a",
+    "tsc": [
+      "src/compiler/scanner.ts:222"
+    ],
+    "reason": "A symbol own key is outside the first version; Node intentionally omits it from entries.",
+    "node": {
+      "stdout": "before entries\ncount:1\nvisible:1\nafter entries\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/entries/06_symbol_key.a:4:30: stage 0 can't lower a computed field name yet"
+    }
+  }
+]
