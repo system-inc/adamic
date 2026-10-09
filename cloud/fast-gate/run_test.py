@@ -2564,3 +2564,106 @@ class FinishRedSort(unittest.TestCase):
             with open(os.path.join(out, 'status.txt')) as handle:
                 self.assertIn('no main record on these tools', handle.read())
 
+
+
+class PlantedRedSortProof(unittest.TestCase):
+    """Real Go answers and real published refs, using finish's production sort path."""
+    def test_real_wrong_answer_among_mains_reds_is_one_candidate_red(self):
+        from input_hashes import tools_fingerprint
+        import sort_reds
+        with tempfile.TemporaryDirectory() as root:
+            tree, remote = os.path.join(root, 'tree'), os.path.join(root, 'origin.git')
+            os.makedirs(tree)
+            def command(args, **options):
+                return realRun(args, cwd=tree, capture_output=True, text=True, timeout=90, **options)
+            def git(*args, input=None):
+                return command(['git', '-c', 'user.name=proof', '-c', 'user.email=proof@example.com'] + list(args),
+                               input=input, check=True).stdout.strip()
+            def write(path, content):
+                target = os.path.join(tree, path)
+                os.makedirs(os.path.dirname(target), exist_ok=True)
+                with open(target, 'w') as handle:
+                    handle.write(content)
+            write('go.mod', 'module example.com/proof\n\ngo 1.23\n')
+            write('legacy/legacy_test.go', 'package legacy\nimport "testing"\nfunc TestMainRed(t *testing.T) { t.Fatal("assertion diff: main existing red") }\n')
+            write('answer/answer.go', 'package answer\nfunc Answer() int { return 1 }\n')
+            write('answer/answer_test.go', 'package answer\nimport "testing"\nfunc TestAnswer(t *testing.T) { if got := Answer(); got != 1 { t.Fatalf("assertion diff: got %d want 1", got) } }\n')
+            git('init', '-q')
+            git('add', '.')
+            git('commit', '-qm', 'main has one existing red and a correct answer')
+            main_sha = git('rev-parse', 'HEAD')
+            git('init', '-q', '--bare', remote)
+            git('remote', 'add', 'origin', remote)
+            git('push', '-q', 'origin', main_sha + ':refs/heads/main')
+            fingerprint = tools_fingerprint(PhaseInputs.tree)
+            def finish(sha, label, publish_lookup):
+                out = os.path.join(root, label)
+                os.makedirs(out)
+                tests = command(['go', 'test', '-count=1', '-json', '-timeout', '90s', './...'])
+                self.assertEqual(tests.returncode, 1, tests.stderr)
+                with open(os.path.join(out, 'test.jsonl'), 'w') as handle:
+                    handle.write(tests.stdout)
+                gate = run.Gate.__new__(run.Gate)
+                gate.arguments = types.SimpleNamespace(tree=tree, tools=PhaseInputs.tree, out=out,
+                    sha=sha, base=main_sha, full=True, branch='', session='')
+                gate.kind, gate.started = 'full', time.monotonic()
+                gate.lock, gate.processes = threading.Lock(), []
+                gate.steps, gate.exits, gate.planned = {}, {'tests': 1}, ['tests']
+                events = [json.loads(line) for line in tests.stdout.splitlines()]
+                gate.failedTests = sorted({event['Package'] + ' ' + event['Test'] for event in events
+                                          if event.get('Test') and event.get('Action') == 'fail'})
+                gate.counts = {action: sum(event.get('Action') == action and bool(event.get('Test')) for event in events)
+                               for action in ('pass', 'fail', 'skip')}
+                gate.census = {'required_input': [], 'unclassified': []}
+                gate.complete = True
+                gate.failure = {'step': 'tests', 'detail': gate.failedTests[0], 'after_seconds': 0}
+                gate.result = {'sha': sha, 'base': main_sha, 'tools_fingerprint': fingerprint}
+                with mock.patch('builtins.print'):
+                    if publish_lookup:
+                        gate.finish()
+                    else:
+                        with mock.patch.object(run, 'sort_record', side_effect=lambda record, tree: sort_reds.sort_reds(record)):
+                            gate.finish()
+                with open(os.path.join(out, 'full.json')) as handle:
+                    result = json.load(handle)
+                with open(os.path.join(out, 'status.txt')) as handle:
+                    status = handle.read()
+                return result, status
+            main, _ = finish(main_sha, 'main', False)
+            # Publish the record exactly as gate-logs refs do: JSON at the Git tree root.
+            blob = git('hash-object', '-w', '--stdin', input=json.dumps(main))
+            log_tree = git('mktree', input='100644 blob ' + blob + '\tfull.json\n')
+            log_commit = git('commit-tree', log_tree, '-m', 'finished main gate proof')
+            main_ref = 'gate-logs/' + main_sha[:12] + '/20261009T081700Z/full-main'
+            git('push', '-q', 'origin', log_commit + ':refs/heads/' + main_ref)
+            write('answer/answer.go', 'package answer\nfunc Answer() int { return 2 }\n')
+            git('add', '.')
+            git('commit', '-qm', 'plant a real wrong answer in the candidate')
+            candidate_sha = git('rev-parse', 'HEAD')
+            candidate, status = finish(candidate_sha, 'candidate', True)
+            result = candidate['red_sort']
+            self.assertEqual(result['main_record'], main_ref)
+            self.assertEqual(result['candidate_reds'], 1, result)
+            self.assertEqual([row['unit'] for row in result['candidate']], ['example.com/proof/answer TestAnswer'])
+            self.assertEqual([row['unit'] for row in result['mains']], ['example.com/proof/legacy TestMainRed'])
+            self.assertEqual(result['infra'], [])
+            self.assertEqual(result['stale'], [])
+            self.assertIn('candidate reds: 1', status)
+
+    def test_all_mains_mutant_fails_the_planted_proof(self):
+        import sort_reds
+        original = sort_reds.sort_reds
+        def all_mains(*args, **kwargs):
+            result = original(*args, **kwargs)
+            result['mains'] += result['candidate']
+            result['candidate'] = []
+            result['candidate_reds'] = 0
+            result['status'] = 'candidate reds: 0'
+            return result
+        with mock.patch.object(sort_reds, 'sort_reds', side_effect=all_mains):
+            result = unittest.TestResult()
+            PlantedRedSortProof('test_real_wrong_answer_among_mains_reds_is_one_candidate_red').run(result)
+        self.assertEqual(result.testsRun, 1)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 1, 'all-mains mutant survived the proof')
+        self.assertIn('0 != 1', result.failures[0][1])
