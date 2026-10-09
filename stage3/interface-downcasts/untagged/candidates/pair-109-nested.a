@@ -1,0 +1,20 @@
+// Independently written recursive FlowNode contract projection.
+interface ProjectionNode {readonly kind:number;}
+interface Terminal {readonly flags:number;readonly id:number;readonly node:undefined;readonly antecedent:undefined;}
+interface Start {readonly flags:number;readonly id:number;readonly node?:{readonly kind:10};readonly antecedent:undefined;}
+interface Label {readonly flags:number;readonly id:number;readonly node:undefined;readonly antecedent?:readonly FlowNode[];}
+interface Assignment {readonly flags:number;readonly id:number;readonly node:{readonly kind:20};readonly antecedent:FlowNode;}
+interface Call {readonly flags:number;readonly id:number;readonly node:{readonly kind:21};readonly antecedent:FlowNode;}
+interface Condition {readonly flags:number;readonly id:number;readonly node:{readonly kind:22};readonly antecedent:FlowNode;}
+interface SwitchData {readonly switchStatement:{readonly kind:23};readonly clauseStart:number;readonly clauseEnd:number;}
+interface Switch {readonly flags:number;readonly id:number;readonly node:SwitchData;readonly antecedent:FlowNode;}
+interface Mutation {readonly flags:number;readonly id:number;readonly node:{readonly kind:24};readonly antecedent:FlowNode;}
+interface ReduceData {readonly target:Label;readonly antecedents:readonly FlowNode[];}
+interface Reduce {readonly flags:number;readonly id:number;readonly node:ReduceData;readonly antecedent:FlowNode;}
+type FlowNode=Terminal|Start|Label|Assignment|Call|Condition|Switch|Mutation|Reduce;
+interface ReadReceiver {readonly kind:'Receiver';readonly antecedent:FlowNode;}
+const raw0={kind:'Receiver' as const,antecedent:{flags:1,id:1,node:{kind:20},antecedent:{flags:1,id:1,node:true,antecedent:{flags:0,id:1,node:undefined,antecedent:undefined}}}};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const value0=view0.antecedent;
+console.log(`${value0!==undefined}`);

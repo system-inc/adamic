@@ -7,6 +7,7 @@
 adamic_view_union_value adamic_view_union_heap(const adamic_heap *value) {
     adamic_view_union_value snapshot = {adamic_view_union_unknown, {.reference = (void *)value}};
     if (value == NULL) { snapshot.kind = adamic_view_union_undefined; return snapshot; }
+    if (value == &adamic_null) { snapshot.kind = adamic_view_union_null; return snapshot; }
     switch (value->kind) {
     case adamic_kind_number:
         snapshot.kind = adamic_view_union_number;
