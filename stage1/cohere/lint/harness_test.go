@@ -254,9 +254,7 @@ func TestWitnessScriptKind(t *testing.T) {
 					manifest(t, []string{products.Source + "\tno-debugger"}), products.JavaScript)
 			}
 			if os.Getenv("ADAMIC_LINT_WITNESS_PRODUCTS") == "" {
-				t.Run("planted-disagreement", func(t *testing.T) {
-					checkWitnessPlantedDisagreement(t, products)
-				})
+				checkWitnessPlantedDisagreement(t, products)
 			}
 		})
 	}
