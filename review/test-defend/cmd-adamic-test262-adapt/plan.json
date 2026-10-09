@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "test": "TestAdaptStrictEq",
+    "change": "change inequality replacement constant",
+    "file_line": "cmd/adamic-test262/adapt.go:1878"
+  },
+  {
+    "mutant": "D2",
+    "test": "TestAdaptLeavesCheckoutText",
+    "change": "drop class-body skip",
+    "file_line": "cmd/adamic-test262/adapt.go:631"
+  },
+  {
+    "mutant": "D3",
+    "test": "TestAdaptLeavesCheckoutText",
+    "change": "drop class unsafe-vars marker",
+    "file_line": "cmd/adamic-test262/adapt.go:632"
+  },
+  {
+    "mutant": "D4",
+    "test": "TestAdaptLeavesCheckoutText",
+    "change": "off by one unchanged-source implicit full-length bound",
+    "file_line": "cmd/adamic-test262/adapt.go:35"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-test262/adapt.go b/cmd/adamic-test262/adapt.go
+index db6556ca..31d1f9e0 100644
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1875,7 +1875,7 @@ func (p *parser) rewriteEquals() {
+ 		}
+ 		text := "==="
+ 		if cmp.op == "!=" {
+-			text = "!=="
++			text = "==="
+ 		}
+ 		p.edits = append(p.edits, edit{start: cmp.start, end: cmp.end, text: text})
+ 		p.counts[adaptStrictEq]++

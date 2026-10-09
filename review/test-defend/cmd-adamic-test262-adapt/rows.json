@@ -1,0 +1,59 @@
+[
+  {
+    "test": "TestAdaptStrictEq",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 cmd/adamic-test262/adapt.go:1878",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "cmd/adamic-test262/adapt.go:1878",
+        "change": "change inequality replacement constant",
+        "rows_failed": [
+          "TestAdaptStrictEq"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-adapt/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run .; adapt_test.go:156: missing strict ops:"
+  },
+  {
+    "test": "TestAdaptLeavesCheckoutText",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestAdaptClassKeepsVars",
+      "TestAdaptVarToLet"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "cmd/adamic-test262/adapt.go:631",
+        "change": "drop class-body skip",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "cmd/adamic-test262/adapt.go:632",
+        "change": "drop class unsafe-vars marker",
+        "rows_failed": [
+          "TestAdaptClassKeepsVars"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "cmd/adamic-test262/adapt.go:35",
+        "change": "off by one unchanged-source implicit full-length bound",
+        "rows_failed": [
+          "TestAdaptClassKeepsVars",
+          "TestAdaptLeavesCheckoutText",
+          "TestAdaptVarToLet"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-adapt/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run .; adapt_test.go:194: class file changed: main.adapted{Source:\"class Box { value: number; }\", Counts:map[string]int(nil)}"
+  }
+]

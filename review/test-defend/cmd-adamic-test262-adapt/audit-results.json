@@ -1,0 +1,207 @@
+[
+  {
+    "test": "TestAdaptVarToLet",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:8",
+    "seconds": 0.009,
+    "oracle": "Self-written expected rewritten source and adaptation counts; no external execution or copied authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [
+      "M2",
+      "M4",
+      "M5"
+    ],
+    "last_proven_fail": "M6: TestAdaptVarToLet/plain: adapt_test.go:110: source",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M6 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M6.log 2>&1; TestAdaptVarToLet/plain: adapt_test.go:110: source"
+  },
+  {
+    "test": "TestAdaptCallbackParam",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:119",
+    "seconds": 0.008,
+    "oracle": "Self-written expected rewritten source and adaptation counts; no external execution or copied authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M3",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10"
+    ],
+    "unique_kills": [
+      "M7",
+      "M8",
+      "M9",
+      "M10"
+    ],
+    "last_proven_fail": "M10: TestAdaptCallbackParam: adapt_test.go:124: annotation missing:",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M10.log 2>&1; TestAdaptCallbackParam: adapt_test.go:124: annotation missing:"
+  },
+  {
+    "test": "TestAdaptStrictEq",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:152",
+    "seconds": 0.008,
+    "oracle": "Self-written expected rewritten source and adaptation counts; no external execution or copied authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: TestAdaptStrictEq: adapt_test.go:156: missing strict ops:",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassifyAdapt"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.009,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M12.log 2>&1; TestAdaptStrictEq: adapt_test.go:156: missing strict ops:"
+  },
+  {
+    "test": "TestAdaptThrowError",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:172",
+    "seconds": 0.008,
+    "oracle": "Self-written expected rewritten source and adaptation counts; no external execution or copied authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M13",
+      "M14"
+    ],
+    "last_proven_fail": "M14: TestAdaptThrowError: adapt_test.go:176: throw not rewritten:",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M14.log 2>&1; TestAdaptThrowError: adapt_test.go:176: throw not rewritten:"
+  },
+  {
+    "test": "TestAdaptLeavesCheckoutText",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:187",
+    "seconds": 0.008,
+    "oracle": "Self-written unchanged class text and zero counts. M1 no-op passes. This row asserts no checkout-file IO and contains no rewritable construct; all 20 production mutants pass it, but its zero-value probe fails.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=P1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/P1.log 2>&1; TestAdaptLeavesCheckoutText: adapt_test.go:194: class file changed: main.adapted{Source:\"\", Counts:map[string]int(nil)} (probe only; no production failing line)"
+  },
+  {
+    "test": "TestClassifyAdapt",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:198",
+    "seconds": 0.009,
+    "oracle": "Self-written program fragments and reported counts. M2 passes although a witness shows const value and no let value while reporting var-to-let=1; the expected transformation is incompletely checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M3",
+      "M6",
+      "M11",
+      "M12",
+      "M18",
+      "M19"
+    ],
+    "unique_kills": [
+      "M19"
+    ],
+    "last_proven_fail": "M19: TestClassifyAdapt: adapt_test.go:206: counts map[]",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M19.log 2>&1; TestClassifyAdapt: adapt_test.go:206: counts map[]"
+  },
+  {
+    "test": "TestCrashPath",
+    "package": "cmd/adamic-test262",
+    "file": "cmd/adamic-test262/adapt_test.go:217",
+    "seconds": 0.009,
+    "oracle": "Self-written exact path, colon-space and reason concatenation.",
+    "oracle_kind": "self",
+    "kills": [
+      "M20"
+    ],
+    "unique_kills": [
+      "M20"
+    ],
+    "last_proven_fail": "M20: TestCrashPath: adapt_test.go:222: got \"built-ins/Array/prototype/sort/x.js / clang: no newline at end of file\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M20 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > review/test-audit/cmd-adamic-test262-adapt/M20.log 2>&1; TestCrashPath: adapt_test.go:222: got \"built-ins/Array/prototype/sort/x.js / clang: no newline at end of file\""
+  }
+]

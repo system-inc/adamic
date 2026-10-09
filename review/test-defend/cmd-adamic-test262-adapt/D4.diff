@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-test262/adapt.go b/cmd/adamic-test262/adapt.go
+index db6556ca..0eab8531 100644
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -32,7 +32,7 @@ func adaptSource(source string) adapted {
+ 	}
+ 	parsed.finish()
+ 	if parsed.failed || len(parsed.edits) == 0 {
+-		return adapted{Source: source}
++		return adapted{Source: source[:max(0, len(source)-1)]}
+ 	}
+ 	return adapted{Source: applyEdits(source, parsed.edits), Counts: parsed.counts}
+ }

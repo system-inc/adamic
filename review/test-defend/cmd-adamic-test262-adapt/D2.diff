@@ -1,0 +1,12 @@
+diff --git a/cmd/adamic-test262/adapt.go b/cmd/adamic-test262/adapt.go
+index db6556ca..90453468 100644
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -628,7 +628,6 @@ func (p *parser) parseStatement() {
+ 		p.parseFunction(true)
+ 		return
+ 	case "class":
+-		p.skipBraced()
+ 		p.unsafeVars = true
+ 		return
+ 	case "if":
