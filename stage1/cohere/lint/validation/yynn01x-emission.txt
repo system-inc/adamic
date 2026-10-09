@@ -1,0 +1,68 @@
+Measured lint C emission; main is equally slow, so stopped as instructed.
+Snapshots: area 617a6914dbd043b4ffcedb7d1208b3c5443230c4; main 2b1be38362046455e0e5454d8b0e674a8630e95d.
+Controlled command: 300 s limit, CPU 0, GOMAXPROCS=1; area 78.811715 s, main 78.286231 s.
+Mutants: none; measurement only, no compiler, lint, fixture, or assertion changes.
+Not covered: whole lint gate, every lint unit, or a 60 s emission fix; main's equal slowness triggers the requested stop.
+
+Unit #yynn01x, 2026-10-09 UTC. Main snapshot was current origin/main at the initial fetch.
+The controlled pair differs by 0.525484 s (0.67%). Both synchronous native.C calls finished successfully; neither hung.
+This locates the measured slow emission on main too. It does not establish the cause of the gate's entire 2,087 s package failure.
+
+Measurements (seconds inside native.C, excluding load, lower, gob, hashing, clang, and assertions):
+                         area          main
+Direct, GOMAXPROCS=4      69.992595     77.644905
+Gob, GOMAXPROCS=4         80.331860     62.470811
+Gob, CPU0, GOMAXPROCS=1   78.811715     78.286231
+All six processes exited 0. Runs were sequential; no competing builds during the controlled pair.
+Variation across unpinned runs motivated the same-CPU controlled pair.
+
+Representative slow units share this emission operation:
+compiler_stage1_split_test.go: compilerAgreementLowered loads lint/main.ts, lowers it, then emits native.C.
+shards_agree_split_test.go: testShardsAgreeLowered prepares the registry, loads main.ts, lowers, then emits native.C.
+profile_compilation_main_test.go: compilationLowered serializes IR; compilationEmission decodes it and emits native.C.
+The probe uses the same main.ts and registry, and models both direct and gob-decoded emission.
+Gob registrations were copied from profile_compilation_ir_test.go with package lint changed to main.
+No product cache is consulted. This measures emission rather than cache waits or downstream clang.
+
+Exact measurement commands, run from each snapshot root:
+source /workspace/adamic-tools/env.sh
+export GOMAXPROCS=4
+timeout 300 ./stage1/cohere/lint/yynn01xmeasure/measure > /tmp/yynn01x-AREA-direct.log 2>&1
+timeout 300 ./stage1/cohere/lint/yynn01xmeasure/measure -gob > /tmp/yynn01x-AREA-profile.log 2>&1
+export GOMAXPROCS=1
+timeout 300 taskset -c 0 ./stage1/cohere/lint/yynn01xmeasure/measure -gob > /tmp/yynn01x-AREA-pinned.log 2>&1
+Replace AREA with area or main; the executable path and commands are identical in both roots.
+Area root: /workspace/adamic; detached main root: /tmp/yynn01x-main.
+Build: timeout 120 go build -p 1 -o ./stage1/cohere/lint/yynn01xmeasure/measure ./stage1/cohere/lint/yynn01xmeasure
+Build environment: sourced toolchain, TMPDIR=/workspace/yynn01x-go-tmp, GOMAXPROCS=2.
+The scratch package was removed after measurement; the complete probe source follows below.
+
+Area emitted 7,547,338 bytes, sha256 56f480d39c1e8bc689a13f5bf8d7b1264d0a97156af0bec2739c563ddc589f52.
+Main emitted 6,405,618 bytes, sha256 f598c27de6492cbf46df4918e42eec9a044efb298691ec086291e7e3756a387d.
+Each snapshot's direct and both gob runs produced the same hash, confirming gob does not change that emitted input/output.
+
+Setup: timeout 600 bash cloud/setup.sh, exit 0; nproc=5.
+Timing lines: Go ready 0.040s; Node ready 0.065s; submodules 0.114s;
+markdown deps skipped 0.010s; ready 0.154s; clang ready 0.266s;
+go build 88.096s; deferred tests 88.279s; build cache 88.281s; setup done 88.409s.
+Main's initial cold probe build hit its 180 s limit (exit 124, empty log).
+A first retry exited 1 with an empty log. /tmp was observed 95% full (514 MB free).
+Using a task-owned TMPDIR on /workspace and go build -p 1 succeeded under 180 s.
+Both final probe builds with gob registrations succeeded under 120 s.
+These build failures are separate from the successful timed emission runs; their cause was not established.
+
+Question/choice: whether to change or split lint despite main's slowness.
+Choice: follow the explicit stop condition and publish only this evidence; no lint implementation or test changes.
+
+Probe main.go (add the existing gob registrations as described above):
+package main
+import ("context"; "crypto/sha256"; "encoding/gob"; "bytes"; "flag"; "fmt"; "os"; "time"; "github.com/system-inc/adamic/internal/load"; "github.com/system-inc/adamic/internal/lower"; "github.com/system-inc/adamic/internal/native"; "github.com/system-inc/adamic/internal/ir"; "github.com/system-inc/adamic/stage1/cohere/lint/registry")
+func main() {
+ decoded:=flag.Bool("gob",false,"profile product gob roundtrip");flag.Parse()
+ if _,err:=registry.Generate("stage1/cohere/lint");err!=nil {panic(err)}
+ start:=time.Now(); program,err:=load.Load([]string{"stage1/cohere/lint/main.ts"});if err!=nil {panic(err)};fmt.Printf("load_seconds=%.6f\n",time.Since(start).Seconds())
+ ctx,cancel:=context.WithTimeout(context.Background(),90*time.Second);defer cancel();start=time.Now();value,err:=lower.Lower(ctx,program);if err!=nil {panic(err)};fmt.Printf("lower_seconds=%.6f functions=%d checked_fields=%d\n",time.Since(start).Seconds(),len(value.Functions),len(value.CheckedFields))
+ if *decoded { var data bytes.Buffer; if err:=gob.NewEncoder(&data).Encode(value);err!=nil {panic(err)};var copy ir.Program;if err:=gob.NewDecoder(&data).Decode(&copy);err!=nil {panic(err)};value=&copy }
+ fmt.Printf("C_start=%s gob=%t\n",time.Now().UTC().Format(time.RFC3339),*decoded);start=time.Now();output:=native.C(value);fmt.Printf("C_seconds=%.6f C_bytes=%d C_sha256=%x\n",time.Since(start).Seconds(),len(output),sha256.Sum256([]byte(output)))
+ os.Exit(0)
+}
