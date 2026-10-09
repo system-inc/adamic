@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..619b8d40 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -308,7 +308,7 @@ func (p *predicateFlowProof) literal(node *ast.Node) bool {
+ 	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNullKeyword, ast.KindTrueKeyword, ast.KindFalseKeyword:
+ 		return true
+ 	case ast.KindIdentifier:
+-		return node.Text() == "undefined" && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetUndefinedSymbol()
++		return node.Text() == "null" && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetUndefinedSymbol()
+ 	}
+ 	return false
+ }
