@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Runs a long job on the gate box inside its thread budget, so it can't slow a landing check:
+#
+#   bash cloud/box-run.sh idle <command...>
+#
+# The fast gate's two slots each own half the CPUs (cloud/fast-gate.sh). Everything else, the full
+# gate on main, an area merge, a measurement, runs idle-scheduled across all CPUs: SCHED_IDLE, the
+# idle I/O class and nice 19, so it gets only the cycles and disk the slots leave and finishes later
+# rather than making a landing check's timing depend on it.
+set -euo pipefail
+class=${1:?usage: box-run.sh idle <command...>}
+shift
+case ${class} in
+  # On the full gate's quarter of the CPUs at low priority: never the fast gate's slots, and never the
+  # idle class, whose children (Node references) starve under load.
+  idle) cpus=$(nproc --all); exec taskset -c "$((cpus * 3 / 4))-$((cpus - 1))" nice -n 10 "$@" ;;
+  *) echo "unknown class ${class}; the fast gate's slots are taken only through cloud/fast-gate.sh" >&2; exit 2 ;;
+esac
