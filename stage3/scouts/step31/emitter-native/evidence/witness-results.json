@@ -1,0 +1,377 @@
+[
+  {
+    "name": "01-search-result",
+    "node": {
+      "exit": 0,
+      "stdout": "recorded.js\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/01-search-result.a:6:5: error TS2322: Type 'SearchResult<{ path: string; originalPath: string | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ path: string; originalPath: string | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string | true'.\n        Type 'undefined' is not assignable to type 'string | true'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/01-search-result.a:6:5: error TS2322: Type 'SearchResult<{ path: string; originalPath: string | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ path: string; originalPath: string | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string | true'.\n        Type 'undefined' is not assignable to type 'string | true'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "mutated.js\n"
+    }
+  },
+  {
+    "name": "02-resolved-module",
+    "node": {
+      "exit": 0,
+      "stdout": "recorded.js\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/02-resolved-module.a:5:14: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/02-resolved-module.a:5:14: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "mutated.js\n"
+    }
+  },
+  {
+    "name": "03-package-id",
+    "node": {
+      "exit": 0,
+      "stdout": "6.0.3\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/03-package-id.a:4:11: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/03-package-id.a:4:11: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "6.0.4\n"
+    }
+  },
+  {
+    "name": "04-version-paths",
+    "node": {
+      "exit": 0,
+      "stdout": "6\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/04-version-paths.a:4:28: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.\n  Type 'undefined' is not assignable to type 'MapLike<string[]>'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/04-version-paths.a:4:28: error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.\n  Type 'undefined' is not assignable to type 'MapLike<string[]>'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "7\n"
+    }
+  },
+  {
+    "name": "05-source-content",
+    "node": {
+      "exit": 0,
+      "stdout": "0:emitter\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/05-source-content.a:4:25: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/05-source-content.a:4:25: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "0:mutated\n"
+    }
+  },
+  {
+    "name": "06-watcher-error",
+    "node": {
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/06-watcher-error.a:5:43: error TS18046: 'e' is of type 'unknown'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/06-watcher-error.a:5:43: error TS18046: 'e' is of type 'unknown'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "false\n"
+    }
+  },
+  {
+    "name": "07-source-map-support",
+    "node": {
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/07-source-map-support.a:3:39: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/07-source-map-support.a:3:39: error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "true\n"
+    }
+  },
+  {
+    "name": "08-module-import-error",
+    "node": {
+      "exit": 0,
+      "stdout": "missing\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/08-module-import-error.a:3:7: error TS2322: Type '(error: unknown) => { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(error: unknown) => ModuleImportResult'.\n  Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.\n    Types of property 'error' are incompatible.\n      Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/08-module-import-error.a:3:7: error TS2322: Type '(error: unknown) => { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(error: unknown) => ModuleImportResult'.\n  Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.\n    Types of property 'error' are incompatible.\n      Type 'unknown' is not assignable to type '{ stack?: string; message?: string; }'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "mutated\n"
+    }
+  },
+  {
+    "name": "09-substitution",
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/09-substitution.a:3:51: error TS2532: Object is possibly 'undefined'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/09-substitution.a:3:51: error TS2532: Object is possibly 'undefined'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "4\n"
+    }
+  },
+  {
+    "name": "10-emit-notification",
+    "node": {
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/10-emit-notification.a:3:55: error TS2532: Object is possibly 'undefined'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/10-emit-notification.a:3:55: error TS2532: Object is possibly 'undefined'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "4\n"
+    }
+  },
+  {
+    "name": "11-lexical-stack",
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/11-lexical-stack.a:6:5: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.\n  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/11-lexical-stack.a:6:5: error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.\n  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "2\n"
+    }
+  },
+  {
+    "name": "12-block-stack",
+    "node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/12-block-stack.a:6:5: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.\n  Type 'undefined' is not assignable to type 'Identifier[]'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/12-block-stack.a:6:5: error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.\n  Type 'undefined' is not assignable to type 'Identifier[]'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "2\n"
+    }
+  },
+  {
+    "name": "13-private-member",
+    "node": {
+      "exit": 0,
+      "stdout": "method\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/13-private-member.a:4:68: error TS2532: Object is possibly 'undefined'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/13-private-member.a:4:68: error TS2532: Object is possibly 'undefined'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "mutated\n"
+    }
+  },
+  {
+    "name": "14-super-index",
+    "node": {
+      "exit": 0,
+      "stdout": "super()\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/14-super-index.a:4:41: error TS2538: Type 'undefined' cannot be used as an index type.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/14-super-index.a:4:41: error TS2538: Type 'undefined' cannot be used as an index type.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "mutated()\n"
+    }
+  },
+  {
+    "name": "15-original-node",
+    "node": {
+      "exit": 0,
+      "stdout": "261\n",
+      "stderr": ""
+    },
+    "builds": [
+      {
+        "split": "0",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/15-original-node.a:6:36: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.\n"
+      },
+      {
+        "split": "1",
+        "exit": 1,
+        "diagnostic": "/workspace/adamic/stage3/scouts/step31/emitter-native/witnesses/15-original-node.a:6:36: error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'.\n"
+      }
+    ],
+    "mutant": {
+      "caught_by": "original Node stdout bytes",
+      "exit": 0,
+      "stdout": "262\n"
+    }
+  }
+]

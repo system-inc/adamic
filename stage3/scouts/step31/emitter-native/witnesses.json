@@ -1,0 +1,137 @@
+[
+  {
+    "name": "01-search-result",
+    "checkerCode": "2322",
+    "stdout": "recorded.js\n",
+    "mutant": {
+      "before": "\"recorded.js\"",
+      "after": "\"mutated.js\""
+    }
+  },
+  {
+    "name": "02-resolved-module",
+    "checkerCode": "2322",
+    "stdout": "recorded.js\n",
+    "mutant": {
+      "before": "\"recorded.js\"",
+      "after": "\"mutated.js\""
+    }
+  },
+  {
+    "name": "03-package-id",
+    "checkerCode": "2375",
+    "stdout": "6.0.3\n",
+    "mutant": {
+      "before": "\"6.0.3\"",
+      "after": "\"6.0.4\""
+    }
+  },
+  {
+    "name": "04-version-paths",
+    "checkerCode": "2322",
+    "stdout": "6\n",
+    "mutant": {
+      "before": "\"6\"",
+      "after": "\"7\""
+    }
+  },
+  {
+    "name": "05-source-content",
+    "checkerCode": "2345",
+    "stdout": "0:emitter\n",
+    "mutant": {
+      "before": "[\"emitter\"]",
+      "after": "[\"mutated\"]"
+    }
+  },
+  {
+    "name": "06-watcher-error",
+    "checkerCode": "18046",
+    "stdout": "true\n",
+    "mutant": {
+      "before": "watchPresentFileSystemEntry(\"ENOSPC\")",
+      "after": "watchPresentFileSystemEntry(\"ENOENT\")"
+    }
+  },
+  {
+    "name": "07-source-map-support",
+    "checkerCode": "2307",
+    "stdout": "false\n",
+    "mutant": {
+      "before": "sourceMapsEnabled = false",
+      "after": "sourceMapsEnabled = true"
+    }
+  },
+  {
+    "name": "08-module-import-error",
+    "checkerCode": "2322",
+    "stdout": "missing\n",
+    "mutant": {
+      "before": "message: \"missing\"",
+      "after": "message: \"mutated\""
+    }
+  },
+  {
+    "name": "09-substitution",
+    "checkerCode": "2532",
+    "stdout": "1\n",
+    "mutant": {
+      "before": "|= 1",
+      "after": "|= 4"
+    }
+  },
+  {
+    "name": "10-emit-notification",
+    "checkerCode": "2532",
+    "stdout": "2\n",
+    "mutant": {
+      "before": "|= 2",
+      "after": "|= 4"
+    }
+  },
+  {
+    "name": "11-lexical-stack",
+    "checkerCode": "2322",
+    "stdout": "1\n",
+    "mutant": {
+      "before": "[{ name: \"value\" }]",
+      "after": "[{ name: \"value\" }, { name: \"other\" }]"
+    }
+  },
+  {
+    "name": "12-block-stack",
+    "checkerCode": "2322",
+    "stdout": "1\n",
+    "mutant": {
+      "before": "[{ text: \"value\" }]",
+      "after": "[{ text: \"value\" }, { text: \"other\" }]"
+    }
+  },
+  {
+    "name": "13-private-member",
+    "checkerCode": "2532",
+    "stdout": "method\n",
+    "mutant": {
+      "before": "name: \"method\"",
+      "after": "name: \"mutated\""
+    }
+  },
+  {
+    "name": "14-super-index",
+    "checkerCode": "2538",
+    "stdout": "super()\n",
+    "mutant": {
+      "before": "[\"super()\"]",
+      "after": "[\"mutated()\"]"
+    }
+  },
+  {
+    "name": "15-original-node",
+    "checkerCode": "2345",
+    "stdout": "261\n",
+    "mutant": {
+      "before": "kind: 261",
+      "after": "kind: 262"
+    }
+  }
+]

@@ -1,0 +1,347 @@
+[
+  {
+    "order": 1,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 1549,
+    "column": 21,
+    "message": "error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.",
+    "exit": 1,
+    "seconds": 2.442759219000436,
+    "original": {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2772,
+      "column": 21,
+      "declaration": [
+        "getLoadModuleFromTargetExportOrImport"
+      ],
+      "spanSha256": "6e36df14ef8841cb2c620e28aad5f8771d1845e1332a1bd5ca3f602bc0740e4c",
+      "function": "loadModuleFromTargetExportOrImport",
+      "lineText": "                    return toSearchResult("
+    },
+    "witness": "witnesses/01-search-result.a",
+    "owner": "@system_adamic: stage3 optional-declaration adaptation",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 2,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 156,
+    "column": 9,
+    "message": "error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.",
+    "exit": 1,
+    "seconds": 2.5010965049987135,
+    "original": {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 286,
+      "column": 9,
+      "declaration": [
+        "createResolvedModuleWithFailedLookupLocations"
+      ],
+      "spanSha256": "c625fb1fbaa7217fe8b54d7eb4e3d69cc9f267366dec50dfe748101cf6750c85",
+      "function": "createResolvedModuleWithFailedLookupLocations",
+      "lineText": "        resolvedModule: resolved && {"
+    },
+    "witness": "witnesses/02-resolved-module.a",
+    "owner": "@system_adamic: stage3 optional-declaration adaptation",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 3,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 24,
+    "column": 13,
+    "message": "error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.",
+    "exit": 1,
+    "seconds": 2.464996307997353,
+    "original": {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "declaration": [
+        "withPackageId"
+      ],
+      "spanSha256": "9b1a2bbe548cf35e01c8ddf9b30160dd930a7baae3e7b91f4c8075ca4a1f6844",
+      "function": "withPackageId",
+      "lineText": "            packageId = {"
+    },
+    "witness": "witnesses/03-package-id.a",
+    "owner": "@system_adamic: stage3 optional-declaration adaptation",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 4,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 299,
+    "column": 36,
+    "message": "error TS2322: Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.",
+    "exit": 1,
+    "seconds": 2.491401916999166,
+    "original": {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 474,
+      "column": 36,
+      "declaration": [
+        "getPackageJsonTypesVersionsPaths"
+      ],
+      "spanSha256": "98fbca62e1f82eb22cc5561d09df1378b2b93d9b13b3401baa8db62bd4b1df36",
+      "function": "getPackageJsonTypesVersionsPaths",
+      "lineText": "            return { version: key, paths: typesVersions[key] };"
+    },
+    "witness": "witnesses/04-version-paths.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 5,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sourcemap.ts",
+    "line": 194,
+    "column": 58,
+    "message": "error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.",
+    "exit": 1,
+    "seconds": 2.553983427998901,
+    "original": {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 216,
+      "column": 58,
+      "declaration": [
+        "createSourceMapGenerator"
+      ],
+      "spanSha256": "7609c9be3509760fa6cddc8d5e2945cdaae9475c0d7c0edf4fb0852f3c2558f2",
+      "function": "appendSourceMap",
+      "lineText": "                        setSourceContent(newSourceIndex, map.sourcesContent[raw.sourceIndex]);"
+    },
+    "witness": "witnesses/05-source-content.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 6,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1172,
+    "column": 43,
+    "message": "error TS18046: 'e' is of type 'unknown'.",
+    "exit": 1,
+    "seconds": 2.6243058319996635,
+    "original": {
+      "file": "src/compiler/sys.ts",
+      "line": 1281,
+      "column": 43,
+      "declaration": [
+        "createSystemWatchFunctions"
+      ],
+      "spanSha256": "02d1ad214f2b8f82cccde1dd7a27d8c81fc3f665bd6d8bc361bcf1017d6a3a3f",
+      "function": "watchPresentFileSystemEntry",
+      "lineText": "                hitSystemWatcherLimit ||= e.code === \"ENOSPC\";"
+    },
+    "witness": "witnesses/06-watcher-error.a",
+    "owner": "@system_adamic: Node host/library lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 7,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1459,
+    "column": 69,
+    "message": "error TS2307: Cannot find module 'source-map-support' or its corresponding type declarations.",
+    "exit": 1,
+    "seconds": 2.7317864569995436,
+    "original": {
+      "file": "src/compiler/sys.ts",
+      "line": 1598,
+      "column": 69,
+      "declaration": [
+        "sys"
+      ],
+      "spanSha256": "a752530eace3f65cc7775f8278e1be971a6bc213d18c6a7b27aeb5173e6607b1",
+      "function": "tryEnableSourceMapsForHost",
+      "lineText": "                    (require(\"source-map-support\") as typeof import(\"source-map-support\")).install();"
+    },
+    "witness": "witnesses/07-source-map-support.a",
+    "owner": "@system_adamic: Node host/library lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 8,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1471,
+    "column": 13,
+    "message": "error TS2322: Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.",
+    "exit": 1,
+    "seconds": 2.5340891380001267,
+    "original": {
+      "file": "src/compiler/sys.ts",
+      "line": 1617,
+      "column": 13,
+      "declaration": [
+        "sys"
+      ],
+      "spanSha256": "a752530eace3f65cc7775f8278e1be971a6bc213d18c6a7b27aeb5173e6607b1",
+      "function": "getNodeSystem",
+      "lineText": "            require: (baseDir, moduleName) => {"
+    },
+    "witness": "witnesses/08-module-import-error.a",
+    "owner": "@system_adamic: Node host/library lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 9,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 294,
+    "column": 9,
+    "message": "error TS2532: Object is possibly 'undefined'.",
+    "exit": 1,
+    "seconds": 2.505259543999273,
+    "original": {
+      "file": "src/compiler/transformer.ts",
+      "line": 367,
+      "column": 9,
+      "declaration": [
+        "transformNodes"
+      ],
+      "spanSha256": "3954a63689fecc41b0b18b843e5c4dffcad0fb30fa967bbe4333b8fd9bee056f",
+      "function": "enableSubstitution",
+      "lineText": "        enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.Substitution;"
+    },
+    "witness": "witnesses/09-substitution.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 10,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 319,
+    "column": 9,
+    "message": "error TS2532: Object is possibly 'undefined'.",
+    "exit": 1,
+    "seconds": 2.5103454059972137,
+    "original": {
+      "file": "src/compiler/transformer.ts",
+      "line": 395,
+      "column": 9,
+      "declaration": [
+        "transformNodes"
+      ],
+      "spanSha256": "3954a63689fecc41b0b18b843e5c4dffcad0fb30fa967bbe4333b8fd9bee056f",
+      "function": "enableEmitNotification",
+      "lineText": "        enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.EmitNotifications;"
+    },
+    "witness": "witnesses/10-emit-notification.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 11,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 484,
+    "column": 9,
+    "message": "error TS2322: Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.",
+    "exit": 1,
+    "seconds": 2.5280224779999116,
+    "original": {
+      "file": "src/compiler/transformer.ts",
+      "line": 563,
+      "column": 9,
+      "declaration": [
+        "transformNodes"
+      ],
+      "spanSha256": "3954a63689fecc41b0b18b843e5c4dffcad0fb30fa967bbe4333b8fd9bee056f",
+      "function": "endLexicalEnvironment",
+      "lineText": "        lexicalEnvironmentVariableDeclarations = lexicalEnvironmentVariableDeclarationsStack[lexicalEnvironmentStackOffset];"
+    },
+    "witness": "witnesses/11-lexical-stack.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 12,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 481,
+    "column": 9,
+    "message": "error TS2322: Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.",
+    "exit": 1,
+    "seconds": 2.5586310559992853,
+    "original": {
+      "file": "src/compiler/transformer.ts",
+      "line": 614,
+      "column": 9,
+      "declaration": [
+        "transformNodes"
+      ],
+      "spanSha256": "3954a63689fecc41b0b18b843e5c4dffcad0fb30fa967bbe4333b8fd9bee056f",
+      "function": "endBlockScope",
+      "lineText": "        blockScopedVariableDeclarations = blockScopedVariableDeclarationsStack[blockScopeStackOffset];"
+    },
+    "witness": "witnesses/12-block-stack.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 13,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformers/classFields.ts",
+    "line": 1613,
+    "column": 21,
+    "message": "error TS2532: Object is possibly 'undefined'.",
+    "exit": 1,
+    "seconds": 2.4529119760009053,
+    "original": {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1835,
+      "column": 21,
+      "declaration": [
+        "transformClassFields"
+      ],
+      "spanSha256": "097ece8df9a78f6026bc22c59106fa9b0ac0a29ecd671736ba0c6425c3b0fed6",
+      "function": "visitInNewClassLexicalEnvironment",
+      "lineText": "                    privateInstanceMethodsAndAccessors[0].name,"
+    },
+    "witness": "witnesses/13-private-member.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 14,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformers/classFields.ts",
+    "line": 1970,
+    "column": 45,
+    "message": "error TS2538: Type 'undefined' cannot be used as an index type.",
+    "exit": 1,
+    "seconds": 2.4413639589984086,
+    "original": {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2251,
+      "column": 45,
+      "declaration": [
+        "transformClassFields"
+      ],
+      "spanSha256": "097ece8df9a78f6026bc22c59106fa9b0ac0a29ecd671736ba0c6425c3b0fed6",
+      "function": "transformConstructorBodyWorker",
+      "lineText": "        const superStatement = statementsIn[superStatementIndex];"
+    },
+    "witness": "witnesses/14-super-index.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  },
+  {
+    "order": 15,
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformers/classFields.ts",
+    "line": 2035,
+    "column": 56,
+    "message": "error TS2345: Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.",
+    "exit": 1,
+    "seconds": 2.544472088000475,
+    "original": {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2376,
+      "column": 56,
+      "declaration": [
+        "transformClassFields"
+      ],
+      "spanSha256": "097ece8df9a78f6026bc22c59106fa9b0ac0a29ecd671736ba0c6425c3b0fed6",
+      "function": "transformConstructorBody",
+      "lineText": "                    if (isParameterPropertyDeclaration(getOriginalNode(statement), constructor)) {"
+    },
+    "witness": "witnesses/15-original-node.a",
+    "owner": "@system_adamic: stage3 checked indexed reads/writes lane",
+    "owner_status": "routing recommendation, not a new assignment"
+  }
+]

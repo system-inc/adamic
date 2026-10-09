@@ -1,0 +1,7 @@
+// a-check: type error TS2375
+interface PackageId { name: string; subModuleName: string; version: string; peerDependencies?: string; }
+function withPackageId(peerDependencies: string | undefined): PackageId {
+    const packageId: PackageId = { name: "tsc", subModuleName: "", version: "6.0.3", peerDependencies };
+    return packageId;
+}
+console.log(withPackageId(undefined).version);

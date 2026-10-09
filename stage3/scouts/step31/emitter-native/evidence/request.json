@@ -1,0 +1,1 @@
+{"projects":[{"id":"emitter-recorded","options":{"target":"es2020","module":"commonjs","noLib":true,"types":[]},"files":[{"path":"recorded.a","text":"// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n"}]}]}

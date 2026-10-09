@@ -1,0 +1,8 @@
+// a-check: type error TS2322
+interface Resolved { path: string; originalPath?: string | true; }
+interface SearchResult<T> { readonly value: T | undefined; }
+function toSearchResult<T>(value: T): SearchResult<T> { return { value }; }
+function loadModuleFromTargetExportOrImport(originalPath: string | undefined): SearchResult<Resolved> {
+    return toSearchResult({ path: "recorded.js", originalPath });
+}
+console.log(`${loadModuleFromTargetExportOrImport(undefined).value?.path}`);

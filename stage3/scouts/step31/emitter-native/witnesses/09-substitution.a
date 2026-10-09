@@ -1,0 +1,5 @@
+// a-check: type error TS2532
+const enabledSyntaxKindFeatures: number[] = [];
+function enableSubstitution(kind: number): void { enabledSyntaxKindFeatures[kind] |= 1; }
+enableSubstitution(0);
+console.log(`${enabledSyntaxKindFeatures[0]}`);

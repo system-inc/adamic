@@ -1,0 +1,25 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/workspace/step31-adapted",
+  "entries": [
+    "src/compiler/emitter.ts:emitFiles",
+    "src/compiler/parser.ts:createSourceFile",
+    "src/compiler/binder.ts:bindSourceFile",
+    "src/compiler/transformer.ts:getTransformers",
+    "src/compiler/core.ts:createMultiMap"
+  ],
+  "declarations": 3458,
+  "copied_spans": 3472,
+  "namespace_wrapper_spans": 14,
+  "value_declarations": 2595,
+  "type_declarations": 863,
+  "files": 79,
+  "declaration_files": 62,
+  "code_declarations": 3381,
+  "export_facade_records": 77,
+  "evaluation_only_files": 17,
+  "preserves_evaluation": true,
+  "declaration_lines": 101918,
+  "declaration_bytes": 5058146,
+  "rewritten_import_lines": 341
+}

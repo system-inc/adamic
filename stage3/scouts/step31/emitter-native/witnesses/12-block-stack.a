@@ -1,0 +1,9 @@
+// a-check: type error TS2322
+interface Identifier { text: string; }
+let blockScopedVariableDeclarations: Identifier[] = [];
+const blockScopedVariableDeclarationsStack: Identifier[][] = [[{ text: "value" }]];
+function endBlockScope(offset: number): void {
+    blockScopedVariableDeclarations = blockScopedVariableDeclarationsStack[offset];
+}
+endBlockScope(0);
+console.log(`${blockScopedVariableDeclarations.length}`);

@@ -1,0 +1,9 @@
+// a-check: type error TS2322
+interface VariableDeclaration { name: string; }
+let lexicalEnvironmentVariableDeclarations: VariableDeclaration[] = [];
+const lexicalEnvironmentVariableDeclarationsStack: VariableDeclaration[][] = [[{ name: "value" }]];
+function endLexicalEnvironment(offset: number): void {
+    lexicalEnvironmentVariableDeclarations = lexicalEnvironmentVariableDeclarationsStack[offset];
+}
+endLexicalEnvironment(0);
+console.log(`${lexicalEnvironmentVariableDeclarations.length}`);

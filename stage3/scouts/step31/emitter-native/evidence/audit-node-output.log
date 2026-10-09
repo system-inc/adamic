@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/emitter-native/audit.py", line 33, in <module>
+    assert hashlib.sha256((e/'golden.jsonl').read_bytes()).hexdigest()==summary['node_output_sha256'],'stock Node output hash'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: stock Node output hash
