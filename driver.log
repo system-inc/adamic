@@ -1,1 +1,2 @@
 idle preemption: 0 marked, 0 survivors in their sessions, 5 ms
+green: 007c454005021f3fa4f210706681dc44699f96ea full gate in 2918.5 s (coverage=0.0s build=14.0s tools=0.1s vet=8.4s wasi=55.8s catalog=102.0s stage3=578.9s tests=2894.9s census=7.9s; 237 units over 30 s (27185 s, 174 on the burn-down, 63 drifted over); pending skips: oracle TestEntriesAcceptance (awaits codex/step12-entries-fixtures); box load 11.1 on 64 cores at start, load 1.0 on 64 cores at end), 83 packages, 10254 pass, 43 skip, smoke 0 fixtures
