@@ -1,0 +1,7 @@
+import { parallelMap } from 'adamic';
+function run(): void {
+    const amount = 2;
+    const items = [{ value: 1 }];
+    const results = parallelMap(items, (item) => { item.value += amount; return item; });
+}
+run();

@@ -1,0 +1,2336 @@
+{
+  "limit_seconds": 30.0,
+  "budget_enforced": true,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "TestArithmeticIsNeverFused",
+      "shard": null,
+      "invocation_seconds": 2.1857819260003453,
+      "group_seconds": 0.26,
+      "max_unit_seconds": 0.26,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestArithmeticIsNeverFused",
+          "action": "pass",
+          "seconds": 0.26,
+          "run": "^TestArithmeticIsNeverFused$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestArtifactInputsAndReuse",
+      "shard": null,
+      "invocation_seconds": 1.9445802590016683,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 0.05,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestArtifactInputsAndReuse",
+          "action": "pass",
+          "seconds": 0.05,
+          "run": "^TestArtifactInputsAndReuse$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestBorrowChainDeclarations",
+      "shard": null,
+      "invocation_seconds": 2.0443334429983224,
+      "group_seconds": 0.13,
+      "max_unit_seconds": 0.13,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestBorrowChainDeclarations",
+          "action": "pass",
+          "seconds": 0.13,
+          "run": "^TestBorrowChainDeclarations$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestBorrowChainTargets",
+      "shard": null,
+      "invocation_seconds": 2.113288361000741,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestBorrowChainTargets",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestBorrowChainTargets$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestCEndsInNewline",
+      "shard": null,
+      "invocation_seconds": 1.9037798619974637,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestCEndsInNewline",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestCEndsInNewline$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestCallTargetsElementBorrowPlan",
+      "shard": null,
+      "invocation_seconds": 2.0274863289996574,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestCallTargetsElementBorrowPlan",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestCallTargetsElementBorrowPlan$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestCaseMappingMatchesNode/contexts",
+      "shard": null,
+      "invocation_seconds": 3.312937406000856,
+      "group_seconds": 1.14,
+      "max_unit_seconds": 1.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestCaseMappingMatchesNode/contexts",
+          "action": "pass",
+          "seconds": 1.14,
+          "run": "^TestCaseMappingMatchesNode$/^contexts$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestCaseMappingMatchesNode/points",
+      "shard": null,
+      "invocation_seconds": 14.179674962997524,
+      "group_seconds": 11.92,
+      "max_unit_seconds": 11.92,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestCaseMappingMatchesNode/points",
+          "action": "pass",
+          "seconds": 11.92,
+          "run": "^TestCaseMappingMatchesNode$/^points$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestCaseTablesMatchNodesUnicode",
+      "shard": null,
+      "invocation_seconds": 1.9606449829989288,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestCaseTablesMatchNodesUnicode",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestCaseTablesMatchNodesUnicode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionDropCount",
+      "shard": null,
+      "invocation_seconds": 2.152177677999134,
+      "group_seconds": 0.14,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionDropCount",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestClosureConventionDropCount$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionRuntimeDropCount",
+      "shard": null,
+      "invocation_seconds": 2.0334751539994613,
+      "group_seconds": 0.09,
+      "max_unit_seconds": 0.09,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionRuntimeDropCount",
+          "action": "pass",
+          "seconds": 0.09,
+          "run": "^TestClosureConventionRuntimeDropCount$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "shard": null,
+      "invocation_seconds": 1.9892107980012952,
+      "group_seconds": 0.01,
+      "max_unit_seconds": 0.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+          "action": "pass",
+          "seconds": 0.01,
+          "run": "^TestClosureConventionRuntimeFeaturesIgnoreLiterals$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionWrongOrder/call",
+      "shard": null,
+      "invocation_seconds": 1.9885081789980177,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionWrongOrder/call",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestClosureConventionWrongOrder$/^call$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionWrongOrder/definition",
+      "shard": null,
+      "invocation_seconds": 1.9561991580012545,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionWrongOrder/definition",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestClosureConventionWrongOrder$/^definition$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionWrongOrder/function-pointer-cast",
+      "shard": null,
+      "invocation_seconds": 2.047331071997178,
+      "group_seconds": 0.07,
+      "max_unit_seconds": 0.07,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionWrongOrder/function-pointer-cast",
+          "action": "pass",
+          "seconds": 0.07,
+          "run": "^TestClosureConventionWrongOrder$/^function\\-pointer\\-cast$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestClosureConventionWrongOrder/void-pointer-cast",
+      "shard": null,
+      "invocation_seconds": 2.0269096520023595,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 0.05,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestClosureConventionWrongOrder/void-pointer-cast",
+          "action": "pass",
+          "seconds": 0.05,
+          "run": "^TestClosureConventionWrongOrder$/^void\\-pointer\\-cast$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDevirtualizeBorrowDocClaim",
+      "shard": null,
+      "invocation_seconds": 2.0072109139982786,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDevirtualizeBorrowDocClaim",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestDevirtualizeBorrowDocClaim$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestDevirtualizedCalls",
+      "shard": null,
+      "invocation_seconds": 1.908504933999211,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestDevirtualizedCalls",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestDevirtualizedCalls$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestExactReceiverRejectsAssignments",
+      "shard": null,
+      "invocation_seconds": 2.036610982999264,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestExactReceiverRejectsAssignments",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestExactReceiverRejectsAssignments$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestFreedValuesAreCaughtWithSlabs",
+      "shard": null,
+      "invocation_seconds": 2.3715859229996568,
+      "group_seconds": 0.42,
+      "max_unit_seconds": 0.42,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestFreedValuesAreCaughtWithSlabs",
+          "action": "pass",
+          "seconds": 0.42,
+          "run": "^TestFreedValuesAreCaughtWithSlabs$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestGlobalArgumentLending",
+      "shard": null,
+      "invocation_seconds": 2.0221748190015205,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestGlobalArgumentLending",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestGlobalArgumentLending$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestIeee754MatchesNodeBitForBit",
+      "shard": null,
+      "invocation_seconds": 4.860827360000258,
+      "group_seconds": 2.94,
+      "max_unit_seconds": 2.94,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestIeee754MatchesNodeBitForBit",
+          "action": "pass",
+          "seconds": 2.94,
+          "run": "^TestIeee754MatchesNodeBitForBit$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestInheritanceMemoryPlans",
+      "shard": null,
+      "invocation_seconds": 1.982352525999886,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestInheritanceMemoryPlans",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestInheritanceMemoryPlans$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLibraryMapSetIteratorResources/count",
+      "shard": null,
+      "invocation_seconds": 2.089992558998347,
+      "group_seconds": 0.14,
+      "max_unit_seconds": 0.14,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLibraryMapSetIteratorResources/count",
+          "action": "pass",
+          "seconds": 0.14,
+          "run": "^TestLibraryMapSetIteratorResources$/^count$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLibraryMapSetIteratorResources/peak",
+      "shard": null,
+      "invocation_seconds": 2.2995402820015443,
+      "group_seconds": 0.27,
+      "max_unit_seconds": 0.27,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLibraryMapSetIteratorResources/peak",
+          "action": "pass",
+          "seconds": 0.27,
+          "run": "^TestLibraryMapSetIteratorResources$/^peak$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLibraryMapSetIteratorResources/speed",
+      "shard": null,
+      "invocation_seconds": 1.9894099869998172,
+      "group_seconds": 0.02,
+      "max_unit_seconds": 0.02,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLibraryMapSetIteratorResources/speed",
+          "action": "pass",
+          "seconds": 0.02,
+          "run": "^TestLibraryMapSetIteratorResources$/^speed$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLoopArrayHoldC",
+      "shard": null,
+      "invocation_seconds": 2.138588660000096,
+      "group_seconds": 0.09,
+      "max_unit_seconds": 0.09,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLoopArrayHoldC",
+          "action": "pass",
+          "seconds": 0.09,
+          "run": "^TestLoopArrayHoldC$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLoopBorrowPlan",
+      "shard": null,
+      "invocation_seconds": 1.9385137770004803,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLoopBorrowPlan",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestLoopBorrowPlan$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestLoopCallCoverage",
+      "shard": null,
+      "invocation_seconds": 2.172087136998016,
+      "group_seconds": 0.06,
+      "max_unit_seconds": 0.06,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestLoopCallCoverage",
+          "action": "pass",
+          "seconds": 0.06,
+          "run": "^TestLoopCallCoverage$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMapHashProbeBound/malloc",
+      "shard": null,
+      "invocation_seconds": 7.490506860998721,
+      "group_seconds": 5.43,
+      "max_unit_seconds": 5.43,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMapHashProbeBound/malloc",
+          "action": "pass",
+          "seconds": 5.43,
+          "run": "^TestMapHashProbeBound$/^malloc$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMapHashProbeBound/slabs",
+      "shard": null,
+      "invocation_seconds": 7.4366235449997475,
+      "group_seconds": 5.57,
+      "max_unit_seconds": 5.57,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMapHashProbeBound/slabs",
+          "action": "pass",
+          "seconds": 5.57,
+          "run": "^TestMapHashProbeBound$/^slabs$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMapHashProbeCatchesMutants/NaN_normalization",
+      "shard": null,
+      "invocation_seconds": 7.671897478001483,
+      "group_seconds": 5.71,
+      "max_unit_seconds": 5.71,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMapHashProbeCatchesMutants/NaN_normalization",
+          "action": "pass",
+          "seconds": 5.71,
+          "run": "^TestMapHashProbeCatchesMutants$/^NaN_normalization$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMapHashProbeCatchesMutants/old_hash",
+      "shard": null,
+      "invocation_seconds": 9.403798295999877,
+      "group_seconds": 7.37,
+      "max_unit_seconds": 7.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMapHashProbeCatchesMutants/old_hash",
+          "action": "pass",
+          "seconds": 7.37,
+          "run": "^TestMapHashProbeCatchesMutants$/^old_hash$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMapHashProbeCatchesMutants/zero_normalization",
+      "shard": null,
+      "invocation_seconds": 7.488848596000025,
+      "group_seconds": 5.52,
+      "max_unit_seconds": 5.52,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMapHashProbeCatchesMutants/zero_normalization",
+          "action": "pass",
+          "seconds": 5.52,
+          "run": "^TestMapHashProbeCatchesMutants$/^zero_normalization$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMathAndToFixedMatchJavaScript",
+      "shard": null,
+      "invocation_seconds": 2.7983300689993484,
+      "group_seconds": 0.76,
+      "max_unit_seconds": 0.76,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMathAndToFixedMatchJavaScript",
+          "action": "pass",
+          "seconds": 0.76,
+          "run": "^TestMathAndToFixedMatchJavaScript$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestMaybeNumbersPackIntoOneDouble",
+      "shard": null,
+      "invocation_seconds": 2.094821549999324,
+      "group_seconds": 0.18,
+      "max_unit_seconds": 0.18,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestMaybeNumbersPackIntoOneDouble",
+          "action": "pass",
+          "seconds": 0.18,
+          "run": "^TestMaybeNumbersPackIntoOneDouble$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNbodyBorrowedLoopC",
+      "shard": null,
+      "invocation_seconds": 2.0749454549986694,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 0.05,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNbodyBorrowedLoopC",
+          "action": "pass",
+          "seconds": 0.05,
+          "run": "^TestNbodyBorrowedLoopC$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNbodyIndexedElementsBorrow",
+      "shard": null,
+      "invocation_seconds": 2.179265930000838,
+      "group_seconds": 0.05,
+      "max_unit_seconds": 0.05,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNbodyIndexedElementsBorrow",
+          "action": "pass",
+          "seconds": 0.05,
+          "run": "^TestNbodyIndexedElementsBorrow$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "shard": null,
+      "invocation_seconds": 2.0512589429999935,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestNoReaderCallingConvention$/^arguments_length_no_reader\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "shard": null,
+      "invocation_seconds": 2.106543657002476,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestNoReaderCallingConvention$/^arguments_length_unrelated_type\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "shard": null,
+      "invocation_seconds": 1.9586463930027094,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNoReaderCallingConvention/closure_convention_plain.a",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestNoReaderCallingConvention$/^closure_convention_plain\\.a$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNodeBufferRuntimeWithoutDeclarations",
+      "shard": null,
+      "invocation_seconds": 2.770998182000767,
+      "group_seconds": 0.79,
+      "max_unit_seconds": 0.79,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNodeBufferRuntimeWithoutDeclarations",
+          "action": "pass",
+          "seconds": 0.79,
+          "run": "^TestNodeBufferRuntimeWithoutDeclarations$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNormalizeRandomMatchesNode",
+      "shard": null,
+      "invocation_seconds": 12.63838666599986,
+      "group_seconds": 10.65,
+      "max_unit_seconds": 10.65,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNormalizeRandomMatchesNode",
+          "action": "pass",
+          "seconds": 10.65,
+          "run": "^TestNormalizeRandomMatchesNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "shard": null,
+      "invocation_seconds": 3.129354427997896,
+      "group_seconds": 1.08,
+      "max_unit_seconds": 1.08,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+          "action": "pass",
+          "seconds": 1.08,
+          "run": "^TestNumbersFormatExactlyAsJavaScriptDoes$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestNumbersParseExactlyAsJavaScriptDoes",
+      "shard": null,
+      "invocation_seconds": 2.5867917249997845,
+      "group_seconds": 0.75,
+      "max_unit_seconds": 0.75,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestNumbersParseExactlyAsJavaScriptDoes",
+          "action": "pass",
+          "seconds": 0.75,
+          "run": "^TestNumbersParseExactlyAsJavaScriptDoes$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestOptionalMethodThunksMatchNode",
+      "shard": null,
+      "invocation_seconds": 2.435061084001063,
+      "group_seconds": 0.46,
+      "max_unit_seconds": 0.46,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestOptionalMethodThunksMatchNode",
+          "action": "pass",
+          "seconds": 0.46,
+          "run": "^TestOptionalMethodThunksMatchNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestOptionalWriteMissingSlotRemainsChecked",
+      "shard": null,
+      "invocation_seconds": 2.1877911030023824,
+      "group_seconds": 0.1,
+      "max_unit_seconds": 0.1,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestOptionalWriteMissingSlotRemainsChecked",
+          "action": "pass",
+          "seconds": 0.1,
+          "run": "^TestOptionalWriteMissingSlotRemainsChecked$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestParserHasNoUnusedOptionalMethodThunks",
+      "shard": null,
+      "invocation_seconds": 7.363024619000498,
+      "group_seconds": 5.26,
+      "max_unit_seconds": 5.26,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestParserHasNoUnusedOptionalMethodThunks",
+          "action": "pass",
+          "seconds": 5.26,
+          "run": "^TestParserHasNoUnusedOptionalMethodThunks$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestPassThroughsAreNotConsumers",
+      "shard": null,
+      "invocation_seconds": 2.051317231002031,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestPassThroughsAreNotConsumers",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestPassThroughsAreNotConsumers$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "shard": null,
+      "invocation_seconds": 2.4457644809990597,
+      "group_seconds": 0.26,
+      "max_unit_seconds": 0.26,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestPowersOfTwoFormatAsJavaScriptDoes",
+          "action": "pass",
+          "seconds": 0.26,
+          "run": "^TestPowersOfTwoFormatAsJavaScriptDoes$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordReadMutants/missing-read-silent",
+      "shard": null,
+      "invocation_seconds": 2.2467632990010316,
+      "group_seconds": 0.32,
+      "max_unit_seconds": 0.32,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordReadMutants/missing-read-silent",
+          "action": "pass",
+          "seconds": 0.32,
+          "run": "^TestRecordReadMutants$/^missing\\-read\\-silent$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordReadMutants/own-read-checked-as-missing",
+      "shard": null,
+      "invocation_seconds": 2.3108234949977486,
+      "group_seconds": 0.36,
+      "max_unit_seconds": 0.36,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordReadMutants/own-read-checked-as-missing",
+          "action": "pass",
+          "seconds": 0.36,
+          "run": "^TestRecordReadMutants$/^own\\-read\\-checked\\-as\\-missing$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordReadMutants/prototype-membership-restored",
+      "shard": null,
+      "invocation_seconds": 2.2464647569977387,
+      "group_seconds": 0.31,
+      "max_unit_seconds": 0.31,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordReadMutants/prototype-membership-restored",
+          "action": "pass",
+          "seconds": 0.31,
+          "run": "^TestRecordReadMutants$/^prototype\\-membership\\-restored$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/bench-1000",
+      "shard": null,
+      "invocation_seconds": 2.3093583949994354,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/bench-1000",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestRecordsAgainstNode$/^bench\\-1000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/iteration",
+      "shard": null,
+      "invocation_seconds": 2.1870667109978967,
+      "group_seconds": 0.03,
+      "max_unit_seconds": 0.03,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/iteration",
+          "action": "pass",
+          "seconds": 0.03,
+          "run": "^TestRecordsAgainstNode$/^iteration$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/__defineGetter__",
+      "shard": null,
+      "invocation_seconds": 2.229479296998761,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/__defineGetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^__defineGetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/__defineSetter__",
+      "shard": null,
+      "invocation_seconds": 2.259405314001924,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/__defineSetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^__defineSetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/__lookupGetter__",
+      "shard": null,
+      "invocation_seconds": 2.3329424929979723,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/__lookupGetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^__lookupGetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/__lookupSetter__",
+      "shard": null,
+      "invocation_seconds": 2.3370002589981596,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/__lookupSetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^__lookupSetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/__proto__",
+      "shard": null,
+      "invocation_seconds": 2.2818361499994353,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/__proto__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^__proto__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/constructor",
+      "shard": null,
+      "invocation_seconds": 2.2408173570001964,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/constructor",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^constructor$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/hasOwnProperty",
+      "shard": null,
+      "invocation_seconds": 2.226567748999514,
+      "group_seconds": 0.01,
+      "max_unit_seconds": 0.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/hasOwnProperty",
+          "action": "pass",
+          "seconds": 0.01,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^hasOwnProperty$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/isPrototypeOf",
+      "shard": null,
+      "invocation_seconds": 2.259663486998761,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/isPrototypeOf",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^isPrototypeOf$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/propertyIsEnumerable",
+      "shard": null,
+      "invocation_seconds": 2.309092993997183,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/propertyIsEnumerable",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^propertyIsEnumerable$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/toLocaleString",
+      "shard": null,
+      "invocation_seconds": 2.2475828979986545,
+      "group_seconds": 0.01,
+      "max_unit_seconds": 0.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/toLocaleString",
+          "action": "pass",
+          "seconds": 0.01,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^toLocaleString$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/toString",
+      "shard": null,
+      "invocation_seconds": 2.3798210189997917,
+      "group_seconds": 0.01,
+      "max_unit_seconds": 0.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/toString",
+          "action": "pass",
+          "seconds": 0.01,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^toString$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-get/valueOf",
+      "shard": null,
+      "invocation_seconds": 2.317492846999812,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-get/valueOf",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-get$/^valueOf$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/__defineGetter__",
+      "shard": null,
+      "invocation_seconds": 2.2556823389968486,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/__defineGetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^__defineGetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/__defineSetter__",
+      "shard": null,
+      "invocation_seconds": 2.266237113999523,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/__defineSetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^__defineSetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/__lookupGetter__",
+      "shard": null,
+      "invocation_seconds": 2.2568632649999927,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/__lookupGetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^__lookupGetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/__lookupSetter__",
+      "shard": null,
+      "invocation_seconds": 2.270959932997357,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/__lookupSetter__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^__lookupSetter__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/__proto__",
+      "shard": null,
+      "invocation_seconds": 2.254780324998137,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/__proto__",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^__proto__$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/constructor",
+      "shard": null,
+      "invocation_seconds": 2.2691426029996364,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/constructor",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^constructor$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/hasOwnProperty",
+      "shard": null,
+      "invocation_seconds": 2.308038002000103,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/hasOwnProperty",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^hasOwnProperty$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/isPrototypeOf",
+      "shard": null,
+      "invocation_seconds": 2.4190316449967213,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/isPrototypeOf",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^isPrototypeOf$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/propertyIsEnumerable",
+      "shard": null,
+      "invocation_seconds": 2.2117044309998164,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/propertyIsEnumerable",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^propertyIsEnumerable$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/toLocaleString",
+      "shard": null,
+      "invocation_seconds": 2.364209714000026,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/toLocaleString",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^toLocaleString$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/toString",
+      "shard": null,
+      "invocation_seconds": 2.3531670909978857,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/toString",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^toString$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/missing-has/valueOf",
+      "shard": null,
+      "invocation_seconds": 2.4981608010020864,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/missing-has/valueOf",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^missing\\-has$/^valueOf$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/numeric",
+      "shard": null,
+      "invocation_seconds": 3.2623079389995837,
+      "group_seconds": 0.91,
+      "max_unit_seconds": 0.91,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/numeric",
+          "action": "pass",
+          "seconds": 0.91,
+          "run": "^TestRecordsAgainstNode$/^numeric$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/proto-assignment",
+      "shard": null,
+      "invocation_seconds": 2.2252881779968448,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/proto-assignment",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRecordsAgainstNode$/^proto\\-assignment$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/prototypes",
+      "shard": null,
+      "invocation_seconds": 2.380426127001556,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/prototypes",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestRecordsAgainstNode$/^prototypes$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/reads",
+      "shard": null,
+      "invocation_seconds": 2.336146813002415,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/reads",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestRecordsAgainstNode$/^reads$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/references",
+      "shard": null,
+      "invocation_seconds": 2.785727777998545,
+      "group_seconds": 0.2,
+      "max_unit_seconds": 0.2,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/references",
+          "action": "pass",
+          "seconds": 0.2,
+          "run": "^TestRecordsAgainstNode$/^references$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/semantics",
+      "shard": null,
+      "invocation_seconds": 2.5167015110018838,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/semantics",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestRecordsAgainstNode$/^semantics$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRecordsAgainstNode/workload-1000000",
+      "shard": null,
+      "invocation_seconds": 8.679975417002424,
+      "group_seconds": 6.3,
+      "max_unit_seconds": 6.3,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRecordsAgainstNode/workload-1000000",
+          "action": "pass",
+          "seconds": 6.3,
+          "run": "^TestRecordsAgainstNode$/^workload\\-1000000$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodePatternUnits",
+      "shard": null,
+      "invocation_seconds": 2.1493916799990984,
+      "group_seconds": 0.22,
+      "max_unit_seconds": 0.22,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodePatternUnits",
+          "action": "pass",
+          "seconds": 0.22,
+          "run": "^TestRegExpBytecodePatternUnits$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpBytecodeTest262",
+      "shard": null,
+      "invocation_seconds": 14.398692790000496,
+      "group_seconds": 12.49,
+      "max_unit_seconds": 12.49,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpBytecodeTest262",
+          "action": "pass",
+          "seconds": 12.49,
+          "run": "^TestRegExpBytecodeTest262$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpIteratorResultShape",
+      "shard": null,
+      "invocation_seconds": 2.153321498997684,
+      "group_seconds": 0.17,
+      "max_unit_seconds": 0.17,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpIteratorResultShape",
+          "action": "pass",
+          "seconds": 0.17,
+          "run": "^TestRegExpIteratorResultShape$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpLintPatternsNode",
+      "shard": null,
+      "invocation_seconds": 3.6938338899999508,
+      "group_seconds": 1.84,
+      "max_unit_seconds": 1.84,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpLintPatternsNode",
+          "action": "pass",
+          "seconds": 1.84,
+          "run": "^TestRegExpLintPatternsNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpNativeStepLimit",
+      "shard": null,
+      "invocation_seconds": 2.068191731999832,
+      "group_seconds": 0.16,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpNativeStepLimit",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestRegExpNativeStepLimit$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegExpSearchNode",
+      "shard": null,
+      "invocation_seconds": 2.201223220999964,
+      "group_seconds": 0.37,
+      "max_unit_seconds": 0.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegExpSearchNode",
+          "action": "pass",
+          "seconds": 0.37,
+          "run": "^TestRegExpSearchNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRegexProgramsKeepCheckedFieldReads",
+      "shard": null,
+      "invocation_seconds": 2.296730990998185,
+      "group_seconds": 0.33,
+      "max_unit_seconds": 0.33,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRegexProgramsKeepCheckedFieldReads",
+          "action": "pass",
+          "seconds": 0.33,
+          "run": "^TestRegexProgramsKeepCheckedFieldReads$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestResidentSetUnits",
+      "shard": null,
+      "invocation_seconds": 1.8342923520031036,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestResidentSetUnits",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestResidentSetUnits$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeCacheConcurrentBuilders",
+      "shard": null,
+      "invocation_seconds": 3.05028981400028,
+      "group_seconds": 1.18,
+      "max_unit_seconds": 1.18,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeCacheConcurrentBuilders",
+          "action": "pass",
+          "seconds": 1.18,
+          "run": "^TestRuntimeCacheConcurrentBuilders$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeCacheConcurrentProcesses",
+      "shard": null,
+      "invocation_seconds": 2.0590869229999953,
+      "group_seconds": 0.16,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeCacheConcurrentProcesses",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestRuntimeCacheConcurrentProcesses$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeCacheKeepsCountFlags",
+      "shard": null,
+      "invocation_seconds": 2.124119418000191,
+      "group_seconds": 0.17,
+      "max_unit_seconds": 0.17,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeCacheKeepsCountFlags",
+          "action": "pass",
+          "seconds": 0.17,
+          "run": "^TestRuntimeCacheKeepsCountFlags$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeCacheRebuildsChangedSources",
+      "shard": null,
+      "invocation_seconds": 2.041388890000235,
+      "group_seconds": 0.16,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeCacheRebuildsChangedSources",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestRuntimeCacheRebuildsChangedSources$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeFieldLayoutsAreIncluded",
+      "shard": null,
+      "invocation_seconds": 1.8393024850010988,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeFieldLayoutsAreIncluded",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestRuntimeFieldLayoutsAreIncluded$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeKeyIncludesEveryInput",
+      "shard": null,
+      "invocation_seconds": 2.0430408300017007,
+      "group_seconds": 0.06,
+      "max_unit_seconds": 0.06,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeKeyIncludesEveryInput",
+          "action": "pass",
+          "seconds": 0.06,
+          "run": "^TestRuntimeKeyIncludesEveryInput$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeReleasePaths",
+      "shard": null,
+      "invocation_seconds": 2.311601369998243,
+      "group_seconds": 0.3,
+      "max_unit_seconds": 0.3,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeReleasePaths",
+          "action": "pass",
+          "seconds": 0.3,
+          "run": "^TestRuntimeReleasePaths$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeStringEquality",
+      "shard": null,
+      "invocation_seconds": 2.3475665260011738,
+      "group_seconds": 0.28,
+      "max_unit_seconds": 0.28,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeStringEquality",
+          "action": "pass",
+          "seconds": 0.28,
+          "run": "^TestRuntimeStringEquality$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestRuntimeStringViews",
+      "shard": null,
+      "invocation_seconds": 2.268529976998252,
+      "group_seconds": 0.3,
+      "max_unit_seconds": 0.3,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestRuntimeStringViews",
+          "action": "pass",
+          "seconds": 0.3,
+          "run": "^TestRuntimeStringViews$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestShardSelection",
+      "shard": null,
+      "invocation_seconds": 1.8783846370024548,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestShardSelection",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestShardSelection$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSizeClassesShareTheirChunks",
+      "shard": null,
+      "invocation_seconds": 1.9880085710028652,
+      "group_seconds": 0.09,
+      "max_unit_seconds": 0.09,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSizeClassesShareTheirChunks",
+          "action": "pass",
+          "seconds": 0.09,
+          "run": "^TestSizeClassesShareTheirChunks$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitTokensDoNotRewriteLiterals",
+      "shard": null,
+      "invocation_seconds": 1.9410042919989792,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitTokensDoNotRewriteLiterals",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitTokensDoNotRewriteLiterals$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/WASI",
+      "shard": null,
+      "invocation_seconds": 1.895189176000713,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/WASI",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^WASI$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/decode_prefixes",
+      "shard": null,
+      "invocation_seconds": 1.8895040830029757,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/decode_prefixes",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^decode_prefixes$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/decode_targets",
+      "shard": null,
+      "invocation_seconds": 1.8698816819996864,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/decode_targets",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^decode_targets$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/normalize_points",
+      "shard": null,
+      "invocation_seconds": 1.854066892999981,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/normalize_points",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^normalize_points$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/random_regex",
+      "shard": null,
+      "invocation_seconds": 1.9674139309972816,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/random_regex",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^random_regex$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/record_mutants",
+      "shard": null,
+      "invocation_seconds": 2.033644205002929,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/record_mutants",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^record_mutants$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/shard_union",
+      "shard": null,
+      "invocation_seconds": 1.928709389998403,
+      "group_seconds": 0.01,
+      "max_unit_seconds": 0.01,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/shard_union",
+          "action": "pass",
+          "seconds": 0.01,
+          "run": "^TestSplitUnitCoverage$/^shard_union$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestSplitUnitCoverage/split_cache",
+      "shard": null,
+      "invocation_seconds": 1.8650130969981547,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestSplitUnitCoverage/split_cache",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestSplitUnitCoverage$/^split_cache$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringBuildingMatchesNode",
+      "shard": null,
+      "invocation_seconds": 2.1100225420013885,
+      "group_seconds": 0.22,
+      "max_unit_seconds": 0.22,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringBuildingMatchesNode",
+          "action": "pass",
+          "seconds": 0.22,
+          "run": "^TestStringBuildingMatchesNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringIndexCacheStatesMatchNode",
+      "shard": null,
+      "invocation_seconds": 2.0801319899983355,
+      "group_seconds": 0.2,
+      "max_unit_seconds": 0.2,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringIndexCacheStatesMatchNode",
+          "action": "pass",
+          "seconds": 0.2,
+          "run": "^TestStringIndexCacheStatesMatchNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringIndexMatchesNode/ASCII",
+      "shard": null,
+      "invocation_seconds": 3.317561084000772,
+      "group_seconds": 1.37,
+      "max_unit_seconds": 1.37,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringIndexMatchesNode/ASCII",
+          "action": "pass",
+          "seconds": 1.37,
+          "run": "^TestStringIndexMatchesNode$/^ASCII$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringIndexMatchesNode/BMP",
+      "shard": null,
+      "invocation_seconds": 4.491053132998786,
+      "group_seconds": 2.58,
+      "max_unit_seconds": 2.58,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringIndexMatchesNode/BMP",
+          "action": "pass",
+          "seconds": 2.58,
+          "run": "^TestStringIndexMatchesNode$/^BMP$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringIndexMatchesNode/BMP_low_halves",
+      "shard": null,
+      "invocation_seconds": 4.688154912000755,
+      "group_seconds": 2.84,
+      "max_unit_seconds": 2.84,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringIndexMatchesNode/BMP_low_halves",
+          "action": "pass",
+          "seconds": 2.84,
+          "run": "^TestStringIndexMatchesNode$/^BMP_low_halves$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringIndexMatchesNode/mixed",
+      "shard": null,
+      "invocation_seconds": 6.096723008999106,
+      "group_seconds": 4.18,
+      "max_unit_seconds": 4.18,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringIndexMatchesNode/mixed",
+          "action": "pass",
+          "seconds": 4.18,
+          "run": "^TestStringIndexMatchesNode$/^mixed$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringLengthLimit",
+      "shard": null,
+      "invocation_seconds": 2.141348878001736,
+      "group_seconds": 0.18,
+      "max_unit_seconds": 0.18,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringLengthLimit",
+          "action": "pass",
+          "seconds": 0.18,
+          "run": "^TestStringLengthLimit$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringViewAfterAppendMatchesNode",
+      "shard": null,
+      "invocation_seconds": 2.1818871239993314,
+      "group_seconds": 0.24,
+      "max_unit_seconds": 0.24,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringViewAfterAppendMatchesNode",
+          "action": "pass",
+          "seconds": 0.24,
+          "run": "^TestStringViewAfterAppendMatchesNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestStringsMatchJavaScript",
+      "shard": null,
+      "invocation_seconds": 2.303322667001339,
+      "group_seconds": 0.29,
+      "max_unit_seconds": 0.29,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestStringsMatchJavaScript",
+          "action": "pass",
+          "seconds": 0.29,
+          "run": "^TestStringsMatchJavaScript$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestTSGoBuildSeesTheProgramsFeatures",
+      "shard": null,
+      "invocation_seconds": 2.219576782998047,
+      "group_seconds": 0.1,
+      "max_unit_seconds": 0.1,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestTSGoBuildSeesTheProgramsFeatures",
+          "action": "pass",
+          "seconds": 0.1,
+          "run": "^TestTSGoBuildSeesTheProgramsFeatures$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestThrowElementBorrowPlan",
+      "shard": null,
+      "invocation_seconds": 2.0466943079991324,
+      "group_seconds": 0.04,
+      "max_unit_seconds": 0.04,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestThrowElementBorrowPlan",
+          "action": "pass",
+          "seconds": 0.04,
+          "run": "^TestThrowElementBorrowPlan$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestToExponentialAndToPrecisionMatchNode",
+      "shard": null,
+      "invocation_seconds": 7.293103421998239,
+      "group_seconds": 5.1,
+      "max_unit_seconds": 5.1,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestToExponentialAndToPrecisionMatchNode",
+          "action": "pass",
+          "seconds": 5.1,
+          "run": "^TestToExponentialAndToPrecisionMatchNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestToExponentialAndToPrecisionOutOfRangePanic",
+      "shard": null,
+      "invocation_seconds": 2.4035978669999167,
+      "group_seconds": 0.56,
+      "max_unit_seconds": 0.56,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestToExponentialAndToPrecisionOutOfRangePanic",
+          "action": "pass",
+          "seconds": 0.56,
+          "run": "^TestToExponentialAndToPrecisionOutOfRangePanic$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestToStringWithARadixMatchesNode",
+      "shard": null,
+      "invocation_seconds": 2.7518342590010434,
+      "group_seconds": 0.79,
+      "max_unit_seconds": 0.79,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestToStringWithARadixMatchesNode",
+          "action": "pass",
+          "seconds": 0.79,
+          "run": "^TestToStringWithARadixMatchesNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestToStringWithARadixOutOfRangePanics",
+      "shard": null,
+      "invocation_seconds": 2.4624070919999212,
+      "group_seconds": 0.58,
+      "max_unit_seconds": 0.58,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestToStringWithARadixOutOfRangePanics",
+          "action": "pass",
+          "seconds": 0.58,
+          "run": "^TestToStringWithARadixOutOfRangePanics$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestTypedArrayRuntime/release",
+      "shard": null,
+      "invocation_seconds": 2.26009181200061,
+      "group_seconds": 0.27,
+      "max_unit_seconds": 0.27,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestTypedArrayRuntime/release",
+          "action": "pass",
+          "seconds": 0.27,
+          "run": "^TestTypedArrayRuntime$/^release$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestTypedArrayRuntime/sanitized",
+      "shard": null,
+      "invocation_seconds": 2.3961171379996813,
+      "group_seconds": 0.43,
+      "max_unit_seconds": 0.43,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestTypedArrayRuntime/sanitized",
+          "action": "pass",
+          "seconds": 0.43,
+          "run": "^TestTypedArrayRuntime$/^sanitized$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestUniformFieldsMatchNode",
+      "shard": null,
+      "invocation_seconds": 2.3237021419990924,
+      "group_seconds": 0.44,
+      "max_unit_seconds": 0.44,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestUniformFieldsMatchNode",
+          "action": "pass",
+          "seconds": 0.44,
+          "run": "^TestUniformFieldsMatchNode$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestUnitCacheFlagsHoldSanitizer",
+      "shard": null,
+      "invocation_seconds": 2.0959166049979103,
+      "group_seconds": 0.16,
+      "max_unit_seconds": 0.16,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestUnitCacheFlagsHoldSanitizer",
+          "action": "pass",
+          "seconds": 0.16,
+          "run": "^TestUnitCacheFlagsHoldSanitizer$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestUnitSystemHeaderProvenance",
+      "shard": null,
+      "invocation_seconds": 2.1190684419998433,
+      "group_seconds": 0.24,
+      "max_unit_seconds": 0.24,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestUnitSystemHeaderProvenance",
+          "action": "pass",
+          "seconds": 0.24,
+          "run": "^TestUnitSystemHeaderProvenance$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestUnitsPreserveSharedState",
+      "shard": null,
+      "invocation_seconds": 2.2629766169993673,
+      "group_seconds": 0.4,
+      "max_unit_seconds": 0.4,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestUnitsPreserveSharedState",
+          "action": "pass",
+          "seconds": 0.4,
+          "run": "^TestUnitsPreserveSharedState$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASIRefusesUnsupportedOptions",
+      "shard": null,
+      "invocation_seconds": 1.9536910819988407,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASIRefusesUnsupportedOptions",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestWASIRefusesUnsupportedOptions$"
+        }
+      ]
+    },
+    {
+      "package": "internal/native",
+      "test": "TestWASITargetFlags",
+      "shard": null,
+      "invocation_seconds": 1.930206561999512,
+      "group_seconds": 0,
+      "max_unit_seconds": 0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "TestWASITargetFlags",
+          "action": "pass",
+          "seconds": 0,
+          "run": "^TestWASITargetFlags$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and shared builds keyed by inputs are not timed units. Unit execution and comparison outcomes are never cached; decoder Node goldens are prepared inputs."
+}

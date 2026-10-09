@@ -1,0 +1,8 @@
+import { parallelMap } from 'adamic';
+function run(): string {
+	const offset = 2;
+	const score = (value: number): number => value + offset;
+	const items: readonly { readonly name: string; readonly score: (value: number) => number }[] = [{ name: 'one', score }];
+	return parallelMap(items, (item) => item.name).join(',');
+}
+console.log(run());

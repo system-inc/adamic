@@ -1,0 +1,59 @@
+[
+  {
+    "check": "fixtures",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures$/^real$",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v"
+    ]
+  },
+  {
+    "check": "output-byte",
+    "exit": 1,
+    "bytes_changed": 1,
+    "caught_by": "recorded Node byte comparison failed",
+    "independent_check_passed": "/stage0",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures$/^real$/^type-predicate$/^main.a$",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/tmp/adamic-gate/adamic-real-output-byte-_hmmzm1a"
+    ]
+  },
+  {
+    "check": "diagnostic-byte",
+    "exit": 1,
+    "bytes_changed": 1,
+    "caught_by": "gap changed:",
+    "independent_check_passed": "/node",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures$/^real$/^type-predicate$/^main.a$",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/tmp/adamic-gate/adamic-real-diagnostic-byte-qzcvaepi"
+    ]
+  }
+]

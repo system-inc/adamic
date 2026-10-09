@@ -1,0 +1,19 @@
+import { programArguments } from 'adamic';
+let word = 'before' + (programArguments()[0] ?? '!');
+const replacement = (match: string): string => { word = 'after'; return match; };
+function rewrite(text: string, callback: (match: string) => string): string {
+ return text.replace(/x/, callback);
+}
+function pair(left: string): string { return left + rewrite('x', replacement); }
+console.log(pair(word));
+console.log(word);
+interface Box { readonly text: string; }
+function guarded(): void {
+ let box: Box = { text: 'before' + (programArguments()[0] ?? '!') };
+ try {
+  box = { ...box, text: box.text + 'x'.replace(/x/, (match: string): string => { throw new Error(match); }) };
+ } catch (error) {
+  console.log(box.text);
+ }
+}
+guarded();
