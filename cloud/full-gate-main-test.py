@@ -28,6 +28,7 @@ class FullGateLoopTests(unittest.TestCase):
         git(root, 'clone', '-q', str(self.origin), str(self.work))
         (self.work / 'cloud').mkdir()
         shutil.copy(script, self.work / 'cloud' / 'full-gate-main.sh')
+        shutil.copy(script.with_name('fast-gate-classify.sh'), self.work / 'cloud' / 'fast-gate-classify.sh')
         self.state = root / 'state'
         self.state.mkdir()
         self.code = self.commit({'compiler.go': 'package compiler\n'})
@@ -243,6 +244,71 @@ class FullGateLoopTests(unittest.TestCase):
         self.assertEqual(self.call('box=threadripper; boxFree')[0], 0, "a dead holder's claim is free")
         self.assertEqual(self.call('box=threadripper; claimBox %s; releaseBox' % self.changed)[0], 0)
         self.assertFalse((self.state / 'boxes' / 'threadripper').exists())
+
+    def runRequest(self, sha):
+        """runOnBox of a request, the box a directory on this machine and integration's inbox a file."""
+        root = Path(self.tmp.name)
+        bin = root / 'bin'
+        bin.mkdir(exist_ok=True)
+        box = root / 'box'
+        box.mkdir(exist_ok=True)
+        # The run itself: records what it gated and finishes green at once.
+        (bin / 'ssh').write_text("""#!/bin/bash
+shift
+case "$*" in
+  *pkill*) exit 0 ;;
+  'bash -s -- '*)
+    cat > /dev/null
+    echo "$4" > "$TEST_ROOT/gated"
+    mkdir -p "$TEST_ROOT/box/$6"
+    echo "green: $4 full gate in 1.0 s" > "$TEST_ROOT/box/$6/status.txt"
+    echo '{"finished": true}' > "$TEST_ROOT/box/$6/full.json" ;;
+  *) HOME="$TEST_ROOT/box" bash -c "$*" ;;
+esac
+""")
+        (bin / 'rsync').write_text('#!/bin/bash\nsource=${@: -2:1}\nmkdir -p "${@: -1}"\ncp -R "$TEST_ROOT/box/${source#*:}." "${@: -1}"\n')
+        (bin / 'sleep').write_text('#!/bin/bash\n')
+        (bin / 'ahra').write_text('#!/bin/bash\nprintf "%s\\n" "$*" >> "$TEST_ROOT/sent"\n')
+        for name in ('ssh', 'rsync', 'sleep', 'ahra'):
+            (bin / name).chmod(0o755)
+        command = 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=home; heartbeat() { :; }; runOnBox %s request'
+        environment = dict(os.environ, PATH=str(bin) + ':' + os.environ['PATH'], TEST_ROOT=str(root), ADAMIC_FULL_GATE_STATE=str(self.state),
+                           ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_FULL_GATE_BOXES=str(self.state / 'boxes'))
+        return subprocess.run(['bash', '-c', command % (self.work / 'cloud' / 'full-gate-main.sh', sha)], env=environment, capture_output=True, text=True, timeout=60)
+
+    def published(self, sha):
+        refs = git(self.origin, 'for-each-ref', '--format=%(refname)', 'refs/heads/gate-logs/%s/' % sha[:12]).split()
+        self.assertEqual(len(refs), 1, refs)
+        return git(self.origin, 'show', '%s:status.txt' % refs[0])
+
+    def request(self, files):
+        """The star's candidate, forked from main's parent, so main's own change is one it doesn't hold."""
+        git(self.work, 'checkout', '-q', '--detach', self.records)
+        sha = self.commit(files)
+        git(self.work, 'push', '-q', 'origin', '%s:refs/heads/cloud/land-request' % sha)
+        git(self.work, 'checkout', '-q', '--detach', self.changed)
+        return sha
+
+    def test_a_request_is_gated_merged_onto_main_s_tip(self):
+        # #11ymb02: a candidate forked before main's change gates with it, and its record names both.
+        sha = self.request({'feature.go': 'package feature\n'})
+        result = self.runRequest(sha)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        gated = (Path(self.tmp.name) / 'gated').read_text().strip()
+        self.assertEqual(git(self.work, 'rev-list', '--parents', '-n', '1', gated).split()[1:], [self.changed, sha])
+        self.assertEqual(git(self.work, 'show', '%s:compiler.go' % gated), 'package compiler // changed')
+        status = self.published(sha)
+        self.assertEqual(status, 'green: %s full gate in 1.0 s (gated merged onto main %s as %s)' % (sha, self.changed[:12], gated))
+        self.assertEqual(self.published(gated), status, 'push-main lands the merge by its own record')
+
+    def test_a_conflicting_request_is_red_at_merge_without_a_run(self):
+        sha = self.request({'compiler.go': 'package compiler // the request\'s own\n'})
+        result = self.runRequest(sha)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse((Path(self.tmp.name) / 'gated').exists(), 'a conflict took the box')
+        self.assertTrue(self.published(sha).startswith('red: %s full gate, first failure at merge' % sha), self.published(sha))
+        self.assertIn('compiler.go', self.published(sha))
+        self.assertIn('system_adamic_integration', (Path(self.tmp.name) / 'sent').read_text())
 
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)

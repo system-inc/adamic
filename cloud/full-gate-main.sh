@@ -22,6 +22,8 @@ state=${ADAMIC_FULL_GATE_STATE:-${HOME}/.adamic-full-gate}
 mkdir -p "${state}"
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 once=${1:-}
+# gateMerge: a request is gated merged onto main's tip, as every fast gate is.
+. "${here}/cloud/fast-gate-classify.sh"
 
 # The heartbeat (@system_adamic, Oct 8 03:36): one row when a run starts and one every 10 minutes
 # while the loop lives, to documentation/velocity/full-gate-heartbeat.csv on records/full-gate-heartbeat,
@@ -68,13 +70,23 @@ reclaim() {
 }
 
 publish() {
-  local sha=$1 stamp=$2 out=$3 parent=$4
+  local sha=$1 stamp=$2 out=$3 parent=$4 gated=${5:-$1} mainTip=${6:-}
   local copy index gitDirectory tree commit branch=gate-logs/${sha:0:12}/${stamp}/full-main
   copy=$(mktemp -d)
   # The record, not the run's scratch: the catalog's units hold whole repository worktrees and the wasi units
   # their go-build trees. Copying those with scp -r took over ten minutes a publish (and stalled on their dangling
   # symlinks), so Home's loop hung two hours inside one run's publishes (Oct 9 06:4xZ).
   rsync -a --exclude 'adamic-catalog-worktree-*' --exclude 'go-build*' --exclude '*.test' "${box}:${out}/" "${copy}/full-main/"
+  # A request gated as its merge onto main is recorded under the request's own sha, its status line naming both.
+  if [ "${gated}" != "${sha}" ]; then
+    python3 - "${copy}/full-main/status.txt" "${sha}" "${gated}" "${mainTip}" <<'MERGED'
+import sys
+path, sha, gated, mainTip = sys.argv[1:]
+lines = open(path).read().splitlines()
+lines[0] = lines[0].replace(gated, sha, 1) + " (gated merged onto main %s as %s)" % (mainTip[:12], gated)
+open(path, "w").write("\n".join(lines) + "\n")
+MERGED
+  fi
   # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
   # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
   find "${copy}/full-main" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
@@ -84,6 +96,8 @@ publish() {
   tree=$(cd "${copy}/full-main" && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" --work-tree=. add -A -f . && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" write-tree)
   commit=$(git -C "${here}" commit-tree "${tree}" ${parent:+-p "${parent}"} -m "Full gate of main ${sha}: $(head -1 "${copy}/full-main/status.txt")")
   git -C "${here}" push -q origin "${commit}:refs/heads/${branch}"
+  # The merge's own sha holds the same record, so push-main lands the merge commit by its green record.
+  [ "${gated}" = "${sha}" ] || git -C "${here}" push -q origin "${commit}:refs/heads/gate-logs/${gated:0:12}/${stamp}/full-main"
   echo "${commit}"
 }
 
@@ -140,14 +154,32 @@ run() {
   return "${code}"
 }
 runOnBox() {
-  local sha=$1 origin=${2:-main} tools stamp out status previous="" parent="" stopping=""
+  local sha=$1 origin=${2:-main} tools stamp out status previous="" parent="" stopping="" gated=$1 merged=same mainTip=""
   tools=$(git -C "${here}" rev-parse HEAD)
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
   out=full-gate/out/${sha:0:12}-${stamp}
+  # A request (the star's candidate) is gated merged onto main's tip at its start, never its fork point (#11ymb02;
+  # @system_adamic, Oct 9 08:17Z). A conflict is its red at once, with no box time; a main is its own tip.
+  if [ "${origin}" = request ]; then
+    mainTip=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
+    read -r merged gated <<< "$(gateMerge "${sha}" "${mainTip}" || echo error)"
+    case ${merged} in
+      same) gated=${sha} ;;
+      merge)
+        git -C "${here}" push -q origin "${gated}:refs/gate-merges/${gated}" || { echo "$(date -u +%H:%M:%S) couldn't push ${sha}'s merge onto main ${mainTip}"; return 1; }
+        echo "$(date -u +%H:%M:%S) gating ${sha} merged onto main ${mainTip} as ${gated}" ;;
+      conflict) ;;
+      *) echo "$(date -u +%H:%M:%S) couldn't merge ${sha} onto main ${mainTip}"; return 1 ;;
+    esac
+  fi
   echo "$(date -u +%H:%M:%S) full gate of main ${sha} (tools ${tools}) on ${box}"
   reclaim
   (heartbeat start "${sha}" > /dev/null 2>&1 &)
-  ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" "$([ "${ADAMIC_FULL_GATE_RUN_TO_END:-}" = 1 ] && echo --run-to-end)" <<'BOX'
+  if [ "${merged}" = conflict ]; then
+    ssh "${box}" "mkdir -p ~/${out} && echo 'red: ${sha} full gate, first failure at merge after 0.0 s (conflicts with main ${mainTip:0:12} in ${gated})' > ~/${out}/status.txt && echo '{\"finished\": true, \"failure\": {\"step\": \"merge\"}}' > ~/${out}/full.json"
+    gated=${sha}
+  else
+  ssh "${box}" bash -s -- "${gated}" "${tools}" "${out}" "${share}" "$([ "${ADAMIC_FULL_GATE_RUN_TO_END:-}" = 1 ] && echo --run-to-end)" <<'BOX'
 set -euo pipefail
 sha=$1 tools=$2 out=$3 share=${4:-all} runToEnd=${5:-}
 mkdir -p ~/full-gate ~/"${out}"
@@ -303,18 +335,19 @@ RUN
 echo "running: full gate of ${sha}, waiting for the box" > ~/"${out}"/status.txt
 tmux new -d -s "full-${sha:0:12}" "bash ~/${out}/run.sh > ~/${out}/driver.log 2>&1"
 BOX
+  fi
   local beats=0
   while true; do
     sleep 30
     beats=$((beats + 1)); [ $((beats % 20)) -eq 0 ] && (heartbeat running "${sha}" > /dev/null 2>&1 &)
     if [ "${origin}" = request ] && [ -z "${stopping}" ] && requestDropped "${sha}"; then
       echo "$(date -u +%H:%M:%S) stopping ${sha}: it left the requests file (superseded); ${box} goes to the next request"
-      stopRemote "${sha}"
+      stopRemote "${gated}"
       stopping=yes
     fi
     status=$(ssh "${box}" "head -1 ~/${out}/status.txt" 2>/dev/null || true)
     if [ -n "${status}" ] && [ "${status}" != "${previous}" ]; then
-      parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
+      parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}" "${gated}" "${mainTip}")
       echo "$(date -u +%H:%M:%S) ${status}"
       if [[ ${status} == red:* && ${previous} != red:* ]]; then
         green=$(cat "${state}/last-green" 2>/dev/null || true)
@@ -332,8 +365,8 @@ BOX
         # parent, and the verdict comes back to integration (cloud/ab-trigger.py; @system_adamic from the witness, Oct 9).
         firstFailure=$(mktemp)
         if ssh "${box}" "cat ~/${out}/first-failure.txt" > "${firstFailure}" 2> /dev/null; then
-          git -C "${here}" fetch -q origin "${sha}" 2> /dev/null || true
-          python3 "${here}/cloud/ab-trigger.py" write --candidate "${sha}" --main "$(git -C "${here}" rev-parse "${sha}^1" 2> /dev/null)" \
+          git -C "${here}" fetch -q origin "${gated}" 2> /dev/null || true
+          python3 "${here}/cloud/ab-trigger.py" write --candidate "${gated}" --main "$(git -C "${here}" rev-parse "${gated}^1" 2> /dev/null)" \
             --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_integration || true
         fi
         rm -f "${firstFailure}"
@@ -341,7 +374,7 @@ BOX
       previous=${status}
     fi
     if ssh "${box}" "test -f ~/${out}/full.json" 2>/dev/null; then
-      parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
+      parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}" "${gated}" "${mainTip}")
       final=$(ssh "${box}" "head -1 ~/${out}/status.txt")
       echo "$(date -u +%H:%M:%S) finished: ${final}"
       if [[ ${final} == green:* ]]; then echo "${sha}" > "${state}/last-green"; fi
