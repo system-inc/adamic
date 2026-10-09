@@ -1,0 +1,16 @@
+// a-check: checked
+// compiler/checker.ts:28001,28012-28025: TypeId cache, duplicate key replaced by unknownType.
+// compiler/types.ts:6435: TypeId is number; Type and Symbol here are compiler objects, not JS symbols.
+type TypeId = number;
+interface Type { readonly id: TypeId; readonly name: string }
+const unknownType: Type = { id: 0, name: 'unknown' };
+const map = new Map<TypeId, Type>();
+const types: Type[] = [{ id: 2, name: 'first' }, { id: 1, name: 'second' }, { id: 2, name: 'duplicate' }];
+for (const type of types) {
+    const id = type.id;
+    const existing = map.get(id);
+    if (existing === undefined) map.set(id, type);
+    else map.set(id, unknownType);
+}
+console.log(`${map.size}`);
+for (const [id, type] of map) console.log(`${id} ${type.name}`);

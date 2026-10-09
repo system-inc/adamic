@@ -11,9 +11,6 @@ import (
 func TestRegExpNativeRefusals(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
-		"const matches = /a{18446744073709551616}/.test('a');",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {
@@ -51,6 +48,26 @@ func TestRegExpSourceNode(t *testing.T) {
 	lone := string([]byte{0xed, 0xa0, 0x80})
 	if escapeRegexSource(lone, "") != lone {
 		t.Error("source differs: lone surrogate bytes changed")
+	}
+}
+
+func TestRegExpRuntimeConstructionLowers(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"const matches = /a{18446744073709551616}/.test('a');",
+		"new RegExp('x' + undefined).test('x');",
+		`let flags: string | undefined = undefined; function change(): void { flags = 's'; } if (flags === undefined) { change(); new RegExp('.', flags).test('\n'); }`,
+		"let pattern = 'a'; pattern = 'b'; new RegExp(pattern).test('a');",
+		"let pattern = 'a'; function change(): void { pattern = 'b'; } change(); new RegExp(pattern).test('a');",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatalf("runtime pattern must lower: %s: %v", source, err)
+		}
+	}
+	for _, source := range []string{"function made(pattern: string): RegExp { return new RegExp(pattern); }", "function made(flags: string): RegExp { return new RegExp('a',flags); }"} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatal(err)
+		}
 	}
 }
 

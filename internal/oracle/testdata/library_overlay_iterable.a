@@ -1,0 +1,3 @@
+function arrayFrom<T>(items: MapIterator<T>): T[] { return [...items]; }
+const result: string[] = arrayFrom(new Map<string, string>([['a', 'alpha'], ['b', 'beta']]).values());
+console.log(result.join('|'));

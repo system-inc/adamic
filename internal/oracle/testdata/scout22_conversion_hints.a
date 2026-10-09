@@ -1,0 +1,24 @@
+let order = '';
+const value = {
+ toString: (): string => { order += 'string '; return 'built'.repeat(2); },
+ valueOf: (): number => { order += 'value '; return 7; },
+};
+function suffix(): string { order += 'right '; return '!'; }
+console.log(`${value}`);
+console.log(`${order}`);
+order = '';
+console.log(value + suffix());
+console.log(`${order}`);
+order = '';
+console.log(suffix() + value);
+console.log(`${order}`);
+const fallback = {valueOf: (): { n: number } => { order += 'object '; return {n: 1}; }};
+console.log('fallback ' + fallback);
+console.log(`${order}`);
+const numeric = {toString: (): number => 12, valueOf: (): number => 9};
+console.log(`${numeric}`);
+const noncallable = {toString: 4, valueOf: (): boolean => false};
+console.log(`${noncallable}`);
+const plain = {n: 1};
+console.log(`${plain}`);
+console.log(`${['a'.repeat(2), 'b'.repeat(2)]}`);

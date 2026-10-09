@@ -25,6 +25,7 @@ type engine struct {
 	test262          string
 	work             string
 	adamic           string
+	runtimeRegex     []string
 	runtime          []string
 	include          string
 	flags            []string
@@ -43,6 +44,15 @@ type engine struct {
 	worker           int
 	root             string
 	fallback         *compilerFallback
+	oracle           *typescriptOracle
+	timeout          time.Duration
+}
+
+func (e *engine) executionTimeout() time.Duration {
+	if e.timeout > 0 {
+		return e.timeout
+	}
+	return 15 * time.Second
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -56,6 +66,9 @@ func prepareProfile(root string, test262 string, work string, profile *runProfil
 func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
 	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
+		return nil, err
+	}
+	if err := os.WriteFile(filepath.Join(work, "results.jsonl"), nil, 0o644); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
@@ -97,9 +110,14 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	if err != nil {
 		return nil, err
 	}
+	oracle, err := startTypescript(root, work)
+	if err != nil {
+		return nil, err
+	}
 	context = cacheKey(context, sourceIdentity)
 	done()
 	return &engine{
+		oracle:  oracle,
 		profile: profile,
 		root:    root, fallback: &compilerFallback{}, inProcess: inProcess,
 		test262:          test262,
@@ -133,6 +151,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	attempted := 0
 	tests := make([]classified, len(files))
 	results := make([]result, len(files))
+	diagnostics := make([]string, len(files))
 	ready := make([]chan struct{}, len(files))
 	indices := make([]int, 0, len(files))
 	for index, file := range files {
@@ -192,7 +211,10 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 				defer local.compiler.close()
 			}
 			for index := range queue {
+				var diagnostic bytes.Buffer
+				local.log = &diagnostic
 				one := local.attempt(tests[index])
+				diagnostics[index] = diagnostic.String()
 				if one.Kind == outcomeCrashed {
 					one.Reason = withCrashPath(one.Path, one.Reason)
 				}
@@ -209,10 +231,30 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	}()
 	for index := range files {
 		<-ready[index]
+		fmt.Fprint(e.log, diagnostics[index])
 		report.add(results[index])
+		if !classifyOnly {
+			// Retain every result, not just aggregate reasons, for before/after audits.
+			encoded, err := json.Marshal(results[index])
+			if err != nil {
+				return report, err
+			}
+			file, err := os.OpenFile(filepath.Join(e.work, "results.jsonl"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+			if err != nil {
+				return report, err
+			}
+			_, writeErr := file.Write(append(encoded, '\n'))
+			closeErr := file.Close()
+			if writeErr != nil {
+				return report, writeErr
+			}
+			if closeErr != nil {
+				return report, closeErr
+			}
+		}
 		if (index+1)%50 == 0 || index+1 == len(files) {
-			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
-				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.Crashed, report.Skipped)
+			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d not-typescript=%d crashed=%d skipped=%d\n",
+				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.NotTypescript, report.Crashed, report.Skipped)
 		}
 	}
 	workers.Wait()
@@ -296,6 +338,17 @@ func (e *engine) attempt(test classified) result {
 	if kind == "refused" {
 		base.Kind = outcomeRefused
 		base.Reason = reason
+		if checkerCode(reason) != "" {
+			codes, err := e.oracle.check(test.Program)
+			if err != nil {
+				base.Kind = outcomeCrashed
+				base.Reason = "TypeScript oracle: " + err.Error()
+			} else {
+				decision := typescriptVerdict(reason, codes)
+				base.Kind = decision.Kind
+				base.Reason = decision.Reason
+			}
+		}
 		return base
 	}
 	if kind == "crashed" || lowered.Exit != 0 {
@@ -311,9 +364,15 @@ func (e *engine) attempt(test classified) result {
 	}
 	binary := filepath.Join(directory, "program.bin")
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
-	arguments = append(arguments, e.runtime...)
+	objects, err := e.regexpRuntime(lowered.Stdout)
+	if err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	arguments = append(arguments, objects...)
 	arguments = append(arguments, "-lm")
-	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+	nativeCommand := cacheKey(cacheKey(arguments...), binary, e.executionTimeout().String()+"-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
@@ -325,7 +384,7 @@ func (e *engine) attempt(test classified) result {
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return profile.command("native", func() execution { return runProgram(15*time.Second, nativeEnvironment, binary) }), true
+		return profile.command("native", func() execution { return runProgram(e.executionTimeout(), nativeEnvironment, binary) }), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -335,10 +394,10 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = "clang: " + firstLine(nativeRun.Stderr)
 		return base
 	}
-	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit))
+	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, e.executionTimeout().String()+"-cpu", "2m-wall", fmt.Sprint(outputLimit))
 	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runProgram(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+		return runProgram(e.executionTimeout(), nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -348,6 +407,29 @@ func (e *engine) attempt(test classified) result {
 	})
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
+	// The existing generic harness checks Error ancestry, not constructor
+	// identity. Independent Node success cannot prove that missing native check.
+	// Do not award a RegExp pass until exact constructor checks are supported.
+	if base.Kind == outcomePass && test.ConstructorAssertion {
+		base.Kind = outcomeRefused
+		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
+		return base
+	}
+	if base.Kind == outcomePass && test.Original != "" {
+		original := e.originalRegExp(test)
+		if crashedExecution(original) {
+			base.Kind = outcomeCrashed
+			base.Reason = "original Node test: " + crashReason(verdictInput{Node: original})
+		} else if test.NegativePhase == "runtime" {
+			if original.Exit == 0 || !errorNamed(original.Stderr, test.NegativeType) {
+				base.Kind = outcomeFail
+				base.Reason = "original Node negative expectation not observed"
+			}
+		} else if original.Exit != 0 || original.Stdout != nodeRun.Stdout || original.Stderr != nodeRun.Stderr {
+			base.Kind = outcomeFail
+			base.Reason = "original Node test disagrees with adaptation: " + firstLine(original.Stderr)
+		}
+	}
 	return base
 }
 
@@ -384,24 +466,28 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	command.Env = append(os.Environ(), extra...)
+	command.Env = append(append(os.Environ(), "TZ=UTC"), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
 	stderr.limit = limit
+	stderr.tail = true
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	err := command.Run()
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
-	if stdout.exceeded || stderr.exceeded {
-		result.Exit = -1
-		result.Stderr = "command output exceeded capture limit\n"
-		return result
-	}
 	if ctx.Err() == context.DeadlineExceeded {
 		result.TimedOut = true
 		result.Exit = -1
 		return result
+	}
+	if stdout.exceeded || stderr.exceeded {
+		result.Exit = -1
+		result.Stderr = "command output exceeded capture limit\n" + result.Stderr
+		// Keep processing the exit status: a signal is still a crash.
+		if err == nil {
+			return result
+		}
 	}
 	if err == nil {
 		return result
@@ -423,6 +509,9 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 			result.Exit = -1
 			return result
 		}
+		if stdout.exceeded || stderr.exceeded {
+			return result
+		}
 		result.Exit = status.ExitStatus()
 		return result
 	}
@@ -430,11 +519,12 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	return result
 }
 
-// limitedBuffer keeps the start of a stream and drops the rest, so a test that prints without end
-// cannot fill memory before its timeout.
+// limitedBuffer bounds captured output. Stdout keeps its start; stderr keeps its tail so
+// a sanitizer report after excessive output survives until classification.
 type limitedBuffer struct {
 	buf      bytes.Buffer
 	limit    int
+	tail     bool
 	exceeded bool
 }
 
@@ -443,6 +533,16 @@ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
 	room := buffer.limit - buffer.buf.Len()
 	if written > room {
 		buffer.exceeded = true
+	}
+	if buffer.tail && written > room {
+		if written >= buffer.limit {
+			buffer.buf.Reset()
+			data = data[written-buffer.limit:]
+		} else {
+			buffer.buf.Next(written - room)
+		}
+		_, _ = buffer.buf.Write(data)
+		return written, nil
 	}
 	if room > 0 {
 		if len(data) > room {
@@ -492,38 +592,42 @@ func listTests(test262 string, filter string) ([]string, error) {
 
 // filterReport is one directory filter's counts. Directories are the folders that hold tests.
 type filterReport struct {
-	Path           string        `json:"path"`
-	Pass           int           `json:"pass"`
-	Fail           int           `json:"fail"`
-	Refused        int           `json:"refused"`
-	Crashed        int           `json:"crashed"`
-	Skipped        int           `json:"skipped"`
-	Unrun          int           `json:"unrun,omitempty"`
-	Total          int           `json:"total"`
-	Directories    []dirCount    `json:"directories"`
-	RefusalReasons []reasonCount `json:"refusalReasons"`
-	SkipReasons    []reasonCount `json:"skipReasons"`
-	CrashReasons   []reasonCount `json:"crashReasons"`
-	FailReasons    []reasonCount `json:"failReasons"`
-	Passes         []string      `json:"passes,omitempty"`
-	Adaptations    []reasonCount `json:"adaptations,omitempty"`
-	directories    map[string]*dirCount
-	refusalReasons map[string]int
-	skipReasons    map[string]int
-	crashReasons   map[string]int
-	failReasons    map[string]int
-	adaptations    map[string]int
+	Path                 string        `json:"path"`
+	Pass                 int           `json:"pass"`
+	Fail                 int           `json:"fail"`
+	NotTypescript        int           `json:"notTypescript"`
+	Refused              int           `json:"refused"`
+	Crashed              int           `json:"crashed"`
+	Skipped              int           `json:"skipped"`
+	Unrun                int           `json:"unrun,omitempty"`
+	Total                int           `json:"total"`
+	Directories          []dirCount    `json:"directories"`
+	NotTypescriptReasons []reasonCount `json:"notTypescriptReasons"`
+	RefusalReasons       []reasonCount `json:"refusalReasons"`
+	SkipReasons          []reasonCount `json:"skipReasons"`
+	CrashReasons         []reasonCount `json:"crashReasons"`
+	FailReasons          []reasonCount `json:"failReasons"`
+	Passes               []string      `json:"passes,omitempty"`
+	Adaptations          []reasonCount `json:"adaptations,omitempty"`
+	directories          map[string]*dirCount
+	notTypescriptReasons map[string]int
+	refusalReasons       map[string]int
+	skipReasons          map[string]int
+	crashReasons         map[string]int
+	failReasons          map[string]int
+	adaptations          map[string]int
 }
 
 type dirCount struct {
-	Path    string `json:"path"`
-	Pass    int    `json:"pass"`
-	Fail    int    `json:"fail"`
-	Refused int    `json:"refused"`
-	Crashed int    `json:"crashed"`
-	Skipped int    `json:"skipped"`
-	Unrun   int    `json:"unrun,omitempty"`
-	Total   int    `json:"total"`
+	Path          string `json:"path"`
+	Pass          int    `json:"pass"`
+	Fail          int    `json:"fail"`
+	NotTypescript int    `json:"notTypescript"`
+	Refused       int    `json:"refused"`
+	Crashed       int    `json:"crashed"`
+	Skipped       int    `json:"skipped"`
+	Unrun         int    `json:"unrun,omitempty"`
+	Total         int    `json:"total"`
 }
 
 type reasonCount struct {
@@ -534,6 +638,7 @@ type reasonCount struct {
 func (report *filterReport) add(one result) {
 	if report.directories == nil {
 		report.directories = map[string]*dirCount{}
+		report.notTypescriptReasons = map[string]int{}
 		report.refusalReasons = map[string]int{}
 		report.skipReasons = map[string]int{}
 		report.crashReasons = map[string]int{}
@@ -556,6 +661,10 @@ func (report *filterReport) add(one result) {
 		report.Fail++
 		directory.Fail++
 		report.failReasons[one.Reason]++
+	case outcomeNotTypescript:
+		report.NotTypescript++
+		directory.NotTypescript++
+		report.notTypescriptReasons[reasonOr(one.Reason)]++
 	case outcomeRefused:
 		report.Refused++
 		directory.Refused++
@@ -589,6 +698,7 @@ func (report *filterReport) finish() {
 		report.Directories = append(report.Directories, *directory)
 	}
 	sort.Slice(report.Directories, func(i int, j int) bool { return report.Directories[i].Path < report.Directories[j].Path })
+	report.NotTypescriptReasons = sortedReasons(report.notTypescriptReasons)
 	report.RefusalReasons = sortedReasons(report.refusalReasons)
 	report.SkipReasons = sortedReasons(report.skipReasons)
 	report.CrashReasons = sortedReasons(report.crashReasons)
@@ -616,6 +726,7 @@ type reportDocument struct {
 	Test262 string         `json:"test262"`
 	Commit  string         `json:"commit,omitempty"`
 	Adapt   bool           `json:"adapt"`
+	Oracle  oracleStats    `json:"typescript"`
 	Filters []filterReport `json:"filters"`
 }
 

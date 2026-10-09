@@ -1,0 +1,2 @@
+console.log('before');
+console.log(new Date(NaN).toISOString());
