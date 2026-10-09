@@ -1,0 +1,42 @@
+[
+  [
+    "null-box",
+    "internal/native/union.go",
+    "return \"&adamic_null\"",
+    "return \"NULL\"",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a"
+  ],
+  [
+    "runtime-typeof",
+    "internal/native/union.go",
+    "operand, null := e.typeOfReference(observation)",
+    "operand, null := e.typeOfReference(observation)\n\tif value.Type() == ir.Union { null = \"true\" }",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a"
+  ],
+  [
+    "lower-typeof",
+    "internal/lower/expression.go",
+    "if operand.Type() == ir.Union {",
+    "if false && operand.Type() == ir.Union {",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a"
+  ],
+  [
+    "nullable-admission",
+    "internal/lower/expression.go",
+    "case flags&checker.TypeFlagsUnion != 0:",
+    "case flags&checker.TypeFlagsUnion != 0:\n\t\tif nullableStringUnion(proven) { return 0, false }",
+    "./internal/lower",
+    "TestNullableStringAdmission"
+  ],
+  [
+    "equality-observation",
+    "internal/lower/nullable_strings.go",
+    "if comparedWithUndefined(node) ||",
+    "if false ||",
+    "./internal/oracle",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_strings.a"
+  ]
+]
