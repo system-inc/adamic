@@ -192,6 +192,11 @@ def main():
     # Side work's fast gates on Loom's pool (#xt96xyp): the pool runs this selection where the tree is whole, so one
     # selection decides what a fast gate tests wherever it runs. It writes select.json and runs nothing.
     parser.add_argument("--select", action="store_true", help="write the fast gate's package selection to <out>/select.json and stop")
+    # Loom's pool runs the whole gate as units (Oct 9): one phase of it, optionally one unit of that phase, or the census
+    # over the record the pool merged, each with this gate's own logic and record shape, so the pool never forks it.
+    parser.add_argument("--phase", choices=wholePhases, help="with --full: run only this phase of the whole gate")
+    parser.add_argument("--unit", help="with --phase wasi, stage3 or catalog: run only this unit (a fixture, a stage 3 command, a catalog entry number)")
+    parser.add_argument("--census", metavar="TEST_JSONL", help="with --full: the census and deferred checks over a merged test.jsonl")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
@@ -286,6 +291,9 @@ class Gate:
             self.npmCli()
             if not self.npmPackages():
                 return
+        if self.arguments.full and (vars(self.arguments).get("phase") or vars(self.arguments).get("census")):
+            self.runPhase()
+            return
         if self.arguments.full:
             self.runFull()
             return
@@ -386,6 +394,61 @@ class Gate:
         if self.failure is not None:
             return
         self.checkCensus()
+
+    def runPhase(self):
+        """One phase of the whole gate (--phase, optionally --unit), or its census over a merged record (--census), for
+        Loom's pool (Oct 9): the same code the whole gate runs, writing the same status.txt and full.json, with only
+        that phase planned, so a unit's exits are the gate's. The pool runs the Go test set itself."""
+        census = vars(self.arguments).get("census")
+        if census:
+            self.planned = ["census"]
+            shutil.copyfile(census, os.path.join(self.arguments.out, "test.jsonl"))
+            try:
+                self.checkCensus()
+                self.deferredRanWhole()
+            except BaseException:
+                self.fail("census", traceback.format_exc())
+            return
+        phase = self.arguments.phase
+        self.planned = [phase]
+        try:
+            if phase == "coverage":
+                parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+                changed = [path for path in (self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []) if path]
+                _, unowned = self.touched(changed)
+                self.cover(unowned, changed)
+            elif phase == "tools":
+                self.toolsDeclared()
+            elif phase == "build":
+                self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+            elif phase == "vet":
+                self.vet()
+            elif phase == "wasi":
+                environment = None
+                if os.environ.get("WASI_SYSROOT"):
+                    environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+                with open(os.path.join(self.arguments.out, "test.jsonl"), "w") as log:
+                    self.wasiSplit(log, environment)
+            elif phase == "stage3":
+                self.stage3()
+            elif phase == "catalog":
+                self.catalogFull()
+            elif phase == "determinism":
+                self.determinism(self.smokeList()[0])
+        except BaseException:
+            self.fail(phase, traceback.format_exc())
+
+    def selectedUnits(self, phase, names):
+        """The units of a phase this run takes: all of them, or the one --unit names (a catalog entry by its number).
+        A --unit no unit answers to is an error, never an empty green."""
+        unit = vars(self.arguments).get("unit")
+        if not unit:
+            return list(names)
+        chosen = [name for name in names if name == unit or (phase == "catalog" and unit.isdigit() and name.startswith("%02d " % int(unit)))]
+        if not chosen:
+            raise ValueError("%s has no unit %r (units: %s)" % (phase, unit, ", ".join(names)))
+        self.result["unit"] = unit
+        return chosen
 
     def runFull(self):
         listing = self.command(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
@@ -570,6 +633,8 @@ class Gate:
         commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"], None),
                     ("stage3-lane-tests", ["bash", "-c", install + " && python3 -m unittest test_check test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
                     ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
+        chosen = self.selectedUnits("stage3", [name for name, _, _ in commands])
+        commands = [command for command in commands if command[0] in chosen]
         codes = {}
         # Each command gets its own STAGE3_CACHE: apply runs npm ci into the cache's api/, which deletes
         # node_modules first, so two applies sharing one (apply's test and the lane here, or another
@@ -743,6 +808,9 @@ class Gate:
         names = ["%02d %s" % (entry["number"], entry["name"]) for entry in entries]
         if not names or len(set(names)) != len(names) or len({entry["number"] for entry in entries}) != len(entries):
             raise ValueError("empty or duplicate catalog entries")
+        chosen = self.selectedUnits("catalog", names)
+        entries = [entry for entry, name in zip(entries, names) if name in chosen]
+        names = chosen
         commands = [["bash", "verify/catalog/check.sh", "--entry", str(entry["number"]),
                      "--jobs", "1", self.arguments.sha] for entry in entries]
         def execute(name, command, scratch):
@@ -777,7 +845,7 @@ class Gate:
                         shutil.copyfileobj(handle, output)
 
     def wasiSplit(self, log, environment=None):
-        names = wasiFixtures(self.arguments.tree)
+        names = self.selectedUnits("wasi", wasiFixtures(self.arguments.tree))
         commands = [["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout,
                      "-p", "1", "-parallel", "1", "-run", fixturePattern(["TestWASI"], [name]),
                      "./internal/native"] for name in names]
@@ -1949,6 +2017,10 @@ def longTests(units):
     """The units (testUnits) over longTestSeconds, longest first: (package, unit, seconds, action)."""
     return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > longTestSeconds),
                   key=lambda row: (-row[2], row[0], row[1]))
+
+
+# The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
+wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog", "determinism"]
 
 
 def slotCPUs():

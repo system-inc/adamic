@@ -89,10 +89,10 @@ class FailClosed(unittest.TestCase):
         with open(os.path.join(self.tree, "internal/native/wasm_test.go"), "w") as handle:
             handle.write('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
 
-    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, failing=None, runToEnd=False):
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, failing=None, runToEnd=False, extra=None):
         out = tempfile.mkdtemp(dir=self.directory)
         arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
-                              branch="", branch_source="", session="", session_source="", weights=None, run_to_end=runToEnd)
+                              branch="", branch_source="", session="", session_source="", weights=None, run_to_end=runToEnd, **(extra or {}))
 
         def popen(command, **options):
             if command[0] == "git":
@@ -274,6 +274,37 @@ class FailClosed(unittest.TestCase):
                     gate, status, result = self.gate(full=full)
                 self.assertIn("first failure at determinism", status)
                 self.assertIn("internal/oracle/testdata/a.a (exit 0 and 0, first difference at line 1)", gate.failure["detail"])
+
+    def test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit(self):
+        # Loom's pool runs the whole gate as units (Oct 9): one phase, one unit of it, with this gate's own record.
+        gate, status, result = self.gate(full=True, extra={"phase": "wasi", "unit": "requests"})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["planned_stages"], ["wasi"])
+        self.assertEqual(set(result["stages_exit"]), {"wasi"})
+        self.assertEqual([row["name"] for row in result["wasi_units"]], ["requests"])
+        self.assertEqual(result["unit"], "requests")
+        # A unit the phase doesn't have is red, never an empty green.
+        gate, status, result = self.gate(full=True, extra={"phase": "wasi", "unit": "no-such-fixture"})
+        self.assertIn("first failure at wasi", status)
+        self.assertIn("has no unit 'no-such-fixture'", gate.failure["detail"])
+        # A phase runs nothing of the others: no tests, no build.
+        with mock.patch.object(run.Gate, "emitC", lambda gate, binary, path: (0, "int main(void) {}\n")):
+            gate, status, result = self.gate(full=True, extra={"phase": "determinism"})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["planned_stages"], ["determinism"])
+        self.assertNotIn("tests", result["stages_exit"])
+        self.assertNotIn("build", result["stages_exit"])
+
+    def test_the_census_runs_over_a_merged_record(self):
+        # The pool merges its units' test.jsonl; the gate's census and deferred checks run over it, nothing else.
+        merged = os.path.join(self.directory, "merged.jsonl")
+        with open(merged, "w") as handle:
+            handle.write(json.dumps({"Action": "pass", "Package": run.module + "/p", "Test": "TestOne"}) + "\n")
+        gate, status, result = self.gate(full=True, extra={"census": merged})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["planned_stages"], ["census"])
+        with open(os.path.join(gate.arguments.out, "test.jsonl")) as handle:
+            self.assertIn("TestOne", handle.read())
 
     def test_a_stage_that_reports_nothing_is_red(self):
         for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
@@ -1357,6 +1388,29 @@ class PhaseUnitTests(unittest.TestCase):
         gate.failures = []
         gate.fail = lambda name, detail: gate.failures.append(name)
         return gate
+
+    def test_one_catalog_entry_runs_alone_by_its_number(self):
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            open(os.path.join(tree, "verify/catalog/check.sh"), "w").close()
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": 1, "name": "one"}, {"number": 2, "name": "two"}], handle)
+            gate = self.bare_gate(tree, tree)
+            gate.arguments.unit = "2"
+            entries = []
+
+            def spawn(command, output, environment):
+                entry = int(command[command.index("--entry") + 1])
+                entries.append(entry)
+                output.write("%02d %s: applies-and-fails-as-recorded\n" % (entry, ["one", "two"][entry - 1]))
+                return types.SimpleNamespace(wait=lambda: 0)
+            gate.spawn = spawn
+            gate.catalogFull()
+            self.assertEqual(entries, [2])
+            self.assertEqual([row["name"] for row in gate.result["catalog_units"]], ["02 two"])
+            gate.arguments.unit = "9"
+            with self.assertRaises(ValueError):
+                gate.catalogFull()
 
     def test_catalog_verdicts_are_per_entry(self):
         cases = [(0, "applies-and-fails-as-recorded", True), (1, "no-longer-applies", True),
