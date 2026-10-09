@@ -1,0 +1,11 @@
+file:///tmp/rethink-check/eep1m5z-9984394_uncaught_name.a:2
+    throw new Error(`message ${1}`);
+          ^
+
+message 1
+    at file:///tmp/rethink-check/eep1m5z-9984394_uncaught_name.a:2:11
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async file:///workspace/adamic/oracle/node.mjs:82:1
+
+Node.js v24.19.0

@@ -1,5 +1,5 @@
 Built: evidence-only repros for six old compiler tasks and all nine review-lane witnesses; no compiler fixes or fixtures.
-Commits: base 50654a40; delivery is the commit containing this report on compiler/rethink-check.
+Commits: base 50654a40; repros and results 492e0135; the evidence-log delivery commit contains this report on compiler/rethink-check.
 Commands and outputs: Node source, native release, JavaScript backend and ASan/UBSan/LSan runs; 2 FIXED, 5 REFUSED, 8 STILL WRONG across 15 programs.
 Mutants: three executed JavaScript artifact mutants independently caught by stdout, stderr and exit comparisons; no compiler implementation mutants.
 Not covered: full gate, generic static specializations, accessor-spread throw edges while refused, or new fixtures/count rows.
@@ -92,3 +92,11 @@ git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/
 ```
 
 No Go tests or .a fixtures were added or touched, so counts.md regeneration and TestCallTargetReaders do not apply. No whole package tests or full gate were run. Integration lane output is saved in lane-checks.log. An automatic approval-review attempt for the evidence runner timed out; its authorized retry succeeded.
+
+Integration lane observed exit 0:
+
+```text
+lane checks 119.4 s: gofmt and tools on 277 Go files, t.Parallel on 23 test packages; a-check 100 .a files; vet skipped, over 10 s
+```
+
+The lane compared the committed branch with its main merge base, so its inherited compiler changes also ran through these checks. The subsequent delivery commit adds only this review evidence and saved logs; it changes no checked Go or .a source. Vet was skipped by the lane time limit and is not claimed as passing.
