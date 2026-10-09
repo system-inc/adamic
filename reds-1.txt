@@ -1,0 +1,10 @@
+run adamic-gate-pilot-again-20261009T125140-f1ee45c8: void, 22570 tests in 110 units, 2 failed, 5 units broken, 0 killed over budget
+BROKEN tests-03: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-81: no results (exited true, last output "loom-pilot: checkout of 03613f17bcf71f0132dd69ea45ed5dd92a60abe1 failed")
+BROKEN tests-87: exited 2, Loom's fault (last output "none            8.8G  5.8G  3.1G  66% /tmp")
+BROKEN tests-108: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-122: no results (exited true, last output "loom-pilot: checkout of 03613f17bcf71f0132dd69ea45ed5dd92a60abe1 failed")
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestTypeAwareChildrenAndParentCost (tests-34)
+    resume_test.go:143: cannot enumerate TestVolumeAgreementAndMutants
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-117)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:42:13; use CallTargets or ClosureTargets
