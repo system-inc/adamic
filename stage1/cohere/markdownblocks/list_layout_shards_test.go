@@ -2,19 +2,23 @@ package markdownblocks
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -110,10 +114,10 @@ func runListLayoutShard(t *testing.T, shard int) {
 	products := listLayoutSetup(t)
 	fixture := listLayoutShardFixture(t, products, listLayoutBuckets[shard])
 	for i, mutant := range products.mutants {
-		result := onNode(t, mutant, fixture.mutantNativeCases)
+		result := listLayoutNode(t, mutant, fixture.mutantNativeCases)
 		clean(t, "source Node layout mutant", result)
 		if i == 0 {
-			resultNative := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.canary, fixture.mutantNativeCases)
+			resultNative := listLayoutExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.canary, fixture.mutantNativeCases)
 			clean(t, "native layout canary", resultNative)
 			equal(t, "edited native canary equals source Node", resultNative.stdout, result.stdout)
 		}
@@ -174,7 +178,7 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 		overlayPath := filepath.Join(dir, name+".json")
 		write(t, overlayPath, overlay)
 		binary := filepath.Join(dir, name)
-		command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
+		command := listLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
 		command.Dir = cohere
 		if output, err := combinedOutput(command); err != nil {
 			t.Fatalf("Go bridge: %v\n%s", err, output)
@@ -243,7 +247,23 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 		}
 		sum := sha256.Sum256(source)
 		product := buildcache.Product(t, buildcache.Inputs{Name: name, Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
-			return native.Build(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: sanitize})
+			options := native.Options{Sanitize: sanitize}
+			library, err := native.RuntimeLibraryForSource("", string(source), options)
+			if err != nil {
+				return err
+			}
+			path := filepath.Join(directory, "main.c")
+			if err := os.WriteFile(path, source, 0644); err != nil {
+				return err
+			}
+			args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
+			args = append(args, native.RuntimeLinkFlags(library)...)
+			args = append(args, "-lm")
+			output, err := combinedOutput(listLayoutCommand(t, "clang", args...))
+			if err != nil {
+				return fmt.Errorf("native build: %w\n%s", err, output)
+			}
+			return nil
 		})
 		return filepath.Join(product, "binary")
 	}
@@ -333,7 +353,7 @@ func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 				arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", filepath.Join(directory, "binary"), path)
 				arguments = append(arguments, native.RuntimeLinkFlags(library)...)
 				arguments = append(arguments, "-lm")
-				output, err := combinedOutput(bounded(t, "clang", arguments...))
+				output, err := combinedOutput(listLayoutCommand(t, "clang", arguments...))
 				if err != nil {
 					return fmt.Errorf("mutant build: %w\n%s", err, output)
 				}
@@ -400,12 +420,12 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var err error
-			mutantWant, err = executeResult(t, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
+			mutantWant, err = listLayoutExecuteResult(t, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
 			if err != nil {
 				return run{}, err
 			}
 		}
-		return executeResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
+		return listLayoutExecuteResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
 	main, err := filepath.Abs("testdata/list_probe.ts")
@@ -426,7 +446,7 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		t.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
-		return executeResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+		return listLayoutExecuteResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	sanitizedBuild := startFixtureTask(&workers, func() (string, error) { return products.sanitized, nil })
 	releaseBuild := startFixtureTask(&workers, func() (string, error) { return products.release, nil })
@@ -498,12 +518,12 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
-		return executeResult(t, nil, goLayout, canonicalCases)
+		return listLayoutExecuteResult(t, nil, goLayout, canonicalCases)
 	})
-	sourceTask := startFixtureTask(&workers, func() (run, error) { return onNodeResult(t, main, nativeCases) })
+	sourceTask := startFixtureTask(&workers, func() (run, error) { return listLayoutNodeResult(t, main, nativeCases) })
 	backendPath := filepath.Join(dir, "program.mjs")
 	write(t, backendPath, products.javascript)
-	backendTask := startFixtureTask(&workers, func() (run, error) { return onNodeResult(t, backendPath, nativeCases) })
+	backendTask := startFixtureTask(&workers, func() (run, error) { return listLayoutNodeResult(t, backendPath, nativeCases) })
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := sanitizedBuild.result()
 		if err != nil {
@@ -513,16 +533,16 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		if runtime.GOOS == "linux" {
 			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 		}
-		return executeResult(t, environment, binary, nativeCases)
+		return listLayoutExecuteResult(t, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := releaseBuild.result()
 		if err != nil {
 			return run{}, err
 		}
-		return executeResult(t, nil, binary, nativeCases)
+		return listLayoutExecuteResult(t, nil, binary, nativeCases)
 	})
-	originalTask := startFixtureTask(&workers, func() (run, error) { return executeResult(t, nil, "node", script, fork, canonicalCases) })
+	originalTask := startFixtureTask(&workers, func() (run, error) { return listLayoutExecuteResult(t, nil, "node", script, fork, canonicalCases) })
 	goResult := docTask.await(t)
 	clean(t, "Go document layout", goResult)
 	equal(t, "Go document layout", goResult.stdout, want.stdout)
@@ -543,12 +563,12 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	}
 	switch runtime.GOOS {
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
+		report := listLayoutExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
 		if report.exitCode != 0 {
 			t.Fatalf("leak check: exit %d\n%s", report.exitCode, report.stderr)
 		}
 	case "darwin":
-		report := execute(t, nil, "leaks", "--atExit", "--", products.release, nativeCases)
+		report := listLayoutExecute(t, nil, "leaks", "--atExit", "--", products.release, nativeCases)
 		if report.exitCode != 0 {
 			t.Fatal(string(report.stdout))
 		}
@@ -579,4 +599,65 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		main: main, fork: fork, goLayout: goLayout, script: script,
 		inputs: inputs, files: files, want: want.stdout,
 	}
+}
+
+// Each explicit child has a portable deadline; cancellation includes spawned compilers.
+func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
+func listLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
+	t.Helper()
+	command := listLayoutCommand(t, name, arguments...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := command.Run()
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		return run{}, fmt.Errorf("running %s: %w", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+}
+func listLayoutExecute(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	result, err := listLayoutExecuteResult(t, environment, name, arguments...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+func listLayoutNodeResult(t *testing.T, path string, arguments ...string) (run, error) {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		return run{}, err
+	}
+	return listLayoutExecuteResult(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+}
+func listLayoutNode(t *testing.T, path string, arguments ...string) run {
+	t.Helper()
+	result, err := listLayoutNodeResult(t, path, arguments...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
 }
