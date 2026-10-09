@@ -3,14 +3,17 @@ package estree
 import (
 	"context"
 	"crypto/sha256"
+	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -49,7 +52,7 @@ func deepMutantsProof(t *testing.T) {
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestDeepMutants_") {
+		if fn, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestDeepMutants_") && fn.Name.Name != "TestDeepMutants_Setup" {
 			names[fn.Name.Name] = true
 		}
 	}
@@ -154,11 +157,15 @@ func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, st
 	return filepath.Join(lowered, "source/main.ts"), filepath.Join(product, "port")
 }
 
+func deepMutantsOracleInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	return buildcache.Inputs{Name: "deep-mutants-go-oracle-v1", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go", "stage1/cohere/estree/estree_test.go", "go.mod"}, Flags: []string{"overlay", "root=" + root(t)}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
+}
+
 func deepMutantsOracle(t *testing.T) string {
 	t.Helper()
 	// GoBuild is not on this base. Preserve the existing overlay build command.
-	inputs := buildcache.Inputs{Name: "deep-mutants-go-oracle-v1", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go", "go.mod"}, Flags: []string{"overlay", "root=" + root(t)}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
-	product := buildcache.Product(t, inputs, func(dir string) error {
+	product := buildcache.Product(t, deepMutantsOracleInputs(t), func(dir string) error {
 		data, err := os.ReadFile(goOracle(t))
 		if err != nil {
 			return err
@@ -168,13 +175,90 @@ func deepMutantsOracle(t *testing.T) string {
 	return filepath.Join(product, "oracle")
 }
 
+// Only the serial setup test writes this, before parallel tests resume.
+var deepMutantsFixtureDirectory string
+
+func deepMutantsFixture(t *testing.T, prepare bool) string {
+	t.Helper()
+	if path := os.Getenv("ADAMIC_DEEP_MUTANTS_FIXTURE"); path != "" {
+		return path
+	}
+	if deepMutantsFixtureDirectory != "" {
+		return deepMutantsFixtureDirectory
+	}
+	inputs := deepMutantsOracleInputs(t)
+	inputs.Name = "deep-mutants-oracle-output-v1"
+	inputs.Files = append(inputs.Files, "stage1/cohere/estree/deep_mutants_split_test.go")
+	inputs.Flags = append(inputs.Flags, deepMutantsInput)
+	return buildcache.Product(t, inputs, func(dir string) error {
+		if !prepare {
+			return fmt.Errorf("shared fixture is not ready: run TestDeepMutants_Setup first")
+		}
+		list := manifest(t, []string{deepMutantsInput})
+		want := execute(t, "", deepMutantsOracle(t), "--manifest", list)
+		return os.WriteFile(filepath.Join(dir, "want"), want, 0644)
+	})
+}
+
+// The deadline starts only after the fixture is ready. The worker process owns
+// its descendants, including Go/clang builders, so cancellation kills them too.
+func deepMutantsBounded(t *testing.T, fixture string) []byte {
+	t.Helper()
+	binary, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, "-test.run=^"+t.Name()+"$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_DEEP_MUTANTS_WORKER="+t.Name(), "ADAMIC_DEEP_MUTANTS_FIXTURE="+fixture)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	output, err := command.CombinedOutput()
+	if err != nil {
+		t.Fatalf("%s worker: %v (deadline: %v)\n%s", t.Name(), err, ctx.Err(), output)
+	}
+	t.Logf("%s", output)
+	return output
+}
+
+// Not parallel: publishes the shared oracle fixture before parallel shards resume.
+func TestDeepMutants_Setup(t *testing.T) {
+	if os.Getenv("ADAMIC_DEEP_MUTANTS_WORKER") == t.Name() {
+		directory := deepMutantsFixture(t, true)
+		fmt.Fprintln(os.Stdout, "DEEP_MUTANTS_FIXTURE="+directory)
+		return
+	}
+	output := deepMutantsBounded(t, "")
+	for _, line := range strings.Split(string(output), "\n") {
+		if strings.HasPrefix(line, "DEEP_MUTANTS_FIXTURE=") {
+			deepMutantsFixtureDirectory = strings.TrimPrefix(line, "DEEP_MUTANTS_FIXTURE=")
+			return
+		}
+	}
+	t.Fatal("setup worker did not publish its fixture")
+}
+
 func deepMutantsShard(t *testing.T, shard int) {
 	t.Helper()
 	deepMutantsProof(t)
-	started := time.Now()
+	fixture := deepMutantsFixture(t, false)
+	if os.Getenv("ADAMIC_DEEP_MUTANTS_WORKER") != t.Name() {
+		deepMutantsBounded(t, fixture)
+		return
+	}
 	list := manifest(t, []string{deepMutantsInput})
-	want := execute(t, "", deepMutantsOracle(t), "--manifest", list)
-	t.Logf("TestDeepMutants (setup): %.3fs", time.Since(started).Seconds())
+	want, err := os.ReadFile(filepath.Join(fixture, "want"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	cases := deepMutantsEnumeration()
 	for index, item := range cases {
 		if deepMutantsOwner(index, len(cases)) != shard {

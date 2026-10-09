@@ -3,16 +3,18 @@ package yaml
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
-	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -33,45 +35,128 @@ var testFormatterMutants = []struct{ name, file, from, to string }{
 
 const testFormatterMutantsShards = 6
 
-var testFormatterMutantsOracle struct {
-	once            sync.Once
-	cases, expected []byte
-	count           int
-	ready           bool
+// Written only by the serial setup test, before parallel leaves are released.
+// This also shares the fresh product when ADAMIC_BUILD_CACHE=off.
+var formatterMutantsSetupProduct string
+
+// The setup product persists across one-shard invocations. Leaves never build
+// this product: a cold leaf-only invocation must run the setup test first.
+func formatterMutantsSetupInputs() buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "yaml-formatter-mutants-oracle-and-corpus-v2",
+		Files:     []string{"cohere", "internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"},
+		Flags:     []string{"go build -overlay ./command/formatter_comparison", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+		Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED")},
+	}
 }
 
-// Only the immutable corpus and Go answer are shared in memory. Products are
-// built once per content key, including when shards run in separate processes.
-func formatterMutantsSetup(t *testing.T) {
+func formatterMutantsDeadline(t *testing.T) func() {
 	t.Helper()
-	testFormatterMutantsOracle.once.Do(func() {
-		started := time.Now()
-		defer func() { t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds()) }()
+	timer := time.AfterFunc(90*time.Second, func() {
+		fmt.Fprintf(os.Stderr, "%s exceeded 90s deadline\n", t.Name())
+		os.Exit(124)
+	})
+	return func() { timer.Stop() }
+}
+
+// Commands share their unit's deadline. Kill the entire process group, including
+// compilers spawned by go build, rather than leaving children behind.
+func formatterMutantsCommand(ctx context.Context, directory, name string, args ...string) ([]byte, error) {
+	command := exec.CommandContext(ctx, name, args...)
+	command.Dir = directory
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	var out, errOut bytes.Buffer
+	command.Stdout, command.Stderr = &out, &errOut
+	if err := command.Run(); err != nil {
+		return nil, fmt.Errorf("%s: %w\n%s", name, err, errOut.Bytes())
+	}
+	if errOut.Len() != 0 {
+		return nil, fmt.Errorf("%s stderr: %s", name, errOut.Bytes())
+	}
+	return out.Bytes(), nil
+}
+
+// Not parallel: prepares the shared formatter-mutant corpus and Go oracle before parallel leaves are released.
+func TestFormatterMutants_Setup(t *testing.T) {
+	defer formatterMutantsDeadline(t)()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	started := time.Now()
+	product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
 		cases, _, count := formatCases(t)
 		data, err := os.ReadFile(cases)
 		if err != nil {
-			t.Fatal(err)
+			return err
 		}
 		if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
-			t.Fatal("corpus count disagrees with live enumeration")
+			return fmt.Errorf("corpus count disagrees with live enumeration")
 		}
-		testFormatterMutantsOracle.cases = data
-		testFormatterMutantsOracle.expected = goFormat(t, cases)
-		testFormatterMutantsOracle.count = count
-		testFormatterMutantsOracle.ready = true
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			return err
+		}
+		source, err := filepath.Abs("testdata/format_go.go")
+		if err != nil {
+			return err
+		}
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(directory, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		binary := filepath.Join(directory, "go-format")
+		if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
+			return err
+		}
+		expected, err := formatterMutantsCommand(ctx, "", binary, "--cases", cases)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
 	})
-	if !testFormatterMutantsOracle.ready {
-		t.Fatal("shared oracle setup failed")
+	data, _ := formatterMutantsReadCorpus(t, product)
+	formatterMutantsUnion(t, data)
+	formatterMutantsSetupProduct = product
+	t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
+}
+
+func formatterMutantsReadCorpus(t *testing.T, product string) ([]byte, []byte) {
+	t.Helper()
+	cases, err := os.ReadFile(filepath.Join(product, "cases.txt"))
+	if err != nil {
+		t.Fatal(err)
 	}
+	expected, err := os.ReadFile(filepath.Join(product, "expected.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return cases, expected
+}
+
+func formatterMutantsUnion(t *testing.T, cases []byte) {
+	t.Helper()
+	count := len(strings.Split(strings.TrimSuffix(string(cases), "\n"), "\n"))
 	plan := formatterMutantsEnumeration(t)
 	if len(testFormatterMutants) != testFormatterMutantsShards {
 		t.Fatal("shard enumeration disagrees with declared count")
 	}
-	// The pinned mutant table partitions the complete live corpus by mutant.
 	seen := map[string]bool{}
 	for _, index := range plan {
 		mutant := testFormatterMutants[index]
-		for i := 0; i < testFormatterMutantsOracle.count; i++ {
+		for i := 0; i < count; i++ {
 			id := fmt.Sprintf("%s/%d", mutant.name, i)
 			if seen[id] {
 				t.Fatalf("repeated case %s", id)
@@ -79,10 +164,10 @@ func formatterMutantsSetup(t *testing.T) {
 			seen[id] = true
 		}
 	}
-	if len(seen) != len(testFormatterMutants)*testFormatterMutantsOracle.count {
+	if len(seen) != len(testFormatterMutants)*count {
 		t.Fatal("incomplete union")
 	}
-	t.Logf("union: %d mutant/case pairs (%d complete corpus cases)", len(seen), testFormatterMutantsOracle.count)
+	t.Logf("union: %d mutant/case pairs (%d complete corpus cases)", len(seen), count)
 }
 
 // Read the actual top-level wrappers, so a missing, duplicated or miswired
@@ -96,7 +181,7 @@ func formatterMutantsEnumeration(t *testing.T) []int {
 	plan := map[int]int{}
 	for _, declaration := range file.Decls {
 		function, ok := declaration.(*ast.FuncDecl)
-		if !ok || !strings.HasPrefix(function.Name.Name, "TestFormatterMutants_") {
+		if !ok || function.Name.Name == "TestFormatterMutants_Setup" || !strings.HasPrefix(function.Name.Name, "TestFormatterMutants_") {
 			continue
 		}
 		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestFormatterMutants_"))
@@ -155,7 +240,19 @@ func formatterMutantSurvived(actual, expected []byte) error {
 
 func formatterMutantsShard(t *testing.T, index int) {
 	t.Helper()
-	formatterMutantsSetup(t)
+	// Fetch shared state before starting this leaf's budget. The callback cannot
+	// prepare it lazily; only TestFormatterMutants_Setup is allowed to build it.
+	oracle := formatterMutantsSetupProduct
+	if oracle == "" {
+		oracle = buildcache.Product(t, formatterMutantsSetupInputs(), func(string) error {
+			return fmt.Errorf("shared setup missing: run TestFormatterMutants_Setup before this shard")
+		})
+	}
+	corpus, expected := formatterMutantsReadCorpus(t, oracle)
+	defer formatterMutantsDeadline(t)()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	formatterMutantsUnion(t, corpus)
 	mutant := testFormatterMutants[index]
 	entries, err := filepath.Glob("*.ts")
 	if err != nil {
@@ -191,7 +288,7 @@ func formatterMutantsShard(t *testing.T, index int) {
 		if err != nil {
 			return err
 		}
-		lowered, err := lower.Lower(context.Background(), program)
+		lowered, err := lower.Lower(ctx, program)
 		if err != nil {
 			return err
 		}
@@ -206,7 +303,7 @@ func formatterMutantsShard(t *testing.T, index int) {
 		return native.Build(string(code), filepath.Join(directory, "mutant"), options)
 	})
 	cases := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, testFormatterMutantsOracle.cases, 0644); err != nil {
+	if err := os.WriteFile(cases, corpus, 0644); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -214,16 +311,20 @@ func formatterMutantsShard(t *testing.T, index int) {
 		t.Fatal(err)
 	}
 	for _, side := range []struct {
-		name string
-		out  []byte
+		name, command string
+		args          []string
 	}{
-		{"native", run(t, "", nil, filepath.Join(product, "mutant"), "--cases", cases)},
-		{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases)},
+		{"native", filepath.Join(product, "mutant"), []string{"--cases", cases}},
+		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases}},
 	} {
-		if err := formatterMutantSurvived(side.out, testFormatterMutantsOracle.expected); err != nil {
+		out, err := formatterMutantsCommand(ctx, "", side.command, side.args...)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := formatterMutantSurvived(out, expected); err != nil {
 			t.Fatalf("%s: %v", side.name, err)
 		}
-		t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, testFormatterMutantsOracle.expected))
+		t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(out, expected))
 	}
 }
 

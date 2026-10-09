@@ -80,7 +80,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 	return binary
 }
 
-// Not parallel: fresh-process throughput is measured after correctness on the same sources.
+// Not parallel: throughput measurements share CPU capacity and the same source corpus.
 func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
@@ -140,19 +140,19 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 // Go, Node, sanitized native, and leak checks on its entire assigned slice.
 const testJsxLintTreesShards = 16
 
-func TestJsxLintTrees_000(t *testing.T) { jsxRunTreeShard(t, 0) }
-func TestJsxLintTrees_001(t *testing.T) { jsxRunTreeShard(t, 1) }
-func TestJsxLintTrees_002(t *testing.T) { jsxRunTreeShard(t, 2) }
-func TestJsxLintTrees_003(t *testing.T) { jsxRunTreeShard(t, 3) }
-func TestJsxLintTrees_004(t *testing.T) { jsxRunTreeShard(t, 4) }
-func TestJsxLintTrees_005(t *testing.T) { jsxRunTreeShard(t, 5) }
-func TestJsxLintTrees_006(t *testing.T) { jsxRunTreeShard(t, 6) }
-func TestJsxLintTrees_007(t *testing.T) { jsxRunTreeShard(t, 7) }
-func TestJsxLintTrees_008(t *testing.T) { jsxRunTreeShard(t, 8) }
-func TestJsxLintTrees_009(t *testing.T) { jsxRunTreeShard(t, 9) }
-func TestJsxLintTrees_010(t *testing.T) { jsxRunTreeShard(t, 10) }
-func TestJsxLintTrees_011(t *testing.T) { jsxRunTreeShard(t, 11) }
-func TestJsxLintTrees_012(t *testing.T) { jsxRunTreeShard(t, 12) }
-func TestJsxLintTrees_013(t *testing.T) { jsxRunTreeShard(t, 13) }
-func TestJsxLintTrees_014(t *testing.T) { jsxRunTreeShard(t, 14) }
-func TestJsxLintTrees_015(t *testing.T) { jsxRunTreeShard(t, 15) }
+func TestJsxLintTrees_000(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 0) }
+func TestJsxLintTrees_001(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 1) }
+func TestJsxLintTrees_002(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 2) }
+func TestJsxLintTrees_003(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 3) }
+func TestJsxLintTrees_004(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 4) }
+func TestJsxLintTrees_005(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 5) }
+func TestJsxLintTrees_006(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 6) }
+func TestJsxLintTrees_007(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 7) }
+func TestJsxLintTrees_008(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 8) }
+func TestJsxLintTrees_009(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 9) }
+func TestJsxLintTrees_010(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 10) }
+func TestJsxLintTrees_011(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 11) }
+func TestJsxLintTrees_012(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 12) }
+func TestJsxLintTrees_013(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 13) }
+func TestJsxLintTrees_014(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 14) }
+func TestJsxLintTrees_015(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 15) }

@@ -81,7 +81,7 @@ func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string
 
 func (h *harness) stage0() string {
 	h.t.Helper()
-	path, err := sharedProduct("stage0", func(directory string) (string, error) {
+	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
 		command := exec.Command("go", "build", "-o", binary, "./cmd/adamic")
 		command.Dir = h.repository

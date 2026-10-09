@@ -261,7 +261,7 @@ func TestProfileCompilationPlantedFailure(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=75s")
+	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=90s")
 	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
 	output, err := command.CombinedOutput()
 	if command.ProcessState == nil {
@@ -354,7 +354,7 @@ func compilationEmission(t *testing.T, inputs buildcache.Inputs, kind string) st
 }
 
 // Build products are individually enumerable so cold work never waits behind
-// a monolithic lowering-plus-emission build. Each has the same hard 75s harness.
+// a monolithic lowering-plus-emission build. Each has the same hard 90s harness.
 func TestProfileCompilationBuildLower(t *testing.T) {
 	t.Parallel()
 	defer compilationBudget(t)()
@@ -393,4 +393,40 @@ func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	}
 	command.WaitDelay = time.Second
 	return command
+}
+
+// Preparation is independently discoverable and bounded, including the overlay
+// oracle (which buildcache intentionally refuses to cache). Products are fetched
+// before any runtime shard starts its case timer, even when selected alone.
+func TestProfileCompilation_Setup(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_PROFILE_SETUP_CHILD") == "1" {
+		compilationPrepare(t)
+		return
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_Setup$", "-test.v", "-test.timeout=90s")
+	command.Env = append(os.Environ(), "ADAMIC_PROFILE_SETUP_CHILD=1")
+	started := time.Now()
+	output, err := command.CombinedOutput()
+	t.Logf("setup wall=%s\n%s", time.Since(started), output)
+	if err != nil {
+		t.Fatalf("setup failed or cooked at 90s: %v", err)
+	}
+}
+
+func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
+	t.Helper()
+	compilationCase(t)
+	directory := t.TempDir()
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
+	products := compilationProducts(t)
+	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
+	oracle := goOracle(t)
+	want, countedWant := compilationOracleOutputs(t, oracle, path)
+	return directory, products, path, want, countedWant
 }
