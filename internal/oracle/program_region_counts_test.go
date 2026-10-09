@@ -42,7 +42,11 @@ func programRegionCountRows(t *testing.T) []string {
 		if alloc != frees+members {
 			t.Fatalf("%s: unaccounted allocation: %s", name, result.stderr)
 		}
-		rows = append(rows, fmt.Sprintf("| Program region: %s | %s |", relative, strings.Join(columns, " | ")))
+		regions, merges := "0", "0"
+		if graph := graphCountsLine.FindSubmatch(result.stderr); graph != nil {
+			regions, merges = string(graph[1]), string(graph[2])
+		}
+		rows = append(rows, fmt.Sprintf("| Program region: %s | %s | %s | %s |", relative, strings.Join(columns, " | "), regions, merges))
 	}
 	return rows
 }

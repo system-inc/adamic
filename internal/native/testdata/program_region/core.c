@@ -14,12 +14,12 @@ static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
 static adamic_object *member(void) {
     adamic_object *object = adamic_object_new(&shape);
     assert(object->heap.references == 1);
-    ((unsigned char *)object)[adamic_object_size(shape.count) - 1] = 7;
+    ((unsigned char *)object)[sizeof(adamic_object) + shape.count * (sizeof(adamic_value) + sizeof(size_t) + 2) - 1] = 7;
     adamic_object_initialized(object)[3] = 0;
     adamic_object_field_types(object)[1] = 3;
     object = adamic_program_adopt_owned(object, adamic_object_size(shape.count));
     /* Pin every tail, including the last byte of the physical allocation. */
-    assert(((unsigned char *)object)[adamic_object_size(shape.count) - 1] == 7);
+    assert(((unsigned char *)object)[sizeof(adamic_object) + shape.count * (sizeof(adamic_value) + sizeof(size_t) + 2) - 1] == 7);
     assert(adamic_object_initialized(object)[0] == 1);
     assert(adamic_object_initialized(object)[3] == 0);
     assert(adamic_object_field_types(object)[1] == 3);
