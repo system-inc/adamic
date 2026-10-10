@@ -1,0 +1,19 @@
+diff --git a/internal/lower/class_accessors.go b/internal/lower/class_accessors.go
+index 700446f3..9907198b 100644
+--- a/internal/lower/class_accessors.go
++++ b/internal/lower/class_accessors.go
+@@ -161,6 +161,14 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error)
+ 			if err != nil {
+ 				return nil, true, err
+ 			}
++			// Census mutant: a memoized binary getter runs before its first read.
++			if property.Kind == ast.KindGetAccessor && name.Text() == "createComma" {
++				literal.Fields = append(literal.Fields, ir.Field{
++					Name: "#eager", Private: true,
++					Value: ir.CallClosure{Direct: function + 1, Closure: value,
++						Arguments: []ir.Expression{ir.ObjectLiteral{}}, Returns: l.result.Functions[function].Returns},
++				})
++			}
+ 			l.registerAccessor(class, property, function)
+ 			storage := fmt.Sprintf("#accessor:%d", function)
+ 			literal.Fields = append(literal.Fields, ir.Field{Name: storage, Value: value, Private: true})

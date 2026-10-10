@@ -1,0 +1,22 @@
+// Reduced from TypeScript 050880ce src/compiler/factory/nodeFactory.ts:1022; memoizeOne expanded to isolate accessor lowering.
+interface Node { readonly value: number; }
+type Binary = (left: Node, right: Node) => Node;
+interface Factory { readonly createComma: Binary; }
+function makeFactory(): Factory {
+    const cache = new Map<number, Binary>();
+    function getBinaryCreateFunction(kind: number): Binary {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        console.log(`initialize ${kind}`);
+        const value: Binary = (left, right) => ({ value: kind + left.value + right.value });
+        cache.set(kind, value);
+        return value;
+    }
+    return { get createComma() { return getBinaryCreateFunction(7); } };
+}
+const factory = makeFactory();
+console.log('constructed');
+console.log(`${factory.createComma({ value: 2 }, { value: 3 }).value}`);
+console.log(`${factory.createComma({ value: 4 }, { value: 5 }).value}`);
+const again = makeFactory();
+console.log(`${again.createComma({ value: 1 }, { value: 2 }).value}`);
