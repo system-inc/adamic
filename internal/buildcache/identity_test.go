@@ -147,10 +147,9 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 		// bytes of the external link's debug info (Oct 9 16:34Z). GoBuild has no callers yet, so no gate product is affected.
 	} {
 		t.Run(built.output, func(t *testing.T) {
-			store, log := shared(t)
-			token := filepath.Join(t.TempDir(), "publish-token")
-			os.WriteFile(token, []byte("gate-box-token"), 0o600)
-			t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
+			// Built for this machine alone (ADAMIC_BUILD_STORE=off), keyed by GoInputs' declared files: a fetched
+			// product's bytes are its manifest's, checked by hash, so the store's half is the Settle tests'.
+			cached(t)
 			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, true, nil)
 
 			started := time.Now()
@@ -159,31 +158,8 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 				t.Fatal(err)
 			}
 			coldSeconds := time.Since(started).Seconds()
-			if len(store.writes) == 0 {
-				t.Fatal("the cold build published nothing")
-			}
-
-			// Another machine: an empty cache, no credential.
-			t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-			t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
-			writes := len(store.writes)
-			started = time.Now()
-			warm, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
-			if err != nil {
-				t.Fatal(err)
-			}
-			warmSeconds := time.Since(started).Seconds()
-			if lines, _ := os.ReadFile(log); strings.Count(string(lines), " miss ") != 1 || strings.Count(string(lines), " fetched ") != 1 || len(store.writes) != writes {
-				t.Fatalf("the cold build must miss and the warm one fetch, writing nothing: census %q, writes %v", lines, store.writes[writes:])
-			}
-
-			t.Logf("product %s fresh=%x cold=%x warm=%x seconds fresh=%.2f cold=%.2f warm=%.2f",
-				built.output, sha256.Sum256(fresh), sha256.Sum256(cold), sha256.Sum256(warm), freshSeconds, coldSeconds, warmSeconds)
+			t.Logf("product %s fresh=%x cold=%x seconds fresh=%.2f cold=%.2f", built.output, sha256.Sum256(fresh), sha256.Sum256(cold), freshSeconds, coldSeconds)
 			identical(t, built.output+" fresh and cold", fresh, cold)
-			// A fetch is a copy of what was stored, so warm and cold are the same bytes on every platform.
-			if !bytes.Equal(cold, warm) {
-				t.Errorf("the fetched product isn't what was built: %s", describeRanges(differingRanges(cold, warm), uuidAndSignature(cold)))
-			}
 		})
 	}
 }
@@ -250,9 +226,9 @@ type inputChange struct {
 // output and the same bytes. A key that ignores the input finds the product from before the change in either place.
 func changeEachInput(t *testing.T, directory, output, pkg string, arguments, environment *[]string, steps []inputChange) {
 	t.Helper()
-	store, log := shared(t)
-	token := filepath.Join(t.TempDir(), "publish-token")
-	os.WriteFile(token, []byte("gate-box-token"), 0o600)
+	// Each change is built for this machine alone through one cache kept across the steps, keyed by GoInputs' declared
+	// files: the tripwire a measured read set is held against, so a declared key that ignores an input still fails here.
+	_, log := cached(t)
 	cold := t.TempDir()
 	cache := freshGoCache(t)
 	var previous []byte
@@ -266,14 +242,8 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 			t.Fatalf("changing %s didn't change the product, so this step proves nothing", step.input)
 		}
 		previous = fresh
-		for _, way := range []string{"cold", "warm"} {
-			if way == "cold" {
-				t.Setenv("ADAMIC_BUILD_CACHE_DIR", cold)
-				t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
-			} else {
-				t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-				t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
-			}
+		for _, way := range []string{"cold"} {
+			t.Setenv("ADAMIC_BUILD_CACHE_DIR", cold)
 			before, _ := os.ReadFile(log)
 			binary := GoBuild(t, output, pkg, *arguments, *environment...)
 			after, _ := os.ReadFile(log)
@@ -300,9 +270,6 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 				t.Fatalf("after changing %s, the warm product printed %q, a fresh build %q (%v): the key ignores %s, or the store served another product", step.input, got, step.output, outcome, step.input)
 			}
 		}
-	}
-	if len(store.objects) == 0 {
-		t.Fatal("nothing was published, so no warm build was fetched")
 	}
 }
 
