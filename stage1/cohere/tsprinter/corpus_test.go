@@ -31,6 +31,16 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 			files = append(files, filepath.Join(checkout, entry.Path))
 		}
 	}
+	// Without .git, a .ts file the manifest leaves out (and no .gitignore ignores) is a stale manifest, refused.
+	extra, err := tracked.Unrecorded(checkout, root)
+	if err != nil {
+		return nil, fmt.Errorf("corpus root %s: %w", root, err)
+	}
+	for _, name := range extra {
+		if strings.HasSuffix(name, ".ts") {
+			return nil, fmt.Errorf("corpus root %s: %s is on disk but not in the tree's manifest", root, name)
+		}
+	}
 	if len(files) == 0 {
 		return nil, fmt.Errorf("corpus root %s: no git-tracked .ts files", root)
 	}
@@ -114,6 +124,12 @@ func TestTrackedCorpusRoots(t *testing.T) {
 		t.Fatalf("a source with neither .git nor a manifest was listed: %v", err)
 	}
 	if err := tracked.Write(directory, source); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := trackedRootFiles(t, source, "named"); err == nil || !strings.Contains(err.Error(), "named/untracked.ts") {
+		t.Fatalf("a .ts file the manifest leaves out was dropped silently: %v", err)
+	}
+	if err := os.Remove(filepath.Join(source, "named/untracked.ts")); err != nil {
 		t.Fatal(err)
 	}
 	files, err = trackedRootFiles(t, source, "named")

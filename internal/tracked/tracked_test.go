@@ -54,14 +54,15 @@ func repository(t *testing.T, files map[string]string) string {
 
 // checkout is adamic's shape in small: a tree with a submodule at cohere, which has its own at TypeScript. Names that
 // sort beside the gitlink (cohere-x/, cohere.json) put git's order apart from a sorted listing: git prints a
-// submodule's files where its gitlink sorts, before cohere-x/, and a byte sort puts cohere/ after cohere.json.
+// submodule's files where its gitlink sorts, before cohere-x/, and a byte sort puts cohere/ after cohere.json. In a
+// tree object a directory sorts as if it ended in "/", so a.b.md comes before a/ there and after it in a byte sort.
 func checkout(t *testing.T) string {
 	t.Helper()
 	leaf := repository(t, map[string]string{"src/compiler/a.ts": "a;\n", "README.md": "# leaf\n"})
 	middle := repository(t, map[string]string{"internal/x.go": "package x\n", "TypeScript-shim/y.md": "y\n"})
 	runGit(t, middle, "submodule", "add", "-q", leaf, "TypeScript")
 	runGit(t, middle, "commit", "-qm", "TypeScript")
-	top := repository(t, map[string]string{"cohere-x/file.ts": "x;\n", "cohere.json": "{}\n", "a/b.md": "b\n", "tool.sh": "#!/bin/sh\n"})
+	top := repository(t, map[string]string{"cohere-x/file.ts": "x;\n", "cohere.json": "{}\n", "a/b.md": "b\n", "a.b.md": "beside a/\n", "tool.sh": "#!/bin/sh\n"})
 	if err := os.Symlink("a/b.md", filepath.Join(top, "link.md")); err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +150,7 @@ func TestManifestAnswersWhatGitAnswers(t *testing.T) {
 	if err != nil || !reflect.DeepEqual(recursive, gitRecursive) {
 		t.Fatalf("recursive listing %q (%v), git says %q", recursive, err, gitRecursive)
 	}
-	if sort.StringsAreSorted(recursive) || len(recursive) != 11 {
+	if sort.StringsAreSorted(recursive) || len(recursive) != 12 {
 		t.Fatalf("the fixture no longer tells git's order from a sorted one: %q", recursive)
 	}
 	t.Logf("recursive, in git's order: %q", recursive)
@@ -211,11 +212,32 @@ func TestNoGitAndNoManifestFailsByName(t *testing.T) {
 	}
 }
 
-// A submodule's recorded commit must be the one its parent's gitlink pins: a manifest that disagrees is refused.
+// record replaces repository's record in source with the one Write makes of directory as it stands.
+func record(t *testing.T, directory, source, repository string) {
+	t.Helper()
+	scratch := t.TempDir()
+	if err := Write(directory, scratch); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{headFile, commitFile, filesFile} {
+		data, err := os.ReadFile(filepath.Join(scratch, ManifestDirectory, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		write(t, filepath.Join(source, ManifestDirectory, filepath.FromSlash(repository), name), string(data), 0o644)
+	}
+}
+
+// A submodule's recorded commit must be the one its parent's gitlink pins: a record of another commit, whole and
+// bound, is refused.
 func TestManifestCommitMustMatchTheParentGitlink(t *testing.T) {
 	t.Parallel()
-	source := unpack(t, checkout(t), true)
-	write(t, filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", "HEAD"), strings.Repeat("1", 40)+"\n", 0o644)
+	checkout := checkout(t)
+	source := unpack(t, checkout, true)
+	leaf := filepath.Join(checkout, "cohere", "TypeScript")
+	write(t, filepath.Join(leaf, "README.md"), "# moved on\n", 0o644)
+	runGit(t, leaf, "commit", "-qam", "unpinned")
+	record(t, leaf, source, "cohere/TypeScript")
 	if _, err := Head(filepath.Join(source, "cohere", "TypeScript")); err == nil || !strings.Contains(err.Error(), "gitlink") {
 		t.Fatalf("a commit its parent doesn't pin: %v", err)
 	}
@@ -234,7 +256,137 @@ func TestGitAnswersOverAManifest(t *testing.T) {
 	if head, err := Head(checkout); err != nil || head != want {
 		t.Fatalf("HEAD %s (%v), git says %s", head, err, want)
 	}
-	if files, err := Files(checkout); err != nil || len(files) != 7 {
+	if files, err := Files(checkout); err != nil || len(files) != 8 {
 		t.Fatalf("files %v (%v)", files, err)
+	}
+}
+
+// A record's three files are one commit's: the commit object must hash to HEAD, and the tree it names must be the
+// tree the listing rebuilds. A listing from another commit, a commit object edited, or one missing, is refused.
+func TestManifestFilesAreBoundToItsCommit(t *testing.T) {
+	t.Parallel()
+	checkout := checkout(t)
+	leaf := filepath.Join(checkout, "cohere", "TypeScript")
+	older := t.TempDir()
+	if err := Write(leaf, older); err != nil {
+		t.Fatal(err)
+	}
+	// The tree and cohere as checked out, TypeScript as Write recorded it before any later commit: bound.
+	prepare := func() string {
+		source := unpack(t, checkout, false)
+		record(t, checkout, source, "")
+		record(t, filepath.Join(checkout, "cohere"), source, "cohere")
+		for _, file := range []string{headFile, commitFile, filesFile} {
+			data, err := os.ReadFile(filepath.Join(older, ManifestDirectory, file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			write(t, filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", file), string(data), 0o644)
+		}
+		return source
+	}
+	for name, plant := range map[string]func(source string){
+		"files from another commit": func(source string) {
+			write(t, filepath.Join(leaf, "src/compiler/b.ts"), "b;\n", 0o644)
+			runGit(t, leaf, "add", ".")
+			runGit(t, leaf, "commit", "-qm", "later")
+			later := t.TempDir()
+			if err := Write(leaf, later); err != nil {
+				t.Fatal(err)
+			}
+			data, err := os.ReadFile(filepath.Join(later, ManifestDirectory, filesFile))
+			if err != nil {
+				t.Fatal(err)
+			}
+			write(t, filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", filesFile), string(data), 0o644)
+		},
+		"commit object edited": func(source string) {
+			name := filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", commitFile)
+			data, err := os.ReadFile(name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			write(t, name, strings.Replace(string(data), "fixture", "fixturf", 1), 0o644)
+		},
+		"commit object missing": func(source string) {
+			if err := os.Remove(filepath.Join(source, ManifestDirectory, "cohere", "TypeScript", commitFile)); err != nil {
+				t.Fatal(err)
+			}
+		},
+	} {
+		source := prepare()
+		if _, err := Files(filepath.Join(source, "cohere", "TypeScript")); err != nil {
+			t.Fatalf("%s: the record before the fault: %v", name, err)
+		}
+		source = prepare()
+		plant(source)
+		_, err := Files(filepath.Join(source, "cohere", "TypeScript"))
+		want := map[string]string{"files from another commit": "aren't that commit's", "commit object edited": "hashes to", "commit object missing": "no commit object"}[name]
+		if err == nil || !strings.Contains(err.Error(), want) {
+			t.Fatalf("%s: %v", name, err)
+		}
+		t.Logf("%s: %v", name, err)
+	}
+}
+
+// git's rule for the executable bit is the owner's: a group or other x alone changes nothing, and a 100755 file its
+// owner can't execute has changed mode.
+func TestExecutableBitIsTheOwners(t *testing.T) {
+	t.Parallel()
+	source := unpack(t, checkout(t), true)
+	files, err := Files(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chmod(filepath.Join(source, "a/b.md"), 0o654); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chmod(filepath.Join(source, "tool.sh"), 0o645); err != nil {
+		t.Fatal(err)
+	}
+	missing, changed, err := Changed(source, files)
+	if err != nil || len(missing) != 0 || !reflect.DeepEqual(changed, []string{"tool.sh"}) {
+		t.Fatalf("missing %q, changed %q (%v)", missing, changed, err)
+	}
+}
+
+// A file the record leaves out is a stale manifest: Unrecorded names it, and Recursive refuses rather than list the
+// tree without it. What the tree's own .gitignore files ignore (a provisioned node_modules, a log) is no file of the
+// source, as git status has it, and a submodule's files are its own record's. Where git answers, it is nil.
+func TestUnrecordedFilesAreNamed(t *testing.T) {
+	t.Parallel()
+	checkout := checkout(t)
+	write(t, filepath.Join(checkout, ".gitignore"), "node_modules/\n*.log\n", 0o644)
+	runGit(t, checkout, "add", ".gitignore")
+	runGit(t, checkout, "commit", "-qm", "ignore rules")
+	source := unpack(t, checkout, true)
+	write(t, filepath.Join(source, "a", "node_modules", "pkg", "README.md"), "provisioned\n", 0o644)
+	write(t, filepath.Join(source, "run.log"), "log\n", 0o644)
+	if extra, err := Unrecorded(source, "."); err != nil || len(extra) != 0 {
+		t.Fatalf("ignored leftovers named: %q (%v)", extra, err)
+	}
+	if _, err := Recursive(source); err != nil {
+		t.Fatalf("ignored leftovers refused: %v", err)
+	}
+	write(t, filepath.Join(source, "a", "new", "c.md"), "added since\n", 0o644)
+	write(t, filepath.Join(source, "cohere", "internal", "y.go"), "package x\n", 0o644)
+	if extra, err := Unrecorded(source, "a"); err != nil || !reflect.DeepEqual(extra, []string{"a/new/c.md"}) {
+		t.Fatalf("unrecorded under a: %q (%v)", extra, err)
+	}
+	if extra, err := Unrecorded(filepath.Join(source, "cohere"), "."); err != nil || !reflect.DeepEqual(extra, []string{"internal/y.go"}) {
+		t.Fatalf("unrecorded in cohere: %q (%v)", extra, err)
+	}
+	if _, err := Recursive(source); err == nil || !strings.Contains(err.Error(), "internal/y.go") {
+		t.Fatalf("a stale submodule record listed: %v", err)
+	}
+	if err := os.Remove(filepath.Join(source, "cohere", "internal", "y.go")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Recursive(source); err == nil || !strings.Contains(err.Error(), "a/new/c.md") {
+		t.Fatalf("a stale record listed: %v", err)
+	}
+	write(t, filepath.Join(checkout, "a", "new", "c.md"), "untracked in a checkout\n", 0o644)
+	if extra, err := Unrecorded(checkout, "."); err != nil || extra != nil {
+		t.Fatalf("git's own checkout: %q (%v)", extra, err)
 	}
 }

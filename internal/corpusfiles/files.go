@@ -192,7 +192,8 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 // manifest, and the checks git makes against HEAD are made against it, file by file. There is no index, so the
 // manifest is HEAD and index at once. Upstream's status becomes: every file under a root is a recorded entry (anything
 // else is untracked, ignored or not), and every entry under it is on disk as recorded. Repository's worktree check
-// becomes: every matching entry is on disk as recorded.
+// becomes: every matching entry is on disk as recorded, and no matching file that the .gitignore files leave in is
+// missing from the record, which would make the selection smaller than git's.
 func selectManifest(checkout, pin string, roots, patterns []string) ([]string, string, []int, error) {
 	actual, err := tracked.Head(checkout)
 	if err != nil {
@@ -245,6 +246,20 @@ func selectManifest(checkout, pin string, roots, patterns []string) ([]string, s
 			}
 			if len(changed) != 0 {
 				return nil, actual, nil, fmt.Errorf("%s root %s: dirty worktree paths against HEAD: %q", checkout, root, changed)
+			}
+			// git would select a file its commit tracks; one the manifest leaves out means the manifest is stale.
+			extra, err := tracked.Unrecorded(checkout, root)
+			if err != nil {
+				return nil, actual, nil, err
+			}
+			var unlisted []string
+			for _, name := range extra {
+				if matches(name, patterns) {
+					unlisted = append(unlisted, name)
+				}
+			}
+			if len(unlisted) != 0 {
+				return nil, actual, nil, fmt.Errorf("%s root %s: corpus files the tree's manifest doesn't record and no .gitignore ignores (a stale manifest, or a leftover): %q", checkout, root, unlisted)
 			}
 		}
 		var missing []string
