@@ -312,6 +312,12 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 				}
 			}
 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+			// Layout must follow the destination, even when the literal infers narrower elements.
+			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
+				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
+					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
+				}
+			}
 			// Keep every proven nonempty contextual element representation, including weak handles.
 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
@@ -1385,9 +1391,9 @@ func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Express
 // visits are the array methods that call a function per element and look at what it returns.
 var visits = map[string]struct{}{"forEach": {}, "filter": {}, "some": {}, "every": {}, "find": {}, "findIndex": {}}
 
-// arrayVisit lowers forEach, filter, some, every, find and findIndex. All but forEach decide by what
-// the callback returns, which 0.1 requires to be a boolean: JavaScript would take any value's
-// truthiness there, and 0.1 has none.
+// arrayVisit lowers forEach, filter, some, every, find, findIndex, findLast and findLastIndex.
+// All but forEach decide by what the callback returns, which 0.1 requires to be a boolean:
+// JavaScript would take any value's truthiness there, and 0.1 has none.
 func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
@@ -1406,6 +1412,14 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	}
 	claim := predicateOfSignature(l.checker, signatures[0])
 	if claim != nil && claim.Type() != nil {
+		// A predicate changes the receiver's flow type, never its stored elements.
+		// Optional numbers and references keep their storage; boxed unions cannot become S[].
+		if name == "every" && element == ir.Union {
+			target, known := l.kept(l.concrete(claim.Type()))
+			if known && target != element {
+				return nil, true, &Refused{Where: l.program.Where(node), What: "array element narrowing across a union layout is not yet sound", Fix: "read the elements through the union type, or copy them into a new S[]"}
+			}
+		}
 		if name == "filter" && element == ir.Union {
 			target, known := l.kept(l.concrete(claim.Type()))
 			if known && target != element {
@@ -1414,10 +1428,10 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		}
 		// An undefined result already fits packed optional-number storage.
 		// Heap-backed and boxed sources cannot be reused as that result slot.
-		if name == "find" && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
+		if (name == "find" || name == "findLast") && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
 			result, err := l.typeOf(node)
 			if err != nil || result != ir.Maybe(element) {
-				return nil, true, l.notYet(node, "find predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
+				return nil, true, l.notYet(node, name+" predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
 			}
 		}
 	}

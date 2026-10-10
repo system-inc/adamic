@@ -1,0 +1,28 @@
+{
+  "implementation_commit": "5f466b83",
+  "full_lower": {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Elapsed": 100.533
+  },
+  "new_leaves": [
+    {
+      "test": "TestFX5NumberValueRefused",
+      "seconds": 0.23
+    },
+    {
+      "test": "TestFX5NumberLiteralRefused",
+      "seconds": 0.16
+    },
+    {
+      "test": "TestFX5MixedLiteralAgrees",
+      "seconds": 1.76
+    }
+  ],
+  "counts": "PASS 130.373s, counts.md unchanged",
+  "lane": "lane checks 8.6 s: gofmt and tools on 2 Go files, t.Parallel on 1 test packages; vet 1 packages",
+  "call_target_readers": "PASS 44.415s",
+  "mutant_refusal": "FAIL: expected Refused, got nil",
+  "mutant_native": "FAIL: native stdout empty, Node number 1 newline",
+  "q12": "No verified cancellation witness found"
+}

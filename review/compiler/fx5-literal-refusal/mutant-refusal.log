@@ -1,0 +1,8 @@
+=== RUN   TestFX5NumberLiteralRefused
+=== PAUSE TestFX5NumberLiteralRefused
+=== CONT  TestFX5NumberLiteralRefused
+    fx5_literal_test.go:16: want narrow refusal at literal main.a:1:36 with fix, got <nil>
+--- FAIL: TestFX5NumberLiteralRefused (0.24s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.283s
+FAIL

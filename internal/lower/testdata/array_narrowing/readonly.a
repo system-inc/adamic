@@ -1,0 +1,5 @@
+function isNumber(value: string | number): value is number { return typeof value === 'number'; }
+const built: (string | number)[] = [1, 2, 'discard'];
+built.pop();
+const items: readonly (string | number)[] = built;
+if (items.every(isNumber)) console.log('total ' + items.reduce((a, b) => a + b, 0));

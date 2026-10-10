@@ -1,0 +1,54 @@
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== RUN   TestArrayNarrowingInferredRefused
+=== PAUSE TestArrayNarrowingInferredRefused
+=== RUN   TestArrayNarrowingReadonlyRefused
+=== PAUSE TestArrayNarrowingReadonlyRefused
+=== RUN   TestArrayNarrowingEarlyReturnRefused
+=== PAUSE TestArrayNarrowingEarlyReturnRefused
+=== RUN   TestArrayNarrowingPropertyRefused
+=== PAUSE TestArrayNarrowingPropertyRefused
+=== RUN   TestArrayNarrowingForwardRefused
+=== PAUSE TestArrayNarrowingForwardRefused
+=== RUN   TestArrayNarrowingCatRefused
+=== PAUSE TestArrayNarrowingCatRefused
+=== RUN   TestArrayNarrowingFindRefused
+=== PAUSE TestArrayNarrowingFindRefused
+=== RUN   TestArrayNarrowingFindLastRefused
+=== PAUSE TestArrayNarrowingFindLastRefused
+=== RUN   TestArrayNarrowingOptionalNumberAgrees
+=== PAUSE TestArrayNarrowingOptionalNumberAgrees
+=== RUN   TestArrayNarrowingOptionalStringAgrees
+=== PAUSE TestArrayNarrowingOptionalStringAgrees
+=== RUN   TestArrayNarrowingSomeNegatedAgrees
+=== PAUSE TestArrayNarrowingSomeNegatedAgrees
+=== RUN   TestArrayNarrowingFindLastIndexAgrees
+=== PAUSE TestArrayNarrowingFindLastIndexAgrees
+=== CONT  TestArrayNarrowingEveryRefused
+=== CONT  TestArrayNarrowingFindRefused
+=== CONT  TestArrayNarrowingPropertyRefused
+=== CONT  TestArrayNarrowingOptionalNumberAgrees
+=== CONT  TestArrayNarrowingFindLastRefused
+--- PASS: TestArrayNarrowingEveryRefused (0.09s)
+=== CONT  TestArrayNarrowingEarlyReturnRefused
+--- PASS: TestArrayNarrowingFindLastRefused (0.09s)
+=== CONT  TestArrayNarrowingCatRefused
+--- PASS: TestArrayNarrowingFindRefused (0.10s)
+=== CONT  TestArrayNarrowingReadonlyRefused
+--- PASS: TestArrayNarrowingPropertyRefused (0.11s)
+=== CONT  TestArrayNarrowingForwardRefused
+--- PASS: TestArrayNarrowingEarlyReturnRefused (0.07s)
+=== CONT  TestArrayNarrowingInferredRefused
+--- PASS: TestArrayNarrowingCatRefused (0.07s)
+=== CONT  TestArrayNarrowingFindLastIndexAgrees
+--- PASS: TestArrayNarrowingReadonlyRefused (0.07s)
+=== CONT  TestArrayNarrowingSomeNegatedAgrees
+--- PASS: TestArrayNarrowingForwardRefused (0.06s)
+=== CONT  TestArrayNarrowingOptionalStringAgrees
+--- PASS: TestArrayNarrowingInferredRefused (0.05s)
+--- PASS: TestArrayNarrowingFindLastIndexAgrees (3.71s)
+--- PASS: TestArrayNarrowingOptionalNumberAgrees (3.87s)
+--- PASS: TestArrayNarrowingOptionalStringAgrees (3.70s)
+--- PASS: TestArrayNarrowingSomeNegatedAgrees (3.71s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.895s

@@ -1,0 +1,17 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1406,14 +1406,6 @@
+ 	}
+ 	claim := predicateOfSignature(l.checker, signatures[0])
+ 	if claim != nil && claim.Type() != nil {
+-		// A predicate changes the receiver's flow type, never its stored elements.
+-		// Optional numbers and references keep their storage; boxed unions cannot become S[].
+-		if name == "every" && element == ir.Union {
+-			target, known := l.kept(l.concrete(claim.Type()))
+-			if known && target != element {
+-				return nil, true, &Refused{Where: l.program.Where(node), What: "array element narrowing across a union layout is not yet sound", Fix: "read the elements through the union type, or copy them into a new S[]"}
+-			}
+-		}
+ 		if name == "filter" && element == ir.Union {
+ 			target, known := l.kept(l.concrete(claim.Type()))
+ 			if known && target != element {
