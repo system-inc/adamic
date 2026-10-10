@@ -13,7 +13,7 @@ import (
 func TestEditCacheSeparation(t *testing.T) {
 	// Not parallel: enable observations even when the surrounding gate is uncached.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,7 +65,7 @@ func TestNodeHarnessIdentity(t *testing.T) {
 
 func TestWorkerLazyFallback(t *testing.T) {
 	t.Parallel()
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), productAdamic(t), nil, true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +117,7 @@ func TestLoweringSourceEdit(t *testing.T) {
 			t.Fatal(err)
 		}
 		profile := newRunProfile()
-		e, err := prepareMode(root, "testdata/mini", t.TempDir(), profile, true)
+		e, err := prepareMode(root, "testdata/mini", t.TempDir(), nil, profile, true)
 		if err != nil {
 			t.Fatal(err)
 		}

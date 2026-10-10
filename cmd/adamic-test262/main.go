@@ -97,7 +97,7 @@ func run(arguments []string) (exit int) {
 	var prepared *engine
 	var err error
 	if !*classifyOnly {
-		prepared, err = prepareMode(*root, *test262, workDirectory, profile, inProcess)
+		prepared, err = prepareMode(*root, *test262, workDirectory, goBuildAdamic(*root), profile, inProcess)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			return 1

@@ -41,29 +41,39 @@ type engine struct {
 	compilerIdentity string
 	profile          *runProfile
 	worker           int
-	root             string
 	fallback         *compilerFallback
+	buildAdamic      adamicBuilder
 }
 
-func prepare(root string, test262 string, work string) (*engine, error) {
-	return prepareMode(root, test262, work, nil, false)
+// An adamicBuilder puts the stage 0 compiler at output: go build of ./cmd/adamic for the command, the shared keyed
+// product for a test (buildcache.Adamic), so no test unit runs go build. A nil one has no compiler to give, for an
+// in-process engine that never falls back.
+type adamicBuilder func(output string) error
+
+// goBuildAdamic builds ./cmd/adamic of the checkout at root.
+func goBuildAdamic(root string) adamicBuilder {
+	return func(output string) error {
+		build := exec.Command("go", "build", "-o", output, "./cmd/adamic")
+		build.Dir = root
+		if combined, err := build.CombinedOutput(); err != nil {
+			return fmt.Errorf("building adamic: %w\n%s", err, combined)
+		}
+		return nil
+	}
 }
 
-func prepareProfile(root string, test262 string, work string, profile *runProfile) (*engine, error) {
-	return prepareMode(root, test262, work, profile, false)
-}
-
-func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
+func prepareMode(root string, test262 string, work string, buildAdamic adamicBuilder, profile *runProfile, inProcess bool) (*engine, error) {
 	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
 	if !inProcess {
-		build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
-		build.Dir = root
-		if output, err := build.CombinedOutput(); err != nil {
-			return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
+		if buildAdamic == nil {
+			return nil, fmt.Errorf("a subprocess engine needs a stage 0 compiler")
+		}
+		if err := buildAdamic(adamic); err != nil {
+			return nil, err
 		}
 	}
 	done()
@@ -100,8 +110,8 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 	context = cacheKey(context, sourceIdentity)
 	done()
 	return &engine{
-		profile: profile,
-		root:    root, fallback: &compilerFallback{}, inProcess: inProcess,
+		profile:  profile,
+		fallback: &compilerFallback{}, inProcess: inProcess, buildAdamic: buildAdamic,
 		test262:          test262,
 		work:             work,
 		adamic:           adamic,
@@ -659,11 +669,11 @@ type compilerFallback struct {
 func (e *engine) fallbackCompile(path string) execution {
 	if e.fallback != nil && e.inProcess {
 		e.fallback.once.Do(func() {
-			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")
-			build.Dir = e.root
-			if output, err := build.CombinedOutput(); err != nil {
-				e.fallback.err = fmt.Errorf("building adamic: %w\n%s", err, output)
+			if e.buildAdamic == nil {
+				e.fallback.err = fmt.Errorf("this engine has no stage 0 compiler to fall back to")
+				return
 			}
+			e.fallback.err = e.buildAdamic(e.adamic)
 		})
 		if e.fallback.err != nil {
 			return execution{Exit: -1, Stderr: e.fallback.err.Error()}
