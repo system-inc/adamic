@@ -46,7 +46,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 	inputs := buildcache.Inputs{
 		Name:  "estree-acceptance-mutant-lowered-" + item.name,
 		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
-		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
 		main := mutantPort(t, item.file, item.from, item.to)
@@ -106,7 +106,7 @@ func acceptanceMutantsOracle(t *testing.T) string {
 	acceptanceOracleOnce.Do(func() {
 		inputs := buildcache.Inputs{Name: "estree-acceptance-mutants-go-oracle",
 			Files:     []string{"stage1/cohere/estree", "cohere", "go.mod", "go.work"},
-			Flags:     []string{"repository=" + root(t), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+			Flags:     []string{"repository=" + root(t), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")}}
 		directory := buildcache.Product(t, inputs, func(directory string) error {
 			// GoBuild is absent on this base; preserve the existing overlay recipe.

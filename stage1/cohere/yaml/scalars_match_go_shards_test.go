@@ -97,7 +97,7 @@ func scalarsMatchGoInputs(t *testing.T, name string) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: name, Files: files, Toolchain: []string{runtime.Version()}, Flags: []string{"GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
+	return buildcache.Inputs{Name: name, Files: files, Toolchain: []string{runtime.Version()}, Flags: []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
 }
 
 type scalarsMatchGoProduct struct {
@@ -147,7 +147,7 @@ func scalarsMatchGoNativeProduct(t *testing.T) string {
 		inputs := scalarsMatchGoInputs(t, "yaml-scalars-native")
 		inputs.Flags = append(inputs.Flags, "scalar_main.ts: lower+native.C+javascript.JavaScript")
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
-		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
+		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		scalarsMatchGoNative.directory = buildcache.Product(t, inputs, func(directory string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "scalars.c"))

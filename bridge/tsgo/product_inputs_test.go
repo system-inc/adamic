@@ -38,7 +38,7 @@ func checkBridgeProductInput(t *testing.T, name string) {
 			t.Fatal(err)
 		}
 		keys = append(keys, key)
-		directory, err := buildcache.Get(buildcache.Inputs{Name: "bridge-input-proof-" + name, Flags: []string{root, key}}, func(directory string) error {
+		directory, err := buildcache.Get(buildcache.Inputs{Name: "bridge-input-proof-" + name, Flags: []string{key}}, func(directory string) error {
 			source, err := os.ReadFile(recipe)
 			if err != nil {
 				return err

@@ -163,8 +163,9 @@ var testExecutable struct {
 }
 
 type testBuildCache struct {
-	inputs buildcache.Inputs
-	get    func(buildcache.Inputs, func(string) error) (string, error)
+	inputs     buildcache.Inputs
+	repository string
+	get        func(buildcache.Inputs, func(string) error) (string, error)
 }
 
 func newTestBuildCache(repository string, directories ...string) (*testBuildCache, error) {
@@ -188,10 +189,10 @@ func newTestBuildCache(repository string, directories ...string) (*testBuildCach
 		return nil, testExecutable.err
 	}
 	in := buildcache.Inputs{Name: "native tests", Files: append([]string{"go.mod", "cmd/adamic"}, directories...), Flags: []string{"test=" + testExecutable.digest}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")}}
-	for _, name := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_LDFLAGS", "CC", "GOTOOLCHAIN"} {
+	for _, name := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_LDFLAGS", "CC"} {
 		in.Flags = append(in.Flags, name+"="+os.Getenv(name))
 	}
-	return &testBuildCache{inputs: in}, nil
+	return &testBuildCache{inputs: in, repository: repository}, nil
 }
 func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) error) (string, error) {
 	in := c.inputs
@@ -204,6 +205,14 @@ func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) 
 		return c.get(in, build)
 	}
 	return buildcache.Get(in, build)
+}
+
+// portable names the tree as $REPO in text the key hashes (and so Key can't rewrite).
+func (c *testBuildCache) portable(text string) string {
+	if c.repository == "" {
+		return text
+	}
+	return strings.ReplaceAll(text, c.repository, "$REPO")
 }
 
 // Command caches compiler output only. It refuses commands without a single -o.
@@ -227,7 +236,8 @@ func (c *testBuildCache) Command(command *exec.Cmd, scratch string, extraInputs 
 		if i == outputIndex {
 			continue
 		}
-		normalized := strings.ReplaceAll(arg, scratch, "$SCRATCH")
+		// Hashed, an argument is out of Key's reach, so it names the tree the way Key would: never by its path.
+		normalized := c.portable(strings.ReplaceAll(arg, scratch, "$SCRATCH"))
 		inputs = append(inputs, []byte(normalized))
 		if data, err := os.ReadFile(arg); err == nil {
 			if strings.HasSuffix(arg, ".json") {
@@ -245,7 +255,7 @@ func (c *testBuildCache) Command(command *exec.Cmd, scratch string, extraInputs 
 						if err != nil {
 							return nil, err
 						}
-						inputs = append(inputs, []byte(original), contents)
+						inputs = append(inputs, []byte(c.portable(original)), contents)
 					}
 				}
 			}

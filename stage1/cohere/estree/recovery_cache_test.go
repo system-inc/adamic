@@ -103,11 +103,7 @@ func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
 	sort.Strings(names)
 	sort.Strings(external)
 	flags = append(flags, external...)
-	environment, err := exec.Command("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN").Output()
-	if err != nil {
-		t.Fatal(err)
-	}
-	flags = append(flags, string(environment))
+	flags = append(flags, buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"))
 	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 }
 

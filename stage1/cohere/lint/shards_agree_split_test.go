@@ -308,7 +308,12 @@ func testShardsAgreePreparedInputs(t *testing.T) buildcache.Inputs {
 		if err != nil {
 			t.Fatal(err)
 		}
-		fmt.Fprintf(hash, "%s %d\n", path, len(data))
+		// Named inside the TypeScript checkout, not by where this machine keeps it (#t37sw0f).
+		relative, err := filepath.Rel(source, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Fprintf(hash, "%s %d\n", filepath.ToSlash(relative), len(data))
 		hash.Write(data)
 	}
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("compiler corpus %x", hash.Sum(nil)))

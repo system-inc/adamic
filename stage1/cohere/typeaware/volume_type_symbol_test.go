@@ -100,7 +100,7 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 		flags = append(flags, input.name+"="+sum)
 	}
 	flags = append(flags, fmt.Sprintf("sanitize=%t", sanitize))
-	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		flags = append(flags, key+"="+os.Getenv(key))
 	}
 	inputs := buildcache.Inputs{Name: "typeaware-" + name, Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-print-search-dirs"), buildcache.Tool("clang", "-print-resource-dir")}}

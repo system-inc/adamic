@@ -15,14 +15,18 @@ import (
 
 // Discovery uses Go's effective dependency lists, including test sources and
 // embedded runtime files. Repository inputs are Files; external dependencies,
-// compiler binaries and their content hashes identify the toolchain.
+// compiler binaries and their content hashes identify the toolchain. Each is
+// labelled by what it is (a module file by its module-cache path, a tool by its
+// role), never by where this machine keeps it (#t37sw0f); go's own locations,
+// the GOTOOLCHAIN policy and the python and bootstrap go running this script
+// aren't inputs: go version names the release that builds.
 const fixtureHookInputsScript = `
 import hashlib, json, os, pathlib, runpy, shlex, shutil, subprocess, sys
 root = pathlib.Path(sys.argv[1]).resolve()
 hook = runpy.run_path(str(root / 'stage3/fixtures/build-hook.py'))
 files = {'go.mod', 'stage3/fixtures/build-hook.py', 'stage3/fixtures/products_test.go'}
 if (root / 'go.sum').exists(): files.add('go.sum')
-external = set()
+external = {}
 for package in hook['records'](subprocess.check_output(['go','list','-deps','-test','-json','./internal/oracle'], cwd=root, text=True)):
     if package.get('Error') or package.get('DepsErrors'):
         raise RuntimeError('oracle dependency discovery failed')
@@ -39,7 +43,7 @@ for package in hook['records'](subprocess.check_output(['go','list','-deps','-te
         try:
             files.add(path.resolve().relative_to(root).as_posix())
         except ValueError:
-            external.add(str(path.resolve()))
+            external[str(path.resolve())] = None
 settings = json.loads(subprocess.check_output(['go','env','-json','GOOS','GOARCH','GOAMD64','GOARM','GOARM64','GO386','GOMIPS','GOMIPS64','GOPPC64','GORISCV64','GOWASM','GOFLAGS','CGO_ENABLED','GOEXPERIMENT','GOWORK','GOTOOLDIR','GOTOOLCHAIN','GOENV','GOROOT','GOPATH','CC','CXX','AR','PKG_CONFIG','GODEBUG','GOFIPS140','CGO_CFLAGS','CGO_CPPFLAGS','CGO_CXXFLAGS','CGO_FFLAGS','CGO_LDFLAGS'], text=True))
 for name in ['go.work','go.work.sum']:
     if (root / name).exists(): files.add(name)
@@ -47,26 +51,32 @@ if settings['GOWORK'] not in ['', 'off']:
     for path in [pathlib.Path(settings['GOWORK']), pathlib.Path(settings['GOWORK'] + '.sum')]:
         if path.exists():
             try: files.add(path.resolve().relative_to(root).as_posix())
-            except ValueError: external.add(str(path.resolve()))
+            except ValueError: external[str(path.resolve())] = 'GOWORK ' + path.name
 for name in ['compile','link']:
-    external.add(str(pathlib.Path(settings['GOTOOLDIR']) / name))
+    external[str(pathlib.Path(settings['GOTOOLDIR']) / name)] = 'go tool ' + name
 for name in ['CC','CXX','AR','PKG_CONFIG']:
     command = shlex.split(settings[name])
     path = shutil.which(command[0]) if command else None
-    if path: external.add(str(pathlib.Path(path).resolve()))
-external.add(str(pathlib.Path(sys.executable).resolve()))
-external.add(str(pathlib.Path(shutil.which('go')).resolve()))
-tools = [subprocess.check_output(['go','version'], text=True), sys.version]
+    if path: external[str(pathlib.Path(path).resolve())] = name + ' ' + pathlib.Path(path).name
+tools = [subprocess.check_output(['go','version'], text=True)]
 environment = ['CPATH','C_INCLUDE_PATH','CPLUS_INCLUDE_PATH','LIBRARY_PATH','SDKROOT','MACOSX_DEPLOYMENT_TARGET','CGO_CFLAGS_ALLOW','CGO_CFLAGS_DISALLOW','CGO_LDFLAGS_ALLOW','CGO_LDFLAGS_DISALLOW']
 flags = [k+'='+os.environ.get(k, '') for k in environment]
 cache = pathlib.Path(subprocess.check_output(['go','env','GOCACHE'], text=True).strip()).resolve()
+modules = pathlib.Path(subprocess.check_output(['go','env','GOMODCACHE'], text=True).strip()).resolve()
+goroot = pathlib.Path(settings['GOROOT']).resolve()
 fingerprints = []
-for path in external:
+for path, label in external.items():
     source = pathlib.Path(path)
-    label = 'generated-test-main' if source.is_relative_to(cache) else path
+    if label is None:
+        if source.is_relative_to(cache): label = 'generated-test-main'
+        elif source.is_relative_to(goroot): label = 'GOROOT ' + source.relative_to(goroot).as_posix()
+        elif source.is_relative_to(modules): label = 'module ' + source.relative_to(modules).as_posix()
+        else: label = path
     fingerprints.append(label + ':' + hashlib.sha256(source.read_bytes()).hexdigest())
 tools.extend(sorted(fingerprints))
-print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Flags':['-buildvcs=false','-c','./internal/oracle','repository='+str(root)] + flags + [k+'='+str(v) for k,v in sorted(settings.items())], 'Toolchain':tools}))
+workspace = 'workspace=off' if settings['GOWORK'] in ['', 'off'] else 'workspace=on'
+locations = {'GOWORK','GOTOOLDIR','GOTOOLCHAIN','GOENV','GOROOT','GOPATH'}
+print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Flags':['-buildvcs=false','-c','./internal/oracle','repository='+str(root), workspace] + flags + [k+'='+str(v) for k,v in sorted(settings.items()) if k not in locations], 'Toolchain':tools}))
 `
 
 func fixtureHookInputs(t testing.TB, repository string) buildcache.Inputs {

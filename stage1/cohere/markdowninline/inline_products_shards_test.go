@@ -284,14 +284,7 @@ func collectInlineCompilerInputs(t *testing.T) buildcache.Inputs {
 		in.Files = append(in.Files, name)
 	}
 	sort.Strings(in.Files)
-	command, cancel = inlineCommand("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT")
-	command.Dir = root
-	defer cancel()
-	resolved, err := combinedOutput(command)
-	if err != nil {
-		t.Fatalf("compiler environment: %v", err)
-	}
-	in.Flags = append(in.Flags, string(resolved))
+	in.Flags = append(in.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT"))
 	return in
 }
 func inlineProgramInputs(base buildcache.Inputs, name string) buildcache.Inputs {
@@ -314,12 +307,12 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 }
 func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
 	in := buildcache.Inputs{Name: name, Files: []string{"internal/native", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
-	in.Flags = append(in.Flags, inlineEnvironment("PATH", "HOME", "XDG_CACHE_HOME", "TMPDIR", "LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "LANG", "LC_ALL", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED")...)
+	in.Flags = append(in.Flags, inlineEnvironment("LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT")...)
 	return inlineProductSources(t, in, source, "program.c")
 }
 func inlineNodeInputs(t *testing.T, name, source string) buildcache.Inputs {
 	in := buildcache.Inputs{Name: name, Files: []string{"stage1/cohere/markdowninline/testdata/build_node.mjs", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, Toolchain: []string{buildcache.Tool("node", "--version")}}
-	in.Flags = append(in.Flags, inlineEnvironment("PATH", "NODE_OPTIONS", "NODE_PATH")...)
+	in.Flags = append(in.Flags, inlineEnvironment("NODE_OPTIONS")...)
 	return inlineProductSources(t, in, source, "main.ts", "inline.ts", "classes.ts")
 }
 

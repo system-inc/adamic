@@ -115,7 +115,7 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 	// Go reports effective values, including settings loaded from GOENV. Runtime
 	// cache locations and logging switches do not change the compiled product.
 	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
-	for _, variable := range []string{"ADAMIC_GATE_UNCACHED", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "WASI_SYSROOT", "PATH", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
+	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
 		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
@@ -123,34 +123,16 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
 	}
 	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
-		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "))
+		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
 		if len(fields) != 0 {
 			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
 		}
 	}
-	// Stage 0, the oracle and the checker archive are plain go builds: with -trimpath and -buildvcs=false in effect
-	// (cloud/setup.sh exports both, @system_adamic's ruling, Oct 9) their bytes don't depend on where the checkout sits,
-	// so their key names the repository by role and a checkout at any path fetches what main's gate published
-	// (cmd/productidentity -elsewhere proves it). Every other product keeps the path: clang's debug information names
-	// it, and an overlay's map does.
-	if bridgePathFreeProducts[name] && bridgeBuildsArePathFree() {
-		for index, flag := range inputs.Flags {
-			inputs.Flags[index] = strings.ReplaceAll(flag, repository, "<repository>")
-		}
-	}
+	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
+	// asks for what Workshop built. Stage 0, the oracle and the checker archive are the same bytes from any path (with
+	// -trimpath and -buildvcs=false, which cloud/setup.sh exports and GOFLAGS keys); a native product's debug
+	// information still names the path it was built at, until its build maps that prefix.
 	return inputs
-}
-
-var bridgePathFreeProducts = map[string]bool{"stage0": true, "oracle": true, "tsgo.a": true}
-
-// bridgeBuildsArePathFree says whether go builds here leave out the checkout's path and commit, as GOFLAGS says.
-func bridgeBuildsArePathFree() bool {
-	var trimmed, unstamped bool
-	for _, flag := range strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", "GOFLAGS"), "go env GOFLAGS: ")) {
-		trimmed = trimmed || flag == "-trimpath" || flag == "-trimpath=true"
-		unstamped = unstamped || flag == "-buildvcs=false"
-	}
-	return trimmed && unstamped
 }
 
 func bridgeProduct(t testing.TB, repository, name string) string {

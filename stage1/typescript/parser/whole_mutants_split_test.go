@@ -58,7 +58,7 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 
 func wholeMutantBuildFlags() []string {
 	flags := []string{"GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}
-	for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOTOOLCHAIN", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "GOAMD64", "GOARM64", "CGO_ENABLED", "ADAMIC_NATIVE_SPLIT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	return flags

@@ -88,7 +88,7 @@ func pilotGoProduct(t *testing.T, family string) string {
 	// Sort map-derived inputs to keep the recipe key deterministic.
 	sort.Strings(files)
 	flags := []string{"go build", "overlay:" + command}
-	for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "CC", "CXX"} {
+	for _, name := range []string{"GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "CC", "CXX"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	dir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-pilot-" + family + "-go", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
@@ -144,7 +144,7 @@ func pilotNativeProductFromLowered(t *testing.T, family, lowered string, sanitiz
 	}
 	options := native.Options{Sanitize: sanitize}
 	flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)))
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-pilot-%s-native-%t", family, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}, func(dir string) error {

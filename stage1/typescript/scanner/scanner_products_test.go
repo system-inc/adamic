@@ -56,7 +56,7 @@ func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) er
 
 func scannerOracleProduct(t *testing.T) string {
 	t.Helper()
-	inputs := buildcache.Inputs{Name: "scanner-go-oracle", Files: []string{"cohere/TypeScript/tsc", "go.mod", "go.work", "stage1/typescript/scanner/testdata/oracle.go"}, Flags: []string{"go build", "-overlay", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{buildcache.Tool("go", "version")}}
+	inputs := buildcache.Inputs{Name: "scanner-go-oracle", Files: []string{"cohere/TypeScript/tsc", "go.mod", "go.work", "stage1/typescript/scanner/testdata/oracle.go"}, Flags: []string{"go build", "-overlay", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{buildcache.Tool("go", "version")}}
 	return scannerFetch(t, inputs, func(directory string) error {
 		root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 		if err != nil {
@@ -88,7 +88,7 @@ func scannerOracleProduct(t *testing.T) string {
 func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
-	flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	contents := make(map[string][]byte)
 	for _, name := range portFiles {
 		data, err := os.ReadFile(filepath.Join(source, name))

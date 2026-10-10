@@ -220,7 +220,7 @@ func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	inputs.Flags = append(inputs.Flags, "split=true")
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
-	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	binary := buildcache.Product(t, inputs, func(dir string) error {
 		c, err := os.ReadFile(filepath.Join(lowered, "program.c"))
@@ -249,7 +249,7 @@ func threePortOracleInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
+		Flags:     []string{"repository=" + root(t), "go build", "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
