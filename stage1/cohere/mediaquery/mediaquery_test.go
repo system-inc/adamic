@@ -19,6 +19,7 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -288,8 +289,11 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-timeout=0", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/mediaquery")
-	command.Dir = cohere
+	// The package's test binary with the harness laid over it is a product (buildcache.GoTest), built ahead, and run here
+	// in the package's directory, where go test would run it; the child guard owns hang detection.
+	binary := buildcache.GoTest(t, "cohere", "mediaquery.test", "./internal/format/css/mediaquery", []string{"-overlay=" + overlayPath})
+	command := bounded(t, binary, "-test.timeout=0", "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
