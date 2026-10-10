@@ -1,23 +1,11 @@
 {
   "version": 1,
-  "tiers": [
-    {
-      "name": "codex-strict",
-      "memoryMegabytes": 16384,
-      "cpus": 4
-    },
-    {
-      "name": "box-strict",
-      "memoryMegabytes": 65536,
-      "cpus": 8
-    }
-  ],
   "units": [
     {
       "package": "stage1/cohere/typeaware",
-      "memoryMegabytes": 32768,
+      "memoryMegabytes": 9710,
       "cpus": 4,
-      "record": "provisional, pending cloud's measured peak (Oct 10 02:0xZ): the three codex-strict drops first cited (future-f7812fffa6b565c3d31a13d3183e8d074d412e92-1 twice, -2) were the coordinator dropping live runners after three missed 120 s heartbeats while go test ran silent (Fabric 01:56Z: both workers asked the pool again), not memory; held on box-strict until the measurement, which reads a 9.9 GB setup peak (cgroup memory.peak at go build ./... link) and a test phase past 8.7 GB, still compiling"
+      "record": "measured on Cloud (Fabric, Oct 10 02:05Z): unit ec123b7f alone, runner 8a70ebce, 4 contended cores (AllowedCPUs 60-63), warm tree; test phase from prepare-ready 01:37:47Z to exit 0 at 02:00:49Z, wall 1390.9 s, cgroup memory.peak 9710 MB (sampled every 5 s, ~/loom-fabric/rss-ec123b7f/memory.log), largest process 2.36 GB; setup measured apart peaked at 9.9 GB (go build ./... at link). Its real cost is time: about 23 minutes, inside the 1800 s ceiling only with --silence-drop until the runner heartbeats through go test"
     }
   ]
 }
