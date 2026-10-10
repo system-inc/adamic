@@ -356,7 +356,8 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 			if err != nil {
 				t.Fatal(err)
 			}
-			overlay := filepath.Join(directory, "volume-oracle-overlay.json")
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			overlay := filepath.Join(t.TempDir(), "volume-oracle-overlay.json")
 			if err := os.WriteFile(overlay, data, 0600); err != nil {
 				t.Fatal(err)
 			}

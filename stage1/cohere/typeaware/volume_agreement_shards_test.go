@@ -145,6 +145,8 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
 		if err := os.WriteFile(overlay, data, 0444); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlay)
 		cmd, cancel := volumeGuardCommand(context.Background(), "go", "build", "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)
 		defer cancel()
 		cmd.Dir = filepath.Join(h.repository, "cohere")

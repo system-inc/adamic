@@ -113,6 +113,8 @@ func buildInlineGoBridge(dir string) error {
 	if err = inlineWrite(dir, "overlay.json", data); err != nil {
 		return err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(filepath.Join(dir, "overlay.json"))
 	cmd, cancel := inlineCommand("go", "build", "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
 	defer cancel()
 	cmd.Dir = cohere

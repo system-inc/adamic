@@ -416,6 +416,8 @@ func upstreamParityOracleProduct(t *testing.T) string {
 			if err := os.WriteFile(overlay, encoded, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(overlay)
 			command := upstreamParityCommand(context.Background(), "go", "test", "-c", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), "./internal/format/javascript")
 			command.Dir = cohere
 			output, err := childguard.CombinedOutput(command, jsonGuard)

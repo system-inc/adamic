@@ -114,6 +114,8 @@ func formatterMutantsOracleProduct(t *testing.T) string {
 			if err := os.WriteFile(path, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(path)
 			binary := filepath.Join(directory, "go-format")
 			if _, err := formatterMutantsCommand(ctx, filepath.Join(root, "cohere"), "go", "build", "-overlay", path, "-o", binary, "./command/formatter_comparison"); err != nil {
 				return err

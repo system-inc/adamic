@@ -318,6 +318,8 @@ func decodedOptionsGoOracle(ctx context.Context, directory string) (string, erro
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return "", err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(overlayPath)
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + overlayPath, "-o", binary}, virtualFiles...)
 	command := decodedOptionsCommand(ctx, root, "go", args...)

@@ -89,6 +89,8 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 			if err := os.WriteFile(overlay, data, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(overlay)
 			args := append(append([]string{"build"}, flags...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
 			cmd := exec.CommandContext(t.Context(), "go", args...)
 			cmd.Dir = filepath.Join(root, "cohere")
