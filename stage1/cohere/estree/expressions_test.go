@@ -24,11 +24,17 @@ func TestRecoveredExpressions(t *testing.T) {
 	t.Logf("%d decorated class / await / yield cases, %d bytes match Go", len(recoveredExpressions()), len(want))
 }
 
+// recoveredExpressionMutantPath is the port with sourceLookahead's flag test widened, so recovery admits what Go refuses.
+func recoveredExpressionMutantPath(t *testing.T) string {
+	t.Helper()
+	return mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
+}
+
 // Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
-	path := mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
+	path := recoveredExpressionMutantPath(t)
 	binary, _ := recoveryBuild(t, path, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if d := firstDifference(want, got); d == "" {
