@@ -88,7 +88,7 @@
         "better-tailwindcss/no-unknown-classes",
         "better-tailwindcss/no-unnecessary-whitespace"
       ],
-      "change": "items were strings; LegacySelector decodes itself (a name or [name, matchers]), so the generator marks them unsupported and generate.py drops these twelve rules from strict decoding"
+      "change": "items were strings; LegacySelector decodes itself (a name or [name, matchers]). The generator states its shape by hand, and SelectorTarget's (a word or a whole number), and describes the recursive SelectorMatcher by ref, so the twelve rules stay in strict decoding"
     },
     {
       "commit": "c2e39b75",
@@ -121,11 +121,24 @@
     }
   ],
   "cases_before": 23539,
-  "cases_after": 21119,
-  "explained_losses": [
+  "cases_after": 29399,
+  "explained_losses": [],
+  "explained_gains": [
     {
-      "commit": "0b892cc9",
-      "strict_decode_targets_removed": [
+      "commit": "c2e39b75",
+      "strict_decode_targets_added": [
+        "id-length",
+        "object-shorthand"
+      ],
+      "cases": 424
+    },
+    {
+      "commits": [
+        "0b892cc9",
+        "f5d1934a",
+        "8908cf64"
+      ],
+      "strict_decode_targets": [
         "better-tailwindcss/enforce-canonical-classes",
         "better-tailwindcss/enforce-consistent-class-order",
         "better-tailwindcss/enforce-consistent-important-position",
@@ -139,17 +152,8 @@
         "better-tailwindcss/no-unknown-classes",
         "better-tailwindcss/no-unnecessary-whitespace"
       ],
-      "cases": -2844
-    }
-  ],
-  "explained_gains": [
-    {
-      "commit": "c2e39b75",
-      "strict_decode_targets_added": [
-        "id-length",
-        "object-shorthand"
-      ],
-      "cases": 424
+      "cases": 5436,
+      "note": "8,280 cases where the old pin had 2,844: 4,032 flat samples over the twelve rules' fields, selectors, tags and tsconfig among them, and 4,248 samples derived from the hand-stated and recursive shapes"
     }
   ],
   "unexplained_losses": []
