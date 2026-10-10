@@ -64,22 +64,31 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
 	started := time.Now()
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
+		root, err := repositoryRoot()
+		if err != nil {
+			return "", "", err
+		}
+		key, err := Key(root, inputs)
+		if err != nil {
+			return "", "", err
+		}
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
 			return "", "", err
 		}
+		// Another product names this one as <build cache>/<key>, which Absolute finds here (relative.go).
+		located(key, directory)
 		if err = build(directory); err != nil {
+			return "", "", err
+		}
+		if err = relocatable(inputs.Name, directory); err != nil {
 			return "", "", err
 		}
 		// Main's own gate runs uncached and is the one writer of trusted refs: what it built from main's sources is
 		// published for everyone to read (store.go).
 		if trusted() {
-			if root, err := repositoryRoot(); err == nil {
-				if key, err := Key(root, inputs); err == nil {
-					if err = publish(key, inputs.Name, directory); err != nil {
-						note("publish %s %s failed: %v", inputs.Name, key[:12], err)
-					}
-				}
+			if err = publish(key, inputs.Name, directory); err != nil {
+				note("publish %s %s failed: %v", inputs.Name, key[:12], err)
 			}
 		}
 		return directory, record(inputs.Name, "uncached", "off", started), nil
@@ -142,7 +151,16 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		}
 	}
 	if outcome == "miss" {
-		if err = build(scratch); err != nil {
+		// While it builds, the product's own directory is its scratch one, which Relative names <build cache>/<key>, the
+		// place it is published to.
+		located(key, scratch)
+		err = build(scratch)
+		productDirectories.Delete(scratch)
+		productKeys.Delete(key)
+		if err == nil {
+			err = relocatable(inputs.Name, scratch)
+		}
+		if err != nil {
 			os.RemoveAll(scratch)
 			return "", "", err
 		}
