@@ -1,0 +1,29 @@
+{
+  "base": "72ad75effe2dbcc0deedc3e7e34a8d5e29670eac",
+  "head": "d40702f5f23fb717aec2a5a8a855b9ac0a934d6a",
+  "verdict": "pass",
+  "admitted": 30,
+  "node_agreements": 22,
+  "accepted_witnesses": 8,
+  "negative_witness_count": 8,
+  "sampling_size": 30,
+  "omitted": 0,
+  "phase_seconds": {
+    "base_build": 7.1816e-05,
+    "checkout": 1.487757124,
+    "checkout_and_provision": 1.867667722,
+    "classification": 29.993312592,
+    "head_build": 7.681e-06,
+    "manifest_and_verification": 1.991979715,
+    "provision": 0.37990467,
+    "runtime": 7.102127082,
+    "total": 40.958364882
+  },
+  "classified_programs": 1071,
+  "tool_dependency": "25db7dd1c4e13895c593174164cedc2c452452b9",
+  "classes": {
+    "refused-by-both": 6,
+    "accepted-by-both": 1035,
+    "newly-accepted": 30
+  }
+}
