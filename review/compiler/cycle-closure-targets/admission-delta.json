@@ -1,5 +1,5 @@
 {
-  "programs": 1335,
+  "programs": 1346,
   "newly_admitted": 10,
   "newly_refused": [],
   "classifications": [
@@ -2675,6 +2675,86 @@
       "agree": true
     },
     {
+      "path": "internal/oracle/testdata/getters_census_binary_inline.a",
+      "base_exit": 0,
+      "head_exit": 0,
+      "base_error": [],
+      "head_error": []
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_callback_pair_methods.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_class_map.a",
+      "base_exit": 0,
+      "head_exit": 0,
+      "base_error": [],
+      "head_error": []
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_closure_number_methods.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_methods.a:5:14: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_methods.a:5:14: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_closure_number_next.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_next.a:5:41: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_next.a:5:41: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_closure_union_next.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_union_next.a:5:45: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_closure_union_next.a:5:45: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_higher_callback_pair_methods.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_lazy_object.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_lazy_object.a:9:57: stage 0 can't lower reading factory yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_lazy_object.a:9:57: stage 0 can't lower reading factory yet"
+      ]
+    },
+    {
       "path": "internal/oracle/testdata/getters_census_optional_boolean_function.a",
       "base_exit": 1,
       "head_exit": 0,
@@ -2750,6 +2830,17 @@
       "agree": true
     },
     {
+      "path": "internal/oracle/testdata/getters_census_overloaded_function.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_overloaded_function.a:18:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_overloaded_function.a:18:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      ]
+    },
+    {
       "path": "internal/oracle/testdata/getters_census_primary_function.a",
       "base_exit": 1,
       "head_exit": 0,
@@ -2773,6 +2864,24 @@
         "stderr": ""
       },
       "agree": true
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_snapshot_next.a",
+      "base_exit": 1,
+      "head_exit": 1,
+      "base_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_snapshot_next.a:7:56: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ],
+      "head_error": [
+        "adamic: /workspace/adamic/internal/oracle/testdata/getters_census_snapshot_next.a:7:56: stage 0 can't lower a non-accessor method in an accessor literal yet"
+      ]
+    },
+    {
+      "path": "internal/oracle/testdata/getters_census_throwing_object.a",
+      "base_exit": 0,
+      "head_exit": 0,
+      "base_error": [],
+      "head_error": []
     },
     {
       "path": "internal/oracle/testdata/getters_census_unary_function.a",

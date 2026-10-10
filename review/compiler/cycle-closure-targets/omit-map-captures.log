@@ -1,0 +1,12 @@
+=== RUN   TestClosureCycleMap
+=== PAUSE TestClosureCycleMap
+=== CONT  TestClosureCycleMap
+    cycle_closure_targets_test.go:118: gate cache node hit
+    cycle_closure_targets_test.go:118: want cycle refusal, got <nil>
+--- FAIL: TestClosureCycleMap (0.09s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.104s
+FAIL

@@ -1,0 +1,12 @@
+=== RUN   TestClosureCycleDirect
+=== PAUSE TestClosureCycleDirect
+=== CONT  TestClosureCycleDirect
+    cycle_closure_targets_test.go:116: gate cache node hit
+    cycle_closure_targets_test.go:116: want cycle refusal, got <nil>
+--- FAIL: TestClosureCycleDirect (0.09s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.099s
+FAIL
