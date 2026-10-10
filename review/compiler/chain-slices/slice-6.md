@@ -1,6 +1,6 @@
 TypeScript binder.ts:1691:17 has a stale FlowLabel narrowing after bind(finallyBlock) can install FlowAssignment; .a needs adaptation (see narrowing-sites.md).
 Built exact uncaught diagnostics, the .a writing-call refusal/control, TypeScript stop witness, memory correction and tab indentation fixes on main 98008bbb.
-Member commits stay df93806d, bab6155e, d10e3e00, cd0b8e5f; this is one production fix on top of cleared 66ad4a67, with review-only delivery evidence afterward.
+Member commits stay df93806d, bab6155e, d10e3e00, cd0b8e5f; production fix f2576fec is on top of cleared 66ad4a67, with review-only delivery evidence afterward.
 Lower shards: 281 pass, two existing skips; 14 admission agreements, zero .a witnesses; counts refresh and six follow-up mutants pass.
 Not covered: a native tsc binary, WASI execution, unresolved indirect calls or a universal whole-program effect/admission proof.
 
@@ -35,6 +35,7 @@ Machine-readable facts are in ../chain-slice-6/narrowing-witness.json. The witne
 | Counts | go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -json -timeout 180s -args -update-counts; pass 82.651 s. The preceding 180 s attempt timed out before writing. Table refreshed once. | followup-counts-final.jsonl, followup-counts-attribution.json |
 | Feature/runtime link | Four exact feature selectors with ADAMIC_CLANG_TSGO_ARCHIVE=/tmp/chain-slice-6-tsgo.a; 32 matching masks, mismatch probes and actual checker archive; pass 9.331 s. | followup-features.jsonl |
 | Lint profile | TestProfileRuntimeFeaturesMatchNode; pass 0.318 s. | followup-lint.jsonl |
+| Final lane | Required fetch/show pipeline: `lane checks 7.3 s: gofmt and tools on 75 Go files, t.Parallel on 13 test packages; a-check 5 .a files; vet 13 packages`. No skips. | followup-lane.log |
 | WASI compile/opt-in | TestWASIRequestThrows compiles and skips under its existing ADAMIC_ORACLE_WASI opt-in; stderr expectation updated to `Uncaught Error: boundary\n`. | followup-wasi.jsonl |
 
 Every follow-up mutant below failed at its intended behavioral/refusal assertion; build failures receive no credit.
