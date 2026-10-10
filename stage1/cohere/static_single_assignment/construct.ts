@@ -44,6 +44,7 @@ import type {
     PhiOperandInterface,
     RoleType,
 } from './static_single_assignment.ts';
+import { entryPredecessors } from './verify.ts';
 
 // SingleAssignmentState is one block's view: what each original binding currently resolves to, and the
 // phis whose operands are still waiting on an unprocessed predecessor.
@@ -380,8 +381,22 @@ class SingleAssignmentBuilder<F, B, P> {
  * After it returns: every identifier that a source binding takes is written exactly once, every use
  * names the definition that actually reaches it, and each block's phis hold a phi wherever a binding's
  * value depends on which predecessor control arrived from.
+ *
+ * It refuses, by panicking with the reason, a function whose entry block some edge enters, which
+ * graph.entry rules out. Its lookup walks back through predecessors until it finds a definition or a
+ * block with none, and an entry on a cycle of blocks with one predecessor each gives it neither: before
+ * this check, that was a stack overflow in valueAt. Neither IR builds such a function; one that did has
+ * a bug in its adapter or its lowering, and the panic names it. verifySingleAssignment reports the same
+ * thing without constructing.
  */
 export function construct<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): void {
+    const entered = entryPredecessors(graph, fn);
+    if(entered !== undefined) {
+        panic(
+            `static_single_assignment.construct: the entry block bb${entered.entry} has predecessors [${entered.predecessors.map((id) => `${id}`).join(' ')}]; graph.entry must be a block no edge enters`,
+        );
+    }
+
     /*
      * Phis from a previous run are dropped, because this pass appends them and cannot reconcile what it
      * did not mint. A caller that restructures the graph and runs construction again is the case:

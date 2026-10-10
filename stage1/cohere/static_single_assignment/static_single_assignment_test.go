@@ -216,11 +216,9 @@ var mutants = []mutant{
 		to:   "!graph.contextStoreDefines(fn, currentBlock, position, place) &&\n            false\n        ) {",
 	},
 	// computeDominance: one round of Cooper-Harvey-Kennedy rather than its fixed point, so a block whose
-	// dominator only settles once a loop's latch is processed keeps the first round's answer. Mutants
-	// that combine the predecessors another way hang instead of answering: reverse postorder can place a
-	// block through a structural fallthrough ahead of every real predecessor, so a block can become its
-	// own immediate dominator, and dominates never leaves it. A mutant that hangs isn't caught by its
-	// answers; this one keeps every immediate dominator ahead of its block, as the first round sets them.
+	// dominator only settles once a loop's latch is processed keeps the first round's answer. Over the
+	// real reverse postorder computeDominance walks, most graphs settle in one round; 17 of the
+	// generated functions need a second, which is what catches this.
 	{
 		name: "dominance from one round, not a fixed point",
 		file: "verify.ts",
