@@ -137,3 +137,11 @@ setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (18.751s)
 setup: source /workspace/adamic-tools/env.sh
 setup: logs /tmp/adamic-gate/setup.P1wpPl
 ```
+
+## Lane result
+
+```text
+lane checks 2.7 s: gofmt and tools on 49 Go files, t.Parallel on 5 test packages; vet 5 packages
+```
+
+logs.json preserves the captured log files verbatim as named JSON strings, including baseline failures, intended mutant failures and green final checks. The new test leaves are all below one second.
