@@ -1,0 +1,48 @@
+{
+  "whole_table_writer": "counts-update.log: pass 97.461s, one regeneration",
+  "targeted_final_measurement": "wider-count.stderr: 6/6/10/13/5/0",
+  "rows": [
+    {
+      "path": "internal/oracle/testdata/getters_census_throwing_object.a",
+      "before": "| internal/oracle/testdata/getters_census_throwing_object.a | 3 | 3 | 5 | 8 | 3 | 0 |",
+      "after": "| internal/oracle/testdata/getters_census_throwing_object.a | 3 | 3 | 6 | 9 | 3 | 0 |",
+      "reason": "new main fixture now uses the slice exception member: narrowed_union_member retains the returned caught Error and its caller releases it, adding one pair; see getter-counts-c.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_builtin_narrow_terminal.ts | 6 | 6 | 10 | 13 | 5 | 0 |",
+      "reason": "new .ts agreement/checked-stop fixture; counts stop at the inserted check for the two witnesses"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_narrow_flags_use.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_narrow_flags_use.ts | 13 | 13 | 9 | 21 | 6 | 0 |",
+      "reason": "new .ts agreement/checked-stop fixture; counts stop at the inserted check for the two witnesses"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_narrow_length_use.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_narrow_length_use.ts | 6 | 6 | 5 | 12 | 3 | 0 |",
+      "reason": "new .ts agreement/checked-stop fixture; counts stop at the inserted check for the two witnesses"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_narrow_member_use.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_narrow_member_use.ts | 6 | 4 | 11 | 12 | 5 | 0 |",
+      "reason": "new .ts agreement/checked-stop fixture; counts stop at the inserted check for the two witnesses"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_narrow_parameter_use.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_narrow_parameter_use.ts | 6 | 4 | 4 | 6 | 5 | 0 |",
+      "reason": "new .ts agreement/checked-stop fixture; counts stop at the inserted check for the two witnesses"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_narrow_wider_parameter.ts",
+      "before": null,
+      "after": "| internal/oracle/testdata/step21_narrow_wider_parameter.ts | 6 | 6 | 10 | 13 | 5 | 0 |",
+      "reason": "new wider Error and unknown-parameter agreement; after the one whole-table writer, adding observe(value) adds one snapshot retain/release pair, independently measured in wider-count.stderr and corrected in this one row"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{"Time":"2026-10-10T02:24:36.568539465Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-10T02:24:36.5816224Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops"}
+{"Time":"2026-10-10T02:24:36.581697538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"=== RUN   TestStep21NarrowedParameterUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:36.58172309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"=== PAUSE TestStep21NarrowedParameterUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:36.581731223Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops"}
+{"Time":"2026-10-10T02:24:36.581735849Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees"}
+{"Time":"2026-10-10T02:24:36.581737927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees","Output":"=== RUN   TestStep21WiderParameterUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:36.581740715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees","Output":"=== PAUSE TestStep21WiderParameterUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:36.58174246Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees"}
+{"Time":"2026-10-10T02:24:36.581745635Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops"}
+{"Time":"2026-10-10T02:24:36.58175065Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"=== CONT  TestStep21NarrowedParameterUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:36.581754067Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees"}
+{"Time":"2026-10-10T02:24:36.581756567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees","Output":"=== CONT  TestStep21WiderParameterUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:37.259718479Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees","Output":"--- PASS: TestStep21WiderParameterUseAgrees (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:37.604273128Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21WiderParameterUseAgrees","Elapsed":0.68}
+{"Time":"2026-10-10T02:24:37.604395812Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"    step21_narrowing_uses_test.go:15: sanitized native removed narrowed_union_member check caught: exit 0 stdout \"Error\\ncontinued\\n\" stderr \"\"\n"}
+{"Time":"2026-10-10T02:24:37.604410142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"    step21_narrowing_uses_test.go:15: release removed narrowed_union_member check caught: exit 0 stdout \"Error\\ncontinued\\n\" stderr \"\"\n"}
+{"Time":"2026-10-10T02:24:37.604413785Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"    step21_narrowing_uses_test.go:15: JavaScript removed narrowed_union_member check caught: exit 0 stdout \"Error\\ncontinued\\n\" stderr \"\"\n"}
+{"Time":"2026-10-10T02:24:37.605097036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Output":"--- PASS: TestStep21NarrowedParameterUseStops (1.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:37.605113889Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NarrowedParameterUseStops","Elapsed":1.02}
+{"Time":"2026-10-10T02:24:37.605117223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:24:37.605120433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=4\n"}
+{"Time":"2026-10-10T02:24:37.605122625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=5\n"}
+{"Time":"2026-10-10T02:24:37.605124556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-10T02:24:37.60676832Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.038s\n"}
+{"Time":"2026-10-10T02:24:37.606813369Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.038}

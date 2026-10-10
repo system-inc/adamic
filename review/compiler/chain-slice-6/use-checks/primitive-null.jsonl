@@ -1,0 +1,26 @@
+{"Time":"2026-10-10T02:28:31.698439665Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-10T02:28:31.729443941Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees"}
+{"Time":"2026-10-10T02:28:31.729597864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees","Output":"=== RUN   TestStep21StoredPrimitiveLengthUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:31.729673025Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees","Output":"=== PAUSE TestStep21StoredPrimitiveLengthUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:31.729678623Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees"}
+{"Time":"2026-10-10T02:28:31.729830101Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops"}
+{"Time":"2026-10-10T02:28:31.729836641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"=== RUN   TestStep21NullPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:31.729849123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"=== PAUSE TestStep21NullPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:31.729851245Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops"}
+{"Time":"2026-10-10T02:28:31.729854736Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees"}
+{"Time":"2026-10-10T02:28:31.72985699Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees","Output":"=== CONT  TestStep21StoredPrimitiveLengthUseAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:31.72985969Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops"}
+{"Time":"2026-10-10T02:28:31.729861588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"=== CONT  TestStep21NullPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:33.75660531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees","Output":"--- PASS: TestStep21StoredPrimitiveLengthUseAgrees (2.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:34.253104999Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21StoredPrimitiveLengthUseAgrees","Elapsed":2.03}
+{"Time":"2026-10-10T02:28:34.253400539Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"    step21_narrowing_uses_test.go:193: sanitized native null guard mutant caught: exit 70 stdout \"\" stderr \"adamic: panic: dynamic property read on null or undefined\\n\"\n"}
+{"Time":"2026-10-10T02:28:34.253422327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"    step21_narrowing_uses_test.go:193: release null guard mutant caught: exit 70 stdout \"\" stderr \"adamic: panic: dynamic property read on null or undefined\\n\"\n"}
+{"Time":"2026-10-10T02:28:34.253426999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"    step21_narrowing_uses_test.go:193: JavaScript null guard mutant caught: exit 0 stdout \"caught\\ncontinued\\n\" stderr \"\"\n"}
+{"Time":"2026-10-10T02:28:34.2544742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Output":"--- PASS: TestStep21NullPropertyUseStops (2.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:34.25455359Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21NullPropertyUseStops","Elapsed":2.52}
+{"Time":"2026-10-10T02:28:34.254591609Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:28:34.25462064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=4\n"}
+{"Time":"2026-10-10T02:28:34.254624308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=5\n"}
+{"Time":"2026-10-10T02:28:34.254627473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-10T02:28:34.256639787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.558s\n"}
+{"Time":"2026-10-10T02:28:34.256686764Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.558}

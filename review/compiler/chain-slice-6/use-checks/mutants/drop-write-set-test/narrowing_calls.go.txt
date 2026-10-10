@@ -1,0 +1,361 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// WritingNarrowing records a checker-narrowed variable read whose incoming flow
+// passes a call that can assign that same binding after its narrowing proof.
+// Nodes are retained so the compiler and source audit use the same analysis.
+type WritingNarrowing struct {
+	Read, Call, Narrowing        *ast.Node
+	Variable, Declared, Narrowed string
+	Writes                       []*ast.Node
+}
+
+type narrowingWrites struct {
+	direct map[*ast.Symbol][]*ast.Node
+	calls  []*ast.Node
+}
+
+type narrowingCalls struct {
+	checker   *checker.Checker
+	functions map[*ast.Node]*narrowingWrites
+	summaries map[*ast.Node]map[*ast.Symbol][]*ast.Node
+}
+
+func (a *narrowingCalls) symbol(n *ast.Node) *ast.Symbol {
+	if n == nil {
+		return nil
+	}
+	s := a.checker.GetSymbolAtLocation(n)
+	if s != nil && s.Flags&ast.SymbolFlagsAlias != 0 {
+		s = a.checker.GetAliasedSymbol(s)
+	}
+	if s != nil {
+		s = a.checker.GetExportSymbolOfSymbol(s)
+	}
+	return s
+}
+
+func (a *narrowingCalls) target(call *ast.Node) *ast.Node {
+	if call.Kind != ast.KindCallExpression {
+		return nil
+	}
+	if signature := a.checker.GetResolvedSignature(call); signature != nil {
+		if declaration := signature.Declaration(); declaration != nil && declaration.Body() != nil {
+			return declaration
+		}
+	}
+	if symbol := a.symbol(call.Expression()); symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if ast.IsFunctionLike(declaration) && declaration.Body() != nil {
+				return declaration
+			}
+			if declaration.Kind == ast.KindVariableDeclaration {
+				value := declaration.Initializer()
+				if value != nil && ast.IsFunctionLike(ast.SkipParentheses(value)) {
+					return ast.SkipParentheses(value)
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (a *narrowingCalls) assigned(n *ast.Node) *ast.Symbol {
+	if n == nil {
+		return nil
+	}
+	n = ast.SkipParentheses(n)
+	if n.Kind == ast.KindVariableDeclaration {
+		n = n.Name()
+	}
+	if n != nil && ast.IsIdentifier(n) {
+		return a.symbol(n)
+	}
+	return nil
+}
+
+func (a *narrowingCalls) gather(function *ast.Node) {
+	if function == nil || a.functions[function] != nil {
+		return
+	}
+	info := &narrowingWrites{direct: map[*ast.Symbol][]*ast.Node{}}
+	a.functions[function] = info
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if ast.IsFunctionLike(n) {
+			return false
+		}
+		var target *ast.Node
+		if n.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(n.AsBinaryExpression().OperatorToken.Kind) {
+			target = n.AsBinaryExpression().Left
+		}
+		if n.Kind == ast.KindPrefixUnaryExpression {
+			unary := n.AsPrefixUnaryExpression()
+			if unary.Operator == ast.KindPlusPlusToken || unary.Operator == ast.KindMinusMinusToken {
+				target = unary.Operand
+			}
+		}
+		if n.Kind == ast.KindPostfixUnaryExpression {
+			target = n.AsPostfixUnaryExpression().Operand
+		}
+
+		if symbol := a.assigned(target); symbol != nil && bindingFunction(symbol) != function {
+			info.direct[symbol] = append(info.direct[symbol], n)
+		}
+		if n.Kind == ast.KindCallExpression {
+			info.calls = append(info.calls, n)
+		}
+		n.ForEachChild(visit)
+		return false
+	}
+	visit(function.Body())
+	for _, call := range info.calls {
+		a.gather(a.target(call))
+	}
+}
+
+// Sets converge over the reachable call graph, including recursive components.
+func (a *narrowingCalls) closeWrites() {
+	for function, info := range a.functions {
+		set := map[*ast.Symbol][]*ast.Node{}
+		for symbol, nodes := range info.direct {
+			set[symbol] = append([]*ast.Node{}, nodes...)
+		}
+		a.summaries[function] = set
+	}
+	changed := true
+	for changed {
+		changed = false
+		for function, info := range a.functions {
+			set := a.summaries[function]
+			for _, call := range info.calls {
+				for symbol, nodes := range a.summaries[a.target(call)] {
+					seen := map[*ast.Node]bool{}
+					for _, node := range set[symbol] {
+						seen[node] = true
+					}
+					for _, node := range nodes {
+						if !seen[node] {
+							set[symbol] = append(set[symbol], node)
+							changed = true
+							seen[node] = true
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+func (a *narrowingCalls) proof(flow *ast.FlowNode, symbol *ast.Symbol, observed *checker.Type) *ast.Node {
+	if flow.Flags&ast.FlowFlagsAssignment != 0 && a.assigned(flow.Node) == symbol {
+		return flow.Node
+	}
+	if flow.Flags&ast.FlowFlagsCondition == 0 || flow.Node == nil {
+		return nil
+	}
+	var proof *ast.Node
+	var visit ast.Visitor
+	visit = func(n *ast.Node) bool {
+		if ast.IsFunctionLike(n) {
+			return false
+		}
+		if ast.IsIdentifier(n) && a.symbol(n) == symbol {
+			before := a.checker.GetTypeAtLocation(n)
+			// A fresh instanceof repeats the nominal proof even when the checker kept
+			// the old type across the intervening call.
+			parent := n.Parent
+			nominal := parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindInstanceOfKeyword && parent.AsBinaryExpression().Left == n
+			if nominal {
+				right := a.symbol(parent.AsBinaryExpression().Right)
+				nominal = right != nil && observed.Symbol() != nil && right.Name == observed.Symbol().Name
+			}
+			if nominal || !a.checker.IsTypeAssignableTo(before, observed) {
+				proof = flow.Node
+			}
+		}
+		n.ForEachChild(visit)
+		return false
+	}
+	visit(flow.Node)
+	return proof
+}
+
+func (a *narrowingCalls) precedingProof(flow *ast.FlowNode, symbol *ast.Symbol, observed *checker.Type, seen map[*ast.FlowNode]bool) *ast.Node {
+	if flow == nil || seen[flow] {
+		return nil
+	}
+	seen[flow] = true
+	if proof := a.proof(flow, symbol, observed); proof != nil {
+		return proof
+	}
+	if proof := a.precedingProof(flow.Antecedent, symbol, observed, seen); proof != nil {
+		return proof
+	}
+	for list := flow.Antecedents; list != nil; list = list.Next {
+		if proof := a.precedingProof(list.Flow, symbol, observed, seen); proof != nil {
+			return proof
+		}
+	}
+	return nil
+}
+
+// WritingCallNarrowings uses the checker's bound control-flow graph and resolved
+// callees. Only binding assignments enter a write set; similarly named unrelated
+// locals and declarations of nested functions do not become writes of the caller.
+func WritingCallNarrowings(c *checker.Checker, modules []*ast.SourceFile) []WritingNarrowing {
+	a := &narrowingCalls{checker: c, functions: map[*ast.Node]*narrowingWrites{}, summaries: map[*ast.Node]map[*ast.Symbol][]*ast.Node{}}
+	for _, module := range modules {
+		var gather ast.Visitor
+		gather = func(n *ast.Node) bool {
+			if ast.IsFunctionLike(n) && n.Body() != nil {
+				a.gather(n)
+			}
+			if n.Kind == ast.KindCallExpression {
+				a.gather(a.target(n))
+			}
+			n.ForEachChild(gather)
+			return false
+		}
+		module.AsNode().ForEachChild(gather)
+	}
+	a.closeWrites()
+	sites := []WritingNarrowing{}
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if ast.IsIdentifier(n) && n.FlowNodeData() != nil && !narrowingObservation(n) {
+				symbol := a.symbol(n)
+				if symbol != nil && symbol.Flags&ast.SymbolFlagsVariable != 0 {
+					declared, observed := c.GetTypeOfSymbol(symbol), c.GetTypeAtLocation(n)
+					if observed.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsNever) == 0 && (!c.IsTypeAssignableTo(declared, observed) || nominalNarrowingChanged(declared, observed)) && !narrowingAcceptsDeclared(c, n, declared) {
+						seen := map[*ast.FlowNode]bool{}
+						var walk func(*ast.FlowNode)
+						walk = func(flow *ast.FlowNode) {
+							if flow == nil || seen[flow] {
+								return
+							}
+							seen[flow] = true
+							if a.proof(flow, symbol, observed) != nil {
+								return
+							}
+							if flow.Flags&ast.FlowFlagsCall != 0 && flow.Node != nil {
+								writes := a.summaries[a.target(flow.Node)][symbol]
+								if true {
+									if proof := a.precedingProof(flow.Antecedent, symbol, observed, map[*ast.FlowNode]bool{}); proof != nil {
+										sites = append(sites, WritingNarrowing{Read: n, Call: flow.Node, Narrowing: proof, Variable: symbol.Name, Declared: c.TypeToString(declared), Narrowed: c.TypeToString(observed), Writes: writes})
+									}
+								}
+							}
+							walk(flow.Antecedent)
+							for list := flow.Antecedents; list != nil; list = list.Next {
+								walk(list.Flow)
+							}
+						}
+						walk(n.FlowNodeData().FlowNode)
+					}
+				}
+			}
+			n.ForEachChild(visit)
+			return false
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	return sites
+}
+
+// These operations examine the held value to establish a new proof; they do not
+// consume the checker's narrower representation as an already proven value.
+func narrowingObservation(n *ast.Node) bool {
+	parent := n.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		n = parent
+		parent = parent.Parent
+	}
+	return comparedWithUndefined(n) || parent != nil && (parent.Kind == ast.KindTypeOfExpression || parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindInstanceOfKeyword && parent.AsBinaryExpression().Left == n)
+}
+
+func bindingFunction(symbol *ast.Symbol) *ast.Node {
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return nil
+	}
+	for node := symbol.Declarations[0].Parent; node != nil; node = node.Parent {
+		if ast.IsFunctionLike(node) {
+			return node
+		}
+	}
+	return nil
+}
+
+// A dynamic observation or a slot accepting the entire declared type does not
+// consume the narrower proof. Match the existing acceptsUndefined read policy,
+// extending it to unions and nominal narrowings for this admission check.
+func narrowingAcceptsDeclared(c *checker.Checker, node *ast.Node, declared *checker.Type) bool {
+	// A qualified binding's identifier is the property name; its receiving
+	// context belongs to the complete qualified read (Debug.level).
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		node = node.Parent
+	}
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	if parent := node.Parent; parent != nil {
+		switch parent.Kind {
+		case ast.KindTemplateSpan:
+			return true
+		case ast.KindPrefixUnaryExpression:
+			return parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken
+		case ast.KindIfStatement, ast.KindWhileStatement, ast.KindDoStatement:
+			if parent.Expression() == node {
+				return true
+			}
+		case ast.KindConditionalExpression:
+			conditional := parent.AsConditionalExpression()
+			if conditional.Condition == node {
+				return true
+			}
+			return narrowingAcceptsDeclared(c, parent, declared)
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			if binary.Left == node && (binary.OperatorToken.Kind == ast.KindQuestionQuestionToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || binary.OperatorToken.Kind == ast.KindBarBarToken) {
+				return true
+			}
+		case ast.KindPropertyAccessExpression:
+			access := parent.AsPropertyAccessExpression()
+			if access.Expression == node && access.QuestionDotToken != nil {
+				return true
+			}
+		case ast.KindElementAccessExpression:
+			access := parent.AsElementAccessExpression()
+			if access.Expression == node && access.QuestionDotToken != nil {
+				return true
+			}
+		}
+	}
+	contextual := c.GetContextualType(node, checker.ContextFlagsNone)
+	return contextual != nil && c.IsTypeAssignableTo(declared, contextual) && !nominalNarrowingChanged(declared, contextual)
+}
+
+func nominalNarrowingChanged(declared, observed *checker.Type) bool {
+	symbol := observed.Symbol()
+	if symbol == nil || symbol == declared.Symbol() {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindClassDeclaration {
+			return true
+		}
+		if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			switch symbol.Name {
+			case "Error", "RangeError", "TypeError":
+				return true
+			}
+		}
+	}
+	return false
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "name": "backend-renders-stack",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/backend-renders-stack/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 11.716
+  },
+  {
+    "name": "backend-drops-line",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/backend-drops-line/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 12.049
+  },
+  {
+    "name": "native-renders-stack",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/native-renders-stack/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 39.54
+  },
+  {
+    "name": "native-drops-line",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/native-drops-line/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 42.964
+  },
+  {
+    "name": "drop-write-set-test",
+    "caught": true,
+    "exit": 1,
+    "catcher": "narrow again after the call",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/drop-write-set-test/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStep21NonWritingCallControl$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 29.529
+  },
+  {
+    "name": "admit-writing-call",
+    "caught": true,
+    "exit": 1,
+    "catcher": "writing-call refusal: got <nil>",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/admit-writing-call/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStep21WritingCallRefusal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 20.2
+  },
+  {
+    "name": "whole-narrowed-type",
+    "caught": true,
+    "exit": 1,
+    "catcher": ".name agreement",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/whole-narrowed-type/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21WritingCallTypeScriptAgreement$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 27.415
+  },
+  {
+    "name": "native-string-length",
+    "caught": true,
+    "exit": 1,
+    "catcher": "primitive length",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/native-string-length/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21StoredPrimitiveLengthUseAgrees$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 25.958
+  },
+  {
+    "name": "native-scalar-properties",
+    "caught": false,
+    "exit": 1,
+    "catcher": "stale narrowing use failed",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/use-checks/mutants/native-scalar-properties/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNarrowedUnionMemberCheck$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 28.369
+  }
+]
