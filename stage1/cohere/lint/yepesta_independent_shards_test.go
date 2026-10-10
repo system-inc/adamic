@@ -299,8 +299,6 @@ func yepestaPrepare(t *testing.T) string {
 			return err
 		}
 		bundle.Oracle = "oracle"
-		// The port, its JavaScript and the binary are other products, named by their keys (#tqrqx60).
-		bundle.Port, bundle.JS, bundle.Binary = buildcache.Relative(bundle.Port), buildcache.Relative(bundle.JS), buildcache.Relative(bundle.Binary)
 		data, err = json.Marshal(bundle)
 		if err != nil {
 			return err
@@ -349,13 +347,6 @@ func yepestaFetch(t *testing.T) (yepestaBundle, string) {
 		t.Fatal(err)
 	}
 	bundle.Oracle = filepath.Join(directory, bundle.Oracle)
-	bundle.Port, bundle.JS, bundle.Binary = buildcache.Absolute(bundle.Port), buildcache.Absolute(bundle.JS), buildcache.Absolute(bundle.Binary)
-	// Node runs the port, so it reads the lowered product's copy whose imports name this checkout.
-	lowered, err := buildcache.Resolved(filepath.Dir(bundle.Port))
-	if err != nil {
-		t.Fatal(err)
-	}
-	bundle.Port = filepath.Join(lowered, "port")
 	for _, rows := range [][]string{bundle.Rows, bundle.Witnesses} {
 		for i, row := range rows {
 			fields := strings.Split(row, "\t")
