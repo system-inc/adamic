@@ -95,8 +95,13 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 				command.Stderr = &stderr
 				output, err := command.Output()
 				t.Logf("%s: stdout %q, exit result %v", command.Args, output, err)
-				if (command.Path == binary || !probe.fails) && stderr.Len() != 0 {
+				if !probe.fails && stderr.Len() != 0 {
 					t.Errorf("%s: unexpected stderr %s", command.Path, stderr.Bytes())
+				}
+				if probe.fails && command.Path == binary {
+					if !strings.HasPrefix(stderr.String(), "Uncaught ReferenceError: Cannot access '") || strings.Count(stderr.String(), "\n") != 1 {
+						t.Errorf("native uncaught line: %q", stderr.String())
+					}
 				}
 				if string(output) != probe.output {
 					t.Errorf("%s: got %q, want %q (error %v)", command.Path, output, probe.output, err)

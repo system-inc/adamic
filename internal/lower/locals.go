@@ -245,11 +245,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 	if l.result.Locals[local].Type == ir.Union {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.
-		parent := node.Parent
-		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-			parent = parent.Parent
-		}
-		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
+		observing := narrowingObservation(node)
 		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.

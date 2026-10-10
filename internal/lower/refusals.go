@@ -56,6 +56,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if strings.HasSuffix(l.program.FileName(module), ".a") {
+		if sites := WritingCallNarrowings(l.checker, []*ast.SourceFile{module}); len(sites) != 0 {
+			site := sites[0]
+			return &Refused{Where: l.program.Where(site.Read), What: "a narrowed read of " + site.Variable + " after " + sourceExpression(site.Call) + " can write it", Fix: "narrow again after the call"}
+		}
+	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
 	var contractError error

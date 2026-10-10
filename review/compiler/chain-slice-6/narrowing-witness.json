@@ -1,0 +1,24 @@
+{
+  "path": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts",
+  "sha256": "c6273c04f4e421e248443ab2c5b27196332d89409f2c54fb123b8a901054513b",
+  "negative_witness_class": "step 21: unsound narrowing across a writing call",
+  "ruling": "#bqj5drt's step 21, ruled Oct 9 18:0x by @system_adamic",
+  "violated_narrowing": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts:5",
+  "variable_declaration": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts:2",
+  "consuming_read": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts:7:21",
+  "node": {
+    "exit": 0,
+    "stdout": "Error\nfinally\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+  },
+  "javascript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+  }
+}

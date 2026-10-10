@@ -932,7 +932,7 @@ bool adamic_weak_held(const void *target);
 
 // adamic_thrown owns a tagged union payload (NULL is undefined). The separate pending flag
 // distinguishes a thrown undefined from no exception. Every throwing call tests the flag.
-// A catch takes ownership; adamic_uncaught flushes stdout and exits 1 without conversion.
+// A catch takes ownership; adamic_uncaught flushes stdout, writes one diagnostic line, releases the payload and exits 1.
 extern adamic_heap *adamic_thrown;
 extern bool adamic_exception_pending;
 extern const adamic_class adamic_error_class;

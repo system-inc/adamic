@@ -38,7 +38,7 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 			if node := onNode(t, path); disagreement(run{stdout: []byte(probe.output)}, node) != "" {
 				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(t, step21TypeScriptCopy(t, path))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -82,8 +82,8 @@ func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 	if node := onNode(t, path); disagreement(run{stdout: []byte("1\n")}, node) != "" {
 		t.Fatalf("source Node: %#v", node)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
+	_, err = lowered(t, step21TypeScriptCopy(t, path))
+	if err == nil || !strings.Contains(err.Error(), "writing-call.ts") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
 		t.Fatalf("want refusal naming the path and fix, got %v", err)
 	}
 }

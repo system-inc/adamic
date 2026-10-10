@@ -1,10 +1,56 @@
+TypeScript binder.ts:1691:17 has a stale FlowLabel narrowing after bind(finallyBlock) can install FlowAssignment; .a needs adaptation (see narrowing-sites.md).
+Built exact uncaught diagnostics, the .a writing-call refusal/control, TypeScript stop witness, memory correction and tab indentation fixes on main 98008bbb.
+Member commits stay df93806d, bab6155e, d10e3e00, cd0b8e5f; this is one production fix on top of cleared 66ad4a67, with review-only delivery evidence afterward.
+Lower shards: 281 pass, two existing skips; 14 admission agreements, zero .a witnesses; counts refresh and six follow-up mutants pass.
+Not covered: a native tsc binary, WASI execution, unresolved indirect calls or a universal whole-program effect/admission proof.
+
 # Chain slice 6
 
-Built four own-net members on main, with catchable initialization throws and matching lint/runtime features.
-Member commits: df93806d, bab6155e, d10e3e00, cd0b8e5f; each includes its owning repairs.
-Lower: 277 pass, two existing skips; own fixtures, feature matrix, reader guard, counts and lane checks pass.
-49 mutant cases were caught; each case and catcher is listed below with evidence.
-Not covered: literal all-admission Node agreement, WASI execution, other platforms or the full gate.
+## Runtime condition and step 21 ruling follow-up
+
+Native and JavaScript write exactly one diagnostic line. Error instances, including subclasses, use their actual shape fields: `Uncaught Name: message`. Other kinds print `undefined`, `null`, `number`, `boolean`, `string`, `function`, or `object` (arrays/maps included). CR and LF in fields are escaped; lone UTF-16 surrogates encode as U+FFFD in both backends. Native flushes stdout, writes/flushes stderr, releases the thrown payload and exits 1. The JavaScript handler synchronously writes the same bytes and exits 1. Source Node's renderer remains excluded by the step 21 ruling. TestStep21Uncaught pins exact bytes for sanitized native, release and JavaScript; TestStep21UncaughtKinds adds kind, subclass, CR/LF and Unicode coverage. Error creation indentation now uses tabs; docs/memory.md no longer describes uncaught exceptions as exit-70 panics.
+
+The .a refusal is `:7:21: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call`. The original step21_builtin_narrow_terminal.a is unchanged. The control changes only the write target to another variable and prints `TypeError` then `finally` in source Node, JavaScript, sanitized native and release native, with no leaks. Captured/module binding assignments are propagated through resolved direct/transitive callees and recursive write summaries; writes to another activation's own locals are excluded. Fresh instanceof checks read the held union to establish the proof again. Calls that cannot write the binding remain admitted. Dynamic observations (including qualified reads) and slots accepting the entire declared type do not consume the stale proof.
+
+The general rule also refuses existing deliberate stale-read .a fixtures. Their source files are intact; exact refusal tests replace runnable registrations. Existing narrowed-union IR stop mutation proofs use temporary TypeScript compatibility copies; no negative-witness-list support was added. The source analysis and precise coverage limits are recorded in ../chain-slice-6/narrowing-sites.md. It scans all 77 original pinned compiler files plus the pin's generated diagnostic map, with zero semantic diagnostics; ten pairs at seven distinct reads. Reads that save/restore correctly and unreachable switch paths are identified. The reported FlowLabel defect concerns the static narrowing; the .flags read remains valid for wider FlowNode values. No native tsc runtime result or JavaScript behavior defect is claimed.
+
+The external admission-delta worker should add these facts under **step 21: unsound narrowing across a writing call**:
+
+- Source: internal/oracle/testdata/step21_builtin_narrow_terminal.ts, byte-identical to the .a source.
+- SHA-256: c6273c04f4e421e248443ab2c5b27196332d89409f2c54fb123b8a901054513b.
+- Ruling: #bqj5drt's step 21, ruled Oct 9 18:0x by @system_adamic.
+- Violated narrowing: internal/oracle/testdata/step21_builtin_narrow_terminal.ts:5 (`value instanceof TypeError`); binding declaration :2; consuming read :7:21.
+- Node: exit 0, stdout `Error\nfinally\n`, empty stderr.
+- Sanitized native, release native and JavaScript: exit 70, empty stdout, exactly `adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n`.
+
+Machine-readable facts are in ../chain-slice-6/narrowing-witness.json. The witness list itself remains owned by compiler/admission-delta.
+
+| Follow-up proof | Exact scope/result | Evidence under ../chain-slice-6/ |
+| --- | --- | --- |
+| Lower | run-followup-lower.py; 283 exact top-level tests in 15 shards, -count=1 -json -timeout 90s; 281 pass, two original skips; max shard 27.759 s. Qualified wider-slot reads were rechecked after the final precision adjustment. | followup-lower/lower-results.json, followup-lower/lower-union.json; followup-observations.jsonl |
+| Exceptions and TS witness | go test ./internal/oracle -run '^TestStep21\|^TestNarrowedUnion' -count=1 -json -timeout 90s; pass 18.732 s. | followup-exceptions.jsonl |
+| Positive control | TestStep21NonWritingControlAgreement; source/JS, ASan/UBSan, release, leaks; pass 5.872 s. Lower's independent control is the over-refusal mutant catcher. | followup-control.jsonl, narrowing-tests-final.jsonl |
+| Admission agreements | TestNativeAgreesWithNode exact flat, nested review/refused and structural selectors; all 14 newly admitted ordinary .a fixtures pass, zero .a witnesses. | followup-admission-{flat,review,structural}.jsonl, admission-delta-fix.json |
+| Reader guard | go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -json -timeout 90s; pass 0.660 s. First concurrent attempt did not complete; isolated rerun is credited. | followup-readers-final.jsonl |
+| Counts | go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -json -timeout 180s -args -update-counts; pass 82.651 s. The preceding 180 s attempt timed out before writing. Table refreshed once. | followup-counts-final.jsonl, followup-counts-attribution.json |
+| Feature/runtime link | Four exact feature selectors with ADAMIC_CLANG_TSGO_ARCHIVE=/tmp/chain-slice-6-tsgo.a; 32 matching masks, mismatch probes and actual checker archive; pass 9.331 s. | followup-features.jsonl |
+| Lint profile | TestProfileRuntimeFeaturesMatchNode; pass 0.318 s. | followup-lint.jsonl |
+| WASI compile/opt-in | TestWASIRequestThrows compiles and skips under its existing ADAMIC_ORACLE_WASI opt-in; stderr expectation updated to `Uncaught Error: boundary\n`. | followup-wasi.jsonl |
+
+Every follow-up mutant below failed at its intended behavioral/refusal assertion; build failures receive no credit.
+
+| Mutant | Catcher |
+| --- | --- |
+| backend-renders-stack | TestStep21Uncaught exact diagnostic, multiline Node stack differs |
+| backend-drops-line | TestStep21Uncaught exact diagnostic, empty line differs |
+| native-renders-stack | TestStep21Uncaught exact diagnostic, extra frame line differs |
+| native-drops-line | TestStep21Uncaught exact diagnostic, empty line differs |
+| drop-write-set-test | TestStep21NonWritingCallControl refuses the non-writing control |
+| admit-writing-call | TestStep21WritingCallRefusal receives nil instead of the exact refusal |
+
+Results, commands, bounded logs and non-compilable sources are under followup-mutants/. followup-test-seconds.json records test seconds. All added test leaves are under 60 s. The uncaught renderer itself changes no runtime counts: its borrowed shape/text reads allocate and retain nothing. The combined narrowing fix moves three retained rows: library_failures loses two retain/release pairs, library_types and error_subclasses lose one pair each because fresh instanceof no longer calls a stale nominal-read helper. Eleven runtime-count rows disappear because their .a sources are now compile-time refusals. Every row is attributed, with generated-C diffs, in followup-counts-attribution.json and followup-counts-diffs/. Stdout/exit behavior of admitted programs does not change.
+
+Runtime files changed by this follow-up: internal/native/runtime/exceptions.c and internal/native/runtime/adamic.h. The complete slice's ten runtime paths remain listed below for @system_adamic_runtime. The branch remains based on 98008bbb; fetching lane references does not merge later main or another worker's branch.
 
 ## Extraction and dependencies
 
@@ -23,7 +69,7 @@ Repair ownership: 71972e18 supplies lexical TDZ exceptions, ReferenceError and r
 
 Excluded outside portions: Read.Unset, Defined.Throws and namespace readiness are absent from main and unnecessary for its lexical readiness model; absent-message-shape runtime changes belong to another member. The lint parser_construction_test.go hunk names an outside fixture absent on main. The 2b2b1095 named-outcome WASI hunk needs ruled-backend-outcomes (2391c655) for backendDisagreement at internal/oracle/wasi_test.go:76. That helper is absent on main; its named-stack/weak-stop fixtures were not copied. Main's disagreement helper already covers the exception-owned exit-1 contract. No slice 1-4 changes imported.
 
-## Commands and observed results
+## Initial delivered commands and observed results (66ad4a67)
 
 Setup exported GOPROXY=https://proxy.golang.org|direct. First timeout 240 bash cloud/setup.sh exited 124 without diagnostic; retry with ADAMIC_GOCACHE_OFF=1 completed. Printed elapsed seconds: Go 0.180, Node 0.234, submodules 0.484, markdown 0.522, clang 1.265, shared cache off 1.289, build 402.140, deferred 402.302, cache warm 402.304, done 402.429. nproc=5; Go capped at four CPUs. Go 1.27.1, Node 24.19, clang 20.1.8. Missing pinned Node types were installed with npm ci --prefix stage3/api. The checker archive build expired once and completed on retry. Setup delays and proof work exceeded the requested first-green window.
 
@@ -47,13 +93,13 @@ Build/test commands source /workspace/adamic-tools/env.sh, unset GOCACHEPROG, an
 
 Test seconds are in test-seconds.json; largest member leaf observed 38.58 s. No new test leaf exceeds 60 s. The counts aggregate writer is an existing test. Unsuccessful setup, stale allowlist and missing-type attempts are retained and not credited as passes.
 
-## Admission delta limitation
+## Admission delta on the final refusal policy
 
-The main-overlay baseline and slice binaries were compared on all 1,293 .a files under internal/oracle/testdata. Fifteen newly admitted; zero admission regressions; zero census timeouts. The later main merge changes C metadata caching; frontend, IR, JS, Go dependencies and cohere revision are identical between the two main commits. Final-main backend witnesses were rerun. See admission-census.json and admission-delta.json.
+The original finite 1,293-file internal/oracle/testdata .a corpus was rerun against main and the final slice: 14 newly admitted agreements and zero .a negative witnesses, no timeouts. Every one of the 14 ran against source Node in JavaScript, sanitized native (ASan/UBSan), release native and leak checks when source Node exits successfully. Commands and leaves are in followup-admission-{flat,review,structural}.jsonl. The additional positive control is under internal/lower/testdata and has its own sanitized/release/JS/Node and leak proof; it is not included in this fixed corpus.
 
-Fourteen newly admitted ordinary witnesses agree with Node under the step-21 stdout/exit contract for uncaught exceptions. The fifteenth, step21_builtin_narrow_terminal.a, deliberately invalidates a nominal narrowing through a call. Both Adamic backends stop at the inserted proof check; raw Node continues. This is a checked-negative soundness witness, NOT raw Node agreement. Therefore the literal requested all-admission Node proof is not established. The finite corpus also cannot establish universal agreement for all possible programs. Observations and those limits are kept separate.
+The general writing-call refusal intentionally removes 15 main admissions from that corpus. Every moved source has an exact refusal test, with the builtin and primitive fixtures tested separately. See admission-refusals-fix.json and TestStep21ExistingWritingCallRefusals. This includes a type-preserving `keep()` write: the ruling tests whether the write set reaches the narrowed binding, not whether one particular runtime write preserves its type. Dynamic observations and wider receiving slots remain admitted. No other admission regression was observed. The earlier 15th newly admitted checked-negative .a is now refused; its exact TypeScript witness facts follow below. This is a finite corpus proof, not a proof for all possible programs.
 
-## Every mutant and catcher
+## Initial delivered mutants and catchers (66ad4a67)
 
 Compilation failures were not credited. Go/C mutations use overlays. Node .mjs mutations write the file Node reads and restore in finally; the first attempted Go overlay did not affect direct Node reads and was not credited. M02 also failed native exit 70 against Node exit 0.
 
@@ -126,6 +172,6 @@ For @system_adamic_runtime, own runtime files changed against current main:
 - internal/native/runtime/sort.c
 - internal/native/runtime/sort_undefined.c
 
-Runtime clearance and integration acceptance remain pending. Delivery branch: compiler/chain-slice-6. No PR and no main/area push.
+Runtime cleared 66ad4a67 subject to the uncaught diagnostic condition. The follow-up below supplies that diagnostic; integration acceptance remains pending. Delivery branch: compiler/chain-slice-6. No PR and no main/area push.
 
 Owning repairs were folded into one commit per member on current main. The tested tree is unchanged: 65191d9656fb6dbcfcefd550e94d692eb4aecd24 before and after history consolidation. See ../chain-slice-6/history-proof.json.

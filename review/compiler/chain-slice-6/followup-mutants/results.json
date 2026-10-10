@@ -1,0 +1,122 @@
+[
+  {
+    "name": "backend-renders-stack",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/backend-renders-stack/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 63.867
+  },
+  {
+    "name": "backend-drops-line",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/backend-drops-line/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 13.126
+  },
+  {
+    "name": "native-renders-stack",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/native-renders-stack/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 30.78
+  },
+  {
+    "name": "native-drops-line",
+    "caught": true,
+    "exit": 1,
+    "catcher": "uncaught diagnostic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/native-drops-line/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 34.51
+  },
+  {
+    "name": "drop-write-set-test",
+    "caught": true,
+    "exit": 1,
+    "catcher": "narrow again after the call",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/drop-write-set-test/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStep21NonWritingCallControl$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 19.199
+  },
+  {
+    "name": "admit-writing-call",
+    "caught": true,
+    "exit": 1,
+    "catcher": "writing-call refusal: got <nil>",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/followup-mutants/admit-writing-call/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStep21WritingCallRefusal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "seconds": 11.572
+  }
+]

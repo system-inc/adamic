@@ -170,7 +170,7 @@ func TestWASIRequestThrows(t *testing.T) {
 	result, err := command.CombinedOutput()
 	exit, ok := err.(*exec.ExitError)
 	// Step 21 rules stdout and exit status, excluding Node's uncaught renderer.
-	if !ok || exit.ExitCode() != 1 || len(result) != 0 {
+	if !ok || exit.ExitCode() != 1 || string(result) != "Uncaught Error: boundary\n" {
 		t.Fatalf("uncaught handler exception: %v, %q", err, result)
 	}
 }

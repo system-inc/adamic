@@ -25,15 +25,7 @@ func init() {
 			"internal/oracle/testdata/step21_" + name + ".a", true, false,
 		})
 	}
-	fixtures = append(fixtures, struct {
-		path    string
-		lowers  bool
-		checked bool
-	}{"internal/oracle/testdata/step21_soundness_terminal.a", true, true})
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/oracle/testdata/step21_builtin_narrow_terminal.a", true, true})
+
 }
 
 // The unknown-read proposal retains its checker barrier; source Node establishes its meaning.
@@ -198,34 +190,59 @@ func TestStep21ThrowPathLiveness(t *testing.T) {
 // failures fatal and keep the ordinary panic comparisons unchanged.
 func TestStep21Uncaught(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"step21_dynamic_uncaught", "step21_object_uncaught", "exceptions_uncaught", "closures_throw_uncaught"} {
-		t.Run(name, func(t *testing.T) {
+	for _, probe := range []struct{ name, diagnostic string }{
+		{"step21_dynamic_uncaught", "Uncaught undefined\n"},
+		{"step21_object_uncaught", "Uncaught object\n"},
+		{"exceptions_uncaught", "Uncaught Error: the job failed\n"},
+		{"closures_throw_uncaught", "Uncaught Error: item3 is too loud\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowered(t, path)
-			if err != nil {
+			step21Uncaught(t, path, probe.diagnostic)
+		})
+	}
+}
+
+func step21Uncaught(t *testing.T, path, diagnostic string) {
+	t.Helper()
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := onNode(t, path)
+	native, binary := nativelyUncached(t, program)
+	results := map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program), "leak": executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)}
+	for label, result := range results {
+		if original.exitCode != 1 || result.exitCode != 1 || !bytes.Equal(original.stdout, result.stdout) {
+			t.Fatalf("%s: stdout/exit differ: source %d %q, actual %d %q stderr %q", label, original.exitCode, original.stdout, result.exitCode, result.stdout, result.stderr)
+		}
+		if string(result.stderr) != diagnostic {
+			t.Fatalf("%s uncaught diagnostic: got %q, want %q", label, result.stderr, diagnostic)
+		}
+	}
+}
+
+func TestStep21UncaughtKinds(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, expression, diagnostic string }{
+		{"null", "null", "null"}, {"number", "42", "number"}, {"boolean", "true", "boolean"}, {"string", "'payload'", "string"},
+		{"function", "(() => 'value')", "function"}, {"array", "[1, 2]", "object"}, {"map", "new Map<string, number>()", "object"},
+		{"subclass", "new Failure('boom')", "Failure: boom"},
+		{"line-breaks", "new Error('first\\r\\nsecond')", "Error: first\\r\\nsecond"},
+		{"unicode", "new Error('🌍\\ud800')", "Error: 🌍�"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "uncaught.a")
+			source := "class Failure extends Error { readonly extra = 1; constructor(message: string) { super(message); this.name = 'Failure'; } } console.log('before'); throw " + probe.expression + ";"
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 				t.Fatal(err)
 			}
-			original := onNode(t, path)
-			native, binary := natively(t, program)
-			leakRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-			if leakRun.exitCode != 1 || len(leakRun.stderr) != 0 {
-				t.Fatalf("uncaught lifetime check: exit %d stderr %q", leakRun.exitCode, leakRun.stderr)
-			}
-			for label, result := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
-				if original.exitCode != 1 || result.exitCode != 1 || !bytes.Equal(original.stdout, result.stdout) {
-					t.Fatalf("%s: stdout/exit differ: source %d %q, actual %d %q stderr %q", label, original.exitCode, original.stdout, result.exitCode, result.stdout, result.stderr)
-				}
-				if len(result.stderr) != 0 {
-					t.Fatalf("%s uncaught renderer wrote stderr: %s", label, result.stderr)
-				}
-				if strings.Contains(string(result.stderr), "Sanitizer") || strings.Contains(string(result.stderr), "runtime error:") {
-					t.Fatalf("%s sanitizer failure: %s", label, result.stderr)
-				}
-			}
+			step21Uncaught(t, path, "Uncaught "+probe.diagnostic+"\n")
 		})
 	}
 }
