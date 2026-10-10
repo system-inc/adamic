@@ -29,8 +29,9 @@ import (
 // The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for Loom's artifacts store, or another store's address
 // (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never matches a
 // rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it stays off
-// until those are fixed, and gocacheprog is untouched). Only a machine holding the
-// write credential publishes, through Loom's Worker: the gate boxes hold a publish-scoped token at
+// until those are fixed, and gocacheprog is untouched). Only Workshop's tree builder publishes: it opts in with
+// ADAMIC_BUILD_STORE=traced (traced=<address> for another store) and runs under cmd/traced, and only a settled traced
+// build is published (#vt46geg), by a machine holding the write credential, through Loom's Worker: the gate boxes hold a publish-scoped token at
 // ~/.loom/publish-token (ADAMIC_BUILD_STORE_TOKEN names another file). Every file's blob goes first, then the
 // manifest's, then the ref, so a ref never names a blob the store doesn't hold. A ref never changes: the store
 // refuses one naming a different manifest, which means a key that isn't honest, and that is said loudly.
@@ -62,13 +63,23 @@ type manifestFile struct {
 // storeAddress is the shared store's address, or "" when the shared tier is off.
 func storeAddress() string {
 	address := os.Getenv("ADAMIC_BUILD_STORE")
+	if rest, ok := strings.CutPrefix(address, "traced="); ok {
+		address = rest
+	}
 	switch address {
 	case "", "off":
 		return ""
-	case "on":
+	case "on", "traced":
 		address = defaultStore
 	}
 	return strings.TrimSuffix(address, "/")
+}
+
+// publishing says whether this run is Workshop's tree builder, the one opted in to building traced and publishing what
+// settles (ADAMIC_BUILD_STORE=traced, or traced=<address>).
+func publishing() bool {
+	setting := os.Getenv("ADAMIC_BUILD_STORE")
+	return setting == "traced" || strings.HasPrefix(setting, "traced=")
 }
 
 var storeClient = &http.Client{Timeout: 5 * time.Minute}
@@ -347,4 +358,98 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 		return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)", key[:12], name, gotJSON, wantJSON))
 	}
 	return nil
+}
+
+// Read sets travel with the products (#vt46geg): a machine with no read sets of its own finds a product in the store
+// by its name key. Refs never change, so each settled set is its own ref, refs/<namespace>/<name key>.<n>, numbered from
+// 0 in the order they were published; a reader finds the newest by probing and reads back the newest keptSets. The
+// namespaces split by trust as products' do: reads (main's) and reads-candidate.
+func readsNamespaces() []string {
+	if trusted() {
+		return []string{"reads"}
+	}
+	return []string{"reads", "reads-candidate"}
+}
+
+// fetchReads is nameKey's read sets in the store, newest first, at most keptSets per namespace. An unreachable store or
+// a set that doesn't check is no sets: a lookup then misses, never trusts it.
+func fetchReads(nameKey string) []readSet {
+	store := storeAddress()
+	var sets []readSet
+	for _, namespace := range readsNamespaces() {
+		low := highestReads(store, namespace, nameKey)
+		for index := low; index >= 0 && index > low-keptSets; index-- {
+			reference, err := download(fmt.Sprintf("%s/refs/%s/%s.%d", store, namespace, nameKey, index))
+			if err != nil {
+				break
+			}
+			content, err := blob(store, strings.TrimSpace(string(reference)))
+			if err != nil {
+				break
+			}
+			var set readSet
+			if json.Unmarshal(content, &set) == nil && len(set.Entries) > 0 {
+				sets = append(sets, set)
+			}
+		}
+	}
+	return sets
+}
+
+// highestReads is the highest index published under refs/<namespace>/<nameKey>.<n>, or -1: doubling until one is
+// missing, then halving back.
+func highestReads(store, namespace, nameKey string) int {
+	exists := func(index int) bool {
+		_, err := download(fmt.Sprintf("%s/refs/%s/%s.%d", store, namespace, nameKey, index))
+		return err == nil
+	}
+	if !exists(0) {
+		return -1
+	}
+	low, high := 0, 1
+	for exists(high) {
+		low, high = high, high*2
+	}
+	for high-low > 1 {
+		if middle := (low + high) / 2; exists(middle) {
+			low = middle
+		} else {
+			high = middle
+		}
+	}
+	return low
+}
+
+// publishReads stores a settled set as nameKey's next ref: its blob, then the first free index, retried past one a
+// racing publisher took.
+func publishReads(nameKey string, set readSet) error {
+	token := publishToken()
+	if token == "" || storeAddress() == "" {
+		return nil
+	}
+	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
+	if writer == "" {
+		writer = defaultWriter
+	}
+	writer = strings.TrimSuffix(writer, "/")
+	encoded, err := json.Marshal(set)
+	if err != nil {
+		return err
+	}
+	sum := sha256.Sum256(encoded)
+	hash := hex.EncodeToString(sum[:])
+	if err = upload(writer+"/blobs/"+hash, token, encoded); err != nil {
+		return err
+	}
+	namespace := "reads-candidate"
+	if trusted() {
+		namespace = "reads"
+	}
+	for index := highestReads(storeAddress(), namespace, nameKey) + 1; index < 1<<20; index++ {
+		err = upload(fmt.Sprintf("%s/refs/%s/%s.%d", writer, namespace, nameKey, index), token, []byte(hash))
+		if err == nil || !strings.Contains(err.Error(), "409") {
+			return err
+		}
+	}
+	return errors.New("no free read set index")
 }
