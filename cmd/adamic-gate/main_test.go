@@ -8,31 +8,17 @@ import (
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// Ask Go itself which tests ran. A regex-only check would miss Go's slash splitting rules.
+// Ask Go itself which tests ran. A regex-only check would miss Go's slash splitting rules. The probe
+// (testdata/selectorprobe, a module of its own, built with GOWORK off) is a test binary built ahead, and
+// test2json is too, so the unit runs Go's own test selection without running go.
 func TestAnchoredSelectors(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	files := map[string]string{
-		"go.mod": "module selectorprobe\n\ngo 1.27.0\n",
-		"probe_test.go": `package selectorprobe
-import "testing"
-func TestParent(t *testing.T) {
-	t.Parallel()
- for _,name:=range []string{"internal/oracle/testdata/a.a", "internal/oracle/testdata/aXa", "internal/oracle/testdata/b+.a", "internal/load/testdata/0.1/compile/main.a", "internal/load/testdata/0X1/compile/extra.a", "internal/load/testdata/0X1/compile/main.a"} {
-  t.Run(name,func(t *testing.T){t.Parallel()})
- }
-}
-func TestParentExtra(t *testing.T) {}
-func TestOther(t *testing.T) {}
-`,
-	}
-	for name, content := range files {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(content), 0600); err != nil {
-			t.Fatal(err)
-		}
-	}
+	probe, test2json := selectorProbe(t)
 	asked := []unit{{Package: "selectorprobe", Test: "TestParent/internal/oracle/testdata/a.a"}, {Package: "selectorprobe", Test: "TestParent/internal/oracle/testdata/b+.a"}, {Package: "selectorprobe", Test: "TestParent/internal/load/testdata/0.1/compile/main.a"}}
 	var all []result
 	for index, pattern := range patterns(asked) {
@@ -41,9 +27,8 @@ func TestOther(t *testing.T) {}
 		if err != nil {
 			t.Fatal(err)
 		}
-		cmd := exec.Command("go", "test", "-timeout", "90s", "-count=1", "-json", "-run", pattern, ".")
-		cmd.Dir = directory
-		cmd.Env = append(os.Environ(), "GOWORK=off", "GOCACHE="+filepath.Join(directory, "go-cache"))
+		cmd := exec.Command(test2json, "-t", "-p", "selectorprobe", probe, "-test.v=test2json", "-test.timeout=90s", "-test.count=1", "-test.run="+pattern)
+		cmd.Dir = filepath.Dir(probe)
 		cmd.Stdout = f
 		cmd.Stderr = f
 		err = cmd.Run()
@@ -68,6 +53,18 @@ func TestOther(t *testing.T) {}
 	if !reflect.DeepEqual(leaves, want) {
 		t.Fatalf("Go executed %v, want exactly %v", leaves, want)
 	}
+}
+
+// selectorProbe is testdata/selectorprobe's test binary and go's test2json, both products built ahead.
+func selectorProbe(t *testing.T) (string, string) {
+	t.Helper()
+	probe := buildcache.GoTest(t, "cmd/adamic-gate/testdata/selectorprobe", "selectorprobe.test", ".", nil, "GOWORK=off")
+	return probe, buildcache.GoBuild(t, "test2json", "cmd/test2json", nil)
+}
+
+func TestProduct_SelectorProbe(t *testing.T) {
+	t.Parallel()
+	selectorProbe(t)
 }
 
 func TestCoverageRejectsOverlapAndUnplannedTests(t *testing.T) {
