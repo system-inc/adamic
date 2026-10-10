@@ -123,6 +123,30 @@ class LandingTests(unittest.TestCase):
         refused = self.push('--test-only', carried, 'carried')
         self.assertIn('carries non-test history: %s' % code[:8], refused.stderr)
 
+    def test_the_lander_s_hands_move_main_or_the_landing_is_refused(self):
+        root = Path(self.tmp.name)
+        calls = root / 'hands.log'
+        hands = root / 'hands.sh'
+        # A stand-in for the workshop pusher: it records what it was given and pushes the landing as a fast-forward.
+        hands.write_text('#!/usr/bin/env bash\necho "$1 $2" >> %s\ngit push -q origin "$1:refs/heads/main"\n' % calls)
+        hands.chmod(0o755)
+        sha = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test')
+        os.environ['PUSH_MAIN_HANDS'] = str(hands)
+        try:
+            new = self.assertLanded(self.push('--test-only', sha, 'through the hands'), self.main, sha)
+            self.assertEqual(calls.read_text().split(), [new, self.main])
+            # Hands that fail, or leave main elsewhere, refuse the landing and main stays.
+            hands.write_text('#!/usr/bin/env bash\nexit 1\n')
+            failed = self.push('--test-only', self.change(new, 'code/b_test.go', 'package code\n', 'another test'), 'failed hands')
+            self.assertIn("the lander's hands didn't move main", failed.stderr)
+            self.assertEqual(self.main_now(), new)
+            hands.write_text('#!/usr/bin/env bash\ntrue\n')
+            idle = self.push('--test-only', self.change(new, 'code/c_test.go', 'package code\n', 'a third test'), 'idle hands')
+            self.assertIn('after the lander', idle.stderr)
+            self.assertEqual(self.main_now(), new)
+        finally:
+            del os.environ['PUSH_MAIN_HANDS']
+
     def test_a_deletion_no_code_reads_lands_ungated(self):
         self.write('documentation/table.csv', 'a,b\n')
         self.write('documentation/read.csv', 'a,b\n')

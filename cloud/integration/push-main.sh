@@ -905,7 +905,16 @@ if [ "$(git rev-parse "${landing}^{tree}")" != "$tree" ]; then
 	echo "refused: the landing commit's tree isn't the landing's" >&2
 	exit 1
 fi
-git push origin "${landing}:refs/heads/main"
+# The lander's hands (Loom's cut, Oct 10): with PUSH_MAIN_HANDS set, main moves only through that command, given the
+# landing commit and the old main, which pushes it as a fast-forward with the lander's own key (on workshop, at cutover
+# the only key that can move main). It must leave main exactly at the landing commit or fail; nothing here forces.
+if [ -n "${PUSH_MAIN_HANDS:-}" ]; then
+	"${PUSH_MAIN_HANDS}" "${landing}" "${old}" || { echo "refused: the lander's hands didn't move main to ${landing:0:8}" >&2; exit 1; }
+	git fetch -q origin main
+	[ "$(git rev-parse origin/main)" = "${landing}" ] || { echo "refused: main is $(git rev-parse --short=8 origin/main) after the lander's hands, not ${landing:0:8}" >&2; exit 1; }
+else
+	git push origin "${landing}:refs/heads/main"
+fi
 
 echo "Pushed main ${old:0:8}..${landing:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes; its numbers are ${landing:0:8}'s trailers; backlog ${backlog} commits."
 "$directory/merge-back.sh"
