@@ -64,24 +64,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	}
 	cases := filepath.Join(dir, "cases.txt")
 	write(t, cases, []byte(batch.String()))
-	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_prefix/main.go")
-	mainGo, err := filepath.Abs("testdata/prefix_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/prefix_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: mainGo, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_prefix.go"): bridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
-	goBinary := buildcache.GoBuildIn(t, "cohere", "go-prefix", mainPath, []string{"-overlay=" + overlayPath})
+	goBinary := prefixGoOracle(t)
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "actual Go parser primitives", want)
 	main, err := filepath.Abs("testdata/prefix_probe.ts")
@@ -163,4 +146,36 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		t.Logf("parser primitive throughput %s %.1f texts/s, three runs %.6fs; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
 	t.Logf("%d physical files, %d generated, %d sources; exact chunk boundaries/codes and %d quote prefix contexts match actual Go/source/native/backend; ASan/UBSan/leaks", files, len(inputs)-files, len(inputs), len(inputs)*8)
+}
+
+// prefixGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
+func prefixGoOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	cohere := filepath.Join(root, "cohere")
+	mainPath := filepath.Join(cohere, "cmd/adamic_prefix/main.go")
+	mainGo, err := filepath.Abs("testdata/prefix_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, err := filepath.Abs("testdata/prefix_bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: mainGo, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_prefix.go"): bridge}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(dir, "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-prefix", mainPath, []string{"-overlay=" + overlayPath})
+}
+
+func TestProduct_MarkdownPrefixGo(t *testing.T) {
+	t.Parallel()
+	prefixGoOracle(t)
 }

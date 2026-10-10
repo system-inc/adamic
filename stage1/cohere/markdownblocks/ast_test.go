@@ -55,27 +55,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 	cases := filepath.Join(dir, "cases.jsonl")
 	write(t, cases, batch.Bytes())
 	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_ast/main.go")
-	driver, err := filepath.Abs("testdata/ast_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/ast_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	facts, err := filepath.Abs("testdata/ast_facts.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/adamic_ast.go"): bridge, filepath.Join(cohere, "internal/format/markdown/adamic_ast_facts.go"): facts}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
-	goBinary := buildcache.GoBuildIn(t, "cohere", "go-ast", mainPath, []string{"-overlay=" + overlayPath})
+	goBinary := astGoOracle(t)
 	nativeCases := filepath.Join(dir, "native.txt")
 	want := execute(t, nil, goBinary, cases, nativeCases)
 	clean(t, "Go preprocessing", want)
@@ -193,4 +173,40 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 		t.Logf("%s %.1f documents/s; three runs, startup, tree transport and output included; parsing excluded on all three sides", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
 	t.Logf("%d AST contexts: %d physical Markdown files, 4943 layout corpus plus five-tab-width generated cases; complete six-pass projected fields and shared position identity agree", len(inputs), files)
+}
+
+// astGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
+func astGoOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	cohere := filepath.Join(root, "cohere")
+	mainPath := filepath.Join(cohere, "cmd/adamic_ast/main.go")
+	driver, err := filepath.Abs("testdata/ast_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, err := filepath.Abs("testdata/ast_bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	facts, err := filepath.Abs("testdata/ast_facts.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/adamic_ast.go"): bridge, filepath.Join(cohere, "internal/format/markdown/adamic_ast_facts.go"): facts}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(dir, "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-ast", mainPath, []string{"-overlay=" + overlayPath})
+}
+
+func TestProduct_MarkdownASTGo(t *testing.T) {
+	t.Parallel()
+	astGoOracle(t)
 }

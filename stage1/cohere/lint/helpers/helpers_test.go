@@ -57,6 +57,10 @@ func oracle(t *testing.T) string {
 	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
 	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual+" "+filepath.Join(root, "adamic_helper_descriptors.go"), []string{"-overlay=" + path})
 }
+func TestProduct_HelperOracle(t *testing.T) {
+	t.Parallel()
+	oracle(t)
+}
 func build(t *testing.T, directory string) string {
 	t.Helper()
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
