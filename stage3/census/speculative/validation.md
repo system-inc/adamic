@@ -93,3 +93,12 @@ bounds. It timed out after 1800.233s with peak RSS 2985980KiB. The earlier
 one-CPU probe remains archived. All 50 incomplete files were actually measured
 by the batch; none lost its budget to the shared deadline. Thirteen timed out
 at 600s and factory/utilities.ts exited 2 with a captured stack overflow.
+
+Task #b2wbbha adds exact 8-piece watch and 5-piece transformer union checks.
+Both match 0442c4a9 sites/reasons/combined depths/boundaries with zero differences.
+Dropped, duplicated and moved-site mutants fail independent partition/provenance
+audits. The final binary retains piece-off observations and actual watch-piece
+observations byte for byte. New resume, timing and publication guards pass their
+mutants; stream depth/coverage and C/JS identity witnesses pass again. Five checker
+samples complete and createNodeBuilder times out at 900.070s; no new full-file
+coverage is claimed. See evidence/pieces/README.md and SHA256.json.

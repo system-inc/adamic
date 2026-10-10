@@ -1,0 +1,813 @@
+{
+  "version": 1,
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/emitter.ts",
+  "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+  "source_bytes": 274627,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:42:ImportDeclaration",
+      "start": 0,
+      "end": 42,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 42,
+      "name": ""
+    },
+    {
+      "id": "42:11215:ImportDeclaration",
+      "start": 42,
+      "end": 11215,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 11173,
+      "name": ""
+    },
+    {
+      "id": "11215:11280:ImportDeclaration",
+      "start": 11215,
+      "end": 11280,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 65,
+      "name": ""
+    },
+    {
+      "id": "11280:11321:VariableStatement",
+      "start": 11280,
+      "end": 11321,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 41,
+      "name": ""
+    },
+    {
+      "id": "11321:11460:FunctionDeclaration",
+      "start": 11321,
+      "end": 11460,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 139,
+      "name": "isBuildInfoFile"
+    },
+    {
+      "id": "11460:13305:FunctionDeclaration",
+      "start": 11460,
+      "end": 13305,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1845,
+      "name": "forEachEmittedFile"
+    },
+    {
+      "id": "13305:14296:FunctionDeclaration",
+      "start": 13305,
+      "end": 14296,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 991,
+      "name": "getTsBuildInfoEmitOutputFilePath"
+    },
+    {
+      "id": "14296:14427:FunctionDeclaration",
+      "start": 14296,
+      "end": 14427,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 131,
+      "name": "canEmitTsBuildInfo"
+    },
+    {
+      "id": "14427:15101:FunctionDeclaration",
+      "start": 14427,
+      "end": 15101,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 674,
+      "name": "getOutputPathsForBundle"
+    },
+    {
+      "id": "15101:16620:FunctionDeclaration",
+      "start": 15101,
+      "end": 16620,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1519,
+      "name": "getOutputPathsFor"
+    },
+    {
+      "id": "16620:16799:FunctionDeclaration",
+      "start": 16620,
+      "end": 16799,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 179,
+      "name": "getSourceMapFilePath"
+    },
+    {
+      "id": "16799:17330:FunctionDeclaration",
+      "start": 16799,
+      "end": 17330,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 531,
+      "name": "getOutputExtension"
+    },
+    {
+      "id": "17330:17731:FunctionDeclaration",
+      "start": 17330,
+      "end": 17731,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 401,
+      "name": "getOutputPathWithoutChangingExt"
+    },
+    {
+      "id": "17731:18129:FunctionDeclaration",
+      "start": 17731,
+      "end": 18129,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 398,
+      "name": "getOutputDeclarationFileName"
+    },
+    {
+      "id": "18129:18558:FunctionDeclaration",
+      "start": 18129,
+      "end": 18558,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 429,
+      "name": "getOutputDeclarationFileNameWorker"
+    },
+    {
+      "id": "18558:19237:FunctionDeclaration",
+      "start": 18558,
+      "end": 19237,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 679,
+      "name": "getOutputJSFileName"
+    },
+    {
+      "id": "19237:19624:FunctionDeclaration",
+      "start": 19237,
+      "end": 19624,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 387,
+      "name": "getOutputJSFileNameWorker"
+    },
+    {
+      "id": "19624:19976:FunctionDeclaration",
+      "start": 19624,
+      "end": 19976,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 352,
+      "name": "createAddOutput"
+    },
+    {
+      "id": "19976:20403:FunctionDeclaration",
+      "start": 19976,
+      "end": 20403,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 427,
+      "name": "getSingleOutputFileNames"
+    },
+    {
+      "id": "20403:21246:FunctionDeclaration",
+      "start": 20403,
+      "end": 21246,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 843,
+      "name": "getOwnOutputFileNames"
+    },
+    {
+      "id": "21246:22754:FunctionDeclaration",
+      "start": 21246,
+      "end": 22754,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1508,
+      "name": "getCommonSourceDirectory"
+    },
+    {
+      "id": "22754:23553:FunctionDeclaration",
+      "start": 22754,
+      "end": 23553,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 799,
+      "name": "getComputedCommonSourceDirectory"
+    },
+    {
+      "id": "23553:24063:FunctionDeclaration",
+      "start": 23553,
+      "end": 24063,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 510,
+      "name": "getCommonSourceDirectoryOfConfig"
+    },
+    {
+      "id": "24063:24773:FunctionDeclaration",
+      "start": 24063,
+      "end": 24773,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 710,
+      "name": "getAllProjectOutputs"
+    },
+    {
+      "id": "24773:25372:FunctionDeclaration",
+      "start": 24773,
+      "end": 25372,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 599,
+      "name": "getOutputFileNames"
+    },
+    {
+      "id": "25372:26706:FunctionDeclaration",
+      "start": 25372,
+      "end": 26706,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1334,
+      "name": "getFirstProjectOutput"
+    },
+    {
+      "id": "26706:26906:FunctionDeclaration",
+      "start": 26706,
+      "end": 26906,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 200,
+      "name": "emitResolverSkipsTypeChecking"
+    },
+    {
+      "id": "26906:45520:FunctionDeclaration",
+      "start": 26906,
+      "end": 45520,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 18614,
+      "name": "emitFiles"
+    },
+    {
+      "id": "45520:45649:FunctionDeclaration",
+      "start": 45520,
+      "end": 45649,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 129,
+      "name": "getBuildInfoText"
+    },
+    {
+      "id": "45649:45838:FunctionDeclaration",
+      "start": 45649,
+      "end": 45838,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 189,
+      "name": "getBuildInfo"
+    },
+    {
+      "id": "45838:48026:VariableStatement",
+      "start": 45838,
+      "end": 48026,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 2188,
+      "name": ""
+    },
+    {
+      "id": "48026:48140:EnumDeclaration",
+      "start": 48026,
+      "end": 48140,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 114,
+      "name": "PipelinePhase"
+    },
+    {
+      "id": "48140:48267:VariableStatement",
+      "start": 48140,
+      "end": 48267,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 127,
+      "name": ""
+    },
+    {
+      "id": "48267:48422:VariableStatement",
+      "start": 48267,
+      "end": 48422,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 155,
+      "name": ""
+    },
+    {
+      "id": "48422:48617:VariableStatement",
+      "start": 48422,
+      "end": 48617,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 195,
+      "name": ""
+    },
+    {
+      "id": "48617:48822:VariableStatement",
+      "start": 48617,
+      "end": 48822,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 205,
+      "name": ""
+    },
+    {
+      "id": "48822:272222:FunctionDeclaration",
+      "start": 48822,
+      "end": 272222,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 223400,
+      "name": "createPrinter"
+    },
+    {
+      "id": "272222:272527:FunctionDeclaration",
+      "start": 272222,
+      "end": 272527,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 305,
+      "name": "createBracketsMap"
+    },
+    {
+      "id": "272527:272643:FunctionDeclaration",
+      "start": 272527,
+      "end": 272643,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 116,
+      "name": "getOpeningBracket"
+    },
+    {
+      "id": "272643:272759:FunctionDeclaration",
+      "start": 272643,
+      "end": 272759,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 116,
+      "name": "getClosingBracket"
+    },
+    {
+      "id": "272759:273015:EnumDeclaration",
+      "start": 272759,
+      "end": 273015,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 256,
+      "name": "TempFlags"
+    },
+    {
+      "id": "273015:273139:InterfaceDeclaration",
+      "start": 273015,
+      "end": 273139,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 124,
+      "name": "OrdinalParentheizerRuleSelector"
+    },
+    {
+      "id": "273139:273199:TypeAliasDeclaration",
+      "start": 273139,
+      "end": 273199,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 60,
+      "name": "ParenthesizerRule"
+    },
+    {
+      "id": "273199:273312:TypeAliasDeclaration",
+      "start": 273199,
+      "end": 273312,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 113,
+      "name": "ParenthesizerRuleOrSelector"
+    },
+    {
+      "id": "273312:273412:TypeAliasDeclaration",
+      "start": 273312,
+      "end": 273412,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 100,
+      "name": "EmitFunction"
+    },
+    {
+      "id": "273412:273577:TypeAliasDeclaration",
+      "start": 273412,
+      "end": 273577,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 165,
+      "name": "EmitListItemFunction"
+    },
+    {
+      "id": "273577:273754:FunctionDeclaration",
+      "start": 273577,
+      "end": 273754,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 177,
+      "name": "emitListItemNoParenthesizer"
+    },
+    {
+      "id": "273754:273997:FunctionDeclaration",
+      "start": 273754,
+      "end": 273997,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 243,
+      "name": "emitListItemWithParenthesizerRuleSelector"
+    },
+    {
+      "id": "273997:274188:FunctionDeclaration",
+      "start": 273997,
+      "end": 274188,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 191,
+      "name": "emitListItemWithParenthesizerRule"
+    },
+    {
+      "id": "274188:274625:FunctionDeclaration",
+      "start": 274188,
+      "end": 274625,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 437,
+      "name": "getEmitListItem"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "48822:272222:FunctionDeclaration"
+      ],
+      "bytes": 223400
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "26906:45520:FunctionDeclaration"
+      ],
+      "bytes": 18614
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "42:11215:ImportDeclaration"
+      ],
+      "bytes": 11173
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "45838:48026:VariableStatement"
+      ],
+      "bytes": 2188
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "11460:13305:FunctionDeclaration"
+      ],
+      "bytes": 1845
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "15101:16620:FunctionDeclaration"
+      ],
+      "bytes": 1519
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "21246:22754:FunctionDeclaration"
+      ],
+      "bytes": 1508
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "25372:26706:FunctionDeclaration"
+      ],
+      "bytes": 1334
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "13305:14296:FunctionDeclaration"
+      ],
+      "bytes": 991
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "20403:21246:FunctionDeclaration"
+      ],
+      "bytes": 843
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "22754:23553:FunctionDeclaration"
+      ],
+      "bytes": 799
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "24063:24773:FunctionDeclaration"
+      ],
+      "bytes": 710
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "18558:19237:FunctionDeclaration"
+      ],
+      "bytes": 679
+    },
+    {
+      "id": 13,
+      "atoms": [
+        "14427:15101:FunctionDeclaration"
+      ],
+      "bytes": 674
+    },
+    {
+      "id": 14,
+      "atoms": [
+        "24773:25372:FunctionDeclaration"
+      ],
+      "bytes": 599
+    },
+    {
+      "id": 15,
+      "atoms": [
+        "16799:17330:FunctionDeclaration"
+      ],
+      "bytes": 531
+    },
+    {
+      "id": 16,
+      "atoms": [
+        "23553:24063:FunctionDeclaration"
+      ],
+      "bytes": 510
+    },
+    {
+      "id": 17,
+      "atoms": [
+        "274188:274625:FunctionDeclaration"
+      ],
+      "bytes": 437
+    },
+    {
+      "id": 18,
+      "atoms": [
+        "18129:18558:FunctionDeclaration"
+      ],
+      "bytes": 429
+    },
+    {
+      "id": 19,
+      "atoms": [
+        "19976:20403:FunctionDeclaration"
+      ],
+      "bytes": 427
+    },
+    {
+      "id": 20,
+      "atoms": [
+        "17330:17731:FunctionDeclaration"
+      ],
+      "bytes": 401
+    },
+    {
+      "id": 21,
+      "atoms": [
+        "17731:18129:FunctionDeclaration"
+      ],
+      "bytes": 398
+    },
+    {
+      "id": 22,
+      "atoms": [
+        "19237:19624:FunctionDeclaration"
+      ],
+      "bytes": 387
+    },
+    {
+      "id": 23,
+      "atoms": [
+        "19624:19976:FunctionDeclaration"
+      ],
+      "bytes": 352
+    },
+    {
+      "id": 24,
+      "atoms": [
+        "272222:272527:FunctionDeclaration"
+      ],
+      "bytes": 305
+    },
+    {
+      "id": 25,
+      "atoms": [
+        "272759:273015:EnumDeclaration"
+      ],
+      "bytes": 256
+    },
+    {
+      "id": 26,
+      "atoms": [
+        "273754:273997:FunctionDeclaration"
+      ],
+      "bytes": 243
+    },
+    {
+      "id": 27,
+      "atoms": [
+        "48617:48822:VariableStatement"
+      ],
+      "bytes": 205
+    },
+    {
+      "id": 28,
+      "atoms": [
+        "26706:26906:FunctionDeclaration"
+      ],
+      "bytes": 200
+    },
+    {
+      "id": 29,
+      "atoms": [
+        "48422:48617:VariableStatement"
+      ],
+      "bytes": 195
+    },
+    {
+      "id": 30,
+      "atoms": [
+        "273997:274188:FunctionDeclaration"
+      ],
+      "bytes": 191
+    },
+    {
+      "id": 31,
+      "atoms": [
+        "45649:45838:FunctionDeclaration"
+      ],
+      "bytes": 189
+    },
+    {
+      "id": 32,
+      "atoms": [
+        "16620:16799:FunctionDeclaration"
+      ],
+      "bytes": 179
+    },
+    {
+      "id": 33,
+      "atoms": [
+        "273577:273754:FunctionDeclaration"
+      ],
+      "bytes": 177
+    },
+    {
+      "id": 34,
+      "atoms": [
+        "273412:273577:TypeAliasDeclaration"
+      ],
+      "bytes": 165
+    },
+    {
+      "id": 35,
+      "atoms": [
+        "48267:48422:VariableStatement"
+      ],
+      "bytes": 155
+    },
+    {
+      "id": 36,
+      "atoms": [
+        "11321:11460:FunctionDeclaration"
+      ],
+      "bytes": 139
+    },
+    {
+      "id": 37,
+      "atoms": [
+        "14296:14427:FunctionDeclaration"
+      ],
+      "bytes": 131
+    },
+    {
+      "id": 38,
+      "atoms": [
+        "45520:45649:FunctionDeclaration"
+      ],
+      "bytes": 129
+    },
+    {
+      "id": 39,
+      "atoms": [
+        "48140:48267:VariableStatement"
+      ],
+      "bytes": 127
+    },
+    {
+      "id": 40,
+      "atoms": [
+        "273015:273139:InterfaceDeclaration"
+      ],
+      "bytes": 124
+    },
+    {
+      "id": 41,
+      "atoms": [
+        "272527:272643:FunctionDeclaration"
+      ],
+      "bytes": 116
+    },
+    {
+      "id": 42,
+      "atoms": [
+        "272643:272759:FunctionDeclaration"
+      ],
+      "bytes": 116
+    },
+    {
+      "id": 43,
+      "atoms": [
+        "48026:48140:EnumDeclaration"
+      ],
+      "bytes": 114
+    },
+    {
+      "id": 44,
+      "atoms": [
+        "273199:273312:TypeAliasDeclaration"
+      ],
+      "bytes": 113
+    },
+    {
+      "id": 45,
+      "atoms": [
+        "273312:273412:TypeAliasDeclaration"
+      ],
+      "bytes": 100
+    },
+    {
+      "id": 46,
+      "atoms": [
+        "11215:11280:ImportDeclaration"
+      ],
+      "bytes": 65
+    },
+    {
+      "id": 47,
+      "atoms": [
+        "273139:273199:TypeAliasDeclaration"
+      ],
+      "bytes": 60
+    },
+    {
+      "id": 48,
+      "atoms": [
+        "0:42:ImportDeclaration"
+      ],
+      "bytes": 42
+    },
+    {
+      "id": 49,
+      "atoms": [
+        "11280:11321:VariableStatement"
+      ],
+      "bytes": 41
+    }
+  ]
+}

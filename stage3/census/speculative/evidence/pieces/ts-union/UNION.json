@@ -1,0 +1,110 @@
+{
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/ts.ts",
+  "baseline_sha256": "99c22eee752bf218d03690e71522bca8fb302d44b1f78da22a774199fa80c5be",
+  "exact_match": true,
+  "whole_sites": 800,
+  "piece_sites": 800,
+  "missing_sites": [],
+  "added_sites": [],
+  "changed_depths": [],
+  "removed_boundaries": [],
+  "added_boundaries": [],
+  "raw_depths_recalibrated": {
+    "whole": 0,
+    "pieces": 28
+  },
+  "mutants": {
+    "piece dropped": "piece dropped from union",
+    "piece duplicated": "duplicate piece in union",
+    "site moved between pieces": "site moved between pieces: atom provenance violates partition"
+  },
+  "runtimes": [
+    {
+      "piece": 0,
+      "bytes": 110595,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/ts-run/piece-000.pending.jsonl"
+      ],
+      "wall_seconds": 408.2667748980002,
+      "peak_rss_kib": 1035896,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 1,
+      "bytes": 5168,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/ts-run/piece-001.pending.jsonl"
+      ],
+      "wall_seconds": 34.71395159399981,
+      "peak_rss_kib": 713904,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 2,
+      "bytes": 604,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/ts-run/piece-002.pending.jsonl"
+      ],
+      "wall_seconds": 34.3561918359992,
+      "peak_rss_kib": 715116,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 3,
+      "bytes": 252,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/ts-run/piece-003.pending.jsonl"
+      ],
+      "wall_seconds": 34.1172140409999,
+      "peak_rss_kib": 739560,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 4,
+      "bytes": 120,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/ts-run/piece-004.pending.jsonl"
+      ],
+      "wall_seconds": 34.38831116300025,
+      "peak_rss_kib": 741856,
+      "exit": 0,
+      "user_cpu_seconds": 34.066337,
+      "system_cpu_seconds": 0.34812899999999997,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.0213570940013597,
+        "contract_scan": 3.0766178789999685,
+        "registration": 34.28804071200102
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    }
+  ]
+}

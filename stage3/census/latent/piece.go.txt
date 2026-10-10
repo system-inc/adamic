@@ -1,0 +1,162 @@
+// Census-only selection. This file is never compiled into the production compiler.
+package lower
+
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"strconv"
+)
+
+type latentPieceAtom struct {
+	ID     string `json:"id"`
+	Start  int    `json:"start"`
+	End    int    `json:"end"`
+	Kind   string `json:"kind"`
+	Parent string `json:"parent"`
+}
+type latentPieceRecord struct {
+	ID         int      `json:"id"`
+	PlanSHA256 string   `json:"plan_sha256"`
+	Atoms      []string `json:"atoms"`
+}
+type latentPiecePlan struct {
+	File   string            `json:"file"`
+	SHA256 string            `json:"sha256"`
+	Atoms  []latentPieceAtom `json:"atoms"`
+	Pieces []struct {
+		ID    int      `json:"id"`
+		Atoms []string `json:"atoms"`
+	} `json:"pieces"`
+}
+type latentPieceSelection struct {
+	record   latentPieceRecord
+	file     *ast.SourceFile
+	atoms    map[*ast.Node]string
+	selected map[*ast.Node]bool
+	units    []*ast.Node
+	wrapper  *ast.Node
+}
+
+var latentPiece *latentPieceSelection
+var latentPieceOrigin string
+
+func latentPieceStart(program *load.Program, file *ast.SourceFile) {
+	latentPiece, latentPieceOrigin = nil, ""
+	path := os.Getenv("LATENT_PIECE_PLAN")
+	if path == "" {
+		return
+	}
+	if !latentSpeculativeEnabled() || os.Getenv("LATENT_ONLY_FILE") == "" {
+		panic("piece mode requires speculative single-file selection")
+	}
+	bytes, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	var plan latentPiecePlan
+	if err := json.Unmarshal(bytes, &plan); err != nil {
+		panic(err)
+	}
+	digest := sha256.Sum256([]byte(file.Text()))
+	if plan.File != program.FileName(file) || plan.SHA256 != hex.EncodeToString(digest[:]) {
+		panic("piece source identity changed")
+	}
+	id, err := strconv.Atoi(os.Getenv("LATENT_PIECE_ID"))
+	if err != nil || id < 0 || id >= len(plan.Pieces) || plan.Pieces[id].ID != id {
+		panic("invalid piece ID")
+	}
+	digest = sha256.Sum256(bytes)
+	selection := &latentPieceSelection{file: file, atoms: map[*ast.Node]string{}, selected: map[*ast.Node]bool{}, record: latentPieceRecord{ID: id, PlanSHA256: hex.EncodeToString(digest[:]), Atoms: plan.Pieces[id].Atoms}}
+	wanted := map[string]bool{}
+	for _, atom := range plan.Pieces[id].Atoms {
+		if wanted[atom] {
+			panic("duplicate planned atom")
+		}
+		wanted[atom] = true
+	}
+	candidates := []*ast.Node{}
+	for _, node := range file.Statements.Nodes {
+		if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == "createTypeChecker" && node.Body() != nil && node.Body().Kind == ast.KindBlock {
+			selection.wrapper = node
+			candidates = append(candidates, node.Body().AsBlock().Statements.Nodes...)
+		} else {
+			candidates = append(candidates, node)
+		}
+	}
+	if len(candidates) != len(plan.Atoms) {
+		panic("piece atom inventory mismatch")
+	}
+	for i, node := range candidates {
+		atom := plan.Atoms[i]
+		if atom.Start != node.Pos() || atom.End != node.End() || "Kind"+atom.Kind != node.Kind.String() || atom.ID != fmt.Sprintf("%d:%d:%s", node.Pos(), node.End(), atom.Kind) {
+			panic("piece AST identity mismatch")
+		}
+		selection.atoms[node] = atom.ID
+		if wanted[atom.ID] {
+			selection.selected[node] = true
+			selection.units = append(selection.units, node)
+			delete(wanted, atom.ID)
+		}
+	}
+	if len(wanted) != 0 || len(selection.units) == 0 {
+		panic("piece includes unknown atoms or is empty")
+	}
+	latentPiece, latentPieceOrigin = selection, "prepass"
+}
+func latentPieceUnits(file *ast.SourceFile) []*ast.Node {
+	if latentPiece == nil {
+		return file.Statements.Nodes
+	}
+	return latentPiece.units
+}
+func latentPieceAtomID(node *ast.Node) string {
+	if latentPiece == nil {
+		return ""
+	}
+	return latentPiece.atoms[node]
+}
+func latentPieceAllows(node *ast.Node) bool {
+	if latentPiece == nil {
+		return true
+	}
+	for current := node; current != nil; current = current.Parent {
+		if _, atom := latentPiece.atoms[current]; atom {
+			return latentPiece.selected[current]
+		}
+		if current == latentPiece.file.AsNode() {
+			return false
+		}
+	}
+	// Foreign dependencies remain observations in the whole-project context.
+	return true
+}
+func latentPieceSkipBody(node *ast.Node) bool {
+	if latentPiece == nil {
+		return false
+	}
+	return node == latentPiece.wrapper || !latentPieceAllows(node)
+}
+func (l *lowering) latentPiecePrepare(node *ast.Node) {
+	if latentPiece == nil || latentPiece.wrapper == nil || node.Parent != latentPiece.wrapper.Body() {
+		return
+	}
+	wrapper := latentPiece.wrapper
+	l.latentAncestors = map[*ast.Node]bool{wrapper: true}
+	index := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "piece enclosing createTypeChecker"})
+	if err := l.signature(index, wrapper, -1); err != nil {
+		panic(err)
+	}
+	l.functionIndex, l.function = index, &l.result.Functions[index]
+}
+func latentPieceFinish(record *LatentFile) {
+	if latentPiece != nil {
+		record.Piece = &latentPiece.record
+	}
+}
