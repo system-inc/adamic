@@ -772,9 +772,9 @@ pruneQueue() {
   rm -f "${kept}" "${state}/queue.verdicts" "${state}/queue.duplicates"
 }
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
-# landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed. A front tip is the star,
-# and the star owns its box (@system_adamic, Oct 8 21:47Z): it runs big, on Server's reserved area slot, and a
-# box running or awaiting it takes no other gate.
+# landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed. The star owns its box
+# (@system_adamic, Oct 8 21:47Z): it runs big, on Server's reserved area slot, and a box running or awaiting it takes no
+# other gate. Only the top front tip is the star (isStar); every other front tip keeps its rank and takes ordinary slots.
 frontGlobs() {
   [ -f "${state}/front" ] || return 0
   awk '$1 !~ /^#/ && NF {print $1}' "${state}/front"
@@ -796,6 +796,18 @@ frontLine() {
   done
   echo 0
 }
+# The star is the front file's top line a queued or running tip matches (starLine, from loadRanking), not every front
+# tip (@system_adamic, Oct 10 00:29Z: only the top front tip owns its box). With 25 front lines each front landing held a
+# box whole: c2, line 4, held Threadripper's second B line while V4 ef14787c, another front tip, waited at rank 0.
+# A loop, not frontLine's $(...): the slot checks ask it for every running gate on every pick.
+isStar() {
+  local glob line=0
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    line=$((line + 1))
+    [[ $1 == ${glob} ]] && { [ "${line}" = "${starLine:-0}" ]; return; }
+  done
+  return 1
+}
 # ${state}/star-boxes, rewritten every pass: the boxes the star runs on or waits for, one per line. Work outside
 # this watcher (Loom's pilot) reads it and stays off them.
 writeStarBoxes() {
@@ -805,10 +817,10 @@ writeStarBoxes() {
     cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
       # The pool isn't a box the star owns: its side jobs are never preempted for it.
       [ "${runningBox}" = pool ] && continue
-      isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
+      isStar "${runningBranch}" && echo "${runningBox:-threadripper}"
     done
     while read -r class queued branch sha; do
-      isFront "${branch}" && ! starOnPool "${branch}" "${sha}" && reservedBoxes "${branch}" B
+      isStar "${branch}" && ! starOnPool "${branch}" "${sha}" && reservedBoxes "${branch}" B
     done < "${state}/queue"
   } | sort -u > "${state}/star-boxes.tmp"
   mv "${state}/star-boxes.tmp" "${state}/star-boxes"
@@ -818,6 +830,10 @@ writeStarBoxes() {
 # bottom first; superseded slices leave it) takes the big slot of another box, whole, preempting what runs there:
 # an idle box first, else the one running the lowest-ranked work. At most two star boxes, so stale slices can't take
 # the farm. Assigned once a pass, as "branch box" lines in starSeconds.
+# Since only the top front tip is the star (isStar), only its tips take a second box, and only star boxes count toward
+# the two. Server held by any front run still sends the star elsewhere: a front tip that took Server as the star before a
+# higher line queued runs on, since front work is never preempted, and for the same reason no box with a front run on it
+# is picked.
 requests=${ADAMIC_FULL_GATE_REQUESTS:-${HOME}/.adamic-full-gate/requests}
 assignStarBoxes() {
   local starRunning count sha branch box
@@ -826,11 +842,13 @@ assignStarBoxes() {
     isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
   done | sort -u)
   echo "${starRunning}" | grep -qx server || return 0
-  count=$(echo "${starRunning}" | grep -c .)
+  count=$(cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
+    isStar "${runningBranch}" && echo "${runningBox:-threadripper}"
+  done | sort -u | grep -c .)
   while read -r sha; do
     [ "${count}" -ge 2 ] && break
     branch=$(awk -v s="${sha}" '$4 == s {print $3; exit}' "${state}/queue")
-    [ -n "${branch}" ] && isFront "${branch}" || continue
+    [ -n "${branch}" ] && isStar "${branch}" || continue
     box=$(pickStarBox "${starRunning}")
     [ -n "${box}" ] || break
     starSeconds="${starSeconds}${branch} ${box}
@@ -848,7 +866,7 @@ ${box}"
     while read -r class queued branch sha; do
       [[ ${branch} == ${glob} ]] && { queuedBranch=${branch}; break; }
     done < "${state}/queue"
-    [ -n "${queuedBranch}" ] || continue
+    [ -n "${queuedBranch}" ] && isStar "${queuedBranch}" || continue
     starSecondBoxOf "${queuedBranch}"
     [ -z "${starSecond}" ] || continue
     box=$(pickStarBox "${starRunning}")
@@ -934,10 +952,24 @@ stepPosition() {
 # queued, a fork-per-tip ranking took about 24 s for every pick (Oct 8 19:15Z, measured by the realistic
 # queue test), and a reap waited behind each one.
 loadRanking() {
-  local glob position
+  local glob position line=0 class queued branch rest
   reservationList=() frontList=() aheadList=() stepGlobList=() stepPositions=() priorityList=()
-  while read -r glob; do [ -n "${glob}" ] && reservationList+=("${glob}"); done <<< "$(reservationGlobs)"
   while read -r glob; do [ -n "${glob}" ] && frontList+=("${glob}"); done <<< "$(frontGlobs)"
+  # The star (isStar): the first front line a queued or running tip matches, 0 for none. Server's area slot is then
+  # reserved for that line alone, so the other front tips are no reservation and take ordinary slots; with no front tip
+  # live it stays reserved for every line, so whichever comes first gets it at once.
+  starLine=0
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    line=$((line + 1))
+    while read -r class queued branch rest; do
+      [[ ${branch} == ${glob} ]] && { starLine=${line}; break 2; }
+    done < "${state}/queue"
+    while read -r branch rest; do
+      [[ ${branch} == ${glob} ]] && { starLine=${line}; break 2; }
+    done < <(cat "${state}"/running/* 2> /dev/null)
+  done
+  [ "${starLine}" -gt 0 ] && echo "${frontList[starLine - 1]}" > "${state}/first-step-globs.poll"
+  while read -r glob; do [ -n "${glob}" ] && reservationList+=("${glob}"); done <<< "$(reservationGlobs)"
   if [ -f "${state}/ahead" ]; then
     while read -r glob _; do [ -n "${glob}" ] && [[ ${glob} != \#* ]] && aheadList+=("${glob}"); done < "${state}/ahead"
   fi
@@ -969,6 +1001,8 @@ rankQueue() {
     reserved=no
     isFront "${branch}" && class=B
     if matchesReservation "${branch}"; then reserved=yes rank=0
+    # A front tip that isn't the star is no reservation but keeps the front's rank, ordered by its line (train below).
+    elif isFront "${branch}"; then rank=0
     elif [[ ${branch} == cloud/land-* ]]; then rank=1
     elif [[ ${branch} == area/* ]]; then rank=2
     elif [[ ${branch} == devtools/* ]]; then rank=3
@@ -1081,10 +1115,10 @@ usableSlots() {
   while read -r runningBranch runningSha runningSlot runningBox rest; do
     [ -n "${runningBranch}" ] || continue
     slotReserved "${runningBranch}" "${runningBox:-threadripper}" "${runningSlot}" && held="${held}${runningBox:-threadripper} "
-    # The star holds whatever box it runs on, reserved there or not. A canary of main still takes a free slot beside a
-    # front run that doesn't hold the box whole: at 12:13Z on Oct 9 front runs sat on all four boxes, three of them
-    # leaving slots free, and the stage canary the star waited on had nowhere to start.
-    isFront "${runningBranch}" && ! isCanary "${branch}" && held="${held}${runningBox:-threadripper} "
+    # The star holds whatever box it runs on, reserved there or not; another front run shares its box (isStar). A canary
+    # of main still takes a free slot beside a star run that doesn't hold the box whole: at 12:13Z on Oct 9 front runs sat
+    # on all four boxes, three of them leaving slots free, and the stage canary the star waited on had nowhere to start.
+    isStar "${runningBranch}" && ! isCanary "${branch}" && held="${held}${runningBox:-threadripper} "
   done < "${state}/running.tmp"
   while read -r box slot; do
     # The pool is offered to side tips by pickNext alone.
@@ -1241,7 +1275,8 @@ while true; do
     pruneRefresh=${now}
   fi
   # The star owns Server (@system_adamic, Oct 8 21:47Z, and integration for the views train): while the front
-  # file names any tip, Server's area slot is reserved for the front instead of the roadmap's first step.
+  # file names any tip, Server's area slot is reserved for the front instead of the roadmap's first step, and each
+  # scheduling pass narrows it to the star's line (loadRanking).
   if [ -n "$(frontGlobs)" ]; then
     frontGlobs > "${state}/first-step-globs.poll"
   else
@@ -1474,8 +1509,10 @@ while true; do
   clearStaleSlotLock
   if mkdir "${state}/slot-table.lock" 2>/dev/null; then
   slotTableOwned=yes
-  loadRanking
   echo "$$ $(/bin/date -u +%s)" > "${state}/slot-table.lock/holder"
+  # Discards leave first, so the star loadRanking finds is a tip that can still run.
+  pruneQueue
+  loadRanking
   # A deploy barrier persists until this tools version gets a real main verdict.
   # A running probe is never duplicated, including across watcher restarts.
   # An old watcher's result cannot satisfy this startup's deploy barrier.
@@ -1561,7 +1598,6 @@ while true; do
       fi
     fi
   fi
-  pruneQueue
   writeStarBoxes
   preemptForStar
   rankQueue

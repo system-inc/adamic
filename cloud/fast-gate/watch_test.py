@@ -863,19 +863,43 @@ class WatchTests(unittest.TestCase):
         self.assertTrue([x for x in w.read('starts').splitlines() if not x.startswith('canary/')][0].startswith('cloud/land-a-x '))
 
     def test_a_front_tip_whose_reserved_boxes_are_held_takes_any_big_slot_after_ten_minutes(self):
-        # Three front tips, two star boxes: the third waited on Server while another big slot sat free (Oct 9).
-        w = self.reservation('server B\nother B\nthird B\n', [('cloud/land-a-x', 'B'), ('cloud/land-b-x', 'B'), ('cloud/land-c-x', 'B')], release=False)
+        # The star waited on Server while another big slot sat free (Oct 9). Since only the top front tip is the star
+        # (Oct 10 00:29Z), its reserved box is held when a lower line took Server as the star before it queued: line 2
+        # runs on Server whole, line 3 on one of other's lines, and no box free of front work is left for a second box.
+        w = self.reservation('server B\nother B\nother B\n', [('cloud/land-a-x', 'B')], release=False)
         (w.state / 'front').write_text('cloud/land-a-*\ncloud/land-b-*\ncloud/land-c-*\n')
-        # A pass reads the reservations from the top of the pass: release the canary once one has seen the front.
-        w.wait(lambda: 'cloud/land-c-*' in w.read('state/first-step-globs.poll'))
+        for branch, box in (('cloud/land-b-x', 'server'), ('cloud/land-c-x', 'other')):
+            holder = subprocess.Popen(['sleep', '30'])
+            self.addCleanup(holder.kill)
+            (w.state / 'running' / str(holder.pid)).write_text('%s %s B %s B x %s\n' % (branch, 'c' * 40, box, w.state / 'logs/old.log'))
+            if box == 'server':
+                (w.state / 'reserved-running' / str(holder.pid)).write_text('server\n')
         w.put('initial', 'pass')
-        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 2)
+        w.wait(lambda: 'done canary:' in w.read('output'))
         time.sleep(.5)
-        self.assertNotIn('cloud/land-c-x', w.read('starts'), 'took a general slot before its ten minutes')
+        self.assertNotIn('cloud/land-a-x', w.read('starts'), 'took a general slot before its ten minutes')
         w.put('clock', '1503')
-        w.wait(lambda: 'cloud/land-c-x' in w.read('starts'))
-        start = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-c-x ')][0]
-        self.assertTrue(start.endswith(' third'), start)
+        w.wait(lambda: 'cloud/land-a-x' in w.read('starts'))
+        start = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-a-x ')][0]
+        self.assertTrue(start.endswith(' B other'), start)
+        self.assertNotIn('preempted', w.read('output'))
+
+    def test_only_the_top_front_tip_owns_its_box_and_the_others_share_ordinary_lines(self):
+        # @system_adamic, Oct 10 00:29Z: with 25 front lines every front landing held a whole box; c2 (line 4) held
+        # Threadripper's second B line while V4 ef14787c, another front tip, waited at rank 0. Line 1 is the star and owns
+        # Server whole; lines 2 and 3 keep their rank but take Threadripper's two B lines like any candidate, at once.
+        w = self.reservation('server B\nthreadripper B\nthreadripper B\n',
+                             [('cloud/land-a-x', 'B'), ('cloud/land-b-x', 'B'), ('cloud/land-c-x', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-a-*\ncloud/land-b-*\ncloud/land-c-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 3)
+        boxes = {x.split()[0]: x.split()[-1] for x in w.read('starts').splitlines()}
+        self.assertEqual(boxes['cloud/land-a-x'], 'server')
+        self.assertEqual(boxes['cloud/land-b-x'], 'threadripper')
+        self.assertEqual(boxes['cloud/land-c-x'], 'threadripper')
+        self.assertEqual(w.read('whole').split(), ['cloud/land-a-x'])
+        w.wait(lambda: w.read('state/star-boxes') == 'server\n')
+        self.assertNotIn('preempted', w.read('output'))
 
     def test_a_box_running_the_star_takes_no_other_gate(self):
         # No Server in the table: the star runs wherever a big slot is free, and that box is then its own.
