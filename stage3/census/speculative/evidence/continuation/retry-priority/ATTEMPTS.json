@@ -1,0 +1,1059 @@
+{
+  "workers": 4,
+  "deadline_epoch": 1791590295.0,
+  "attempts": [
+    {
+      "file": "transformers/generators.ts",
+      "started_epoch": 1791585428.2955804,
+      "finished_epoch": 1791585740.6454687,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__generators.ts.pending"
+        ],
+        "wall_seconds": 312.16063625699917,
+        "peak_rss_kib": 1035724,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "parser.ts",
+      "started_epoch": 1791585428.294771,
+      "finished_epoch": 1791586028.651967,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/parser.ts.pending"
+        ],
+        "wall_seconds": 600.2113104130003,
+        "peak_rss_kib": 1036496,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "utilities.ts",
+      "started_epoch": 1791585428.2950606,
+      "finished_epoch": 1791586028.6707034,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/utilities.ts.pending"
+        ],
+        "wall_seconds": 600.157208777,
+        "peak_rss_kib": 1035780,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "builder.ts",
+      "started_epoch": 1791585428.296127,
+      "finished_epoch": 1791586028.7005186,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/builder.ts.pending"
+        ],
+        "wall_seconds": 600.1933536320003,
+        "peak_rss_kib": 1035400,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "started_epoch": 1791586028.7007208,
+      "finished_epoch": 1791586137.88382,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/utilitiesPublic.ts.pending"
+        ],
+        "wall_seconds": 108.95239383100034,
+        "peak_rss_kib": 1045532,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "started_epoch": 1791585740.6457293,
+      "finished_epoch": 1791586227.6106439,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__ts.ts.pending"
+        ],
+        "wall_seconds": 486.7201422449998,
+        "peak_rss_kib": 1036176,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "core.ts",
+      "started_epoch": 1791586227.6108968,
+      "finished_epoch": 1791586265.9368417,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/core.ts.pending"
+        ],
+        "wall_seconds": 38.152086968999356,
+        "peak_rss_kib": 1034316,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "started_epoch": 1791586028.6708913,
+      "finished_epoch": 1791586358.4669335,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__module__module.ts.pending"
+        ],
+        "wall_seconds": 329.6423846260004,
+        "peak_rss_kib": 1036068,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "started_epoch": 1791586137.8840067,
+      "finished_epoch": 1791586520.1772978,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__declarations.ts.pending"
+        ],
+        "wall_seconds": 382.1210426819998,
+        "peak_rss_kib": 1036376,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "visitorPublic.ts",
+      "started_epoch": 1791586265.9370625,
+      "finished_epoch": 1791586520.1567798,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/visitorPublic.ts.pending"
+        ],
+        "wall_seconds": 254.0847925500002,
+        "peak_rss_kib": 1036804,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "sys.ts",
+      "started_epoch": 1791586358.467089,
+      "finished_epoch": 1791586528.2043986,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/sys.ts.pending"
+        ],
+        "wall_seconds": 169.5531785660005,
+        "peak_rss_kib": 1035540,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "started_epoch": 1791586028.6521783,
+      "finished_epoch": 1791586628.9689476,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/tsbuildPublic.ts.pending"
+        ],
+        "wall_seconds": 600.1224160540005,
+        "peak_rss_kib": 1035120,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "started_epoch": 1791586520.1570153,
+      "finished_epoch": 1791586697.7584813,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__module__system.ts.pending"
+        ],
+        "wall_seconds": 177.401220234,
+        "peak_rss_kib": 1035736,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "factory/utilities.ts",
+      "started_epoch": 1791586628.969158,
+      "finished_epoch": 1791586711.9495788,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/factory__utilities.ts.pending"
+        ],
+        "wall_seconds": 82.78240801900029,
+        "peak_rss_kib": 1551612,
+        "exit": 2,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "started_epoch": 1791586528.2045898,
+      "finished_epoch": 1791586790.578498,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/moduleSpecifiers.ts.pending"
+        ],
+        "wall_seconds": 262.1444831099998,
+        "peak_rss_kib": 1034960,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "started_epoch": 1791586711.9498162,
+      "finished_epoch": 1791586838.4874933,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__es2018.ts.pending"
+        ],
+        "wall_seconds": 126.38146791500003,
+        "peak_rss_kib": 1035348,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "resolutionCache.ts",
+      "started_epoch": 1791586520.1774633,
+      "finished_epoch": 1791586844.606348,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/resolutionCache.ts.pending"
+        ],
+        "wall_seconds": 324.26943340699927,
+        "peak_rss_kib": 1034592,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "started_epoch": 1791586790.5787442,
+      "finished_epoch": 1791586918.6353064,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/factory__emitHelpers.ts.pending"
+        ],
+        "wall_seconds": 127.87850075299957,
+        "peak_rss_kib": 1036608,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "debug.ts",
+      "started_epoch": 1791586844.6065266,
+      "finished_epoch": 1791587002.8866522,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/debug.ts.pending"
+        ],
+        "wall_seconds": 158.07830814099998,
+        "peak_rss_kib": 1037380,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "started_epoch": 1791586697.758751,
+      "finished_epoch": 1791587073.2169857,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/expressionToTypeNode.ts.pending"
+        ],
+        "wall_seconds": 375.2896860459996,
+        "peak_rss_kib": 1036024,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "started_epoch": 1791587002.8869727,
+      "finished_epoch": 1791587097.446076,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__es2017.ts.pending"
+        ],
+        "wall_seconds": 94.40222467700005,
+        "peak_rss_kib": 1036160,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "started_epoch": 1791587073.217171,
+      "finished_epoch": 1791587114.4249752,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__declarations__diagnostics.ts.pending"
+        ],
+        "wall_seconds": 41.01608399199995,
+        "peak_rss_kib": 1035908,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "watchPublic.ts",
+      "started_epoch": 1791586838.4878664,
+      "finished_epoch": 1791587166.0579126,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/watchPublic.ts.pending"
+        ],
+        "wall_seconds": 327.4263046269998,
+        "peak_rss_kib": 1035412,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "started_epoch": 1791587114.4252682,
+      "finished_epoch": 1791587208.8520699,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__legacyDecorators.ts.pending"
+        ],
+        "wall_seconds": 94.22702449000008,
+        "peak_rss_kib": 1035264,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "started_epoch": 1791587166.0581067,
+      "finished_epoch": 1791587286.6470966,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__jsx.ts.pending"
+        ],
+        "wall_seconds": 120.45590264299972,
+        "peak_rss_kib": 1035444,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "watchUtilities.ts",
+      "started_epoch": 1791587286.6472754,
+      "finished_epoch": 1791587356.332124,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/watchUtilities.ts.pending"
+        ],
+        "wall_seconds": 69.48493454599975,
+        "peak_rss_kib": 1035768,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "started_epoch": 1791587208.8522747,
+      "finished_epoch": 1791587370.947862,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__utilities.ts.pending"
+        ],
+        "wall_seconds": 161.94173050000063,
+        "peak_rss_kib": 1035860,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "started_epoch": 1791587356.332397,
+      "finished_epoch": 1791587399.5899007,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/factory__parenthesizerRules.ts.pending"
+        ],
+        "wall_seconds": 43.03901378400042,
+        "peak_rss_kib": 1036300,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "started_epoch": 1791587370.9480617,
+      "finished_epoch": 1791587489.8008852,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__esnext.ts.pending"
+        ],
+        "wall_seconds": 118.65298515699942,
+        "peak_rss_kib": 1035384,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "started_epoch": 1791586918.6356664,
+      "finished_epoch": 1791587518.9667265,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/executeCommandLine.ts.pending"
+        ],
+        "wall_seconds": 600.1377790430006,
+        "peak_rss_kib": 1034904,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "transformer.ts",
+      "started_epoch": 1791587518.966933,
+      "finished_epoch": 1791587572.4508467,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformer.ts.pending"
+        ],
+        "wall_seconds": 53.28558821000024,
+        "peak_rss_kib": 1036028,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "watch.ts",
+      "started_epoch": 1791587097.4462388,
+      "finished_epoch": 1791587600.7866936,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/watch.ts.pending"
+        ],
+        "wall_seconds": 503.18810455200037,
+        "peak_rss_kib": 1036784,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "started_epoch": 1791587489.8010638,
+      "finished_epoch": 1791587632.4308693,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__destructuring.ts.pending"
+        ],
+        "wall_seconds": 142.45730487700075,
+        "peak_rss_kib": 1035600,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "builderState.ts",
+      "started_epoch": 1791587572.4510293,
+      "finished_epoch": 1791587647.136562,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/builderState.ts.pending"
+        ],
+        "wall_seconds": 74.46404731300026,
+        "peak_rss_kib": 1031524,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "sourcemap.ts",
+      "started_epoch": 1791587399.590077,
+      "finished_epoch": 1791587664.1640298,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/sourcemap.ts.pending"
+        ],
+        "wall_seconds": 264.43269746999977,
+        "peak_rss_kib": 1035068,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "tracing.ts",
+      "started_epoch": 1791587632.4310317,
+      "finished_epoch": 1791587695.3325682,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/tracing.ts.pending"
+        ],
+        "wall_seconds": 62.69415933599976,
+        "peak_rss_kib": 907964,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "started_epoch": 1791587647.1367342,
+      "finished_epoch": 1791587705.2634282,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__es2020.ts.pending"
+        ],
+        "wall_seconds": 57.95260197599964,
+        "peak_rss_kib": 1033136,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "started_epoch": 1791587664.164278,
+      "finished_epoch": 1791587722.9172933,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/factory__emitNode.ts.pending"
+        ],
+        "wall_seconds": 58.54844651100029,
+        "peak_rss_kib": 1029740,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "started_epoch": 1791587600.7868707,
+      "finished_epoch": 1791587782.2021174,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry-priority/records/transformers__module__esnextAnd2015.ts.pending"
+        ],
+        "wall_seconds": 181.25310344100035,
+        "peak_rss_kib": 1034612,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    }
+  ]
+}
