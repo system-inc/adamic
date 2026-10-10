@@ -1,0 +1,17 @@
+{
+  "sha": "2dd2bf70c72e009a6964ed11838cc35c078c68d0",
+  "candidate": "2dd2bf70c72e009a6964ed11838cc35c078c68d0",
+  "base": "0bf6186d9753b2ee809965d2510531275e43d867",
+  "base_name": "main",
+  "branch": "cloud/land-stack-chain-slice-4-2dd2bf70",
+  "tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "status": "red",
+  "failure": {
+    "step": "merge",
+    "after_seconds": 0.0,
+    "detail": "conflicts with main 0bf6186d9753b2ee809965d2510531275e43d867 in internal/oracle/counts.md"
+  },
+  "merge_conflicts": [
+    "internal/oracle/counts.md"
+  ]
+}
