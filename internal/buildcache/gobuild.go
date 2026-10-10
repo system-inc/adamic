@@ -25,7 +25,9 @@ import (
 func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
 	t.Helper()
 	arguments = reproducible(arguments)
-	inputs, err := GoInputs(output, pkg, arguments, environment)
+	var inputs Inputs
+	var err error
+	keying(func() { inputs, err = GoInputs(output, pkg, arguments, environment) })
 	if err != nil {
 		t.Fatalf("build %s: %v", pkg, err)
 	}
@@ -76,7 +78,12 @@ var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIME
 // goSettings runs go env for names in directory (the working directory when empty) with environment added, and
 // returns each variable as goSetting keys it, in the order asked, with the values go reported. -json among names is
 // ignored: the report is the same either way.
-func goSettings(directory string, environment, names []string) ([]string, map[string]string, error) {
+func goSettings(directory string, environment, names []string) (settings []string, values map[string]string, err error) {
+	keying(func() { settings, values, err = goSettingsKeyed(directory, environment, names) })
+	return settings, values, err
+}
+
+func goSettingsKeyed(directory string, environment, names []string) ([]string, map[string]string, error) {
 	var asked []string
 	for _, name := range names {
 		if name != "-json" {
