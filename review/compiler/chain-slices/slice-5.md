@@ -1,8 +1,8 @@
-Built slice 5 on main: placeholder initializers, parser construction and speculation, named stack guards, and exact backend-stop rulings for Outcome 24.
-Member commits: bf65c361, df996382, a47ac4cf; contract/counts correction ca547958; current-main merge 235bc94c.
-Commands: bounded lowering and oracle shards pass; Node/native/JavaScript fixtures pass; counts regeneration and verification pass; reader guard, vet and lane checks pass.
-Mutants: all 23 recorded compiler/backend mutations and both catalog entries caught; executed IR/runtime mutations are documented below.
-Not covered: complete native TypeScript parser, Program-region lifetime, arbitrary-input admission equivalence, full gate, other operating systems, and runtime-owner clearance.
+Ruled admission-delta proof passes with 22 Node agreements and eight listed negative witnesses; factory-use.a agrees and is not listed.
+Delivery: compiler/chain-slice-5 from 2841bccd; tool dependency compiler/admission-delta is separate and unmerged; final SHAs are reported by the worker.
+Commands: complete 1,071-program census plus mandatory revision diff passes, 30 new admissions, zero omissions; native parser RSS observations are below.
+Mutants: the type-correct speculative repair agrees cleanly, then retained stopping artifacts are rejected as an unlisted divergence.
+Not covered: full adapted TypeScript parser, Program-region lifetime, arbitrary-input admission equivalence, the full gate, or non-Linux platforms.
 
 Base was origin/main 5e33a17b186a8a2218d27b69b21e2de5acc5b750. Current main 98008bbba2881939e07a9d74031994102a3bbe36 was merged only after it landed. No other slice, chain, area branch, or unlanded worker branch was merged. The chain used for source/repair audit was f5236b48ee11d680c5288e3074c2fec6ad26a09a. The delivery contains one feature commit per retained member, plus the main-contract/counts correction, current-main reconciliation and review evidence.
 
@@ -12,7 +12,7 @@ Base was origin/main 5e33a17b186a8a2218d27b69b21e2de5acc5b750. Current main 9800
 | step24-parser-main | e503868c | kept | df996382 | placeholders in this slice | Outcome 24 factory, NodeArray, speculation and stack slice; #ktz9fek and #cs3ehy8 contract work |
 | per-backend-stops | 7a151f7f | kept | a47ac4cf | named stack guard in this slice | #z1vjxxd reproduction and proofs |
 
-Task #wj4pmt1 receives this independently based slice; the complete chain task and integration acceptance are not claimed closed. Runtime-owner clearance remains outstanding.
+Task #wj4pmt1 receives this independently based slice; the complete chain task and integration acceptance are not claimed closed. Runtime-owner clearance was supplied by @system_adamic_runtime; the follow-up is comment/report only.
 
 Source extraction follows the refined ranges, excluding review evidence and stale counts, rather than branch-tip ancestry:
 
@@ -107,4 +107,6 @@ Runtime files changed, listed for @system_adamic_runtime clearance:
 - `internal/native/runtime/union.c`
 - `oracle/adamic.mjs`
 
-Runtime-owner clearance has not been obtained by this worker. No cohere file was copied. The complete parser and Program lifetime, 301-project native corpus certification, fresh pinned scout remeasurement, optional-only array relation admission, whole gate, WASI and non-Linux platforms were not covered. Delivery serves Outcome 24's bounded native parser construction/speculation/stack machinery, pending integration acceptance.
+Runtime-owner clearance was supplied by @system_adamic_runtime, with the metadata comment and RSS/rescan report follow-up recorded in delta-negatives/REPORT.md. No cohere file was copied. The complete parser and Program lifetime, 301-project native corpus certification, fresh pinned scout remeasurement, optional-only array relation admission, whole gate, WASI and non-Linux platforms were not covered. Delivery serves Outcome 24's bounded native parser construction/speculation/stack machinery, pending integration acceptance.
+
+Admission-delta ruling follow-up: the new tool now proves 22 ordinary Node agreements and eight accepted hash-listed witnesses, rather than treating factory-use.a as a negative witness. The list, all three candidate observations, the type-correct repaired-source mutant, native parse RSS and bounded rescan findings are in [the delta-negatives report](../chain-slice-5/delta-negatives/REPORT.md). Earlier 21-plus-nine wording above records the previous per-backend proof, superseded for admission-delta classification by this follow-up. The ledger is cloud/admission-corpus/negative-witnesses.json; adding an entry is a ruling routed to @system_adamic.
