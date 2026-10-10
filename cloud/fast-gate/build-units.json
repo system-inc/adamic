@@ -1,6 +1,7 @@
 {
   "version": 1,
   "packages": {
+    "bridge/tsgo": "go list -deps -test -json to key each bridge product, never remembered (products_test.go:30)",
     "cmd/adamic-gate": "go test in a temp module, to read which leaf tests a -run pattern selects (main_test.go:44)",
     "cmd/adamic-gocacheprog": "go build -x with this program as GOCACHEPROG, cold then warm, read from go's trace (main_test.go:291)",
     "cmd/adamic-test262": "go build of ./cmd/adamic outside any product (run.go:63, run.go:662, performance_test.go:24)",
@@ -8,6 +9,7 @@
     "internal/fuzz": "go build of adamic in Prepare (run.go:46)",
     "internal/ir": "go list -export compiles every dependency for the call target guard (call_targets_guard_test.go:48)",
     "stage1/cohere/css": "go test -overlay of the Go parser and printer oracles (css_test.go:102, print_test.go:40)",
+    "stage1/cohere/estree": "go list and go env to key every recovery build (recovery_cache_test.go:28, :106)",
     "stage1/cohere/graphql": "go test -overlay of Go cohere's harness (graphql_test.go:346)",
     "stage1/cohere/json": "go test -overlay per call of the audit oracle (audit_test.go:276)",
     "stage1/cohere/lint/helpers": "go build -overlay of the Go oracle (helpers_test.go:57)",
@@ -22,6 +24,7 @@
     "stage1/cohere/values": "go test -overlay of Go cohere's harness (values_test.go:349)",
     "stage3/census/latent/refusalrewrite": "go test of a temp module holding Rewrite's output (rewrite_test.go:179)",
     "stage3/census/latent/statecopy": "go run of the generator (main_test.go:26, publication_unix_test.go:36)",
-    "stage3/census/latent/statementrewrite": "go run of the generator (main_test.go:23)"
+    "stage3/census/latent/statementrewrite": "go run of the generator (main_test.go:23)",
+    "stage3/fixtures": "go list, go env and go version to key the oracle hook per fixture (products_test.go:26)"
   }
 }
