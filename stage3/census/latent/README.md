@@ -251,3 +251,18 @@ Totals outside that interval, and whole-file or whole-corpus totals, are invalid
 for this partial ledger. The ordinary full census and diagnostic replay modes are
 unchanged. [Historical hidden 04 evidence](../../../review/compiler/hidden-boundaries-main/step3/historical-optional-array/REPORT.md) verifies this clipping
 against the original full-census result before comparing the current compiler.
+
+## Speculative continuation
+
+Set `LATENT_SPECULATIVE=1` on this same guarded overlay binary to recover failed
+expressions, statements and signatures and visit their children. Normal builds
+do not include the speculative implementation. `root_kind` is the exact reason;
+`depth` counts failed AST ancestors, excluding the site's own boundary. The driver
+buffers file observations until every file is examined so depth includes dependency
+boundaries discovered later. It retains checker diagnostics and never emits IR.
+
+[Speculative results](../speculative/README.md) contain the depth tables, top twenty,
+coverage inventory, reproduction commands and mutants.
+[Method and limits](../speculative/method.md) explain opaque checked placeholders
+and how speculative examination differs from successful lowering.
+`LATENT_MUTANT_NO_STUBS=1 LATENT_FULL=1` restores the existing full census exactly.
