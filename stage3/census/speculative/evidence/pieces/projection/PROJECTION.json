@@ -1,0 +1,438 @@
+{
+  "definition": "Single-CPU wall time is the core-cost proxy; fixed project overhead plus byte cost extrapolated from the six largest checker pieces. Sample extrema are scenarios, not confidence bounds.",
+  "assumptions": [
+    "Same per-core throughput and sufficient RAM on the larger box.",
+    "Repeated loader, refusal scan and registration are included in every piece.",
+    "Measured checker load/scan/registration overhead is charged to every file. This is deliberately cautious about repeated prepasses but is not a proven upper bound.",
+    "Unmeasured bodies may be slower, fail, or overflow the stack; byte size alone is not a cost proof.",
+    "A censored sample contributes its observed attempt time only; completion requires unknown extra time. Scenarios then have an unresolved completion tail, not a finite finish forecast.",
+    "Top-level containers outside createTypeChecker are indivisible; more cores cannot shorten that critical path.",
+    "Coverage remains the previously published 65 files; these six samples do not finish checker."
+  ],
+  "fixed_overhead_seconds": 108.77796296350061,
+  "transformer_empirical_floor_seconds": 34.1172140409999,
+  "measured": [
+    {
+      "piece": 0,
+      "bytes": 327341,
+      "atoms": [
+        "326122:653463:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-000.pending.jsonl"
+      ],
+      "wall_seconds": 900.0702889549993,
+      "peak_rss_kib": 1175036,
+      "exit": 124,
+      "user_cpu_seconds": 872.290437,
+      "system_cpu_seconds": 10.080572,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.1689822190000996,
+        "contract_scan": 3.2418259709993436,
+        "walk": 107.4194226540003
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 1,
+      "bytes": 171898,
+      "atoms": [
+        "1316356:1488254:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-001.pending.jsonl"
+      ],
+      "wall_seconds": 401.9600161849994,
+      "peak_rss_kib": 1036352,
+      "exit": 0,
+      "user_cpu_seconds": 379.020901,
+      "system_cpu_seconds": 3.303914,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.1721688689995062,
+        "contract_scan": 3.241079327999614,
+        "registration": 107.69048453799951,
+        "walk": 107.81648083800064,
+        "completed": 401.85973319000004
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 2,
+      "bytes": 76626,
+      "atoms": [
+        "1725809:1802435:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-002.pending.jsonl"
+      ],
+      "wall_seconds": 148.12760431800052,
+      "peak_rss_kib": 1035632,
+      "exit": 0,
+      "user_cpu_seconds": 138.310653,
+      "system_cpu_seconds": 1.734531,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.438950701000067,
+        "contract_scan": 3.4829263589999755,
+        "registration": 109.59500286399998,
+        "walk": 109.73944508900058,
+        "completed": 148.02737510100087
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 3,
+      "bytes": 52940,
+      "atoms": [
+        "1591053:1643993:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-003.pending.jsonl"
+      ],
+      "wall_seconds": 180.02298485899883,
+      "peak_rss_kib": 1037052,
+      "exit": 0,
+      "user_cpu_seconds": 167.936131,
+      "system_cpu_seconds": 1.90156,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.3005690579993825,
+        "contract_scan": 3.4818056490003073,
+        "registration": 107.31906517700008,
+        "walk": 107.56624692900004,
+        "completed": 179.92272405599942
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 6,
+      "bytes": 42099,
+      "atoms": [
+        "50085:50129:VariableStatement",
+        "78863:78934:VariableStatement",
+        "90114:90153:VariableStatement",
+        "90986:91051:VariableStatement",
+        "105088:105380:FunctionDeclaration",
+        "154454:155182:FunctionDeclaration",
+        "209106:209313:FunctionDeclaration",
+        "251330:251845:FunctionDeclaration",
+        "703756:704825:FunctionDeclaration",
+        "753546:754103:FunctionDeclaration",
+        "756757:756925:FunctionDeclaration",
+        "868614:868846:FunctionDeclaration",
+        "1001174:1002503:FunctionDeclaration",
+        "1018491:1018584:FunctionDeclaration",
+        "1039601:1040579:FunctionDeclaration",
+        "1095517:1095738:FunctionDeclaration",
+        "1185702:1186148:FunctionDeclaration",
+        "1248926:1249111:FunctionDeclaration",
+        "1527051:1527191:FunctionDeclaration",
+        "1677180:1678068:FunctionDeclaration",
+        "1842494:1842869:FunctionDeclaration",
+        "2106071:2107275:FunctionDeclaration",
+        "2278298:2278551:FunctionDeclaration",
+        "2279523:2279672:FunctionDeclaration",
+        "2292123:2292924:FunctionDeclaration",
+        "2318996:2319664:FunctionDeclaration",
+        "2330319:2330929:FunctionDeclaration",
+        "2405427:2433269:FunctionDeclaration",
+        "2461857:2462127:FunctionDeclaration",
+        "2599847:2600190:FunctionDeclaration",
+        "2601851:2601966:FunctionDeclaration",
+        "2684816:2685294:FunctionDeclaration",
+        "2723724:2724043:FunctionDeclaration",
+        "3127421:3127826:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-006.pending.jsonl"
+      ],
+      "wall_seconds": 206.74773910800104,
+      "peak_rss_kib": 1035800,
+      "exit": 0,
+      "user_cpu_seconds": 193.01401,
+      "system_cpu_seconds": 1.7170459999999999,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.362632106000092,
+        "contract_scan": 3.4605918540000857,
+        "registration": 112.48318941300022,
+        "walk": 112.72453895299986,
+        "completed": 206.63763556699996
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 9,
+      "bytes": 42099,
+      "atoms": [
+        "83971:84093:VariableStatement",
+        "89858:89935:VariableStatement",
+        "90200:90239:VariableStatement",
+        "91112:91177:VariableStatement",
+        "93424:93507:VariableStatement",
+        "94111:94155:VariableStatement",
+        "160976:161175:FunctionDeclaration",
+        "176754:176966:FunctionDeclaration",
+        "187329:188210:FunctionDeclaration",
+        "210213:210473:FunctionDeclaration",
+        "233437:250208:FunctionDeclaration",
+        "258946:259118:FunctionDeclaration",
+        "286065:286354:FunctionDeclaration",
+        "324149:324751:FunctionDeclaration",
+        "732080:732525:FunctionDeclaration",
+        "751504:753072:FunctionDeclaration",
+        "920504:920955:FunctionDeclaration",
+        "935494:935741:FunctionDeclaration",
+        "1052236:1052404:FunctionDeclaration",
+        "1136703:1138109:FunctionDeclaration",
+        "1174869:1175499:FunctionDeclaration",
+        "1233819:1235620:FunctionDeclaration",
+        "1287316:1288030:FunctionDeclaration",
+        "1493341:1493675:FunctionDeclaration",
+        "1547172:1549104:FunctionDeclaration",
+        "1666759:1667114:FunctionDeclaration",
+        "1925813:1926910:FunctionDeclaration",
+        "2008039:2008559:FunctionDeclaration",
+        "2155243:2156150:FunctionDeclaration",
+        "2218693:2219730:FunctionDeclaration",
+        "2234444:2237178:FunctionDeclaration",
+        "2293334:2293558:FunctionDeclaration",
+        "2631954:2633275:FunctionDeclaration",
+        "2656593:2657104:FunctionDeclaration",
+        "2710733:2710859:FunctionDeclaration",
+        "2729148:2731485:FunctionDeclaration",
+        "2946848:2947145:FunctionDeclaration",
+        "3059332:3060071:FunctionDeclaration",
+        "3103292:3103674:FunctionDeclaration"
+      ],
+      "command": [
+        "/workspace/b2wbbha-storage/final-piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/checker-sample/piece-009.pending.jsonl"
+      ],
+      "wall_seconds": 286.5840489220009,
+      "peak_rss_kib": 1035676,
+      "exit": 0,
+      "user_cpu_seconds": 274.793626,
+      "system_cpu_seconds": 1.740243,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.297760957000719,
+        "contract_scan": 3.2852258940001775,
+        "registration": 113.02240489200085,
+        "walk": 113.15191065600084,
+        "completed": 286.48379227999976
+      },
+      "time_limit_seconds": 900.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    }
+  ],
+  "prepass_censored": false,
+  "measured_sample_cpu_core_hours": 0.5682898955555555,
+  "completion_projection_censored": true,
+  "completed_samples": 5,
+  "censored_or_failed_samples": [
+    0
+  ],
+  "remaining_files": 14,
+  "remaining_source_bytes": 6249721,
+  "total_pieces": 731,
+  "total_atom_bytes": 6249597,
+  "workload": [
+    {
+      "file": "binder.ts",
+      "source_bytes": 195107,
+      "plan": "binder.ts.plan.json",
+      "pieces": 16,
+      "atoms": 16,
+      "atom_bytes": 195105,
+      "largest_piece_bytes": 171473
+    },
+    {
+      "file": "builder.ts",
+      "source_bytes": 117298,
+      "plan": "builder.ts.plan.json",
+      "pieces": 64,
+      "atoms": 85,
+      "atom_bytes": 117296,
+      "largest_piece_bytes": 28044
+    },
+    {
+      "file": "checker.ts",
+      "source_bytes": 3154156,
+      "plan": "checker.ts.plan.json",
+      "pieces": 64,
+      "atoms": 2400,
+      "atom_bytes": 3154058,
+      "largest_piece_bytes": 327341
+    },
+    {
+      "file": "commandLineParser.ts",
+      "source_bytes": 183733,
+      "plan": "commandLineParser.ts.plan.json",
+      "pieces": 64,
+      "atoms": 166,
+      "atom_bytes": 183731,
+      "largest_piece_bytes": 40879
+    },
+    {
+      "file": "emitter.ts",
+      "source_bytes": 274627,
+      "plan": "emitter.ts.plan.json",
+      "pieces": 50,
+      "atoms": 50,
+      "atom_bytes": 274625,
+      "largest_piece_bytes": 223400
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "source_bytes": 54177,
+      "plan": "executeCommandLine.ts.plan.json",
+      "pieces": 50,
+      "atoms": 50,
+      "atom_bytes": 54175,
+      "largest_piece_bytes": 7651
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "source_bytes": 336646,
+      "plan": "factory__nodeFactory.ts.plan.json",
+      "pieces": 26,
+      "atoms": 26,
+      "atom_bytes": 336644,
+      "largest_piece_bytes": 309876
+    },
+    {
+      "file": "factory/utilities.ts",
+      "source_bytes": 76615,
+      "plan": "factory__utilities.ts.plan.json",
+      "pieces": 64,
+      "atoms": 108,
+      "atom_bytes": 76613,
+      "largest_piece_bytes": 7010
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "source_bytes": 183618,
+      "plan": "moduleNameResolver.ts.plan.json",
+      "pieces": 64,
+      "atoms": 163,
+      "atom_bytes": 183616,
+      "largest_piece_bytes": 18473
+    },
+    {
+      "file": "parser.ts",
+      "source_bytes": 541260,
+      "plan": "parser.ts.plan.json",
+      "pieces": 64,
+      "atoms": 75,
+      "atom_bytes": 541258,
+      "largest_piece_bytes": 416598
+    },
+    {
+      "file": "program.ts",
+      "source_bytes": 271300,
+      "plan": "program.ts.plan.json",
+      "pieces": 64,
+      "atoms": 84,
+      "atom_bytes": 271298,
+      "largest_piece_bytes": 185123
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "source_bytes": 231789,
+      "plan": "transformers__es2015.ts.plan.json",
+      "pieces": 13,
+      "atoms": 13,
+      "atom_bytes": 231787,
+      "largest_piece_bytes": 215321
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "source_bytes": 114655,
+      "plan": "tsbuildPublic.ts.plan.json",
+      "pieces": 64,
+      "atoms": 106,
+      "atom_bytes": 114653,
+      "largest_piece_bytes": 14389
+    },
+    {
+      "file": "utilities.ts",
+      "source_bytes": 514740,
+      "plan": "utilities.ts.plan.json",
+      "pieces": 64,
+      "atoms": 892,
+      "atom_bytes": 514738,
+      "largest_piece_bytes": 32053
+    }
+  ],
+  "projections": {
+    "fast_sample": {
+      "seconds_per_byte": 0.0005009808580507914,
+      "fixed_overhead_seconds": 107.4194226540003,
+      "core_hours": 22.99342269980447,
+      "largest_piece_seconds": 900.0702889549993,
+      "wall_seconds": {
+        "14": 5951.966976572645,
+        "32": 2655.1600840180113,
+        "64": 1325.9212943879995
+      }
+    },
+    "median_sample": {
+      "seconds_per_byte": 0.0017111515860975624,
+      "fixed_overhead_seconds": 108.77796296350061,
+      "core_hours": 25.12819095432311,
+      "largest_piece_seconds": 900.0702889549993,
+      "wall_seconds": {
+        "14": 6519.559047400199,
+        "32": 2893.03850125549,
+        "64": 1453.2474986642806
+      }
+    },
+    "slow_sample": {
+      "seconds_per_byte": 0.004119626078196633,
+      "fixed_overhead_seconds": 113.15191065600084,
+      "core_hours": 29.713151370759615,
+      "largest_piece_seconds": 1829.3798955805617,
+      "wall_seconds": {
+        "14": 7671.092419818047,
+        "32": 3400.162924897173,
+        "64": 1829.3798955805617
+      }
+    }
+  },
+  "measured_sample_wall_core_hours": 0.5898646339852778,
+  "bounded_attempt_budget": {
+    "per_piece_seconds": 900.0,
+    "core_hours": 182.75,
+    "wall_seconds": {
+      "14": 47700.0,
+      "32": 20700.0,
+      "64": 10800.0
+    },
+    "note": "Nominal time-limit budget for attempts, not completed coverage; KILL grace, supervisor and publication overhead excluded."
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "mapper_fix": "already on main: 6b33ec61da399ae79cfba0900c9f753ed38faa1a equivalent generic binder inference; census copier preserves opaque mapper",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 7,
+    "Refused": 2
+  },
+  "stream_inventory": {
+    "inputs": {
+      "binary_sha256": "809b3fbd2524e66a03f4b4f6a0a04516087eeb3aaf526b18203d3bff9652e95c",
+      "root": "/workspace/b2wbbha-storage/stream-guard-audit/source",
+      "files": [
+        {
+          "file": "main.a",
+          "bytes": 120,
+          "sha256": "a29addcf59bba5fc182e5511a7da3b3ced8d456286bb11c468cbe9ff2a3b75c7"
+        },
+        {
+          "file": "target.a",
+          "bytes": 122,
+          "sha256": "c85112175e7d3b0faa8a3efcedc91e9de1a154c5f69e0cdad9605daec5f20ad2"
+        }
+      ],
+      "seconds": 30.0,
+      "rss_mib": 6144,
+      "project": "whole compiler; only the census walk is filtered"
+    },
+    "completed": [
+      {
+        "file": "main.a",
+        "bytes": 120,
+        "sha256": "a29addcf59bba5fc182e5511a7da3b3ced8d456286bb11c468cbe9ff2a3b75c7",
+        "metrics": {
+          "command": [
+            "/workspace/b2wbbha-storage/final-piece-census",
+            "/workspace/b2wbbha-storage/stream-guard-audit/source",
+            "/workspace/b2wbbha-storage/stream-guard-audit/run/records/main.a.pending"
+          ],
+          "wall_seconds": 0.10707686900059343,
+          "peak_rss_kib": 30040,
+          "exit": 0,
+          "user_cpu_seconds": 0.031273999999999996,
+          "system_cpu_seconds": 0.0075439999999999995,
+          "phase_first_wall_seconds": {},
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false,
+          "unit_deadline_limited": false,
+          "go_env": {
+            "GOMEMLIMIT": "1GiB",
+            "GOGC": "200",
+            "GOMAXPROCS": "4"
+          }
+        }
+      },
+      {
+        "file": "target.a",
+        "bytes": 122,
+        "sha256": "c85112175e7d3b0faa8a3efcedc91e9de1a154c5f69e0cdad9605daec5f20ad2",
+        "metrics": {
+          "command": [
+            "/workspace/b2wbbha-storage/final-piece-census",
+            "/workspace/b2wbbha-storage/stream-guard-audit/source",
+            "/workspace/b2wbbha-storage/stream-guard-audit/run/records/target.a.pending"
+          ],
+          "wall_seconds": 0.10696064300100261,
+          "peak_rss_kib": 30428,
+          "exit": 0,
+          "user_cpu_seconds": 0.031797,
+          "system_cpu_seconds": 0.009974,
+          "phase_first_wall_seconds": {},
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false,
+          "unit_deadline_limited": false,
+          "go_env": {
+            "GOMEMLIMIT": "1GiB",
+            "GOGC": "200",
+            "GOMAXPROCS": "4"
+          }
+        }
+      }
+    ],
+    "incomplete": []
+  },
+  "counts": {
+    "NotYet": [
+      2,
+      2,
+      1,
+      0,
+      0
+    ],
+    "Refused": [
+      0,
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "a WithStatement",
+      "counts": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "with",
+      "counts": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a generic function as a value",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 242,
+  "examined_bytes": 242,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 242,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 9,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "main.a",
+      "sha256": "a29addcf59bba5fc182e5511a7da3b3ced8d456286bb11c468cbe9ff2a3b75c7",
+      "source_bytes": 120,
+      "total_nodes": 17,
+      "visited_nodes": 22,
+      "attempted_nodes": 16,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "target.a",
+      "sha256": "c85112175e7d3b0faa8a3efcedc91e9de1a154c5f69e0cdad9605daec5f20ad2",
+      "source_bytes": 122,
+      "total_nodes": 22,
+      "visited_nodes": 22,
+      "attempted_nodes": 10,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}
