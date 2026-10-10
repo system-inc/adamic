@@ -3,7 +3,6 @@ package json
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
@@ -43,15 +42,7 @@ type jsonTopBuild struct {
 func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
 	t.Helper()
 	jsonTopState.corpus.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		state, err := cachedRepositoryCasesAtPin(root, repositoryCorpusCommit)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if len(state) == 0 {
+		if tracked, _ := pinnedCorpusProduct(t); len(tracked) == 0 {
 			t.Fatal("repository JSON corpus is empty")
 		}
 		jsonTopState.cases = corpusCases(t)
