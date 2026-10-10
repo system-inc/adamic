@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -25,6 +26,41 @@ import (
 func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
 	t.Helper()
 	repo := root(t)
+	sources := recoveryDependencies(t, repo)
+	names := append([]string(nil), sources.names...)
+	external := append([]string(nil), sources.external...)
+	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
+	for _, file := range sourceFiles {
+		source, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		normalized := strings.ReplaceAll(string(source), filepath.ToSlash(filepath.Join(repo, "stage1/typescript")), "../../typescript")
+		flags = append(flags, filepath.Base(file)+":"+fmt.Sprintf("%x", sha256.Sum256([]byte(normalized))))
+	}
+	flags = append(flags, external...)
+	flags = append(flags, buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"))
+	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+}
+
+// recoverySources is the part of every lowered program's key that doesn't depend on the program: the compiler's
+// repository files (with stage1/typescript), sorted, and its module-cache sources as named content fingerprints.
+type recoverySources struct{ names, external []string }
+
+// recoveryDependencies discovers the compiler's sources with go list, once per process for each repository, since
+// every recovery build keys by them. Parallel builds wait on the first discovery; a failed one isn't remembered.
+// Callers copy the slices.
+func recoveryDependencies(t *testing.T, repo string) recoverySources {
+	t.Helper()
+	recoveryDiscovered.Lock()
+	defer recoveryDiscovered.Unlock()
+	if sources, ok := recoveryDiscovered.sources[repo]; ok {
+		return sources
+	}
 	cmd := exec.Command("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
 	cmd.Dir = repo
 	output, err := cmd.Output()
@@ -87,24 +123,19 @@ func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
 	for file := range files {
 		names = append(names, file)
 	}
-	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
-	for _, file := range sourceFiles {
-		source, err := os.ReadFile(file)
-		if err != nil {
-			t.Fatal(err)
-		}
-		normalized := strings.ReplaceAll(string(source), filepath.ToSlash(filepath.Join(repo, "stage1/typescript")), "../../typescript")
-		flags = append(flags, filepath.Base(file)+":"+fmt.Sprintf("%x", sha256.Sum256([]byte(normalized))))
-	}
 	sort.Strings(names)
 	sort.Strings(external)
-	flags = append(flags, external...)
-	flags = append(flags, buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"))
-	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	sources := recoverySources{names: names, external: external}
+	if recoveryDiscovered.sources == nil {
+		recoveryDiscovered.sources = map[string]recoverySources{}
+	}
+	recoveryDiscovered.sources[repo] = sources
+	return sources
+}
+
+var recoveryDiscovered struct {
+	sync.Mutex
+	sources map[string]recoverySources
 }
 
 // native.Build embeds its random scratch path in sanitizer metadata. This local
