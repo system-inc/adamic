@@ -1657,3 +1657,19 @@ reads cmd/adamic internal/lower/testdata/*
 reads cmd/adamic internal/oracle/testdata/*
 reads internal/native internal/load/testdata/*
 reads internal/corpusfiles cohere
+
+# Tests' proposed lines for what 8b2af706 misses (#pcghsyd, 87 cross-package reads in 20 packages).
+reads internal/oracle stage3/drivers/scanner/probes/*/main.a
+reads internal/oracle stage3/fixtures/*
+reads internal/lower internal/oracle/testdata/*.a
+reads internal/flow internal/load/testdata/*.ts
+reads internal/fresh internal/load/testdata/*.ts
+reads internal/native internal/regexp/testdata/*
+reads stage1/cohere/lint internal/native/runtime/*.[ch]
+reads stage1/cohere/typeaware stage1/cohere/lint/*
+reads stage1/cohere/typeaware stage1/typescript/*
+reads stage1/cohere/graphql/printer stage1/cohere/json/*
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/testdata/*.mjs
+reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/*
+reads stage1/cohere/tsprinter stage1/typescript/parser/*
+reads stage1/typescript/parser stage1/typescript/scanner/*
