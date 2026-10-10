@@ -63,7 +63,11 @@ func witnessScriptKindLoweredProduct(t *testing.T) string {
 		if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
+		if err := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644); err != nil {
+			return err
+		}
+		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(out)
 	})
 }
 
