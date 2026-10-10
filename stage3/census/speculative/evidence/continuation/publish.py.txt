@@ -1,0 +1,111 @@
+"""Publish independently finalized cumulative records; measurement jobs must be finished."""
+import gzip,hashlib,json,shutil
+from pathlib import Path
+repo=Path('/workspace/adamic')
+scripts=repo/'stage3/census/speculative'
+root=Path('/tmp/pqjagjf')
+run=root/'retry-priority'
+final=Path('/workspace/pqjagjf-storage/final-result')
+evidence=scripts/'evidence/continuation'
+evidence.mkdir(parents=True,exist_ok=True)
+def archive(source,target):
+    target.parent.mkdir(parents=True,exist_ok=True)
+    raw=source.read_bytes()
+    target.write_bytes(gzip.compress(raw,mtime=0) if target.suffix=='.gz' else raw)
+# Retain previous published summary and totals, not duplicate observations.
+for name in ('README.md','RESULT.json'):
+    before=evidence/('BEFORE-'+name)
+    if not before.exists():shutil.copyfile(scripts/name,before)
+before=json.loads((evidence/'BEFORE-RESULT.json').read_text())
+result=json.loads((final/'RESULT.json').read_text())
+checker_dir=root/('checker-exclusive' if (root/'checker-exclusive/metrics.json').exists() else 'checker-final')
+checker=json.loads((checker_dir/'metrics.json').read_text())
+progress=json.loads((checker_dir/'progress.json').read_text())
+checker_outcome='completed' if checker['exit']==0 else 'timed out' if checker['exit']==124 else 'failed'
+checker_variant='exclusive four-CPU' if checker.get('exclusive') else 'overlapping one-CPU'
+ledger=[]
+for item in result['stream_inventory']['completed']+result['stream_inventory']['incomplete']:
+    m=item['metrics']
+    ledger.append(dict(file=item['file'],source_bytes=item['bytes'],completed=item in result['stream_inventory']['completed'],metrics=m))
+ledger.sort(key=lambda x:x['file'])
+timeouts=[x['file'] for x in ledger if not x['completed'] and x['metrics'] and x['metrics']['exit']==124 and x['metrics']['time_limit_seconds']==600]
+short=[x['file'] for x in ledger if not x['completed'] and x['metrics'] and x['metrics'].get('unit_deadline_limited')]
+slow=[x for x in ledger if x['metrics'] and x['metrics']['wall_seconds']>120]
+failures=[]
+for item in ledger:
+    m=item['metrics']
+    if item['completed'] or not m or m['exit'] in (0,124):continue
+    log=run/(item['file'].replace('/','__')+'.log')
+    text=log.read_text(errors='replace') if log.exists() else ''
+    item['diagnostic']='Go stack overflow with repeated lower.inferTypes frames' if 'fatal error: stack overflow' in text and 'lowering).inferTypes' in text else text.splitlines()[0] if text.splitlines() else 'measurement failed'
+    failures.append(item)
+summary=dict(tasks=['#pqjagjf','#j4wwk2f'],previous_commit='76487f84',checkpoint_commit='155445a9',before=dict(files=len(before['files']),bytes=before['examined_bytes']),after=dict(files=len(result['files']),bytes=result['examined_bytes']),total=dict(files=79,bytes=result['typescript_source_bytes']),full_600_second_timeouts=timeouts,unit_deadline_files=short,measurement_failures=failures,checker=dict(metrics=checker,last_checkpoint=progress,variant=checker_variant,earlier_1800_second_probe=json.loads((root/'checker-final/metrics.json').read_text())),per_file=ledger)
+(evidence/'COVERAGE.json').write_text(json.dumps(summary,indent=2)+'\n')
+# Preserve the full per-attempt provenance, including aborted and deferred work.
+for directory in ('retry','retry-priority','checker','checker-final','checker-exclusive'):
+    source=root/directory
+    for p in sorted(source.rglob('*')):
+        if not p.is_file() or p.name.endswith('.pending'):continue
+        if directory.startswith('retry') and p.suffix not in ('.json','.jsonl','.sha256','.log'):continue
+        rel=p.relative_to(source)
+        target=evidence/directory/rel
+        if p.suffix in ('.log','.jsonl'):target=target.with_name(target.name+'.gz')
+        archive(p,target)
+for p in sorted(final.iterdir()):
+    if not p.is_file():continue
+    target=evidence/'final-result'/p.name
+    if p.suffix in ('.log','.jsonl') or p.name=='stock.json':target=target.with_name(target.name+'.gz')
+    archive(p,target)
+for p in sorted(root.iterdir()):
+    if p.is_file() and (p.suffix in ('.log','.json') or p.name.startswith('watch') and p.suffix=='.jsonl'):
+        target=evidence/p.name
+        if p.suffix in ('.log','.jsonl'):target=target.with_name(target.name+'.gz')
+        archive(p,target)
+archive(Path('/tmp/pqjagjf-setup.log'),evidence/'setup.log.gz')
+for p in sorted(Path('/workspace/pqjagjf-storage/isolation-final').iterdir()):
+    if p.is_file() and p.suffix in ('.c','.js','.err','.log'):
+        archive(p,evidence/'isolation'/(p.name+'.gz'))
+for p in (root/'retry-priority').glob('*.metrics.json'):
+    assert json.loads(p.read_text())['exit'] != 0 or (run/'records'/(p.name.removesuffix('.metrics.json')+'.jsonl')).exists()
+for p in Path('/tmp/b17vtn1/whole/records').glob('*.jsonl'):
+    assert p.read_bytes() == (run/'records'/p.name).read_bytes(), 'baseline completed record changed'
+
+for name in ('publish.py','finalize_when_done.py','continue_priority.py','unit_deadline.py'):
+    archive(root/name,evidence/(name+'.txt'))
+for directory in (root/'final-runner-proof',root/'progress-v2-proof',Path('/workspace/pqjagjf-storage/concurrency-proof-handoff')):
+    for p in sorted(directory.rglob('*')):
+        if p.is_file() and p.suffix in ('.log','.json','.jsonl','.sha256','.a','.py'):
+            archive(p,evidence/'controls'/directory.name/(str(p.relative_to(directory))+'.gz'))
+shutil.copyfile(final/'RESULT.json',scripts/'RESULT.json')
+text=(final/'README.md').read_text();body=text.split('\n\n',1)[1]
+text='\n'.join([
+'Retried incomplete speculative census files with four bounded, resumable workers.',
+'Compiler base 946a8f09 is unchanged; continuation checkpoint 155445a9 records the two-hour cutoff.',
+f'Coverage grew from {len(before["files"])} to {len(result["files"])} / 79 files, and from {before["examined_bytes"]:,} to {result["examined_bytes"]:,} / {result["typescript_source_bytes"]:,} TypeScript bytes.',
+'Independent depth/coverage audits, stream/progress/concurrency mutants and overlay-off C/JS identity pass.',
+f'{len(timeouts)} files still timed out at 600 seconds; the final checker probe {checker_outcome}; incomplete observations are excluded.'
+])+'\n\n'+body
+text+='\nAll records use the same whole-compiler project, pinned compiler and adapted source hashes as 76487f84. The cumulative table is recounted from the union of completed records; historical and new tables are not summed. Dependency observations may contribute sites without claiming coverage of their entire source file.\n\n'
+text+='| Coverage | Files | TypeScript bytes | Share |\n|---|---:|---:|---:|\n'
+for label,data in [('Before',summary['before']),('After',summary['after'])]:
+    text+=f'| {label} | {data["files"]} / 79 | {data["bytes"]:,} / {result["typescript_source_bytes"]:,} | {100*data["bytes"]/result["typescript_source_bytes"]:.6f}% |\n'
+text+='\nFiles still timed out after a full 600-second budget:\n\n'
+text+='\n'.join('- `'+name+'`' for name in timeouts)+'\n'
+if short:
+    text+='\nFiles stopped by the unit deadline before receiving 600 seconds:\n\n'+'\n'.join('- `'+name+'`' for name in short)+'\n'
+if failures:
+    text+='\nOther incomplete measurements:\n\n| File | Wall seconds | Peak RSS KiB | Exit | Diagnostic |\n|---|---:|---:|---:|---|\n'
+    for item in failures:
+        m=item['metrics'];text+=f'| {item["file"]} | {m["wall_seconds"]:.3f} | {m["peak_rss_kib"]:,} | {m["exit"]} | {item["diagnostic"]} |\n'
+text+=f'\nThe {checker_variant} checker probe {checker_outcome} after **{checker["wall_seconds"]:.3f}s**, peak RSS **{checker["peak_rss_kib"]:,} KiB**. Its last persisted checkpoint at {progress["elapsed_seconds"]:.3f}s was in `{progress["phase"]}` at `{progress["current_where"]}`: **{progress["statements_completed"]}/{progress["total_statements"]} top-level statements completed**, {progress["walker_unique_target_nodes"]:,} unique selected-source walker nodes, {progress["lowerer_unique_target_nodes"]:,} lowerer nodes, and {progress["examined_unique_target_nodes"]:,}/{progress["total_target_ast_nodes"]:,} nodes in the scanner/walker/lowerer union. The scanner had already covered almost all AST nodes; this union does not mean the value walk completed. No partial checker observations enter the table.\n'
+text+='\nFour retry workers each use one CPU and a 600-second wall limit, 3GiB RSS watchdog and 6GiB address-space cap. The first checker probe overlaps them; the final four-CPU probe runs after the batch finishes. Two initial SIGKILLs coincided with tmpfs/cgroup memory pressure and recorded OOM kills; inactive scratch moved to disk and a 1GiB Go heap target allowed fresh parser/utilities and checker attempts. All attempts are archived separately. The 130-minute worst-case batch ceiling exceeded the two-hour unit budget; checkpoint 155445a9 was pushed when the measured forecast crossed that boundary. Measurements stop by 23:58:15 UTC and publication by 00:05:15 UTC.\n'
+text+='\nEvery cumulative per-file measurement over 120 seconds follows; the separate checker probe is listed separately. RSS is the sampled process-group maximum or child rusage maximum, whichever is larger.\n\n| File | Wall seconds | Peak RSS KiB | Exit |\n|---|---:|---:|---:|\n'
+for item in slow:
+    m=item['metrics'];text+=f'| {item["file"]} | {m["wall_seconds"]:.3f} | {m["peak_rss_kib"]:,} | {m["exit"]} |\n'
+text+=f'| checker.ts (separate 1,800s probe) | {checker["wall_seconds"]:.3f} | {checker["peak_rss_kib"]:,} | {checker["exit"]} |\n'
+text+='\nFocused checks: `audit_retry.py`, `audit_progress.py`, `audit_stream.py`, `isolation.py`, `finalize_stream.py` and `verify.py` pass. Mutants caught: serial workers, future deadline, corrupted checksum, dropped completed record, shifted progress nodes/bytes, shifted depth, dropped stream file, incorrect depth/top20/coverage/byte totals, and altered overlay-off C/JS bytes. The prior header controls, mapper Node/native witness and f6bb0b41 directory comparison remain historical evidence; see [prior report](evidence/continuation/BEFORE-README.md) and [validation](validation.md).\n'
+text+='\nSee [continuation method](continuation.md), [coverage and every runtime](evidence/continuation/COVERAGE.json), and [archived logs and records](evidence/continuation). SHA256.json inventories every archived file. Setup completed in 15.926s; nproc=5 with a four-CPU quota.\n'
+(scripts/'README.md').write_text(text)
+index={str(p.relative_to(evidence)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(evidence.rglob('*')) if p.is_file() and p.name!='SHA256.json'}
+(evidence/'SHA256.json').write_text(json.dumps(index,indent=2)+'\n')
+print(json.dumps({k:v for k,v in summary.items() if k not in ('per_file','checker')},indent=2))
