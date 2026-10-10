@@ -129,7 +129,11 @@ func whitespaceLayoutPrepare(t *testing.T) {
 		if err := os.WriteFile(filepath.Join(directory, "policy.mjs"), policy.backend, 0644); err != nil {
 			return err
 		}
+		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
 		paths := map[string]string{"go": products.goBinary, "goLayout": products.goLayout, "sanitized": products.sanitized, "release": products.release, "policy": policy.sanitized}
+		for name, path := range paths {
+			paths[name] = buildcache.Relative(path)
+		}
 		data, err := json.Marshal(paths)
 		if err != nil {
 			return err
@@ -778,6 +782,9 @@ func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLay
 	var paths map[string]string
 	if err := json.Unmarshal(data, &paths); err != nil {
 		t.Fatal(err)
+	}
+	for name, path := range paths {
+		paths[name] = buildcache.Absolute(path)
 	}
 	backend, err := os.ReadFile(filepath.Join(directory, "layout.mjs"))
 	if err != nil {

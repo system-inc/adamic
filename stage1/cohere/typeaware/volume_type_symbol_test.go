@@ -270,13 +270,14 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		if err := command.Run(); err != nil {
 			return fmt.Errorf("oracle: %w %s", err, stderr.Bytes())
 		}
-		return os.WriteFile(filepath.Join(dir, "findings"), stdout.Bytes(), 0444)
+		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
+		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(stdout.String())), 0444)
 	})
 	truthBytes, err := os.ReadFile(filepath.Join(outputDir, "findings"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	return result{stdout: truthBytes}
+	return result{stdout: []byte(buildcache.Absolute(string(truthBytes)))}
 }
 
 func TestVolumeTypeSymbol_000(t *testing.T) {
