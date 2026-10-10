@@ -24,5 +24,8 @@
     "internal_lower_latent_state.go": "dadb89d03b9934754160d6fee1599b3c0f5c4f23614e6ea39aec95bea7052297",
     "internal_lower_lower.go": "769df5f2cb67face0921f260feb4c3b587a2607474abd8e19e903e83b891f256"
   },
-  "compatibility": "Only ir.Program.argumentFacts is left nil in copied snapshots; this derived backend cache recomputes from public state. No other snapshot guard, eligibility, boundary or arithmetic change. Fixture headers removed only in scratch to retain 54/183 known answer."
+  "compatibility": "Only ir.Program.argumentFacts is left nil in copied snapshots; this derived backend cache recomputes from public state. No other snapshot guard, eligibility, boundary or arithmetic change. Fixture headers removed only in scratch to retain 54/183 known answer.",
+  "scheduling_adapter": "file-range.py: output files only; full 81-root checker program unchanged",
+  "range_binary_sha256": "d28df4a29e85f68e5935ec28d5152184606299244bc468d4c6c93b236406672b",
+  "range_overlay_sha256": "aa1c9c4b74f0c0ee529c3c9e2aeea60b6855a8629361f29434a09bf7ab9e34f1"
 }
