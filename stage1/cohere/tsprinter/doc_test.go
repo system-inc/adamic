@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func documentCorpus(t *testing.T) (string, string, string) {
@@ -17,8 +19,11 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+path, "-run=^TestAdamicDocuments$", "./internal/format/doc")
-	command.Dir = cohere
+	// Cohere's doc package with the harness laid over it is a product built ahead; the unit only runs it, in the
+	// package's directory (#5qykzj5).
+	binary := buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", []string{"-overlay=" + path})
+	command := bounded(t, binary, "-test.run=^TestAdamicDocuments$")
+	command.Dir = cohere + "/internal/format/doc"
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go doc corpus %v\n%s", err, output)
