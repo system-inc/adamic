@@ -147,6 +147,18 @@ func TestProduct_query_cost_native(t *testing.T) {
 	t.Parallel()
 	typeAwareNativeProduct(typeAwareProductHarness(t), "query-cost", "testdata/query_cost.ts", false)
 }
+
+// The released-handle refusal reads released.ts's C and its native over the checker archive; no product built either,
+// so Workshop's combined proof (Oct 10) found the C missing on the reading checkout.
+func TestProduct_released_lowered(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released.ts"), "released")
+}
+func TestProduct_released_native(t *testing.T) {
+	t.Parallel()
+	typeAwareNativeProduct(typeAwareProductHarness(t), "released", "testdata/released.ts", false)
+}
 func TestProduct_volume_lowered(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
