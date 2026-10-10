@@ -14,7 +14,7 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/javascript`: the second backend, IR to JavaScript, carrying the same inserted checks as native.
 - `internal/flow`: a control-flow graph built from the IR, with single assignment lifted from cohere's high-level IR, for the analyses reuse in place and arenas need (#5jck546).
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
-- `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
+- `cohere/`: a submodule (cohere, which carries typescript-go). Public over HTTPS, so any machine fetches it without a key: `git submodule update --init --recursive --depth 1`.
 
 ## Compiler file ownership
 
