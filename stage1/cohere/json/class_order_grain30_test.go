@@ -14,7 +14,7 @@ import (
 )
 
 // An explicit repository-relative key keeps ownership stable as the corpus grows.
-// Agreement belongs to _000; _001 adds only the independent leak pass.
+// _000 owns backend agreement, _001 the leak pass, and _002 ASan/UBSan.
 const jsonPortClassOrderKey = "cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json"
 
 func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
@@ -63,8 +63,9 @@ func jsonPortClassOrderUnion(all, ordinary []textCase, shards []nativeChunk, ded
 	return nil
 }
 
-func jsonPortClassOrderRun(t *testing.T, leak bool) {
+func jsonPortClassOrderRun(t *testing.T, mode int) {
 	t.Helper()
+	leak := mode == 1
 	setup := time.Now()
 	portMatchesPrepare(t)
 	all, _ := jsonTopCorpus(t)
@@ -93,40 +94,53 @@ func jsonPortClassOrderRun(t *testing.T, leak bool) {
 		t.Fatal(err)
 	}
 	compare(t, "release", execute(t, nil, portMatchesShared.release, "--cases", path), expected, items)
-	if !leak {
+	if mode == 0 {
 		compare(t, "Node", onNode(t, portMatchesShared.entry, "--cases", path), expected, items)
 		compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), expected, items)
 	}
-	mode := "ASan/UBSan"
-	options := "ASAN_OPTIONS=detect_leaks=0"
-	if leak {
-		mode = "LeakSanitizer"
-		options = "ASAN_OPTIONS=detect_leaks=1"
-	}
-	if leak && runtime.GOOS != "linux" {
-		result := execute(t, nil, "leaks", "--atExit", "--", portMatchesShared.release, "--cases", path)
-		if result.exitCode != 0 {
-			t.Fatalf("leaks: %s", result.stderr)
+	if mode != 0 {
+		label := "ASan/UBSan"
+		options := "ASAN_OPTIONS=detect_leaks=0"
+		if leak {
+			label = "LeakSanitizer"
+			options = "ASAN_OPTIONS=detect_leaks=1"
 		}
-	} else {
-		began := time.Now()
-		compare(t, mode, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
-		t.Logf("%s: %.3fs", mode, time.Since(began).Seconds())
+		if leak && runtime.GOOS != "linux" {
+			result := execute(t, nil, "leaks", "--atExit", "--", portMatchesShared.release, "--cases", path)
+			if result.exitCode != 0 {
+				t.Fatalf("leaks: %s", result.stderr)
+			}
+		} else {
+			began := time.Now()
+			compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
+			t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
+		}
 	}
 	t.Logf("%s: own work %.3fs", jsonPortClassOrderKey, time.Since(start).Seconds())
 }
 
 func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
 	t.Parallel()
-	jsonPortClassOrderRun(t, false)
+	jsonPortClassOrderRun(t, 0)
 }
 func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
 	t.Parallel()
-	jsonPortClassOrderRun(t, true)
+	jsonPortClassOrderRun(t, 1)
+}
+
+func TestPortMatchesGoCohereClassOrder_002(t *testing.T) {
+	t.Parallel()
+	jsonPortClassOrderRun(t, 2)
 }
 
 func TestJSONClassOrderShardOwnership(t *testing.T) {
 	t.Parallel()
+	for _, group := range [][]textCase{nil, {{Name: "small.json", Text: "{}"}}, {{Name: jsonPortClassOrderKey, Text: "[]"}}} {
+		ordinary, shards, dedicated := jsonPortClassOrderPartition(group)
+		if err := jsonPortClassOrderUnion(group, ordinary, shards, dedicated); err != nil {
+			t.Fatal(err)
+		}
+	}
 	all := []textCase{{Name: "small.json", Text: "{}"}, {Name: jsonPortClassOrderKey, Text: "[]"}}
 	ordinary, shards, dedicated := jsonPortClassOrderPartition(all)
 	if err := jsonPortClassOrderUnion(all, ordinary, shards, dedicated); err != nil {
@@ -169,7 +183,16 @@ func TestJSONClassOrderShardOwnership(t *testing.T) {
 	if caught != 1 {
 		t.Fatalf("planted disagreement caught by %d owners", caught)
 	}
-	tree, err := parser.ParseFile(token.NewFileSet(), "class_order_shards_test.go", nil, 0)
+	for child := 0; child < 3; child++ {
+		answers := make([]answer, len(dedicated))
+		_, want := protocol(dedicated, answers)
+		answers[0].Output = "planted disagreement"
+		_, got := protocol(dedicated, answers)
+		if comparisonError(fmt.Sprintf("child-%03d", child), run{stdout: []byte(got)}, want, dedicated) == nil {
+			t.Fatalf("child %d missed planted failure", child)
+		}
+	}
+	tree, err := parser.ParseFile(token.NewFileSet(), "class_order_grain30_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -179,7 +202,7 @@ func TestJSONClassOrderShardOwnership(t *testing.T) {
 			declared[f.Name.Name] = true
 		}
 	}
-	if len(declared) != 2 || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
+	if len(declared) != 3 || !declared["TestPortMatchesGoCohereClassOrder_002"] || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
 		t.Fatalf("dedicated shard declarations: %v", declared)
 	}
 	t.Log("dedicated union intact; planted disagreement caught by exactly one agreement shard")
