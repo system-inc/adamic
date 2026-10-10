@@ -13,7 +13,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -99,9 +98,4 @@ func lines(text string) int {
 		count++
 	}
 	return count
-}
-
-// Gate mutant phase-tools (#7x6trdv): a command run by literal name that cloud/fast-gate/tools.txt does not declare. Never merge.
-func phaseToolsMutant() *exec.Cmd {
-	return exec.Command("phase-tools-mutant-undeclared")
 }
