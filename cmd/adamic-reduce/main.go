@@ -13,6 +13,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -98,4 +99,10 @@ func lines(text string) int {
 		count++
 	}
 	return count
+}
+
+// Gate mutant phase-census-dependencies (#7x6trdv): this package now imports os/exec, a compiler consumer
+// marker, and compiler-dependencies.json does not declare it. No tool is named by literal. Never merge.
+func phaseCensusMutant(name string) (string, error) {
+	return exec.LookPath(name)
 }
