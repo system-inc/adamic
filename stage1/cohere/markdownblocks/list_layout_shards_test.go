@@ -80,7 +80,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v2", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -129,6 +129,11 @@ func buildListLayoutSetup(t *testing.T) {
 
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
+
+// TestProduct_MarkdownListLayout builds the shared products every list layout shard reads (238 s inside
+// TestMarkdownListLayout_Setup on Oct 10: the lowered program, its sanitized and release natives, the canary and the
+// Go oracles), so Workshop builds them once and the shards and Setup only read them.
+func TestProduct_MarkdownListLayout(t *testing.T) { buildListLayoutSetup(t) }
 
 // A shard prepares the shared products itself, once per process: it fetches them when they are built
 // and builds them on a miss, so it never needs another top-level test to have run first.
