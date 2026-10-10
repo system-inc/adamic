@@ -60,7 +60,11 @@ func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 		started = time.Now()
 		err = os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 		t.Logf("emit JS: %.3fs", time.Since(started).Seconds())
-		return err
+		if err != nil {
+			return err
+		}
+		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(out)
 	})
 	return lowered, inputs
 }

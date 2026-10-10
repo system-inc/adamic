@@ -77,10 +77,20 @@ func dotARenameProduct(t *testing.T, slot int, inputs buildcache.Inputs, recipe 
 
 func dotARenameSource(t *testing.T) string {
 	t.Helper()
-	return dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
+	product := dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
 		copyPort(t, dir, "", "")
-		return os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts"))
+		if err := os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts")); err != nil {
+			return err
+		}
+		// The port's imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(dir)
 	})
+	// The loader and Node read the port, so callers get the copy whose imports name this checkout.
+	directory, err := buildcache.Resolved(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return directory
 }
 
 func dotARenameOracle(t *testing.T) string {

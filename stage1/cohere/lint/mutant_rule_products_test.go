@@ -106,13 +106,19 @@ func mutantRuleProduct(t *testing.T, slug string) string {
 				return err
 			}
 			t.Logf("cold mutant %s JavaScript=%s", slug, time.Since(started))
-			return nil
+			// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+			return buildcache.RelativeFiles(out)
 		})
 	})
 	if value.directory == "" {
 		t.Fatalf("mutant %s product failed earlier in this process", slug)
 	}
-	return value.directory
+	// Node and the loader read the port, so callers get the copy whose imports name this checkout.
+	directory, err := buildcache.Resolved(value.directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return directory
 }
 
 var mutantRuleNativeOnce sync.Once
