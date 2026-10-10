@@ -1,15 +1,12 @@
-// nexus/shouting.go:155; "`[^`]*`"
+// react/boolean_prop_naming.go:627; `\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}`
 import { observe } from '../observe.a';
-const pattern = "`[^`]*`";
+const pattern = "\\{\\{[ \\t\\n\\f\\r]*([A-Za-z_][A-Za-z0-9_]*)[ \\t\\n\\f\\r]*\\}\\}";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "``", 4);
-observe(regex, "x``", 5);
-observe(regex, "``\n", 6);
-observe(regex, "// `export import x = mod.x` being treated as instantiated:", 7);
-observe(regex, "/** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */", 8);
-observe(regex, "//       order in the generated program (see `getDefaultLibFilePriority` in program.ts). This", 9);
+observe(regex, "{{A}}", 4);
+observe(regex, "x{{A}}", 5);
+observe(regex, "{{A}}\n", 6);
