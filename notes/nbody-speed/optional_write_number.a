@@ -6,3 +6,6 @@ function write(value: Optional): void {
 }
 write({ amount: 1 });
 write({});
+
+// Gate mutant phase-a-check (#7x6trdv): a type error in a changed .a outside any package. Never merge.
+const phaseACheckMutant: number = "not a number";
