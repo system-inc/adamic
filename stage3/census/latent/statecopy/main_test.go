@@ -75,3 +75,8 @@ func statecopy(t testing.TB) string {
 	t.Helper()
 	return buildcache.GoBuild(t, "statecopy", "./stage3/census/latent/statecopy", nil, "GOWORK=off")
 }
+
+func TestProduct_Statecopy(t *testing.T) {
+	t.Parallel()
+	statecopy(t)
+}

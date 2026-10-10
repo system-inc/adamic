@@ -22,7 +22,7 @@ func TestMissingStatementFailsWithMethodName(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(buildcache.GoBuild(t, "statementrewrite", "./stage3/census/latent/statementrewrite", nil, "GOWORK=off"), input, output)
+	command := exec.Command(statementrewrite(t), input, output)
 	command.Stdout = log
 	command.Stderr = log
 	err = command.Run()
@@ -34,4 +34,15 @@ func TestMissingStatementFailsWithMethodName(t *testing.T) {
 	if _, err := os.Stat(output); !os.IsNotExist(err) {
 		t.Fatal("rewrite published partial output")
 	}
+}
+
+// statementrewrite is this package's command, a keyed product (GOWORK=off, as go run built it), so no test runs go.
+func statementrewrite(t testing.TB) string {
+	t.Helper()
+	return buildcache.GoBuild(t, "statementrewrite", "./stage3/census/latent/statementrewrite", nil, "GOWORK=off")
+}
+
+func TestProduct_Statementrewrite(t *testing.T) {
+	t.Parallel()
+	statementrewrite(t)
 }
