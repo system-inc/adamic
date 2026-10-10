@@ -1,0 +1,19 @@
+// Reduced from TypeScript 050880ce src/compiler/transformer.ts:295.
+interface Node { readonly value: number; }
+type Hook = (hint: number, node: Node) => Node;
+interface Context { hook: Hook; readonly addDiagnostic: (message: string) => void; }
+function transformNodes(): Context {
+    let hook: Hook = (hint: number, node: Node): Node => ({ value: hint + node.value });
+    let initialized = false;
+    return {
+        get hook() { return hook; },
+        set hook(value) { if (initialized) throw new Error('initialized'); hook = value; },
+        addDiagnostic(message) { console.log(message); initialized = true; }
+    };
+}
+const context = transformNodes();
+console.log(`${context.hook(1, { value: 2 }).value}`);
+context.hook = (hint: number, node: Node): Node => ({ value: hint + node.value + 10 });
+console.log(`${context.hook(1, { value: 2 }).value}`);
+context.addDiagnostic('done');
+try { context.hook = (hint: number, node: Node): Node => ({ value: hint + node.value }); } catch (error) { if (error instanceof Error) console.log(error.message); }
