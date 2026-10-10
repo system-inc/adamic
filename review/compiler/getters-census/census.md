@@ -207,3 +207,11 @@ Counts refresh passed in 88.390s. Only three rows were added; every existing row
 | getters_census_binary_inline.a | 37 | 37 | 29 | 57 | 17 | 0 |
 
 TestCallTargetReaders passed in 38.465s. The new tests read no raw call-target fields.
+
+Integration lane checks passed after the census commit. This checkout's fetch refspec tracked only main, so the first attempt could not resolve origin/cloud/merge-tree. Explicitly fetching the two guard branches into their remote-tracking refs fixed the setup. The required command then ran:
+
+```sh
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+```
+
+Output: `lane checks 5.0 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages`. Current origin/main remains the baseline commit. The final registration check after deduplicating the shared diagnostic passed (1.522s); the compiler mutant is absent from git diff. The implementation commit is `9486c7a1fee60da7afa7800643d38507ff6a2665`; a following evidence commit records the logs and this lane result.
