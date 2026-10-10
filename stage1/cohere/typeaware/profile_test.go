@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func profileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
@@ -39,7 +41,12 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 			h.t.Fatal(err)
 		}
 	}
-	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
+	binary := h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
+	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
+	if err := buildcache.RelativeFiles(directory); err != nil {
+		h.t.Fatal(err)
+	}
+	return binary
 }
 
 func volumeProfileMissingBinding(h *harness, stage0, archive string) string {
