@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func TestMissingStatementFailsWithMethodName(t *testing.T) {
@@ -20,8 +22,7 @@ func TestMissingStatementFailsWithMethodName(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("go", "run", ".", input, output)
-	command.Env = append(os.Environ(), "GOWORK=off")
+	command := exec.Command(buildcache.GoBuild(t, "statementrewrite", "./stage3/census/latent/statementrewrite", nil, "GOWORK=off"), input, output)
 	command.Stdout = log
 	command.Stderr = log
 	err = command.Run()
