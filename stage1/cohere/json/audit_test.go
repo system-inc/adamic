@@ -273,8 +273,15 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	}
 	writeJSON(t, overlayPath, map[string]any{"Replace": replacements})
 	goPath := filepath.Join(scratch, "go.json")
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
-	command.Dir = cohere
+	// Unmutated, cohere with the harness laid over it is the "json upstream parity audit oracle" product, built ahead, and
+	// this unit only runs it in the package's directory (#5qykzj5). A printer mutant's sources are written here, outside
+	// the repository, so its oracle is still this unit's own build, under ADAMIC_JSON_PRETTIER only (#ebc67r2).
+	command := bounded(t, filepath.Join(upstreamParityOracleProduct(t), "oracle"), "-test.v", "-test.run=^TestAdamicJSONAudit$")
+	command.Dir = filepath.Join(cohere, "internal/format/javascript")
+	if len(mutations) > 0 {
+		command = bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
+		command.Dir = cohere
+	}
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
