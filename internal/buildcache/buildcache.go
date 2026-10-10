@@ -82,6 +82,15 @@ var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/tr
 
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
 	started := time.Now()
+	root, err := repositoryRoot()
+	if err != nil {
+		return "", "", err
+	}
+	var nameKey string
+	keying(func() { nameKey = NameKey(root, inputs) })
+	// Every build site, uncached, traced or for this machine alone, builds through relocating, and every directory
+	// returned is held under its name key: a product names itself and every other product by name key (relative.go).
+	build = relocating(inputs.Name, nameKey, build)
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
@@ -91,32 +100,24 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			if err = build(directory); err != nil {
 				return "", "", err
 			}
-			return directory, record(inputs.Name, "uncached", "off", started), nil
+			return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
 		}
 		// Traced and uncached (main's own gate on Workshop): built fresh, and settled from where it was built.
-		root, err := repositoryRoot()
-		if err != nil {
-			return "", "", err
-		}
-		nameKey, id, err := tracedBuild(root, inputs, directory, build)
+		_, id, err := tracedBuild(root, inputs, directory, build)
 		if err != nil {
 			return "", "", err
 		}
 		journalBuilt(root, inputs, nameKey, id, directory)
-		return directory, record(inputs.Name, "uncached", "off", started), nil
-	}
-	root, err := repositoryRoot()
-	if err != nil {
-		return "", "", err
+		return holding(nameKey, directory), record(inputs.Name, "uncached", "off", started), nil
 	}
 	cache, err := cacheDirectory()
 	if err != nil {
 		return "", "", err
 	}
-	var nameKey, described string
+	var described string
 	var looked found
 	keying(func() {
-		nameKey, described = NameKey(root, inputs), describe(root, inputs)
+		described = describe(root, inputs)
 		looked, err = productFor(root, cache, nameKey, 0)
 	})
 	if err != nil {
@@ -138,7 +139,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if looked.directory != "" {
 		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: looked.directory})
 		refreshPublished(cache, nameKey, looked.key, looked.directory, inputs.Name)
-		return looked.directory, record(inputs.Name, looked.key, "hit", started), nil
+		return holding(nameKey, looked.directory), record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
 		for _, key := range looked.keys {
@@ -164,7 +165,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			}
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
 			refreshPublished(cache, nameKey, key, product, inputs.Name)
-			return product, record(inputs.Name, key, outcome, started), nil
+			return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 		}
 	}
 	switch {
@@ -188,7 +189,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		} else {
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
 		}
-		return product, record(inputs.Name, nameKey, outcome, started), nil
+		return holding(nameKey, product), record(inputs.Name, nameKey, outcome, started), nil
 	case publishing():
 		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w, so a build's reads become its key", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
 	}
@@ -199,7 +200,8 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	built, err := filled(filepath.Join(cache, "local", key), described, build)
+	product := filepath.Join(cache, "local", key)
+	built, err := filled(product, described, build)
 	if err != nil {
 		return "", "", err
 	}
@@ -207,7 +209,11 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if built {
 		outcome = "miss"
 	}
-	return filepath.Join(cache, "local", key), record(inputs.Name, key, outcome, started), nil
+	// Another process finds this product by its name key alone, through the inputs that key it here.
+	if err = pointLocal(cache, nameKey, inputs); err != nil {
+		note("local name %s %s: %v", inputs.Name, nameKey[:12], err)
+	}
+	return holding(nameKey, product), record(inputs.Name, key, outcome, started), nil
 }
 
 // tracedBuild builds into directory between markers naming the build, and returns its name key and id.
