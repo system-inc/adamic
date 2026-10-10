@@ -1,0 +1,11 @@
+=== RUN   TestNarrowedUnionObjectTagRefusal
+=== PAUSE TestNarrowedUnionObjectTagRefusal
+=== CONT  TestNarrowedUnionObjectTagRefusal
+    narrowed_union_test.go:87: want refusal naming the path and fix, got <nil>
+--- FAIL: TestNarrowedUnionObjectTagRefusal (0.16s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.167s
+FAIL

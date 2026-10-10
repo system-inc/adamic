@@ -1,0 +1,95 @@
+=== RUN   TestV4EscapeAdapterBlameArgument
+=== PAUSE TestV4EscapeAdapterBlameArgument
+=== RUN   TestV4EscapeAdapterBlameResult
+=== PAUSE TestV4EscapeAdapterBlameResult
+=== RUN   TestV4EscapeAdapterBlameCall
+=== PAUSE TestV4EscapeAdapterBlameCall
+=== RUN   TestV4EscapeAdapterBlameApply
+=== PAUSE TestV4EscapeAdapterBlameApply
+=== RUN   TestV4EscapeAdapterBlameBound
+=== PAUSE TestV4EscapeAdapterBlameBound
+=== CONT  TestV4EscapeAdapterBlameArgument
+=== CONT  TestV4EscapeAdapterBlameApply
+=== CONT  TestV4EscapeAdapterBlameResult
+=== CONT  TestV4EscapeAdapterBlameCall
+=== CONT  TestV4EscapeAdapterBlameBound
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: sanitized call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:98: javascript call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:98: native call/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameCall3643934661/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: native apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:99: sanitized apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:99: javascript apply/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameApply2235498510/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: native direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:96: sanitized direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:96: javascript direct/result read=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameResult2949855331/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: native direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:92: sanitized direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:11:8 exit=70
+    checked_views_v4_blame_test.go:92: javascript direct/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameArgument4211553870/001/identity.ts:11:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: native bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:12:8 exit=70
+    checked_views_v4_blame_test.go:102: sanitized bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:12:8 exit=70
+    checked_views_v4_blame_test.go:102: javascript bound/argument read=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:6:8 call=/tmp/adamic-gate/TestV4EscapeAdapterBlameBound1685165454/001/identity.ts:12:8 exit=70
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameCall
+    checked_views_v4_blame_test.go:98: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:98: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:98: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameCall (1.58s)
+=== NAME  TestV4EscapeAdapterBlameResult
+    checked_views_v4_blame_test.go:96: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:96: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:96: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameResult (1.60s)
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameApply
+    checked_views_v4_blame_test.go:99: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:99: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:99: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameApply (1.63s)
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: gate cache node miss
+=== NAME  TestV4EscapeAdapterBlameBound
+    checked_views_v4_blame_test.go:102: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:102: sanitized read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:102: javascript read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameBound (1.68s)
+=== NAME  TestV4EscapeAdapterBlameArgument
+    checked_views_v4_blame_test.go:92: javascript read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:92: native read-site omission caught; same exit/output, missing read site
+    checked_views_v4_blame_test.go:92: sanitized read-site omission caught; same exit/output, missing read site
+--- PASS: TestV4EscapeAdapterBlameArgument (1.72s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.741s

@@ -1,0 +1,44 @@
+{
+  "targets": [
+    [
+      "PrivateIdentifierPropertyDeclaration",
+      "modifiers"
+    ],
+    [
+      "UnionOrIntersectionType",
+      "resolvedProperties"
+    ],
+    [
+      "UnionType",
+      "arrayFallbackSignatures"
+    ],
+    [
+      "InterfaceType",
+      "outerTypeParameters"
+    ],
+    [
+      "SourceFile | undefined",
+      "imports"
+    ],
+    [
+      "SignatureDeclaration",
+      "typeArguments"
+    ],
+    [
+      "SignatureDeclaration",
+      "jsDoc"
+    ],
+    [
+      "JSDocFunctionType",
+      "typeParameters"
+    ],
+    [
+      "SourceFile",
+      "additionalSyntacticDiagnostics"
+    ],
+    [
+      "EmitNode | undefined",
+      "helpers"
+    ]
+  ]
+}

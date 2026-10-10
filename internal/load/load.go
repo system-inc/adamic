@@ -253,6 +253,9 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
 		message = diagnostic.Localize(english)
 	}
 	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
+	if diagnostic.Code() == 7009 {
+		builder.WriteString("; use a producer with a construct signature directly, or call the callable directly")
+	}
 	writeChain(&builder, diagnostic.MessageChain(), 1)
 	return builder.String()
 }

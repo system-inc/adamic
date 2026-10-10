@@ -290,6 +290,13 @@ func (e *emitter) arguments(call ir.Call) []string {
 // Method), the receiver's own function value or its class's method, found before the arguments are
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
+	if expression.Receiver != nil {
+		return e.callWithReceiver(expression, closure)
+	}
+
+	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" && expression.CallContract != 0 {
+		return e.emitDirectViewCallable(expression, receiver)
+	}
 	method := ""
 	exactCount := false
 	if receiver != "" {
@@ -298,6 +305,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
+			if property.View != "" && property.ViewContract > 0 {
+				e.emitViewCallableMethodCertificate(property, method)
+			}
 			exactCount = e.program.PackedCountNeeded(function)
 		} else {
 			method = e.temporary()
@@ -306,7 +316,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			if property.View != "" {
+				closure = e.emitViewCallableRead(property, receiver, method)
+			} else {
+				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			}
 		}
 	}
 	packed, count := e.closureArguments(expression)
@@ -333,7 +347,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		} else {
 			methodCall := fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
 			if e.program.ClosureReceiversNeeded() {
-				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+				if e.program.ViewAdapters {
+					e.viewCallableBlameRuntime()
+					call = fmt.Sprintf("adamic_view_call_at(%s, %s, %s, %s, %d, %s)", closure, receiver, packed, count, e.packedArgumentSize(expression), viewCallableSourceSite(expression))
+				} else {
+					call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+				}
 				if e.program.PackedCountNeededFromCall(expression) {
 					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
 				} else if e.program.ClosureConventionNeeded() {

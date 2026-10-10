@@ -20,13 +20,21 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
 		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
+	// The owning adapter supplies complete standalone array contracts. V2's
+	// placeholder remains only for unavailable adapters and union-arm dispatch.
+	if l.checker.IsArrayType(target) && viewArrayContractHook != nil {
+		return viewArrayContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
 	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
 		return l.unionAggregateContract(node, target)
 	}
 	if l.callableViewContract(target) {
+		if viewCallableContractHook != nil {
+			return viewCallableContractHook(l, node, target, nil)
+		}
 		family = "callable"
 	}
-	if l.checker.IsArrayType(target) {
+	if l.checker.IsArrayType(target) && viewArrayContractHook == nil {
 		family = "array"
 	}
 	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
@@ -95,10 +103,22 @@ func (l *lowering) checkLazyViewReads() error {
 	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
+		for _, function := range program.Functions {
+			if function.Bound != nil {
+				assignAllocationSites(program)
+				return newAllocationFlowGraph(program).checkBoundSurfaceCalls()
+			}
+		}
 		return nil
+	}
+	if err := l.prepareViewCallableAggregateSchemas(); err != nil {
+		return err
 	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
+	if err := graph.checkBoundSurfaceCalls(); err != nil {
+		return err
+	}
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}
@@ -115,7 +135,10 @@ func (l *lowering) checkLazyViewReads() error {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
+	callResults := viewCallableAggregateResults(program)
+	l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 	for len(queue) != 0 {
+		l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 		site := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 		if literal, ok := index.records[site]; ok {
@@ -143,6 +166,10 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	l.certifyUnrelatedViewWrites(graph, viewed, unknown)
+	if err := l.activateViewArrayReads(graph, viewed, unknown); err != nil {
+		return err
+	}
 	// Wider interfaces and instantiated helpers can give the same member a
 	// different checker type id. Field-name fallback retains the refusal until
 	// the receiver flow proves it cannot receive a viewed allocation.
@@ -159,14 +186,44 @@ func (l *lowering) checkLazyViewReads() error {
 		if refused != nil {
 			return false
 		}
+
+		if call, ok := node.(ir.CallClosure); ok {
+			if property, ok := program.ClosureTargets(call).Value.(ir.Property); ok && program.CheckedFields[property.Name] {
+				reaches := graph.ReachingAllocations(property.Object)
+				demanded := unknown || reaches.Unknown
+				for _, site := range reaches.Sites {
+					demanded = demanded || viewed[site]
+				}
+				if demanded && (call.CallContract == 0 || graph.viewCallableUncheckableProducer(property, reaches)) {
+					refused = &Refused{Where: call.CallWhere, What: "a checked view call to member " + property.Name + " with an unsupported value contract", Fix: "prove the callable relation or use a callable with runtime-checkable parameter and result types"}
+					return false
+				}
+			}
+		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
 		var field, where string
 
 		switch read := node.(type) {
 		case ir.Property:
+			if read.Object != nil && read.Object.Type() == ir.Closure {
+				return true
+			}
 			if !program.CheckedFields[read.Name] {
 				return true
+			}
+			if read.ViewEscape {
+				reaches := graph.ReachingAllocations(read.Object)
+				demanded := unknown || reaches.Unknown
+				for _, site := range reaches.Sites {
+					demanded = demanded || viewed[site]
+				}
+				if demanded {
+					if err := checkViewCallableEscape(graph, read, reaches); err != nil {
+						refused = err
+						return false
+					}
+				}
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
@@ -182,7 +239,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !viewCallableConcreteReadContract(program, contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

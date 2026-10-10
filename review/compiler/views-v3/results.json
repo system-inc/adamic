@@ -1,0 +1,501 @@
+{
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "gomaxprocs": 4,
+  "test_units": [
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayMembershipUsesUnionMatcher",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 0.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.049
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedArrayElementStorageRemainsRefused",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.077
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.028
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.029
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.03
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.028
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestMixedUnionContractGraph",
+      "status": "pass",
+      "go_seconds": 0.16,
+      "wall_seconds": 0.164
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource/good",
+      "status": "pass",
+      "go_seconds": 0.58,
+      "wall_seconds": 0.581
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/number",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 0.6
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/tuple-object",
+      "status": "pass",
+      "go_seconds": 0.64,
+      "wall_seconds": 0.65
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/boxed-mixed",
+      "status": "pass",
+      "go_seconds": 0.7,
+      "wall_seconds": 0.725
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource/empty",
+      "status": "pass",
+      "go_seconds": 0.47,
+      "wall_seconds": 1.062
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource/mixed",
+      "status": "pass",
+      "go_seconds": 0.51,
+      "wall_seconds": 1.088
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource/nested",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 1.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource/wrong",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 1.229
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewUntaggedArraySource",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 1.636
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewV2ArrayArmAdmission",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 1.636
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionNarrowing",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 1.673
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/sparse-wrong",
+      "status": "pass",
+      "go_seconds": 0.59,
+      "wall_seconds": 1.779
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/sparse-max",
+      "status": "pass",
+      "go_seconds": 0.59,
+      "wall_seconds": 1.833
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/boolean-good",
+      "status": "pass",
+      "go_seconds": 0.63,
+      "wall_seconds": 2.27
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/maybe-number",
+      "status": "pass",
+      "go_seconds": 0.68,
+      "wall_seconds": 2.356
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/boolean",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 2.381
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership/string",
+      "status": "pass",
+      "go_seconds": 0.64,
+      "wall_seconds": 2.469
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrayUnionMembership",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 2.469
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/optional-absent",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 1.404
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/node-indicator-wrong",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 1.88
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/literal-text-wrong",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 1.891
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/node-indicator-good",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 1.972
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/diagnostic-wrong",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 2.007
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong",
+      "status": "pass",
+      "go_seconds": 0.58,
+      "wall_seconds": 2.47
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/diagnostic-good",
+      "status": "pass",
+      "go_seconds": 0.62,
+      "wall_seconds": 2.499
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong",
+      "status": "pass",
+      "go_seconds": 0.56,
+      "wall_seconds": 2.537
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/diagnostic-boolean",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 2.602
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/node-indicator-false",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 3.014
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/literal-negative-wrong",
+      "status": "pass",
+      "go_seconds": 0.52,
+      "wall_seconds": 3.055
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/literal-boolean",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 3.153
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/comment-boolean",
+      "status": "pass",
+      "go_seconds": 0.67,
+      "wall_seconds": 3.171
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/literal-good",
+      "status": "pass",
+      "go_seconds": 0.65,
+      "wall_seconds": 3.666
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/comment-good",
+      "status": "pass",
+      "go_seconds": 0.71,
+      "wall_seconds": 3.766
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/required-missing",
+      "status": "pass",
+      "go_seconds": 0.66,
+      "wall_seconds": 3.834
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 3.879
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource/comment-flags-wrong",
+      "status": "pass",
+      "go_seconds": 0.76,
+      "wall_seconds": 3.918
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewObjectPrimitiveSource",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 4.985
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/object-element",
+      "status": "pass",
+      "go_seconds": 0.44,
+      "wall_seconds": 4.283
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/non-array",
+      "status": "pass",
+      "go_seconds": 0.52,
+      "wall_seconds": 4.322
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-element",
+      "status": "pass",
+      "go_seconds": 0.46,
+      "wall_seconds": 4.343
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-holes-view",
+      "status": "pass",
+      "go_seconds": 0.61,
+      "wall_seconds": 4.352
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/nullable-array-element",
+      "status": "pass",
+      "go_seconds": 0.42,
+      "wall_seconds": 4.771
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-field",
+      "status": "pass",
+      "go_seconds": 0.5,
+      "wall_seconds": 4.79
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/nullable-array-missing",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 4.907
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/generic-array-element",
+      "status": "pass",
+      "go_seconds": 0.6,
+      "wall_seconds": 4.935
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/nullable-array-string",
+      "status": "pass",
+      "go_seconds": 0.5,
+      "wall_seconds": 5.275
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-string-literal",
+      "status": "pass",
+      "go_seconds": 0.52,
+      "wall_seconds": 5.315
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-undefined",
+      "status": "pass",
+      "go_seconds": 0.51,
+      "wall_seconds": 5.418
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-alias",
+      "status": "pass",
+      "go_seconds": 0.56,
+      "wall_seconds": 5.491
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-map-bad",
+      "status": "pass",
+      "go_seconds": 0.49,
+      "wall_seconds": 5.77
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-iteration-bad",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 5.852
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-boolean",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 5.951
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-missing",
+      "status": "pass",
+      "go_seconds": 0.56,
+      "wall_seconds": 6.05
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-length-kind",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 6.336
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-second",
+      "status": "pass",
+      "go_seconds": 0.52,
+      "wall_seconds": 6.374
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-bounds",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 6.517
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-pop",
+      "status": "pass",
+      "go_seconds": 0.51,
+      "wall_seconds": 6.671
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-map",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 6.905
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-iteration",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 6.972
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays/array-lazy",
+      "status": "pass",
+      "go_seconds": 0.46,
+      "wall_seconds": 6.972
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedViewArrays",
+      "status": "pass",
+      "go_seconds": 0.01,
+      "wall_seconds": 8.066
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetReaders",
+      "status": "pass",
+      "go_seconds": 18.59,
+      "wall_seconds": 18.594
+    }
+  ]
+}

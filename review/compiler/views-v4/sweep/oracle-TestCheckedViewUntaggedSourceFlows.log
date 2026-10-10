@@ -1,0 +1,104 @@
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== PAUSE TestCheckedViewUntaggedSourceFlows
+=== CONT  TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/good
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== PAUSE TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/good
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/good
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/wrong
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/good
+=== CONT  TestCheckedViewUntaggedSourceFlows/generic/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_v2_source_test.go:140: gate cache node miss
+    checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/helper/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/callback/wrong
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceFlows/stored/good
+=== NAME  TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_v2_source_test.go:141: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:134: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_v2_source_test.go:141: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:140: gate cache node miss
+=== NAME  TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_v2_source_test.go:141: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:141: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceFlows (0.00s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (1.45s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (1.61s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (1.62s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (1.62s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (1.63s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (1.05s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (0.93s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (1.01s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.642s

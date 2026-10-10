@@ -1,0 +1,75 @@
+=== RUN   TestV4EscapeAdapterCallArgument
+=== PAUSE TestV4EscapeAdapterCallArgument
+=== RUN   TestV4EscapeAdapterApplyResult
+=== PAUSE TestV4EscapeAdapterApplyResult
+=== RUN   TestV4EscapeAdapterArgument
+=== PAUSE TestV4EscapeAdapterArgument
+=== RUN   TestV4EscapeAdapterResult
+=== PAUSE TestV4EscapeAdapterResult
+=== CONT  TestV4EscapeAdapterCallArgument
+=== CONT  TestV4EscapeAdapterArgument
+=== CONT  TestV4EscapeAdapterResult
+=== CONT  TestV4EscapeAdapterApplyResult
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: native result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:191: sanitized result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:191: javascript result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:75) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterResult30109117/001/adapter.ts:5:118\n"
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: sanitized argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:186: javascript argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:118\n"
+    checked_views_v4_escape_test.go:186: native argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterArgument3243396985/001/adapter.ts:5:118\n"
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: native apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:67: sanitized apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:67: javascript apply result: exit70 stdout="read\nreceiver\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:73) result expected view \"ok\", producer string call at /tmp/adamic-gate/TestV4EscapeAdapterApplyResult24595517/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: native call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:55: sanitized call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:114\n"
+    checked_views_v4_call_apply_test.go:55: javascript call argument: exit70 stdout="read\nreceiver\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:73) argument 1 expected producer \"ok\", view string call at /tmp/adamic-gate/TestV4EscapeAdapterCallArgument2090883166/001/identity.ts:6:114\n"
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: native/ASan/UBSan/LSan apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+    checked_views_v4_call_apply_test.go:67: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: native/ASan/UBSan/LSan call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+    checked_views_v4_call_apply_test.go:55: gate cache node miss
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: gate cache node miss
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: gate cache node miss
+=== NAME  TestV4EscapeAdapterApplyResult
+    checked_views_v4_call_apply_test.go:67: JavaScript apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+--- PASS: TestV4EscapeAdapterApplyResult (1.04s)
+=== NAME  TestV4EscapeAdapterCallArgument
+    checked_views_v4_call_apply_test.go:55: JavaScript call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterCallArgument (1.06s)
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: native result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+    checked_views_v4_escape_test.go:191: sanitized result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+    checked_views_v4_escape_test.go:191: javascript result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: javascript argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: native argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: sanitized argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterResult (1.08s)
+--- PASS: TestV4EscapeAdapterArgument (1.08s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.093s

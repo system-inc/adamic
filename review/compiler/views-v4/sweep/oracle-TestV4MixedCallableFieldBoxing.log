@@ -1,0 +1,14 @@
+=== RUN   TestV4MixedCallableFieldBoxing
+=== PAUSE TestV4MixedCallableFieldBoxing
+=== CONT  TestV4MixedCallableFieldBoxing
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+    checked_views_v4_mixed_test.go:18: gate cache node miss
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in native: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in sanitized: exit 0 output "2\n"
+    checked_views_v4_mixed_test.go:18: guard mutant admitted in javascript: exit 0 output "2\n"
+--- PASS: TestV4MixedCallableFieldBoxing (0.56s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.574s

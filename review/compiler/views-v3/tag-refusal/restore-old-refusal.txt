@@ -1,0 +1,11 @@
+=== RUN   TestNarrowedUnionObjectTagPassing
+=== PAUSE TestNarrowedUnionObjectTagPassing
+=== CONT  TestNarrowedUnionObjectTagPassing
+    narrowed_union_test.go:82: /workspace/adamic/internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet
+--- FAIL: TestNarrowedUnionObjectTagPassing (0.16s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.171s
+FAIL

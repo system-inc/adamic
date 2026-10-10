@@ -1,0 +1,12 @@
+=== RUN   TestV4EscapeAdapterConstructorIdentity
+=== PAUSE TestV4EscapeAdapterConstructorIdentity
+=== CONT  TestV4EscapeAdapterConstructorIdentity
+    checked_views_v4_identity_test.go:190: gate cache node miss
+    checked_views_v4_identity_test.go:190: source Node: exit=0 stdout="true\n"
+    checked_views_v4_identity_test.go:190: gate cache node miss
+--- PASS: TestV4EscapeAdapterConstructorIdentity (0.46s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.471s

@@ -1,0 +1,12 @@
+=== RUN   TestV4EscapeAdapterSurfaceComputedName
+=== PAUSE TestV4EscapeAdapterSurfaceComputedName
+=== CONT  TestV4EscapeAdapterSurfaceComputedName
+    checked_views_v4_surface_test.go:115: gate cache node miss
+    checked_views_v4_surface_test.go:115: native sanitized surface counts: [3 3 5 6 3 0]
+    checked_views_v4_surface_test.go:115: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceComputedName (1.65s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.667s

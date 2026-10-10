@@ -1,0 +1,10 @@
+=== RUN   TestRecordMutantsUnit01
+=== PAUSE TestRecordMutantsUnit01
+=== CONT  TestRecordMutantsUnit01
+=== RUN   TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit01 (7.63s)
+    --- PASS: TestRecordMutantsUnit01/uint32-max-as-index (7.63s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	7.650s

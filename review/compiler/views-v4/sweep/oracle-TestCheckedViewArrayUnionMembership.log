@@ -1,0 +1,81 @@
+=== RUN   TestCheckedViewArrayUnionMembership
+=== PAUSE TestCheckedViewArrayUnionMembership
+=== CONT  TestCheckedViewArrayUnionMembership
+=== RUN   TestCheckedViewArrayUnionMembership/number
+=== PAUSE TestCheckedViewArrayUnionMembership/number
+=== RUN   TestCheckedViewArrayUnionMembership/string
+=== PAUSE TestCheckedViewArrayUnionMembership/string
+=== RUN   TestCheckedViewArrayUnionMembership/boolean
+=== PAUSE TestCheckedViewArrayUnionMembership/boolean
+=== RUN   TestCheckedViewArrayUnionMembership/tuple-object
+=== PAUSE TestCheckedViewArrayUnionMembership/tuple-object
+=== RUN   TestCheckedViewArrayUnionMembership/boxed-mixed
+=== PAUSE TestCheckedViewArrayUnionMembership/boxed-mixed
+=== RUN   TestCheckedViewArrayUnionMembership/maybe-number
+=== PAUSE TestCheckedViewArrayUnionMembership/maybe-number
+=== RUN   TestCheckedViewArrayUnionMembership/boolean-good
+=== PAUSE TestCheckedViewArrayUnionMembership/boolean-good
+=== RUN   TestCheckedViewArrayUnionMembership/sparse-max
+=== PAUSE TestCheckedViewArrayUnionMembership/sparse-max
+=== RUN   TestCheckedViewArrayUnionMembership/sparse-wrong
+=== PAUSE TestCheckedViewArrayUnionMembership/sparse-wrong
+=== CONT  TestCheckedViewArrayUnionMembership/number
+=== CONT  TestCheckedViewArrayUnionMembership/maybe-number
+=== CONT  TestCheckedViewArrayUnionMembership/boxed-mixed
+=== CONT  TestCheckedViewArrayUnionMembership/sparse-max
+=== CONT  TestCheckedViewArrayUnionMembership/sparse-wrong
+=== NAME  TestCheckedViewArrayUnionMembership/boxed-mixed
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/sparse-max
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/maybe-number
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/number
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/sparse-wrong
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/maybe-number
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/number
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/sparse-wrong
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/boxed-mixed
+    checked_views_array_union_test.go:55: gate cache node miss
+=== CONT  TestCheckedViewArrayUnionMembership/boolean-good
+=== CONT  TestCheckedViewArrayUnionMembership/boolean
+=== CONT  TestCheckedViewArrayUnionMembership/tuple-object
+=== NAME  TestCheckedViewArrayUnionMembership/sparse-max
+    checked_views_array_union_test.go:55: gate cache node miss
+=== CONT  TestCheckedViewArrayUnionMembership/string
+=== NAME  TestCheckedViewArrayUnionMembership/boolean-good
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/tuple-object
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/boolean
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/string
+    checked_views_array_union_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/boolean-good
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/tuple-object
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/string
+    checked_views_array_union_test.go:55: gate cache node miss
+=== NAME  TestCheckedViewArrayUnionMembership/boolean
+    checked_views_array_union_test.go:55: gate cache node miss
+--- PASS: TestCheckedViewArrayUnionMembership (0.00s)
+    --- PASS: TestCheckedViewArrayUnionMembership/maybe-number (0.95s)
+    --- PASS: TestCheckedViewArrayUnionMembership/number (0.98s)
+    --- PASS: TestCheckedViewArrayUnionMembership/boxed-mixed (1.00s)
+    --- PASS: TestCheckedViewArrayUnionMembership/sparse-wrong (1.02s)
+    --- PASS: TestCheckedViewArrayUnionMembership/sparse-max (1.10s)
+    --- PASS: TestCheckedViewArrayUnionMembership/boolean-good (0.86s)
+    --- PASS: TestCheckedViewArrayUnionMembership/tuple-object (0.82s)
+    --- PASS: TestCheckedViewArrayUnionMembership/boolean (0.86s)
+    --- PASS: TestCheckedViewArrayUnionMembership/string (0.82s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.854s

@@ -1,0 +1,32 @@
+{
+  "./internal/lower": [
+    "TestMixedUnionContractGraph",
+    "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "TestMixedUnionContractUnknownMemberFails",
+    "TestMixedUnionContractRecursiveMember",
+    "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "TestMixedUnionContractPhantomVoidIsUndefined"
+  ],
+  "./internal/oracle": [
+    "TestCheckedViewV2ReadsAfterWrites",
+    "TestCheckedViewV2ArrayArmAdmission",
+    "TestCheckedViewV2WrongFamilyMutant",
+    "TestCheckedViewV2RepresentationMutants",
+    "TestCheckedViewV2MembershipMutant",
+    "TestCheckedViewV2TupleIdentityMutant",
+    "TestCheckedViewV2CallableProducerMutant",
+    "TestCheckedViewV2MovedStage3Results",
+    "TestCheckedViewObjectPrimitiveSource",
+    "TestCheckedViewUntaggedSourceDispatch",
+    "TestCheckedViewUntaggedCallableUnion",
+    "TestCheckedViewUntaggedOptionalCallableControl",
+    "TestCheckedViewUntaggedSourceFlows",
+    "TestCheckedViewUntaggedOwnClassData",
+    "TestCheckedViewUntaggedRecursive",
+    "TestCheckedViewUntaggedArraySource",
+    "TestCheckedViewArrays"
+  ],
+  "./stage1/cohere/json": [
+    "TestPortElementMetadataEmission"
+  ]
+}

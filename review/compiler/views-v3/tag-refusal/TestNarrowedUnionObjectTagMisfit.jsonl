@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T05:49:53.559474478Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T05:49:53.566666811Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit"}
+{"Time":"2026-10-09T05:49:53.566750564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"=== RUN   TestNarrowedUnionObjectTagMisfit\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:49:53.566783403Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"=== PAUSE TestNarrowedUnionObjectTagMisfit\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:49:53.566786187Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit"}
+{"Time":"2026-10-09T05:49:53.566794479Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit"}
+{"Time":"2026-10-09T05:49:53.566797053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"=== CONT  TestNarrowedUnionObjectTagMisfit\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:50:06.51794726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"    narrowed_union_test.go:98: JavaScript: exit 70 stdout \"\" stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n"}
+{"Time":"2026-10-09T05:50:06.517998256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"    narrowed_union_test.go:98: native-sanitized: exit 70 stdout \"\" stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n"}
+{"Time":"2026-10-09T05:50:06.518004545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"    narrowed_union_test.go:98: native-release: exit 70 stdout \"\" stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\"\n"}
+{"Time":"2026-10-09T05:50:06.518291449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Output":"--- PASS: TestNarrowedUnionObjectTagMisfit (12.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:50:06.518304398Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNarrowedUnionObjectTagMisfit","Elapsed":12.95}
+{"Time":"2026-10-09T05:50:06.518331408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:50:06.518334943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:50:06.518336766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T05:50:06.518338728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:50:06.519979918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t12.960s\n"}
+{"Time":"2026-10-09T05:50:06.520010803Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":12.961}

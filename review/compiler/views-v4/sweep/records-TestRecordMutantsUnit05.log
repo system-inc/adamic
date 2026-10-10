@@ -1,0 +1,9 @@
+=== RUN   TestRecordMutantsUnit05
+=== PAUSE TestRecordMutantsUnit05
+=== CONT  TestRecordMutantsUnit05
+=== RUN   TestRecordMutantsUnit05/own-slot-null-read
+    record_test.go:244: caught by runtime error: member access within null pointer
+--- PASS: TestRecordMutantsUnit05 (8.12s)
+    --- PASS: TestRecordMutantsUnit05/own-slot-null-read (8.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.142s

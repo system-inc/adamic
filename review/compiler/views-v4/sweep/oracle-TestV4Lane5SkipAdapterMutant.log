@@ -1,0 +1,17 @@
+=== RUN   TestV4Lane5SkipAdapterMutant
+=== PAUSE TestV4Lane5SkipAdapterMutant
+=== CONT  TestV4Lane5SkipAdapterMutant
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+    checked_views_v4_lane5_test.go:125: gate cache node miss
+    checked_views_v4_lane5_test.go:125: native exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: sanitized exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:125: javascript exit70 at first call: adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:73) argument 1 expected producer "ok", view string call at /tmp/adamic-gate/TestV4Lane5SkipAdapterMutant2575041380/001/identity.ts:4:94
+    checked_views_v4_lane5_test.go:126: gate cache node hit
+    checked_views_v4_lane5_test.go:141: gate cache node miss
+    checked_views_v4_lane5_test.go:145: skip-adapter mutant caught in native ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4Lane5SkipAdapterMutant (0.96s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.973s

@@ -1,0 +1,11 @@
+=== RUN   TestV4EscapeAdapterConstructSignatureRefusal
+=== PAUSE TestV4EscapeAdapterConstructSignatureRefusal
+=== CONT  TestV4EscapeAdapterConstructSignatureRefusal
+    checked_views_v4_construct_refusals_test.go:23: gate cache node miss
+    checked_views_v4_construct_refusals_test.go:32: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterConstructSignatureRefusal1383252220/001/construct.ts:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented
+--- PASS: TestV4EscapeAdapterConstructSignatureRefusal (0.23s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.241s
