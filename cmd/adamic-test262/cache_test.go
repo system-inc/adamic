@@ -135,7 +135,7 @@ func TestCacheBypass(t *testing.T) {
 func TestParallelCachedMatchesSerial(t *testing.T) {
 	// Not parallel: compare both modes while changing the bypass environment.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -216,7 +216,7 @@ func TestOrderedProgress(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); err != nil {
 		t.Fatal(err)
 	}
-	e, err := prepare("../..", corpus, t.TempDir())
+	e, err := prepare(t, corpus, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -236,7 +236,7 @@ func TestOrderedProgress(t *testing.T) {
 
 func TestUnavailableCacheStillRuns(t *testing.T) {
 	t.Parallel()
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -257,7 +257,7 @@ func TestUnavailableCacheStillRuns(t *testing.T) {
 
 func TestImportedInputsRunFresh(t *testing.T) {
 	t.Parallel()
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -326,7 +326,7 @@ func TestCompilerCacheProgram(t *testing.T) {
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 	// Not parallel: explicitly enable reuse even in the uncached integration gate.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepare(t, "testdata/mini", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}

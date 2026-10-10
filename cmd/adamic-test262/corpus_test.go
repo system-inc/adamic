@@ -198,7 +198,7 @@ func TestMiniRunner(t *testing.T) {
 		t.Skip("node not on PATH")
 	}
 	work := t.TempDir()
-	engine, err := prepare("../..", "testdata/mini", work)
+	engine, err := prepare(t, "testdata/mini", work)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -239,7 +239,7 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	engine, err := prepare("../..", root, t.TempDir())
+	engine, err := prepare(t, root, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
