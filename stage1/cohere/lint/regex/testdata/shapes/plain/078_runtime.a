@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:69; `^rounded$`
+// tailwind/no_deprecated_classes.go:93; `^bg-left-bottom$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "rounded", 4);
-observe(regex, "xrounded", 5);
-observe(regex, "rounded\n", 6);
+observe(regex, "bg-left-bottom", 4);
+observe(regex, "xbg-left-bottom", 5);
+observe(regex, "bg-left-bottom\n", 6);
