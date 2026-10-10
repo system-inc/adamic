@@ -289,7 +289,8 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	t.Parallel()
 	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
+	// The shard must prepare cold, here: the shared store is off for the child, or it fetches what another machine built.
+	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_BUILD_STORE=off", "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
 	output, err := command.CombinedOutput()
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte(" miss ")) {
 		t.Fatalf("standalone cold shard: %v\n%s", err, output)
