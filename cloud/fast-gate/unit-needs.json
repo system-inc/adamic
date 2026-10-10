@@ -1,15 +1,23 @@
 {
   "version": 1,
   "tiers": [
-    {"name": "codex-strict", "memoryMegabytes": 16384, "cpus": 4},
-    {"name": "box-strict", "memoryMegabytes": 65536, "cpus": 8}
+    {
+      "name": "codex-strict",
+      "memoryMegabytes": 16384,
+      "cpus": 4
+    },
+    {
+      "name": "box-strict",
+      "memoryMegabytes": 65536,
+      "cpus": 8
+    }
   ],
   "units": [
     {
       "package": "stage1/cohere/typeaware",
       "memoryMegabytes": 32768,
       "cpus": 4,
-      "record": "provisional (Loom, Oct 10 01:47Z): unit ec123b7f took down a 16 GB codex-strict worker in each of three placements, runs future-f7812fffa6b565c3d31a13d3183e8d074d412e92-1 (twice, workers loom-fabric-14 and -17) and future-f7812fffa6b565c3d31a13d3183e8d074d412e92-2, each dropped after about 370 s silent with its worker gone (workshop:~/loom-fabric/future-1/future-record.jsonl); the measured peak RSS from cloud replaces this number and record"
+      "record": "provisional, pending cloud's measured peak (Oct 10 02:0xZ): the three codex-strict drops first cited (future-f7812fffa6b565c3d31a13d3183e8d074d412e92-1 twice, -2) were the coordinator dropping live runners after three missed 120 s heartbeats while go test ran silent (Fabric 01:56Z: both workers asked the pool again), not memory; held on box-strict until the measurement, which reads a 9.9 GB setup peak (cgroup memory.peak at go build ./... link) and a test phase past 8.7 GB, still compiling"
     }
   ]
 }
