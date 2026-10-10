@@ -180,18 +180,6 @@
     "array-callback-return",
     "arrow-body-style",
     "base/security-require-context-access",
-    "better-tailwindcss/enforce-canonical-classes",
-    "better-tailwindcss/enforce-consistent-class-order",
-    "better-tailwindcss/enforce-consistent-important-position",
-    "better-tailwindcss/enforce-consistent-variable-syntax",
-    "better-tailwindcss/enforce-consistent-variant-order",
-    "better-tailwindcss/enforce-shorthand-classes",
-    "better-tailwindcss/no-concatenated-classes",
-    "better-tailwindcss/no-conflicting-classes",
-    "better-tailwindcss/no-deprecated-classes",
-    "better-tailwindcss/no-duplicate-classes",
-    "better-tailwindcss/no-unknown-classes",
-    "better-tailwindcss/no-unnecessary-whitespace",
     "class-methods-use-this",
     "complexity",
     "consistent-return",
@@ -200,6 +188,7 @@
     "dot-notation",
     "func-name-matching",
     "grouped-accessor-pairs",
+    "id-length",
     "max-classes-per-file",
     "max-depth",
     "max-lines",
@@ -227,6 +216,7 @@
     "no-useless-computed-key",
     "no-useless-escape",
     "no-useless-rename",
+    "object-shorthand",
     "operator-assignment",
     "react-hooks/config",
     "react-hooks/error-boundaries",
@@ -261,5 +251,5 @@
     "sort-vars",
     "yoda"
   ],
-  "cases": 23539
+  "cases": 21119
 }
