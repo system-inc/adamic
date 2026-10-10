@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a
+    oracle_test.go:775: stdout differs
+        node:   exit 0, stdout "absent\nselected2:arg1\n2 1\nselected3:arg2\nabsent\n2\nselected4:arg3\nabsent\n3\nfinished\n", stderr ""
+        native: exit 0, stdout "absent\nselected3:arg1\n3 1\nselected4:arg2\nabsent\n2\nselected5:arg3\nabsent\n3\nfinished\n", stderr ""
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "absent\nselected2:arg1\n2 1\nselected3:arg2\nabsent\n2\nselected4:arg3\nabsent\n3\nfinished\n", stderr ""
+        backend: exit 0, stdout "absent\nselected3:arg1\n3 1\nselected4:arg2\nabsent\n2\nselected5:arg3\nabsent\n3\nfinished\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a (2.49s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.591s
+FAIL

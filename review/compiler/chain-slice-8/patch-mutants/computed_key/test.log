@@ -1,0 +1,10 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_computed_key
+    checked_json_next_test.go:109: unsupported contract or alias mutation became accepted
+--- FAIL: TestCheckedJSONNextRefusals (0.17s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_dictionary_computed_key (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.210s
+FAIL

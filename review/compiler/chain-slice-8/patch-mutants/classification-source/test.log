@@ -1,0 +1,8 @@
+=== RUN   TestRefusalMustBeInsideDeclaration
+=== PAUSE TestRefusalMustBeInsideDeclaration
+=== CONT  TestRefusalMustBeInsideDeclaration
+    classification_test.go:18: capture.d.ts:12:4: refused: inside=true want false
+--- FAIL: TestRefusalMustBeInsideDeclaration (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/checked-any/probe	0.014s
+FAIL

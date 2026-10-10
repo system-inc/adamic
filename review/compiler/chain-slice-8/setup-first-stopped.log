@@ -1,0 +1,32 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.097s)
+v24.19.0
+setup: node ready (0.110s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.618s)
+
+added 3 packages in 823ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.349s
+setup: markdown dependencies ready (1.594s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (26.527s)
+setup: shared cache ready (35.692s)
+Terminated
+# github.com/system-inc/adamic/internal/native
+internal/native/emit_objects.go:467:1: syntax error: unexpected <<, expected }
+internal/native/emit_objects.go:475:60: syntax error: unexpected {, expected name
+internal/native/emit_objects.go:482:3: syntax error: unexpected ) after top level declaration
+# github.com/system-inc/adamic/internal/fresh
+internal/fresh/fresh.go:1141:10: undefined: ir.CheckedJSON
+# github.com/system-inc/adamic/internal/javascript
+internal/javascript/javascript.go:57:22: undefined: checkedJSONRuntime
+internal/javascript/javascript.go:733:10: undefined: ir.CheckedJSON
+internal/javascript/javascript.go:734:12: e.checkedJSON undefined (type *emitter has no field or method checkedJSON)
+internal/javascript/javascript.go:736:17: expression.Optional undefined (type ir.DynamicProperty has no field or method Optional)
+internal/javascript/javascript.go:896:16: e.program.JSONCheckedFields undefined (type *ir.Program has no field or method JSONCheckedFields)
+internal/javascript/javascript.go:896:112: undefined: ir.JSONReadType
+internal/javascript/javascript.go:901:108: undefined: checkedJSONSchema
+internal/javascript/javascript.go:901:126: undefined: runtimeJSONType
+internal/javascript/javascript.go:1043:16: e.program.JSONCheckedArrays undefined (type *ir.Program has no field or method JSONCheckedArrays)
+internal/javascript/javascript.go:1043:83: undefined: ir.JSONReadType
+internal/javascript/javascript.go:1043:83: too many errors

@@ -1,0 +1,10 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+    checked_json_next_test.go:112: wrong point of refusal: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_alias_write1034166874/001/boundary.ts:5:1: stage 0 can't lower assigning a field of a union of differently held members yet
+--- FAIL: TestCheckedJSONNextRefusals (0.20s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.209s
+FAIL

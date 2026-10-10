@@ -1,6 +1,6 @@
 Built a main-only audit; neither member meets admission requirements.  
-Base: `59edda91ea8701890146e8869924183df5907866`; audited source tips: `b6ef2cb4`, `57ea02f8`; no member commits retained.  
-Commands and outputs: bounded lowering shards, reader guard, count regeneration and lane results are recorded below.  
+Base: `79f2067b13beb8603380fc993d188b22f10213c2`; audit commit: `58b66ce2ed80e934195ae0aa0f2498217b591da0`; audited source tips: `b6ef2cb4`, `57ea02f8`; no member commits retained.  
+Commands and outputs: 23 lowering shards passed (maximum 35.540 s), reader guard passed (2.428 s), count regeneration passed (96.05 s), lane passed (3.9 s).  
 Mutants: candidate results and catchers are recorded below; incomplete campaigns do not certify either dropped member.  
 Not covered: complete optional mutant campaign, fresh 271-site lowering classification, full gate; no tasks closed.
 
@@ -140,3 +140,7 @@ Counts: `timeout 360 go test -p 4 ./internal/oracle -run '^TestCountsAreRecorded
 Final admission delta: zero. The delivery modifies only review evidence and this report; all production source, runtime, fixtures, counts and compiler dependency declarations equal current main. Consequently the admission function and emitted outputs are unchanged for every input, including inputs outside the candidate census. Runtime files changed: none.
 
 Lane command after committing: `git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -`. Result is recorded with the delivery evidence.
+
+Main refreshed again to `79f2067b` after the audit commit: speculative-census evidence and class-order test grain landed. This changes no production compiler/runtime or internal/oracle count registry/table, and leaves the lower tree unchanged. Main was merged only into this delivery branch. Initial lane output: `lane checks 3.9 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages; a-check 1 .a files`. [Lane log](../chain-slice-8/main-proof/lane-checks.log). The final evidence commit is checked again before push.
+
+Final main reader guard: PASS, package 0.691 s; [log](../chain-slice-8/main-proof/readers-final-main.jsonl). Every fixture table row has an explicit [owner entry](../chain-slice-8/main-proof/count-row-owners.json). [Delivery identity](../chain-slice-8/main-proof/delivery-identity.json) records the zero non-review delta against current main. Main-refresh commit: `7ddf2199850698b52773af7289acd0f0c99fe894`.

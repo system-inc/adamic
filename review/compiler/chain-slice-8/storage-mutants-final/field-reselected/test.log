@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "arg\nhost1:value2\narg\nreplacement:value2\nabsent\nnull\n", stderr ""
+        backend: exit 0, stdout "arg\nreplacement:value2\narg\nreplacement:value2\nabsent\nnull\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a (2.68s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.766s
+FAIL

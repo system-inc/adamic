@@ -1,0 +1,13 @@
+=== RUN   TestStep18StorageTypeLie
+=== PAUSE TestStep18StorageTypeLie
+=== CONT  TestStep18StorageTypeLie
+=== RUN   TestStep18StorageTypeLie/.ts
+    step18_storage_test.go:75: native: exit codes differ; got oracle.run{stdout:[]uint8{0x61, 0x72, 0x67, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestStep18StorageTypeLie (1.23s)
+    --- FAIL: TestStep18StorageTypeLie/.ts (1.23s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.270s
+FAIL

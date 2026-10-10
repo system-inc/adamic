@@ -1,0 +1,10 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_callable_contract
+    checked_json_next_test.go:118: wrong callable refusal: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_callable_contract285178172/001/boundary.ts:2:45: stage 0 can't lower checked JSON contract () => number (requires a finite data structure without alias writes) yet
+--- FAIL: TestCheckedJSONNextRefusals (0.23s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_callable_contract (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.250s
+FAIL

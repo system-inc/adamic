@@ -1,0 +1,10 @@
+=== RUN   TestStep18StorageTypeLie
+=== PAUSE TestStep18StorageTypeLie
+=== CONT  TestStep18StorageTypeLie
+=== RUN   TestStep18StorageTypeLie/.a
+    step18_storage_test.go:58: got <nil>, want non-callable storage refusal
+--- FAIL: TestStep18StorageTypeLie (0.19s)
+    --- FAIL: TestStep18StorageTypeLie/.a (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.256s
+FAIL

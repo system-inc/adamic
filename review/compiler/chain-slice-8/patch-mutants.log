@@ -1,0 +1,23 @@
+alias_write {'name': 'alias_write', 'exit': 1, 'caught': True, 'seconds': 21.177909147000037, 'selector': '^TestCheckedJSONNextRefusals$/json_dictionary_alias_write$', 'log': 'review/compiler/chain-slice-8/patch-mutants/alias_write/test.log'}
+nul_key {'name': 'nul_key', 'exit': 1, 'caught': True, 'seconds': 22.641829014999985, 'selector': '^TestCheckedJSONNextRefusals$/json_dictionary_nul_key$', 'log': 'review/compiler/chain-slice-8/patch-mutants/nul_key/test.log'}
+proto_key {'name': 'proto_key', 'exit': 1, 'caught': True, 'seconds': 20.539487066999982, 'selector': '^TestCheckedJSONNextRefusals$/json_dictionary_proto_key$', 'log': 'review/compiler/chain-slice-8/patch-mutants/proto_key/test.log'}
+computed_key {'name': 'computed_key', 'exit': 1, 'caught': True, 'seconds': 46.56413419599994, 'selector': '^TestCheckedJSONNextRefusals$/json_dictionary_computed_key$', 'log': 'review/compiler/chain-slice-8/patch-mutants/computed_key/test.log'}
+symbol_field {'name': 'symbol_field', 'exit': 1, 'caught': True, 'seconds': 59.79045764999978, 'selector': '^TestCheckedJSONNextRefusals$/json_symbol_contract$', 'log': 'review/compiler/chain-slice-8/patch-mutants/symbol_field/test.log'}
+callable_contract {'name': 'callable_contract', 'exit': 1, 'caught': True, 'seconds': 54.801708039000005, 'selector': '^TestCheckedJSONNextRefusals$/json_callable_contract$', 'log': 'review/compiler/chain-slice-8/patch-mutants/callable_contract/test.log'}
+nullable_tag {'name': 'nullable_tag', 'exit': 1, 'caught': True, 'seconds': 45.34467455400022, 'selector': '^TestCheckedJSONNext$/json_nullable$', 'log': 'review/compiler/chain-slice-8/patch-mutants/nullable_tag/test.log'}
+optional_read {'name': 'optional_read', 'exit': 1, 'caught': True, 'seconds': 38.49470712099992, 'selector': '^TestCheckedJSONNext$/json_nullable$', 'log': 'review/compiler/chain-slice-8/patch-mutants/optional_read/test.log'}
+ownership_identity {'name': 'ownership_identity', 'exit': 1, 'caught': True, 'seconds': 39.53464146600004, 'selector': '^TestCheckedJSONPreservesIdentityAndOperandWrites$', 'log': 'review/compiler/chain-slice-8/patch-mutants/ownership_identity/test.log'}
+javascript_depth {'name': 'javascript_depth', 'exit': 1, 'caught': True, 'seconds': 24.03094268299992, 'selector': '^TestCheckedJSONNext$/json_depth_misfit$', 'log': 'review/compiler/chain-slice-8/patch-mutants/javascript_depth/test.log'}
+runtime_depth {'name': 'runtime_depth', 'exit': 1, 'caught': True, 'seconds': 50.825745207999944, 'selector': '^TestCheckedJSONNext$/json_depth_misfit$', 'log': 'review/compiler/chain-slice-8/patch-mutants/runtime_depth/test.log'}
+runtime_key_order {'name': 'runtime_key_order', 'exit': 1, 'caught': True, 'seconds': 42.41765573500015, 'selector': '^TestCheckedJSONNext$/json_dictionary_order_misfit$', 'log': 'review/compiler/chain-slice-8/patch-mutants/runtime_key_order/test.log'}
+runtime_record_guard {'name': 'runtime_record_guard', 'exit': 1, 'caught': True, 'seconds': 27.924990589000117, 'selector': '^TestCheckedJSONRecordRemainsUnsupported$', 'log': 'review/compiler/chain-slice-8/patch-mutants/runtime_record_guard/test.log'}
+array-layout {'name': 'array-layout', 'caught': False, 'error': 'None'}
+evolving-any {'name': 'evolving-any', 'caught': False, 'error': 'None'}
+explicit-any-policy {'name': 'explicit-any-policy', 'caught': False, 'error': 'None'}
+literal-result {'name': 'literal-result', 'caught': False, 'error': 'None'}
+primitive-prototype {'name': 'primitive-prototype', 'caught': False, 'error': 'None'}
+staged-field {'name': 'staged-field', 'caught': False, 'error': 'None'}
+string-length {'name': 'string-length', 'caught': False, 'error': 'None'}
+typed-field {'name': 'typed-field', 'caught': False, 'error': 'None'}
+classification-source {'name': 'classification-source', 'exit': 1, 'caught': True, 'seconds': 10.643091496000125, 'selector': '^TestRefusalMustBeInsideDeclaration$', 'log': 'review/compiler/chain-slice-8/patch-mutants/classification-source/test.log'}
+classification-span {'name': 'classification-span', 'exit': 1, 'caught': True, 'seconds': 12.349423031000015, 'selector': '^TestRefusalMustBeInsideDeclaration$', 'log': 'review/compiler/chain-slice-8/patch-mutants/classification-span/test.log'}

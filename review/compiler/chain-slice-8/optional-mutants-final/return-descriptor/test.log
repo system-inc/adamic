@@ -1,0 +1,42 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==49070==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56549e7f55be bp 0x7ffd307c40f0 sp 0x7ffd307c40c0 T0)\n==49070==The signal is caused by a READ memory access.\n==49070==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x56549e7f55be in adamic_release /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28\n    #1 0x56549e7e0c31 in adamic_function_1_cleanup /tmp/adamic-gate/adamic-build-4233162803/main.c:56:3\n    #2 0x56549e7e0a03 in main /tmp/adamic-gate/adamic-build-4233162803/main.c:93:2\n    #3 0x7f0758251ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f0758251d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x56549e6fa460 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodedocsstep-18fixturesruntime-return-de457447373/002/program+0x5a460)\n\n==49070==Register values:\nrax = 0x4044800000000000  rbx = 0x00007b37573e0040  rcx = 0x0808900000000000  rdx = 0x00000f66eae7c008  \nrdi = 0x4044800000000000  rsi = 0x4044800000000000  rbp = 0x00007ffd307c40f0  rsp = 0x00007ffd307c40c0  \n r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0x0000000000000001  \nr12 = 0x00007b37573e0040  r13 = 0x00007b0755f00040  r14 = 0x00007b37573e0040  r15 = 0x00007b0755f00060  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28 in adamic_release\n==49070==ABORTING\n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "2\n", stderr ""
+        native: exit 1, stdout "", stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==49070==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56549e7f55be bp 0x7ffd307c40f0 sp 0x7ffd307c40c0 T0)\n==49070==The signal is caused by a READ memory access.\n==49070==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x56549e7f55be in adamic_release /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28\n    #1 0x56549e7e0c31 in adamic_function_1_cleanup /tmp/adamic-gate/adamic-build-4233162803/main.c:56:3\n    #2 0x56549e7e0a03 in main /tmp/adamic-gate/adamic-build-4233162803/main.c:93:2\n    #3 0x7f0758251ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f0758251d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x56549e6fa460 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodedocsstep-18fixturesruntime-return-de457447373/002/program+0x5a460)\n\n==49070==Register values:\nrax = 0x4044800000000000  rbx = 0x00007b37573e0040  rcx = 0x0808900000000000  rdx = 0x00000f66eae7c008  \nrdi = 0x4044800000000000  rsi = 0x4044800000000000  rbp = 0x00007ffd307c40f0  rsp = 0x00007ffd307c40c0  \n r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0x0000000000000001  \nr12 = 0x00007b37573e0040  r13 = 0x00007b0755f00040  r14 = 0x00007b37573e0040  r15 = 0x00007b0755f00060  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28 in adamic_release\n==49070==ABORTING\n"
+    oracle_test.go:788: leaks:
+        exit 1
+        AddressSanitizer:DEADLYSIGNAL
+        =================================================================
+        ==49116==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56064c7df5be bp 0x7fff42897130 sp 0x7fff42897100 T0)
+        ==49116==The signal is caused by a READ memory access.
+        ==49116==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+            #0 0x56064c7df5be in adamic_release /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28
+            #1 0x56064c7cac31 in adamic_function_1_cleanup /tmp/adamic-gate/adamic-build-4233162803/main.c:56:3
+            #2 0x56064c7caa03 in main /tmp/adamic-gate/adamic-build-4233162803/main.c:93:2
+            #3 0x7fd122231ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x7fd122231d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #5 0x56064c6e4460 in _start (/tmp/adamic-gate/TestNativeAgreesWithNodedocsstep-18fixturesruntime-return-de457447373/002/program+0x5a460)
+        
+        ==49116==Register values:
+        rax = 0x4044800000000000  rbx = 0x00007c01213e0040  rcx = 0x0808900000000000  rdx = 0x00000f802427c008  
+        rdi = 0x4044800000000000  rsi = 0x4044800000000000  rbp = 0x00007fff42897130  rsp = 0x00007fff42897100  
+         r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0x0000000000000001  
+        r12 = 0x00007c01213e0040  r13 = 0x00007bd11ff00040  r14 = 0x00007c01213e0040  r15 = 0x00007bd11ff00060  
+        AddressSanitizer can not provide additional info.
+        SUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-450189819/heap.c:372:28 in adamic_release
+        ==49116==ABORTING
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a (1.49s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.540s
+FAIL

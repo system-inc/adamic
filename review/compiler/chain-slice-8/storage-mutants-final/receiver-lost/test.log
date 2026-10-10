@@ -1,0 +1,24 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-2597797331/main.c:155:81: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2597797331/main.c:155:81 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "arg\nhost1:value2\narg\nreplacement:value2\nabsent\nnull\n", stderr ""
+        native: exit 1, stdout "", stderr "/tmp/adamic-gate/adamic-build-2597797331/main.c:155:81: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2597797331/main.c:155:81 \n"
+    oracle_test.go:788: leaks:
+        exit 1
+        /tmp/adamic-gate/adamic-build-2597797331/main.c:155:81: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2597797331/main.c:155:81 
+--- FAIL: TestNativeAgreesWithNode (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a (1.86s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.960s
+FAIL

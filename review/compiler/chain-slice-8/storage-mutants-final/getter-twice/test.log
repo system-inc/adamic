@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "absent\nget\nabsent\nget\nargument\nowner1:value1\nget\nargument\ndirect2:value2\n3:2\nabsent\nliteral-get\nargument\nliteral3:value3\n", stderr ""
+        backend: exit 0, stdout "absent\nget\nget\nabsent\nget\nget\nargument\nowner1:value1\nget\nget\nargument\ndirect2:value2\n6:2\nabsent\nliteral-get\nliteral-get\nargument\nliteral3:value3\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a (2.62s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.708s
+FAIL

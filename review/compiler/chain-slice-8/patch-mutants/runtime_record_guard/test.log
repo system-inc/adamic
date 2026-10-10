@@ -1,0 +1,6 @@
+=== RUN   TestCheckedJSONRecordRemainsUnsupported
+    checked_json_runtime_test.go:37: pending record must stop before reading storage: <nil> stdout="" stderr=""
+--- FAIL: TestCheckedJSONRecordRemainsUnsupported (14.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	14.058s
+FAIL

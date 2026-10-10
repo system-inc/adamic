@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a
+    oracle_test.go:775: stdout differs
+        node:   exit 0, stdout "absent\nabsent\nargument\nclass1:1\nabsent\nabsent\nargument\nliteral2:2\n2\n", stderr ""
+        native: exit 0, stdout "argument\nabsent\nargument\nabsent\nargument\nargument\nclass1:4\nargument\nabsent\nargument\nabsent\nargument\nargument\nliteral2:8\n8\n", stderr ""
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "absent\nabsent\nargument\nclass1:1\nabsent\nabsent\nargument\nliteral2:2\n2\n", stderr ""
+        backend: exit 0, stdout "argument\nabsent\nargument\nabsent\nargument\nargument\nclass1:4\nargument\nabsent\nargument\nabsent\nargument\nargument\nliteral2:8\n8\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a (3.22s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.447s
+FAIL

@@ -1,0 +1,10 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_proto_key
+    checked_json_next_test.go:122: wrong point of refusal: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_proto_key2569854989/001/boundary.ts:3:20: Adamic 0.1 refuses __proto__ in an object literal; JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation
+--- FAIL: TestCheckedJSONNextRefusals (0.04s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_dictionary_proto_key (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.057s
+FAIL

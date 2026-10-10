@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "arg\nhost1:value2\narg\nreplacement:value2\nabsent\n", stderr ""
+        native: exit 70, stdout "arg\nhost1:value2\narg\nreplacement:value2\narg\n", stderr "adamic: panic: TypeError: optional call value is not callable\n"
+    oracle_test.go:781: JavaScript backend: stdout differs
+        node:    exit 0, stdout "arg\nhost1:value2\narg\nreplacement:value2\nabsent\n", stderr ""
+        backend: exit 0, stdout "arg\narg\nhost1:value2\narg\narg\nreplacement:value2\narg\nabsent\n", stderr ""
+    oracle_test.go:788: leaks:
+        exit 70
+        adamic: panic: TypeError: optional call value is not callable
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a (1.68s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.755s
+FAIL

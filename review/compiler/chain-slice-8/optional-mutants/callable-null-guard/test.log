@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-values.a
+=== PAUSE TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-values.a
+=== CONT  TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-values.a
+    oracle_test.go:781: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "-1\n5\ntrue\nfalse\n-2\n7\n-3\n-3\n9\nabsent\nbox1\n-4\n11\n", stderr ""
+        backend: exit 70, stdout "-1\n5\ntrue\nfalse\n", stderr "adamic: panic: TypeError: Cannot read properties of null (reading 'code')\n"
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-values.a (2.55s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.690s
+FAIL
