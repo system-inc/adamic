@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -53,9 +54,8 @@ func oracle(t *testing.T) string {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "go-oracle")
-	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual, filepath.Join(root, "adamic_helper_descriptors.go"))
-	return binary
+	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
+	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual+" "+filepath.Join(root, "adamic_helper_descriptors.go"), []string{"-overlay=" + path})
 }
 func build(t *testing.T, directory string) string {
 	t.Helper()
