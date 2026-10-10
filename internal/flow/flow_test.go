@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -310,6 +310,22 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 func refusedConstructorFixture(path string) bool {
 	switch filepath.Base(path) {
 	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+		return true
+	}
+	return false
+}
+
+// These accessor census witnesses pin where main stops lowering: getters_census_test.go asserts
+// each one's NotYet or Refused, so they never enter the oracle's runnable set. The census's three
+// programs that lower (class_map, throwing_object, binary_inline) stay here.
+func refusedGettersCensusFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "getters_census_binary_function.a", "getters_census_callback_pair_methods.a", "getters_census_closure_number_methods.a",
+		"getters_census_closure_number_next.a", "getters_census_closure_union_next.a", "getters_census_higher_callback_pair_methods.a",
+		"getters_census_lazy_object.a", "getters_census_optional_boolean_function.a", "getters_census_optional_comment_function.a",
+		"getters_census_optional_type_function.a", "getters_census_overloaded_function.a", "getters_census_primary_function.a",
+		"getters_census_snapshot_next.a", "getters_census_unary_function.a", "getters_census_unary_node_function.a",
+		"getters_census_update_comment_function.a", "getters_census_update_node_function.a", "getters_census_update_type_function.a":
 		return true
 	}
 	return false

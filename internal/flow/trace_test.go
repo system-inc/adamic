@@ -59,7 +59,12 @@ type run struct {
 // variables hold: one that holds the same object as it did at that point, which now prints
 // differently, was mutated by that instruction. Printing follows every field, element and map entry,
 // so a mutation of anything a variable's object reaches counts; a closure prints as itself, since
-// what its cells hold isn't a tracked value. Calls are frames, and each compares only its own.
+// what its cells hold isn't a tracked value. An accessor literal's getter or setter prints as itself
+// and is never run: the observer must not run the program's code, and a getter whose receiver is a
+// tracked variable would print that receiver again at its own first point, recursing until the
+// stack runs out, which loses a call's leave and changes what the program prints. What an accessor
+// computes from is held in fields and cells, never in the accessor. Calls are frames, and each
+// compares only its own.
 const traceRuntime = `
 const adamicTrace = [];
 const adamicIdentities = new WeakMap();
@@ -77,7 +82,10 @@ const adamicPrint = (value, seen) => {
 	if (typeof value.code === 'function') return 'closure' + adamicIdentity(value);
 	if (value instanceof Map) return 'map(' + [...value].map(([key, entry]) => adamicPrint(key, seen) + '=>' + adamicPrint(entry, seen)).join(',') + ')';
 	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
-	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
+	return '{' + Object.keys(value).map((key) => {
+		const field = Object.getOwnPropertyDescriptor(value, key);
+		return key + ':' + ('value' in field ? adamicPrint(field.value, seen) : 'accessor');
+	}).join(',') + '}';
 };
 // A panic on Node is a throw a catch can take, though natively it ends the program where it stands, so
 // what runs after one isn't a path of the program: the runtime silences stdout when it panics, and
@@ -410,7 +418,11 @@ func checkLivenessProgram(t *testing.T, path string) {
 		live[function] = LiveOut(graph)
 	}
 	count := 0
-	for _, sequence := range frames(run) {
+	sequences, problems := frames(run)
+	for _, problem := range problems {
+		t.Error(problem)
+	}
+	for _, sequence := range sequences {
 		graph := run.graphs[sequence.function]
 		throwers := throwingInstructions(graph)
 		// Backward: readNext says whether the next thing to touch a variable is a read.
@@ -486,9 +498,11 @@ type sequence struct {
 	points   []InstructionId
 }
 
-// frames splits a trace into its calls' sequences.
-func frames(run run) []sequence {
+// frames splits a trace into its calls' sequences, and says where a point ran inside a call of
+// another function: an unbalanced trace whose instructions would be read against the wrong graph.
+func frames(run run) ([]sequence, []string) {
 	var done []sequence
+	var problems []string
 	stack := []sequence{{function: -1}}
 	for _, event := range run.events {
 		switch {
@@ -501,9 +515,13 @@ func frames(run run) []sequence {
 		default:
 			if index, err := strconv.Atoi(event); err == nil {
 				top := &stack[len(stack)-1]
+				if run.marked[index].function != top.function {
+					problems = append(problems, fmt.Sprintf("a point of function %d ran inside a call of function %d", run.marked[index].function, top.function))
+					continue
+				}
 				top.points = append(top.points, run.marked[index].instruction)
 			}
 		}
 	}
-	return append(done, stack...)
+	return append(done, stack...), problems
 }
