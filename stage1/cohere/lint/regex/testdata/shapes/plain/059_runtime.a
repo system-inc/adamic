@@ -1,4 +1,4 @@
-// react/exhaustive_deps.go:451; `Effect($|[^a-z])`
+// tailwind/no_deprecated_classes.go:65; `^inset-shadow$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,7 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "Effect", 4);
-observe(regex, "xEffect", 5);
-observe(regex, "Effect\n", 6);
-observe(regex, "useEffect(", 7);
+observe(regex, "inset-shadow", 4);
+observe(regex, "xinset-shadow", 5);
+observe(regex, "inset-shadow\n", 6);
