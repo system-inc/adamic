@@ -53,6 +53,87 @@ func Adamic(t testing.TB) string {
 	return GoBuild(t, "adamic", "./cmd/adamic", nil)
 }
 
+// GoExports is the product of 'go list -export -deps -test -json <packages>' at the repository root, for a test that
+// type-checks against the compiler's export data (go/importer) without running go: listing.json holds one
+// ListedPackage per package go list reported, in its order, each Export a file the product holds and each Dir
+// relative to the repository. Its key is GoTest's for the same packages: every file they compile, their tests
+// included.
+func GoExports(t testing.TB, packages ...string) string {
+	t.Helper()
+	request := goRequest{verb: "list -export", output: "listing.json", pkg: strings.Join(packages, " ")}
+	request.arguments = []string{"-trimpath"}
+	inputs, err := request.inputs()
+	if err != nil {
+		t.Fatalf("go list -export %s: %v", request.pkg, err)
+	}
+	root, _ := repositoryRoot()
+	return Product(t, inputs, func(directory string) error {
+		command := exec.Command("go", append([]string{"list", "-trimpath", "-export", "-deps", "-test", "-json"}, packages...)...)
+		command.Dir = root
+		output, err := command.Output()
+		if err != nil {
+			var exit *exec.ExitError
+			if errors.As(err, &exit) {
+				return fmt.Errorf("go list -export: %v\n%s", err, exit.Stderr)
+			}
+			return err
+		}
+		if err := os.Mkdir(filepath.Join(directory, "exports"), 0o755); err != nil {
+			return err
+		}
+		real := resolved(root)
+		var listing []ListedPackage
+		decoder := json.NewDecoder(strings.NewReader(string(output)))
+		for {
+			var listed ListedPackage
+			if err := decoder.Decode(&listed); err == io.EOF {
+				break
+			} else if err != nil {
+				return err
+			}
+			// A product holds no absolute path: a directory outside the repository (the standard library's, go's module
+			// cache) is left out, since only its export data is read.
+			relative := ""
+			for _, spelling := range []string{root, real} {
+				if spelling != "" && inside(spelling, listed.Dir) {
+					relative = filepath.ToSlash(mustRelative(spelling, listed.Dir))
+					break
+				}
+			}
+			listed.Dir = relative
+			// Likewise a file go generated in its own cache (a test main) is named absolutely and left out.
+			for _, names := range []*[]string{&listed.GoFiles, &listed.TestGoFiles, &listed.XTestGoFiles} {
+				*names = slices.DeleteFunc(*names, filepath.IsAbs)
+			}
+			if listed.Export != "" {
+				content, err := os.ReadFile(listed.Export)
+				if err != nil {
+					return err
+				}
+				listed.Export = fmt.Sprintf("exports/%d.a", len(listing))
+				if err := os.WriteFile(filepath.Join(directory, listed.Export), content, 0o644); err != nil {
+					return err
+				}
+			}
+			listing = append(listing, listed)
+		}
+		encoded, err := json.MarshalIndent(listing, "", "\t")
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, request.output), encoded, 0o644)
+	})
+}
+
+// A ListedPackage is one package of a GoExports listing, as go list reports it, except that Dir is relative to the
+// repository (empty for a package outside it), a file go generated in its own cache is left out, and Export names a
+// file in the product.
+type ListedPackage struct {
+	ImportPath, Dir, Export, ForTest   string
+	Standard                           bool
+	GoFiles, TestGoFiles, XTestGoFiles []string
+}
+
 // A goRequest is one go invocation a product is built by: 'go build', or 'go test -c', of pkg in module (a directory
 // of the repository, its root when empty), with arguments and environment added.
 type goRequest struct {
@@ -322,7 +403,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		listed = append(listed, "-overlay="+overlay.path)
 	}
 	asked := []string{"list", "-deps", "-json"}
-	if request.verb == "test -c" {
+	if request.verb == "test -c" || request.verb == "list -export" {
 		// The test variant of each package, so its _test.go files are keyed too.
 		asked = append(asked, "-test")
 	}
