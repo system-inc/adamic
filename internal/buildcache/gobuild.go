@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -45,6 +47,25 @@ func GoTest(t testing.TB, module, output, pkg string, arguments []string, enviro
 func GoBuildIn(t testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
 	t.Helper()
 	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// A Mutation is one planted change a product is built with: File, a file of the repository the build reads (a
+// package's source or an overlay's replacement), relative to the repository, with Before, which must occur in it exactly
+// once, replaced by After. It is how a test proves a check can fail, built ahead like any other product.
+type Mutation struct{ File, Before, After string }
+
+// GoTestMutated is GoTest with mutations planted. Each mutated copy is written inside the product while it builds and
+// laid over the original by an overlay of its own, so the product names no machine. The key is GoTest's with each
+// mutation's file, before and after: a changed after-string is another product.
+func GoTestMutated(t testing.TB, module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: arguments, mutations: mutations, environment: environment})
+}
+
+// GoBuildInMutated is GoBuildIn with mutations planted, as GoTestMutated plants them.
+func GoBuildInMutated(t testing.TB, module, output, pkg string, arguments []string, mutations []Mutation, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, mutations: mutations, environment: environment})
 }
 
 // Adamic is the stage 0 compiler, ./cmd/adamic, as one product every test that runs adamic shares.
@@ -139,6 +160,7 @@ type ListedPackage struct {
 type goRequest struct {
 	verb, module, output, pkg string
 	arguments, environment    []string
+	mutations                 []Mutation
 }
 
 func goProduct(t testing.TB, request goRequest) string {
@@ -154,6 +176,15 @@ func goProduct(t testing.TB, request goRequest) string {
 		arguments = append([]string{"-a"}, arguments...)
 	}
 	directory := Product(t, inputs, func(directory string) error {
+		arguments := arguments
+		if len(request.mutations) > 0 {
+			planted, cleanup, err := request.plant(root, directory, arguments)
+			if err != nil {
+				return err
+			}
+			defer cleanup()
+			arguments = planted
+		}
 		command := exec.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
 		command.Dir = filepath.Join(root, request.module)
 		command.Env = append(os.Environ(), request.environment...)
@@ -163,6 +194,109 @@ func goProduct(t testing.TB, request goRequest) string {
 		return nil
 	})
 	return filepath.Join(directory, request.output)
+}
+
+// plant writes each mutated file inside directory, the product, under mutations/<its path in the repository>, and
+// returns arguments whose overlay lays the copies over what they mutate: the request's own overlay with every
+// replacement that is a mutated file pointed at its copy, and a mutated package source replaced by its copy. The
+// overlay names this checkout's paths, so it sits in a temporary directory and leaves with the build (#tqrqx60).
+func (request goRequest) plant(root, directory string, arguments []string) ([]string, func(), error) {
+	replace := map[string]string{}
+	var kept []string
+	for index := 0; index < len(arguments); index++ {
+		path := ""
+		switch argument := arguments[index]; {
+		case argument == "-overlay" && index+1 < len(arguments):
+			path = arguments[index+1]
+			index++
+		case strings.HasPrefix(argument, "-overlay="):
+			path = strings.TrimPrefix(argument, "-overlay=")
+		default:
+			kept = append(kept, argument)
+			continue
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return nil, nil, err
+		}
+		var declared struct{ Replace map[string]string }
+		if err := json.Unmarshal(content, &declared); err != nil {
+			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
+		}
+		maps.Copy(replace, declared.Replace)
+	}
+	texts, err := request.mutated(root)
+	if err != nil {
+		return nil, nil, err
+	}
+	for file, text := range texts {
+		original := filepath.Join(root, file)
+		copied := filepath.Join(directory, "mutations", filepath.FromSlash(file))
+		if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
+			return nil, nil, err
+		}
+		if err := os.WriteFile(copied, []byte(text), 0o644); err != nil {
+			return nil, nil, err
+		}
+		pointed := false
+		for from, to := range replace {
+			if !filepath.IsAbs(to) {
+				to = filepath.Join(root, request.module, to)
+			}
+			if filepath.Clean(to) == original {
+				replace[from], pointed = copied, true
+			}
+		}
+		if !pointed {
+			replace[original] = copied
+		}
+	}
+	scratch, err := os.MkdirTemp("", "buildcache-mutations-")
+	if err != nil {
+		return nil, nil, err
+	}
+	cleanup := func() { os.RemoveAll(scratch) }
+	encoded, err := json.Marshal(map[string]any{"Replace": replace})
+	if err == nil {
+		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
+	}
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	return append(kept, "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
+}
+
+// mutated is each file the request's mutations change, by its path in the repository, with every mutation of it
+// applied in order. A mutation whose Before isn't in its file exactly once is refused, since it would plant nothing
+// or plant it in the wrong place.
+func (request goRequest) mutated(root string) (map[string]string, error) {
+	texts := map[string]string{}
+	for _, mutation := range request.mutations {
+		text, ok := texts[mutation.File]
+		if !ok {
+			content, err := os.ReadFile(filepath.Join(root, mutation.File))
+			if err != nil {
+				return nil, fmt.Errorf("mutation of %s: %v", mutation.File, err)
+			}
+			text = string(content)
+		}
+		if count := strings.Count(text, mutation.Before); count != 1 {
+			return nil, fmt.Errorf("mutation of %s: %q occurs %d times, not once", mutation.File, mutation.Before, count)
+		}
+		texts[mutation.File] = strings.Replace(text, mutation.Before, mutation.After, 1)
+	}
+	return texts, nil
+}
+
+// mutationKeys are the request's mutations as its identity and key spell them: the file, then before and after
+// quoted, so a changed after-string is another product.
+func (request goRequest) mutationKeys() []string {
+	var keys []string
+	for _, mutation := range request.mutations {
+		keys = append(keys, "mutation "+mutation.File+" "+strconv.Quote(mutation.Before)+" -> "+strconv.Quote(mutation.After))
+	}
+	return keys
 }
 
 // reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
@@ -375,6 +509,7 @@ func (request goRequest) identity(root string) (string, overlayKey, error) {
 		parts = append(parts, "argument "+portable(root, argument))
 	}
 	parts = append(parts, overlay.flags...)
+	parts = append(parts, request.mutationKeys()...)
 	for _, setting := range request.environment {
 		parts = append(parts, "environment "+portable(root, setting))
 	}
@@ -513,11 +648,21 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 	for _, target := range overlay.files {
 		files[target] = true
 	}
+	// A mutation plants into a file the build reads, as a package's source or an overlay's replacement, with a Before
+	// that occurs once: anything else would build the unmutated product under a mutant's key.
+	for _, mutation := range request.mutations {
+		if !files[mutation.File] {
+			return Inputs{}, fmt.Errorf("mutation of %s: the build doesn't read it (a package's source the overlay doesn't replace, or an overlay's replacement)", mutation.File)
+		}
+	}
+	if _, err := request.mutated(root); err != nil {
+		return Inputs{}, err
+	}
 	name := "go build " + request.pkg + " " + request.output
 	if request.verb != "build" || request.module != "" {
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
-	inputs := Inputs{Name: name, Flags: append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
+	inputs := Inputs{Name: name, Flags: append(append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), request.mutationKeys()...), Toolchain: []string{Tool("go", "version")}}
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
