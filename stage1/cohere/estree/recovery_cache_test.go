@@ -239,13 +239,8 @@ func recoveryAnswer(t *testing.T, oracle, list, mode string) []byte {
 
 const testRecoveryNativeRecipeShards = 4
 
-// ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
-// The fixture checks the compiler recipe, including leak detection, rather than
-// merely checking that its command line still contains sanitizer switches.
-func TestRecoveryNativeRecipe(t *testing.T) {
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	source := `#include "adamic.h"
+// recoveryNativeRecipeSource is the fixture the native recipe proof compiles: clean, then each sanitizer's catch.
+const recoveryNativeRecipeSource = `#include "adamic.h"
 #include <limits.h>
 #include <stdlib.h>
 static void * volatile lost;
@@ -260,6 +255,11 @@ int main(int argc,char **argv) {
  return 0;
 }
 `
+
+// recoveryNativeRecipe is the fixture built twice from one recipe in two independent build directories, a and b.
+func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
+	t.Helper()
+	source := recoveryNativeRecipeSource
 	inputs := buildcache.Inputs{
 		Name:      "estree-native-recipe-proof-a",
 		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
@@ -269,6 +269,16 @@ int main(int argc,char **argv) {
 	first := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
 	inputs.Name = "estree-native-recipe-proof-b"
 	second := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+	return first, second
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
+// The fixture checks the compiler recipe, including leak detection, rather than
+// merely checking that its command line still contains sanitizer switches.
+func TestRecoveryNativeRecipe(t *testing.T) {
+	setup := beginRecoverySetup(t)
+	defer setup.report(t)
+	first, second := recoveryNativeRecipe(t, setup)
 	a, err := os.ReadFile(filepath.Join(first, "port"))
 	if err != nil {
 		t.Fatal(err)
