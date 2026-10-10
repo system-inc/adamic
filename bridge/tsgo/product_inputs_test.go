@@ -3,6 +3,7 @@ package tsgo_test
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -13,8 +14,14 @@ import (
 // fetch a new product; omitting it returns version one and fails this comparison.
 func checkBridgeProductInput(t *testing.T, name string) {
 	t.Helper()
-	inputs := bridgeProductInputs(t, bridgeRepository(t), name)
+	repository := bridgeRepository(t)
+	inputs := bridgeProductInputs(t, repository, name)
 	root := t.TempDir()
+	// The stand-in tree is the repository here: its flags name it where they named the checkout, so Key spells both
+	// <repository> and the proof's products key the same from any checkout, as Workshop builds them.
+	for index, flag := range inputs.Flags {
+		inputs.Flags[index] = strings.ReplaceAll(flag, repository, root)
+	}
 	for _, file := range inputs.Files {
 		path := filepath.Join(root, file)
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
@@ -62,6 +69,15 @@ func checkBridgeProductInput(t *testing.T, name string) {
 	}
 	if keys[0] == keys[1] {
 		t.Fatalf("%s kept a stale key after its recipe changed", name)
+	}
+}
+
+// TestProduct_BridgeInputProofs builds, on Workshop, the two products each TestBridgeProductInput_ reads: for every
+// bridge product, the stand-in recipe's version one and version two, under the keys that recipe's inputs give them.
+func TestProduct_BridgeInputProofs(t *testing.T) {
+	t.Parallel()
+	for _, name := range bridgeProductNames {
+		checkBridgeProductInput(t, name)
 	}
 }
 
