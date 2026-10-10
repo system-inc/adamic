@@ -1,5 +1,5 @@
 Built step 10 merge resolution: checked-write emission with main's per-emitter object metadata cache.
-Commits: merged current origin/main 0bf6186d into compiler/checked-writes-follow from cleared 29275d4e; delivery SHA is in the push response.
+Commits: merged current origin/main 0bf6186d into compiler/checked-writes-follow from cleared 29275d4e; merge commit 3d60a19969f30d01785645d6d71b0c2daef99e32; delivery SHA is in the push response.
 Commands and outputs: Node-held oracle PASS 26.235s; runtime/metadata catchers PASS .948s; reader guard PASS 10.945s; counts comparison PASS 38.948s.
 Mutants: all 52 prior mutants caught again, plus the new cached checked-write metadata mutant (53 total).
 Limits: no whole-package test or full gate; runtime files changed since 29275d4e: none.
@@ -93,4 +93,4 @@ Separate overlays (first twelve are the remaining prior mutants; last is the new
 
 Runtime clearance: git diff 29275d4e -- internal/native/runtime is empty, including main changes brought by this merge. No new runtime change needs clearance.
 
-Lane checks run after the merge commit, from the root with the prescribed fetched script; results are in lane-checks.log and the push response.
+Lane checks after merge commit 3d60a199: PASS in 9.0s, gofmt and tools on 46 Go files, t.Parallel on five test packages, a-check on 16 .a files, vet on five packages. Command: timeout 30 git fetch -q origin main devtools/fast-gate cloud/merge-tree, then timeout 300 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'. Output is lane-checks.log. Source changes pass git diff origin/main --check for emit_objects.go and object_metadata_test.go; context whitespace in preserved evidence patches from main and the original conflict is intentional.
