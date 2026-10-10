@@ -466,6 +466,12 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
 	return copyPort(t, t.TempDir(), from, to, targets...)
 }
 func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+	return copyPortImporting(t, directory, rewritePortImports, from, to, targets...)
+}
+
+// copyPortImporting is copyPort with imports, which spells each copied file's imports: rewritePortImports points the
+// ones leaving the package at this checkout, and keepPortImports leaves them as written (portTree).
+func copyPortImporting(t *testing.T, directory string, imports func(t *testing.T, file, source string) string, from, to string, targets ...string) string {
 	if len(targets) == 0 && from != "" {
 		targets = []string{"lint.ts"}
 	}
@@ -486,7 +492,7 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 			changed++
 		}
 		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
-			source = rewritePortImports(t, file, source)
+			source = imports(t, file, source)
 		}
 		destination := filepath.Join(directory, file)
 		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {

@@ -90,7 +90,7 @@ func jsxTextnodesShard(t *testing.T, shard int) {
 	for _, i := range slices[shard] {
 		selected = append(selected, rows[i])
 	}
-	port, js, binary := bundle.Port, bundle.JS, bundle.Binary
+	port, js, binary := jsxTextnodesProducts(t)
 	t.Logf("shard-%03d cases=%d", shard, len(selected))
 	path := manifest(t, selected)
 	want := yepestaExecute(t, "", oracle, "--manifest", path).output
@@ -139,7 +139,7 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(t *testing.T) {
 			continue
 		}
 		suffix, ok := strings.CutPrefix(fn.Name.Name, "TestMutantsReactJsxNoCommentTextnodes_")
-		if !ok || suffix == "Setup" {
+		if !ok {
 			continue
 		}
 		i, err := strconv.Atoi(suffix)
@@ -174,7 +174,7 @@ func TestMutantsReactJsxNoCommentTextnodesMutantKilled(t *testing.T) {
 	witnesses := bundle.Witnesses
 	path := manifest(t, witnesses)
 	want := yepestaExecute(t, "", oracle, "--manifest", path).output
-	port, js := bundle.Port, bundle.JS
+	port, js, _ := jsxTextnodesProducts(t)
 	for _, side := range []struct {
 		name   string
 		output []byte
@@ -245,19 +245,6 @@ func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { t.Parallel(); jsx
 func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 14) }
 func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 15) }
 
-// The setup entry points remain useful for explicitly warming the same products.
-func TestMutantsReactJsxNoCommentTextnodesOracleSetup(t *testing.T) {
-	t.Parallel()
-	yepestaFetch(t)
-}
-func TestMutantsReactJsxNoCommentTextnodesLoweredSetup(t *testing.T) {
-	t.Parallel()
-	yepestaFetch(t)
-}
-func TestMutantsReactJsxNoCommentTextnodesNativeSetup(t *testing.T) {
-	t.Parallel()
-	yepestaFetch(t)
-}
 func yepestaOracle(t *testing.T) string {
 	t.Helper()
 	inputs := yepestaInputs()
@@ -269,19 +256,13 @@ func yepestaOracle(t *testing.T) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func TestMutantsReactJsxNoCommentTextnodes_Setup(t *testing.T) {
-	t.Parallel()
-	yepestaFetch(t)
-}
-
 func yepestaPrepare(t *testing.T) string {
 	t.Helper()
 	directory := buildcache.Product(t, yepestaInputs(), func(out string) error {
 		oracle := yepestaOracle(t)
 		rows := jsxTextnodesRows(t, oracle)
 		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
-		port, js, binary := jsxTextnodesProducts(t)
-		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle"), Port: port, JS: js, Binary: binary}
+		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle")}
 		data, err := os.ReadFile(oracle)
 		if err != nil {
 			return err
@@ -327,17 +308,24 @@ func yepestaPrepare(t *testing.T) string {
 	return directory
 }
 
+// yepestaBundle is the shards' shared preparation, every path in it relative to its product's directory: the Go
+// oracle and the rows and witnesses it judges. The mutated port, its JavaScript and its native build are products of
+// their own (jsxTextnodesProducts), so the bundle names no other product's place in any one machine's cache.
 type yepestaBundle struct {
-	Oracle, Port, JS, Binary string
-	Rows, Witnesses          []string
+	Oracle          string
+	Rows, Witnesses []string
 }
 
+// yepestaInputs name what changes the bundle: the sources it reads and the Go that builds its oracle. Which shard
+// reads which rows is decided at run time, and the native build is jsx-textnodes-mutant-native's, so neither keys it.
 func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v1", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Flags: []string{packageDirectory, "shards=16", os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Toolchain: []string{buildcache.Tool("go", "version")}}
 }
 
 // Preparation runs once per process, including when a single shard is selected.
-// Product supplies content-addressed reuse across processes; its miss always builds.
+// Product supplies content-addressed reuse across processes: Workshop builds it once
+// (TestProduct_YepestaSetup), and a runner reading with ADAMIC_BUILD_CACHE=read fails
+// naming it when it is missing rather than building it.
 var yepestaPrepared struct {
 	once      sync.Once
 	directory string
