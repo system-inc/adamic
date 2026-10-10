@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_indexed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_indexed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_indexed.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_indexed.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_read.a (0.42s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.447s

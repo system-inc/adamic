@@ -1,0 +1,138 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/class.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/class.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/object.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/object.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/break.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/break.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/return.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/return.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/labeled_continue.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/labeled_continue.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/body_throw.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/body_throw.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/next_throw.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/next_throw.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_body.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_body.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/cached_next.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/cached_next.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/completion.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/completion.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/done_throw.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/done_throw.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/value_throw.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/value_throw.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/method_getters.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/method_getters.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/object_iteration.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/object_iteration.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/test262_array_views.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/test262_array_views.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_weak.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_weak.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/user_forwarding.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/user_forwarding.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/generator.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/generator.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/delegated_generator.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/delegated_generator.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/class.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/labeled_continue.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/break.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/delegated_generator.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/generator.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/user_forwarding.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_weak.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/test262_array_views.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/return.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/object_iteration.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a
+    oracle_test.go:748: not yet: /workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/object.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/next_throw.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_body.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/body_throw.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/value_throw.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/method_getters.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/completion.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/done_throw.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/cached_next.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/break.a (0.77s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/class.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/labeled_continue.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_break.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_weak.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/test262_array_views.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/user_forwarding.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/generator.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/delegated_generator.a (1.24s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/object_iteration.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/return.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a (0.03s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a (0.52s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/object.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/next_throw.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/close_throw_body.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/body_throw.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/value_throw.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/method_getters.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/completion.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/done_throw.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration-dispatch/cached_next.a (0.52s)
+PASS
+gate cache: native hits=0 misses=93
+gate cache: node hits=0 misses=62
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.237s
