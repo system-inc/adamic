@@ -86,9 +86,14 @@ func tscAgreementPrepare(t *testing.T) string {
 				if err != nil {
 					return err
 				}
-				if err := os.WriteFile(filepath.Join(output, name), content, 0644); err != nil {
+				// A refused file is named by the root the reader supplies (#tqrqx60).
+				if err := os.WriteFile(filepath.Join(output, name), []byte(buildcache.Relative(string(content))), 0644); err != nil {
 					return err
 				}
+			}
+			// Each case's label names its corpus file by the root the reader supplies, never this checkout (#tqrqx60).
+			for i := range cases {
+				cases[i].Label = buildcache.Relative(cases[i].Label)
 			}
 			data.Families = append(data.Families, tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry})
 		}
@@ -118,6 +123,9 @@ func tscAgreementLoad(t *testing.T) tscAgreementData {
 	}
 	for i := range data.Families {
 		data.Families[i].Directory = filepath.Join(directory, data.Families[i].Directory)
+		for j := range data.Families[i].Cases {
+			data.Families[i].Cases[j].Label = buildcache.Absolute(data.Families[i].Cases[j].Label)
+		}
 		source, err := filepath.Abs(data.Families[i].Source)
 		if err != nil {
 			t.Fatal(err)

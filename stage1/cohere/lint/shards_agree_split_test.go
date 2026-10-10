@@ -127,22 +127,18 @@ func testShardsAgreeUpstream(t *testing.T) []string {
 		if err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(d, "rows"), []byte(strings.Join(rows, "\n")), 0644)
+		// Each row names a case in this product, by its key, wherever the reader's cache holds it (#tqrqx60).
+		return os.WriteFile(filepath.Join(d, "rows"), []byte(buildcache.Relative(strings.Join(rows, "\n"))), 0644)
 	})
-	// Product atomically renames its scratch directory; rewrite stored paths.
 	data, err := os.ReadFile(filepath.Join(d, "rows"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	rows := strings.Split(string(data), "\n")
-	for i, row := range rows {
-		fields := strings.SplitN(row, "\t", 2)
-		at := strings.Index(fields[0], "/case-")
-		if at < 0 {
+	rows := strings.Split(buildcache.Absolute(string(data)), "\n")
+	for _, row := range rows {
+		if !strings.HasPrefix(row, d+"/case-") {
 			t.Fatalf("capture path: %q", row)
 		}
-		fields[0] = d + fields[0][at:]
-		rows[i] = strings.Join(fields, "\t")
 	}
 	return rows
 }
@@ -274,8 +270,9 @@ func testShardsAgreePrepare(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		// Scratch paths are rewritten on read after Product publishes by rename.
-		return os.WriteFile(filepath.Join(d, "prepared.json"), data, 0644)
+		// This product, the scanner, the capture's cases and TypeScript's sources are each named by a root the reader
+		// supplies: Product publishes this scratch directory by rename, and a runner holds all four elsewhere (#tqrqx60).
+		return os.WriteFile(filepath.Join(d, "prepared.json"), []byte(buildcache.Relative(string(data))), 0644)
 	})
 	t.Logf("TestShardsAgree (setup): %.3fs; %s", time.Since(started).Seconds(), d)
 	return d
@@ -336,23 +333,8 @@ func testShardsAgreeRead(t *testing.T, d string) testShardsAgreeProducts {
 		t.Fatal(err)
 	}
 	var products testShardsAgreeProducts
-	if err = json.Unmarshal(data, &products); err != nil {
+	if err = json.Unmarshal([]byte(buildcache.Absolute(string(data))), &products); err != nil {
 		t.Fatal(err)
-	}
-	rewrite := func(row string) string {
-		fields := strings.SplitN(row, "\t", 2)
-		if strings.HasPrefix(fields[0], products.Root+string(filepath.Separator)) {
-			fields[0] = d + strings.TrimPrefix(fields[0], products.Root)
-		}
-		return strings.Join(fields, "\t")
-	}
-	for i, row := range products.Rows {
-		products.Rows[i] = rewrite(row)
-	}
-	for i := range products.Buckets {
-		for j, row := range products.Buckets[i] {
-			products.Buckets[i][j] = rewrite(row)
-		}
 	}
 	products.Root = d
 	return products
