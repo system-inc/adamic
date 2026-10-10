@@ -1,0 +1,21 @@
+from pathlib import Path
+import json,os,subprocess,time
+run=Path('/tmp/pqjagjf/retry');deadline=1791590295
+while time.time()<deadline:
+    journal=run/'ATTEMPTS.json'
+    if journal.exists() and len(json.loads(journal.read_text())['attempts'])==50:break
+    time.sleep(2)
+else:raise SystemExit('global deadline before priority continuation')
+identity=json.loads((run/'INPUT.json').read_text())
+selected=[]
+for item in identity['files']:
+    name=item['file'].replace('/','__')
+    if (run/'records'/(name+'.jsonl')).exists():continue
+    metrics=run/(name+'.metrics.json')
+    value=json.loads(metrics.read_text()) if metrics.exists() else None
+    if value is None or value['exit']!=124 or value['time_limit_seconds']<600:selected.append(item['file'])
+Path('/tmp/pqjagjf/priority-selection.json').write_text(json.dumps(selected,indent=2)+'\n')
+print('priority continuation files '+str(len(selected))+' '+str(selected),flush=True)
+env=dict(os.environ,LATENT_RETRY_FILES=','.join(selected))
+with Path('/tmp/pqjagjf/retry-priority.log').open('w') as log:
+    subprocess.run(['python3','stage3/census/speculative/retry_stream.py','/tmp/b17vtn1/stream-census',identity['root'],str(run),'/tmp/pqjagjf/retry-priority','600','3072','4',str(deadline)],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=max(1,deadline-time.time()+15),check=True)

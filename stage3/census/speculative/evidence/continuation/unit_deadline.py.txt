@@ -1,0 +1,3 @@
+import subprocess,time
+remaining=max(1,int(1791590595-time.time()))
+raise SystemExit(subprocess.run(['timeout','-k','5s',str(remaining)+'s','python3','/tmp/pqjagjf/finalize_when_done.py'],timeout=remaining+10).returncode)
