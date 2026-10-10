@@ -1927,5 +1927,24 @@
     "opt_in_on": [
       "ADAMIC_ORACLE_WASI"
     ]
+  },
+  {
+    "file": "stage3/fixtures/runner_guard_test.go",
+    "test": "TestNodeRunnerModeGuardHook",
+    "id": "TestNodeRunnerModeGuardHook:ac3d1ec39d3f5f45ba30dd0d5de90418695feae4d877e6bbdf242948d72e2891",
+    "line": 74,
+    "condition": "!present",
+    "reads": [
+      "os.LookupEnv(\"ADAMIC_NODE_RUNNER_MODE_SOURCE\")"
+    ],
+    "callers": [
+      "TestNodeRunnerModeGuardHook"
+    ],
+    "message": "\"subprocess hook\"",
+    "class": "not-applicable",
+    "provides": "TestNodeRunnerModeGuardRejectsBothCalls and its siblings run this hook as a subprocess (-test.run=^TestNodeRunnerModeGuardHook$) with ADAMIC_NODE_RUNNER_MODE_SOURCE; standalone it has no source and is not an independent gate check.",
+    "opt_in_off": [
+      "ADAMIC_NODE_RUNNER_MODE_SOURCE"
+    ]
   }
 ]
