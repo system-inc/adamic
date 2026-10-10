@@ -387,3 +387,34 @@ func TestGoTestKeysTheSameTreeTheSameFromAnyPath(t *testing.T) {
 		t.Fatalf("the key's files: %v", first.Files)
 	}
 }
+
+// GoBuildIn builds in a module of its own a main its overlay synthesizes, which isn't on disk: keyed through the
+// overlay, it runs, and its name differs from a root build's.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestGoBuildInBuildsASynthesizedMainInAModule(t *testing.T) {
+	cached(t)
+	forgetInputs()
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	module := "internal/buildcache/testdata/module"
+	virtual := filepath.Join(root, module, "cmd/greeter/main.go")
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	declared, _ := json.Marshal(map[string]map[string]string{"Replace": {virtual: filepath.Join(root, "internal/buildcache/testdata/module-side/main.go.txt")}})
+	if err := os.WriteFile(overlay, declared, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := GoBuildIn(t, module, "greeter", virtual, []string{"-overlay=" + overlay}, "GOWORK=off")
+	output, err := exec.Command(binary).Output()
+	if err != nil || strings.TrimSpace(string(output)) != "synthesized hello" {
+		t.Fatalf("the synthesized main printed %q, %v", output, err)
+	}
+	inputs, err := goRequest{verb: "build", module: module, output: "greeter", pkg: virtual, arguments: reproducible([]string{"-overlay=" + overlay}), environment: []string{"GOWORK=off"}}.inputs()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(inputs.Name, "go build "+module+" ") || !slices.Contains(inputs.Files, module+"/greet/greet.go") || slices.Contains(inputs.Files, module+"/cmd/greeter/main.go") {
+		t.Fatalf("name %q, files %v", inputs.Name, inputs.Files)
+	}
+}

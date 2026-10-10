@@ -39,6 +39,14 @@ func GoTest(t testing.TB, module, output, pkg string, arguments []string, enviro
 	return goProduct(t, goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
 }
 
+// GoBuildIn is GoBuild run in module, a directory of the repository with a go.mod of its own (cohere): how a port
+// builds a Go oracle from a main its overlay synthesizes. pkg may name several files, separated by spaces, as go
+// build takes them.
+func GoBuildIn(t testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "build", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
 // Adamic is the stage 0 compiler, ./cmd/adamic, as one product every test that runs adamic shares.
 func Adamic(t testing.TB) string {
 	t.Helper()
@@ -65,7 +73,7 @@ func goProduct(t testing.TB, request goRequest) string {
 		arguments = append([]string{"-a"}, arguments...)
 	}
 	directory := Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), request.pkg)...)
+		command := exec.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
 		command.Dir = filepath.Join(root, request.module)
 		command.Env = append(os.Environ(), request.environment...)
 		if combined, err := command.CombinedOutput(); err != nil {
@@ -310,7 +318,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		// The test variant of each package, so its _test.go files are keyed too.
 		asked = append(asked, "-test")
 	}
-	listing, err := run(append(append(asked, listed...), request.pkg)...)
+	listing, err := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
 	if err != nil {
 		return Inputs{}, err
 	}
@@ -417,7 +425,7 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		files[target] = true
 	}
 	name := "go build " + request.pkg + " " + request.output
-	if request.verb != "build" {
+	if request.verb != "build" || request.module != "" {
 		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
 	}
 	inputs := Inputs{Name: name, Flags: append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
