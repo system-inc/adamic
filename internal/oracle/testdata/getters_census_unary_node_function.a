@@ -1,0 +1,27 @@
+// Reduced from TypeScript 050880ce src/compiler/factory/nodeFactory.ts:820.
+interface Node { readonly value: number; }
+function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
+    const cache = new Map<number, T>();
+    return (kind) => {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        const value = callback(kind);
+        cache.set(kind, value);
+        return value;
+    };
+}
+interface Factory { readonly create: (type: Node) => Node; }
+function makeFactory(): Factory {
+    const getCreate = memoizeOne((kind: number) => {
+        console.log(`initialize ${kind}`);
+        return (type: Node): Node => ({ value: kind + type.value });
+    });
+    const factory: Factory = { get create() { return getCreate(7); } };
+    return factory;
+}
+const factory = makeFactory();
+console.log('constructed');
+console.log(`${factory.create({ value: 2 }).value}`);
+console.log(`${factory.create({ value: 2 }).value}`);
+const again = makeFactory();
+console.log(`${again.create({ value: 2 }).value}`);
