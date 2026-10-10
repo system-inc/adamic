@@ -20,7 +20,30 @@ timeout 30 gofmt -w "$scratch/tools/overlay/internal_lower_latent_full.go"
 (cd "$scratch/tools/tree"; GOWORK="$scratch/tools/go.work" timeout 300 go build -p 2 -overlay="$scratch/tools/overlay/overlay.json" -o "$scratch/tools/census" ./stage3/census/latent/tool) > "$scratch/build.log" 2>&1
 timeout 90 node stage3/census/tsc-closure/closure.cjs "$scratch/adapted" src/tsc/tsc.ts "$scratch/closure.json" > "$scratch/graph.log" 2>&1
 LATENT_ROOT_MANIFEST="$scratch/closure.json" LATENT_ASSERT_NO_OUTPUT=1 timeout 3600 "$scratch/tools/census" "$scratch/adapted/src/compiler" "$scratch/latent.jsonl" > "$scratch/latent.log" 2>&1
-LATENT_ROOT_MANIFEST="$scratch/closure.json" LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 timeout 3600 "$scratch/tools/census" "$scratch/adapted/src/compiler" "$scratch/full.jsonl" > "$scratch/full.log" 2>&1
+# File ranges change scheduling only; every worker loads the same whole manifest.
+timeout 30 python3 "$rerun/file-range.py" "$scratch/tools" "$scratch/range" > "$scratch/range-prepare.log" 2>&1
+timeout 30 gofmt -w "$scratch/range/units.go"
+(cd "$scratch/tools/tree"; GOWORK="$scratch/tools/go.work" timeout 300 go build -p 2 -buildvcs=false -overlay="$scratch/range/overlay.json" -o "$scratch/range/census" ./stage3/census/latent/tool) > "$scratch/range-build.log" 2>&1
+unset LATENT_FILE_START LATENT_FILE_END
+export LATENT_ROOT_MANIFEST="$scratch/closure.json" LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1
+LATENT_FILE_END="$scratch/adapted/src/compiler/commandLineParser.ts" timeout 3600 "$scratch/range/census" "$scratch/adapted/src/compiler" "$scratch/full-first.jsonl" > "$scratch/full-first.log" 2>&1 &
+first_job=$!
+LATENT_FILE_START="$scratch/adapted/src/compiler/commandLineParser.ts" LATENT_FILE_END="$scratch/adapted/src/compiler/parser.ts" timeout 3600 "$scratch/range/census" "$scratch/adapted/src/compiler" "$scratch/full-middle.jsonl" > "$scratch/full-middle.log" 2>&1 &
+middle_job=$!
+LATENT_FILE_START="$scratch/adapted/src/compiler/parser.ts" LATENT_FILE_END="$scratch/adapted/src/compiler/transformers/" timeout 3600 "$scratch/range/census" "$scratch/adapted/src/compiler" "$scratch/full-parser.jsonl" > "$scratch/full-parser.log" 2>&1 &
+parser_job=$!
+LATENT_FILE_START="$scratch/adapted/src/compiler/transformers/" timeout 3600 "$scratch/range/census" "$scratch/adapted/src/compiler" "$scratch/full-last.jsonl" > "$scratch/full-last.log" 2>&1 &
+last_job=$!
+trap 'for job in $(jobs -pr); do kill "$job" 2>/dev/null || true; done' EXIT
+while [[ -n $(jobs -pr) ]]; do
+    date -u
+    tail -n 1 "$scratch/full-first.log" "$scratch/full-middle.log" "$scratch/full-parser.log" "$scratch/full-last.log"
+    sleep 30
+done
+wait "$first_job"; wait "$middle_job"; wait "$parser_job"; wait "$last_job"
+trap - EXIT
+unset LATENT_FULL
+timeout 90 python3 "$rerun/merge.py" "$scratch/full.jsonl" "$scratch/full-first.jsonl" "$scratch/full-middle.jsonl" "$scratch/full-parser.jsonl" "$scratch/full-last.jsonl" > "$scratch/merge.log" 2>&1
 timeout 30 python3 - "$scratch" <<'PY'
 import json,shutil,sys
 from pathlib import Path
