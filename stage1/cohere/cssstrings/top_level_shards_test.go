@@ -336,3 +336,7 @@ func TestCSSStrings_283(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 283)
 func TestCSSStrings_284(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 284) }
 func TestCSSStrings_285(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 285) }
 func TestCSSStrings_286(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 286) }
+func TestCSSStrings_287(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 287) }
+func TestCSSStrings_288(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 288) }
+func TestCSSStrings_289(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 289) }
+func TestCSSStrings_290(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 290) }
