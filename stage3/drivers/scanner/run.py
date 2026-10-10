@@ -43,7 +43,7 @@ else:
         shutil.copyfile(repository / 'stage3' / name, pipeline / name)
     shutil.copytree(repository / 'stage3/api', pipeline / 'api')
     (pipeline / 'adapt').mkdir()
-    for name in ['00-setup', '10-type-imports', '50-temporary-scanner-implicit-returns', '51-temporary-scanner-fallthrough']:
+    for name in ['00-setup', '10-type-imports', '42-scanner-any', '50-temporary-scanner-implicit-returns', '51-temporary-scanner-fallthrough']:
         source = repository / 'stage3/adapt' / name
         if source.exists():
             shutil.copytree(source, pipeline / 'adapt' / name)

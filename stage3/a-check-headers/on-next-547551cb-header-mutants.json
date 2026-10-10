@@ -1,0 +1,18 @@
+{
+  "wrong-expectation": {
+    "caught": 71,
+    "exit": 1,
+    "diagnostics": "captured real compiler diagnostics",
+    "predicate": "unchanged pinned Gate.aCheck"
+  },
+  "removed-error-header": {
+    "caught": 44,
+    "exit": 1,
+    "diagnostics": "captured real compiler diagnostics",
+    "predicate": "unchanged pinned Gate.aCheck"
+  },
+  "accepted": {
+    "files": 490,
+    "exit": 0
+  }
+}

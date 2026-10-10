@@ -1,0 +1,4 @@
+function own(): any { return 7; }
+own();
+JSON.parse("{}");
+require("node:path");

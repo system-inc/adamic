@@ -1,0 +1,10 @@
+// Reduced from TypeScript 050880ce src/compiler/core.ts:1707.
+interface SetLike { readonly size: number; readonly add: () => void; }
+function createSet(): SetLike {
+    let size = 0;
+    return { add() { size++; }, get size() { return size; } };
+}
+const set = createSet();
+console.log(`${set.size}`);
+set.add();
+console.log(`${set.size}`);

@@ -1,0 +1,26 @@
+{
+  "file": "08_getDirectories.a",
+  "line": 199,
+  "copiedDeclarations": 18,
+  "sourceCommit": "06971f0574b6cd408c6291973c685941ea6457ee",
+  "mutant": "changed copied declaration rejected by canonical source audit",
+  "node": "v24.19.0",
+  "nodeObservation": {
+    "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "nodeGoldenUnchanged": true,
+  "semanticMutant": {
+    "change": "getDirectories returns files instead of directories",
+    "caughtBy": "Node stdout comparison",
+    "stdout": "file\nfile\n\nfile\n",
+    "exit": 0
+  },
+  "fullBucketSourceAudit": {
+    "exit": 1,
+    "reason": "25_readDirectory.a: declaration differs from adapted source: getAccessibleFileSystemEntries",
+    "outOfScope": true
+  },
+  "nativeLoaderRerun": false
+}

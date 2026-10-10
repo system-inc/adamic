@@ -80,12 +80,7 @@ func boundedPortParserShard(t *testing.T, shard int) {
 	}
 	binary, script := miscBuild(t, main)
 	oracle := miscOracle(t)
-	audited := make([]boundedPortCase, 0, len(cases))
-	for _, item := range cases {
-		if item.audit {
-			audited = append(audited, item)
-		}
-	}
+	audited := estreeBoundedAudits(t)
 	answers := miscAnswers(t, oracle, audited)
 	byID := make(map[string]miscAnswer, len(audited))
 	for i, item := range audited {
@@ -138,7 +133,7 @@ func portStallControlShard(t *testing.T, shard int) {
 		finishSetup()
 		return
 	}
-	main := miscMutant(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
+	main := estreeStallMutantPath(t)
 	binary, _ := miscBuild(t, main)
 	finishSetup()
 	for range indexes {

@@ -11,6 +11,9 @@ import tempfile
 import sys
 
 LANE = Path(__file__).resolve().parent
+sys.path.append(str(LANE.parent / 'oracle'))
+from failure_details import read_failures, cause_counts, diff_previews, markdown
+
 ANSI = re.compile(r'\x1b\[[0-?]*[ -/]*[@-~]')
 
 
@@ -157,13 +160,31 @@ def check_results(results, expected_file=LANE / 'expected.json',
         report['results'] = str(results.resolve())
     except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as error:
         report = dict(status='fail', errors=[f'missing or invalid lane evidence: {error}'])
+    try:
+        log = (results / 'oracle/tests.log').read_text(errors='replace')
+        diff_file = results / 'oracle/baseline.diff'
+        diff = diff_file.read_text() if diff_file.exists() else ''
+        report['failures'] = read_failures(log, diff, results / 'oracle/mocha-errors')
+        report['cause_counts'] = cause_counts(report['failures'])
+        report['baseline_previews'] = list(diff_previews(diff).values())
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        report['failure_details_error'] = str(error)
     return report
 
 
 def write_verdict(results, report):
     message = 'PASS stage3 landing lane' if report['status'] == 'pass' else (
         'FAIL stage3 landing lane: ' + report['errors'][0].splitlines()[0])
+    if report.get('cause_counts') is not None:
+        message += ' [causes: ' + ', '.join(f'{name}={count}' for name, count in report['cause_counts'].items()) + ']'
     report['verdict'] = message
+    try:
+        (results / 'failures.md').write_text(markdown(report.get('failures', [])))
+        (results / 'verdict.json').write_text(json.dumps(dict(verdict=message, status=report['status'],
+            failures=report.get('failures', []), cause_counts=report.get('cause_counts', {}),
+            baseline_previews=report.get('baseline_previews', [])), indent=2) + '\n')
+    except OSError as error:
+        report['failure_details_error'] = str(error)
     (results / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     (results / 'verdict.txt').write_text(message + '\n')
     for error in report['errors']:

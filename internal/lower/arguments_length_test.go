@@ -39,6 +39,16 @@ func TestArgumentsLengthRefusals(t *testing.T) {
 	}
 }
 
+func TestMixedTupleSpreadIsNotYet(t *testing.T) {
+	t.Parallel()
+	// Node prints 2:7:word8; one argument slot can't hold both a number and a string representation.
+	_, err := lowerSource(t, "function read(number: number, text: string): string { return `${arguments.length}:${number}:${text}`; }\nconsole.log(read(...[7, `word${8}`]));\n")
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(gap.What, "a call spreading a tuple with differently represented elements") {
+		t.Fatalf("got %v; want the mixed-representation tuple spread refusal", err)
+	}
+}
+
 func TestArgumentsLengthReadNeighbors(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{

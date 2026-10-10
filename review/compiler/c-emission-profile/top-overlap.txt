@@ -1,0 +1,19 @@
+File: c-emission-profile
+Build ID: fa145ac134c5a681f9e57d71c36668ff02040cbf
+Type: cpu
+Time: 2026-10-09 07:00:02 UTC
+Duration: 82.26s, Total samples = 70.66s (85.90%)
+Showing nodes accounting for 29.02s, 41.07% of 70.66s total
+Dropped 206 nodes (cum <= 0.35s)
+Showing top 10 nodes out of 64
+      flat  flat%   sum%        cum   cum%
+     1.97s  2.79%  2.79%     69.36s 98.16%  github.com/system-inc/adamic/internal/native.walkExpressions.func1
+     0.19s  0.27%  3.06%     68.95s 97.58%  github.com/system-inc/adamic/internal/native.walkExpressions
+     1.09s  1.54%  4.60%     68.68s 97.20%  github.com/system-inc/adamic/internal/native.walkStatement
+         0     0%  4.60%     68.55s 97.01%  github.com/system-inc/adamic/internal/native.cProgram
+         0     0%  4.60%     68.48s 96.91%  github.com/system-inc/adamic/internal/native.(*emitter).statement
+         0     0%  4.60%     68.43s 96.84%  github.com/system-inc/adamic/internal/native.(*emitter).statementAt
+         0     0%  4.60%     68.40s 96.80%  github.com/system-inc/adamic/internal/native.C (inline)
+         0     0%  4.60%     68.40s 96.80%  main.main
+    25.77s 36.47% 41.07%     68.15s 96.45%  github.com/system-inc/adamic/internal/native.walkStatement.func1
+         0     0% 41.07%     68.10s 96.38%  runtime.main

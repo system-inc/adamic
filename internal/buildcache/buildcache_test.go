@@ -117,6 +117,9 @@ func cached(t *testing.T) (string, string) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	// The real store is never reached from a test; the store's own tests serve one.
+	t.Setenv("ADAMIC_BUILD_STORE", "off")
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 	return cache, log
 }
 

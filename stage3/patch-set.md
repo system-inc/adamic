@@ -14,6 +14,8 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 33-indexed-reads-emit | 16 | 119 | 119 |
 | 40-explicit-any | 17 | 106 | 106 |
 | 41-explicit-any-remaining | 8 | 25 | 22 |
+| 42-scanner-any | 1 | 1 | 1 |
+| 43-any-returns | 2 | 14 | 9 |
 | 45-regex-captures | 5 | 12 | 10 |
 | 46-fix-pragma-empty-argument | 1 | 1 | 1 |
 | 47-host-errors | 3 | 16 | 5 |
@@ -30,7 +32,7 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 71-writable-views | 20 | 88 | 88 |
 | 75-optional-widening | 1 | 17 | 6 |
 | 76-truthful-casts | 1 | 1 | 1 |
-| **Total** | 79 | 5247 | 5213 |
+| **Total** | 79 | 5262 | 5223 |
 
 65-temporary-node-builtins is temporary: it retires when Adamic accepts require
 with a literal specifier and Node builtin types. Its two-file edit erases on Node;
