@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"regexp"
+	"syscall"
 	"testing"
 )
 
@@ -46,7 +48,28 @@ func TestMain(m *testing.M) {
 	command := exec.Command(os.Args[0], "-test.run=^TestFileDriver_Setup$", "-test.timeout="+flag.Lookup("test.timeout").Value.String(), "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_FILE_DRIVER_SETUP_CHILD=1", "ADAMIC_FILE_DRIVER_STATE="+manifest)
 	command.Stdout, command.Stderr = os.Stdout, os.Stderr
-	err = command.Run()
+	// The child leads its own process group, so this process answers for everything in it. A gate
+	// stops a unit by signalling the unit's group, which no longer holds the child, so a termination
+	// signal is passed on to the child's group. Whatever the child leaves behind when it exits, its
+	// own -test.timeout included, is killed with it.
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, syscall.SIGINT, syscall.SIGTERM)
+	err = command.Start()
+	if err == nil {
+		go func() {
+			if received, ok := <-signals; ok {
+				syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+				fmt.Fprintln(os.Stderr, "file-driver setup: stopped by", received)
+				os.RemoveAll(directory)
+				os.Exit(1)
+			}
+		}()
+		err = command.Wait()
+		syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	signal.Stop(signals)
+	close(signals)
 	if err == nil {
 		err = fileDriverReadState(manifest)
 	}
