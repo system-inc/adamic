@@ -1,8 +1,9 @@
-Retried incomplete speculative census files with four bounded, resumable workers.
-Compiler base 946a8f09 is unchanged; continuation checkpoint 155445a9 records the two-hour cutoff.
-Coverage grew from 29 to 65 / 79 files, and from 1,323,621 to 3,760,099 / 10,009,820 TypeScript bytes.
-Independent depth/coverage audits, stream/progress/concurrency mutants and overlay-off C/JS identity pass.
-13 files still timed out at 600 seconds; the final checker probe timed out; incomplete observations are excluded.
+Recursive planner built; watch matches, createNodeBuilder fails the union admission check.
+50 KiB threshold: 882 planned pieces across 14 files; checker has 64, createNodeBuilder eight.
+Largest planned piece: 49,302 bytes, 189.813s, peak RSS 1036812KiB.
+Whole createNodeBuilder: 971.045s, peak RSS 4182624KiB; all 30,499 nodes visited.
+Dropped, duplicated, moved and shifted-node mutants caught; full coverage remains 65/79 files.
+
 
 | Depth | NotYet | Refused |
 |---|---:|---:|
@@ -141,3 +142,7 @@ Focused checks: `audit_retry.py`, `audit_progress.py`, `audit_stream.py`, `isola
 See [continuation method](continuation.md), [coverage and every runtime](evidence/continuation/COVERAGE.json), and [archived logs and records](evidence/continuation). SHA256.json inventories every archived file. Setup completed in 15.926s; nproc=5 with a four-CPU quota.
 
 Finalization took 61.210s with peak RSS 2540296KiB. Its whole-project boundary union recalibrated 280 raw depth tags before the independent recount. Published totals contain 18163 unique classified sites. All 50 retries received their intended budgets; no file was shortened by the two-hour deadline.
+
+Task #b2wbbha: [piece method and reproduction](pieces.md), [union, measurements and scaling report](evidence/pieces/README.md). The six checker samples are excluded from this table.
+
+Recursive continuation: [result and failed admission](evidence/recursive-pieces/README.md), [every createNodeBuilder difference](evidence/recursive-pieces/DIFFERENCES.md). No recursive observations enter the depth table.

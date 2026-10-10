@@ -35,11 +35,19 @@ def run(seconds, rss_mib, metrics, log, command):
     started = time.monotonic()
     peak = 0
     killed = False
+    phase_first_wall_seconds = {}
+    progress_path = os.environ.get("LATENT_PROGRESS_FILE")
     with Path(log).open('wb') as stream:
         process = subprocess.Popen(['timeout', '-k', '2s', str(seconds) + 's', *command],
                                    stdout=stream, stderr=subprocess.STDOUT, preexec_fn=bounded)
         while process.poll() is None:
             peak = max(peak, resident_bytes(process.pid))
+            if progress_path:
+                try:
+                    checkpoint = json.loads(Path(progress_path).read_text())
+                    phase_first_wall_seconds.setdefault(checkpoint['phase'], time.monotonic() - started)
+                except (OSError, ValueError, KeyError):
+                    pass
             if peak > limit:
                 killed = True
                 os.killpg(process.pid, signal.SIGKILL)
@@ -49,6 +57,8 @@ def run(seconds, rss_mib, metrics, log, command):
     usage = resource.getrusage(resource.RUSAGE_CHILDREN)
     result = dict(command=command, wall_seconds=time.monotonic() - started,
                   peak_rss_kib=max(peak // 1024, usage.ru_maxrss), exit=code,
+                  user_cpu_seconds=usage.ru_utime, system_cpu_seconds=usage.ru_stime,
+                  phase_first_wall_seconds=phase_first_wall_seconds,
                   time_limit_seconds=float(seconds), rss_limit_mib=int(rss_mib),
                   address_space_limit_mib=2 * int(rss_mib), rss_limit_killed=killed)
     Path(metrics).write_text(json.dumps(result, indent=2) + '\n')

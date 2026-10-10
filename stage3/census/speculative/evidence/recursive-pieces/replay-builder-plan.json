@@ -1,0 +1,1441 @@
+{
+  "version": 2,
+  "threshold_bytes": 51200,
+  "root_name": "createNodeBuilder",
+  "split_functions": [
+    {
+      "start": 326122,
+      "end": 653463,
+      "name": "createNodeBuilder"
+    },
+    {
+      "start": 357895,
+      "end": 422707,
+      "name": "typeToTypeNodeWorker"
+    },
+    {
+      "start": 526716,
+      "end": 652606,
+      "name": "symbolTableToDeclarationStatements"
+    }
+  ],
+  "split_containers": [],
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/checker.ts",
+  "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+  "source_bytes": 3154156,
+  "requested_pieces": 8,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "326122:653463:FunctionDeclaration",
+      "start": 326122,
+      "end": 653463,
+      "kind": "FunctionDeclaration",
+      "parent": "root",
+      "bytes": 17903,
+      "name": "createNodeBuilder"
+    },
+    {
+      "id": "343821:343936:FunctionDeclaration",
+      "start": 343821,
+      "end": 343936,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 115,
+      "name": "getTypeFromTypeNode"
+    },
+    {
+      "id": "343936:344059:FunctionDeclaration",
+      "start": 343936,
+      "end": 344059,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 123,
+      "name": "getTypeFromTypeNode"
+    },
+    {
+      "id": "344059:344468:FunctionDeclaration",
+      "start": 344059,
+      "end": 344468,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 409,
+      "name": "getTypeFromTypeNode"
+    },
+    {
+      "id": "344468:346534:FunctionDeclaration",
+      "start": 344468,
+      "end": 346534,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2066,
+      "name": "setTextRange"
+    },
+    {
+      "id": "346534:347435:FunctionDeclaration",
+      "start": 346534,
+      "end": 347435,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 901,
+      "name": "symbolToNode"
+    },
+    {
+      "id": "347435:348849:FunctionDeclaration",
+      "start": 347435,
+      "end": 348849,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1414,
+      "name": "symbolToDeclarations"
+    },
+    {
+      "id": "348849:349816:FunctionDeclaration",
+      "start": 348849,
+      "end": 349816,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 967,
+      "name": "simplifyClassDeclaration"
+    },
+    {
+      "id": "349816:350338:FunctionDeclaration",
+      "start": 349816,
+      "end": 350338,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 522,
+      "name": "simplifyModifiers"
+    },
+    {
+      "id": "350338:350691:FunctionDeclaration",
+      "start": 350338,
+      "end": 350691,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 353,
+      "name": "simplifyInterfaceDeclaration"
+    },
+    {
+      "id": "350691:351302:FunctionDeclaration",
+      "start": 350691,
+      "end": 351302,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 611,
+      "name": "symbolToDeclarationsWorker"
+    },
+    {
+      "id": "351302:354519:FunctionDeclaration",
+      "start": 351302,
+      "end": 354519,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 3217,
+      "name": "withContext"
+    },
+    {
+      "id": "354519:355103:FunctionDeclaration",
+      "start": 354519,
+      "end": 355103,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 584,
+      "name": "addSymbolTypeToContext"
+    },
+    {
+      "id": "355103:355540:FunctionDeclaration",
+      "start": 355103,
+      "end": 355540,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 437,
+      "name": "saveRestoreFlags"
+    },
+    {
+      "id": "355540:355730:FunctionDeclaration",
+      "start": 355540,
+      "end": 355730,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 190,
+      "name": "checkTruncationLengthIfExpanding"
+    },
+    {
+      "id": "355730:355985:FunctionDeclaration",
+      "start": 355730,
+      "end": 355985,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 255,
+      "name": "checkTruncationLength"
+    },
+    {
+      "id": "355985:356574:FunctionDeclaration",
+      "start": 355985,
+      "end": 356574,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 589,
+      "name": "canPossiblyExpandType"
+    },
+    {
+      "id": "356574:357499:FunctionDeclaration",
+      "start": 356574,
+      "end": 357499,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 925,
+      "name": "shouldExpandType"
+    },
+    {
+      "id": "357499:357895:FunctionDeclaration",
+      "start": 357499,
+      "end": 357895,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 396,
+      "name": "typeToTypeNodeHelper"
+    },
+    {
+      "id": "357895:422707:FunctionDeclaration",
+      "start": 357895,
+      "end": 422707,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 17041,
+      "name": "typeToTypeNodeWorker"
+    },
+    {
+      "id": "374925:379158:FunctionDeclaration",
+      "start": 374925,
+      "end": 379158,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 4233,
+      "name": "conditionalTypeToTypeNode"
+    },
+    {
+      "id": "379158:379912:FunctionDeclaration",
+      "start": 379158,
+      "end": 379912,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 754,
+      "name": "typeToTypeNodeOrCircularityElision"
+    },
+    {
+      "id": "379912:380055:FunctionDeclaration",
+      "start": 379912,
+      "end": 380055,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 143,
+      "name": "isMappedTypeHomomorphic"
+    },
+    {
+      "id": "380055:380296:FunctionDeclaration",
+      "start": 380055,
+      "end": 380296,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 241,
+      "name": "isHomomorphicMappedTypeWithNonHomomorphicInstantiation"
+    },
+    {
+      "id": "380296:387666:FunctionDeclaration",
+      "start": 380296,
+      "end": 387666,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 7370,
+      "name": "createMappedTypeNodeFromType"
+    },
+    {
+      "id": "387666:393768:FunctionDeclaration",
+      "start": 387666,
+      "end": 393768,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 6102,
+      "name": "createAnonymousTypeNode"
+    },
+    {
+      "id": "393768:399027:FunctionDeclaration",
+      "start": 393768,
+      "end": 399027,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 5259,
+      "name": "visitAndTransformType"
+    },
+    {
+      "id": "399027:402829:FunctionDeclaration",
+      "start": 399027,
+      "end": 402829,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 3802,
+      "name": "createTypeNodeFromObjectType"
+    },
+    {
+      "id": "402829:412276:FunctionDeclaration",
+      "start": 402829,
+      "end": 412276,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 9447,
+      "name": "typeReferenceToTypeNode"
+    },
+    {
+      "id": "412276:415399:FunctionDeclaration",
+      "start": 412276,
+      "end": 415399,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 3123,
+      "name": "appendReferenceToType"
+    },
+    {
+      "id": "415399:415790:FunctionDeclaration",
+      "start": 415399,
+      "end": 415790,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 391,
+      "name": "getAccessStack"
+    },
+    {
+      "id": "415790:418501:FunctionDeclaration",
+      "start": 415790,
+      "end": 418501,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 2711,
+      "name": "indexInfoToObjectComputedNamesOrSignatureDeclaration"
+    },
+    {
+      "id": "418501:422696:FunctionDeclaration",
+      "start": 418501,
+      "end": 422696,
+      "kind": "FunctionDeclaration",
+      "parent": "typeToTypeNodeWorker",
+      "bytes": 4195,
+      "name": "createTypeNodesFromResolvedType"
+    },
+    {
+      "id": "422707:423199:FunctionDeclaration",
+      "start": 422707,
+      "end": 423199,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 492,
+      "name": "createElidedInformationPlaceholder"
+    },
+    {
+      "id": "423199:425305:FunctionDeclaration",
+      "start": 423199,
+      "end": 425305,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2106,
+      "name": "shouldUsePlaceholderForProperty"
+    },
+    {
+      "id": "425305:434371:FunctionDeclaration",
+      "start": 425305,
+      "end": 434371,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 9066,
+      "name": "addPropertyToElementList"
+    },
+    {
+      "id": "434371:434752:FunctionDeclaration",
+      "start": 434371,
+      "end": 434752,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 381,
+      "name": "setCommentRange"
+    },
+    {
+      "id": "434752:439355:FunctionDeclaration",
+      "start": 434752,
+      "end": 439355,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 4603,
+      "name": "mapToTypeNodes"
+    },
+    {
+      "id": "439355:439593:FunctionDeclaration",
+      "start": 439355,
+      "end": 439593,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 238,
+      "name": "typesAreSameReference"
+    },
+    {
+      "id": "439593:440849:FunctionDeclaration",
+      "start": 439593,
+      "end": 440849,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1256,
+      "name": "indexInfoToIndexSignatureDeclarationHelper"
+    },
+    {
+      "id": "441046:447033:FunctionDeclaration",
+      "start": 441046,
+      "end": 447033,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 5987,
+      "name": "signatureToSignatureDeclarationHelper"
+    },
+    {
+      "id": "447033:450899:FunctionDeclaration",
+      "start": 447033,
+      "end": 450899,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 3866,
+      "name": "createRecoveryBoundary"
+    },
+    {
+      "id": "450899:460840:FunctionDeclaration",
+      "start": 450899,
+      "end": 460840,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 9941,
+      "name": "enterNewScope"
+    },
+    {
+      "id": "460840:461736:FunctionDeclaration",
+      "start": 460840,
+      "end": 461736,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 896,
+      "name": "tryGetThisParameterDeclaration"
+    },
+    {
+      "id": "461736:462645:FunctionDeclaration",
+      "start": 461736,
+      "end": 462645,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 909,
+      "name": "typeParameterToDeclarationWithConstraint"
+    },
+    {
+      "id": "462645:463046:FunctionDeclaration",
+      "start": 462645,
+      "end": 463046,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 401,
+      "name": "typeToTypeNodeHelperWithPossibleReusableTypeNode"
+    },
+    {
+      "id": "463046:463477:FunctionDeclaration",
+      "start": 463046,
+      "end": 463477,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 431,
+      "name": "typeParameterToDeclaration"
+    },
+    {
+      "id": "463477:464385:FunctionDeclaration",
+      "start": 463477,
+      "end": 464385,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 908,
+      "name": "typePredicateToTypePredicateNodeHelper"
+    },
+    {
+      "id": "464385:464994:FunctionDeclaration",
+      "start": 464385,
+      "end": 464994,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 609,
+      "name": "getEffectiveParameterDeclaration"
+    },
+    {
+      "id": "464994:466756:FunctionDeclaration",
+      "start": 464994,
+      "end": 466756,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1762,
+      "name": "symbolToParameterDeclaration"
+    },
+    {
+      "id": "466756:468868:FunctionDeclaration",
+      "start": 466756,
+      "end": 468868,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2112,
+      "name": "parameterToParameterDeclarationName"
+    },
+    {
+      "id": "468868:470055:FunctionDeclaration",
+      "start": 468868,
+      "end": 470055,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1187,
+      "name": "trackComputedName"
+    },
+    {
+      "id": "470055:470381:FunctionDeclaration",
+      "start": 470055,
+      "end": 470381,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 326,
+      "name": "lookupSymbolChain"
+    },
+    {
+      "id": "470381:475910:FunctionDeclaration",
+      "start": 470381,
+      "end": 475910,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 5529,
+      "name": "lookupSymbolChainWorker"
+    },
+    {
+      "id": "475910:476515:FunctionDeclaration",
+      "start": 475910,
+      "end": 476515,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 605,
+      "name": "typeParametersToTypeParameterDeclarations"
+    },
+    {
+      "id": "476515:478325:FunctionDeclaration",
+      "start": 476515,
+      "end": 478325,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1810,
+      "name": "lookupTypeParameterNodes"
+    },
+    {
+      "id": "478325:478673:FunctionDeclaration",
+      "start": 478325,
+      "end": 478673,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 348,
+      "name": "getTopmostIndexedAccessType"
+    },
+    {
+      "id": "478673:482701:FunctionDeclaration",
+      "start": 478673,
+      "end": 482701,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 4028,
+      "name": "getSpecifierForModuleSymbol"
+    },
+    {
+      "id": "482701:483020:FunctionDeclaration",
+      "start": 482701,
+      "end": 483020,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 319,
+      "name": "symbolToEntityNameNode"
+    },
+    {
+      "id": "483020:493602:FunctionDeclaration",
+      "start": 483020,
+      "end": 493602,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 10582,
+      "name": "symbolToTypeNode"
+    },
+    {
+      "id": "493602:494069:FunctionDeclaration",
+      "start": 493602,
+      "end": 494069,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 467,
+      "name": "typeParameterShadowsOtherTypeParameterInScope"
+    },
+    {
+      "id": "494069:496663:FunctionDeclaration",
+      "start": 494069,
+      "end": 496663,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2594,
+      "name": "typeParameterToName"
+    },
+    {
+      "id": "496663:496801:FunctionDeclaration",
+      "start": 496663,
+      "end": 496801,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 138,
+      "name": "symbolToName"
+    },
+    {
+      "id": "496801:496938:FunctionDeclaration",
+      "start": 496801,
+      "end": 496938,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 137,
+      "name": "symbolToName"
+    },
+    {
+      "id": "496938:498606:FunctionDeclaration",
+      "start": 496938,
+      "end": 498606,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1668,
+      "name": "symbolToName"
+    },
+    {
+      "id": "498606:502406:FunctionDeclaration",
+      "start": 498606,
+      "end": 502406,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 3800,
+      "name": "symbolToExpression"
+    },
+    {
+      "id": "502406:503028:FunctionDeclaration",
+      "start": 502406,
+      "end": 503028,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 622,
+      "name": "isStringNamed"
+    },
+    {
+      "id": "503028:503324:FunctionDeclaration",
+      "start": 503028,
+      "end": 503324,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 296,
+      "name": "isSingleQuotedStringNamed"
+    },
+    {
+      "id": "503324:504334:FunctionDeclaration",
+      "start": 503324,
+      "end": 504334,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1010,
+      "name": "getPropertyNameNodeForSymbol"
+    },
+    {
+      "id": "504334:505786:FunctionDeclaration",
+      "start": 504334,
+      "end": 505786,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1452,
+      "name": "getPropertyNameNodeForSymbolFromNameType"
+    },
+    {
+      "id": "505786:508004:FunctionDeclaration",
+      "start": 505786,
+      "end": 508004,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2218,
+      "name": "cloneNodeBuilderContext"
+    },
+    {
+      "id": "508004:508328:FunctionDeclaration",
+      "start": 508004,
+      "end": 508328,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 324,
+      "name": "getDeclarationWithTypeAnnotation"
+    },
+    {
+      "id": "508328:509452:FunctionDeclaration",
+      "start": 508328,
+      "end": 509452,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1124,
+      "name": "existingTypeNodeIsNotReferenceOrIsReferenceWithCompatibleTypeArgumentCount"
+    },
+    {
+      "id": "509452:509771:FunctionDeclaration",
+      "start": 509452,
+      "end": 509771,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 319,
+      "name": "getEnclosingDeclarationIgnoringFakeScope"
+    },
+    {
+      "id": "509771:510679:FunctionDeclaration",
+      "start": 509771,
+      "end": 510679,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 908,
+      "name": "serializeInferredTypeForDeclaration"
+    },
+    {
+      "id": "510679:513051:FunctionDeclaration",
+      "start": 510679,
+      "end": 513051,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2372,
+      "name": "serializeTypeForDeclaration"
+    },
+    {
+      "id": "513051:513861:FunctionDeclaration",
+      "start": 513051,
+      "end": 513861,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 810,
+      "name": "typeNodeIsEquivalentToType"
+    },
+    {
+      "id": "513861:515552:FunctionDeclaration",
+      "start": 513861,
+      "end": 515552,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 1691,
+      "name": "serializeReturnTypeForSignature"
+    },
+    {
+      "id": "515552:516443:FunctionDeclaration",
+      "start": 515552,
+      "end": 516443,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 891,
+      "name": "serializeInferredReturnTypeForSignature"
+    },
+    {
+      "id": "516443:522513:FunctionDeclaration",
+      "start": 516443,
+      "end": 522513,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 6070,
+      "name": "trackExistingEntityName"
+    },
+    {
+      "id": "522513:523260:FunctionDeclaration",
+      "start": 522513,
+      "end": 523260,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 747,
+      "name": "serializeTypeName"
+    },
+    {
+      "id": "523260:525978:FunctionDeclaration",
+      "start": 523260,
+      "end": 525978,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 2718,
+      "name": "canReuseTypeNode"
+    },
+    {
+      "id": "525978:526716:FunctionDeclaration",
+      "start": 525978,
+      "end": 526716,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 738,
+      "name": "serializeExistingTypeNode"
+    },
+    {
+      "id": "526716:652606:FunctionDeclaration",
+      "start": 526716,
+      "end": 652606,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 4402,
+      "name": "symbolTableToDeclarationStatements"
+    },
+    {
+      "id": "531107:531291:FunctionDeclaration",
+      "start": 531107,
+      "end": 531291,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 184,
+      "name": "isIdentifierAndNotUndefined"
+    },
+    {
+      "id": "531291:531716:FunctionDeclaration",
+      "start": 531291,
+      "end": 531716,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 425,
+      "name": "getNamesOfDeclaration"
+    },
+    {
+      "id": "531716:535341:FunctionDeclaration",
+      "start": 531716,
+      "end": 535341,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 3625,
+      "name": "flattenExportAssignedNamespace"
+    },
+    {
+      "id": "535341:537884:FunctionDeclaration",
+      "start": 535341,
+      "end": 537884,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 2543,
+      "name": "mergeExportDeclarations"
+    },
+    {
+      "id": "537884:540474:FunctionDeclaration",
+      "start": 537884,
+      "end": 540474,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 2590,
+      "name": "inlineExportModifiers"
+    },
+    {
+      "id": "540474:541508:FunctionDeclaration",
+      "start": 540474,
+      "end": 541508,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1034,
+      "name": "mergeRedundantStatements"
+    },
+    {
+      "id": "541508:541784:FunctionDeclaration",
+      "start": 541508,
+      "end": 541784,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 276,
+      "name": "addExportModifier"
+    },
+    {
+      "id": "541784:542037:FunctionDeclaration",
+      "start": 541784,
+      "end": 542037,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 253,
+      "name": "removeExportModifier"
+    },
+    {
+      "id": "542037:543636:FunctionDeclaration",
+      "start": 542037,
+      "end": 543636,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1599,
+      "name": "visitSymbolTable"
+    },
+    {
+      "id": "543636:545246:FunctionDeclaration",
+      "start": 543636,
+      "end": 545246,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1610,
+      "name": "serializeSymbol"
+    },
+    {
+      "id": "545246:563029:FunctionDeclaration",
+      "start": 545246,
+      "end": 563029,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 17783,
+      "name": "serializeSymbolWorker"
+    },
+    {
+      "id": "563029:564552:FunctionDeclaration",
+      "start": 563029,
+      "end": 564552,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1523,
+      "name": "includePrivateSymbol"
+    },
+    {
+      "id": "564552:564914:FunctionDeclaration",
+      "start": 564552,
+      "end": 564914,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 362,
+      "name": "isExportingScope"
+    },
+    {
+      "id": "564914:567423:FunctionDeclaration",
+      "start": 564914,
+      "end": 567423,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 2509,
+      "name": "addResult"
+    },
+    {
+      "id": "567423:569456:FunctionDeclaration",
+      "start": 567423,
+      "end": 569456,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 2033,
+      "name": "serializeTypeAlias"
+    },
+    {
+      "id": "569456:571454:FunctionDeclaration",
+      "start": 569456,
+      "end": 571454,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1998,
+      "name": "serializeInterface"
+    },
+    {
+      "id": "571454:571608:FunctionDeclaration",
+      "start": 571454,
+      "end": 571608,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 154,
+      "name": "serializePropertySymbolsForClassOrInterface"
+    },
+    {
+      "id": "571608:571779:FunctionDeclaration",
+      "start": 571608,
+      "end": 571779,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 171,
+      "name": "serializePropertySymbolsForClassOrInterface"
+    },
+    {
+      "id": "571779:573586:FunctionDeclaration",
+      "start": 571779,
+      "end": 573586,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1807,
+      "name": "serializePropertySymbolsForClassOrInterface"
+    },
+    {
+      "id": "573586:574591:FunctionDeclaration",
+      "start": 573586,
+      "end": 574591,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1005,
+      "name": "createTruncationProperty"
+    },
+    {
+      "id": "574591:575410:FunctionDeclaration",
+      "start": 574591,
+      "end": 575410,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 819,
+      "name": "getNamespaceMembersForSerialization"
+    },
+    {
+      "id": "575410:575625:FunctionDeclaration",
+      "start": 575410,
+      "end": 575625,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 215,
+      "name": "isTypeOnlyNamespace"
+    },
+    {
+      "id": "575625:579932:FunctionDeclaration",
+      "start": 575625,
+      "end": 579932,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 4307,
+      "name": "serializeModule"
+    },
+    {
+      "id": "579932:584040:FunctionDeclaration",
+      "start": 579932,
+      "end": 584040,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 4108,
+      "name": "serializeEnum"
+    },
+    {
+      "id": "584040:585357:FunctionDeclaration",
+      "start": 584040,
+      "end": 585357,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1317,
+      "name": "serializeAsFunctionNamespaceMerge"
+    },
+    {
+      "id": "585357:585785:FunctionDeclaration",
+      "start": 585357,
+      "end": 585785,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 428,
+      "name": "createTruncationStatement"
+    },
+    {
+      "id": "585785:586588:FunctionDeclaration",
+      "start": 585785,
+      "end": 586588,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 803,
+      "name": "getSignatureTextRangeLocation"
+    },
+    {
+      "id": "586588:591744:FunctionDeclaration",
+      "start": 586588,
+      "end": 591744,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 5156,
+      "name": "serializeAsNamespaceDeclaration"
+    },
+    {
+      "id": "591744:592104:FunctionDeclaration",
+      "start": 591744,
+      "end": 592104,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 360,
+      "name": "isNamespaceMember"
+    },
+    {
+      "id": "592104:593883:FunctionDeclaration",
+      "start": 592104,
+      "end": 593883,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1779,
+      "name": "sanitizeJSDocImplements"
+    },
+    {
+      "id": "593883:599899:FunctionDeclaration",
+      "start": 593883,
+      "end": 599899,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 6016,
+      "name": "serializeAsClass"
+    },
+    {
+      "id": "599899:601092:FunctionDeclaration",
+      "start": 599899,
+      "end": 601092,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1193,
+      "name": "getSomeTargetNameFromDeclarations"
+    },
+    {
+      "id": "601092:618325:FunctionDeclaration",
+      "start": 601092,
+      "end": 618325,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 17233,
+      "name": "serializeAsAlias"
+    },
+    {
+      "id": "618325:619087:FunctionDeclaration",
+      "start": 618325,
+      "end": 619087,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 762,
+      "name": "serializeExportSpecifier"
+    },
+    {
+      "id": "619087:627494:FunctionDeclaration",
+      "start": 619087,
+      "end": 627494,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 8407,
+      "name": "serializeMaybeAliasAssignment"
+    },
+    {
+      "id": "627494:629884:FunctionDeclaration",
+      "start": 627494,
+      "end": 629884,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 2390,
+      "name": "isTypeRepresentableAsFunctionNamespaceMerge"
+    },
+    {
+      "id": "629884:630540:FunctionDeclaration",
+      "start": 629884,
+      "end": 630540,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 656,
+      "name": "makeSerializePropertySymbol"
+    },
+    {
+      "id": "630540:631149:FunctionDeclaration",
+      "start": 630540,
+      "end": 631149,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 609,
+      "name": "makeSerializePropertySymbol"
+    },
+    {
+      "id": "631149:641885:FunctionDeclaration",
+      "start": 631149,
+      "end": 641885,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 10736,
+      "name": "makeSerializePropertySymbol"
+    },
+    {
+      "id": "641885:643078:FunctionDeclaration",
+      "start": 641885,
+      "end": 643078,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1193,
+      "name": "modifiersLength"
+    },
+    {
+      "id": "643078:643294:FunctionDeclaration",
+      "start": 643078,
+      "end": 643294,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 216,
+      "name": "serializePropertySymbolForInterface"
+    },
+    {
+      "id": "643294:646562:FunctionDeclaration",
+      "start": 643294,
+      "end": 646562,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 3268,
+      "name": "serializeSignatures"
+    },
+    {
+      "id": "646562:647375:FunctionDeclaration",
+      "start": 646562,
+      "end": 647375,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 813,
+      "name": "serializeIndexSignatures"
+    },
+    {
+      "id": "647375:648281:FunctionDeclaration",
+      "start": 647375,
+      "end": 648281,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 906,
+      "name": "serializeBaseType"
+    },
+    {
+      "id": "648281:649463:FunctionDeclaration",
+      "start": 648281,
+      "end": 649463,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1182,
+      "name": "trySerializeAsTypeReference"
+    },
+    {
+      "id": "649463:649906:FunctionDeclaration",
+      "start": 649463,
+      "end": 649906,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 443,
+      "name": "serializeImplementedType"
+    },
+    {
+      "id": "649906:650817:FunctionDeclaration",
+      "start": 649906,
+      "end": 650817,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 911,
+      "name": "getUnusedName"
+    },
+    {
+      "id": "650817:651994:FunctionDeclaration",
+      "start": 650817,
+      "end": 651994,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 1177,
+      "name": "getNameCandidateWorker"
+    },
+    {
+      "id": "651994:652595:FunctionDeclaration",
+      "start": 651994,
+      "end": 652595,
+      "kind": "FunctionDeclaration",
+      "parent": "symbolTableToDeclarationStatements",
+      "bytes": 601,
+      "name": "getInternalSymbolName"
+    },
+    {
+      "id": "652606:652734:FunctionDeclaration",
+      "start": 652606,
+      "end": 652734,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 128,
+      "name": "isExpanding"
+    },
+    {
+      "id": "652734:653113:FunctionDeclaration",
+      "start": 652734,
+      "end": 653113,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 379,
+      "name": "isHashPrivate"
+    },
+    {
+      "id": "653113:653456:FunctionDeclaration",
+      "start": 653113,
+      "end": 653456,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeBuilder",
+      "bytes": 343,
+      "name": "getClonedHashPrivateName"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "326122:653463:FunctionDeclaration",
+        "354519:355103:FunctionDeclaration",
+        "379912:380055:FunctionDeclaration",
+        "393768:399027:FunctionDeclaration",
+        "415399:415790:FunctionDeclaration",
+        "447033:450899:FunctionDeclaration",
+        "466756:468868:FunctionDeclaration",
+        "482701:483020:FunctionDeclaration",
+        "502406:503028:FunctionDeclaration",
+        "504334:505786:FunctionDeclaration",
+        "508004:508328:FunctionDeclaration",
+        "508328:509452:FunctionDeclaration",
+        "585785:586588:FunctionDeclaration",
+        "592104:593883:FunctionDeclaration",
+        "643294:646562:FunctionDeclaration",
+        "647375:648281:FunctionDeclaration"
+      ],
+      "bytes": 40855
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "346534:347435:FunctionDeclaration",
+        "347435:348849:FunctionDeclaration",
+        "351302:354519:FunctionDeclaration",
+        "355103:355540:FunctionDeclaration",
+        "379158:379912:FunctionDeclaration",
+        "423199:425305:FunctionDeclaration",
+        "464994:466756:FunctionDeclaration",
+        "470381:475910:FunctionDeclaration",
+        "478325:478673:FunctionDeclaration",
+        "498606:502406:FunctionDeclaration",
+        "522513:523260:FunctionDeclaration",
+        "541508:541784:FunctionDeclaration",
+        "545246:563029:FunctionDeclaration",
+        "571608:571779:FunctionDeclaration",
+        "585357:585785:FunctionDeclaration",
+        "650817:651994:FunctionDeclaration",
+        "652606:652734:FunctionDeclaration"
+      ],
+      "bytes": 40978
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "343936:344059:FunctionDeclaration",
+        "344468:346534:FunctionDeclaration",
+        "355540:355730:FunctionDeclaration",
+        "399027:402829:FunctionDeclaration",
+        "434371:434752:FunctionDeclaration",
+        "441046:447033:FunctionDeclaration",
+        "464385:464994:FunctionDeclaration",
+        "496938:498606:FunctionDeclaration",
+        "509771:510679:FunctionDeclaration",
+        "513051:513861:FunctionDeclaration",
+        "531716:535341:FunctionDeclaration",
+        "541784:542037:FunctionDeclaration",
+        "599899:601092:FunctionDeclaration",
+        "601092:618325:FunctionDeclaration",
+        "648281:649463:FunctionDeclaration",
+        "651994:652595:FunctionDeclaration",
+        "653113:653456:FunctionDeclaration"
+      ],
+      "bytes": 40974
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "344059:344468:FunctionDeclaration",
+        "357895:422707:FunctionDeclaration",
+        "422707:423199:FunctionDeclaration",
+        "460840:461736:FunctionDeclaration",
+        "475910:476515:FunctionDeclaration",
+        "476515:478325:FunctionDeclaration",
+        "494069:496663:FunctionDeclaration",
+        "503028:503324:FunctionDeclaration",
+        "535341:537884:FunctionDeclaration",
+        "543636:545246:FunctionDeclaration",
+        "564552:564914:FunctionDeclaration",
+        "571454:571608:FunctionDeclaration",
+        "573586:574591:FunctionDeclaration",
+        "579932:584040:FunctionDeclaration",
+        "593883:599899:FunctionDeclaration",
+        "649906:650817:FunctionDeclaration"
+      ],
+      "bytes": 40852
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "387666:393768:FunctionDeclaration",
+        "439355:439593:FunctionDeclaration",
+        "461736:462645:FunctionDeclaration",
+        "463046:463477:FunctionDeclaration",
+        "493602:494069:FunctionDeclaration",
+        "503324:504334:FunctionDeclaration",
+        "515552:516443:FunctionDeclaration",
+        "516443:522513:FunctionDeclaration",
+        "537884:540474:FunctionDeclaration",
+        "542037:543636:FunctionDeclaration",
+        "564914:567423:FunctionDeclaration",
+        "571779:573586:FunctionDeclaration",
+        "575410:575625:FunctionDeclaration",
+        "575625:579932:FunctionDeclaration",
+        "630540:631149:FunctionDeclaration",
+        "631149:641885:FunctionDeclaration",
+        "652734:653113:FunctionDeclaration"
+      ],
+      "bytes": 40869
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "349816:350338:FunctionDeclaration",
+        "356574:357499:FunctionDeclaration",
+        "380055:380296:FunctionDeclaration",
+        "380296:387666:FunctionDeclaration",
+        "412276:415399:FunctionDeclaration",
+        "462645:463046:FunctionDeclaration",
+        "478673:482701:FunctionDeclaration",
+        "483020:493602:FunctionDeclaration",
+        "505786:508004:FunctionDeclaration",
+        "513861:515552:FunctionDeclaration",
+        "540474:541508:FunctionDeclaration",
+        "563029:564552:FunctionDeclaration",
+        "574591:575410:FunctionDeclaration",
+        "586588:591744:FunctionDeclaration",
+        "591744:592104:FunctionDeclaration",
+        "629884:630540:FunctionDeclaration",
+        "643078:643294:FunctionDeclaration"
+      ],
+      "bytes": 40865
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "348849:349816:FunctionDeclaration",
+        "350338:350691:FunctionDeclaration",
+        "355730:355985:FunctionDeclaration",
+        "418501:422696:FunctionDeclaration",
+        "434752:439355:FunctionDeclaration",
+        "439593:440849:FunctionDeclaration",
+        "450899:460840:FunctionDeclaration",
+        "496801:496938:FunctionDeclaration",
+        "510679:513051:FunctionDeclaration",
+        "523260:525978:FunctionDeclaration",
+        "525978:526716:FunctionDeclaration",
+        "531107:531291:FunctionDeclaration",
+        "531291:531716:FunctionDeclaration",
+        "567423:569456:FunctionDeclaration",
+        "618325:619087:FunctionDeclaration",
+        "619087:627494:FunctionDeclaration",
+        "641885:643078:FunctionDeclaration",
+        "649463:649906:FunctionDeclaration"
+      ],
+      "bytes": 40982
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "343821:343936:FunctionDeclaration",
+        "350691:351302:FunctionDeclaration",
+        "355985:356574:FunctionDeclaration",
+        "357499:357895:FunctionDeclaration",
+        "374925:379158:FunctionDeclaration",
+        "402829:412276:FunctionDeclaration",
+        "415790:418501:FunctionDeclaration",
+        "425305:434371:FunctionDeclaration",
+        "463477:464385:FunctionDeclaration",
+        "468868:470055:FunctionDeclaration",
+        "470055:470381:FunctionDeclaration",
+        "496663:496801:FunctionDeclaration",
+        "509452:509771:FunctionDeclaration",
+        "526716:652606:FunctionDeclaration",
+        "569456:571454:FunctionDeclaration",
+        "584040:585357:FunctionDeclaration",
+        "627494:629884:FunctionDeclaration",
+        "646562:647375:FunctionDeclaration"
+      ],
+      "bytes": 40966
+    }
+  ]
+}

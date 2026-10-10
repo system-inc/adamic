@@ -93,3 +93,14 @@ bounds. It timed out after 1800.233s with peak RSS 2985980KiB. The earlier
 one-CPU probe remains archived. All 50 incomplete files were actually measured
 by the batch; none lost its budget to the shared deadline. Thirteen timed out
 at 600s and factory/utilities.ts exited 2 with a captured stack overflow.
+
+Task #b2wbbha adds exact 8-piece watch and 5-piece transformer union checks.
+Both match 0442c4a9 sites/reasons/combined depths/boundaries with zero differences.
+Dropped, duplicated and moved-site mutants fail independent partition/provenance
+audits. The final binary retains piece-off observations and actual watch-piece
+observations byte for byte. New resume, timing and publication guards pass their
+mutants; stream depth/coverage and C/JS identity witnesses pass again. Five checker
+samples complete and createNodeBuilder times out at 900.070s; no new full-file
+coverage is claimed. See evidence/pieces/README.md and SHA256.json.
+
+Recursive continuation: watch retains 315 sites exactly. The complete createNodeBuilder reference finishes in 971.045s, peak RSS 4182624KiB; recursive ownership and whole traversal both count all 30,499 nodes. Its union is rejected with 63 missing, 51 added and ten depth differences. Dropped, duplicated, moved and shifted-owned-node mutants are caught; progress, resume, stream, publication and C/JS identity controls pass. No recursive result is admitted to full-file coverage. See evidence/recursive-pieces/README.md, DIFFERENCES.md and SHA256.json.

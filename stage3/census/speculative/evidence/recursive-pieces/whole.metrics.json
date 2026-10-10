@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/b2wbbha-storage/final-piece-census",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/workspace/b2wbbha-recursive/whole.jsonl"
+  ],
+  "wall_seconds": 971.0453605349994,
+  "peak_rss_kib": 4182624,
+  "exit": 0,
+  "user_cpu_seconds": 910.986676,
+  "system_cpu_seconds": 10.263307,
+  "phase_first_wall_seconds": {
+    "refusal_scan": 2.4626190119997773,
+    "contract_scan": 3.546987285999421,
+    "walk": 99.32401956499962,
+    "completed": 970.7222360689993
+  },
+  "time_limit_seconds": 3600.0,
+  "rss_limit_mib": 6144,
+  "address_space_limit_mib": 12288,
+  "rss_limit_killed": false
+}

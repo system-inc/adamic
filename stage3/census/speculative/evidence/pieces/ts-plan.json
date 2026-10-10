@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/ts.ts",
+  "sha256": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469",
+  "source_bytes": 116741,
+  "requested_pieces": 8,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:5168:ImportDeclaration",
+      "start": 0,
+      "end": 5168,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 5168,
+      "name": ""
+    },
+    {
+      "id": "5168:5288:VariableStatement",
+      "start": 5168,
+      "end": 5288,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 120,
+      "name": ""
+    },
+    {
+      "id": "5288:5540:EnumDeclaration",
+      "start": 5288,
+      "end": 5540,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 252,
+      "name": "TypeScriptSubstitutionFlags"
+    },
+    {
+      "id": "5540:6144:EnumDeclaration",
+      "start": 5540,
+      "end": 6144,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 604,
+      "name": "ClassFacts"
+    },
+    {
+      "id": "6144:116739:FunctionDeclaration",
+      "start": 6144,
+      "end": 116739,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 110595,
+      "name": "transformTypeScript"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "6144:116739:FunctionDeclaration"
+      ],
+      "bytes": 110595
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "0:5168:ImportDeclaration"
+      ],
+      "bytes": 5168
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "5540:6144:EnumDeclaration"
+      ],
+      "bytes": 604
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "5288:5540:EnumDeclaration"
+      ],
+      "bytes": 252
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "5168:5288:VariableStatement"
+      ],
+      "bytes": 120
+    }
+  ]
+}

@@ -40,7 +40,7 @@ func latentProgressStart(program *load.Program, file *ast.SourceFile) {
 	}
 	p := &latentProgressState{path: path, program: program, file: program.FileName(file), bytes: len(file.Text()),
 		target: map[*ast.Node]bool{}, scanned: map[*ast.Node]bool{}, walked: map[*ast.Node]bool{}, attempted: map[*ast.Node]bool{}, examined: map[*ast.Node]bool{},
-		phase: "refusal_scan", started: time.Now(), totalUnits: len(file.Statements.Nodes)}
+		phase: "refusal_scan", started: time.Now(), totalUnits: len(latentPieceUnits(file))}
 	var catalogue ast.Visitor
 	catalogue = func(node *ast.Node) bool { p.target[node] = true; node.ForEachChild(catalogue); return false }
 	catalogue(file.AsNode())

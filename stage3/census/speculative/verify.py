@@ -7,6 +7,7 @@ import sys
 
 raw, result_path, root = map(Path, sys.argv[1:4])
 rows = [json.loads(line) for line in raw.read_text().splitlines()]
+assert all(not row.get('piece') for row in rows[1:]), 'piece records cannot claim complete file coverage'
 result = json.loads(result_path.read_text())
 
 

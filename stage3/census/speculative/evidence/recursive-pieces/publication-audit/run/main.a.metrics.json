@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/b2wbbha-recursive/verified-census",
+    "/workspace/b2wbbha-recursive/verified-stream-audit/source",
+    "/workspace/b2wbbha-recursive/verified-stream-audit/run/records/main.a.pending"
+  ],
+  "wall_seconds": 0.1103590399998211,
+  "peak_rss_kib": 30564,
+  "exit": 0,
+  "user_cpu_seconds": 0.036413999999999995,
+  "system_cpu_seconds": 0.010535,
+  "phase_first_wall_seconds": {},
+  "time_limit_seconds": 30.0,
+  "rss_limit_mib": 6144,
+  "address_space_limit_mib": 12288,
+  "rss_limit_killed": false,
+  "unit_deadline_limited": false,
+  "go_env": {
+    "GOMEMLIMIT": "1GiB",
+    "GOGC": "200",
+    "GOMAXPROCS": "4"
+  }
+}

@@ -63,6 +63,7 @@ func (l *lowering) latentPlaceholder(node *ast.Node) (value ir.Expression) {
 func latentFindingKey(finding LatentFinding) string {
 	return strings.Join([]string{finding.Kind, finding.Where, finding.Reason, finding.Text}, "\x00")
 }
+
 // Speculative sites distinguish failed AST constructs which share a printed
 // location and reason. Full/no-stubs retain the original census identity.
 func latentSpecFindingKey(finding LatentFinding) string {
@@ -120,6 +121,9 @@ func (l *lowering) latentSpecExpression(node *ast.Node) (value ir.Expression, fa
 }
 
 func (l *lowering) latentSpecStatement(node *ast.Node) (result []ir.Statement, failure error) {
+	if !latentPieceAllows(node) {
+		return nil, nil
+	}
 	latentSpec.attempted[node] = true
 	latentProgressVisit(node, true)
 	var checkpoint *lowering
@@ -245,7 +249,7 @@ func latentSpecValue(node *ast.Node) bool {
 }
 
 func (l *lowering) latentSpecWalk(node *ast.Node) {
-	if node == nil || latentSpec.active[node] {
+	if node == nil || latentSpec.active[node] || !latentPieceAllows(node) {
 		return
 	}
 	latentSpec.visited[node] = true
@@ -295,7 +299,10 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	boundaries := map[latentBoundaryKey]*ast.Node{}
 	nodes := map[string]*ast.Node{}
 	for _, file := range program.Files() {
-		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
+		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected {
+			continue
+		}
+		latentPieceStart(program, file)
 		latentProgressStart(program, file)
 		latentFindings = nil
 		latentSpec = &latentSpeculation{attempted: map[*ast.Node]bool{}, failed: failed, nodes: nodes, active: map[*ast.Node]bool{}, visited: map[*ast.Node]bool{}, bodies: map[*ast.Node]bool{}, boundaries: boundaries, sites: sites}
@@ -325,22 +332,32 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		l.latentRegister(program.Files())
 		l.latentRegisterNested(program.Files())
 		latentProgressPhase("walk")
-		for _, node := range file.Statements.Nodes {
+		for _, node := range latentPieceUnits(file) {
+			latentPieceOrigin = latentPieceAtomID(node)
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "speculative", CheckerDiagnostics: []string{}}
 			if node.Name() != nil {
 				unit.Name = node.Name().Text()
 			}
 			copy := l.latentSnapshot()
+			copy.latentPiecePrepare(node)
 			copy.latentSpecWalk(node)
 			record.Units = append(record.Units, unit)
 			latentProgressUnitDone()
 		}
-		l.latentSpecWalk(file.AsNode())
+		if latentPiece == nil {
+			l.latentSpecWalk(file.AsNode())
+		}
+		latentPieceFinish(&record)
 		record.Findings = append([]LatentFinding{}, latentFindings...)
 		record.SpeculativeCoverage = &LatentSpeculativeCoverage{SourceBytes: len(file.Text()), VisitedNodes: len(latentSpec.visited), AttemptedNodes: len(latentSpec.attempted)}
 		var verify ast.Visitor
+		verified := map[*ast.Node]bool{}
 		verify = func(node *ast.Node) bool {
+			if verified[node] || !latentPieceAllows(node) {
+				return false
+			}
+			verified[node] = true
 			record.SpeculativeCoverage.TotalNodes++
 			if !latentSpec.visited[node] {
 				record.SpeculativeCoverage.UnvisitedNodes++
@@ -348,7 +365,13 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			node.ForEachChild(verify)
 			return false
 		}
-		verify(file.AsNode())
+		if latentPiece == nil {
+			verify(file.AsNode())
+		} else {
+			for _, node := range latentPieceUnits(file) {
+				verify(node)
+			}
+		}
 		latentProgressPhase("completed")
 		release()
 		fmt.Fprintf(os.Stderr, "speculative walk: %s nodes=%d findings=%d unvisited=%d\n", record.File, record.SpeculativeCoverage.TotalNodes, len(record.Findings), record.SpeculativeCoverage.UnvisitedNodes)
@@ -365,8 +388,12 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	for file := range boundaryInventory {
 		sort.Slice(boundaryInventory[file], func(i, j int) bool {
 			a, b := boundaryInventory[file][i], boundaryInventory[file][j]
-			if a.Start != b.Start { return a.Start < b.Start }
-			if a.End != b.End { return a.End < b.End }
+			if a.Start != b.Start {
+				return a.Start < b.Start
+			}
+			if a.End != b.End {
+				return a.End < b.End
+			}
 			return a.Kind < b.Kind
 		})
 	}
@@ -374,7 +401,9 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	// boundary before or after the boundary's own file is attempted.
 	for _, record := range records {
 		record.FailedBoundaries = boundaryInventory[record.File]
-		if os.Getenv("LATENT_ONLY_FILE") != "" { record.ProjectFailedBoundaries = boundaryInventory }
+		if os.Getenv("LATENT_ONLY_FILE") != "" {
+			record.ProjectFailedBoundaries = boundaryInventory
+		}
 		seen := map[string]bool{}
 		findings := record.Findings
 		record.Findings = []LatentFinding{}
@@ -405,6 +434,8 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		}
 		emit(record)
 	}
+	latentPiece = nil
+	latentPieceOrigin = ""
 	latentSpec = nil
 	latentSpecProgram = nil
 }
@@ -494,9 +525,9 @@ func (l *lowering) latentSpecDeclareLocal(name *ast.Node) (local int, failure er
 // Census boundary metadata is never present in a normal production build.
 type LatentBoundary struct {
 	Where string `json:"where"`
-	Kind string `json:"kind"`
-	Start int `json:"start"`
-	End int `json:"end"`
+	Kind  string `json:"kind"`
+	Start int    `json:"start"`
+	End   int    `json:"end"`
 }
 
 var latentSpecFunctionSchemas = map[reflect.Type]bool{}
@@ -504,15 +535,24 @@ var latentSpecFunctionSchemas = map[reflect.Type]bool{}
 // Direct function-slice copying is safe only while every mutable field is
 // explicitly cloned. Future IR fields fail here instead of silently aliasing.
 func latentSpecFunctionSchema(t reflect.Type) {
-	if os.Getenv("LATENT_MUTANT_SKIP_FUNCTION_SCHEMA") == "1" { return }
-	if latentSpecFunctionSchemas[t] { return }
+	if os.Getenv("LATENT_MUTANT_SKIP_FUNCTION_SCHEMA") == "1" {
+		return
+	}
+	if latentSpecFunctionSchemas[t] {
+		return
+	}
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
-		if field.PkgPath != "" { panic("latent state copy: unexported function field " + field.Name) }
-		if latentSpecImmutable(field.Type) { continue }
+		if field.PkgPath != "" {
+			panic("latent state copy: unexported function field " + field.Name)
+		}
+		if latentSpecImmutable(field.Type) {
+			continue
+		}
 		switch field.Name {
 		case "Parameters", "OptionalParameters", "Body", "Environment", "FrameEnvironment", "ReferenceParents":
-		default: panic("latent state copy: unsupported function field " + field.Name)
+		default:
+			panic("latent state copy: unsupported function field " + field.Name)
 		}
 	}
 	latentSpecFunctionSchemas[t] = true

@@ -1,0 +1,209 @@
+{
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/watch.ts",
+  "baseline_sha256": "74effdc22902dd7aca543f6e09db3fff8679cd51e3e4b782b464c655a699739c",
+  "exact_match": true,
+  "owned_stock_nodes": 4980,
+  "piece_walk_nodes": 4980,
+  "whole_walk_nodes": 4982,
+  "whole_sites": 315,
+  "piece_sites": 315,
+  "missing_sites": [],
+  "added_sites": [],
+  "changed_depths": [],
+  "removed_boundaries": [],
+  "added_boundaries": [],
+  "raw_depths_recalibrated": {
+    "whole": 0,
+    "pieces": 63
+  },
+  "mutants": {
+    "piece dropped": "piece dropped from union",
+    "piece duplicated": "duplicate piece in union",
+    "site moved between pieces": "site moved between pieces: atom provenance violates partition",
+    "shifted owned AST count": "owned AST coverage double-counted or dropped nodes"
+  },
+  "runtimes": [
+    {
+      "piece": 0,
+      "bytes": 6995,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-000.pending.jsonl"
+      ],
+      "wall_seconds": 12.256550602000061,
+      "peak_rss_kib": 651068,
+      "exit": 0,
+      "user_cpu_seconds": 11.337154,
+      "system_cpu_seconds": 0.322169,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.2830414449999807,
+        "walk": 2.399286789999678,
+        "completed": 12.15620407500137
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 1,
+      "bytes": 5575,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-001.pending.jsonl"
+      ],
+      "wall_seconds": 31.466581161999784,
+      "peak_rss_kib": 889896,
+      "exit": 0,
+      "user_cpu_seconds": 30.893841,
+      "system_cpu_seconds": 0.45145399999999997,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.296995001999676,
+        "walk": 2.4045968179998454,
+        "completed": 31.36632894199829
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 2,
+      "bytes": 5610,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-002.pending.jsonl"
+      ],
+      "wall_seconds": 87.9392980320008,
+      "peak_rss_kib": 998536,
+      "exit": 0,
+      "user_cpu_seconds": 87.470502,
+      "system_cpu_seconds": 0.600109,
+      "phase_first_wall_seconds": {
+        "registration": 2.13951477000046,
+        "walk": 2.251054694001141
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 3,
+      "bytes": 5495,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-003.pending.jsonl"
+      ],
+      "wall_seconds": 14.201063751999754,
+      "peak_rss_kib": 836832,
+      "exit": 0,
+      "user_cpu_seconds": 13.70184,
+      "system_cpu_seconds": 0.38564299999999996,
+      "phase_first_wall_seconds": {
+        "registration": 2.3012434269985533,
+        "walk": 2.4117523329987307,
+        "completed": 14.100825514999087
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 4,
+      "bytes": 5570,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-004.pending.jsonl"
+      ],
+      "wall_seconds": 24.945544436001,
+      "peak_rss_kib": 936484,
+      "exit": 0,
+      "user_cpu_seconds": 24.507768,
+      "system_cpu_seconds": 0.395899,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.041972930999691,
+        "walk": 2.14922678000039,
+        "completed": 24.84534772600091
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 5,
+      "bytes": 5497,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-005.pending.jsonl"
+      ],
+      "wall_seconds": 50.6101330829988,
+      "peak_rss_kib": 954164,
+      "exit": 0,
+      "user_cpu_seconds": 50.144063,
+      "system_cpu_seconds": 0.531237,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 1.944840463998844,
+        "walk": 2.05202743999871
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 6,
+      "bytes": 5613,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-006.pending.jsonl"
+      ],
+      "wall_seconds": 22.8399294489991,
+      "peak_rss_kib": 846120,
+      "exit": 0,
+      "user_cpu_seconds": 21.784733,
+      "system_cpu_seconds": 0.41433699999999996,
+      "phase_first_wall_seconds": {
+        "refusal_scan": 2.287469520999366,
+        "walk": 2.4021087599994644,
+        "completed": 22.739709413999663
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 7,
+      "bytes": 5567,
+      "command": [
+        "/workspace/b2wbbha-recursive/verified-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-recursive/verified-watch-run/piece-007.pending.jsonl"
+      ],
+      "wall_seconds": 31.37878595499933,
+      "peak_rss_kib": 870488,
+      "exit": 0,
+      "user_cpu_seconds": 30.981903,
+      "system_cpu_seconds": 0.380055,
+      "phase_first_wall_seconds": {
+        "registration": 2.1546905219984183,
+        "walk": 2.2624406949998956,
+        "completed": 31.27854262999972
+      },
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import sys
 
 root, observations, stock_path, output = map(Path, sys.argv[1:5])
 rows = [json.loads(line) for line in observations.read_text().splitlines()]
+assert all(not row.get('piece') for row in rows[1:]), 'piece records cannot claim complete file coverage'
 stock = json.loads(stock_path.read_text())
 assert rows[0]['latent_mode'] == 'speculative'
 assert stock['typescript'] == '6.0.3'

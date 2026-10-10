@@ -1,0 +1,32 @@
+{
+  "task": "#b2wbbha",
+  "branch": "codex/stage3-speculative-census-main",
+  "base_commit": "9421a92c1c7708916301c35ebb9d85161a8e843b",
+  "compiler_base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "typescript": "6.0.3",
+  "threshold_bytes": 51200,
+  "root": "/tmp/b17vtn1/original-adapted/src/compiler",
+  "stock_sha256": "26a25eb1570a8bbfb1a2dcb7cf99aba4eb3fe457d0a281583bb99b38cea65b95",
+  "reference_binary_sha256": "809b3fbd2524e66a03f4b4f6a0a04516087eeb3aaf526b18203d3bff9652e95c",
+  "measurement_binary_sha256": "81d82629583940e0fac1df953900e70b6655d62256a11b9b9680bfe2e5832ac2",
+  "whole_reference_env": {
+    "LATENT_SPECULATIVE": "1",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/tmp/b17vtn1/original-adapted/src/compiler/checker.ts",
+    "LATENT_PIECE_PLAN": "/workspace/b2wbbha-storage/plans/checker.ts.plan.json",
+    "LATENT_PIECE_ID": "0",
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "4GiB",
+    "GOGC": "200"
+  },
+  "recursive_env": {
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "1GiB",
+    "GOGC": "200"
+  },
+  "recursive_workers": 3,
+  "watch_workers": 2,
+  "owning_node_rule": "nearest planned AST ancestor, including self",
+  "admission": "failed: recursive createNodeBuilder union differs; no recursive results enter full-file publication"
+}
