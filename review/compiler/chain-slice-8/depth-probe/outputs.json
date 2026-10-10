@@ -1,0 +1,27 @@
+{
+  "main_admission": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/adamic-gate/chain-slice-8-depth.ts:2:18: stage 0 can't lower a value of type any yet\n"
+  },
+  "Node": {
+    "exit": 0,
+    "stdout": "passed\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.value needs JSON value | undefined, found non-JSON recursion\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.value needs JSON value | undefined, found non-JSON recursion\n"
+  }
+}

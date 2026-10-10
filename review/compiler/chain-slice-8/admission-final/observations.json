@@ -1,0 +1,1202 @@
+[
+  {
+    "path": "checked .ts copy: json_domain_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "NaN\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.number needs JSON value | undefined, found non-JSON number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.number needs JSON value | undefined, found non-JSON number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: arithmetic.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: structural.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_depth_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.value needs JSON value | undefined, found non-JSON recursion\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.next.value needs JSON value | undefined, found non-JSON recursion\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_literal_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value.type needs \"list\", found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value.type needs \"list\", found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: validated.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: parameter.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_nullable_array_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw[0] needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw[0] needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: stock_decode_entities.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "A B \u00a0 &missing;\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "A B \u00a0 &missing;\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "A B \u00a0 &missing;\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_recursive.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "1\n2\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "1\n2\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "1\n2\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_dictionary.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_dictionary_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.beta needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.beta needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: staged_field.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: non-null assertion failed at /tmp/adamic-gate/chain-slice-8-any/staged_field.ts:1:29: undefined! is null or undefined\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: non-null assertion failed at /tmp/adamic-gate/chain-slice-8-any/staged_field.ts:1:29: undefined! is null or undefined\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: property_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: config.value needs string, found number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: config.value needs string, found number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: property.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "node\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "node\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "node\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_object.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "one\n14\ntrue\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "one\n14\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "one\n14\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: string_length.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "3\n1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "3\n1\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "3\n1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: property_null_misfit.ts",
+    "Node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of null (reading 'value')\n"
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: config needs non-null property receiver, found null\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: config needs non-null property receiver, found null\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: literal_result.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_recovery.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_union_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value.type needs \"list\" | \"object\", found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value.type needs \"list\" | \"object\", found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_boxed_list.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n15\ntrue\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "14\n15\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "14\n15\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_nullable_array.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\nfalse\ntrue\n0\n0\n1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\nfalse\ntrue\n0\n0\n1\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\nfalse\ntrue\n0\n0\n1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_literal.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "list\nnode\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "list\nnode\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "list\nnode\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_nested_list_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.paths[0].path needs string, found number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.paths[0].path needs string, found number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: boolean.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "false\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: transport.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "number\nstring\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "number\nstring\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "number\nstring\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_nul_literal.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_literal_result_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value + 1 needs 1, found number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value + 1 needs 1, found number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_nullable_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.option needs string | null | undefined, found number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.option needs string | null | undefined, found number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: arithmetic_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_nested_list.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "node\nmissing\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "node\nmissing\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "node\nmissing\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_optional.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n15\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "14\n15\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "14\n15\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_list.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n2\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "14\n2\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "14\n2\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: parameter_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: assertion_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: 'wrong' as any needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: 'wrong' as any needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_boolean_list.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "false\ntrue\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "false\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "false\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: assertion.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "15\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_list_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value[0] needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value[0] needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: config_validated.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_recursive_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.next.value needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.next.value needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_validated.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\nCompiler option 'compileOnSave' requires a value of type boolean.\nfalse\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\nCompiler option 'compileOnSave' requires a value of type boolean.\nfalse\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\nCompiler option 'compileOnSave' requires a value of type boolean.\nfalse\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_nullable.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: stale_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "14\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs string, found number\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: value needs string, found number\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_union.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "list\nobject\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "list\nobject\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "list\nobject\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_literal_result.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: json_object_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "wrong\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.options.limit needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.options.limit needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_dictionary_order_misfit.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "passed\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.1 needs number, found string\n"
+    },
+    "native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: checked any: raw.1 needs number, found string\n"
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": false
+  },
+  {
+    "path": "checked .ts copy: json_nullable_validated.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\ntrue\nvalue\ndiagnostic: expected a string, null or undefined\ntrue\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\ntrue\nvalue\ndiagnostic: expected a string, null or undefined\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\ntrue\nvalue\ndiagnostic: expected a string, null or undefined\ntrue\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  },
+  {
+    "path": "checked .ts copy: config_diagnostics.ts",
+    "Node": {
+      "exit": 0,
+      "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "agrees": true
+  }
+]

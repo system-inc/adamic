@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: json_nullable_misfit.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "passed\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.option needs string | null | undefined, found number\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.option needs string | null | undefined, found number\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

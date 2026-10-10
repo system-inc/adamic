@@ -1,0 +1,7 @@
+function convertJsonOption(value: any): readonly number[] { return value; }
+const mixed: (number | string)[] = [14, 15];
+const raw: any = mixed;
+const list = convertJsonOption(raw);
+console.log(String(list[0] ?? 0));
+console.log(String(list[1] ?? 0));
+console.log(String(list === raw));

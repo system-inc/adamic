@@ -1,0 +1,322 @@
+[
+  {
+    "Time": "2026-10-10T00:17:21.672186879Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "=== RUN   TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672189055Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "=== PAUSE TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672247203Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "=== RUN   TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672249604Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "=== PAUSE TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672290955Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672293211Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672298384Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "=== RUN   TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672301269Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "=== PAUSE TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:21.672316838Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "=== CONT  TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.262111391Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "=== CONT  TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.420072057Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "    oracle_test.go:775: exit codes differ\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.420110912Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "        node:   exit 0, stdout \"selected:argument1\\nabsent\\nmethod2:argument1\\nmethod2:next\\n\", stderr \"\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.42011657Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "        native: exit 70, stdout \"selected:argument1\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.456082389Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "    oracle_test.go:788: leaks:\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.456113058Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "        exit 70\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.456120359Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "        adamic: panic: TypeError: optional call value is not callable\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:25.456133322Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a",
+    "Output": "--- FAIL: TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-bound-method-selection.a (3.76s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.42499179Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "    oracle_test.go:775: exit codes differ\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.425049658Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "        node:   exit 0, stdout \"absent\\nselected2:arg1\\n2 1\\nselected3:arg2\\nabsent\\n2\\nselected4:arg3\\nabsent\\n3\\nfinished\\n\", stderr \"\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.425055848Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "        native: exit 70, stdout \"absent\\nselected2:arg1\\n2 1\\nselected3:arg2\\nabsent\\n2\\nselected4:arg3\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.447642958Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "    oracle_test.go:788: leaks:\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.447695388Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "        exit 70\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.447699073Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "        adamic: panic: TypeError: optional call value is not callable\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:29.448247228Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a",
+    "Output": "--- FAIL: TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-order.a (4.19s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:42.592344305Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.128859256Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "=== CONT  TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.392340911Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "    oracle_test.go:775: exit codes differ\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.392392146Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "        node:   exit 0, stdout \"arg\\nhost1:value2\\narg\\nreplacement:value2\\nabsent\\n\", stderr \"\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.392399246Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "        native: exit 70, stdout \"arg\\nhost1:value2\\narg\\nreplacement:value2\\narg\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.412178274Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "    oracle_test.go:788: leaks:\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.412207973Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "        exit 70\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.412212924Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "        adamic: panic: TypeError: optional call value is not callable\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:45.412905072Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+    "Output": "--- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a (2.85s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.208156696Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "    oracle_test.go:775: exit codes differ\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.208206843Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "        node:   exit 0, stdout \"absent\\nabsent\\nargument\\nclass1:1\\nabsent\\nabsent\\nargument\\nliteral2:2\\n2\\n\", stderr \"\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.208214363Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "        native: exit 70, stdout \"absent\\nabsent\\nargument\\nclass1:1\\nargument\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\"\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.232813626Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "    oracle_test.go:788: leaks:\n",
+    "OutputType": "error"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.23286524Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "        exit 70\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.232872865Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "        adamic: panic: TypeError: optional call value is not callable\n",
+    "OutputType": "error-continue"
+  },
+  {
+    "Time": "2026-10-10T00:17:47.232884872Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "Output": "--- FAIL: TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a (2.10s)\n",
+    "OutputType": "frame"
+  }
+]

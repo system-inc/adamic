@@ -1,0 +1,5 @@
+interface Option { readonly type: 'list'; readonly values: readonly string[]; }
+function convertJsonOption(value: any): Option { return value; }
+const option = convertJsonOption({type: 'list', values: ['node']});
+console.log(option.type);
+console.log(option.values[0] ?? 'missing');

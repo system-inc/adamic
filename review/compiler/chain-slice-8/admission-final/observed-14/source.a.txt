@@ -1,0 +1,3 @@
+// Reduced own-value read from tsc's convertToObject config boundary.
+function read(config: any): string { return config.value; }
+console.log(read({ value: 'node' }));

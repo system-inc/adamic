@@ -1,0 +1,3 @@
+interface Option { readonly type: 'list' | 'object'; }
+function convertJsonOption(value: any): Option { return value; }
+console.log(convertJsonOption({type: 'wrong'}).type);

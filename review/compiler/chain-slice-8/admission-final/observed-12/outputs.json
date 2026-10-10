@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: staged_field.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: non-null assertion failed at /tmp/adamic-gate/chain-slice-8-any/staged_field.ts:1:29: undefined! is null or undefined\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: non-null assertion failed at /tmp/adamic-gate/chain-slice-8-any/staged_field.ts:1:29: undefined! is null or undefined\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

@@ -1,0 +1,27 @@
+{
+  "main_admission": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/review/compiler/chain-slice-8/dependency-probe/optional-catch.a:7:16: stage 0 can't lower an optional chain longer than one step yet\n"
+  },
+  "Node": {
+    "exit": 0,
+    "stdout": "caught\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+  }
+}

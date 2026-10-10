@@ -1,0 +1,78 @@
+[
+  {
+    "fixture": "field.a.txt",
+    "Node": {
+      "exit": 0,
+      "stdout": "arg\nhost1:value2\narg\nreplacement:value2\nabsent\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "arg\nhost1:value2\narg\nreplacement:value2\nabsent\n",
+      "stderr": ""
+    },
+    "original_native": [
+      "native: exit 70, stdout \"arg\\nhost1:value2\\narg\\nreplacement:value2\\narg\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\""
+    ],
+    "cast": false,
+    "non_null_assertion": false,
+    "declared_type_lie": false
+  },
+  {
+    "fixture": "optional-method.a.txt",
+    "Node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nargument\nclass1:1\nabsent\nabsent\nargument\nliteral2:2\n2\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nargument\nclass1:1\nabsent\nabsent\nargument\nliteral2:2\n2\n",
+      "stderr": ""
+    },
+    "original_native": [
+      "native: exit 70, stdout \"absent\\nabsent\\nargument\\nclass1:1\\nargument\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\""
+    ],
+    "cast": false,
+    "non_null_assertion": false,
+    "declared_type_lie": false
+  },
+  {
+    "fixture": "runtime-bound-method-selection.a.txt",
+    "Node": {
+      "exit": 0,
+      "stdout": "selected:argument1\nabsent\nmethod2:argument1\nmethod2:next\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "selected:argument1\nabsent\nmethod2:argument1\nmethod2:next\n",
+      "stderr": ""
+    },
+    "original_native": [
+      "native: exit 70, stdout \"selected:argument1\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\""
+    ],
+    "cast": false,
+    "non_null_assertion": false,
+    "declared_type_lie": false
+  },
+  {
+    "fixture": "runtime-order.a.txt",
+    "Node": {
+      "exit": 0,
+      "stdout": "absent\nselected2:arg1\n2 1\nselected3:arg2\nabsent\n2\nselected4:arg3\nabsent\n3\nfinished\n",
+      "stderr": ""
+    },
+    "JavaScript": {
+      "exit": 0,
+      "stdout": "absent\nselected2:arg1\n2 1\nselected3:arg2\nabsent\n2\nselected4:arg3\nabsent\n3\nfinished\n",
+      "stderr": ""
+    },
+    "original_native": [
+      "native: exit 70, stdout \"absent\\nselected2:arg1\\n2 1\\nselected3:arg2\\nabsent\\n2\\nselected4:arg3\\n\", stderr \"adamic: panic: TypeError: optional call value is not callable\\n\""
+    ],
+    "cast": false,
+    "non_null_assertion": false,
+    "declared_type_lie": false
+  }
+]

@@ -1,0 +1,12 @@
+interface Value { readonly text: string }
+interface Host { value: Value | undefined }
+function clear(host: Host): void { host.value = undefined; }
+function read(host: Host | undefined): string {
+    if (host !== undefined && host.value !== undefined) {
+        clear(host);
+        return host?.value.text ?? 'absent';
+    }
+    return 'absent';
+}
+try { console.log(read({ value: { text: 'present' } })); }
+catch { console.log('caught'); }

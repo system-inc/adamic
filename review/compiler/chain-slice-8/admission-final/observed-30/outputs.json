@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: arithmetic_misfit.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "wrong1\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: value needs number, found string\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: value needs number, found string\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

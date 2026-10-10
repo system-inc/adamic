@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: json_nested_list_misfit.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "14\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.paths[0].path needs string, found number\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.paths[0].path needs string, found number\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

@@ -1,0 +1,6 @@
+interface ConfigNode { value: number; readonly next?: ConfigNode; }
+function convert(raw: any): ConfigNode { return raw; }
+const raw: any = { value: 1, next: { value: 2 } };
+const checked = convert(raw);
+console.log(String(checked.value));
+console.log(String(checked.next?.value ?? 0));

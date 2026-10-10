@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: config_diagnostics.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n",
+    "stderr": ""
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": true
+}

@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: config_validated.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n",
+    "stderr": ""
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": true
+}

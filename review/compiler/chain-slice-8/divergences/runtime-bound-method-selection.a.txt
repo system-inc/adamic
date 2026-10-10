@@ -1,0 +1,16 @@
+// Derived from checker.ts:6910's tracker callback, with two runtime callee origins.
+interface Reporter { readonly report: ((value: string) => string) | undefined }
+class Report {
+	readonly label: string;
+	constructor(label: string) { this.label = label; }
+	report(value: string): string { return `${this.label}:${value}`; }
+}
+interface Holder { report: ((value: string) => string) | undefined }
+const holder: Holder = { report: (value: string): string => `selected:${value}` };
+function clear(): string { holder.report = undefined; return `argument${1}`; }
+function invoke(value: Reporter): void {
+	console.log(value.report?.(clear()) ?? 'absent');
+	console.log(value.report?.('next') ?? 'absent');
+}
+invoke(holder);
+invoke(new Report(`method${2}`));

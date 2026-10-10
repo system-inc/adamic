@@ -1,0 +1,450 @@
+[
+  {
+    "tests": [
+      "TestAMethodReadAsAValueIsRefused",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+      "TestAdamicNullishAssertionsAreRefused",
+      "TestAgreementAcceptsComputedAnswer",
+      "TestAgreementAcceptsExpectedPanic",
+      "TestAgreementEnumConstantWitness",
+      "TestAgreementInheritedFieldWitness",
+      "TestAgreementParameterPropertyWitness",
+      "TestAgreementParseIntRadixWitness"
+    ],
+    "exit": 0,
+    "seconds": 78.49830042099984,
+    "log": "review/compiler/chain-slice-8/lower-00-repaired.jsonl"
+  },
+  {
+    "tests": [
+      "TestAgreementRejectsEmptyAnswer",
+      "TestAgreementRejectsWrongLoweredOutput",
+      "TestAgreementStaticInitializerWitness",
+      "TestArgumentsLengthReadKeepsReaderFact",
+      "TestArgumentsLengthReadNeighbors",
+      "TestArgumentsLengthRefusalFixtures",
+      "TestArgumentsLengthRefusals",
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestArrayPredicateCoexistsWithUnknownReflection",
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+      "TestArrayPredicatePreservesDeclaredElementContract",
+      "TestCallableNamespaceLimitsStayLoud"
+    ],
+    "exit": 0,
+    "seconds": 6.654459864999922,
+    "log": "review/compiler/chain-slice-8/lower-01.jsonl"
+  },
+  {
+    "tests": [
+      "TestCallableNamespaceReceiverStaysLoud",
+      "TestCensusBooleanDeadBranch",
+      "TestCensusMarkerResultIsAssignable",
+      "TestCensusMarkerZeroCallIsNotAssumedSafe",
+      "TestCensusOverloadBinderGuards",
+      "TestCensusOverloadRelation",
+      "TestCensusOverloadReturnProof",
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes",
+      "TestCensusPredicateMarkerCallStaysNotYet",
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusRestMutableElements"
+    ],
+    "exit": 0,
+    "seconds": 3.136414789000014,
+    "log": "review/compiler/chain-slice-8/lower-02.jsonl"
+  },
+  {
+    "tests": [
+      "TestCensusSmallFiniteKeyRead",
+      "TestCheckPragmaNeighborsCompile",
+      "TestCheckPragmasAreRefused",
+      "TestCheckedCastProofAndElision",
+      "TestClassArgumentsUseCheckerIdentity",
+      "TestClassFeaturesAccessorCaptureCycle",
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesNarrowedAccessor",
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage",
+      "TestClassFeaturesReadonlyChecker",
+      "TestClassFeaturesStaticDeclarationsExecute"
+    ],
+    "exit": 0,
+    "seconds": 4.359695515999988,
+    "log": "review/compiler/chain-slice-8/lower-03.jsonl"
+  },
+  {
+    "tests": [
+      "TestClassFeaturesStaticInterfaceCycle",
+      "TestClassFeaturesStaticParentCycle",
+      "TestClassFeaturesStaticSoundness",
+      "TestClassStaticInitializerCallIsEmitted",
+      "TestClassStaticSideEffectMatchesNode",
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair",
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01Shapes"
+    ],
+    "exit": 0,
+    "seconds": 3.4502020029999585,
+    "log": "review/compiler/chain-slice-8/lower-04.jsonl"
+  },
+  {
+    "tests": [
+      "TestClosedFrameInputRejectsMutation",
+      "TestConditionAssertionAdmission",
+      "TestConsoleLowersToWriteLine",
+      "TestConstEnumErasesRuntimeObject",
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestDebugNamespaceMergedCapabilities",
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestDefaultTaggedInterfaceNeedsNoFlag",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDestructuredMethodsCannotLoadOwnSlots",
+      "TestEmptyLiteralGenericReturnUsesSamePath"
+    ],
+    "exit": 0,
+    "seconds": 4.247619206999957,
+    "log": "review/compiler/chain-slice-8/lower-05.jsonl"
+  },
+  {
+    "tests": [
+      "TestEmptyNeverMapCannotGainWritableInhabitants",
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries",
+      "TestEnumFlagProofsWithoutObservableLoweringEffect",
+      "TestEnumIdentityAcrossModules",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumInitializationReach",
+      "TestEnumLimitsStayLoud",
+      "TestEnumMemberValuesAndReverseNameMatchNode",
+      "TestEnumNameEnumeration",
+      "TestEnumNamespaceSharedCycle",
+      "TestEnumNeverDefault"
+    ],
+    "exit": 0,
+    "seconds": 3.448787809999999,
+    "log": "review/compiler/chain-slice-8/lower-06.jsonl"
+  },
+  {
+    "tests": [
+      "TestEnumReverseMappingUsesSingleSlot",
+      "TestEnumSlotViews",
+      "TestEnumSwitchExhaustiveness",
+      "TestEveryNeedsCallbackEffects",
+      "TestFSExistsOperation",
+      "TestFSOpenStringFlagsLower",
+      "TestFSRemoveDefaultRetryDelayLowers",
+      "TestFSStatThrowsByDefault",
+      "TestFlagEnumAliasBoundaries",
+      "TestFlagEnumInlineIteration",
+      "TestFlagEnumLiteralSpellings",
+      "TestFlagEnumMemberAliases"
+    ],
+    "exit": 0,
+    "seconds": 26.719197773999895,
+    "log": "review/compiler/chain-slice-8/lower-07-repaired.jsonl"
+  },
+  {
+    "tests": [
+      "TestFlagEnumsDomain",
+      "TestFlagEnumsOpen",
+      "TestFunctionValueUnionViewsStayNotYet",
+      "TestGeneratorsAreRefusedEvenWithoutYield",
+      "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "TestGenericIteratorViewsPreserveNativeArguments",
+      "TestGenericJSONUnionArrayIsNotYet",
+      "TestGenericUnionFixtureHasSeparateInstances",
+      "TestIndirectPredicateOverloadIsPending",
+      "TestInheritanceAllowsSoundOverrides",
+      "TestInheritanceConditionalThisRules",
+      "TestInheritanceCycleFinderIncludesInheritedFields"
+    ],
+    "exit": 0,
+    "seconds": 9.15176094900005,
+    "log": "review/compiler/chain-slice-8/lower-08.jsonl"
+  },
+  {
+    "tests": [
+      "TestInheritanceGenericFactoryLayouts",
+      "TestInheritanceGenericMonomorphizations",
+      "TestInheritanceGenericNominalConstraints",
+      "TestInheritanceGenericSoundness",
+      "TestInheritanceGenericViewsKeepNominalArguments",
+      "TestInheritanceHasClassIdentity",
+      "TestInheritanceKeepsCheckerConstructorRules",
+      "TestInheritanceKeepsNominalTupleDestructuring",
+      "TestInheritanceNativeSignatureLimits",
+      "TestInheritanceNativeSignatureNeighbors",
+      "TestInheritanceRefusesFalseNominalViews",
+      "TestInheritanceRefusesGrowingGenericClasses"
+    ],
+    "exit": 0,
+    "seconds": 3.541782861999991,
+    "log": "review/compiler/chain-slice-8/lower-09.jsonl"
+  },
+  {
+    "tests": [
+      "TestInheritanceRefusesThisBeforeSuperReturns",
+      "TestInheritanceRefusesUnsoundOverrides",
+      "TestInheritanceRejectsUnsupportedConstructorShapes",
+      "TestInheritedLibraryReadsNeverLoadOwnFields",
+      "TestInputSpreadArgumentsAreNotYet",
+      "TestInputSpreadCoverage",
+      "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+      "TestIteratorDescriptorReasons",
+      "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "TestIteratorGapsAreExplicit",
+      "TestIteratorMapperIndexHasNumberRepresentation",
+      "TestIteratorSymbolKeysAreNotStringKeys"
+    ],
+    "exit": 0,
+    "seconds": 8.733040871000071,
+    "log": "review/compiler/chain-slice-8/lower-10.jsonl"
+  },
+  {
+    "tests": [
+      "TestIteratorViewsCannotEraseReceivers",
+      "TestIteratorViewsCannotHideReturn",
+      "TestLibraryLanguageBoundaries",
+      "TestLibraryMapSetGapsStayRefused",
+      "TestLibraryMapSetIteratorCopyTypesRefused",
+      "TestLibraryMethodValueBoundaries",
+      "TestLibraryMethodValueSafety",
+      "TestLibraryMethodValues",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestLiteralMethodSignatureViewsDoNotLoseThis"
+    ],
+    "exit": 0,
+    "seconds": 4.042399929999988,
+    "log": "review/compiler/chain-slice-8/lower-11.jsonl"
+  },
+  {
+    "tests": [
+      "TestLiteralMethodViewsDoNotLoseThis",
+      "TestMissingBindingSymbolHasStructuredLocation",
+      "TestMixedTupleSpreadIsNotYet",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestModuleNamespaceInitializedReadProof",
+      "TestModuleNamespaceLimitsStayLoud",
+      "TestNamespaceAmbientContextsDoNotExecute"
+    ],
+    "exit": 0,
+    "seconds": 2.482202861000019,
+    "log": "review/compiler/chain-slice-8/lower-12.jsonl"
+  },
+  {
+    "tests": [
+      "TestNamespaceAmbientHostInitialization",
+      "TestNamespaceCallGraphCycleUnion",
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "TestNamespaceFactoryBindingsAgreeWithNode",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceLimitsStayLoud",
+      "TestNamespaceReceiverArrowInheritsScope",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceReturnedAssignmentLimits"
+    ],
+    "exit": 0,
+    "seconds": 12.804089159000114,
+    "log": "review/compiler/chain-slice-8/lower-13-repaired.jsonl"
+  },
+  {
+    "tests": [
+      "TestNamespaceTypesErase",
+      "TestNativeAgreementRejectsWrongExit",
+      "TestNativeAgreementRejectsWrongOutput",
+      "TestNestedBodylessDeclarationsAreLoud",
+      "TestNestedCallbackCycleIsRefused",
+      "TestNestedCapturedParametersAreOwned",
+      "TestNestedEmptyArrayElementKinds",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "TestNestedEnvironmentHasOneAllocationSite",
+      "TestNestedFunctionCycleIsRefused",
+      "TestNestedFunctionGapsAreLoud",
+      "TestNestedRebindingNotYet"
+    ],
+    "exit": 0,
+    "seconds": 9.938280286999998,
+    "log": "review/compiler/chain-slice-8/lower-14.jsonl"
+  },
+  {
+    "tests": [
+      "TestNestedRestIsSupported",
+      "TestNodeBufferRefusals",
+      "TestNodeFSFileBufferBorrow",
+      "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "TestNodeFSFileKeepsDetachedMethodRefusal",
+      "TestNodeFSFileNamespaceImport",
+      "TestNodeFSFileOptionsBorrow",
+      "TestNodeFSFileQualifiedErrorType",
+      "TestNodeFSFileRefusesOptionEffects",
+      "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+      "TestNodeFSFileRefusesVoidValues",
+      "TestNodeFSFileScratchOptionsBorrow"
+    ],
+    "exit": 0,
+    "seconds": 6.414008381999906,
+    "log": "review/compiler/chain-slice-8/lower-15.jsonl"
+  },
+  {
+    "tests": [
+      "TestNodeFSFileScratchOverloadsAreNamed",
+      "TestNodeLibraryDistinguishesReceiverOwners",
+      "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "TestNodeLibraryNamesUnimplementedMembers",
+      "TestNodeLibraryQualifiedTypeAssertion",
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased",
+      "TestNullishPrototypeReadsAreRejectedByChecker",
+      "TestNumericEnumLiteralPromises",
+      "TestNumericEnumNeverProof",
+      "TestNumericEnumsAreOpen",
+      "TestObjectRefusalsExplainSoundness"
+    ],
+    "exit": 0,
+    "seconds": 10.83369474799997,
+    "log": "review/compiler/chain-slice-8/lower-16.jsonl"
+  },
+  {
+    "tests": [
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestOptionalFunctionValueRelation",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+      "TestOptionalIndexingMapShapeRefused",
+      "TestOptionalWideningAllowed",
+      "TestOptionalWideningCensus",
+      "TestOptionalWideningRefused",
+      "TestOptionalWideningSpreadOverwrite",
+      "TestOriginalCycleLedger",
+      "TestOverloadInferenceWitnesses",
+      "TestOverloadedShorthandFunctionValueStaysNotYet"
+    ],
+    "exit": 1,
+    "seconds": 15.783680000999993,
+    "log": "review/compiler/chain-slice-8/lower-17-repaired.jsonl"
+  },
+  {
+    "tests": [
+      "TestOverrideOptionalNumberRefusesNativeSignature",
+      "TestOverrideOptionalRefusesNativeSignature",
+      "TestParameterPropertiesSoundness",
+      "TestParameterPropertyCallbackReceiver",
+      "TestParameterPropertyCheckerContracts",
+      "TestParameterPropertyValueMatchesNode",
+      "TestParseIntMapUsesIndexRadix",
+      "TestParserFactoryBindingHoisting",
+      "TestPredicateBodiesAreProven",
+      "TestPredicateBodyProof",
+      "TestPredicateCallbackContracts",
+      "TestPredicateOverloadCallback"
+    ],
+    "exit": 0,
+    "seconds": 6.883552152999982,
+    "log": "review/compiler/chain-slice-8/lower-18.jsonl"
+  },
+  {
+    "tests": [
+      "TestPredicateOverloadRuntime",
+      "TestPredicateSummaryParameterIndex",
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall",
+      "TestPrimitiveAdmittingSlotsUseBoxes",
+      "TestPrivateAndPublicStaticsAgreeWithNode",
+      "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+      "TestPrototypeMethodsAreRefusedWithReasons",
+      "TestProvenRelationsErase",
+      "TestProvenRelationsRefuse",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestReadinessErrorIncludesReceiverExpression"
+    ],
+    "exit": 0,
+    "seconds": 32.467416311999955,
+    "log": "review/compiler/chain-slice-8/lower-19.jsonl"
+  },
+  {
+    "tests": [
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestRegExpEscapedSlashSourceAgreesWithNode",
+      "TestRegExpNativeRefusals",
+      "TestRegExpSlashClassSourceAgreesWithNode",
+      "TestRegExpSourceNode",
+      "TestRegExpUnicodeClassSourceAgreesWithNode",
+      "TestRepresentationClockSourceCheckedTypes",
+      "TestRepresentedMethodReplacementIsNotYet",
+      "TestStep18CallableReceiverContract",
+      "TestStep18DetachedCallableOrigins",
+      "TestStep18OptionalCallableBoundaries",
+      "TestStep18UnknownDetachedCallable"
+    ],
+    "exit": 0,
+    "seconds": 11.701178387000027,
+    "log": "review/compiler/chain-slice-8/lower-20.jsonl"
+  },
+  {
+    "tests": [
+      "TestStringEnumsStayClosed",
+      "TestSuppressionDirectiveSoundNeighbors",
+      "TestSuppressionDirectivesAreRefused",
+      "TestSwitchConditionalBreakFallsThrough",
+      "TestSwitchEmptyBlockFallsThrough",
+      "TestSwitchEmptyCaseFallsThrough",
+      "TestSwitchEmptyElseFallsThrough",
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestTscNamespaceDeclarationShapes",
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestTypedArrayFromArray"
+    ],
+    "exit": 0,
+    "seconds": 12.800874344000022,
+    "log": "review/compiler/chain-slice-8/lower-21.jsonl"
+  },
+  {
+    "tests": [
+      "TestTypedArrayFromEmptyArray",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestTypedArraysLower",
+      "TestUncheckableCastsStayRefused",
+      "TestUndecidedCycleReadsUseReadyChecks",
+      "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "TestUnknownReflectionRefusals",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestUnrepresentedPrototypeCallsAreNotYet",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "exit": 0,
+    "seconds": 40.58401793600001,
+    "log": "review/compiler/chain-slice-8/lower-22.jsonl"
+  },
+  {
+    "tests": [
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "exit": 0,
+    "seconds": 33.506687575,
+    "log": "review/compiler/chain-slice-8/lower-23.jsonl"
+  }
+]

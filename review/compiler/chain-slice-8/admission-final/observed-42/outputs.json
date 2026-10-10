@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: json_nullable.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "true\nfalse\nfalse\ntrue\nvalue\ntrue\ntrue\n14\n0\n0\n0\n5\nmissing\nmissing\nvalue\nobject\nundefined\n",
+    "stderr": ""
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": true
+}

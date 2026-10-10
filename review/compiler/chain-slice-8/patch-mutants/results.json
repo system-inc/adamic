@@ -1,0 +1,162 @@
+[
+  {
+    "name": "alias_write",
+    "exit": 1,
+    "caught": true,
+    "seconds": 21.177909147000037,
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_alias_write$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/alias_write/test.log"
+  },
+  {
+    "name": "nul_key",
+    "exit": 1,
+    "caught": true,
+    "seconds": 22.641829014999985,
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_nul_key$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/nul_key/test.log"
+  },
+  {
+    "name": "proto_key",
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.539487066999982,
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_proto_key$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/proto_key/test.log"
+  },
+  {
+    "name": "computed_key",
+    "exit": 1,
+    "caught": true,
+    "seconds": 46.56413419599994,
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_computed_key$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/computed_key/test.log"
+  },
+  {
+    "name": "symbol_field",
+    "exit": 1,
+    "caught": true,
+    "seconds": 59.79045764999978,
+    "selector": "^TestCheckedJSONNextRefusals$/json_symbol_contract$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/symbol_field/test.log"
+  },
+  {
+    "name": "callable_contract",
+    "exit": 1,
+    "caught": true,
+    "seconds": 54.801708039000005,
+    "selector": "^TestCheckedJSONNextRefusals$/json_callable_contract$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/callable_contract/test.log"
+  },
+  {
+    "name": "nullable_tag",
+    "exit": 1,
+    "caught": true,
+    "seconds": 45.34467455400022,
+    "selector": "^TestCheckedJSONNext$/json_nullable$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/nullable_tag/test.log"
+  },
+  {
+    "name": "optional_read",
+    "exit": 1,
+    "caught": true,
+    "seconds": 38.49470712099992,
+    "selector": "^TestCheckedJSONNext$/json_nullable$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/optional_read/test.log"
+  },
+  {
+    "name": "ownership_identity",
+    "exit": 1,
+    "caught": true,
+    "seconds": 39.53464146600004,
+    "selector": "^TestCheckedJSONPreservesIdentityAndOperandWrites$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/ownership_identity/test.log"
+  },
+  {
+    "name": "javascript_depth",
+    "exit": 1,
+    "caught": true,
+    "seconds": 24.03094268299992,
+    "selector": "^TestCheckedJSONNext$/json_depth_misfit$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/javascript_depth/test.log"
+  },
+  {
+    "name": "runtime_depth",
+    "exit": 1,
+    "caught": true,
+    "seconds": 50.825745207999944,
+    "selector": "^TestCheckedJSONNext$/json_depth_misfit$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/runtime_depth/test.log"
+  },
+  {
+    "name": "runtime_key_order",
+    "exit": 1,
+    "caught": true,
+    "seconds": 42.41765573500015,
+    "selector": "^TestCheckedJSONNext$/json_dictionary_order_misfit$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/runtime_key_order/test.log"
+  },
+  {
+    "name": "runtime_record_guard",
+    "exit": 1,
+    "caught": true,
+    "seconds": 27.924990589000117,
+    "selector": "^TestCheckedJSONRecordRemainsUnsupported$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/runtime_record_guard/test.log"
+  },
+  {
+    "name": "array-layout",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "evolving-any",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "explicit-any-policy",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "literal-result",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "primitive-prototype",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "staged-field",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "string-length",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "typed-field",
+    "caught": false,
+    "error": "None"
+  },
+  {
+    "name": "classification-source",
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.643091496000125,
+    "selector": "^TestRefusalMustBeInsideDeclaration$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/classification-source/test.log"
+  },
+  {
+    "name": "classification-span",
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.349423031000015,
+    "selector": "^TestRefusalMustBeInsideDeclaration$",
+    "log": "review/compiler/chain-slice-8/patch-mutants/classification-span/test.log"
+  }
+]

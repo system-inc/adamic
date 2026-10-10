@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: property_misfit.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "14\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: config.value needs string, found number\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: config.value needs string, found number\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

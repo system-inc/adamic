@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: json_domain_misfit.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "NaN\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.number needs JSON value | undefined, found non-JSON number\n"
+  },
+  "native": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: checked any: raw.number needs JSON value | undefined, found non-JSON number\n"
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": false
+}

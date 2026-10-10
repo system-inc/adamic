@@ -1,0 +1,24 @@
+{
+  "path": "checked .ts copy: stock_decode_entities.ts",
+  "Node": {
+    "exit": 0,
+    "stdout": "A B \u00a0 &missing;\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "stdout": "A B \u00a0 &missing;\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "A B \u00a0 &missing;\n",
+    "stderr": ""
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "agrees": true
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "callable-reselect",
+    "fixture": "runtime-order",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/callable-reselect/test.log"
+  },
+  {
+    "name": "callable-null-guard",
+    "fixture": "runtime-values",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/callable-null-guard/test.log"
+  },
+  {
+    "name": "callable-eager-arguments",
+    "fixture": "runtime-arguments",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/callable-eager-arguments/test.log"
+  },
+  {
+    "name": "callable-result-zero",
+    "fixture": "runtime-values",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/callable-result-zero/test.log"
+  },
+  {
+    "name": "callable-narrowing",
+    "fixture": "runtime-order",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/callable-narrowing/test.log"
+  },
+  {
+    "name": "return-descriptor",
+    "fixture": "runtime-return-descriptor",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "build_failure": false,
+    "log": "/workspace/adamic/review/compiler/chain-slice-8/optional-mutants/return-descriptor/test.log"
+  }
+]

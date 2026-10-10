@@ -1,0 +1,45 @@
+// Reassignment adversaries for the selected callable in checker.ts:8066's shape.
+let selections = 0;
+let argumentsRun = 0;
+function select(present: boolean): ((value: string) => string) | undefined {
+	selections += 1;
+	const prefix = `selected${selections}`;
+	return present ? (value: string): string => `${prefix}:${value}` : undefined;
+}
+function argument(): string {
+	argumentsRun += 1;
+	return `arg${argumentsRun}`;
+}
+console.log(select(false)?.(argument()) ?? 'absent');
+console.log(select(true)?.(argument()) ?? 'absent');
+console.log(`${selections} ${argumentsRun}`);
+
+let callback: ((value: string) => string) | undefined = select(true);
+function clearCallback(): string {
+	callback = undefined;
+	return argument();
+}
+console.log(callback?.(clearCallback()) ?? 'absent');
+console.log(callback?.(argument()) ?? 'absent');
+console.log(`${argumentsRun}`);
+
+interface Holder { method: ((value: string) => string) | undefined }
+const holder: Holder = { method: select(true) };
+function clearField(): string {
+	holder.method = undefined;
+	return argument();
+}
+console.log(holder.method?.(clearField()) ?? 'absent');
+console.log(holder.method?.(argument()) ?? 'absent');
+console.log(`${argumentsRun}`);
+
+let cleanup: (() => void) | undefined = (): void => { console.log('unexpected'); };
+function clearCleanup(): void { cleanup = undefined; }
+if (cleanup !== undefined) {
+	clearCleanup();
+	cleanup?.();
+}
+const steps: (() => void)[] = [];
+const step = steps[0];
+step?.();
+console.log('finished');
