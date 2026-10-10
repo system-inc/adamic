@@ -284,7 +284,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 			}
 		}
 	}
-	if err := add(root, existing(root, "go.work", "go.work.sum")); err != nil {
+	if err := add(root, existing(root, "go.work")); err != nil {
 		return Inputs{}, err
 	}
 	settings, values, err := goSettings(root, environment, goEnvironment)
