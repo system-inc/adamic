@@ -20,6 +20,13 @@ dedication/dedication.o
 # Local caches
 .cache/
 
+# Go's workspace checksums
+#
+# go writes go.work.sum during a run (product keys never read it, #t37sw0f), so it is no part of the source. A
+# Loom runner's source has no .git, and there a file its manifest doesn't record is refused unless this file
+# ignores it (internal/tracked).
+/go.work.sum
+
 # Operating systems and editors, as cohere carries them. Finder writes a .DS_Store into any directory
 # it displays; two appeared here, at the root and under internal/, while the repository was only
 # being read.

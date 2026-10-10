@@ -227,11 +227,11 @@ func TestManifestPackageContracts(t *testing.T) {
 			if got := Upstream(t, directory, pin, roots, patterns); !reflect.DeepEqual(before, got) {
 				t.Fatal("clean upstream differs")
 			}
+			// Unlike a checkout, a source can't tell an untracked file from one a stale manifest left out, so a
+			// matching file it doesn't record is refused, unless the tree's .gitignore ignores it.
 			stray := filepath.Join(test.root, "stray"+test.extension)
 			writeFile(t, filepath.Join(directory, stray), "stray\n")
-			if after := Repository(t, directory, roots, patterns); !reflect.DeepEqual(before, after) {
-				t.Fatal("untracked file changed count")
-			}
+			requireFailure(t, directory, "", test.root, pattern, "doesn't record", filepath.ToSlash(stray))
 			requireFailure(t, directory, pin, test.root, pattern, "untracked", filepath.ToSlash(stray))
 			if err := os.Remove(filepath.Join(directory, stray)); err != nil {
 				t.Fatal(err)
@@ -250,6 +250,9 @@ func TestManifestPackageContracts(t *testing.T) {
 			requireFailure(t, directory, strings.Repeat("0", 40), test.root, pattern, "HEAD", "pin")
 			ignored := filepath.Join(test.root, "ignored-stray"+test.extension)
 			writeFile(t, filepath.Join(directory, ignored), "ignored\n")
+			if after := Repository(t, directory, roots, patterns); !reflect.DeepEqual(before, after) {
+				t.Fatal("an ignored file changed the selection")
+			}
 			requireFailure(t, directory, pin, test.root, pattern, "ignored", filepath.ToSlash(ignored))
 			if err := os.Remove(filepath.Join(directory, ignored)); err != nil {
 				t.Fatal(err)
