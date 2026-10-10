@@ -82,6 +82,8 @@ def prove(binary, root, out, seconds):
     source_checks(root, original)
     raw, expected = archived_record(CONTROL, root)
     (out / 'expected.jsonl').write_bytes(expected)
+    # A new proof must never consume the previous invocation's output.
+    (out / 'actual.jsonl').unlink(missing_ok=True)
     env = dict(os.environ, LATENT_ONLY_FILE=str(root / CONTROL), LATENT_SPECULATIVE='1',
                LATENT_FULL='1', LATENT_ASSERT_NO_OUTPUT='1', GOMAXPROCS='1', GOMEMLIMIT='3GiB')
     for key in ('LATENT_MUTANT_NO_STUBS', 'LATENT_PROGRESS_FILE'):
@@ -196,7 +198,7 @@ def finalize():
         empty_result()
         return
     results = WORK / 'results'
-    # Keep the existing audits byte-for-byte except their subprocess time limits.
+    # Execute the original audits; bound children and avoid bulky Python teardown.
     audit = WORK / 'finalizer'
     audit.mkdir(exist_ok=True)
     for name in ('finalize_stream.py', 'stock.cjs', 'report.py'):
@@ -204,6 +206,13 @@ def finalize():
         if name == 'finalize_stream.py':
             assert text.count('timeout=90') == 3
             text = text.replace('timeout=90', 'timeout=240')
+        if name == 'report.py':
+            # All artifact writes are closed by the original body before return.
+            # A failed check must exit immediately, without freeing its huge AST.
+            text = ("import os, sys, traceback\ntry:\n    exec(compile(" + repr(text) +
+                    ", __file__, 'exec'))\nexcept BaseException:\n    traceback.print_exc()\n" +
+                    "    sys.stdout.flush()\n    sys.stderr.flush()\n    os._exit(1)\n" +
+                    "sys.stdout.flush()\nsys.stderr.flush()\nos._exit(0)\n")
         (audit / name).write_text(text)
     command([sys.executable, audit / 'finalize_stream.py', ROOT, RUN, results], WORK / 'finalize.log', 900)
     command([sys.executable, SCRIPTS / 'verify.py', results / 'speculative.jsonl', results / 'RESULT.json', ROOT],

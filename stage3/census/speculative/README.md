@@ -166,8 +166,9 @@ producer hashes, roots, control proof and original/relocated record checksums.
 WORKDIR holds progress.txt updated every minute using watch_stream.py, checkpoint
 sidecars under run, logs, RESULT.json, README.md and per-file.tsv for all 79 files.
 Reused metrics are archived measurements; new attempts replace them.
-Finalization has a 990-second bound after measurement stops; its unchanged
-audits receive 240-second child limits to cover CPU contention. Restart with
+Finalization has a 900-second limit, followed by 90-second verification; its unchanged
+audits receive 240-second child limits to cover CPU contention. A report wrapper
+flushes output and exits after success or failure, avoiding costly AST teardown. Restart with
 the same directory and a new deadline: completed records are checked and skipped,
 and unfinished files get the new remaining budget. One directory allows one
 invocation. Preserve and rename a partial tree before retrying failed preparation.
@@ -181,8 +182,9 @@ Local validation: a 720-second deadline with two workers exited 0, retained
 A 90-second restart exited 0: all 65 record hashes and mtimes were unchanged,
 only the 14 unfinished files were queued, and the control proof ran again.
 The producer variants failed byte identity; the valid marker variant refused
-archive reuse and queued all 79 files including its fresh control measurement.
-Same-size source, compressed/decompressed archive, resumed-record checksum and
+archive reuse, queued all 79 files, and finalized two fresh files (14 sites).
+No-output producer (stale proof), same-size source, compressed/decompressed archive,
+resumed-record checksum and
 concurrent-run mutants were rejected. An expired deadline exited 0 with all
 three artifacts, zero completed files and 79 TSV rows. Finalization and verify
 also caught their depth, coverage, byte-share and top20 artifact mutants.
