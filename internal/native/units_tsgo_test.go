@@ -16,10 +16,7 @@ import (
 // Not parallel: this test explicitly compares the object cache with its bypass on the same input.
 func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
 	t.Helper()
-	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
-	if archive == "" {
-		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
-	}
+	archive := checkerArchive(t)
 	program, err := load.Load([]string{"../../stage1/cohere/typeaware/main.ts"})
 	if err != nil {
 		t.Fatal(err)
@@ -59,13 +56,6 @@ func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	archiveProduct, err := cache.Tree("checker-archive", [][]byte{archiveBytes}, func(destination string) error {
-		return os.WriteFile(filepath.Join(destination, "tsgo.a"), archiveBytes, 0644)
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	archive = filepath.Join(archiveProduct, "tsgo.a")
 	optionBytes, _ := json.Marshal(options)
 	built, err := cache.Tree("whole-tsgo-baseline", [][]byte{[]byte(source), archiveBytes, optionBytes}, func(destination string) error {
 		return BuildTSGo(source, filepath.Join(destination, "whole"), archive, options)
