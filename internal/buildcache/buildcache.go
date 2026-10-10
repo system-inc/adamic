@@ -11,6 +11,7 @@
 package buildcache
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
@@ -19,7 +20,11 @@ import (
 	"io/fs"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
+	"regexp"
+	"slices"
+	"sort"
 	"strings"
 	"sync"
 	"syscall"
@@ -146,7 +151,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			note("publish %s %s failed: %v", inputs.Name, key[:12], err)
 		}
 	}
-	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {
+	if err = os.WriteFile(product+".inputs", []byte(describe(root, inputs)), 0o644); err != nil {
 		os.RemoveAll(scratch)
 		return "", "", err
 	}
@@ -164,27 +169,136 @@ func Key(root string, inputs Inputs) (string, error) {
 		fmt.Fprintf(hash, "%s %d\n%s\n", kind, len(value), value)
 	}
 	field("buildcache", "v1")
-	field("name", inputs.Name)
+	field("name", portable(root, inputs.Name))
 	for _, name := range inputs.Files {
 		if err := hashPath(hash, root, name, field); err != nil {
 			return "", err
 		}
 	}
 	for _, flag := range inputs.Flags {
-		field("flag", flag)
+		field("flag", portable(root, flag))
 	}
 	for _, tool := range inputs.Toolchain {
-		field("tool", tool)
+		field("tool", portable(root, tool))
 	}
 	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+
+// portable is a name, a flag or a tool report as every machine holding the same tree spells it, so a product Workshop built
+// is the key a runner asks for (#t37sw0f: runners missed every product because keys named Workshop's machine). The
+// repository's absolute path becomes <repository> and the home directory ~, wherever either appears as a whole path,
+// so a value keeps what it names inside the tree and loses where the tree was checked out. Go's parallel share
+// (-p=N, or -p N, which Workshop's GOFLAGS carries as the core count it computed) is dropped: it changes how many
+// packages build at once, never what they build. Everything else stays verbatim, so a flag that changes the output
+// still changes the key.
+func portable(root, value string) string {
+	for _, place := range places(root) {
+		value = replacePath(value, place.path, place.name)
+	}
+	return withoutParallelShare(value)
+}
+
+type place struct{ path, name string }
+
+// places are the directories portable rewrites, longest first, so a checkout inside the home directory becomes
+// <repository> rather than ~/....: the repository, the build cache (a key that names another product by its path,
+// such as estree's main=<build cache>/<key>/main.ts, names it by its key), the home directory, and each as its symbolic
+// links resolve (macOS spells /tmp as /private/tmp).
+func places(root string) []place {
+	var found []place
+	add := func(path, name string) {
+		if !filepath.IsAbs(path) || filepath.Clean(path) == string(filepath.Separator) {
+			return
+		}
+		for _, candidate := range []string{filepath.Clean(path), resolved(path)} {
+			if candidate != "" && !slices.ContainsFunc(found, func(other place) bool { return other.path == candidate }) {
+				found = append(found, place{candidate, name})
+			}
+		}
+	}
+	if root != "" {
+		add(root, "<repository>")
+	}
+	if cache, err := cacheLocation(); err == nil {
+		add(cache, "<build cache>")
+	}
+	if home, err := os.UserHomeDir(); err == nil {
+		add(home, "~")
+	}
+	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
+	return found
+}
+
+func resolved(path string) string {
+	if value, err := filepath.EvalSymlinks(path); err == nil {
+		return value
+	}
+	return ""
+}
+
+// replacePath replaces path with name where it stands as a whole path: not inside a longer name (/work/adamic in
+// /work/adamic-bench stays) and not as the tail of another path (/root in /chroot stays).
+func replacePath(value, path, name string) string {
+	var built strings.Builder
+	for {
+		index := strings.Index(value, path)
+		if index < 0 {
+			built.WriteString(value)
+			return built.String()
+		}
+		end := index + len(path)
+		before := index == 0 || !pathByte(value[index-1]) && value[index-1] != '/'
+		after := end == len(value) || value[end] == '/' || !pathByte(value[end])
+		built.WriteString(value[:index])
+		if before && after {
+			built.WriteString(name)
+		} else {
+			built.WriteString(path)
+		}
+		value = value[end:]
+	}
+}
+
+func pathByte(b byte) bool {
+	return 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z' || '0' <= b && b <= '9' || strings.IndexByte("._-+@~", b) >= 0
+}
+
+// parallelShare is go's -p flag as a token of its own: after the start, a space, a quote or an equals sign (GOFLAGS=-p=8),
+// and before the end, a space or a quote.
+var parallelShare = regexp.MustCompile(`(^|[\s'"=])-p(?:=|[ \t]+)[0-9]+([\s'"]|$)`)
+
+func withoutParallelShare(value string) string {
+	for {
+		match := parallelShare.FindStringSubmatchIndex(value)
+		if match == nil {
+			return value
+		}
+		left, right := value[match[2]:match[3]], value[match[4]:match[5]]
+		// What bounded the token survives, once: "a -p=8 b" is "a b", "a -p=8" is "a", "GOFLAGS=-p=8 -trimpath" is
+		// "GOFLAGS=-trimpath", "'-p=8'" is "''". A quote or an equals sign is kept; two spaces become one.
+		leftMark, rightMark := strings.TrimSpace(left) != "", strings.TrimSpace(right) != ""
+		keep := ""
+		switch {
+		case leftMark && rightMark:
+			keep = left + right
+		case leftMark:
+			keep = left
+		case rightMark:
+			keep = right
+		case left != "" && right != "":
+			keep = left
+		}
+		value = value[:match[0]] + keep + value[match[1]:]
+	}
 }
 
 func hashPath(hash io.Writer, root, name string, field func(kind, value string)) error {
 	if filepath.IsAbs(name) || strings.HasPrefix(filepath.Clean(name), "..") {
 		return fmt.Errorf("input %q must be inside the repository, relative to its root", name)
 	}
+	start := filepath.Join(root, name)
 	// WalkDir visits in lexical order, so the same tree always hashes the same.
-	return filepath.WalkDir(filepath.Join(root, name), func(path string, entry fs.DirEntry, err error) error {
+	return filepath.WalkDir(start, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -193,15 +307,30 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			return err
 		}
 		relative = filepath.ToSlash(relative)
+		// Git's own record is never an input: a .git directory, or a submodule's .git file, whose content is the path of
+		// its git directory (gitdir: /home/ahra/...), so a checkout, a worktree and an unpacked source of one tree key
+		// the same (#smkk3et).
+		if entry.Name() == ".git" {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		// Under a named directory, only what the tree carries: a checkout's untracked files (a build's leftovers, a
+		// stray note) are not in the source a runner unpacks, so they never key a product. A path named in Files is
+		// hashed whether or not git tracks it.
+		if path != start && !Tracked(root, path, entry.IsDir()) {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
 		info, err := entry.Info()
 		if err != nil {
 			return err
 		}
 		switch {
 		case entry.IsDir():
-			if entry.Name() == ".git" {
-				return filepath.SkipDir
-			}
 			field("directory", relative)
 		case info.Mode()&fs.ModeSymlink != 0:
 			target, err := os.Readlink(path)
@@ -223,19 +352,113 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 	})
 }
 
+// trackedFiles is what git tracks in one repository: each tracked path (a file, a symbolic link, or a submodule's
+// gitlink), relative to it, and every directory holding one. all is set when git couldn't say, and then everything
+// counts, as in a tree with no git at all.
+type trackedFiles struct {
+	paths, directories map[string]bool
+	all                bool
+}
+
+// repositories holds each directory's trackedFiles once per process, or nil for a directory that isn't a repository's.
+var repositories sync.Map
+
+// Tracked says whether name, under root, is in the source the tree carries: an entry of the nearest repository above
+// it at or under root (git ls-files there, so a submodule answers for its own files), or anything at all when there is
+// none, as in an unpacked source. Key asks it of everything under a directory it hashes; a test that lists a tree's
+// files itself into Files asks it too, so a checkout's leftovers never key a product (#smkk3et).
+func Tracked(root, name string, directory bool) bool {
+	for at := filepath.Dir(name); inside(root, at) || at == root; at = filepath.Dir(at) {
+		files := repositoryAt(at)
+		if files == nil {
+			if at == root {
+				break
+			}
+			continue
+		}
+		if files.all {
+			return true
+		}
+		relative, err := filepath.Rel(at, name)
+		if err != nil {
+			return true
+		}
+		relative = filepath.ToSlash(relative)
+		// Inside a submodule whose files are there without its git directory (productidentity -elsewhere links cohere's
+		// in), the repository above knows the submodule only as a gitlink, so everything under it counts.
+		for parent := path.Dir(relative); parent != "."; parent = path.Dir(parent) {
+			if files.paths[parent] {
+				return true
+			}
+		}
+		return files.paths[relative] || directory && files.directories[relative]
+	}
+	return true
+}
+
+func repositoryAt(directory string) *trackedFiles {
+	if found, ok := repositories.Load(directory); ok {
+		return found.(*trackedFiles)
+	}
+	var files *trackedFiles
+	if _, err := os.Lstat(filepath.Join(directory, ".git")); err == nil {
+		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}}
+		listed, err := exec.Command("git", "-C", directory, "ls-files", "-z").Output()
+		if err != nil {
+			files.all = true
+		}
+		for _, name := range strings.Split(string(listed), "\x00") {
+			if name == "" {
+				continue
+			}
+			files.paths[name] = true
+			for parent := path.Dir(name); parent != "."; parent = path.Dir(parent) {
+				files.directories[parent] = true
+			}
+		}
+	}
+	found, _ := repositories.LoadOrStore(directory, files)
+	return found.(*trackedFiles)
+}
+
 var tools sync.Map
 
 // Tool names a tool by its own report, such as Tool("clang", "--version"), running it once per process. A tool
 // that can't run is named by its error, so the build that needs it fails rather than reusing another's product.
+//
+// The report names what the tool is, never where or how it was found, so one tool on two machines reports the same
+// (#t37sw0f). It is the tool's standard output (its standard error only when it writes nothing else, as clang -v
+// does), so a note on standard error, such as go's "go: downloading go1.27.1" the first time a machine meets the
+// tree's release, never enters a key. The tool is labelled by its file name, not the path it was called by, and where
+// it is installed reads as <name>: toolReport drops InstalledDir and installedAs rewrites the install prefix.
+// Tool("go", "env", names...) reports each variable as goSetting keys it (gobuild.go): the release a GOTOOLCHAIN
+// selects rather than the policy that selected it, the workspace's content rather than its path, and no locations.
 func Tool(name string, arguments ...string) string {
 	command := strings.Join(append([]string{name}, arguments...), " ")
 	if value, ok := tools.Load(command); ok {
 		return value.(string)
 	}
-	output, err := exec.Command(name, arguments...).CombinedOutput()
-	value := command + ": " + toolReport(string(output))
-	if err != nil {
-		value += " (" + err.Error() + ")"
+	label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
+	var value string
+	if filepath.Base(name) == "go" && len(arguments) > 0 && arguments[0] == "env" {
+		settings, _, err := goSettings("", nil, arguments[1:])
+		value = label + ": " + strings.Join(settings, "\n")
+		if err != nil {
+			value += " (" + err.Error() + ")"
+		}
+	} else {
+		var output, diagnostics bytes.Buffer
+		run := exec.Command(name, arguments...)
+		run.Stdout, run.Stderr = &output, &diagnostics
+		err := run.Run()
+		report := output.String()
+		if strings.TrimSpace(report) == "" {
+			report = diagnostics.String()
+		}
+		value = label + ": " + toolReport(installedAs(name, report))
+		if err != nil {
+			value += " (" + err.Error() + ")"
+		}
 	}
 	tools.Store(command, value)
 	return value
@@ -256,16 +479,44 @@ func toolReport(output string) string {
 	return strings.TrimSpace(strings.Join(lines, "\n"))
 }
 
-func cacheDirectory() (string, error) {
-	directory := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-	if directory == "" {
-		user, err := os.UserCacheDir()
-		if err != nil {
-			return "", err
+// installedAs rewrites the tool's install prefix, the directory above the bin it runs from, to <name> in its report:
+// clang -print-resource-dir says /opt/adamic-tools/llvm/lib/clang/20 on a cloud box and
+// /home/ahra/adamic-tools/llvm/lib/clang/20 on Workshop for one clang, and both read <clang>/lib/clang/20.
+func installedAs(name, report string) string {
+	path, err := exec.LookPath(name)
+	if err != nil {
+		return report
+	}
+	path, _ = filepath.Abs(path)
+	for _, executable := range []string{path, resolved(path)} {
+		bin := filepath.Dir(executable)
+		if executable == "" || filepath.Base(bin) != "bin" || filepath.Dir(bin) == string(filepath.Separator) {
+			continue
 		}
-		directory = filepath.Join(user, "adamic-build")
+		report = replacePath(report, filepath.Dir(bin), "<"+filepath.Base(name)+">")
+	}
+	return report
+}
+
+func cacheDirectory() (string, error) {
+	directory, err := cacheLocation()
+	if err != nil {
+		return "", err
 	}
 	return directory, os.MkdirAll(directory, 0o755)
+}
+
+// cacheLocation is where products live on this machine: ADAMIC_BUILD_CACHE_DIR, or the user cache directory's
+// adamic-build.
+func cacheLocation() (string, error) {
+	if directory := os.Getenv("ADAMIC_BUILD_CACHE_DIR"); directory != "" {
+		return filepath.Abs(directory)
+	}
+	user, err := os.UserCacheDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(user, "adamic-build"), nil
 }
 
 var root struct {
@@ -299,16 +550,18 @@ func repositoryRoot() (string, error) {
 	return root.directory, root.err
 }
 
-func describe(inputs Inputs) string {
-	lines := []string{"name " + inputs.Name}
+// describe is a product's inputs as its key reads them (its name, each flag and tool portable), beside it in the cache, so the
+// same product's two descriptions from two machines diff to the input that keyed them apart.
+func describe(root string, inputs Inputs) string {
+	lines := []string{"name " + portable(root, inputs.Name)}
 	for _, name := range inputs.Files {
 		lines = append(lines, "file "+name)
 	}
 	for _, flag := range inputs.Flags {
-		lines = append(lines, "flag "+flag)
+		lines = append(lines, "flag "+portable(root, flag))
 	}
 	for _, tool := range inputs.Toolchain {
-		lines = append(lines, "tool "+tool)
+		lines = append(lines, "tool "+portable(root, tool))
 	}
 	return strings.Join(lines, "\n") + "\n"
 }
