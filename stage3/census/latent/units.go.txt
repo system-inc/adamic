@@ -161,6 +161,18 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 					continue
 				}
 			}
+			// A standalone generic, or a nested unit whose lexical types depend on
+			// one, has no concrete call witness. Registration still makes the generic
+			// available to nongeneric callers in this census.
+			deferred := node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0
+			for ancestor := range candidate.ancestors {
+				deferred = deferred || len(ancestor.TypeParameters()) > 0
+			}
+			if deferred {
+				unit.Status = "deferred_generic_instantiation"
+				record.Units = append(record.Units, unit)
+				continue
+			}
 			func() {
 				defer func() {
 					if failure := recover(); failure != nil {
