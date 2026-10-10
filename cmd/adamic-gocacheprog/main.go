@@ -70,8 +70,8 @@ func newCache() (*cache, error) {
 	}
 	c := &cache{
 		dir:       dir,
-		store:     strings.TrimRight(env("ADAMIC_GOCACHE_STORE", "https://adamic-store.kirkouimet.com"), "/"),
-		writer:    strings.TrimRight(env("ADAMIC_GOCACHE_WRITE", "https://loom.kirkouimet.com/public"), "/"),
+		store:     strings.TrimRight(env("ADAMIC_GOCACHE_STORE", "https://artifacts.loom.system.inc"), "/"),
+		writer:    strings.TrimRight(env("ADAMIC_GOCACHE_WRITE", "https://runs.loom.system.inc/public"), "/"),
 		namespace: "gocache-candidate",
 		stderr:    os.Stderr,
 		// The timeout covers reading the body, and a linked test binary is tens of megabytes: at 3 s a cold

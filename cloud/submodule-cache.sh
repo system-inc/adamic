@@ -12,7 +12,9 @@
 # so a worker never trusts a partial or altered payload, and falls back to the network on any doubt.
 set -euo pipefail
 
-url=${ADAMIC_BUILD_CACHE_URL:-https://adamic-build-cache.kirk-ouimet.workers.dev}
+# The cache's Worker retired with the old gate path (Oct 10), and nothing serves these payloads yet, so the
+# cache is off unless ADAMIC_BUILD_CACHE_URL names one; setup then clones as it always could.
+url=${ADAMIC_BUILD_CACHE_URL:-}
 format=adamic-submodules-v1
 
 key() { printf '%s cohere %s' "${format}" "$1" | sha256sum | cut -d' ' -f1; }
@@ -20,6 +22,7 @@ digest() { sha256sum "$1" | cut -d' ' -f1; }
 
 publish() {
   local commit=$1 scratch gitlink name token part
+  [ -n "${url}" ] || { echo "submodule cache: off (ADAMIC_BUILD_CACHE_URL is unset)" >&2; return 1; }
   token=$(cat ~/.adamic-build-cache-token)
   scratch=$(mktemp -d)
   git clone -q --no-checkout https://github.com/system-inc/adamic.git "${scratch}/repository"
@@ -57,6 +60,7 @@ publish() {
 
 restore() {
   local repository=${1:-.} gitlink name scratch manifest suffix expected
+  [ -n "${url}" ] || { echo "submodule cache: off"; return 0; }
   [ -d "${repository}/.git" ] || return 0
   # Already there (a resumed container, or setup ran before): nothing to do.
   [ -e "${repository}/cohere/.git" ] && return 0

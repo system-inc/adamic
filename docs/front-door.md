@@ -1,6 +1,6 @@
 # The front door to main
 
-Every change reaches main through Loom's queue at `https://loom-pipeline.kirk-ouimet.workers.dev`. Nobody else pushes
+Every change reaches main through Loom's queue at `https://loom.system.inc`. Nobody else pushes
 main. Loom's contracts are in system-inc/loom, `docs/contracts.md`.
 
 ## Submit
@@ -9,7 +9,7 @@ Push your commit to any branch on system-inc/adamic, then post it with your subm
 your username):
 
 ```sh
-curl -sS -X POST https://loom-pipeline.kirk-ouimet.workers.dev/changes \
+curl -sS -X POST https://loom.system.inc/changes \
   -H "Authorization: Bearer $LOOM_SUBMIT_TOKEN" -H 'Content-Type: application/json' \
   -d '{"sha":"<40 hex>","base":"<main sha it starts from>","owner":"<your username>","paths":["<every path the diff touches>"]}'
 ```

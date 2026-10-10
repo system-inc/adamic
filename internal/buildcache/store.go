@@ -21,12 +21,12 @@ import (
 )
 
 // The shared tier (@system_adamic's ruling, Oct 9: one store, Loom's): a product another machine built is fetched by
-// its key from adamic-store, read directly and unauthenticated, so a test anywhere starts after a fetch instead of a
+// its key from Loom's artifacts store, read directly and unauthenticated, so a test anywhere starts after a fetch instead of a
 // build. A product is a manifest blob naming one blob per file; refs/build/<key> holds the manifest's sha256. Every
 // blob is checked against its own hash and the manifest against the key it was asked for, so a stored product can't
 // be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is a miss.
 //
-// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for adamic-store, or another store's address
+// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for Loom's artifacts store, or another store's address
 // (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never matches a
 // rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it stays off
 // until those are fixed, and gocacheprog is untouched). Only a machine holding the
@@ -34,10 +34,10 @@ import (
 // ~/.loom/publish-token (ADAMIC_BUILD_STORE_TOKEN names another file). Every file's blob goes first, then the
 // manifest's, then the ref, so a ref never names a blob the store doesn't hold. A ref never changes: the store
 // refuses one naming a different manifest, which means a key that isn't honest, and that is said loudly.
-const defaultStore = "https://adamic-store.kirkouimet.com"
+const defaultStore = "https://artifacts.loom.system.inc"
 
 // Where writes go (ADAMIC_BUILD_STORE_WRITE overrides it): /blobs/<sha256> and /refs/build/<key> under it.
-const defaultWriter = "https://loom.kirkouimet.com/public"
+const defaultWriter = "https://runs.loom.system.inc/public"
 
 // A fetched product is rebuilt and compared file by file at this rate (ADAMIC_BUILD_AUDIT overrides it): a store
 // that served a wrong product fails the test as poisoned (the ruling on #x2651cf: audit every gate's hits).
