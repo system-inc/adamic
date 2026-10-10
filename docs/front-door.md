@@ -16,7 +16,9 @@ curl -sS -X POST https://loom-pipeline.kirk-ouimet.workers.dev/changes \
 
 - `base` is an ancestor of `sha` and on main. Start from main's tip when you can: a change on an older main is tested
   merged onto the newest one.
-- `paths` lists only paths in `git diff --name-only base sha`.
+- `paths` lists every path in `git diff --name-only base sha`, and nothing else.
+- A change under `stage3/fixtures/` or `stage3/meter/` (other than `_test.go` or `testdata`) carries its mutant evidence:
+  one of its paths names `mutant`.
 - Optional: `parent` (the change id yours stacks on, at most 5 deep) and `fixesRed` (the red main sha it fixes).
 
 The answer is `201 {"change": "chg_...", "state": "queued", "position": n}`, or `422 {"reason": ...}` when the line or
