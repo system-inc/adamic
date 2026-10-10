@@ -1,15 +1,12 @@
-// nexus/shouting.go:125; `\b[A-Z][A-Z0-9_]*\b`
+// nexus/shouting.go:186; `^\s*(\$|ahra\s|git\s|pnpm\s|npm\s|sqlite3\s|curl\s|s\s+c\b)`
 import { observe } from '../observe.a';
-const pattern = "\\b[A-Z][A-Z0-9_]*\\b";
+const pattern = "^[ \\t\\n\\f\\r]*(\\$|ahra[ \\t\\n\\f\\r]|git[ \\t\\n\\f\\r]|pnpm[ \\t\\n\\f\\r]|npm[ \\t\\n\\f\\r]|sqlite3[ \\t\\n\\f\\r]|curl[ \\t\\n\\f\\r]|s[ \\t\\n\\f\\r]+c\\b)";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "A", 4);
-observe(regex, "xA", 5);
-observe(regex, "A\n", 6);
-observe(regex, "TODO", 7);
-observe(regex, "K", 8);
-observe(regex, "S", 9);
+observe(regex, "$", 4);
+observe(regex, "x$", 5);
+observe(regex, "$\n", 6);

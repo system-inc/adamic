@@ -1,4 +1,4 @@
-// nexus/shouting.go:186; `^\s*(\$|ahra\s|git\s|pnpm\s|npm\s|sqlite3\s|curl\s|s\s+c\b)`
+// tailwind/class_matchers.go:783; `^[A-Z_a-z][0-9A-Z_a-z]*$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "$", 4);
-observe(regex, "x$", 5);
-observe(regex, "$\n", 6);
+observe(regex, "A", 4);
+observe(regex, "xA", 5);
+observe(regex, "A\n", 6);
+observe(regex, "PaginationInput", 7);
+observe(regex, "Pagination", 8);
+observe(regex, "TODO", 9);

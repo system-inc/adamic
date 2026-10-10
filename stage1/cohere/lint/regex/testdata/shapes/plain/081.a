@@ -1,12 +1,12 @@
-// tailwind/no_deprecated_classes.go:75; `^border-opacity-(.*)$`
+// tailwind/no_deprecated_classes.go:96; `^object-left-top$`
 import { observe } from '../observe.a';
-const pattern = "^border-opacity-([^\\n]*)(?![\\s\\S])";
+const pattern = "^object-left-top(?![\\s\\S])";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "border-opacity-", 4);
-observe(regex, "xborder-opacity-", 5);
-observe(regex, "border-opacity-\n", 6);
+observe(regex, "object-left-top", 4);
+observe(regex, "xobject-left-top", 5);
+observe(regex, "object-left-top\n", 6);

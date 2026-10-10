@@ -1,4 +1,4 @@
-// next/no_html_link_for_pages_routes.go:170; `^index\.[jt]sx?$`
+// nexus/consistency_no_ambiguous_identifier.go:18; `^on[A-Z]`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,7 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "index.js", 4);
-observe(regex, "xindex.js", 5);
-observe(regex, "index.js\n", 6);
+observe(regex, "onA", 4);
+observe(regex, "xonA", 5);
+observe(regex, "onA\n", 6);
+observe(regex, "onClick", 7);

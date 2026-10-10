@@ -1,12 +1,13 @@
-// nexus/shouting.go:177; `'[A-Z0-9_][A-Z0-9_ .,:=\-/]*[A-Z0-9_]'`
+// react/exhaustive_deps.go:452; `Effect($|[^a-z])`
 import { observe } from '../observe.a';
-const pattern = "'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'";
+const pattern = "Effect((?![\\s\\S])|[^a-z])";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "'AA'", 4);
-observe(regex, "x'AA'", 5);
-observe(regex, "'AA'\n", 6);
+observe(regex, "Effect", 4);
+observe(regex, "xEffect", 5);
+observe(regex, "Effect\n", 6);
+observe(regex, "useEffect(", 7);

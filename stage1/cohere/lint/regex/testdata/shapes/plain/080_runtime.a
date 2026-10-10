@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:74; `^text-opacity-(.*)$`
+// tailwind/no_deprecated_classes.go:95; `^bg-right-bottom$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "text-opacity-", 4);
-observe(regex, "xtext-opacity-", 5);
-observe(regex, "text-opacity-\n", 6);
+observe(regex, "bg-right-bottom", 4);
+observe(regex, "xbg-right-bottom", 5);
+observe(regex, "bg-right-bottom\n", 6);

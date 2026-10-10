@@ -1,4 +1,4 @@
-// tailwind/collapse/utility_nodes.go:138; `--(.*?)\s--(.*?)`
+// tailwind/no_deprecated_classes.go:78; `^placeholder-opacity-(.*)$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,7 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "--\t--", 4);
-observe(regex, "x--\t--", 5);
-observe(regex, "--\t--\n", 6);
-observe(regex, "// This currently helps enable --diagnostics and --extendedDiagnostics", 7);
+observe(regex, "placeholder-opacity-", 4);
+observe(regex, "xplaceholder-opacity-", 5);
+observe(regex, "placeholder-opacity-\n", 6);

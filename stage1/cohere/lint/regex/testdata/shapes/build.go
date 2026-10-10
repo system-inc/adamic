@@ -86,26 +86,6 @@ func translated(p string) (string, string) {
 }
 func dynamic(id string) (string, string) {
 	switch id {
-	case "core/default_case.go:100":
-		return "^no default$", "commentPattern=^no default$"
-	case "core/id_length.go:93":
-		return "^_", "exceptionPatterns=[^_]"
-	case "core/id_match.go:111":
-		return "^[a-z]+$", "pattern=^[a-z]+$"
-	case "core/no_fallthrough.go:170":
-		return "(?i)falls? through", "pattern=falls? through"
-	case "core/no_inline_comments.go:103":
-		return "TODO", "ignorePattern=TODO"
-	case "core/no_param_reassign.go:553":
-		return "^ignore", "ignorePropertyModificationsForRegex=[^ignore]"
-	case "core/no_unused_vars.go:282":
-		return "^_", "destructuredArrayIgnorePattern=^_"
-	case "core/no_unused_vars.go:2276":
-		return "^_", "vars/args/caughtErrorsIgnorePattern=^_"
-	case "core/no_warning_comments.go:452":
-		return `(?i)^[\s*]*todo\b`, "term=todo; location=start; decoration=[*]"
-	case "core/object_shorthand.go:141":
-		return "^ignore", "methodsIgnorePattern=^ignore"
 	case "core/require_description.go:236":
 		return `^(custom)(?:[\t\n\x0B\f\r \x{00A0}\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}]|$)`, "additionalDirectives=[custom]"
 	case "nexus/abbreviation_vocabulary.go:162":
@@ -118,20 +98,8 @@ func dynamic(id string) (string, string) {
 		return "Cfg($|[A-Z0-9])", "word=Cfg"
 	case "nexus/consistency_no_return_void.go:116":
 		return `^return\s+void\s+value\s*;$`, "operandText=value"
-	case "react/boolean_prop_naming.go:93", "react/boolean_prop_naming.go:182":
-		return "^(is|has)[A-Z]", "rule=^(is|has)[A-Z]"
-	case "react/exhaustive_deps.go:463":
-		return "^useCustom", "additionalHooks=^useCustom"
 	case "react/no_unstable_nested_components.go:893":
 		return "^render.*$", "propNamePattern=render*"
-	case "react/sort_comp.go:589":
-		return "(?i)^render$", "regex descriptor=/^render$/i"
-	case "tailwind/enforce_canonical_classes.go:334":
-		return "^custom-", "ignorePatterns=[^custom-]"
-	case "typescript/no_require_imports.go:378":
-		return "^node:", "allow=[^node:]"
-	case "typescript/switch_exhaustiveness_check.go:213":
-		return "^no default$", "defaultCaseCommentPattern=^no default$"
 	}
 	panic(id)
 }

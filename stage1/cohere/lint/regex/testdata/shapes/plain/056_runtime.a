@@ -1,4 +1,4 @@
-// react/boolean_prop_naming.go:621; `\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}`
+// tailwind/collapse/utility_nodes.go:140; `\s+`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,8 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "{{A}}", 4);
-observe(regex, "x{{A}}", 5);
-observe(regex, "{{A}}\n", 6);
+observe(regex, "\t", 4);
+observe(regex, "x\t", 5);
+observe(regex, "\t\n", 6);
+observe(regex, "foo\r", 7);
+observe(regex, "a\nb", 8);

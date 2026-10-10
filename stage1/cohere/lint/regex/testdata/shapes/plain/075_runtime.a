@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:66; `^drop-shadow$`
+// tailwind/no_deprecated_classes.go:88; `^decoration-slice$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "drop-shadow", 4);
-observe(regex, "xdrop-shadow", 5);
-observe(regex, "drop-shadow\n", 6);
+observe(regex, "decoration-slice", 4);
+observe(regex, "xdecoration-slice", 5);
+observe(regex, "decoration-slice\n", 6);

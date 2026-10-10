@@ -1,0 +1,12 @@
+// nexus/consistency_no_abbreviated_identifier.go:50; `([a-z])Ms($|[A-Z])`
+import { observe } from '../observe.a';
+const pattern = "([a-z])Ms((?![\\s\\S])|[A-Z])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "aMs", 4);
+observe(regex, "xaMs", 5);
+observe(regex, "aMs\n", 6);

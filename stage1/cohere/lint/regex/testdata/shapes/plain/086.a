@@ -1,12 +1,13 @@
-// tailwind/no_deprecated_classes.go:83; `^flex-shrink-(.*)$`
+// tailwind/tools/generate_variant/main.go:232; `(?:class|className)\s*=\s*"([^"\n{}$]+)"`
 import { observe } from '../observe.a';
-const pattern = "^flex-shrink-([^\\n]*)(?![\\s\\S])";
+const pattern = "(?:class|className)[ \\t\\n\\f\\r]*=[ \\t\\n\\f\\r]*\"([^\"\\n{}$]+)\"";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "flex-shrink-", 4);
-observe(regex, "xflex-shrink-", 5);
-observe(regex, "flex-shrink-\n", 6);
+observe(regex, "class=\"A\"", 4);
+observe(regex, "xclass=\"A\"", 5);
+observe(regex, "class=\"A\"\n", 6);
+observe(regex, "className=\"flex-grow-2\"", 7);

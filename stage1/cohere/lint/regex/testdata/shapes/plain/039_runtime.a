@@ -1,4 +1,4 @@
-// nexus/shouting.go:123; `[0-9_]`
+// nexus/shouting.go:184; `^@example\b`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "0", 4);
-observe(regex, "x0", 5);
-observe(regex, "0\n", 6);
-observe(regex, "var a = 1; // TODO: later", 7);
-observe(regex, "className=\"flex-grow-2\"", 8);
-observe(regex, "__String", 9);
+observe(regex, "@example", 4);
+observe(regex, "x@example", 5);
+observe(regex, "@example\n", 6);

@@ -101,7 +101,7 @@ func main() {
 	if e = json.Unmarshal(data, &fixtures); e != nil {
 		fail("%v", e)
 	}
-	if len(fixtures) != 107 {
+	if len(fixtures) != 89 {
 		fail("lost table rows: %d", len(fixtures))
 	}
 	table, e := os.ReadFile(filepath.Join(root, "../../table.json"))

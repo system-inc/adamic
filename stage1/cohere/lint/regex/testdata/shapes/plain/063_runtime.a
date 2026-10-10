@@ -1,4 +1,4 @@
-// react/sort_comp.go:119; `/(.*)/([gimsuy]*)`
+// tailwind/no_deprecated_classes.go:69; `^rounded$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "//", 4);
-observe(regex, "x//", 5);
-observe(regex, "//\n", 6);
-observe(regex, "var a = 1; // TODO: later", 7);
-observe(regex, "// XXX", 8);
-observe(regex, "/* Generated file to emulate the ts.moduleSpecifiers namespace. */", 9);
+observe(regex, "rounded", 4);
+observe(regex, "xrounded", 5);
+observe(regex, "rounded\n", 6);
