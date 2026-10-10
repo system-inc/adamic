@@ -21,8 +21,19 @@ func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
 
 func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" || latentSpeculativeEnabled() }
 
-// IR fields are exported. Compiler/checker identities remain shared; all mutable
-// lowering-owned state is copied by the generated typed state copier.
+type latentIRCache struct {
+	owner reflect.Type
+	field string
+}
+
+// These fields are derived, never semantic state. A zero-valued copy makes the
+// next reader recompute them. New private fields still require explicit review.
+var latentDerivedIRCaches = map[latentIRCache]bool{
+	{reflect.TypeFor[ir.Program](), "argumentFacts"}: true,
+}
+
+// Compiler/checker identities remain shared; all mutable lowering-owned state
+// is copied by the generated typed state copier, except named derived IR caches.
 func latentCopyIR[T any](value T, seen map[any]any) T {
 	speculative := latentSpeculativeEnabled()
 	shareScalarSlice := os.Getenv("LATENT_MUTANT_SHARE_SCALAR_SLICE") == "1"
@@ -58,9 +69,19 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 		case reflect.Struct:
 			result := reflect.New(v.Type()).Elem()
 			if speculative {
-				result.Set(v)
+				for i := 0; i < v.NumField(); i++ {
+					if latentResetDerivedIRCache(v, i) {
+						continue
+					}
+					if !result.Field(i).CanSet() {
+						panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
+					}
+					result.Field(i).Set(v.Field(i))
+				}
 				for _, index := range latentSpecMutableFields(v.Type()) {
-					if latentEmptyArgumentCache(v, index) { continue }
+					if latentResetDerivedIRCache(v, index) {
+						continue
+					}
 					if !result.Field(index).CanSet() {
 						panic("latent state copy: unexported IR field " + v.Type().Field(index).Name)
 					}
@@ -69,7 +90,9 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 				return result
 			}
 			for i := 0; i < v.NumField(); i++ {
-				if latentEmptyArgumentCache(v, i) { continue }
+				if latentResetDerivedIRCache(v, i) {
+					continue
+				}
 				if !result.Field(i).CanSet() {
 					panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
 				}
@@ -92,12 +115,24 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 				cloned := make([]ir.Function, len(original))
 				copy(cloned, original)
 				for i, function := range original {
-					if function.Parameters != nil { cloned[i].Parameters = copyValue(reflect.ValueOf(function.Parameters)).Interface().([]int) }
-					if function.OptionalParameters != nil { cloned[i].OptionalParameters = copyValue(reflect.ValueOf(function.OptionalParameters)).Interface().(map[int]bool) }
-					if function.Body != nil { cloned[i].Body = copyValue(reflect.ValueOf(function.Body)).Interface().([]ir.Statement) }
-					if function.Environment != nil { cloned[i].Environment = copyValue(reflect.ValueOf(function.Environment)).Interface().([]int) }
-					if function.FrameEnvironment != nil { cloned[i].FrameEnvironment = copyValue(reflect.ValueOf(function.FrameEnvironment)).Interface().([]int) }
-					if function.ReferenceParents != nil { cloned[i].ReferenceParents = copyValue(reflect.ValueOf(function.ReferenceParents)).Interface().([]int) }
+					if function.Parameters != nil {
+						cloned[i].Parameters = copyValue(reflect.ValueOf(function.Parameters)).Interface().([]int)
+					}
+					if function.OptionalParameters != nil {
+						cloned[i].OptionalParameters = copyValue(reflect.ValueOf(function.OptionalParameters)).Interface().(map[int]bool)
+					}
+					if function.Body != nil {
+						cloned[i].Body = copyValue(reflect.ValueOf(function.Body)).Interface().([]ir.Statement)
+					}
+					if function.Environment != nil {
+						cloned[i].Environment = copyValue(reflect.ValueOf(function.Environment)).Interface().([]int)
+					}
+					if function.FrameEnvironment != nil {
+						cloned[i].FrameEnvironment = copyValue(reflect.ValueOf(function.FrameEnvironment)).Interface().([]int)
+					}
+					if function.ReferenceParents != nil {
+						cloned[i].ReferenceParents = copyValue(reflect.ValueOf(function.ReferenceParents)).Interface().([]int)
+					}
 				}
 				return reflect.ValueOf(cloned)
 			}
@@ -203,8 +238,14 @@ func latentNestedDeclarations(body *ast.Node, visit ast.Visitor) {
 	body.ForEachChild(walk)
 }
 
-// Main added a private backend derivation cache. A census has not run the
-// backend derivation; accept its nil state only, and reject a populated cache.
-func latentEmptyArgumentCache(v reflect.Value, index int) bool {
-    return v.Type() == reflect.TypeFor[ir.Program]() && v.Type().Field(index).Name == "argumentFacts" && v.Field(index).IsNil()
+// Named derived caches remain nil in the new struct, even when populated.
+func latentResetDerivedIRCache(v reflect.Value, index int) bool {
+	field := v.Type().Field(index)
+	if !latentDerivedIRCaches[latentIRCache{v.Type(), field.Name}] {
+		return false
+	}
+	if field.Type.Kind() != reflect.Pointer {
+		panic("latent state copy: derived IR cache is not nil-resettable " + field.Name)
+	}
+	return true
 }

@@ -1,0 +1,572 @@
+{
+  "before": [],
+  "after": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5553,
+      "column": 61,
+      "code": 2345,
+      "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5568,
+      "column": 62,
+      "code": 2345,
+      "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5790,
+      "column": 30,
+      "code": 2345,
+      "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6191,
+      "column": 44,
+      "code": 2345,
+      "message": "Argument of type 'SymbolFlags | undefined' is not assignable to parameter of type 'SymbolFlags'.\n  Type 'undefined' is not assignable to type 'SymbolFlags'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16437,
+      "column": 66,
+      "code": 2345,
+      "message": "Argument of type 'SignatureDeclaration | JSDocSignature | undefined' is not assignable to parameter of type 'SignatureDeclaration | JSDocSignature'.\n  Type 'undefined' is not assignable to type 'SignatureDeclaration | JSDocSignature'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19889,
+      "column": 76,
+      "code": 2769,
+      "message": "No overload matches this call.\n  Overload 1 of 2, '(types: readonly Type[], mapper: TypeMapper): readonly Type[]', gave the following error.\n    Argument of type 'Type[] | undefined' is not assignable to parameter of type 'readonly Type[]'.\n      Type 'undefined' is not assignable to type 'readonly Type[]'.\n  Overload 2 of 2, '(types: readonly Type[] | undefined, mapper: TypeMapper): readonly Type[] | undefined', gave the following error.\n    Argument of type 'TypeMapper | undefined' is not assignable to parameter of type 'TypeMapper'.\n      Type 'undefined' is not assignable to type 'TypeMapper'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20277,
+      "column": 50,
+      "code": 2345,
+      "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28392,
+      "column": 41,
+      "code": 2345,
+      "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32024,
+      "column": 19,
+      "code": 18048,
+      "message": "'contextFlags' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32724,
+      "column": 37,
+      "code": 18048,
+      "message": "'contextFlags' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38571,
+      "column": 41,
+      "code": 18048,
+      "message": "'flags' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38572,
+      "column": 35,
+      "code": 18048,
+      "message": "'flags' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46972,
+      "column": 59,
+      "code": 2345,
+      "message": "Argument of type 'TypeParameter[] | undefined' is not assignable to parameter of type 'TypeParameter[]'.\n  Type 'undefined' is not assignable to type 'TypeParameter[]'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1244,
+      "column": 17,
+      "code": 2322,
+      "message": "Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2474,
+      "column": 16,
+      "code": 2454,
+      "message": "Variable 'lastResult' is used before being assigned."
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1417,
+      "column": 9,
+      "code": 2322,
+      "message": "Type 'EmitTextWriter | undefined' is not assignable to type 'EmitTextWriter'.\n  Type 'undefined' is not assignable to type 'EmitTextWriter'."
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 4954,
+      "column": 16,
+      "code": 18048,
+      "message": "'pos' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 4954,
+      "column": 26,
+      "code": 2322,
+      "message": "Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 4954,
+      "column": 32,
+      "code": 18048,
+      "message": "'pos' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1069,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1133,
+      "column": 28,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1150,
+      "column": 16,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1184,
+      "column": 31,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1211,
+      "column": 25,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1288,
+      "column": 38,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1303,
+      "column": 22,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1335,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1358,
+      "column": 22,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1430,
+      "column": 27,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1437,
+      "column": 27,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1442,
+      "column": 27,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1449,
+      "column": 27,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1473,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1484,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1492,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1500,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1509,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1582,
+      "column": 43,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1591,
+      "column": 24,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1601,
+      "column": 97,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1605,
+      "column": 24,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1642,
+      "column": 32,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1646,
+      "column": 47,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1650,
+      "column": 38,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1663,
+      "column": 55,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1679,
+      "column": 32,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1683,
+      "column": 53,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1750,
+      "column": 20,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1802,
+      "column": 27,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1812,
+      "column": 19,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1859,
+      "column": 22,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1904,
+      "column": 67,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1905,
+      "column": 45,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2070,
+      "column": 29,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2110,
+      "column": 89,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2186,
+      "column": 48,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2187,
+      "column": 56,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2215,
+      "column": 48,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2216,
+      "column": 56,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2237,
+      "column": 48,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2238,
+      "column": 56,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2277,
+      "column": 48,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2278,
+      "column": 56,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2326,
+      "column": 38,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2410,
+      "column": 36,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2431,
+      "column": 26,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2609,
+      "column": 26,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3098,
+      "column": 21,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3158,
+      "column": 39,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3203,
+      "column": 35,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3210,
+      "column": 25,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3215,
+      "column": 35,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3414,
+      "column": 32,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3573,
+      "column": 31,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3731,
+      "column": 44,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3732,
+      "column": 52,
+      "code": 2345,
+      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3765,
+      "column": 22,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3839,
+      "column": 22,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3921,
+      "column": 26,
+      "code": 18048,
+      "message": "'text' is possibly 'undefined'."
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3988,
+      "column": 9,
+      "code": 2322,
+      "message": "Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 11871,
+      "column": 13,
+      "code": 18048,
+      "message": "'result.isReferenced' is possibly 'undefined'."
+    }
+  ]
+}

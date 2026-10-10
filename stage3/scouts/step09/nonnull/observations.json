@@ -1,0 +1,156 @@
+{
+  "compiler_revision": "93ebcf520c87eb55b47ada1d39189796959b2778",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "file": "01_erased.a",
+      "site": "src/compiler/builder.ts:1793:46",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/01_erased.a.mjs"
+        ],
+        "exit": 0,
+        "stdout": "7\n",
+        "stderr": ""
+      },
+      "adamic_source": {
+        "command": [
+          "/tmp/step09-nonnull-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step09/nonnull/01_erased.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/01_erased.a:6:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+      },
+      "explain": "adamic: predicate checks: proven 0 checked 0 unobservable 0\n/tmp/step09-nonnull-fixtures/01_erased.ts:6:30: non-null assertion state.program!: proven\nadamic: non-null checks: proven 1 checked 0\nadamic: checks: proven 1 checked 0 unobservable 0\n",
+      "native": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/01_erased.a.native"
+        ],
+        "exit": 0,
+        "stdout": "7\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/01_erased.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "7\n",
+        "stderr": ""
+      },
+      "count": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/01_erased.a.counted"
+        ],
+        "exit": 0,
+        "stdout": "7\n",
+        "stderr": "adamic: counts: allocations 2 frees 2 retains 0 releases 2 peak 2 regions 0\n"
+      },
+      "temporary_typescript_control": "/tmp/step09-nonnull-fixtures/01_erased.ts"
+    },
+    {
+      "file": "02_checked_pass.a",
+      "site": "src/compiler/core.ts:519:16",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/02_checked_pass.a.mjs"
+        ],
+        "exit": 0,
+        "stdout": "17\n17\n",
+        "stderr": ""
+      },
+      "adamic_source": {
+        "command": [
+          "/tmp/step09-nonnull-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step09/nonnull/02_checked_pass.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/02_checked_pass.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+      },
+      "explain": "adamic: predicate checks: proven 0 checked 0 unobservable 0\n/tmp/step09-nonnull-fixtures/02_checked_pass.ts:5:16: non-null assertion map.get(key)!: checked\nadamic: non-null checks: proven 0 checked 1\nadamic: checks: proven 0 checked 1 unobservable 0\n",
+      "native": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/02_checked_pass.a.native"
+        ],
+        "exit": 0,
+        "stdout": "17\n17\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/02_checked_pass.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "17\n17\n",
+        "stderr": ""
+      },
+      "count": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/02_checked_pass.a.counted"
+        ],
+        "exit": 0,
+        "stdout": "17\n17\n",
+        "stderr": "adamic: counts: allocations 5 frees 5 retains 3 releases 8 peak 3 regions 0\n"
+      },
+      "temporary_typescript_control": "/tmp/step09-nonnull-fixtures/02_checked_pass.ts"
+    },
+    {
+      "file": "03_checked_stop.a",
+      "site": "src/compiler/core.ts:1896:24",
+      "node": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/03_checked_stop.a.mjs"
+        ],
+        "exit": 0,
+        "stdout": "42\nafter\n",
+        "stderr": ""
+      },
+      "adamic_source": {
+        "command": [
+          "/tmp/step09-nonnull-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step09/nonnull/03_checked_stop.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/03_checked_stop.a:6:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+      },
+      "explain": "adamic: predicate checks: proven 0 checked 0 unobservable 0\n/tmp/step09-nonnull-fixtures/03_checked_stop.ts:6:16: non-null assertion undefined!: checked\nadamic: non-null checks: proven 0 checked 1\nadamic: checks: proven 0 checked 1 unobservable 0\n",
+      "native": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/03_checked_stop.a.native"
+        ],
+        "exit": 70,
+        "stdout": "42\n",
+        "stderr": "adamic: panic: non-null assertion failed at /tmp/step09-nonnull-fixtures/03_checked_stop.ts:6:16: undefined! is null or undefined\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-nonnull-fixtures/03_checked_stop.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "42\n",
+        "stderr": "adamic: panic: non-null assertion failed at /tmp/step09-nonnull-fixtures/03_checked_stop.ts:6:16: undefined! is null or undefined\n"
+      },
+      "count": {
+        "command": [
+          "/tmp/step09-nonnull-fixtures/03_checked_stop.a.counted"
+        ],
+        "exit": 70,
+        "stdout": "42\n",
+        "stderr": "adamic: panic: non-null assertion failed at /tmp/step09-nonnull-fixtures/03_checked_stop.ts:6:16: undefined! is null or undefined\nadamic: counts: allocations 2 frees 1 retains 1 releases 1 peak 2 regions 0\n"
+      },
+      "temporary_typescript_control": "/tmp/step09-nonnull-fixtures/03_checked_stop.ts"
+    }
+  ]
+}
