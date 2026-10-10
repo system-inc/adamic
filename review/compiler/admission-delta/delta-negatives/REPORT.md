@@ -23,7 +23,7 @@ Validation commands (all outputs retained here):
 - `go vet ./cmd/adamic-admission-delta`
 - Required integration lane command after commit, with the toolchain environment sourced.
 
-The ten new top-level leaves and touched existing command leaves are recorded in leaf-seconds.json; every leaf is below 60s. TestNegativeTypeCorrectMutant replaces `undefined!` with `"ready"` in a committed fake-compiler input while both backend artifacts still stop: Node exits 0, both backends exit 70, and the tool returns fail with zero accepted witnesses. The independent real slice-5 source repair and retained-artifact mutant is recorded on compiler/chain-slice-5. No oracle fixture was added, so counts.md requires no new row.
+The nine new top-level leaves and touched existing command leaves are recorded in leaf-seconds.json; every leaf is below 60s. TestNegativeTypeCorrectMutant replaces `undefined!` with `"ready"` in a committed fake-compiler input while both backend artifacts still stop: Node exits 0, both backends exit 70, and the tool returns fail with zero accepted witnesses. The independent real slice-5 source repair and retained-artifact mutant is recorded on compiler/chain-slice-5. No oracle fixture was added, so counts.md requires no new row.
 
 Setup: initial shared-cache run was stopped; rerun with ADAMIC_GOCACHE_OFF=1 passed. GOPROXY=https://proxy.golang.org|direct; environment /workspace/adamic-tools/env.sh. Timing lines: go/node 0.021s; submodules 0.060s; markdown 0.066s; clang 0.146s; shared cache off 0.148s; go build 166.134s; test binaries deferred 166.263s; cache warm 166.264s; done 166.293s. nproc=5, cgroup CPU quota=4. Full setup.log retained.
 
