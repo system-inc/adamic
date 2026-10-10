@@ -1,13 +1,19 @@
 // Package buildcache is the one home for build products tests need: the checker archive, stage 0, Go oracle
-// binaries, a port's native build. Each product is addressed by the hash of everything that can change it (its
-// files by content, its flags, its toolchain), built once per hash and reused, so a test's time starts after the
-// fetch (@system_adamic's ruling on the 30 s rule, Oct 8).
+// binaries, a port's native build. Each product is addressed by what can change it, built once per address and
+// reused, so a test's time starts after the fetch (@system_adamic's ruling on the 30 s rule, Oct 8).
 //
-// A miss builds into an empty private directory and publishes it whole by rename, so a product on disk is
-// always complete and a failed build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh
-// directory: the uncached proof mode, which is what lands main. ADAMIC_BUILD_CACHE=read never builds: a runner's mode,
-// whose products arrive built (ErrNotBuilt). The cache is local to the machine (ADAMIC_BUILD_CACHE_DIR, or the user
-// cache directory's adamic-build), and a miss there fetches from the shared store before it builds (store.go).
+// A product's address is its name key (its name, flags and tool reports) and the read set its last traced build
+// measured, valued on the tree at hand (reads.go, #vt46geg): a change misses only the products that read it. Only
+// Workshop builds under a trace (cmd/traced), and only a settled traced build is placed under its key or published
+// (settle.go). A product with no read set yet, or none that names a cached product, builds traced there. Anywhere
+// else a miss is refused (ErrUntraced) unless ADAMIC_BUILD_STORE=off asks for a build for this machine alone, keyed
+// by the declared Files and never published.
+//
+// A product on disk is always complete: it is filled in a private directory and placed whole by rename, so a failed
+// build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh directory: the uncached proof mode,
+// which is what lands main. ADAMIC_BUILD_CACHE=read never builds: a runner's mode, whose products and read sets arrive
+// built (ErrNotBuilt). The cache is local to the machine (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's
+// adamic-build), and a miss there fetches from the shared store by the keys its read sets give (store.go).
 package buildcache
 
 import (
@@ -70,43 +76,37 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 	return directory, err
 }
 
+// ErrUntraced is a product this machine would have to build without a trace: building is Workshop's, under
+// cmd/traced, so what the build reads becomes its key (#vt46geg). ADAMIC_BUILD_STORE=off builds here explicitly, for
+// this machine alone: such a product is keyed by its declared Files, never published and never found by a read set.
+var ErrUntraced = errors.New("only a traced build may build it here")
+
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
 	started := time.Now()
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
-		root, err := repositoryRoot()
-		if err != nil {
-			return "", "", err
-		}
-		key, err := Key(root, inputs)
-		if err != nil {
-			return "", "", err
-		}
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
 			return "", "", err
 		}
-		// Another product names this one as <build cache>/<key>, which Absolute finds here (relative.go).
-		located(key, directory)
-		if err = build(directory); err != nil {
-			return "", "", err
-		}
-		if err = relocatable(inputs.Name, directory); err != nil {
-			return "", "", err
-		}
-		// Main's own gate runs uncached and is the one writer of trusted refs: what it built from main's sources is
-		// published for everyone to read (store.go).
-		if trusted() {
-			if err = publish(key, inputs.Name, directory); err != nil {
-				note("publish %s %s failed: %v", inputs.Name, key[:12], err)
+		if traceDirectory() == "" {
+			if err = build(directory); err != nil {
+				return "", "", err
 			}
+			return directory, record(inputs.Name, "uncached", "off", started), nil
 		}
+		// Traced and uncached (main's own gate on Workshop): built fresh, and settled from where it was built.
+		root, err := repositoryRoot()
+		if err != nil {
+			return "", "", err
+		}
+		nameKey, id, err := tracedBuild(root, inputs, directory, build)
+		if err != nil {
+			return "", "", err
+		}
+		journalBuilt(root, inputs, nameKey, id, directory)
 		return directory, record(inputs.Name, "uncached", "off", started), nil
 	}
 	root, err := repositoryRoot()
-	if err != nil {
-		return "", "", err
-	}
-	key, err := Key(root, inputs)
 	if err != nil {
 		return "", "", err
 	}
@@ -114,82 +114,141 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	product := filepath.Join(cache, key)
-	if _, err = os.Stat(product); err == nil {
-		return product, record(inputs.Name, key, "hit", started), nil
-	}
-	if os.Getenv("ADAMIC_BUILD_CACHE") == "read" {
-		return "", record(inputs.Name, key, "missing", started), fmt.Errorf("product %s (key %s) is %w: it isn't in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop by loom build-tree. Its inputs, as this machine keys them:\n%s", inputs.Name, key[:12], ErrNotBuilt, cache, describe(inputs))
-	}
-	// One builder per key across every process on the machine: the rest wait, then find it built.
-	lock, err := os.OpenFile(product+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	var nameKey, described string
+	var looked found
+	keying(func() {
+		nameKey, described = NameKey(root, inputs), describe(root, inputs)
+		looked, err = productFor(root, cache, nameKey, 0)
+	})
 	if err != nil {
 		return "", "", err
+	}
+	if looked.directory != "" {
+		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: looked.directory})
+		return looked.directory, record(inputs.Name, looked.key, "hit", started), nil
+	}
+	if storeAddress() != "" {
+		for _, key := range looked.keys {
+			outcome := "fetched"
+			product := filepath.Join(cache, key)
+			_, err := filled(product, described, func(scratch string) error {
+				if err := fetch(key, scratch); err != nil {
+					return err
+				}
+				// An audit rebuilds, so it runs only where building may: under a trace.
+				if traceDirectory() != "" && auditing() {
+					outcome = "audited"
+					return audit(key, inputs.Name, scratch, build)
+				}
+				return nil
+			})
+			if errors.Is(err, errNotStored) {
+				note("store %s %s: %v", inputs.Name, key[:12], err)
+				continue
+			}
+			if err != nil {
+				return "", "", err
+			}
+			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
+			return product, record(inputs.Name, key, outcome, started), nil
+		}
+	}
+	switch {
+	case os.Getenv("ADAMIC_BUILD_CACHE") == "read":
+		return "", record(inputs.Name, nameKey, "missing", started), fmt.Errorf("product %s (name key %s) is %w: %s, in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:\n%s", inputs.Name, nameKey[:12], ErrNotBuilt, looked.why, cache, described)
+	case traceDirectory() != "":
+		// Built here under the trace, and found by every process under it, until Settle keys it by what it read.
+		product := filepath.Join(pendingDirectory(cache), nameKey)
+		var id string
+		built, err := filled(product, described, func(scratch string) (err error) {
+			_, id, err = tracedBuild(root, inputs, scratch, build)
+			return err
+		})
+		if err != nil {
+			return "", "", err
+		}
+		outcome := "hit"
+		if built {
+			journalBuilt(root, inputs, nameKey, id, product)
+			outcome = "miss"
+		} else {
+			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
+		}
+		return product, record(inputs.Name, nameKey, outcome, started), nil
+	case os.Getenv("ADAMIC_BUILD_STORE") == "off":
+		var key string
+		keying(func() { key, err = Key(root, inputs) })
+		if err != nil {
+			return "", "", err
+		}
+		built, err := filled(filepath.Join(cache, "local", key), described, build)
+		if err != nil {
+			return "", "", err
+		}
+		outcome := "hit"
+		if built {
+			outcome = "miss"
+		}
+		return filepath.Join(cache, "local", key), record(inputs.Name, key, outcome, started), nil
+	}
+	return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w: Workshop builds products under cmd/traced (strace, Linux), so a build's reads become its key. ADAMIC_BUILD_STORE=off builds it here for this machine alone; ADAMIC_BUILD_CACHE=off builds it uncached", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
+}
+
+// tracedBuild builds into directory between markers naming the build, and returns its name key and id.
+func tracedBuild(root string, inputs Inputs, directory string, build func(directory string) error) (string, string, error) {
+	var nameKey string
+	keying(func() { nameKey = NameKey(root, inputs) })
+	id, err := traced(nameKey, func() error { return build(directory) })
+	return nameKey, id, err
+}
+
+// journalBuilt journals a traced build where its product now is, for Settle to key and place.
+func journalBuilt(root string, inputs Inputs, nameKey, id, directory string) {
+	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root}
+	keying(func() { entry.Name, entry.Inputs = portable(root, inputs.Name), describe(root, inputs) })
+	journal(entry)
+}
+
+// filled makes target by fill when it isn't there: into a private directory beside it, then whole by rename, so a
+// product on disk is always complete and a failed fill leaves nothing; one filler per target across every process on
+// the machine, the rest waiting to find it filled. It says whether this call filled it.
+func filled(target, inputs string, fill func(scratch string) error) (bool, error) {
+	if _, err := os.Stat(target); err == nil {
+		return false, nil
+	}
+	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
+		return false, err
+	}
+	lock, err := os.OpenFile(target+".lock", os.O_CREATE|os.O_RDWR, 0o644)
+	if err != nil {
+		return false, err
 	}
 	defer lock.Close()
 	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
-		return "", "", err
+		return false, err
 	}
 	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
-	if _, err = os.Stat(product); err == nil {
-		return product, record(inputs.Name, key, "hit", started), nil
+	if _, err = os.Stat(target); err == nil {
+		return false, nil
 	}
-	scratch, err := os.MkdirTemp(cache, ".building-"+key[:12]+"-")
+	name := filepath.Base(target)
+	scratch, err := os.MkdirTemp(filepath.Dir(target), ".building-"+name[:min(12, len(name))]+"-")
 	if err != nil {
-		return "", "", err
+		return false, err
 	}
-	outcome := "miss"
-	if storeAddress() != "" {
-		switch err = fetch(key, scratch); {
-		case err == nil:
-			outcome = "fetched"
-			if auditing() {
-				if err = audit(key, inputs.Name, scratch, build); err != nil {
-					os.RemoveAll(scratch)
-					return "", "", err
-				}
-				outcome = "audited"
-			}
-		case errors.Is(err, errNotStored):
-			// Not stored, or the store unreachable: build here, from an empty directory again.
-			note("store %s %s: %v", inputs.Name, key[:12], err)
-			os.RemoveAll(scratch)
-			if scratch, err = os.MkdirTemp(cache, ".building-"+key[:12]+"-"); err != nil {
-				return "", "", err
-			}
-		default:
-			os.RemoveAll(scratch)
-			return "", "", err
-		}
-	}
-	if outcome == "miss" {
-		// While it builds, the product's own directory is its scratch one, which Relative names <build cache>/<key>, the
-		// place it is published to.
-		located(key, scratch)
-		err = build(scratch)
-		productDirectories.Delete(scratch)
-		productKeys.Delete(key)
-		if err == nil {
-			err = relocatable(inputs.Name, scratch)
-		}
-		if err != nil {
-			os.RemoveAll(scratch)
-			return "", "", err
-		}
-		// Publishing is the store's gain, never this build's failure: a write that fails is noted and the product used.
-		if err = publish(key, inputs.Name, scratch); err != nil {
-			note("publish %s %s failed: %v", inputs.Name, key[:12], err)
-		}
-	}
-	if err = os.WriteFile(product+".inputs", []byte(describe(root, inputs)), 0o644); err != nil {
+	if err = fill(scratch); err != nil {
 		os.RemoveAll(scratch)
-		return "", "", err
+		return false, err
 	}
-	if err = os.Rename(scratch, product); err != nil {
+	if err = os.WriteFile(target+".inputs", []byte(inputs), 0o644); err != nil {
 		os.RemoveAll(scratch)
-		return "", "", err
+		return false, err
 	}
-	return product, record(inputs.Name, key, outcome, started), nil
+	if err = os.Rename(scratch, target); err != nil {
+		os.RemoveAll(scratch)
+		return false, err
+	}
+	return true, nil
 }
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
@@ -407,7 +466,14 @@ func unkeyed(name string) bool {
 type trackedFiles struct {
 	paths, directories map[string]bool
 	all                bool
+	// objects are git's ids of the files the index holds, by path, with their modes; dirty are those whose working
+	// copy differs from the index when taken, so a read set values a clean file by its id without reading it.
+	objects map[string]gitObject
+	dirty   map[string]bool
+	taken   time.Time
 }
+
+type gitObject struct{ mode, id string }
 
 // repositories holds each directory's trackedFiles once per process, or nil for a directory that isn't a repository's.
 var repositories sync.Map
@@ -451,14 +517,29 @@ func repositoryAt(directory string) *trackedFiles {
 	}
 	var files *trackedFiles
 	if _, err := os.Lstat(filepath.Join(directory, ".git")); err == nil {
-		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}}
-		listed, err := exec.Command("git", "-C", directory, "ls-files", "-z").Output()
+		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
+		var listed, dirty []byte
+		var err error
+		// git reads .git, which no product's read set may hold: listing what the tree carries is keying.
+		keying(func() {
+			if listed, err = exec.Command("git", "-C", directory, "ls-files", "-s", "-z").Output(); err == nil {
+				dirty, err = exec.Command("git", "-C", directory, "diff-files", "--name-only", "-z").Output()
+			}
+		})
 		if err != nil {
 			files.all = true
 		}
-		for _, name := range strings.Split(string(listed), "\x00") {
-			if name == "" {
+		for _, name := range strings.Split(string(dirty), "\x00") {
+			files.dirty[name] = true
+		}
+		for _, line := range strings.Split(string(listed), "\x00") {
+			// <mode> <id> <stage>\t<path>
+			fields, name, ok := strings.Cut(line, "\t")
+			if !ok || name == "" {
 				continue
+			}
+			if parts := strings.Fields(fields); len(parts) == 3 {
+				files.objects[name] = gitObject{mode: parts[0], id: parts[1]}
 			}
 			files.paths[name] = true
 			for parent := path.Dir(name); parent != "."; parent = path.Dir(parent) {
@@ -489,6 +570,14 @@ func Tool(name string, arguments ...string) string {
 	}
 	label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
 	var value string
+	keying(func() { value = toolValue(name, label, arguments) })
+	tools.Store(command, value)
+	return value
+}
+
+// toolValue runs a tool for Tool: what it reads is the key's, never a build's.
+func toolValue(name, label string, arguments []string) string {
+	var value string
 	if filepath.Base(name) == "go" && len(arguments) > 0 && arguments[0] == "env" {
 		settings, _, err := goSettings("", nil, arguments[1:])
 		value = label + ": " + strings.Join(settings, "\n")
@@ -509,7 +598,6 @@ func Tool(name string, arguments ...string) string {
 			value += " (" + err.Error() + ")"
 		}
 	}
-	tools.Store(command, value)
 	return value
 }
 

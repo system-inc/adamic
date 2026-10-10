@@ -159,10 +159,12 @@ func TestAFailedBuildPublishesNothing(t *testing.T) {
 	}); !errors.Is(err, failure) {
 		t.Fatalf("the build's error was lost: %v", err)
 	}
-	entries, _ := os.ReadDir(cache)
-	for _, entry := range entries {
-		if entry.IsDir() {
-			t.Fatalf("a failed build left %s in the cache", entry.Name())
+	for _, directory := range []string{cache, filepath.Join(cache, "local")} {
+		entries, _ := os.ReadDir(directory)
+		for _, entry := range entries {
+			if entry.IsDir() && entry.Name() != "local" {
+				t.Fatalf("a failed build left %s in %s", entry.Name(), directory)
+			}
 		}
 	}
 	var built bool
@@ -185,31 +187,33 @@ func TestUncachedModeBuildsEveryTime(t *testing.T) {
 	}
 }
 
-// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
+// Read mode finds a product by its read sets and never builds: a product with none, or another name key, is missing,
+// named with its name key, why, the cache it looked in and every input as this machine keys them.
+// Not parallel: newRig.
 func TestReadModeNamesAMissingProductAndNeverBuilds(t *testing.T) {
-	cache, log := cached(t)
-	built := Product(t, thisPackage, func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
-	})
-	t.Setenv("ADAMIC_BUILD_CACHE", "read")
-	never := func(string) error { t.Fatal("read mode called the build"); return nil }
-	if found, err := Get(thisPackage, never); err != nil || found != built {
-		t.Fatalf("read mode found %q, %v; want the built %s", found, err, built)
+	r := newRig(t)
+	_, log := cached(t)
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	r.settle(t)
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("read mode missed a settled product: %v", err)
 	}
-	// A key this machine computes differently, by one flag, is the same miss as a product nobody built.
-	elsewhere := thisPackage
-	elsewhere.Flags = []string{"-p=8"}
-	_, err := Get(elsewhere, never)
+	elsewhere := port
+	elsewhere.Flags = []string{"-DOTHER"}
+	_, err := reading(t, elsewhere)
 	if !errors.Is(err, ErrNotBuilt) {
 		t.Fatalf("a missing product read as %v, want ErrNotBuilt", err)
 	}
-	missing := key(t, repositoryRootForTest(t), elsewhere)
-	for _, want := range []string{"product buildcache test", missing[:12], cache, "TestProduct_", "flag -p=8", "file internal/buildcache/buildcache.go"} {
+	missing := NameKey(r.root, elsewhere)
+	for _, want := range []string{"product port", missing[:12], "no traced build", r.cache, "TestProduct_", "flag -DOTHER", "file source"} {
 		if !strings.Contains(err.Error(), want) {
 			t.Fatalf("the error doesn't name %q: %v", want, err)
 		}
 	}
-	entries, _ := os.ReadDir(cache)
+	entries, _ := os.ReadDir(r.cache)
 	for _, entry := range entries {
 		if strings.Contains(entry.Name(), missing[:12]) {
 			t.Fatalf("read mode left %s in the cache for the missing product", entry.Name())
