@@ -99,3 +99,6 @@ func lines(text string) int {
 	}
 	return count
 }
+
+// Gate mutant phase-build (#7x6trdv): a type error outside any _test.go, in a package no test compiles. Never merge.
+var phaseBuildMutant int = "not an int"
