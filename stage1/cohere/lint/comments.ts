@@ -1,7 +1,8 @@
-// Matching uses Go's ASCII word boundaries and Unicode simple-fold equivalence.
+// Matching reads ESLint's `/^[\s<decoration>]*term\b/iu` as JavaScript does, as cohere now compiles it:
+// JavaScript's whitespace, `iu` word boundaries and Unicode simple-fold equivalence.
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
-import { foldPoint, foldedRange, printable } from './unicode.ts';
+import { foldPoint, printable } from './unicode.ts';
 
 export function word(character: string): boolean {
     return (
@@ -62,43 +63,48 @@ export function selfDirective(value: string): boolean {
     }
     return false;
 }
-function validDecoration(decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            if(((decoration[index] ?? '').codePointAt(0) ?? 0) > ((decoration[index + 2] ?? '').codePointAt(0) ?? 0)) {
-                return false;
-            }
-            index += 2;
-        }
-    }
-    return true;
+// whitespace is JavaScript's `\s`, WhiteSpace and LineTerminator: 25 code points, the no-break space and
+// the byte order mark among them, and not Go's U+0085.
+function whitespace(point: number): boolean {
+    return (
+        (point >= 9 && point <= 13) ||
+        point === 32 ||
+        point === 160 ||
+        point === 5760 ||
+        (point >= 8192 && point <= 8202) ||
+        point === 8232 ||
+        point === 8233 ||
+        point === 8239 ||
+        point === 8287 ||
+        point === 12288 ||
+        point === 65279
+    );
 }
-function decorated(character: string, decoration: string[]): boolean {
-    for(let index = 0; index < decoration.length; index++) {
-        const first = (decoration[index] ?? '').codePointAt(0) ?? 0;
-        let last = first;
-        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
-            last = (decoration[index + 2] ?? '').codePointAt(0) ?? 0;
-            index += 2;
-        }
-        if(foldedRange(character, first, last)) {
-            return true;
+// boundaryWord is a word character as `\b` reads one under `iu`: ASCII's, and the long s and the Kelvin
+// sign, which fold into it. The term's own `/^\w/u` and `/\w$/u` tests carry no `i` and stay ASCII.
+function boundaryWord(character: string): boolean {
+    return word(character) || character === '\u017f' || character === '\u212a';
+}
+// decorated is a member of the decoration class, folded as `iu` folds it. escape-string-regexp writes
+// `-` as `\x2d`, so every decoration character is itself and none spells a range.
+function decorated(point: number, decoration: string[]): boolean {
+    for(const entry of decoration) {
+        for(let index = 0; index < entry.length;) {
+            const member = entry.codePointAt(index) ?? 0;
+            if(foldPoint(member) === foldPoint(point)) {
+                return true;
+            }
+            index += member > 65535 ? 2 : 1;
         }
     }
     return false;
 }
 export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
-    // Go applies (?i) to decoration too. Unescaped '-' creates character ranges;
-    // a reversed range makes compilation fail and the matcher is omitted.
-    if(location === 'start' && !validDecoration(decoration)) {
-        return false;
-    }
     let prefix = 0;
     if(location === 'start') {
         while(prefix < value.length) {
             const point = value.codePointAt(prefix) ?? 0;
-            const character = String.fromCodePoint(point);
-            if(![' ', '\t', '\n', '\r', '\f'].includes(character) && !decorated(character, decoration)) {
+            if(!whitespace(point) && !decorated(point, decoration)) {
                 break;
             }
             prefix += point > 65535 ? 2 : 1;
@@ -122,8 +128,9 @@ export function matches(value: string, term: string, location: string, decoratio
             equal &&
             (location === 'start' ||
                 !word(term[0] ?? '') ||
-                word(value[index - 1] ?? '') !== word(value[index] ?? '')) &&
-            (!word(term[term.length - 1] ?? '') || word(value[end - 1] ?? '') !== word(value[end] ?? ''))
+                boundaryWord(value[index - 1] ?? '') !== boundaryWord(value[index] ?? '')) &&
+            (!word(term[term.length - 1] ?? '') ||
+                boundaryWord(value[end - 1] ?? '') !== boundaryWord(value[end] ?? ''))
         ) {
             return true;
         }

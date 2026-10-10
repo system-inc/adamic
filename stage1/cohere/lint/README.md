@@ -116,7 +116,7 @@ run successfully on Node and sanitized native, and differ from the Go answer:
 compiler gaps to Node and stage 0. Further rule-family mutants exercise
 control, assignment targets, generator/await scope, options, regex edit ranges,
 boolean inversion, comment directives and BOM edits.
-`TestDecorationOptionMutant` proves hyphen-range options are checked.
+`TestDecorationOptionMutant` proves a `-` decoration is checked as one character.
 `TestCountGuardMutant` changes only count mode: ordinary output stays identical,
 but the throughput count check catches the wrong count on Node and native.
 `TestThroughput` runs compiler count mode in five interleaved rounds when

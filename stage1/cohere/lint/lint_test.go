@@ -549,7 +549,9 @@ func TestDecorationOptionMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	// ESLint escapes a `-` decoration as `\x2d`, so it is one more character to skip; the mutant drops it from
+	// the class as the RE2 range reading did, which the `["-", "/"]` row's "-/ TODO" catches.
+	directory := mutant(t, "if(foldPoint(member) === foldPoint(point))", "if(member !== 45 && foldPoint(member) === foldPoint(point))", "comments.ts")
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -558,9 +560,9 @@ func TestDecorationOptionMutant(t *testing.T) {
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("decoration range mutant survived on %s", side.name)
+			t.Fatalf("decoration hyphen mutant survived on %s", side.name)
 		}
-		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+		t.Logf("decoration hyphen dropped from the class caught on %s: %s", side.name, difference(side.run.output, want))
 	}
 }
 
