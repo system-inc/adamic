@@ -1,0 +1,28 @@
+{
+  "compiler_base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "branch_base": "0442c4a923834cf17e59fd790e615822fce063bb",
+  "binary_sha256": {
+    "piece-census": "f07d93a09d359bdcd5e3f5e791232a997751f28eb8bb79735c936fed971a434e",
+    "final-piece-census": "809b3fbd2524e66a03f4b4f6a0a04516087eeb3aaf526b18203d3bff9652e95c"
+  },
+  "configurations": {
+    "GOMAXPROCS": "1",
+    "GOMEMLIMIT": "1GiB",
+    "GOGC": "200",
+    "rss_mib": 3072,
+    "address_space_mib": 6144,
+    "union_seconds": 600,
+    "sample_seconds": 900
+  },
+  "difference": "Final binary formats the new Go helper and counts assigned progress units. Actual watch piece output is byte-identical; piece-off control output is byte-identical to the prior census.",
+  "baseline_records": "0442c4a9 evidence/continuation/retry-priority/records; exact uncompressed bytes verified",
+  "stock": "Unchanged evidence/continuation/final-result/stock.json.gz; TypeScript 6.0.3",
+  "tools": {
+    "go": "1.27.1",
+    "node": "24.19.0",
+    "clang": "20.1.8",
+    "nproc": 5,
+    "cpu_quota": 4,
+    "setup_seconds": 17.336
+  }
+}

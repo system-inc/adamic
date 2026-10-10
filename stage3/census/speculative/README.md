@@ -1,8 +1,8 @@
-Retried incomplete speculative census files with four bounded, resumable workers.
-Compiler base 946a8f09 is unchanged; continuation checkpoint 155445a9 records the two-hour cutoff.
-Coverage grew from 29 to 65 / 79 files, and from 1,323,621 to 3,760,099 / 10,009,820 TypeScript bytes.
-Independent depth/coverage audits, stream/progress/concurrency mutants and overlay-off C/JS identity pass.
-13 files still timed out at 600 seconds; the final checker probe timed out; incomplete observations are excluded.
+Statement-piece census unions match the 0442c4a9 whole-file observations exactly.
+watch.ts: 315 sites in 8 pieces; transformers/ts.ts: 800 sites in 5 pieces; zero differences.
+Base scaling model: 25.13 core-hours plus an unknown censored completion tail.
+Largest checker piece timed out at 900.070s, peak RSS 1175036KiB; five other samples completed.
+Dropped, duplicated and moved-site mutants are caught; coverage remains 65/79 files.
 
 | Depth | NotYet | Refused |
 |---|---:|---:|
@@ -188,3 +188,5 @@ resumed-record checksum and
 concurrent-run mutants were rejected. An expired deadline exited 0 with all
 three artifacts, zero completed files and 79 TSV rows. Finalization and verify
 also caught their depth, coverage, byte-share and top20 artifact mutants.
+
+Task #b2wbbha: [piece method and reproduction](pieces.md), [union, measurements and scaling report](evidence/pieces/README.md). The six checker samples are excluded from this table.
