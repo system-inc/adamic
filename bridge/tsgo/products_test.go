@@ -162,8 +162,24 @@ func bridgeProduct(t testing.TB, repository, name string) string {
 	return filepath.Join(directory, name)
 }
 
+// bridgeProductDeadline is when a product build stops: the test's own deadline (go test's -timeout, whose default of
+// 10 minutes is how loom build-tree runs a product test, and a product unit's 600 s ceiling), less a margin to record
+// the build's log. A fixed budget only turned slow into
+// failed: measured on Workshop Oct 10, one cold c-archive of the checker took 259 to 270 s at 8 jobs, and in the
+// combined proof's -p=12 build the six archives, building at once, were all still running when 5 minutes killed them
+// (and every native waiting on them failed at 456 to 469 s). With no test deadline (go test -timeout=0), the build
+// is bounded only by the run's, as Loom's unit ceiling bounds it.
+func bridgeProductDeadline(t testing.TB) (context.Context, context.CancelFunc) {
+	if test, ok := t.(interface{ Deadline() (time.Time, bool) }); ok {
+		if deadline, ok := test.Deadline(); ok {
+			return context.WithDeadline(context.Background(), deadline.Add(-10*time.Second))
+		}
+	}
+	return context.WithCancel(context.Background())
+}
+
 func buildBridgeProduct(t testing.TB, repository, directory, name string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	ctx, cancel := bridgeProductDeadline(t)
 	defer cancel()
 	run := func(command *exec.Cmd) error {
 		command.Dir = repository
