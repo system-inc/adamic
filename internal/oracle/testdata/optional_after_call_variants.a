@@ -1,0 +1,26 @@
+// Calls invalidate assignment narrowings, including captured locals and fields.
+type Pair = readonly [string, number];
+let pair: Pair | undefined = ['present', 1];
+function dropPair(): void { pair = undefined; }
+dropPair();
+console.log(`${pair?.[0] ?? 'absent'}`);
+interface Box { readonly m: () => string; }
+let box: Box | undefined = { m: () => 'called' };
+function dropBox(): void { box = undefined; }
+dropBox();
+console.log(box?.m() ?? 'absent');
+interface Link { readonly next: Link | undefined; }
+function captured(): void {
+    let chain: Link | undefined = { next: undefined };
+    const drop = (): void => { chain = chain?.next; };
+    drop();
+    chain = (chain)?.next;
+    console.log(`${chain === undefined}`);
+}
+captured();
+const holder: { chain: Link | undefined } = { chain: { next: undefined } };
+function dropField(): void { holder.chain = undefined; }
+if (holder.chain !== undefined) {
+    dropField();
+    console.log(`${holder.chain?.next === undefined}`);
+}

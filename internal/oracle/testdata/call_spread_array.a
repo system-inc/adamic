@@ -1,0 +1,50 @@
+const base: readonly string[] = [`a${1}`, `b${2}`];
+const values: string[] = [];
+console.log(String(values.push(...base)));
+console.log(values.join(','));
+let reads = 0;
+function spreadOnce(): readonly string[] {
+ reads++;
+ return base;
+}
+console.log(String(values.unshift('first', ...spreadOnce(), 'last')));
+console.log(String(reads));
+console.log(values.join(','));
+const empty: readonly string[] = [];
+console.log(String(values.push(...empty)));
+console.log(String(values.unshift()));
+console.log(String(values.push(...[])));
+console.log(String(values.push(...values)));
+console.log(values.join(','));
+const mutable = [`old${1}`];
+function change(): string {
+ mutable[0] = `new${2}`;
+ return 'tail';
+}
+console.log(String(values.unshift(...mutable, change(), ...mutable)));
+console.log(values.join(','));
+function text(...items: string[]): string { return items.join('|'); }
+console.log(text(...base, ...spreadOnce()));
+const call: (...items: string[]) => string = text;
+console.log(call(...base));
+console.log(String(reads));
+const numbers: (number | undefined)[] = [];
+const integers: readonly number[] = [1, 2];
+console.log(String(numbers.push(...integers, undefined)));
+console.log(numbers.join(','));
+function receiver(): string[] {
+ console.log('receiver');
+ return values;
+}
+function incoming(): readonly string[] {
+ console.log('spread');
+ return base;
+}
+function last(): string {
+ console.log('last');
+ return 'end';
+}
+console.log(String(receiver().push(...incoming(), last(), ...incoming())));
+console.log(values.join(','));
+console.log(String(values.unshift(...['head', 'next'])));
+console.log(values.join(','));

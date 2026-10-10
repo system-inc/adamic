@@ -55,10 +55,9 @@ short-text throughput, not a steady-state full-CSS-formatting benchmark.
 ## Gap 1: multi-value Array.push
 
 `gaps/1_multi_push.ts` is accepted by the checker and prints `ab\n` on Node.
-Stage 0 refuses lowering with `push with other than one value` (`lower.NotYet`).
-The port uses one push per value instead. `TestMultiPushGap` asserts Node's output
-and the exact refusal, so a closed gap requires updating this record and removing
-the workaround. No compiler files were changed.
+Spread-shorthand admits the fixture. `TestMultiPushGap` compares its output with
+Node in the JavaScript backend and native ASan/UBSan/LSan build. The port retains
+its one-push-per-value workaround; removing it is outside this slice.
 
 ## Boundaries
 

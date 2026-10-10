@@ -1,0 +1,111 @@
+[
+  {
+    "member": "optional-chain-after-call-main",
+    "source": "5028fa69dfad3a3c52a96c97402840e4502804df",
+    "base": "3a7e52163f22a905e63c752802c78b806e380c00",
+    "patch_check_exit": 0,
+    "diagnostic": "",
+    "files": [
+      "internal/flow/build.go",
+      "internal/flow/optional_after_call_test.go",
+      "internal/ir/defined.go",
+      "internal/javascript/javascript.go",
+      "internal/lower/exceptions.go",
+      "internal/lower/narrowed.go",
+      "internal/native/reuse.go",
+      "internal/oracle/optional_after_call_test.go",
+      "internal/oracle/testdata/optional_after_call_193.a",
+      "internal/oracle/testdata/optional_after_call_79.a",
+      "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+      "internal/oracle/testdata/optional_after_call_propagation.a",
+      "internal/oracle/testdata/optional_after_call_required.a",
+      "internal/oracle/testdata/optional_after_call_variants.a"
+    ],
+    "check_scope": "Own source range where identified; optional-calls still includes inherited lowering-a and requires extraction. Counts/docs/review excluded; chain fixes audited separately, not included in this applicability check."
+  },
+  {
+    "member": "spread-shorthand",
+    "source": "e82c9646451296b678274fc6990296da71217cfe",
+    "base": "fe3852f03ae69a6fce2f1d08b26e69bb759bdd44",
+    "patch_check_exit": 0,
+    "diagnostic": "",
+    "files": [
+      "internal/lower/array_call_arguments.go",
+      "internal/lower/library_array.go",
+      "internal/lower/library_json_stringify.go",
+      "internal/oracle/call_spread_array_test.go",
+      "internal/oracle/json_shorthand_test.go",
+      "internal/oracle/testdata/call_spread_array.a",
+      "internal/oracle/testdata/json_shorthand.a"
+    ],
+    "check_scope": "Own source range where identified; optional-calls still includes inherited lowering-a and requires extraction. Counts/docs/review excluded; chain fixes audited separately, not included in this applicability check."
+  },
+  {
+    "member": "refusal-rulings-main",
+    "source": "8799f5183578321a676d5c18ee837d9c79876126",
+    "base": "7459656e052d7172479a7ce14e35c314b3e622f1",
+    "patch_check_exit": 0,
+    "diagnostic": "",
+    "files": [
+      "internal/ir/ir.go",
+      "internal/javascript/javascript.go",
+      "internal/lower/cycles.go",
+      "internal/lower/expression.go",
+      "internal/lower/function_rulings.go",
+      "internal/lower/functions.go",
+      "internal/lower/merged_fields.go",
+      "internal/lower/refusals.go",
+      "internal/native/emit_expressions.go",
+      "internal/native/runtime/adamic.h",
+      "internal/native/runtime/closure.c",
+      "internal/native/runtime/union.c",
+      "internal/oracle/function_rulings_main_test.go",
+      "internal/oracle/merged_fields_main_test.go",
+      "internal/oracle/testdata/refusal_rulings/function_call.a",
+      "internal/oracle/testdata/refusal_rulings/function_length.a",
+      "internal/oracle/testdata/refusal_rulings/function_signature.a",
+      "internal/oracle/testdata/refusal_rulings/function_unused.a",
+      "internal/oracle/testdata/refusal_rulings/merge_missing.a",
+      "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a",
+      "internal/oracle/testdata/refusal_rulings/merge_present.a",
+      "internal/oracle/testdata/refusal_rulings/merge_unused.a"
+    ],
+    "check_scope": "Own source range where identified; optional-calls still includes inherited lowering-a and requires extraction. Counts/docs/review excluded; chain fixes audited separately, not included in this applicability check."
+  },
+  {
+    "member": "assignment-proofs-main",
+    "source": "a6f05066866debe937c40062e276fcd385d60363",
+    "base": "da6efa977afacaf643c899229d7daad2705aee02",
+    "patch_check_exit": 0,
+    "diagnostic": "",
+    "files": [
+      "internal/oracle/assignment_proofs_test.go",
+      "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+      "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+      "stage3/fixtures/assignment-proofs/03_return_defined.a",
+      "stage3/fixtures/assignment-proofs/04_chained.a",
+      "stage3/fixtures/assignment-proofs/05_compound.a",
+      "stage3/fixtures/assignment-proofs/06_wider_target.a",
+      "stage3/fixtures/assignment-proofs/NOTICE",
+      "stage3/fixtures/assignment-proofs/README.md",
+      "stage3/fixtures/assignment-proofs/check-types.cjs",
+      "stage3/fixtures/assignment-proofs/check.py",
+      "stage3/fixtures/assignment-proofs/counts.md",
+      "stage3/fixtures/assignment-proofs/expectations.json",
+      "stage3/fixtures/assignment-proofs/mutants.json",
+      "stage3/fixtures/assignment-proofs/status.json"
+    ],
+    "check_scope": "Own source range where identified; optional-calls still includes inherited lowering-a and requires extraction. Counts/docs/review excluded; chain fixes audited separately, not included in this applicability check."
+  },
+  {
+    "member": "tsgo.go-cache",
+    "source": "63f5bb078d525d3b4325778029cbfdb92eed4b38",
+    "base": "417dccd3798d7ac7f6e3e42a76e4d288dda6ee46",
+    "patch_check_exit": 0,
+    "diagnostic": "",
+    "files": [
+      "internal/native/tsgo.go"
+    ],
+    "check_scope": "Own source range where identified; optional-calls still includes inherited lowering-a and requires extraction. Counts/docs/review excluded; chain fixes audited separately, not included in this applicability check."
+  }
+]

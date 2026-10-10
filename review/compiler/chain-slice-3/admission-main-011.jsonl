@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/omitted_scanner.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_scanner_explicit.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_scanner_required.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_string.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_class_method.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_array.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_chain.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_map.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_string.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_string_gap.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_indexing_typed_array.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_numbers.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_strings.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_widening_class.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_widening_declared.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_widening_fresh.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"Path":"internal/oracle/testdata/output_then_panic.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_ancestor_directory.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_array_to_map.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_array_to_multimap.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_array_to_numeric_map.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_contracts/serializer.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/overload_contracts/serializer.a:2:58: Adamic 0.1 refuses overload 2 of setSerializerContextAnd parameter cb cannot be served by implementation parameter cb; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+{"Path":"internal/oracle/testdata/overload_contracts/token.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/overload_contracts/token.a:3:1: Adamic 0.1 refuses overload 1 of createToken result SuperExpression cannot be served by implementation result Token\u003cK\u003e; make the implementation result covariant with every overload result"}
+{"Path":"internal/oracle/testdata/overload_contracts/trampoline.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/overload_contracts/trampoline.a:1:1: Adamic 0.1 refuses overload 1 of createBinaryExpressionTrampoline result (node: string) =\u003e R cannot be served by implementation result (node: string, outer: Outer) =\u003e R; make the implementation result covariant with every overload result"}
+{"Path":"internal/oracle/testdata/overload_inference_contracts.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_leading_comment_range.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_mutate_map.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_mutate_map_skipping_new.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_original_node.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_resolve_type_names.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_sort_deduplicate.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/overload_trailing_comment_range.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/override_same_representation.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/pad_too_long.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/panic.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/panic_in_try.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/param_assigned_in_try.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/parameter_properties.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/parameter_properties_kinds.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/parameter_properties_levels.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/parameter_properties_ownership.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_callbacks.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_dotted.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_order.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_overrides.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_shared/left.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_shared/main.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_shared/right.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_shared/state.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_types.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/params_namespaces_values.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/pow_fractional.a","Status":"accepted","Error":""}

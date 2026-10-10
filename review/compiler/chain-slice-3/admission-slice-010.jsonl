@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/node_buffer_encodings.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_finalized.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_input.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_random.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_utf16.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_utf8.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_buffer_writes.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_fs_file_close.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_fs_file_date.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_fs_file_mkdir.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_fs_file_write_buffer.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/node_fs_file_write_file.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/non_null_possible_read.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_possible_read.a:3:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_possible_typeerror.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_possible_typeerror.a:3:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_argument.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_argument.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_checked.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_checked.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_comparison.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_comparison.a:1:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_conditional.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_conditional.a:1:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_default.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_default.a:1:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_element.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_element.a:1:17: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_expression.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_expression.a:2:9: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_logical.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_logical.a:1:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_null.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_null.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_return.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_return.a:1:35: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_spread.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_spread.a:1:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refuse_undefined.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.a:1:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refused/initialized.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/non_null_refused/parser_index.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/non_null_refused/parser_index.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/normalize.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_cache.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_limit.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_long.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_quick.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_repeat.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_coverage_stream.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_form.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/normalize_long_marks.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/notyet_element_access/fields.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/fields.a:12:5: stage 0 can't lower assigning an element of a value yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/jsdoc.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/jsdoc.a:4:78: stage 0 can't lower an ElementAccessExpression yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/nodearray.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower an ElementAccessExpression yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/numeric_record.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/numeric_record.a:2:102: stage 0 can't lower an ElementAccessExpression yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/paths.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/paths.a:3:10: stage 0 can't lower a function returning Path | undefined yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/sorted.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/sorted.a:3:112: stage 0 can't lower an ElementAccessExpression yet"}
+{"Path":"internal/oracle/testdata/notyet_element_access/string_dictionary.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/string_dictionary.a:1:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"}
+{"Path":"internal/oracle/testdata/notyet_element_access/template.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/notyet_element_access/template.a:2:89: stage 0 can't lower an ElementAccessExpression yet"}
+{"Path":"internal/oracle/testdata/notyet_library_object_entries_const.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/notyet_library_regex_callback.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/notyet_library_regex_offset.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/notyet_library_string_bounds.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/number_edges.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/number_formats.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/number_parsing.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/numbers.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/object_prototype.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/objects.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_boolean.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_defaults.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_methods.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_number.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_object.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_reader.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_reader_direct.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_reader_override.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/omitted_reader_string.a","Status":"accepted","Error":""}
