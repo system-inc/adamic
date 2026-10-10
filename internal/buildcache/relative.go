@@ -185,10 +185,15 @@ var resolvedDirectories sync.Map
 // Resolved is a product's directory as this machine reads it, for a reader that hands its files to a tool that can't
 // read Relative's names itself (node running a mutant port, the loader lowering it): a copy beside the product whose
 // text files are read back through Absolute, made once per machine and roots, or the product itself when no file holds
-// a name. The copy is never a product and never published; the product itself stays as it was built.
+// a name. The copy is never a product and never published; the product itself stays as it was built. A directory that
+// isn't a product (a package's own, which a caller may pass alike) is read as it is, and nothing is written beside it.
 func Resolved(directory string) (string, error) {
 	if found, ok := resolvedDirectories.Load(directory); ok {
 		return found.(string), nil
+	}
+	if !isProduct(directory) {
+		resolvedDirectories.Store(directory, directory)
+		return directory, nil
 	}
 	named := false
 	err := textFiles(directory, func(_ string, content []byte, _ fs.FileMode) error {
@@ -229,6 +234,22 @@ func Resolved(directory string) (string, error) {
 	resolvedDirectories.Store(directory, place)
 	return place, nil
 }
+
+// isProduct says whether directory is a product: a key's directory in the build cache, or one this process built
+// uncached.
+func isProduct(directory string) bool {
+	if _, ok := productDirectories.Load(directory); ok {
+		return true
+	}
+	cache, err := cacheLocation()
+	if err != nil || !productKey.MatchString(filepath.Base(directory)) {
+		return false
+	}
+	parent := filepath.Dir(directory)
+	return parent == cache || resolved(parent) != "" && resolved(parent) == resolved(cache)
+}
+
+var productKey = regexp.MustCompile(`^[0-9a-f]{64}$`)
 
 // resolve copies directory to place whole, each text file through Absolute, by way of a scratch directory renamed into
 // place, so a copy on disk is always complete.
