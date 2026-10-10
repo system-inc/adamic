@@ -99,3 +99,9 @@ func lines(text string) int {
 	}
 	return count
 }
+
+// Gate mutant phase-vet (#7x6trdv): unreachable code, which go vet reports and go test's vet subset does not. Never merge.
+func phaseVetMutant() {
+	return
+	println("unreachable")
+}
