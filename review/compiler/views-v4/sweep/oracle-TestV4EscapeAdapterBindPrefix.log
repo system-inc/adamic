@@ -1,0 +1,19 @@
+=== RUN   TestV4EscapeAdapterBindPrefix
+=== PAUSE TestV4EscapeAdapterBindPrefix
+=== CONT  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:30: gate cache node miss
+    checked_views_v4_bind_test.go:32: gate cache node miss
+    checked_views_v4_bind_test.go:36: sanitized prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix3953134178/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: javascript prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix3953134178/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: native prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix3953134178/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:52: gate cache node miss
+    checked_views_v4_bind_test.go:52: guard mutant admitted in sanitized: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in javascript: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in native: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:53: prefix omission caught in both backends, native ASan/UBSan/LeakSanitizer clean; producer never invoked
+--- PASS: TestV4EscapeAdapterBindPrefix (1.25s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.269s

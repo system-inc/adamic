@@ -1,0 +1,23 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== NAME  TestCountsAreRecorded
+    counts_test.go:178: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1710134459/main.c:329:2: error: call to undeclared function 'adamic_array_view_storage'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+          329 |         adamic_array_view_storage(adamic_temporary_82, 10);
+              |         ^
+        1 error generated.
+        
+--- FAIL: TestCountsAreRecorded (24.84s)
+    --- PASS: TestCountsAreRecorded/fixtures (0.02s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a (19.14s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	24.856s
+FAIL

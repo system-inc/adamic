@@ -215,6 +215,9 @@ func (p *Program) CanonicalClosuresNeeded() bool {
 }
 
 func (p *Program) ClosureReceiversNeeded() bool {
+	if p.ViewAdapters {
+		return true
+	}
 	for _, f := range p.Functions {
 		if f.Closure && f.Receiver {
 			return true

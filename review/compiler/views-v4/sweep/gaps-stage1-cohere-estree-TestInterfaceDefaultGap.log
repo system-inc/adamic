@@ -1,0 +1,7 @@
+=== RUN   TestInterfaceDefaultGap
+=== PAUSE TestInterfaceDefaultGap
+=== CONT  TestInterfaceDefaultGap
+    gaps_test.go:137: Node prints 5; lowering refuses before native emission: /workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet
+--- PASS: TestInterfaceDefaultGap (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.129s

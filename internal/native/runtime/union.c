@@ -34,6 +34,8 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right) {
 	case adamic_kind_number:
 		// Compared as numbers, never as boxes: NaN is never ===, even to itself, and -0 === 0.
 		return ((const adamic_number_box *)left)->number == ((const adamic_number_box *)right)->number;
+	case adamic_kind_closure:
+		return adamic_view_adapter_underlying((adamic_closure *)left) == adamic_view_adapter_underlying((adamic_closure *)right);
 	case adamic_kind_string:
 		return adamic_string_equal((const adamic_string *)left, (const adamic_string *)right);
 	default:

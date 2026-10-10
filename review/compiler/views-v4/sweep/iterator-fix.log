@@ -1,0 +1,26 @@
+=== RUN   TestV4IteratorPackedReceiver
+=== PAUSE TestV4IteratorPackedReceiver
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestV4IteratorPackedReceiver
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+=== NAME  TestV4IteratorPackedReceiver
+    cache_test.go:297: /tmp/adamic-gate/TestV4IteratorPackedReceiver2978719675/001/identity.ts:1:195: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestV4IteratorPackedReceiver (0.09s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a (5.38s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.431s
+FAIL

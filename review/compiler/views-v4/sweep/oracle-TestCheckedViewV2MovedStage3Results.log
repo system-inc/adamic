@@ -1,0 +1,57 @@
+=== RUN   TestCheckedViewV2MovedStage3Results
+=== PAUSE TestCheckedViewV2MovedStage3Results
+=== CONT  TestCheckedViewV2MovedStage3Results
+=== RUN   TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== RUN   TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== RUN   TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== PAUSE TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+=== CONT  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+=== CONT  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:267: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:267: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:267: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:267: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a
+    checked_views_v2_migration_test.go:267: gate cache node hit
+    checked_views_v2_migration_test.go:269: gate cache node hit
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    checked_views_v2_migration_test.go:269: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    checked_views_v2_migration_test.go:269: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    checked_views_v2_migration_test.go:269: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    checked_views_v2_migration_test.go:269: gate cache node miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a
+    oracle_test.go:603: gate cache native miss
+--- PASS: TestCheckedViewV2MovedStage3Results (0.00s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a (0.93s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a (1.62s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a (1.68s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a (1.69s)
+    --- PASS: TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a (1.69s)
+PASS
+gate cache: native hits=1 misses=4
+gate cache: node hits=2 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.701s

@@ -1,0 +1,7 @@
+=== RUN   TestCookedSurrogateLibraryGap
+=== PAUSE TestCookedSurrogateLibraryGap
+=== CONT  TestCookedSurrogateLibraryGap
+    utf8_test.go:46: set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestCookedSurrogateLibraryGap (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.009s
