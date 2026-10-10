@@ -1,0 +1,80 @@
+[
+  {
+    "name": "revert-native-reference-fields",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/revert-native-reference-fields.json",
+    "selector": "^TestCheckedRuntime",
+    "package": "./internal/oracle"
+  },
+  {
+    "name": "revert-js-reference-fields",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/revert-js-reference-fields.json",
+    "selector": "^TestCheckedRuntime",
+    "package": "./internal/oracle"
+  },
+  {
+    "name": "revert-array-field-schema",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/revert-array-field-schema.json",
+    "selector": "^TestCheckedRuntime(Regex|Directory)Fields$",
+    "package": "./internal/oracle"
+  },
+  {
+    "name": "drop-runtime-array-contract",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-runtime-array-contract.json",
+    "selector": "TestRuntimeCheckedReferenceArrayKeepsContract",
+    "package": "./internal/native"
+  },
+  {
+    "name": "drop-string-heap-kind",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-string-heap-kind.json",
+    "selector": "TestRuntimeCheckedReferenceArrayKeepsContract",
+    "package": "./internal/native"
+  },
+  {
+    "name": "accept-runtime-array-literal",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/accept-runtime-array-literal.json",
+    "selector": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+    "package": "./internal/native"
+  },
+  {
+    "name": "accept-weaker-array-contract",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/accept-weaker-array-contract.json",
+    "selector": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+    "package": "./internal/native"
+  },
+  {
+    "name": "restore-number-view-native",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/restore-number-view-native.json",
+    "selector": "^TestCheckedWriteMessage02$",
+    "package": "./internal/oracle"
+  },
+  {
+    "name": "restore-number-view-js",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/restore-number-view-js.json",
+    "selector": "^TestCheckedWriteMessage02$",
+    "package": "./internal/oracle"
+  },
+  {
+    "name": "drop-js-runtime-array-contract",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-js-runtime-array-contract.json",
+    "package": "./internal/oracle",
+    "selector": "^TestCheckedRuntimeReferenceArrayLaterWriter$"
+  },
+  {
+    "name": "drop-js-string-heap-kind",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-js-string-heap-kind.json",
+    "package": "./internal/oracle",
+    "selector": "^TestCheckedRuntimeReferenceArrayLaterWriter$"
+  },
+  {
+    "name": "prior-literal",
+    "overlay": "review/compiler/checked-writes-follow/literal-mutant-overlay.json",
+    "package": "./internal/native",
+    "selector": "^TestRuntimeCheckedLibraryPushRejectsLiteral$"
+  },
+  {
+    "name": "drop-checked-write-metadata",
+    "overlay": "review/compiler/checked-writes-follow/merge-main/drop-checked-write-metadata.json",
+    "package": "./internal/native",
+    "selector": "^TestObjectMetadataCheckedWritesIsPerEmission$"
+  }
+]

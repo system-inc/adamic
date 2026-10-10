@@ -1,0 +1,14 @@
+=== RUN   TestCheckedRuntimeReferenceArrayLaterWriter
+=== PAUSE TestCheckedRuntimeReferenceArrayLaterWriter
+=== CONT  TestCheckedRuntimeReferenceArrayLaterWriter
+    checked_runtime_fields_test.go:98: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:99: gate cache node hit
+    checked_runtime_fields_test.go:114: gate cache node miss
+    checked_runtime_fields_test.go:116: JavaScript: exit codes differ; got oracle.run{stdout:[]uint8{0x61, 0xa, 0x61, 0xa, 0x64, 0x6f, 0x6e, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedRuntimeReferenceArrayLaterWriter (0.41s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.415s
+FAIL

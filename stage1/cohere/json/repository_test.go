@@ -2,6 +2,7 @@ package json
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -22,7 +23,12 @@ type repositoryJSON struct {
 var repositoryJSONPatterns = []string{"*.json", ":(exclude)cohere/**", ":(exclude,glob)**/.git/**"}
 
 func gitCorpus(root string, arguments ...string) ([]byte, error) {
-	command := exec.Command("git", append([]string{"-C", root}, arguments...)...)
+	return gitCorpusInput(root, nil, arguments...)
+}
+
+func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, error) {
+	command := exec.CommandContext(context.Background(), "git", append([]string{"-C", root}, arguments...)...)
+	command.Stdin = bytes.NewReader(input)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
 		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
@@ -92,6 +98,10 @@ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPi
 	if err != nil {
 		return corpusPin{}, 0, err
 	}
+	return validateCorpusState(state, cases, expected)
+}
+
+func validateCorpusState(state repositoryJSON, cases []textCase, expected corpusPin) (corpusPin, int, error) {
 	if len(state.dirty) > 0 {
 		return corpusPin{}, 0, fmt.Errorf("repository dirty JSON: %s", strings.Join(state.dirty, ", "))
 	}
