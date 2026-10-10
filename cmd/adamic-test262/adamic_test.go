@@ -20,3 +20,8 @@ func productAdamic(t testing.TB) adamicBuilder {
 	adamic := buildcache.Adamic(t)
 	return func(output string) error { return os.Symlink(adamic, output) }
 }
+
+func TestProduct_Adamic(t *testing.T) {
+	t.Parallel()
+	buildcache.Adamic(t)
+}
