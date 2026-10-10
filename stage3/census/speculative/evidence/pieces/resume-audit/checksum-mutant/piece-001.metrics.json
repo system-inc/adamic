@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/workspace/b2wbbha-storage/final-piece-census",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/workspace/b2wbbha-storage/checker-sample/piece-001.pending.jsonl"
+  ],
+  "wall_seconds": 401.9600161849994,
+  "peak_rss_kib": 1036352,
+  "exit": 0,
+  "user_cpu_seconds": 379.020901,
+  "system_cpu_seconds": 3.303914,
+  "phase_first_wall_seconds": {
+    "refusal_scan": 2.1721688689995062,
+    "contract_scan": 3.241079327999614,
+    "registration": 107.69048453799951,
+    "walk": 107.81648083800064,
+    "completed": 401.85973319000004
+  },
+  "time_limit_seconds": 900.0,
+  "rss_limit_mib": 3072,
+  "address_space_limit_mib": 6144,
+  "rss_limit_killed": false
+}

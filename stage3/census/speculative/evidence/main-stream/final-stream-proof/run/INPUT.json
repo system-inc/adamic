@@ -1,0 +1,19 @@
+{
+  "binary_sha256": "90573732cdcc2029dd49b17652c3149014014c7e4372ba45227e203c2d0f87aa",
+  "root": "/tmp/b17vtn1/final-stream-proof/source",
+  "files": [
+    {
+      "file": "main.a",
+      "bytes": 120,
+      "sha256": "a29addcf59bba5fc182e5511a7da3b3ced8d456286bb11c468cbe9ff2a3b75c7"
+    },
+    {
+      "file": "target.a",
+      "bytes": 122,
+      "sha256": "c85112175e7d3b0faa8a3efcedc91e9de1a154c5f69e0cdad9605daec5f20ad2"
+    }
+  ],
+  "seconds": 30.0,
+  "rss_mib": 6144,
+  "project": "whole compiler; only the census walk is filtered"
+}

@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/binder.ts",
+  "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+  "source_bytes": 195107,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:8625:ImportDeclaration",
+      "start": 0,
+      "end": 8625,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 8625,
+      "name": ""
+    },
+    {
+      "id": "8625:8690:ImportDeclaration",
+      "start": 8625,
+      "end": 8690,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 65,
+      "name": ""
+    },
+    {
+      "id": "8690:8827:EnumDeclaration",
+      "start": 8690,
+      "end": 8827,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 137,
+      "name": "ModuleInstanceState"
+    },
+    {
+      "id": "8827:9013:InterfaceDeclaration",
+      "start": 8827,
+      "end": 9013,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 186,
+      "name": "ActiveLabel"
+    },
+    {
+      "id": "9013:9575:FunctionDeclaration",
+      "start": 9013,
+      "end": 9575,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 562,
+      "name": "getModuleInstanceState"
+    },
+    {
+      "id": "9575:10003:FunctionDeclaration",
+      "start": 9575,
+      "end": 10003,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 428,
+      "name": "getModuleInstanceStateCached"
+    },
+    {
+      "id": "10003:13598:FunctionDeclaration",
+      "start": 10003,
+      "end": 13598,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 3595,
+      "name": "getModuleInstanceStateWorker"
+    },
+    {
+      "id": "13598:15599:FunctionDeclaration",
+      "start": 13598,
+      "end": 15599,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 2001,
+      "name": "getModuleInstanceStateForAliasTarget"
+    },
+    {
+      "id": "15599:16836:EnumDeclaration",
+      "start": 15599,
+      "end": 16836,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 1237,
+      "name": "ContainerFlags"
+    },
+    {
+      "id": "16836:17074:FunctionDeclaration",
+      "start": 16836,
+      "end": 17074,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 238,
+      "name": "createFlowNode"
+    },
+    {
+      "id": "17074:17124:VariableStatement",
+      "start": 17074,
+      "end": 17124,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 50,
+      "name": ""
+    },
+    {
+      "id": "17124:17393:FunctionDeclaration",
+      "start": 17124,
+      "end": 17393,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 269,
+      "name": "bindSourceFile"
+    },
+    {
+      "id": "17393:188866:FunctionDeclaration",
+      "start": 17393,
+      "end": 188866,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 171473,
+      "name": "createBinder"
+    },
+    {
+      "id": "188866:189889:FunctionDeclaration",
+      "start": 188866,
+      "end": 189889,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1023,
+      "name": "isExportsOrModuleExportsOrAlias"
+    },
+    {
+      "id": "189889:194592:FunctionDeclaration",
+      "start": 189889,
+      "end": 194592,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 4703,
+      "name": "getContainerFlags"
+    },
+    {
+      "id": "194592:195105:FunctionDeclaration",
+      "start": 194592,
+      "end": 195105,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 513,
+      "name": "lookupSymbolForName"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "17393:188866:FunctionDeclaration"
+      ],
+      "bytes": 171473
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "0:8625:ImportDeclaration"
+      ],
+      "bytes": 8625
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "189889:194592:FunctionDeclaration"
+      ],
+      "bytes": 4703
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "10003:13598:FunctionDeclaration"
+      ],
+      "bytes": 3595
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "13598:15599:FunctionDeclaration"
+      ],
+      "bytes": 2001
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "15599:16836:EnumDeclaration"
+      ],
+      "bytes": 1237
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "188866:189889:FunctionDeclaration"
+      ],
+      "bytes": 1023
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "9013:9575:FunctionDeclaration"
+      ],
+      "bytes": 562
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "194592:195105:FunctionDeclaration"
+      ],
+      "bytes": 513
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "9575:10003:FunctionDeclaration"
+      ],
+      "bytes": 428
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "17124:17393:FunctionDeclaration"
+      ],
+      "bytes": 269
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "16836:17074:FunctionDeclaration"
+      ],
+      "bytes": 238
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "8827:9013:InterfaceDeclaration"
+      ],
+      "bytes": 186
+    },
+    {
+      "id": 13,
+      "atoms": [
+        "8690:8827:EnumDeclaration"
+      ],
+      "bytes": 137
+    },
+    {
+      "id": 14,
+      "atoms": [
+        "8625:8690:ImportDeclaration"
+      ],
+      "bytes": 65
+    },
+    {
+      "id": 15,
+      "atoms": [
+        "17074:17124:VariableStatement"
+      ],
+      "bytes": 50
+    }
+  ]
+}

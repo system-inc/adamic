@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-c",
+    "import json,os,time\nfrom pathlib import Path\np=Path(os.environ['LATENT_PROGRESS_FILE'])\np.write_text(json.dumps({'phase':'registration'}))\ntime.sleep(0.35)\np.write_text(json.dumps({'phase':'walk'}))\ntime.sleep(0.35)\n"
+  ],
+  "wall_seconds": 0.7432329840012244,
+  "peak_rss_kib": 9088,
+  "exit": 0,
+  "user_cpu_seconds": 0.013313,
+  "system_cpu_seconds": 0.010799,
+  "phase_first_wall_seconds": {
+    "registration": 0.11486215600052674,
+    "walk": 0.43189131899998756
+  },
+  "time_limit_seconds": 5.0,
+  "rss_limit_mib": 64,
+  "address_space_limit_mib": 128,
+  "rss_limit_killed": false
+}
