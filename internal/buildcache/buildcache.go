@@ -5,9 +5,9 @@
 //
 // A miss builds into an empty private directory and publishes it whole by rename, so a product on disk is
 // always complete and a failed build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh
-// directory: the uncached proof mode, which is what lands main. The cache is local to the machine
-// (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's adamic-build), and a miss there fetches from the shared
-// store before it builds (store.go).
+// directory: the uncached proof mode, which is what lands main. ADAMIC_BUILD_CACHE=read never builds: a runner's mode,
+// whose products arrive built (ErrNotBuilt). The cache is local to the machine (ADAMIC_BUILD_CACHE_DIR, or the user
+// cache directory's adamic-build), and a miss there fetches from the shared store before it builds (store.go).
 package buildcache
 
 import (
@@ -49,11 +49,20 @@ func Product(t testing.TB, inputs Inputs, build func(directory string) error) st
 	if line != "" {
 		t.Log(line)
 	}
+	if errors.Is(err, ErrNotBuilt) {
+		t.Fatal(err)
+	}
 	if err != nil {
 		t.Fatalf("build %s: %v", inputs.Name, err)
 	}
 	return directory
 }
+
+// ErrNotBuilt is a product missing under ADAMIC_BUILD_CACHE=read, the mode of a machine that runs tests and never
+// builds: Workshop's loom build-tree runs every TestProduct_ test and ships the cache it filled, and a runner reads it.
+// A miss there is a product no TestProduct_ test builds, or a key this machine computes differently from Workshop, and
+// the error names the product, its key and every input that keyed it, so either reads as what it is.
+var ErrNotBuilt = errors.New("not built")
 
 // Get is Product for TestMain and tools.
 func Get(inputs Inputs, build func(directory string) error) (string, error) {
@@ -99,6 +108,9 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	product := filepath.Join(cache, key)
 	if _, err = os.Stat(product); err == nil {
 		return product, record(inputs.Name, key, "hit", started), nil
+	}
+	if os.Getenv("ADAMIC_BUILD_CACHE") == "read" {
+		return "", record(inputs.Name, key, "missing", started), fmt.Errorf("product %s (key %s) is %w: it isn't in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop by loom build-tree. Its inputs, as this machine keys them:\n%s", inputs.Name, key[:12], ErrNotBuilt, cache, describe(root, inputs))
 	}
 	// One builder per key across every process on the machine: the rest wait, then find it built.
 	lock, err := os.OpenFile(product+".lock", os.O_CREATE|os.O_RDWR, 0o644)
@@ -588,8 +600,9 @@ func note(format string, arguments ...any) {
 	}
 }
 
-// record is the product's census line, 'build <name> <key12> hit|fetched|audited|miss|off <seconds>', also appended to
-// $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit.
+// record is the product's census line, 'build <name> <key12> hit|fetched|audited|miss|missing|off <seconds>', also
+// appended to $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit. missing is read mode's
+// miss, which built nothing.
 func record(name, key, outcome string, started time.Time) string {
 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
