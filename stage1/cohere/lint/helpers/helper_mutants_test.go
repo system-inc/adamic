@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 const helperMutantShards = 4
@@ -142,19 +143,18 @@ func runHelperMutant(t *testing.T, index int) {
 		t.Fatal(err)
 	}
 	t.Logf("setup %.3fs", time.Since(setup).Seconds())
-	// Setup has no test-side deadline. Only executing the prepared corpus does.
+	// Own work is logged, not asserted. Each child runs under childguard's stall and ceiling, as
+	// helpers_test.go's do, which bound a hang and name it; a 30 s context killed a loaded but healthy
+	// run and reported only "signal: killed" (#he9xrrn).
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
 	execute := func(binary string, args ...string) []byte {
-		cmd := exec.CommandContext(ctx, binary, args...)
-		var stderr bytes.Buffer
-		cmd.Stderr = &stderr
-		output, err := cmd.Output()
-		if err != nil || stderr.Len() != 0 {
+		cmd := exec.Command(binary, args...)
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout, cmd.Stderr = &stdout, &stderr
+		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {
 			t.Fatalf("%s: %v stderr %s", binary, err, &stderr)
 		}
-		return output
+		return stdout.Bytes()
 	}
 	want := execute(goOracle, cases)
 	got := execute(binary, cases, catalog)

@@ -97,9 +97,9 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 func compositionRunShard(t *testing.T, index int) {
 	// Prepare shared products once per process before starting this shard's clock.
 	state := compositionSetup(t)
+	// Own work is logged, not asserted: every child runs under childguard's stall and ceiling, so a
+	// hang is bounded there, and a watchdog panic would end the whole package (#he9xrrn).
 	started := time.Now()
-	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition shard exceeded 90s") })
-	defer timer.Stop()
 	shard := state.shards[index]
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
@@ -152,9 +152,8 @@ func TestCompositionMatchesGo_Setup(t *testing.T) {
 func TestCompositionMatchesGoUnion(t *testing.T) {
 	t.Parallel()
 	state := compositionSetup(t)
+	// Logged, not asserted, as in compositionRunShard.
 	started := time.Now()
-	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition union exceeded 90s") })
-	defer timer.Stop()
 	lines := state.lines
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	if err := os.WriteFile(cases, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {

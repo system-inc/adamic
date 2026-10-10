@@ -1,7 +1,6 @@
 package yaml
 
 import (
-	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -9,9 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"syscall"
 	"testing"
-	"time"
 )
 
 // The gate selects each leaf in a fresh process. Run the setup test before m.Run
@@ -42,15 +39,14 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	manifest := filepath.Join(directory, "state.json")
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestFileDriver_Setup$", "-test.timeout=90s", "-test.v")
+	// Shared setup has no deadline of its own. Uncached, on a loaded box, its cold oracle, lowering
+	// and sanitized native builds outlast any fixed budget, and a 90 s context kill read only
+	// "signal: killed". The child takes this process's -test.timeout instead: m.Run hasn't started
+	// that clock yet, so Go's timeout still bounds preparation, and says where it stood if it fires.
+	command := exec.Command(os.Args[0], "-test.run=^TestFileDriver_Setup$", "-test.timeout="+flag.Lookup("test.timeout").Value.String(), "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_FILE_DRIVER_SETUP_CHILD=1", "ADAMIC_FILE_DRIVER_STATE="+manifest)
 	command.Stdout, command.Stderr = os.Stdout, os.Stderr
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = time.Second
 	err = command.Run()
-	cancel()
 	if err == nil {
 		err = fileDriverReadState(manifest)
 	}

@@ -1,7 +1,6 @@
 package css
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -13,7 +12,7 @@ import (
 
 // Eight independent mode/check groups, each with sixteen content-hash partitions.
 // Keep ownership keyed by case bytes; doubling splits each former bucket in two
-// without changing the mode/backend/mutant checks or their own-work deadline.
+// without changing the mode/backend/mutant checks.
 // Every original case is checked in both modes against all original backends
 // and all three mutants. No leaf prepares another leaf's executable.
 const testCSSPrinterAgreesWithGoShards = 128
@@ -43,11 +42,13 @@ func cssPrinterUnitHasWitness(unit cssModeShard, count, witness int) bool {
 	return false
 }
 
-func cssPrinterOwnDeadline(t *testing.T) func() {
+// Own work is logged, not asserted. Every child a shard runs goes through childguard's stall and
+// ceiling, so a hang is bounded there; a watchdog here only measured speed, and on a loaded box its
+// panic ended the whole package and hid every other shard's result (#he9xrrn).
+func cssPrinterOwnWork(t *testing.T) func() {
 	t.Helper()
 	started := time.Now()
-	timer := time.AfterFunc(60*time.Second, func() { panic(fmt.Sprintf("%s: own work exceeded 60s", t.Name())) })
-	return func() { timer.Stop(); t.Logf("own work: %s", time.Since(started)) }
+	return func() { t.Logf("own work: %s", time.Since(started)) }
 }
 
 func runCSSPrinterShard(t *testing.T, shard int) {
@@ -63,7 +64,7 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 	}
 	repo, _ := filepath.Abs(repository)
 	t.Logf("setup including products: %s", time.Since(setup))
-	defer cssPrinterOwnDeadline(t)()
+	defer cssPrinterOwnWork(t)()
 	path := cssShardFile(t, unit.cases)
 	expected := cssPrinterAnswers(t, printerOracle, path, unit.mode)
 	arguments := []string{path, "output", "once", unit.mode}
@@ -121,7 +122,7 @@ func runCSSPrinterShard(t *testing.T, shard int) {
 func TestCSSPrinterAgreesWithGoUnion(t *testing.T) {
 	t.Parallel()
 	lines := cssPrinterCorpusLines(t)
-	defer cssPrinterOwnDeadline(t)()
+	defer cssPrinterOwnWork(t)()
 	plan := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
 	if err := cssModeUnion(lines, plan, testCSSPrinterAgreesWithGoShards); err != nil {
 		t.Fatal(err)
