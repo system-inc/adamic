@@ -226,7 +226,8 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 
 // inputs is the request's key: from the planner's index when it holds the request (precomputed), else as this process
 // already computed it, else computed here under keying and remembered for the rest of the process, so a unit asking
-// for one product many times keys it once.
+// for one product many times keys it once, its parallel tests included: they wait on the first one's go list rather
+// than each running their own. A failure isn't remembered, so the next ask tries again.
 func (request goRequest) inputs() (Inputs, error) {
 	root, err := repositoryRoot()
 	if err != nil {
@@ -239,21 +240,28 @@ func (request goRequest) inputs() (Inputs, error) {
 	if inputs, ok := precomputed()[identity]; ok {
 		return inputs, nil
 	}
-	if known, ok := computedInputs.Load(identity); ok {
-		return known.(Inputs), nil
-	}
-	var inputs Inputs
-	keying(func() { inputs, err = request.keyInputs(root, overlay) })
-	if err != nil {
-		return Inputs{}, err
-	}
-	computedInputs.Store(identity, inputs)
-	recordInputs(identity, inputs)
-	return inputs, nil
+	entry, _ := computedInputs.LoadOrStore(identity, &keyedRequest{})
+	keyed := entry.(*keyedRequest)
+	keyed.once.Do(func() {
+		keying(func() { keyed.inputs, keyed.err = request.keyInputs(root, overlay) })
+		if keyed.err != nil {
+			computedInputs.CompareAndDelete(identity, keyed)
+			return
+		}
+		recordInputs(identity, keyed.inputs)
+	})
+	return keyed.inputs, keyed.err
 }
 
-// computedInputs holds each request's inputs this process computed, by identity.
+// computedInputs holds each request this process keyed, by identity, as a keyedRequest.
 var computedInputs sync.Map
+
+// A keyedRequest is one request's key, computed once however many tests ask for it at the same time.
+type keyedRequest struct {
+	once   sync.Once
+	inputs Inputs
+	err    error
+}
 
 // identity spells the request the same from every checkout of the tree: the verb, module, package and output, each
 // argument, an -overlay as the map it declares (overlayKey's flags, never the overlay file's temporary path), and each
