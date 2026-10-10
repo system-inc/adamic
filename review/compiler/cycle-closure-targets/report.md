@@ -39,7 +39,7 @@ timeout 720 python3 review/compiler/cycle-closure-targets/run-mutants.py
  git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
 ```
 
-The lane script passed gofmt/tools/t.Parallel checks (12.9s); it skipped vet after its budget, so explicit vet above completed it. No test reads guarded call fields directly without the permitted IR interface. Latest main 79f2067b was merged on this branch; its stage3 census changes do not alter the oracle corpus or compiler under test.
+The final lane script passed in 0.9s: gofmt/tools on six Go files, t.Parallel on two test packages, and vet on two packages. The earlier lane run skipped vet after its budget; explicit vet above also completed successfully. No test reads guarded call fields directly without the permitted IR interface. Latest main 79f2067b was merged on this branch; its stage3 census changes do not alter the oracle corpus or compiler under test.
 
 Counts were refreshed for ten admitted fixtures. More precise shared target sets also changed five existing count rows: route_targets_sort_values retains 92→96/releases 142→150; borrow_chain_unknown 3→2/8→7; call_targets_element 32→30/60→58; generic_functions 32→29/55→52; user_iterators 455→442/904→891. Allocation, free, peak and region counts did not change for these rows. All five fixtures were explicitly checked against Node in both backends with native sanitizers in the final oracle command.
 
