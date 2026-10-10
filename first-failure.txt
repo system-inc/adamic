@@ -1,0 +1,11 @@
+FIRST FAILURE (tests, at 3947.6 s):
+github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+    counts_test.go:239: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+        recorded: | internal/oracle/testdata/node_fs_directory_system.a | 5356 | 5356 | 10114 | 8033 | 3540 | 0 |
+        measured: | internal/oracle/testdata/node_fs_directory_system.a | 5364 | 5364 | 10130 | 8045 | 3546 | 0 |
+--- FAIL: TestCountsAreRecorded (563.34s)
+
+(box load 40.5 on 64 cores at first failure)
