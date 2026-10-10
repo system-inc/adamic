@@ -1,65 +1,156 @@
 {
-  "range": "715ba94f..7945d102",
+  "range": "7945d102..0183ccf8",
   "command": "python3 stage1/cohere/lint/helpers/testdata/regenerate.py",
   "messages_reworded": [],
   "options_removed": [],
   "rules_removed": [],
-  "options_added": {
-    "commit": "06906740",
-    "fields": [
-      "cwd",
-      "entryPoint",
-      "tailwindConfig"
-    ],
-    "targets": [
-      "better-tailwindcss/enforce-canonical-classes",
-      "better-tailwindcss/enforce-consistent-class-order",
-      "better-tailwindcss/enforce-consistent-important-position",
-      "better-tailwindcss/enforce-consistent-variable-syntax",
-      "better-tailwindcss/enforce-consistent-variant-order",
-      "better-tailwindcss/enforce-shorthand-classes",
-      "better-tailwindcss/no-concatenated-classes",
-      "better-tailwindcss/no-conflicting-classes",
-      "better-tailwindcss/no-deprecated-classes",
-      "better-tailwindcss/no-duplicate-classes",
-      "better-tailwindcss/no-unknown-classes",
-      "better-tailwindcss/no-unnecessary-whitespace"
-    ]
-  },
+  "options_added": [
+    {
+      "commit": "0b892cc9",
+      "fields": [
+        "selectors"
+      ],
+      "targets": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-concatenated-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unknown-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ]
+    },
+    {
+      "commit": "f5d1934a",
+      "fields": [
+        "tags"
+      ],
+      "targets": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-concatenated-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unknown-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ]
+    },
+    {
+      "commit": "8908cf64",
+      "fields": [
+        "tsconfig"
+      ],
+      "targets": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-concatenated-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unknown-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ]
+    }
+  ],
+  "options_retyped": [
+    {
+      "commit": "0b892cc9",
+      "fields": [
+        "attributes",
+        "callees",
+        "variables"
+      ],
+      "targets": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-concatenated-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unknown-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "change": "items were strings; LegacySelector decodes itself (a name or [name, matchers]), so the generator marks them unsupported and generate.py drops these twelve rules from strict decoding"
+    },
+    {
+      "commit": "c2e39b75",
+      "fields": [
+        "Allow",
+        "ExceptionPatterns",
+        "Pattern",
+        "MethodsIgnorePattern"
+      ],
+      "targets": [
+        "@typescript-eslint/no-require-imports",
+        "id-length",
+        "id-match",
+        "object-shorthand"
+      ],
+      "change": "*regexp.Regexp (a TextUnmarshaler, unsupported) became *esregexp.RegExp, a struct with only unexported fields, which the generator describes as an object with no fields; id-length and object-shorthand therefore join strict decoding"
+    }
+  ],
   "rules_added": [
     {
-      "rule": "nexus/correctness-no-load-time-import-meta-path",
-      "commit": "21d02688"
+      "rule": "adamic/no-indexed-access-write",
+      "commit": "5d54b142"
     }
   ],
   "messages_added": [
     {
-      "rule": "adamic/invariant-mutable",
-      "id": "readonlyMadeWritable",
-      "commit": "f4383994"
-    },
-    {
-      "rule": "adamic/invariant-mutable",
-      "id": "methodParameterNarrowed",
-      "commit": "a64f6eff"
-    },
-    {
-      "rule": "nexus/localization-no-untranslated-value",
-      "id": "missingEnglishSibling",
-      "commit": "12948765"
-    },
-    {
-      "rule": "nexus/localization-no-untranslated-value",
-      "id": "ambiguousEnglishSibling",
-      "commit": "5108245a"
-    },
-    {
-      "rule": "nexus/correctness-no-load-time-import-meta-path",
-      "id": "loadTimeImportMetaPath",
-      "commit": "21d02688"
+      "rule": "adamic/no-indexed-access-write",
+      "id": "indexedAccessWrite",
+      "commit": "5d54b142"
     }
   ],
-  "cases_before": 22347,
-  "cases_after": 23539,
+  "cases_before": 23539,
+  "cases_after": 21119,
+  "explained_losses": [
+    {
+      "commit": "0b892cc9",
+      "strict_decode_targets_removed": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-concatenated-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unknown-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "cases": -2844
+    }
+  ],
+  "explained_gains": [
+    {
+      "commit": "c2e39b75",
+      "strict_decode_targets_added": [
+        "id-length",
+        "object-shorthand"
+      ],
+      "cases": 424
+    }
+  ],
   "unexplained_losses": []
 }
