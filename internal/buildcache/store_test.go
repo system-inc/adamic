@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -14,6 +15,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 )
 
 // A store as Loom's serves it: blobs by sha256 and refs/build/<key>, read with no credential.
@@ -23,6 +25,20 @@ type fakeStore struct {
 	reads   []string
 	writes  []string
 	broken  string
+	// written is the day each object was written, as R2's lifecycle counts it; the Worker never rewrites one it holds.
+	written map[string]int
+}
+
+// expire is R2's lifecycle on day today: every object written more than lifetime days before is gone.
+func (s *fakeStore) expire(today, lifetime int) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+	for name, day := range s.written {
+		if day < today-lifetime {
+			delete(s.objects, name)
+			delete(s.written, name)
+		}
+	}
 }
 
 func (s *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
@@ -60,7 +76,12 @@ func (s *fakeStore) write(writer http.ResponseWriter, request *http.Request) {
 			http.Error(writer, "hash", http.StatusBadRequest)
 			return
 		}
+		if _, held := s.objects[name]; held {
+			writer.WriteHeader(http.StatusOK)
+			return
+		}
 		s.objects[name] = content
+		s.mark(name)
 		writer.WriteHeader(http.StatusCreated)
 	case strings.HasPrefix(name, "/refs/"):
 		held, ok := s.objects[name]
@@ -68,9 +89,21 @@ func (s *fakeStore) write(writer http.ResponseWriter, request *http.Request) {
 			http.Error(writer, "conflict", http.StatusConflict)
 			return
 		}
+		if ok {
+			writer.WriteHeader(http.StatusOK)
+			return
+		}
 		s.objects[name] = content
+		s.mark(name)
 		writer.WriteHeader(http.StatusCreated)
 	}
+}
+
+func (s *fakeStore) mark(name string) {
+	if s.written == nil {
+		s.written = map[string]int{}
+	}
+	s.written[name] = readsDay()
 }
 
 func (s *fakeStore) blob(content []byte) string {
@@ -282,7 +315,7 @@ func TestOnlyASettledBuildIsPublishedAndAnotherMachineFetchesIt(t *testing.T) {
 	key := file.Sets[0].Key
 	// A candidate's settlement writes the product's candidate ref, never main's, then its read set's.
 	if len(store.writes) != 6 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build-candidate/"+key ||
-		store.writes[5] != "/refs/reads-candidate/"+build.NameKey+".0" {
+		store.writes[5] != fmt.Sprintf("/refs/reads-candidate/%s.%d.0", build.NameKey, readsDay()) {
 		t.Fatalf("writes: %q", store.writes)
 	}
 	// Another machine: an empty cache, no read sets of its own, untraced, reading the store. The read set and then the
@@ -389,7 +422,7 @@ func TestRefsAreSplitByTrust(t *testing.T) {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, _ := loadReads(r.cache, build.NameKey)
-	if !slices.Contains(store.writes, "/refs/build/"+file.Sets[0].Key) || !slices.Contains(store.writes, "/refs/reads/"+build.NameKey+".0") {
+	if !slices.Contains(store.writes, "/refs/build/"+file.Sets[0].Key) || !slices.Contains(store.writes, fmt.Sprintf("/refs/reads/%s.%d.0", build.NameKey, readsDay())) {
 		t.Fatalf("main's gate wrote %v", store.writes)
 	}
 }
@@ -417,5 +450,62 @@ func TestTheSharedTierIsOffUnlessTurnedOn(t *testing.T) {
 	}
 	if len(store.reads)+len(store.writes) != 0 {
 		t.Fatalf("an unset store reached the store: reads %v, writes %v", store.reads, store.writes)
+	}
+}
+
+// Read sets outlive R2's lifecycle (seven days for refs/ and blobs/, and the Worker never rewrites what it holds): each
+// publication is a new ref named by its day over a blob stamped with that day, the tree builder publishes again when it
+// uses a product whose newest set is more than five days old, and a reader takes the newest day it finds, so it never
+// depends on the oldest ref surviving.
+// Not parallel: newRig, and it moves the clock read set refs are named by.
+func TestReadSetsOutliveTheStoresLifecycle(t *testing.T) {
+	day := 20000
+	readsClock = func() time.Time { return time.Unix(int64(day)*86400+3600, 0) }
+	t.Cleanup(func() { readsClock = time.Now })
+	r := newRig(t)
+	store, _ := shared(t)
+	address := os.Getenv("ADAMIC_BUILD_STORE")
+	t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	token(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || strings.Contains(settlement.Settled[0], "publish failed") {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	found := func() bool {
+		t.Helper()
+		t.Setenv("ADAMIC_BUILD_STORE", address)
+		defer t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
+		return len(fetchReads(build.NameKey)) > 0
+	}
+	day += 3
+	store.expire(day, readsLifetime)
+	if !found() {
+		t.Fatal("three days on, a reader found no read set")
+	}
+	// Day 6: the tree builder uses the product, whose newest set is six days old, and publishes it again, new.
+	day += 3
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	refreshedReads.Delete(build.NameKey)
+	Product(t, port, func(string) error { t.Fatal("the tree builder rebuilt a cached product"); return nil })
+	if !slices.Contains(store.writes, fmt.Sprintf("/refs/reads-candidate/%s.%d.0", build.NameKey, day)) {
+		t.Fatalf("using a product with a six-day-old read set published no new one: %q", store.writes)
+	}
+	// Day 9: the first set and its blob are gone; the refreshed one is found.
+	day += 3
+	store.expire(day, readsLifetime)
+	if _, held := store.objects[fmt.Sprintf("/refs/reads-candidate/%s.%d.0", build.NameKey, day-9)]; held {
+		t.Fatal("the lifecycle kept the first read set")
+	}
+	if !found() {
+		t.Fatal("after the first read set expired, a reader found none")
+	}
+	// Day 17, unused since day 6: gone, and a reader finds none rather than a wrong one.
+	day += 8
+	store.expire(day, readsLifetime)
+	if found() {
+		t.Fatal("a read set outlived the lifecycle without being used")
 	}
 }

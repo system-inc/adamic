@@ -137,6 +137,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	}
 	if looked.directory != "" {
 		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: looked.directory})
+		refreshReads(cache, nameKey)
 		return looked.directory, record(inputs.Name, looked.key, "hit", started), nil
 	}
 	if storeAddress() != "" {
@@ -162,6 +163,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 				return "", "", err
 			}
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
+			refreshReads(cache, nameKey)
 			return product, record(inputs.Name, key, outcome, started), nil
 		}
 	}

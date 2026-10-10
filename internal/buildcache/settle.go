@@ -2,6 +2,8 @@ package buildcache
 
 import (
 	"bufio"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -63,8 +65,11 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	return state.settle(entries), nil
 }
 
-// TreeState is the repository's state as git sees it: HEAD, every file's status (untracked ones too, but go.work.sum,
-// which go writes as it runs), and each submodule's HEAD and status. cmd/traced takes it before and after a run.
+// TreeState is the repository's state as git sees it, and the machine's packages: HEAD, every file's status
+// (untracked ones too, but go.work.sum, which go writes as it runs), each submodule's HEAD and status, the content of
+// every modified and untracked file in each (status names a dirty file, never what it holds, so a file dirty before the
+// run and edited again during it would read the same), and dpkg's record of what is installed (an upgrade during the
+// run). cmd/traced takes it before and after a run.
 func TreeState() (string, error) {
 	root, err := repositoryRoot()
 	if err != nil {
@@ -72,22 +77,52 @@ func TreeState() (string, error) {
 	}
 	var state strings.Builder
 	keying(func() {
-		for _, arguments := range [][]string{
-			{"rev-parse", "HEAD"},
-			{"status", "--porcelain=v2", "-uall"},
-			{"submodule", "status", "--recursive"},
-			{"submodule", "foreach", "--quiet", "--recursive", "git rev-parse HEAD && git status --porcelain=v2 -uall"},
-		} {
-			var output []byte
-			if output, err = exec.Command("git", append([]string{"-C", root}, arguments...)...).Output(); err != nil {
-				err = fmt.Errorf("git %s: %v", strings.Join(arguments, " "), err)
-				return
+		git := func(directory string, arguments ...string) string {
+			if err != nil {
+				return ""
 			}
-			for _, line := range strings.Split(string(output), "\n") {
+			var output []byte
+			if output, err = exec.Command("git", append([]string{"-C", directory}, arguments...)...).Output(); err != nil {
+				err = fmt.Errorf("git -C %s %s: %v", directory, strings.Join(arguments, " "), err)
+			}
+			return string(output)
+		}
+		keep := func(output string) {
+			for _, line := range strings.Split(output, "\n") {
 				if !strings.HasSuffix(line, "go.work.sum") {
 					state.WriteString(line + "\n")
 				}
 			}
+		}
+		repositories := []string{root}
+		keep(git(root, "rev-parse", "HEAD"))
+		submodules := git(root, "submodule", "status", "--recursive")
+		keep(submodules)
+		for _, line := range strings.Split(submodules, "\n") {
+			if fields := strings.Fields(line); len(fields) >= 2 {
+				repositories = append(repositories, filepath.Join(root, fields[1]))
+			}
+		}
+		for _, repository := range repositories {
+			if _, missing := os.Stat(filepath.Join(repository, ".git")); missing != nil {
+				continue
+			}
+			state.WriteString("repository " + strings.TrimPrefix(repository, root) + "\n")
+			keep(git(repository, "status", "--porcelain=v2", "-uall"))
+			for _, name := range strings.Split(git(repository, "ls-files", "-m", "-o", "--exclude-standard", "-z"), "\x00") {
+				if name == "" || unkeyed(name) {
+					continue
+				}
+				if content, readError := os.ReadFile(filepath.Join(repository, name)); readError == nil {
+					state.WriteString("worktree " + name + " " + blobID(content, 40) + "\n")
+				} else {
+					state.WriteString("worktree " + name + " unreadable\n")
+				}
+			}
+		}
+		if status, readError := os.ReadFile(filepath.Join(dpkgDirectory, "status")); readError == nil {
+			sum := sha256.Sum256(status)
+			state.WriteString("dpkg status " + hex.EncodeToString(sum[:]) + "\n")
 		}
 	})
 	return state.String(), err
@@ -881,7 +916,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		// store doesn't hold.
 		if publishing() {
 			if err = publish(evaluated.key, entry.Name, product); err == nil {
-				err = publishReads(entry.NameKey, set)
+				err = publishReads(facts.cache, entry.NameKey)
 			}
 			if err != nil {
 				line += "; publish failed: " + err.Error()
@@ -930,14 +965,8 @@ func (state *traceState) measured(entry journalEntry, reads map[string]int, prod
 			case found.kind == "go":
 				entries[readEntry{Kind: "go", Path: "release"}] = true
 			case found.kind == "system":
-				// A file a package installed is keyed by the package; a directory, a link, a lookup that missed and a
-				// file no package owns, by itself.
-				info, err := os.Lstat(found.detail)
-				if owner := packageOwner(found.detail); err == nil && info.Mode().IsRegular() && owner != "" {
-					entries[readEntry{Kind: "package", Path: owner}] = true
-				} else {
-					entries[readEntry{Kind: "system", Path: found.detail}] = true
-				}
+				// Valued by systemValue: a file dpkg installed, unchanged, by its package and version.
+				entries[readEntry{Kind: "system", Path: found.detail}] = true
 			default:
 				entries[readEntry{Kind: found.kind, Path: found.detail}] = true
 				if found.kind == "content" || found.kind == "listing" {
