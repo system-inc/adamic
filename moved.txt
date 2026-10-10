@@ -1,0 +1,13 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a/stage0
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/10_build_options.a/stage0
+        fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/objects/10_build_options.a:8:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet}; recorded {Outcome:Refused What:stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added}
