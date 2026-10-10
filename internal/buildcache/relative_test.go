@@ -136,7 +136,7 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 		return string(output), err
 	}
 	output, err := child(tree, cache, "build")
-	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
+	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "dependent found") {
 		t.Fatalf("building at %s: %v\n%s", tree, err, output)
 	}
 	if output, err = child(tree, cache, "build absolute"); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
@@ -153,10 +153,11 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 	if err = os.Rename(cache, movedCache); err != nil {
 		t.Fatal(err)
 	}
-	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
+	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "dependent found") {
 		t.Fatalf("reading at %s: %v\n%s", moved, err, output)
 	}
-	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 1 {
+	// Workshop's two builds, the product and the one keyed by its resolved copy, and only hits on the runner.
+	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 2 {
 		t.Fatalf("the runner rebuilt instead of hitting Workshop's product:\n%s", log)
 	}
 
@@ -240,4 +241,54 @@ func TestRelocationChild(t *testing.T) {
 		t.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
 	}
 	fmt.Println("port resolved")
+
+	// A product keyed by a file of the resolved copy, as estree's misc port is keyed by its main.ts: the copy's name holds
+	// a hash of this machine's roots, and the key names the product's file instead, so the runner hits Workshop's
+	// (#sgemgmn).
+	Product(t, Inputs{Name: "relocation dependent", Files: []string{"data"}, Flags: []string{"main=" + filepath.Join(resolved, "port/main.ts")}}, func(directory string) error {
+		if mode == "read" {
+			return fmt.Errorf("the runner built the product keyed by %s instead of finding it", filepath.Join(resolved, "port/main.ts"))
+		}
+		return os.WriteFile(filepath.Join(directory, "built"), []byte("built\n"), 0o644)
+	})
+	fmt.Println("dependent found")
+}
+
+// A key names a product by its key wherever this process holds it (#sgemgmn): in the cache, in the copy Resolved made
+// of it beside the cache's, whose name holds a hash of this machine's roots, and built uncached in a temporary
+// directory of its own, which main's uncached gate publishes under the key it computes.
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
+func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
+	cached(t)
+	t.Setenv("TMPDIR", t.TempDir())
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	build := func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "main.ts"), []byte("import '"+Relative(filepath.Join(root, "go.mod"))+"';\n"), 0o644)
+	}
+	for _, mode := range []string{"", "off"} {
+		t.Setenv("ADAMIC_BUILD_CACHE", mode)
+		inputs := thisPackage
+		inputs.Name = "named by its key, cache " + mode
+		product := Product(t, inputs, build)
+		key, err := Key(root, inputs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		copied, err := Resolved(product)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if copied == product {
+			t.Fatalf("cache %q: %s, which names <repository>, resolved to itself", mode, product)
+		}
+		want := "main=<build cache>/" + key + "/main.ts"
+		for _, held := range []string{product, copied} {
+			if got := portable(root, "main="+filepath.Join(held, "main.ts")); got != want {
+				t.Errorf("cache %q: a key names %s as %q, want %q", mode, filepath.Join(held, "main.ts"), got, want)
+			}
+		}
+	}
 }
