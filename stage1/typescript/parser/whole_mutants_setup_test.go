@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"testing"
@@ -42,6 +43,11 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+// wholeMutantsTreeScanner is the scanner's absolute path as another checkout wrote it into a mutant copy: copyPort
+// names this checkout's scanner, and a copy that is a product fetched from Workshop names Workshop's, so the hash
+// reads either as the tree spells it (#t37sw0f; the copy's own bytes are #tqrqx60's).
+var wholeMutantsTreeScanner = regexp.MustCompile(`/[^'"\s]*/stage1/typescript/scanner/scanner\.ts`)
+
 func wholeMutantsSourceHash(t *testing.T, directory string) string {
 	t.Helper()
 	scanner, err := filepath.Abs("../scanner/scanner.ts")
@@ -54,7 +60,7 @@ func wholeMutantsSourceHash(t *testing.T, directory string) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		normalized := strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts")
+		normalized := wholeMutantsTreeScanner.ReplaceAllString(strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"), "../scanner/scanner.ts")
 		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
 	}
 	return fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
