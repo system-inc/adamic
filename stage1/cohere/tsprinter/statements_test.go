@@ -77,7 +77,9 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
 		}
 		t.Log(string(output))
-		return nil
+		// The oracle labels each case by its file's path here; the product names it repo/ or typescript/ and the path
+		// inside, as the expression outputs do, so a runner reading Workshop's product keys the same cases (#tqrqx60).
+		return tsPrinterRewriteMetadata(dir, root, upstream, true)
 	})
 	directory = product
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
