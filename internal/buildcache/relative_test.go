@@ -140,7 +140,7 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 		return string(output), err
 	}
 	output, err := child(tree, cache, "build")
-	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
+	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") {
 		t.Fatalf("building at %s: %v\n%s", tree, err, output)
 	}
 	if output, err = child(tree, cache, "build absolute"); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
@@ -157,10 +157,11 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 	if err = os.Rename(cache, movedCache); err != nil {
 		t.Fatal(err)
 	}
-	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
+	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") {
 		t.Fatalf("reading at %s: %v\n%s", moved, err, output)
 	}
-	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 1 {
+	// Two misses, both at Workshop: the product and the inner one it names.
+	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 2 {
 		t.Fatalf("the runner rebuilt instead of hitting Workshop's product:\n%s", log)
 	}
 
@@ -203,6 +204,15 @@ func TestRelocationChild(t *testing.T) {
 	if mode == "build absolute" {
 		inputs.Name += " absolute"
 	}
+	// An inner product the outer one names, keyed by a flag naming this checkout (as lowering a port is, by
+	// repository=). The runner never gets it itself: it reads it only through the name in the outer product's bytes.
+	inner := Inputs{Name: "relocation inner", Files: []string{"data"}, Flags: []string{"repository=" + root}}
+	var innerDirectory string
+	if mode != "read" {
+		innerDirectory = Product(t, inner, func(directory string) error {
+			return os.WriteFile(filepath.Join(directory, "inner.txt"), []byte("inner"), 0o644)
+		})
+	}
 	product := Product(t, inputs, func(directory string) error {
 		if mode == "read" {
 			return fmt.Errorf("the runner built %s instead of finding it", inputs.Name)
@@ -212,6 +222,9 @@ func TestRelocationChild(t *testing.T) {
 			answer = Relative(answer)
 		}
 		if err := os.WriteFile(filepath.Join(directory, "manifest.txt"), []byte(answer), 0o644); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, "inner.name"), []byte(Relative(filepath.Join(innerDirectory, "inner.txt"))), 0o644); err != nil {
 			return err
 		}
 		// A mutant port whose import reaches back into the tree, written as the build's own steps need it, then made
@@ -252,6 +265,14 @@ func TestRelocationChild(t *testing.T) {
 		t.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
 	}
 	fmt.Println("port resolved")
+	name, err := os.ReadFile(filepath.Join(product, "inner.name"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if content, err := os.ReadFile(Absolute(string(name))); err != nil || string(content) != "inner" {
+		t.Fatalf("the inner product named %q read as %q, %v", name, content, err)
+	}
+	fmt.Println("inner read")
 }
 
 // forgetHeld drops what this process holds by name key, as a process that never got these products starts.

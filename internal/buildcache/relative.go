@@ -192,8 +192,23 @@ func localPointer(cache, nameKey string) string {
 	return filepath.Join(cache, "local", nameKey+".json")
 }
 
-// pointLocal records inputs under nameKey, whole by rename, when they aren't there already.
+// pointLocal records inputs under nameKey, whole by rename, when they aren't there already. They are recorded as
+// portable spells them, which is how they key: a flag naming this checkout (repository=/path/to/it) must key the same
+// when another checkout of the tree reads the pointer, and Key reads a portable value back unchanged.
 func pointLocal(cache, nameKey string, inputs Inputs) error {
+	root, err := repositoryRoot()
+	if err != nil {
+		return err
+	}
+	inputs.Name = portable(root, inputs.Name)
+	inputs.Flags = slices.Clone(inputs.Flags)
+	for index, flag := range inputs.Flags {
+		inputs.Flags[index] = portable(root, flag)
+	}
+	inputs.Toolchain = slices.Clone(inputs.Toolchain)
+	for index, tool := range inputs.Toolchain {
+		inputs.Toolchain[index] = portable(root, tool)
+	}
 	encoded, err := json.Marshal(inputs)
 	if err != nil {
 		return err
@@ -208,6 +223,9 @@ func pointLocal(cache, nameKey string, inputs Inputs) error {
 	}
 	if _, err = temporary.Write(encoded); err == nil {
 		err = temporary.Close()
+	}
+	if err == nil {
+		err = os.Chmod(temporary.Name(), 0o644)
 	}
 	if err != nil {
 		os.Remove(temporary.Name())
