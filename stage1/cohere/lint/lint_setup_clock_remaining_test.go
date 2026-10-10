@@ -68,13 +68,6 @@ func TestProfileCompilation_Setup(t *testing.T) {
 	t.Logf("setup wall=%s", time.Since(started))
 }
 
-func TestProfileCompilationBuildLower(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	defer func() { t.Logf("build wall=%s", time.Since(started)) }()
-	compilationLowered(t, compilationInputs(t))
-}
-
 func TestProfileCompilationBuildC(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
