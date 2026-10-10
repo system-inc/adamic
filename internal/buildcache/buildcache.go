@@ -316,6 +316,9 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			}
 			return nil
 		}
+		if unkeyed(relative) {
+			return nil
+		}
 		// Under a named directory, only what the tree carries: a checkout's untracked files (a build's leftovers, a
 		// stray note) are not in the source a runner unpacks, so they never key a product. A path named in Files is
 		// hashed whether or not git tracks it.
@@ -350,6 +353,13 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 		}
 		return nil
 	})
+}
+
+// unkeyed is a file no key reads even when named: go.work.sum, go's record of the checksums of modules the workspace
+// fetched, which go writes as a run needs one (Workshop's proof, Oct 10: a checkout gained one mid-run and every key
+// naming it moved) and which changes no build's output, since go.mod and go.work pin what it verifies.
+func unkeyed(name string) bool {
+	return path.Base(name) == "go.work.sum"
 }
 
 // trackedFiles is what git tracks in one repository: each tracked path (a file, a symbolic link, or a submodule's
@@ -555,7 +565,9 @@ func repositoryRoot() (string, error) {
 func describe(root string, inputs Inputs) string {
 	lines := []string{"name " + portable(root, inputs.Name)}
 	for _, name := range inputs.Files {
-		lines = append(lines, "file "+name)
+		if !unkeyed(name) {
+			lines = append(lines, "file "+name)
+		}
 	}
 	for _, flag := range inputs.Flags {
 		lines = append(lines, "flag "+portable(root, flag))

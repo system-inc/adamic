@@ -120,7 +120,7 @@ func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) 
 		if err != nil {
 			t.Fatal(err)
 		}
-		normalized := strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts")
+		normalized := wholeMutantsTreeScanner.ReplaceAllString(strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"), "../scanner/scanner.ts")
 		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
 	}
 	sourceHash := fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))

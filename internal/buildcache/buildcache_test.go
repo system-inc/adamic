@@ -352,6 +352,25 @@ func TestAKeyHashesWhatTheTreeCarries(t *testing.T) {
 	}
 }
 
+// go.work.sum is never keyed (Workshop's proof, Oct 10): go writes it during a run, so one checkout had it and
+// another didn't, and the products naming it keyed apart, though it changes no build's output.
+func TestGoWorkSumKeysNothing(t *testing.T) {
+	t.Parallel()
+	with, without := repository(t), repository(t)
+	write(t, with, "go.work.sum", "golang.org/x/text v0.42.0 h1:x\n")
+	keyed := key(t, with, Inputs{Name: "port", Files: []string{"source", "go.work.sum"}})
+	if bare := key(t, without, Inputs{Name: "port", Files: []string{"source"}}); keyed != bare {
+		t.Fatalf("a go.work.sum keyed %s, none %s", keyed, bare)
+	}
+	write(t, with, "source/go.work.sum", "another\n")
+	if key(t, with, Inputs{Name: "port", Files: []string{"source", "go.work.sum"}}) != keyed {
+		t.Fatal("a go.work.sum under a named directory moved the key")
+	}
+	if strings.Contains(describe(with, Inputs{Name: "port", Files: []string{"go.work.sum"}}), "go.work.sum") {
+		t.Fatal("the recorded inputs name a go.work.sum the key doesn't read")
+	}
+}
+
 // One tool installed under two prefixes reports the same, and a note on standard error (go downloading the tree's
 // release the first time) never enters its report (#t37sw0f).
 func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
