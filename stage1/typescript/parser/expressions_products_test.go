@@ -68,10 +68,16 @@ func expressionSource(t *testing.T, index int) string {
 					return err
 				}
 			}
-			return nil
+			// copyPort's scanner import names this checkout; the product names it <repository> (#tqrqx60).
+			return buildcache.RelativeFiles(dir)
 		})
 	})
-	return variant.source
+	// Node and the loader read the port, so callers get the copy whose imports name this checkout.
+	directory, err := buildcache.Resolved(variant.source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return directory
 }
 
 var expressionNative [4]struct {
