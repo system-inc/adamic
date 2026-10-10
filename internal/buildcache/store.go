@@ -486,7 +486,74 @@ func publishReads(cache, nameKey string) error {
 	return errors.New("no free read set index today")
 }
 
-var refreshedReads sync.Map
+var refreshedProducts, refreshedReads sync.Map
+
+// refreshPublished runs on the tree builder's every use of a product (a hit, or a fetch), once per process: when any
+// of what a runner needs is gone from the store (the product's ref, its manifest, a file's blob, which R2 expires a
+// week after it was written), the product is published again, whole, and its read sets with it, so a runner never
+// finds a read set whose product is gone for longer than until the tree builder next uses it; otherwise the read sets
+// are refreshed when their newest is more than readsFresh days old.
+//
+// The Worker never rewrites a ref or a blob it holds, so what is still there can't be made fresh from here: a product
+// expires a week after it was first published and comes back on the tree builder's next use. Keeping it present
+// throughout needs the Worker to rewrite a held object's same bytes (as Loom's builder does for refs/action, straight
+// in R2) or refs/build and blobs/ exempted from the lifecycle; both are Loom's.
+func refreshPublished(cache, nameKey, key, directory, name string) {
+	if !publishing() || publishToken() == "" || storeAddress() == "" {
+		return
+	}
+	if _, done := refreshedProducts.LoadOrStore(key, true); done {
+		return
+	}
+	if !productHeld(key, name, directory) {
+		if err := publish(key, name, directory); err != nil {
+			note("republish %s %s: %v", name, key[:12], err)
+			return
+		}
+		refreshedReads.Store(nameKey, true)
+		if err := publishReads(cache, nameKey); err != nil {
+			note("republish read sets %s: %v", nameKey[:12], err)
+		}
+		return
+	}
+	refreshReads(cache, nameKey)
+}
+
+// productHeld says whether the store holds everything a runner needs to fetch the product at directory under key:
+// its ref, its manifest, and each file's blob, asked by HEAD, never downloaded.
+func productHeld(key, name, directory string) bool {
+	store := storeAddress()
+	if !held(store + "/refs/" + writeNamespace() + "/" + key) {
+		return false
+	}
+	product, err := describeProduct(key, name, directory)
+	if err != nil {
+		return false
+	}
+	encoded, err := json.Marshal(product)
+	if err != nil {
+		return false
+	}
+	sum := sha256.Sum256(encoded)
+	if !held(store + "/blobs/" + hex.EncodeToString(sum[:])) {
+		return false
+	}
+	for _, file := range product.Files {
+		if !held(store + "/blobs/" + file.SHA256) {
+			return false
+		}
+	}
+	return true
+}
+
+func held(address string) bool {
+	response, err := storeClient.Head(address)
+	if err != nil {
+		return false
+	}
+	response.Body.Close()
+	return response.StatusCode == http.StatusOK
+}
 
 // refreshReads, on the tree builder's use of a product, publishes its read sets again when the store's newest is more
 // than readsFresh days old or gone, once per process, so a product in use never outlives its read sets.
