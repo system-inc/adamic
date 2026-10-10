@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func TestUnknownMutableContainerFailsLoudly(t *testing.T) {
@@ -23,8 +25,7 @@ func TestUnknownMutableContainerFailsLoudly(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("go", "run", "main.go", root, input, output)
-	command.Env = append(os.Environ(), "GOWORK=off")
+	command := exec.Command(statecopy(t), root, input, output)
 	command.Stdout = log
 	command.Stderr = log
 	err = command.Run()
@@ -55,8 +56,7 @@ func TestUnknownForeignPointerFailsLoudly(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("go", "run", "main.go", root, input, output)
-	command.Env = append(os.Environ(), "GOWORK=off")
+	command := exec.Command(statecopy(t), root, input, output)
 	command.Stdout = log
 	command.Stderr = log
 	err = command.Run()
@@ -68,4 +68,10 @@ func TestUnknownForeignPointerFailsLoudly(t *testing.T) {
 	if _, err := os.Stat(output); !os.IsNotExist(err) {
 		t.Fatal("generator published partial output")
 	}
+}
+
+// statecopy is this package's command, a keyed product (GOWORK=off, as go run built it), so no test runs go.
+func statecopy(t testing.TB) string {
+	t.Helper()
+	return buildcache.GoBuild(t, "statecopy", "./stage3/census/latent/statecopy", nil, "GOWORK=off")
 }
