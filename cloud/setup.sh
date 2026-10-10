@@ -168,7 +168,21 @@ if "$wasiSDK"; then
   curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
  fi
  "$wasiDirectory/bin/clang" --version | head -n 1
- step "wasi sdk ready ($wasiDirectory)"
+ # The WASI tests link with the clang on PATH ($tools/bin/clang), whose resource directory holds builtins for the
+ # native target only, so wasm-ld can't open wasm32-unknown-wasi/libclang_rt.builtins.a and every WASI test skips
+ # (Oct 10: the 36 internal/native wasm units on each box-strict box). The SDK carries the wasm32 builtins for its
+ # own clang; linked into the PATH clang's resource directory when both are the same clang major, they serve it.
+ resource=$("$tools/bin/clang" -print-resource-dir)
+ sdkBuiltins="$wasiDirectory/lib/clang/$(basename "$resource")/lib"
+ [ -d "$sdkBuiltins" ] || { echo "setup: wasi-sdk $wasiVersion has no builtins for clang $(basename "$resource") ($(ls "$wasiDirectory/lib/clang"))" >&2 && exit 1; }
+ for builtins in "$sdkBuiltins"/wasm32-*; do
+  [ -e "$resource/lib/${builtins##*/}" ] && [ ! -L "$resource/lib/${builtins##*/}" ] || ln -sfn "$builtins" "$resource/lib/${builtins##*/}"
+ done
+ # A claimed WASI toolchain links: the WASI tests' own probe, with the clang they run.
+ printf '#include <stdlib.h>\nint main(void) { void *p = malloc(16); free(p); return 0; }\n' > "$probe/wasi.c"
+ "$tools/bin/clang" --target=wasm32-wasi --sysroot="$wasiDirectory/share/wasi-sysroot" -O2 "$probe/wasi.c" -o "$probe/wasi.wasm" ||
+  { echo "setup: $tools/bin/clang can't link for wasm32-wasi with wasi-sdk $wasiVersion" >&2 && exit 1; }
+ step "wasi sdk ready ($wasiDirectory, linking with $tools/bin/clang)"
 fi
 
 # Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
