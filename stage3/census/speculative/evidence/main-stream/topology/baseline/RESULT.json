@@ -1,0 +1,103 @@
+{
+  "base": "a5630a90d05abe85670ba1e00bff3643a2742e53",
+  "mapper_fix": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 7,
+    "Refused": 1
+  },
+  "counts": {
+    "NotYet": [
+      1,
+      2,
+      1,
+      1,
+      2
+    ],
+    "Refused": [
+      0,
+      0,
+      0,
+      1,
+      0
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "an array of T",
+      "counts": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T",
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a function returning T | undefined",
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member map read as an own field",
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 93,
+  "examined_bytes": 93,
+  "examined_share": 1.0,
+  "typescript_source_bytes": 93,
+  "typescript_examined_share": 1.0,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 8,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "span.a",
+      "sha256": "f1934822a09fd3ac24a62ba354b2442350326fc712649b8a2e32807fd09068e5",
+      "source_bytes": 93,
+      "total_nodes": 29,
+      "visited_nodes": 29,
+      "attempted_nodes": 12,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": []
+}
