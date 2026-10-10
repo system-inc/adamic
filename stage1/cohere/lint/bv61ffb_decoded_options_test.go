@@ -249,7 +249,11 @@ func decodedOptionsSetupTest(t *testing.T) {
 	// Both original and mutant source copies live in the content-addressed
 	// product, rather than in a setup test's TempDir.
 	lowered := decodedOptionsSetupLowered(t, false)
-	changed := decodedOptionsSetupLowered(t, true)
+	// Node runs the changed port, so it reads the copy whose imports name this checkout.
+	changed, err := buildcache.Resolved(decodedOptionsSetupLowered(t, true))
+	if err != nil {
+		t.Fatal(err)
+	}
 	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
 	nativeProduct := buildcache.Product(t, inputs, func(output string) error {
@@ -375,7 +379,11 @@ func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
 		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		if err := os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			return err
+		}
+		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(output)
 	})
 }
 
