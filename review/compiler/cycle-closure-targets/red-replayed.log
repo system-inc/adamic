@@ -1,0 +1,96 @@
+=== RUN   TestGettersCensusPrimaryFunction
+=== PAUSE TestGettersCensusPrimaryFunction
+=== RUN   TestGettersCensusOptionalBooleanFunction
+=== PAUSE TestGettersCensusOptionalBooleanFunction
+=== RUN   TestGettersCensusUpdateNodeFunction
+=== PAUSE TestGettersCensusUpdateNodeFunction
+=== RUN   TestGettersCensusUnaryNodeFunction
+=== PAUSE TestGettersCensusUnaryNodeFunction
+=== RUN   TestGettersCensusOptionalTypeFunction
+=== PAUSE TestGettersCensusOptionalTypeFunction
+=== RUN   TestGettersCensusUpdateTypeFunction
+=== PAUSE TestGettersCensusUpdateTypeFunction
+=== RUN   TestGettersCensusOptionalCommentFunction
+=== PAUSE TestGettersCensusOptionalCommentFunction
+=== RUN   TestGettersCensusUpdateCommentFunction
+=== PAUSE TestGettersCensusUpdateCommentFunction
+=== RUN   TestGettersCensusBinaryFunction
+=== PAUSE TestGettersCensusBinaryFunction
+=== RUN   TestGettersCensusUnaryFunction
+=== PAUSE TestGettersCensusUnaryFunction
+=== CONT  TestGettersCensusPrimaryFunction
+=== CONT  TestGettersCensusUpdateTypeFunction
+=== CONT  TestGettersCensusUnaryFunction
+=== CONT  TestGettersCensusBinaryFunction
+=== NAME  TestGettersCensusPrimaryFunction
+    cycle_closure_targets_test.go:52: gate cache node hit
+    cycle_closure_targets_test.go:52: Node: exit 0 stdout "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n" stderr ""
+=== NAME  TestGettersCensusUnaryFunction
+    cycle_closure_targets_test.go:88: gate cache node hit
+    cycle_closure_targets_test.go:88: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+=== NAME  TestGettersCensusUpdateTypeFunction
+    cycle_closure_targets_test.go:72: gate cache node hit
+    cycle_closure_targets_test.go:72: Node: exit 0 stdout "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n" stderr ""
+=== NAME  TestGettersCensusBinaryFunction
+    cycle_closure_targets_test.go:84: gate cache node hit
+    cycle_closure_targets_test.go:84: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusUnaryFunction
+    cycle_closure_targets_test.go:88: /workspace/adamic/internal/oracle/testdata/getters_census_unary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusUnaryFunction (0.15s)
+=== CONT  TestGettersCensusUpdateNodeFunction
+=== NAME  TestGettersCensusUpdateTypeFunction
+    cycle_closure_targets_test.go:72: /workspace/adamic/internal/oracle/testdata/getters_census_update_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusUpdateTypeFunction (0.15s)
+=== CONT  TestGettersCensusUpdateCommentFunction
+=== NAME  TestGettersCensusBinaryFunction
+    cycle_closure_targets_test.go:84: /workspace/adamic/internal/oracle/testdata/getters_census_binary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusBinaryFunction (0.16s)
+=== CONT  TestGettersCensusOptionalCommentFunction
+=== NAME  TestGettersCensusPrimaryFunction
+    cycle_closure_targets_test.go:52: /workspace/adamic/internal/oracle/testdata/getters_census_primary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusPrimaryFunction (0.16s)
+=== CONT  TestGettersCensusOptionalTypeFunction
+=== NAME  TestGettersCensusUpdateNodeFunction
+    cycle_closure_targets_test.go:60: gate cache node hit
+    cycle_closure_targets_test.go:60: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+=== NAME  TestGettersCensusUpdateCommentFunction
+    cycle_closure_targets_test.go:80: gate cache node hit
+    cycle_closure_targets_test.go:80: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusOptionalCommentFunction
+    cycle_closure_targets_test.go:76: gate cache node hit
+    cycle_closure_targets_test.go:76: Node: exit 0 stdout "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n" stderr ""
+=== NAME  TestGettersCensusOptionalTypeFunction
+    cycle_closure_targets_test.go:68: gate cache node hit
+    cycle_closure_targets_test.go:68: Node: exit 0 stdout "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n" stderr ""
+=== NAME  TestGettersCensusOptionalCommentFunction
+    cycle_closure_targets_test.go:76: /workspace/adamic/internal/oracle/testdata/getters_census_optional_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusOptionalCommentFunction (0.08s)
+=== CONT  TestGettersCensusOptionalBooleanFunction
+=== NAME  TestGettersCensusUpdateNodeFunction
+    cycle_closure_targets_test.go:60: /workspace/adamic/internal/oracle/testdata/getters_census_update_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusUpdateNodeFunction (0.10s)
+=== CONT  TestGettersCensusUnaryNodeFunction
+=== NAME  TestGettersCensusUpdateCommentFunction
+    cycle_closure_targets_test.go:80: /workspace/adamic/internal/oracle/testdata/getters_census_update_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusUpdateCommentFunction (0.11s)
+=== NAME  TestGettersCensusOptionalTypeFunction
+    cycle_closure_targets_test.go:68: /workspace/adamic/internal/oracle/testdata/getters_census_optional_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusOptionalTypeFunction (0.10s)
+=== NAME  TestGettersCensusOptionalBooleanFunction
+    cycle_closure_targets_test.go:56: gate cache node hit
+    cycle_closure_targets_test.go:56: Node: exit 0 stdout "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n" stderr ""
+=== NAME  TestGettersCensusUnaryNodeFunction
+    cycle_closure_targets_test.go:64: gate cache node hit
+    cycle_closure_targets_test.go:64: Node: exit 0 stdout "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n" stderr ""
+=== NAME  TestGettersCensusOptionalBooleanFunction
+    cycle_closure_targets_test.go:56: /workspace/adamic/internal/oracle/testdata/getters_census_optional_boolean_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusOptionalBooleanFunction (0.08s)
+=== NAME  TestGettersCensusUnaryNodeFunction
+    cycle_closure_targets_test.go:64: /workspace/adamic/internal/oracle/testdata/getters_census_unary_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestGettersCensusUnaryNodeFunction (0.08s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=10 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.336s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestClosureTargetsFollowParametersReturnsAndMapValues
+=== PAUSE TestClosureTargetsFollowParametersReturnsAndMapValues
+=== CONT  TestClosureTargetsFollowParametersReturnsAndMapValues
+    call_targets_test.go:101: ir.Read: want both returned targets, got {Functions:[2] Unknown:false}
+--- FAIL: TestClosureTargetsFollowParametersReturnsAndMapValues (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

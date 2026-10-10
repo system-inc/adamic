@@ -1,0 +1,17 @@
+function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
+    const cache = new Map<number, T>();
+    return (kind) => {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        const value = callback(kind);
+        cache.set(kind, value);
+        return value;
+    };
+}
+function make(): (kind: number) => () => number {
+let memo: (kind: number) => () => number = (kind) => () => kind;
+memo = memoizeOne((kind: number) => () => memo(kind)());
+return memo;
+}
+const held = make();
+console.log('stored');

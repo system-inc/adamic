@@ -1,0 +1,22 @@
+function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
+    const cache = new Map<number, T>();
+    return (kind) => {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        const value = callback(kind);
+        cache.set(kind, value);
+        return value;
+    };
+}
+function make(): (kind: number) => () => number {
+const links = new Map<number, () => number>();
+let memo: (kind: number) => () => number = (kind) => () => kind;
+links.set(0, () => memo(0)());
+memo = memoizeOne((kind: number) => () => {
+    const next = links.get(kind);
+    return next === undefined ? kind : next();
+});
+return memo;
+}
+const held = make();
+console.log('stored');

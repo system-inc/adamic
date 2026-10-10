@@ -1,0 +1,18 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== RUN   TestClosureTargetsBoundOnlyProvenValues
+=== PAUSE TestClosureTargetsBoundOnlyProvenValues
+=== RUN   TestClosureTargetsFollowParametersReturnsAndMapValues
+=== PAUSE TestClosureTargetsFollowParametersReturnsAndMapValues
+=== RUN   TestClosureTargetsKnownCallerDoesNotHideUnknownCaller
+=== PAUSE TestClosureTargetsKnownCallerDoesNotHideUnknownCaller
+=== CONT  TestCallTargetReaders
+=== CONT  TestClosureTargetsFollowParametersReturnsAndMapValues
+--- PASS: TestClosureTargetsFollowParametersReturnsAndMapValues (0.00s)
+=== CONT  TestClosureTargetsKnownCallerDoesNotHideUnknownCaller
+=== CONT  TestClosureTargetsBoundOnlyProvenValues
+--- PASS: TestClosureTargetsBoundOnlyProvenValues (0.00s)
+--- PASS: TestClosureTargetsKnownCallerDoesNotHideUnknownCaller (0.00s)
+--- PASS: TestCallTargetReaders (0.53s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.544s
