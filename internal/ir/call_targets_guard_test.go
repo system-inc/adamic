@@ -9,14 +9,16 @@ import (
 	"go/types"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // x/tools is not a dependency here. go list supplies the module-aware export
-// files, and go/types resolves selectors, including aliases and embedded fields.
+// files, built ahead as a product (callTargetExports), and go/types resolves
+// selectors, including aliases and embedded fields.
 // Entries name a file, enclosing Go function and IR field, so a migrated reader
 // cannot leave an unrelated reader in that file exempt. Owners identify the unit
 // responsible for routing the remaining analyses. Emission entries are permanent
@@ -45,32 +47,24 @@ func TestCallTargetReaders(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command("go", "list", "-export", "-deps", "-test", "-json", "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow")
-	command.Dir = root
-	output, err := command.Output()
+	listingProduct := callTargetExports(t)
+	encoded, err := os.ReadFile(filepath.Join(listingProduct, "listing.json"))
 	if err != nil {
-		if failure, ok := err.(*exec.ExitError); ok {
-			t.Fatalf("go list: %s", failure.Stderr)
-		}
 		t.Fatal(err)
 	}
-	type listedPackage struct {
-		ImportPath, Dir, Export, ForTest   string
-		GoFiles, TestGoFiles, XTestGoFiles []string
+	var packages []buildcache.ListedPackage
+	if err := json.Unmarshal(encoded, &packages); err != nil {
+		t.Fatal(err)
 	}
-	packages := []listedPackage{}
 	exports := map[string]string{}
-	decoder := json.NewDecoder(strings.NewReader(string(output)))
-	for {
-		var pkg listedPackage
-		err := decoder.Decode(&pkg)
-		if err == io.EOF {
-			break
+	for index, pkg := range packages {
+		if pkg.Export != "" {
+			pkg.Export = filepath.Join(listingProduct, pkg.Export)
 		}
-		if err != nil {
-			t.Fatal(err)
+		if pkg.Dir != "" {
+			pkg.Dir = filepath.Join(root, pkg.Dir)
 		}
-		packages = append(packages, pkg)
+		packages[index] = pkg
 		exports[pkg.ImportPath] = pkg.Export
 		// External tests may use declarations from export_test.go. Import their
 		// package's test variant rather than the production-only export file.
@@ -183,4 +177,16 @@ func TestCallTargetReaders(t *testing.T) {
 			t.Errorf("stale call-target allowlist entry %s; remove it", reader)
 		}
 	}
+}
+
+// callTargetExports is the export data of the packages TestCallTargetReaders reads and everything they import, their
+// tests included, a product built ahead so the test runs no go.
+func callTargetExports(t *testing.T) string {
+	t.Helper()
+	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow")
+}
+
+func TestProduct_CallTargetExports(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t)
 }
