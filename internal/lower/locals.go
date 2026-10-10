@@ -243,10 +243,13 @@ func (l *lowering) constant(value string) int {
 // localRead preserves checker narrowing for both private and qualified singleton reads.
 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
-	if l.result.Locals[local].Type == ir.Union {
+	if l.narrowingPropertyReceiver(node) || l.narrowingWiderCall(node) {
+		return read, nil // The property use checks its result through the stored layout.
+	}
+	if l.result.Locals[local].Type == ir.Union || l.narrowingCallNeedsCheck(node) {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.
 		observing := narrowingObservation(node)
-		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+		if narrowed, isKnown := l.representation(l.narrowingUseType(node)); isKnown && narrowed != ir.Union && !observing {
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.
 			name := "object"
@@ -276,17 +279,17 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			b := l.libraryArrayBuilder([]ir.Expression{read})
 			held := b.read(b.parameters[0])
 			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-			if narrowed == ir.Object && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error", "RangeError", "TypeError") {
+			if narrowed == ir.Object && l.isLibraryType(l.narrowingUseType(node), "Error", "RangeError", "TypeError") {
 				identity := -1
 				for index, builtin := range []string{"Error", "RangeError", "TypeError"} {
-					if l.isLibraryType(l.checker.GetTypeAtLocation(node), builtin) {
+					if l.isLibraryType(l.narrowingUseType(node), builtin) {
 						identity = -index - 1
 						break
 					}
 				}
 				matches = ir.InstanceOf{Value: held, Class: identity}
-			} else if narrowed == ir.Object && isClassInstance(l.checker.GetTypeAtLocation(node)) {
-				proven := l.checker.GetTypeAtLocation(node)
+			} else if narrowed == ir.Object && isClassInstance(l.narrowingUseType(node)) {
+				proven := l.narrowingUseType(node)
 				declaration := l.classes[proven.Symbol()]
 				if declaration == nil {
 					return nil, l.notYet(node, "an unknown narrowed to an unrepresented nominal class")

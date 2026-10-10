@@ -25,9 +25,9 @@ func init() {
 // just as it rejects undefined restored after a narrowing.
 func TestNarrowedUnionMemberCheck(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ path, output string }{
-		{"e4eec87_f2_union_narrow_call.a", "after toNumber: undefined\n"},
-		{"e4eec87_f2b_union_narrow_number.a", "after toText: wordswordswords1\n"},
+	for _, probe := range []struct{ path, output, message, helper string }{
+		{"e4eec87_f2_union_narrow_call.a", "after toNumber: undefined\n", "stale narrowing use failed: shared.length expected number", "narrowed_property_use"},
+		{"e4eec87_f2b_union_narrow_number.a", "after toText: wordswordswords1\n", "union member where the checker narrowed it away: a call since the narrowing put it back", "narrowed_union_member"},
 	} {
 		t.Run(probe.path, func(t *testing.T) {
 			t.Parallel()
@@ -42,7 +42,7 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := run{exitCode: 70, stderr: []byte("adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n")}
+			want := run{exitCode: 70, stderr: []byte("adamic: panic: " + probe.message + "\n")}
 			native, _ := natively(t, program)
 			for name, got := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
@@ -53,9 +53,13 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 			removed := 0
 			for index := range program.Functions {
 				function := &program.Functions[index]
-				if function.Name == "narrowed_union_member" {
-					if _, check := function.Body[0].(ir.If); check {
-						function.Body = function.Body[1:]
+				if function.Name == probe.helper {
+					position := 0
+					if probe.helper == "narrowed_property_use" {
+						position = 2
+					}
+					if _, check := function.Body[position].(ir.If); check {
+						function.Body = append(function.Body[:position], function.Body[position+1:]...)
 						removed++
 					}
 				}

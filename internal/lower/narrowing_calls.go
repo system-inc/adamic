@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // WritingNarrowing records a checker-narrowed variable read whose incoming flow
@@ -232,7 +233,7 @@ func WritingCallNarrowings(c *checker.Checker, modules []*ast.SourceFile) []Writ
 				symbol := a.symbol(n)
 				if symbol != nil && symbol.Flags&ast.SymbolFlagsVariable != 0 {
 					declared, observed := c.GetTypeOfSymbol(symbol), c.GetTypeAtLocation(n)
-					if observed.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsNever) == 0 && !c.IsTypeAssignableTo(declared, observed) && !narrowingAcceptsDeclared(c, n, declared) {
+					if observed.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsNever) == 0 && (!c.IsTypeAssignableTo(declared, observed) || nominalNarrowingChanged(declared, observed)) && !narrowingAcceptsDeclared(c, n, declared) {
 						seen := map[*ast.FlowNode]bool{}
 						var walk func(*ast.FlowNode)
 						walk = func(flow *ast.FlowNode) {
@@ -337,5 +338,24 @@ func narrowingAcceptsDeclared(c *checker.Checker, node *ast.Node, declared *chec
 		}
 	}
 	contextual := c.GetContextualType(node, checker.ContextFlagsNone)
-	return contextual != nil && c.IsTypeAssignableTo(declared, contextual)
+	return contextual != nil && c.IsTypeAssignableTo(declared, contextual) && !nominalNarrowingChanged(declared, contextual)
+}
+
+func nominalNarrowingChanged(declared, observed *checker.Type) bool {
+	symbol := observed.Symbol()
+	if symbol == nil || symbol == declared.Symbol() {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindClassDeclaration {
+			return true
+		}
+		if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			switch symbol.Name {
+			case "Error", "RangeError", "TypeError":
+				return true
+			}
+		}
+	}
+	return false
 }

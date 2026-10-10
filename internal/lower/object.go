@@ -414,6 +414,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.narrowingPropertyReceiver(ast.SkipParentheses(access.Expression)) {
+		return l.checkedNarrowingProperty(node, object, name)
+	}
 	if object.Type() == ir.Union {
 		return l.dynamicProperty(node, object, name)
 	}

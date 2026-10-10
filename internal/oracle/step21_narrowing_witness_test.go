@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestStep21WritingCallTypeScriptWitness(t *testing.T) {
+func TestStep21WritingCallTypeScriptAgreement(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_builtin_narrow_terminal.ts"))
 	if err != nil {
@@ -13,18 +13,20 @@ func TestStep21WritingCallTypeScriptWitness(t *testing.T) {
 	}
 	source := onNode(t, path)
 	if source.exitCode != 0 || string(source.stdout) != "Error\nfinally\n" || len(source.stderr) != 0 {
-		t.Fatalf("source Node witness: %+v", source)
+		t.Fatalf("source Node agreement: %+v", source)
 	}
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
 	}
-	native, _ := nativelyUncached(t, program)
-	want := "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+	native, binary := nativelyUncached(t, program)
 	for name, got := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != want {
-			t.Fatalf("%s checked writing-call stop: exit %d stdout %q stderr %q; want exit 70 and %q", name, got.exitCode, got.stdout, got.stderr, want)
+		if difference := disagreement(source, got); difference != "" {
+			t.Fatalf("%s .name agreement: %s", name, difference)
 		}
+	}
+	if leaked := leaks(t, program, binary); leaked != "" {
+		t.Fatal(leaked)
 	}
 }
 

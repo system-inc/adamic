@@ -1,0 +1,144 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
+
+// A property use needs its result contract, not the receiver's entire narrowed
+// class. Read the stored value and let the dynamic property reader resolve
+// the actual shape and slot tag before interpreting its payload (ruling 127).
+func (l *lowering) narrowingPropertyReceiver(node *ast.Node) bool {
+	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node).AsSourceFile()), ".ts") {
+		return false
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	parent := outer.Parent
+	if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != outer {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil {
+		return false
+	}
+	local, known := l.locals[symbol]
+	if !known {
+		return false
+	}
+	stored := l.result.Locals[local].Type
+	narrowed, represented := l.representation(l.checker.GetTypeAtLocation(node))
+	if !represented || narrowed != ir.Object && narrowed != ir.Array && narrowed != ir.String || stored != ir.Union && stored != ir.Object && stored != ir.Array && stored != ir.String {
+		return false
+	}
+	if l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(symbol), l.checker.GetTypeAtLocation(node)) && !nominalNarrowingChanged(l.checker.GetTypeOfSymbol(symbol), l.checker.GetTypeAtLocation(node)) {
+		return false
+	}
+	for _, site := range WritingCallNarrowings(l.checker, []*ast.SourceFile{ast.GetSourceFileOfNode(node).AsSourceFile()}) {
+		if site.Read == node {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) checkedNarrowingProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+	if l.dynamicReadHazard(name) {
+		return nil, l.notYet(node, "a stale narrowing read of a getter, method or nullable field")
+	}
+	of, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	// DynamicProperty selects the actual shape's slot and boxes its stored tag.
+	// Check the demanded result before Narrow interprets that payload.
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}
+	kind, scalar := names[of]
+	if !scalar {
+		return nil, l.notYet(node, "a stale narrowing property result with a non-scalar contract")
+	}
+	message := "stale narrowing use failed: " + sourceExpression(node) + " expected " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node))
+	b := l.libraryArrayBuilder([]ir.Expression{fit(object, ir.Union)})
+	receiver := b.read(b.parameters[0])
+	absent := ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: receiver}, Right: ir.IsNull{Value: receiver}}
+	b.body = append(b.body, ir.If{Condition: absent, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	value := b.declare("property", ir.DynamicProperty{Object: receiver, Name: name})
+	held := b.read(value)
+	matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(kind)}})
+	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	if allowed := l.viewLiterals(l.checker.GetTypeAtLocation(node)); len(allowed) != 0 && !l.openNumericEnumType(l.checker.GetTypeAtLocation(node)) {
+		var literals ir.Expression
+		for _, literal := range allowed {
+			equal := ir.Binary{Operator: ir.Equal, Left: ir.Narrow{Value: held, To: of}, Right: literal}
+			if literals == nil {
+				literals = equal
+			} else {
+				literals = ir.Binary{Operator: ir.Or, Left: literals, Right: equal}
+			}
+		}
+		b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: literals}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	}
+	return b.finish("narrowed_property_use", ir.Narrow{Value: held, To: of}), nil
+}
+
+// A call consumes the parameter contract. A wider Error parameter does not need
+// the TypeError proof the checker retained for the argument expression.
+func (l *lowering) narrowingUseType(node *ast.Node) *checker.Type {
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if parent := outer.Parent; parent != nil && parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression != outer {
+		if contextual := l.checker.GetContextualType(outer, checker.ContextFlagsNone); contextual != nil && l.isLibraryType(contextual, "Error", "RangeError", "TypeError") {
+			return contextual
+		}
+	}
+	return l.arrayPredicateObservedType(node)
+}
+
+func (l *lowering) narrowingCallNeedsCheck(node *ast.Node) bool {
+	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node).AsSourceFile()), ".ts") {
+		return false
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if parent := outer.Parent; parent == nil || parent.Kind != ast.KindCallExpression || parent.AsCallExpression().Expression == outer {
+		return false
+	}
+	target := l.narrowingUseType(node)
+	if !l.isLibraryType(target, "Error", "RangeError", "TypeError") && !isClassInstance(target) {
+		return false
+	}
+	for _, site := range WritingCallNarrowings(l.checker, []*ast.SourceFile{ast.GetSourceFileOfNode(node).AsSourceFile()}) {
+		if site.Read == node {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) narrowingWiderCall(node *ast.Node) bool {
+	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node).AsSourceFile()), ".ts") {
+		return false
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if parent := outer.Parent; parent == nil || parent.Kind != ast.KindCallExpression || parent.AsCallExpression().Expression == outer {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil {
+		return false
+	}
+	target := l.checker.GetContextualType(outer, checker.ContextFlagsNone)
+	declared := l.checker.GetTypeOfSymbol(symbol)
+	return target != nil && l.checker.IsTypeAssignableTo(declared, target) && !nominalNarrowingChanged(declared, target)
+}

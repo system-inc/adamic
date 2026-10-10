@@ -196,5 +196,11 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 		if (array->properties != NULL) return adamic_dynamic_property(&array->properties->heap, name);
 		return NULL;
 	}
+	// A primitive can replace a narrowed object. These data reads follow JavaScript's
+	// temporary boxing; prototype methods remain outside the dynamic-read contract.
+	if (value->kind == adamic_kind_string) {
+		return strcmp(name, "length") == 0 ? adamic_box_number(adamic_string_length((const adamic_string *)value)) : NULL;
+	}
+	if (value->kind == adamic_kind_number || value->kind == adamic_kind_boolean) return NULL;
 	adamic_panic("dynamic property read on an unsupported runtime value", sizeof "dynamic property read on an unsupported runtime value" - 1);
 }
