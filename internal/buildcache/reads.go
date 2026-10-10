@@ -42,7 +42,7 @@ import (
 const keptSets = 4
 
 // readsVersion versions the read set file and every key derived from it.
-const readsVersion = "buildcache reads v2"
+const readsVersion = "buildcache reads v3"
 
 type readsFile struct {
 	Version string    `json:"version"`

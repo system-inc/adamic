@@ -489,6 +489,7 @@ func TestReadSetsOutliveTheStoresLifecycle(t *testing.T) {
 	day += 3
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
 	refreshedReads.Delete(build.NameKey)
+	refreshedProducts.Range(func(key, _ any) bool { refreshedProducts.Delete(key); return true })
 	Product(t, port, func(string) error { t.Fatal("the tree builder rebuilt a cached product"); return nil })
 	if !slices.Contains(store.writes, fmt.Sprintf("/refs/reads-candidate/%s.%d.0", build.NameKey, day)) {
 		t.Fatalf("using a product with a six-day-old read set published no new one: %q", store.writes)
@@ -502,10 +503,72 @@ func TestReadSetsOutliveTheStoresLifecycle(t *testing.T) {
 	if !found() {
 		t.Fatal("after the first read set expired, a reader found none")
 	}
-	// Day 17, unused since day 6: gone, and a reader finds none rather than a wrong one.
+	// The product, published on day 0, expired with its first read set: a runner finds the read set and no product,
+	// and misses. The tree builder's next use publishes the product again, whole, and the runner fetches it.
+	file, _ := loadReads(r.cache, build.NameKey)
+	key := file.Sets[0].Key
+	runner := func() error {
+		t.Helper()
+		t.Setenv("ADAMIC_BUILD_STORE", address)
+		t.Setenv("ADAMIC_BUILD_CACHE", "read")
+		t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+		defer func() {
+			t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
+			t.Setenv("ADAMIC_BUILD_CACHE", "")
+			t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+		}()
+		_, err := Get(port, func(string) error { t.Fatal("a runner built"); return nil })
+		return err
+	}
+	if err := runner(); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("a runner with the product expired: %v", err)
+	}
+	refreshedProducts.Delete(key)
+	Product(t, port, func(string) error { t.Fatal("the tree builder rebuilt a cached product"); return nil })
+	if err := runner(); err != nil {
+		t.Fatalf("after the tree builder used the expired product: %v", err)
+	}
+	// Day 17, unused since day 9: gone, and a reader finds none rather than a wrong one.
 	day += 8
 	store.expire(day, readsLifetime)
 	if found() {
 		t.Fatal("a read set outlived the lifecycle without being used")
+	}
+}
+
+// A product whose ref outlived one of its blobs (a blob it shares with another product, first uploaded earlier and so
+// expired first) is published again on the tree builder's next use: every blob a runner needs is checked, not just
+// the ref.
+// Not parallel: newRig.
+func TestTheTreeBuilderRestoresABlobTheStoreLost(t *testing.T) {
+	r := newRig(t)
+	store, _ := shared(t)
+	address := os.Getenv("ADAMIC_BUILD_STORE")
+	t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	token(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || strings.Contains(settlement.Settled[0], "publish failed") {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, _ := loadReads(r.cache, build.NameKey)
+	product, err := describeProduct(file.Sets[0].Key, "port", filepath.Join(r.cache, file.Sets[0].Key))
+	if err != nil {
+		t.Fatal(err)
+	}
+	lost := "/blobs/" + product.Files[0].SHA256
+	store.mutex.Lock()
+	delete(store.objects, lost)
+	store.mutex.Unlock()
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	refreshedProducts.Delete(file.Sets[0].Key)
+	Product(t, port, func(string) error { t.Fatal("the tree builder rebuilt a cached product"); return nil })
+	store.mutex.Lock()
+	_, restored := store.objects[lost]
+	store.mutex.Unlock()
+	if !restored {
+		t.Fatalf("the tree builder used a product missing a blob and didn't publish it again: %q", store.writes)
 	}
 }
