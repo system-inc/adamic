@@ -127,7 +127,7 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 		return string(output), err
 	}
 	output, err := child(tree, cache, "build")
-	if err != nil || !strings.Contains(output, "read forty-two") {
+	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
 		t.Fatalf("building at %s: %v\n%s", tree, err, output)
 	}
 	if output, err = child(tree, cache, "build absolute"); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
@@ -144,7 +144,7 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 	if err = os.Rename(cache, movedCache); err != nil {
 		t.Fatal(err)
 	}
-	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") {
+	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") {
 		t.Fatalf("reading at %s: %v\n%s", moved, err, output)
 	}
 	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 1 {
@@ -190,7 +190,21 @@ func TestRelocationChild(t *testing.T) {
 		if mode == "build" {
 			answer = Relative(answer)
 		}
-		return os.WriteFile(filepath.Join(directory, "manifest.txt"), []byte(answer), 0o644)
+		if err := os.WriteFile(filepath.Join(directory, "manifest.txt"), []byte(answer), 0o644); err != nil {
+			return err
+		}
+		// A mutant port whose import reaches back into the tree, written as the build's own steps need it, then made
+		// the product's.
+		if err := os.MkdirAll(filepath.Join(directory, "port"), 0o755); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, "port/main.ts"), []byte("import answer from '"+filepath.Join(root, "data/answer.txt")+"';\n"), 0o644); err != nil {
+			return err
+		}
+		if mode == "build" {
+			return RelativeFiles(directory)
+		}
+		return nil
 	})
 	manifest, err := os.ReadFile(filepath.Join(product, "manifest.txt"))
 	if err != nil {
@@ -201,4 +215,20 @@ func TestRelocationChild(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Printf("read %s", answer)
+	stored, err := os.ReadFile(filepath.Join(product, "port/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	resolved, err := Resolved(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	port, err := os.ReadFile(filepath.Join(resolved, "port/main.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := "import answer from '" + filepath.Join(root, "data/answer.txt") + "';\n"; string(port) != want || resolved == product || !strings.Contains(string(stored), "'<repository>/data/answer.txt'") {
+		t.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
+	}
+	fmt.Println("port resolved")
 }
