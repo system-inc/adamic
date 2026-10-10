@@ -1,0 +1,5 @@
+interface Item { readonly name: string; }
+function firstOrUndefined<T>(items: readonly T[]): T | undefined { return items[0]; }
+function unused<T>(item: T): T | undefined { return item; }
+function caller(): string { const item = firstOrUndefined<Item>([{name: 'yes'}]); return item === undefined ? 'missing' : item.name; }
+console.log(caller());

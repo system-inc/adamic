@@ -1,0 +1,10 @@
+// src/compiler/core.ts:22 length, readonly T[] | undefined in a generic body.
+function length<T>(values: readonly T[] | undefined): number { return values === undefined ? 0 : values.length; }
+function outer<T>(values: readonly T[] | undefined): number { return length(values); }
+interface Item { readonly name: string; }
+const values: readonly Item[] = [{ name: 'item'.repeat(2) }];
+console.log(`${outer(values)}`);
+console.log(`${outer<Item>(undefined)}`);
+console.log(`${outer<number>([0, 2])}`);
+// An uninstantiated body is registered but contributes no executable IR.
+function unused<T>(value: T): T | undefined { return value; }

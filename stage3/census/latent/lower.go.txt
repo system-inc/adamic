@@ -249,6 +249,14 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 					}
 				}
 			}
+			// Independent units have no call witness for a generic binder. Keep the
+			// declaration in the census, but lower it only through instantiateFunction
+			// when a concrete caller reaches it.
+			if node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0 {
+				unit.Status = "deferred_generic_instantiation"
+				record.Units = append(record.Units, unit)
+				continue
+			}
 			func() {
 				defer func() {
 					if failure := recover(); failure != nil {
@@ -274,7 +282,7 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) {
 						l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
 						l.functions[l.symbol(node.Name())] = index
 					}
-					// Attempt generic declarations as written, without invented instantiations.
+					// Nongeneric declarations lower directly; generic bodies are reached at calls.
 					latentRecord(l.lowerFunction(index, node, -1))
 				} else {
 					_, err := l.statement(node)

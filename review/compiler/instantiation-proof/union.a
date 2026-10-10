@@ -1,0 +1,5 @@
+function optional<T>(value: T, present: boolean): T | undefined { return present ? value : undefined; }
+function scalar(flag: boolean): number | string { return flag ? 0 : 's'.repeat(2); }
+console.log(`${optional(scalar(true), true) ?? 'missing'}`);
+console.log(`${optional(scalar(false), true) ?? 'missing'}`);
+console.log(`${optional(scalar(false), false) ?? 'missing'}`);

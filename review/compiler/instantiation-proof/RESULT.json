@@ -1,0 +1,267 @@
+{
+  "base": "55347dce1537c0bd05d35eab0dc5d663c4823803",
+  "measurement": "current census driver on real adapted core.ts, full mode, compiler directory roots",
+  "raw": {
+    "before": {
+      "units": 267,
+      "statuses": {
+        "attempted": 266,
+        "split_checker_body": 1
+      },
+      "findings": 775,
+      "selected_reasons": {
+        "a function returning T | undefined": 10,
+        "a function returning U | undefined": 4,
+        "a value of type T | undefined": 6,
+        "a value of type U | undefined": 2,
+        "a value of type readonly T[] | undefined": 0,
+        "a value of type T | T[] | readonly T[] | undefined": 1
+      },
+      "selected_units": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:22:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 558,
+          "body_end": 615,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "length",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:22:1",
+          "findings": []
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 1048,
+          "body_end": 1302,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "forEach",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+          "findings": [
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:33:17",
+              "reason": "a function returning U | undefined",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet"
+            },
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+              "phase": "lowering",
+              "kind": "Boundary",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+              "reason": "function signature or prologue failed; continued at next declaration",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+              "start": 1048,
+              "end": 1302
+            }
+          ]
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 38479,
+          "body_end": 38562,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "firstOrUndefined",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+          "findings": [
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:17",
+              "reason": "a function returning T | undefined",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:17: stage 0 can't lower a function returning T | undefined yet"
+            },
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+              "phase": "lowering",
+              "kind": "Boundary",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+              "reason": "function signature or prologue failed; continued at next declaration",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:17: stage 0 can't lower a function returning T | undefined yet",
+              "start": 38479,
+              "end": 38562
+            }
+          ]
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 39325,
+          "body_end": 39423,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "lastOrUndefined",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+          "findings": [
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:17",
+              "reason": "a function returning T | undefined",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:17: stage 0 can't lower a function returning T | undefined yet"
+            },
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+              "phase": "lowering",
+              "kind": "Boundary",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+              "reason": "function signature or prologue failed; continued at next declaration",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:17: stage 0 can't lower a function returning T | undefined yet",
+              "start": 39325,
+              "end": 39423
+            }
+          ]
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 85915,
+          "body_end": 86413,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "findBestPatternMatch",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+          "findings": [
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+              "phase": "lowering",
+              "kind": "NotYet",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:17",
+              "reason": "a function returning T | undefined",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:17: stage 0 can't lower a function returning T | undefined yet"
+            },
+            {
+              "root_kind": "",
+              "depth": 0,
+              "measurement": "measured on a checker-rejected program",
+              "unit": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+              "phase": "lowering",
+              "kind": "Boundary",
+              "where": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+              "reason": "function signature or prologue failed; continued at next declaration",
+              "text": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:17: stage 0 can't lower a function returning T | undefined yet",
+              "start": 85915,
+              "end": 86413
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "units": 267,
+      "statuses": {
+        "attempted": 63,
+        "deferred_generic_instantiation": 203,
+        "split_checker_body": 1
+      },
+      "findings": 147,
+      "selected_reasons": {
+        "a function returning T | undefined": 0,
+        "a function returning U | undefined": 0,
+        "a value of type T | undefined": 0,
+        "a value of type U | undefined": 0,
+        "a value of type readonly T[] | undefined": 0,
+        "a value of type T | T[] | readonly T[] | undefined": 0
+      },
+      "selected_units": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:22:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 558,
+          "body_end": 615,
+          "status": "deferred_generic_instantiation",
+          "checker_diagnostics": [],
+          "name": "length",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:22:1",
+          "findings": []
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 1048,
+          "body_end": 1302,
+          "status": "deferred_generic_instantiation",
+          "checker_diagnostics": [],
+          "name": "forEach",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:33:1",
+          "findings": []
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 38479,
+          "body_end": 38562,
+          "status": "deferred_generic_instantiation",
+          "checker_diagnostics": [],
+          "name": "firstOrUndefined",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:1083:1",
+          "findings": []
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 39325,
+          "body_end": 39423,
+          "status": "deferred_generic_instantiation",
+          "checker_diagnostics": [],
+          "name": "lastOrUndefined",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:1116:1",
+          "findings": []
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 85915,
+          "body_end": 86413,
+          "status": "deferred_generic_instantiation",
+          "checker_diagnostics": [],
+          "name": "findBestPatternMatch",
+          "top": "/tmp/instantiation-adapted/src/compiler/core.ts:2412:1",
+          "findings": []
+        }
+      ]
+    }
+  },
+  "production_compiler_changes": [],
+  "admission_delta": 0,
+  "full_closure_rerun": false,
+  "readonly_array_caller_replay": "hard limit reached without a completed record"
+}

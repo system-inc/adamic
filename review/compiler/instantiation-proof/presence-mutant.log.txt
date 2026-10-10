@@ -1,0 +1,13 @@
+=== RUN   TestInstantiationPresenceMutant
+=== PAUSE TestInstantiationPresenceMutant
+=== CONT  TestInstantiationPresenceMutant
+    instantiation_proof_test.go:67: gate cache node miss
+    oracle_test.go:597: gate cache native miss
+    instantiation_proof_test.go:85: gate cache node miss
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationPresenceMutant (0.35s)
+PASS
+gate cache: native hits=1 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.358s

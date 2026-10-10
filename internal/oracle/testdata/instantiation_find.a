@@ -1,0 +1,18 @@
+// src/compiler/core.ts:2412 findBestPatternMatch family: a callback reaches T.
+interface Pattern { readonly prefix: string; readonly suffix: string; }
+function findBestPatternMatch<T>(values: readonly T[], getPattern: (value: T) => Pattern, candidate: string): T | undefined {
+    let matchedValue: T | undefined;
+    let longest = -1;
+    for (const value of values) {
+        const pattern = getPattern(value);
+        if (pattern.prefix.length > longest && candidate.startsWith(pattern.prefix) && candidate.endsWith(pattern.suffix)) {
+            longest = pattern.prefix.length;
+            matchedValue = value;
+        }
+    }
+    return matchedValue;
+}
+interface Item { readonly name: string; }
+const items: readonly Item[] = [{ name: 'a'.repeat(2) }, { name: 'b'.repeat(3) }];
+console.log(`${findBestPatternMatch(items, item => ({ prefix: item.name, suffix: '' }), 'bbb-tail')?.name ?? 'missing'}`);
+console.log(`${findBestPatternMatch(items, item => ({ prefix: item.name, suffix: '' }), 'missing')?.name ?? 'missing'}`);
