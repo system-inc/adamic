@@ -1,0 +1,151 @@
+{
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/watch.ts",
+  "baseline_sha256": "74effdc22902dd7aca543f6e09db3fff8679cd51e3e4b782b464c655a699739c",
+  "exact_match": true,
+  "whole_sites": 315,
+  "piece_sites": 315,
+  "missing_sites": [],
+  "added_sites": [],
+  "changed_depths": [],
+  "removed_boundaries": [],
+  "added_boundaries": [],
+  "raw_depths_recalibrated": {
+    "whole": 0,
+    "pieces": 63
+  },
+  "mutants": {
+    "piece dropped": "piece dropped from union",
+    "piece duplicated": "duplicate piece in union",
+    "site moved between pieces": "site moved between pieces: atom provenance violates partition"
+  },
+  "runtimes": [
+    {
+      "piece": 0,
+      "bytes": 6995,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-000.pending.jsonl"
+      ],
+      "wall_seconds": 12.232326088000264,
+      "peak_rss_kib": 672832,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 1,
+      "bytes": 5575,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-001.pending.jsonl"
+      ],
+      "wall_seconds": 33.915345858000364,
+      "peak_rss_kib": 918032,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 2,
+      "bytes": 5610,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-002.pending.jsonl"
+      ],
+      "wall_seconds": 90.30086730699986,
+      "peak_rss_kib": 1004152,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 3,
+      "bytes": 5495,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-003.pending.jsonl"
+      ],
+      "wall_seconds": 14.54663696499847,
+      "peak_rss_kib": 676008,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 4,
+      "bytes": 5570,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-004.pending.jsonl"
+      ],
+      "wall_seconds": 26.591008969999166,
+      "peak_rss_kib": 889652,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 5,
+      "bytes": 5497,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-005.pending.jsonl"
+      ],
+      "wall_seconds": 53.482831731998886,
+      "peak_rss_kib": 848404,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 6,
+      "bytes": 5613,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-006.pending.jsonl"
+      ],
+      "wall_seconds": 24.34277522499906,
+      "peak_rss_kib": 843956,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    },
+    {
+      "piece": 7,
+      "bytes": 5567,
+      "command": [
+        "/workspace/b2wbbha-storage/piece-census",
+        "/tmp/b17vtn1/original-adapted/src/compiler",
+        "/workspace/b2wbbha-storage/watch-run/piece-007.pending.jsonl"
+      ],
+      "wall_seconds": 31.69783215100142,
+      "peak_rss_kib": 891164,
+      "exit": 0,
+      "time_limit_seconds": 600.0,
+      "rss_limit_mib": 3072,
+      "address_space_limit_mib": 6144,
+      "rss_limit_killed": false
+    }
+  ]
+}

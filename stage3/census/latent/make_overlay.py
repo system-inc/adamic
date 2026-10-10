@@ -129,6 +129,14 @@ for name, signature, renamed in [
     else:
         source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentSpecSignatureReturn(index,declaration,this,returns) }\n'
     output.write_text(source)
+overlay('internal/lower/latent_piece.go', (territory / 'piece.go.txt').read_text())
+# Unassigned selected-file bodies are never lowered by generic dependency calls.
+output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
+source = output.read_text()
+needle = '\tpending := l.signed[index]'
+assert source.count(needle) == 1
+source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n' + needle)
+output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
 
