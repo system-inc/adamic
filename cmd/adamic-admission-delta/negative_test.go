@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func negativeFixture(t *testing.T) ([]byte, negativeWitness, negativeWitnessList) {
@@ -95,7 +96,7 @@ func TestNegativeRulingMetadata(t *testing.T) {
 		}
 	}
 }
-func negativeCommand(t *testing.T, corrected bool) (observation, report) {
+func negativeCommand(t *testing.T, corrected, alreadyAccepted bool) (observation, report) {
 	t.Helper()
 	dir, _, base, head := commandFixture(t)
 	source, witness, list := negativeFixture(t)
@@ -122,6 +123,9 @@ func negativeCommand(t *testing.T, corrected bool) (observation, report) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if alreadyAccepted {
+		base = head
+	}
 	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--corpus", "corpus", "--json")
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
@@ -131,7 +135,7 @@ func negativeCommand(t *testing.T, corrected bool) (observation, report) {
 }
 func TestNegativeCommandAccepted(t *testing.T) {
 	t.Parallel()
-	o, r := negativeCommand(t, false)
+	o, r := negativeCommand(t, false, false)
 	if o.Exit != 0 || r.Verdict != "pass" || r.AcceptedWitnesses != 1 || r.NodeAgreements != 0 || !r.Programs[0].NegativeWitness || *r.Programs[0].Agree {
 		t.Fatal("listed witness not distinguished from agreement", o, r)
 	}
@@ -141,7 +145,7 @@ func TestNegativeCommandAccepted(t *testing.T) {
 }
 func TestNegativeTypeCorrectMutant(t *testing.T) {
 	t.Parallel()
-	o, r := negativeCommand(t, true)
+	o, r := negativeCommand(t, true, false)
 	if o.Exit == 0 || r.Verdict != "fail" || r.AcceptedWitnesses != 0 || r.Programs[0].NegativeWitness || *r.Programs[0].Agree {
 		t.Fatal("type-correct mutant hidden by list", o, r)
 	}
@@ -169,5 +173,30 @@ func TestNegativeEmptyListPrinted(t *testing.T) {
 	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--corpus", "corpus", "--json")
 	if !strings.Contains(o.Stderr, "negative witnesses: 0\n") {
 		t.Fatal("empty list size not printed", o)
+	}
+}
+
+func TestNegativeAlreadyAcceptedRepairMutant(t *testing.T) {
+	t.Parallel()
+	o, r := negativeCommand(t, true, true)
+	if o.Exit == 0 || r.Verdict != "fail" || r.Programs[0].Class != "accepted-by-both" || !r.Programs[0].Sampled || r.Programs[0].NegativeWitness || *r.Programs[0].Agree {
+		t.Fatal("already-admitted type-correct mutant evaded Node agreement", o, r)
+	}
+	t.Log("type-correct input admitted by both compilers still demands Node agreement and rejects exit 70")
+}
+func TestNegativeEditedWitnessMandatory(t *testing.T) {
+	t.Parallel()
+	source, _, list := negativeFixture(t)
+	changed := append(append([]byte{}, source...), []byte("\n")...)
+	if !negativeRelated("corpus/input.a", changed, list) {
+		t.Fatal("edit lost mandatory comparison")
+	}
+	if _, listed := list.Witnesses[contentHash(changed)]; listed {
+		t.Fatal("edit retained exception")
+	}
+	p := entry{program: program{Path: "corpus/input.a"}, Corpus: "fixtures", Class: "accepted-by-both", Head: observation{Exit: 0}, NegativeRelated: true}
+	selected, omitted := sample([]entry{p}, "sha", 0.001, time.Second)
+	if len(selected) != 1 || omitted != 0 {
+		t.Fatal("edited witness sampled away", selected, omitted)
 	}
 }

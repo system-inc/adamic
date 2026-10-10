@@ -140,3 +140,16 @@ func acceptsNegativeWitness(witness negativeWitness, root string, node, javascri
 	// A listed stop is still required to agree between the backends on stdout.
 	return javascript.Stdout == native.Stdout
 }
+
+// Paths schedule rechecks only; exemption still comes exclusively from contentHash.
+// Otherwise a repaired placeholder already admitted on base could evade the oracle.
+func negativeRelated(path string, source []byte, list negativeWitnessList) bool {
+	hash := contentHash(source)
+	for ruledHash, witness := range list.Witnesses {
+		at := strings.LastIndex(witness.Declaration, ":")
+		if hash == ruledHash || hash == witness.TypeCorrectSHA256 || (at > 0 && path == witness.Declaration[:at]) {
+			return true
+		}
+	}
+	return false
+}

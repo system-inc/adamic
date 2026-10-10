@@ -52,6 +52,7 @@ type entry struct {
 	JavaScriptCompile *observation `json:"javascript_compile,omitempty"`
 	NativeCompile     *observation `json:"native_compile,omitempty"`
 	Agree             *bool        `json:"agree"`
+	NegativeRelated   bool         `json:"negative_related"`
 	NegativeWitness   bool         `json:"negative_witness"`
 	Sampled           bool         `json:"sampled"`
 }
@@ -393,7 +394,11 @@ func run(args []string) error {
 				continue
 			}
 			seen[p.Path] = p.Blob
-			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name})
+			source, e := os.ReadFile(filepath.Join(headTree, p.Path))
+			if e != nil {
+				return e
+			}
+			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives)})
 		}
 	}
 
@@ -493,12 +498,12 @@ func sample(programs []entry, seed string, seconds float64, limit time.Duration)
 	witnesses := []int{}
 	others := []int{}
 	for i, p := range programs {
-		if p.Class != "newly-accepted" {
+		if p.Class != "newly-accepted" && !(p.NegativeRelated && p.Head.Exit == 0 && p.Head.Error == "") {
 			continue
 		}
 		if p.Corpus == "diff" {
 			diff = append(diff, i)
-		} else if p.Corpus == "witnesses" {
+		} else if p.Corpus == "witnesses" || p.NegativeRelated {
 			witnesses = append(witnesses, i)
 		} else {
 			others = append(others, i)

@@ -99,3 +99,9 @@ run that loads it, including empty lists; JSON records
 `negative_witness_count`, `node_agreements`, and `accepted_witnesses`.
 `agree` remains false on an accepted listed witness; `negative_witness` records
 the separate exception. A wrong exit, diagnostic, or source repair fails.
+
+Runtime coverage also includes listed bytes, pinned repair bytes, and every
+admitted edit at a ruled declaration's path, even if accepted by both compilers.
+These comparisons are mandatory under a budget. A path schedules coverage only;
+it never grants an exemption. This prevents an already-admitted repair from
+escaping Node agreement merely because it is no longer a new admission.
