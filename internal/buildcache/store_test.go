@@ -347,3 +347,37 @@ func TestRefsAreSplitByTrust(t *testing.T) {
 		t.Fatalf("an uncached candidate wrote %v", store.writes[writes:])
 	}
 }
+
+// The shared tier is off unless ADAMIC_BUILD_STORE turns it on (Oct 9 20:38Z): unset, a product is built here and
+// nothing is fetched or published, even on a machine holding the write credential.
+// Not parallel: points the build cache, the store's writer and the token at this test through t.Setenv.
+func TestTheSharedTierIsOffUnlessTurnedOn(t *testing.T) {
+	for value, want := range map[string]string{"": "", "off": "", "on": defaultStore, "http://127.0.0.1:9/": "http://127.0.0.1:9"} {
+		t.Setenv("ADAMIC_BUILD_STORE", value)
+		if got := storeAddress(); got != want {
+			t.Fatalf("ADAMIC_BUILD_STORE=%q: the store is %q, want %q", value, got, want)
+		}
+	}
+	_, log := cached(t)
+	store := &fakeStore{objects: map[string][]byte{}}
+	server := httptest.NewServer(store)
+	t.Cleanup(server.Close)
+	token := filepath.Join(t.TempDir(), "token")
+	if err := os.WriteFile(token, []byte("gate-box-token"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_BUILD_STORE", "")
+	t.Setenv("ADAMIC_BUILD_STORE_WRITE", server.URL+"/public")
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
+	built := false
+	Product(t, thisPackage, func(string) error { built = true; return nil })
+	if !built {
+		t.Fatal("the product wasn't built here")
+	}
+	if len(store.reads)+len(store.writes) != 0 {
+		t.Fatalf("an unset store reached the store: reads %v, writes %v", store.reads, store.writes)
+	}
+	if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), " miss ") {
+		t.Fatalf("census: %q", lines)
+	}
+}

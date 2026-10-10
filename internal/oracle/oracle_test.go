@@ -108,6 +108,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/borrow_chain_write.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
+	{"internal/oracle/testdata/borrow_chain_captured_root.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
 	{"internal/oracle/testdata/async_plain.a", true, false},

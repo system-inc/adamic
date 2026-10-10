@@ -134,8 +134,8 @@ func verifyCorpusPin(t *testing.T, cases []textCase) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	actual, count, err := validateCorpus(root, cases, expected)
-	t.Logf("corpus repository: %d tracked JSON files; checked against Git HEAD", count)
+	actual, count, err := validatePinnedCorpus(root, cases, expected)
+	t.Logf("corpus repository: %d tracked JSON files; read from Git pin %s", count, repositoryCorpusCommit)
 	if err != nil {
 		t.Fatalf("%s: %v", t.Name(), err)
 	}
@@ -194,7 +194,7 @@ func TestCorpusPinRejectsMissingProvisionedInputs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, _, err = validateCorpus(root, short, full)
+	_, _, err = validatePinnedCorpus(root, short, full)
 	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), "provisioned: got 0, pinned 18") {
 		t.Fatalf("short-box pin mutant survived: %v", err)
 	}

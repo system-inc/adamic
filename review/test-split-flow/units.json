@@ -426,6 +426,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_borrow_chain_captured_root_a_5a3c576b8377",
+    "program": "internal/oracle/testdata/borrow_chain_captured_root.a",
+    "path": "../oracle/testdata/borrow_chain_captured_root.a",
+    "sha256": "0bd228888500968b2af365ea8108053af146fdc8e1fc7a34a1859e9e6e885e7a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_borrow_chain_coverage_bounded_a_01bdd94e1be1",
     "program": "internal/oracle/testdata/borrow_chain_coverage_bounded.a",
     "path": "../oracle/testdata/borrow_chain_coverage_bounded.a",
@@ -7046,6 +7054,14 @@
     "program": "internal/oracle/testdata/borrow_chain_capture.a",
     "path": "../oracle/testdata/borrow_chain_capture.a",
     "sha256": "d91ba8f3a84a1f14392dc24fb7ef255d277b25e2255a47bf45998d7dba232aaa"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_borrow_chain_captured_root_a_5a3c576b8377",
+    "program": "internal/oracle/testdata/borrow_chain_captured_root.a",
+    "path": "../oracle/testdata/borrow_chain_captured_root.a",
+    "sha256": "0bd228888500968b2af365ea8108053af146fdc8e1fc7a34a1859e9e6e885e7a"
   },
   {
     "package": "flow",
@@ -13674,6 +13690,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_borrow_chain_captured_root_a_5a3c576b8377",
+    "program": "internal/oracle/testdata/borrow_chain_captured_root.a",
+    "path": "../oracle/testdata/borrow_chain_captured_root.a",
+    "sha256": "0bd228888500968b2af365ea8108053af146fdc8e1fc7a34a1859e9e6e885e7a"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_borrow_chain_coverage_bounded_a_01bdd94e1be1",
     "program": "internal/oracle/testdata/borrow_chain_coverage_bounded.a",
     "path": "../oracle/testdata/borrow_chain_coverage_bounded.a",
@@ -20294,6 +20318,14 @@
     "program": "internal/oracle/testdata/borrow_chain_capture.a",
     "path": "../oracle/testdata/borrow_chain_capture.a",
     "sha256": "d91ba8f3a84a1f14392dc24fb7ef255d277b25e2255a47bf45998d7dba232aaa"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_borrow_chain_captured_root_a_5a3c576b8377",
+    "program": "internal/oracle/testdata/borrow_chain_captured_root.a",
+    "path": "../oracle/testdata/borrow_chain_captured_root.a",
+    "sha256": "0bd228888500968b2af365ea8108053af146fdc8e1fc7a34a1859e9e6e885e7a"
   },
   {
     "package": "flow",
@@ -26926,6 +26958,14 @@
     "program": "internal/oracle/testdata/borrow_chain_capture.a",
     "path": "../oracle/testdata/borrow_chain_capture.a",
     "sha256": "d91ba8f3a84a1f14392dc24fb7ef255d277b25e2255a47bf45998d7dba232aaa"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_borrow_chain_captured_root_a_5a3c576b8377",
+    "program": "internal/oracle/testdata/borrow_chain_captured_root.a",
+    "path": "../oracle/testdata/borrow_chain_captured_root.a",
+    "sha256": "0bd228888500968b2af365ea8108053af146fdc8e1fc7a34a1859e9e6e885e7a"
   },
   {
     "package": "fresh",

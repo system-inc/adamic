@@ -26,7 +26,10 @@ import (
 // blob is checked against its own hash and the manifest against the key it was asked for, so a stored product can't
 // be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is a miss.
 //
-// ADAMIC_BUILD_STORE overrides the store's address, and "off" turns the shared tier off. Only a machine holding the
+// The shared tier is off unless ADAMIC_BUILD_STORE turns it on: "on" for adamic-store, or another store's address
+// (@system_adamic_release, Oct 9 20:38Z: native products embed their build directory, so a stored one never matches a
+// rebuild and every audited hit reds a gate, and a test that asserts a cold build fetched one instead; it stays off
+// until those are fixed, and gocacheprog is untouched). Only a machine holding the
 // write credential publishes, through Loom's Worker: the gate boxes hold a publish-scoped token at
 // ~/.loom/publish-token (ADAMIC_BUILD_STORE_TOKEN names another file). Every file's blob goes first, then the
 // manifest's, then the ref, so a ref never names a blob the store doesn't hold. A ref never changes: the store
@@ -56,9 +59,13 @@ type manifestFile struct {
 	Mode   uint32 `json:"mode"`
 }
 
+// storeAddress is the shared store's address, or "" when the shared tier is off.
 func storeAddress() string {
 	address := os.Getenv("ADAMIC_BUILD_STORE")
-	if address == "" {
+	switch address {
+	case "", "off":
+		return ""
+	case "on":
 		address = defaultStore
 	}
 	return strings.TrimSuffix(address, "/")
@@ -247,7 +254,7 @@ func publishToken() string {
 // manifest's, then the ref.
 func publish(key, name, directory string) error {
 	token := publishToken()
-	if token == "" || os.Getenv("ADAMIC_BUILD_STORE") == "off" {
+	if token == "" || storeAddress() == "" {
 		return nil
 	}
 	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
