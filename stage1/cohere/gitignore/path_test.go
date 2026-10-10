@@ -6,6 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/nativeproduct"
 )
 
 // sweepPaths are the paths path.ts is held to Go's path package on: every string of up to seven units
@@ -38,6 +41,18 @@ func sweepPaths() []string {
 	)
 }
 
+// pathMutants are the sweep's mutants of path.ts: from replaced by to.
+var pathMutants = []struct{ name, from, to string }{
+	// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
+	{"a run of slashes taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || (path.endsWith('/') && path !== '/')) {"},
+	{"a trailing slash taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || path.includes('//')) {"},
+	{"a trailing . taken for clean", "if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if (path.startsWith('./') || path.includes('/./')) {"},
+	{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
+	{"a .. after a name taken for clean", "!rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');", "!rest.endsWith('/..') && !rest.startsWith('../');"},
+	// dir cleaning from the last slash's position on, where Go cleans up to and with it.
+	{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
+}
+
 // The sweep: path.ts's clean, base and dir answer as Go's path.Clean, path.Base and path.Dir do on every
 // sweep path, natively, on Node and through the JavaScript backend; and each mutant of path.ts below is
 // caught on Node and natively.
@@ -57,7 +72,7 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 	}
 	sweep := func(t *testing.T, directory string) (run, run, run) {
 		t.Helper()
-		program := lowered(t, filepath.Join(directory, "pathsweep.ts"))
+		program := sweepProgram(t, directory)
 		nativeRun, sanitized := natively(t, program, pathsFile)
 		if leaked := leaks(t, program, sanitized, pathsFile); leaked != "" {
 			t.Errorf("leaks:\n%s", leaked)
@@ -83,16 +98,7 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 		t.Logf("%d paths: clean, base and dir the same from Go's path package, path.ts natively, on Node and through the JavaScript backend", len(paths))
 	})
 
-	for _, mutant := range []struct{ name, from, to string }{
-		// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
-		{"a run of slashes taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || (path.endsWith('/') && path !== '/')) {"},
-		{"a trailing slash taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || path.includes('//')) {"},
-		{"a trailing . taken for clean", "if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if (path.startsWith('./') || path.includes('/./')) {"},
-		{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
-		{"a .. after a name taken for clean", "!rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');", "!rest.endsWith('/..') && !rest.startsWith('../');"},
-		// dir cleaning from the last slash's position on, where Go cleans up to and with it.
-		{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
-	} {
+	for _, mutant := range pathMutants {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
 			directory := sweepDirectory(t, mutant.from, mutant.to)
@@ -138,4 +144,25 @@ func sweepDirectory(t *testing.T, from string, to string) string {
 		}
 	}
 	return directory
+}
+
+// sweepProgram is the sweep's driver in directory (sweepDirectory's, a mutant planted or not), lowered: what the sweep
+// builds natively and the TestProduct_ twins build ahead, from this one function so the two can't drift.
+func sweepProgram(t *testing.T, directory string) *ir.Program {
+	t.Helper()
+	return lowered(t, filepath.Join(directory, "pathsweep.ts"))
+}
+
+func TestProduct_GitignorePathSweepNative(t *testing.T) {
+	t.Parallel()
+	nativeproduct.Twin(t, sweepProgram(t, sweepDirectory(t, "", "")))
+}
+
+// TestProduct_GitignorePathMutantsNative builds both binaries of each mutant: the sweep checks every mutant for leaks
+// too.
+func TestProduct_GitignorePathMutantsNative(t *testing.T) {
+	t.Parallel()
+	for _, mutant := range pathMutants {
+		nativeproduct.Twin(t, sweepProgram(t, sweepDirectory(t, mutant.from, mutant.to)))
+	}
 }

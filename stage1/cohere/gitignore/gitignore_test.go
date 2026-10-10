@@ -23,7 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nativeproduct"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -628,10 +628,7 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := nativeproduct.Lowered(t, program, true)
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
@@ -646,11 +643,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", nativeproduct.Lowered(t, program, false)}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
