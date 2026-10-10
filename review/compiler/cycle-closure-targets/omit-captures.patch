@@ -1,0 +1,20 @@
+--- internal/lower/cycles.go
++++ internal/lower/cycles.go
+@@ -376,7 +376,7 @@
+ 					return true
+ 				}
+ 				for _, function := range targets.Functions {
+-					for _, local := range f.l.result.Functions[function].Environment {
++					for _, local := range f.l.result.Functions[function].Environment[:0] {
+ 						queue = append(queue, cycleNode{cell: local + 1})
+ 					}
+ 				}
+@@ -432,7 +432,7 @@
+ 				return true
+ 			}
+ 			for _, function := range targets.Functions {
+-				for _, local := range f.l.result.Functions[function].Environment {
++				for _, local := range f.l.result.Functions[function].Environment[:0] {
+ 					queue = append(queue, cycleNode{cell: local + 1})
+ 				}
+ 			}

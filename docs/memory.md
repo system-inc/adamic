@@ -306,17 +306,94 @@ Reference counting can't free a cycle, and a garbage collector is refused (no cy
 
 - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.
 - **A cycle needs a write.** It forms only when an existing object's mutable slot (a mutable field, an array or map element, a closure's captured variable) is set to something that can reach that object back.
-- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph, so every *cycle-capable* slot can be found at compile time.
+- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph. Function-typed slots refine this membership using their closure targets, as described below.
 
 What stage 0 does (`internal/lower/cycles.go`):
 
-1. **The finder** walks the whole program's type graph after lowering and refuses every cycle-capable slot that isn't declared `Weak`, with the fix (`adamic/cycle-capable`). A slot is a field (a `readonly` one too, since its constructor writes it: below), an element of an array that isn't `readonly`, a `Map`'s value, or a variable a function value captures (`let` or `const`: the cell is written after the closure captured it). Reaching follows an object's fields and the fields of every object type in the program that can be seen as it (a `Dog` seen as an `Animal` brings its `owner` along), an array's elements, a map's keys and values, and, through a function type, the variables captured by every function value in the program that can be seen as it, since a type doesn't say what a function captured. A `Weak` is not followed. A value just made (a literal, a call's result, `new`) is examined only where it's kept, since nothing writes through it before.
-2. **What that means in practice.** A parent pointer must be `Weak`. A mutable child array of the same type (`children: TreeNode[]`) is cycle-capable too (`node.children.push(root)`), so a tree's children are `readonly`, or `Weak`, or written only with what the relaxation below proves can't close a cycle. Either link of a doubly linked list alone can close a cycle (`a.next = a`), and the types can't tell `next` from `prev`, so both are `Weak` and something else (an array) owns the nodes. A closure kept in a variable it captures (`let countdown = ...; countdown = (n) => countdown(n - 1)`) is a cycle; the fix is a function declaration, which captures nothing. A callback field is refused only when some function value in the program captures a variable that can reach the object holding it.
+1. **The finder** walks the whole program's type graph after lowering and refuses every cycle-capable slot that isn't declared `Weak`, with the fix (`adamic/cycle-capable`). A slot is a field (a `readonly` one too, since its constructor writes it: below), an element of an array that isn't `readonly`, a `Map`'s value, or a variable a function value captures (`let` or `const`: the cell is written after the closure captured it). Reaching follows an object's fields and the fields of every object type in the program that can be seen as it (a `Dog` seen as an `Animal` brings its `owner` along), an array's elements, a map's keys and values, and, through a function-typed slot, the variables captured by the closure literals that can flow into it. The shared `ClosureTargets` producer analysis supplies those targets; an Unknown origin remains cycle-capable. A `Weak` is not followed. A value just made (a literal, a call's result, `new`) is examined only where it's kept, since nothing writes through it before.
+2. **What that means in practice.** A parent pointer must be `Weak`. A mutable child array of the same type (`children: TreeNode[]`) is cycle-capable too (`node.children.push(root)`), so a tree's children are `readonly`, or `Weak`, or written only with what the relaxation below proves can't close a cycle. Either link of a doubly linked list alone can close a cycle (`a.next = a`), and the types can't tell `next` from `prev`, so both are `Weak` and something else (an array) owns the nodes. A closure kept in a variable it captures (`let countdown = ...; countdown = (n) => countdown(n - 1)`) is a cycle; the fix is a function declaration, which captures nothing. A callback field is cycle-capable when one of its targets captures a variable that can reach the object holding it, or its target set is Unknown.
 3. **Spelling.** `import type { Weak } from 'adamic'`, then `parent: Weak<TreeNode>`, `Weak<TreeNode>[]`, `Map<string, Weak<TreeNode>>`, or a `let` of a `Weak` type. `Weak<Target>` is `(Target & WeakBrand) | undefined`: tsc accepts it, a plain `TreeNode` assigns into it, and a read is a `TreeNode` once narrowed, so it reads as `TreeNode | undefined`. The brand gives weak slots a type of their own, so the compiler sees them in the type graph, not just in the syntax. An array of `TreeNode` seen as an array of `Weak<TreeNode>` (which tsc allows) says NotYet: one holds targets and the other handles.
 4. **Natively** (`runtime/weak.c`), a `Weak` slot holds a counted handle, shared by every weak slot pointing at one target, never the target itself, so it doesn't count. Freeing a target tells its handle, which then reads `undefined`. A side table from target to handle is how freeing finds it, consulted only while any handle exists, so a program without `Weak` pays nothing.
 5. **In the JavaScript backend**, a `Weak` is a plain reference, which is what Node does with the source.
 
 **Where native and Node differ, by design:** a `Weak` read after its target's last strong holder let go is `undefined` natively, while on Node the collector keeps the target as long as the `Weak` points at it. A read the checker had narrowed to present panics natively instead of reading freed memory. Programs that read a `Weak` only while its target is held strongly (a child's parent, while the tree is held) mean the same on both; the oracle's fixtures are such programs, and `internal/oracle/weak_test.go` pins the difference itself.
+
+### Function slots use closure targets
+
+The closure-target refinement preserves the type-graph rule for objects and
+collections. A function type does not describe the closure's environment.
+Membership instead follows the closure literals that can flow into the slot,
+using the same producer facts as `ClosureTargets` in `internal/ir/call_targets.go`.
+Direct call arguments, local writes, returns and joins contribute actual targets.
+Collection slots and field names are conservatively pooled across the program.
+The analysis never obtains a target by matching function types.
+
+This proof applies only to a closed world. Foreign values, host callbacks,
+unsupported producers and unbounded target sets remain Unknown and
+cycle-capable. Function values that may escape to an unmodelled caller have
+Unknown parameters. Captures are followed transitively: a target is acyclic only
+when everything it captures is acyclic by the same rule. A captured object whose
+type graph reaches the slot still prevents admission. Captured Maps and arrays
+follow their stored function targets too; an indirect back-reference is not an
+exception. Weak edges retain their existing meaning.
+
+`memoizeOne` can therefore capture its callback and a Map of functions when the
+callback and every cached function capture only acyclic values. The ten
+`getters_census_*_function.a` fixtures preserve the lazy initialization and cache
+behavior. They compare source Node, emitted JavaScript, release native and
+sanitized native, with LeakSanitizer.
+
+The following complete program stays refused with the captured-variable
+`adamic/cycle-capable` message. The returned closure reaches `memo` again:
+
+```ts
+function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
+    const cache = new Map<number, T>();
+    return (kind) => {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        const value = callback(kind);
+        cache.set(kind, value);
+        return value;
+    };
+}
+function make(): (kind: number) => () => number {
+let memo: (kind: number) => () => number = (kind) => () => kind;
+memo = memoizeOne((kind: number) => () => memo(kind)());
+return memo;
+}
+const held = make();
+console.log('stored');
+```
+
+The indirect case stays refused too. `links` owns a function that reaches the
+memoizer; the callback reaches `links`. The Map value slot keeps its existing
+`adamic/cycle-capable` refusal:
+
+```ts
+function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
+    const cache = new Map<number, T>();
+    return (kind) => {
+        const found = cache.get(kind);
+        if (found !== undefined) return found;
+        const value = callback(kind);
+        cache.set(kind, value);
+        return value;
+    };
+}
+function make(): (kind: number) => () => number {
+const links = new Map<number, () => number>();
+let memo: (kind: number) => () => number = (kind) => () => kind;
+links.set(0, () => memo(0)());
+memo = memoizeOne((kind: number) => () => {
+    const next = links.get(kind);
+    return next === undefined ? kind : next();
+});
+return memo;
+}
+const held = make();
+console.log('stored');
+```
 
 ### Relaxing the finder for fresh writes
 
