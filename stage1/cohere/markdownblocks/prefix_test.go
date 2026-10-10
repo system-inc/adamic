@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
@@ -79,12 +80,8 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	}
 	overlayPath := filepath.Join(dir, "overlay.json")
 	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-prefix")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	command.Dir = cohere
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go prefix bridge: %v\n%s", err, output)
-	}
+	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
+	goBinary := buildcache.GoBuildIn(t, "cohere", "go-prefix", mainPath, []string{"-overlay=" + overlayPath})
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "actual Go parser primitives", want)
 	main, err := filepath.Abs("testdata/prefix_probe.ts")
