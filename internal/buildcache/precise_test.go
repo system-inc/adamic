@@ -20,6 +20,8 @@ type rig struct {
 	root, cache, trace string
 	pid                int
 	lines              []string
+	// before is the tree's state when the run began; empty, the tree is taken as unchanged.
+	before string
 }
 
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
@@ -125,7 +127,14 @@ func (r *rig) window(id string, reads func()) {
 func (r *rig) settle(t *testing.T) Settlement {
 	t.Helper()
 	t.Chdir(r.root)
-	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"))
+	before := r.before
+	if before == "" {
+		var err error
+		if before, err = TreeState(); err != nil {
+			t.Fatal(err)
+		}
+	}
+	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -183,7 +192,7 @@ func TestATracedBuildIsKeyedByWhatItRead(t *testing.T) {
 	for _, entry := range file.Sets[0].Entries {
 		kinds = append(kinds, entry.Kind+" "+entry.Path)
 	}
-	if want := []string{"content go.mod", "exists include/missing.h", "listing source", "content source/a.c"}; !slices.Equal(kinds, want) {
+	if want := []string{"settings binary", "content go.mod", "exists include/missing.h", "listing source", "content source/a.c"}; !slices.Equal(kinds, want) {
 		t.Fatalf("the read set is %q, want %q", kinds, want)
 	}
 	product, err := reading(t, port)
@@ -258,7 +267,7 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 			store := &fakeStore{objects: map[string][]byte{}}
 			server := httptest.NewServer(store)
 			t.Cleanup(server.Close)
-			t.Setenv("ADAMIC_BUILD_STORE", server.URL)
+			t.Setenv("ADAMIC_BUILD_STORE", "traced="+server.URL)
 			t.Setenv("ADAMIC_BUILD_STORE_WRITE", server.URL+"/public")
 			token(t)
 			pending := Product(t, port, building("built"))
@@ -358,7 +367,7 @@ func TestReadsAreTheBuildsOrTheKeys(t *testing.T) {
 	for _, entry := range file.Sets[0].Entries {
 		paths = append(paths, entry.Path)
 	}
-	if want := []string{"go.mod", "go.sum", "include/x.h", "source/a.c", "source/b.c"}; !slices.Equal(paths, want) {
+	if want := []string{"binary", "go.mod", "go.sum", "include/x.h", "source/a.c", "source/b.c"}; !slices.Equal(paths, want) {
 		t.Fatalf("the read set holds %q, want %q (the child's and the thread's reads, never the key's)", paths, want)
 	}
 }
@@ -378,7 +387,12 @@ func TestAProductReadingAnotherIsKeyedByItsKey(t *testing.T) {
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
 	built := r.built(t)
-	r.window(built["header"].Build, func() { r.open(r.pid, "include/x.h") })
+	// header is built in port's own process, which writes header's product and then reads it: a product is an input
+	// whoever wrote it.
+	r.window(built["header"].Build, func() {
+		r.open(r.pid, "include/x.h")
+		r.write(r.pid, filepath.Join(headerProduct, "product"))
+	})
 	r.window(built["port"].Build, func() {
 		r.open(r.pid, filepath.Join(headerProduct, "product"))
 		r.open(r.pid, "source/a.c")
@@ -413,27 +427,32 @@ func TestAProductReadingAnotherIsKeyedByItsKey(t *testing.T) {
 	}
 }
 
-// Away from a trace a product is never built for others: a miss is refused, named, unless ADAMIC_BUILD_STORE=off asks
-// for a build for this machine alone, which a runner's read mode never finds.
+// Away from a trace a product is built as before, for this machine alone: keyed by its declared Files, never published,
+// and never found by a runner's read mode. Only Workshop's tree builder, ADAMIC_BUILD_STORE=traced, refuses to build
+// outside a trace.
 // Not parallel: newRig.
 func TestAnUntracedMachineBuildsOnlyForItself(t *testing.T) {
 	newRig(t)
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	t.Setenv("ADAMIC_BUILD_STORE", "")
-	never := func(string) error { t.Fatal("an untraced machine built a product"); return nil }
-	if _, err := Get(port, never); !errors.Is(err, ErrUntraced) || !strings.Contains(err.Error(), "ADAMIC_BUILD_STORE=off") {
-		t.Fatalf("an untraced miss read as %v, want ErrUntraced", err)
+	for _, setting := range []string{"", "off", "http://127.0.0.1:1"} {
+		t.Setenv("ADAMIC_BUILD_STORE", setting)
+		t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+		local := Product(t, port, building("local"))
+		if !strings.Contains(local, string(filepath.Separator)+"local"+string(filepath.Separator)) {
+			t.Fatalf("ADAMIC_BUILD_STORE=%q: a local build is at %s", setting, local)
+		}
+		never := func(string) error { t.Fatal("a local product was built twice"); return nil }
+		if again := Product(t, port, never); again != local {
+			t.Fatalf("a local hit found %s, want %s", again, local)
+		}
+		if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "no traced build") {
+			t.Fatalf("read mode found a local product: %v", err)
+		}
 	}
-	t.Setenv("ADAMIC_BUILD_STORE", "off")
-	local := Product(t, port, building("local"))
-	if !strings.Contains(local, string(filepath.Separator)+"local"+string(filepath.Separator)) {
-		t.Fatalf("a local build is at %s", local)
-	}
-	if again := Product(t, port, never); again != local {
-		t.Fatalf("a local hit found %s, want %s", again, local)
-	}
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "no traced build") {
-		t.Fatalf("read mode found a local product: %v", err)
+	t.Setenv("ADAMIC_BUILD_STORE", "traced=http://127.0.0.1:1")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	if _, err := Get(port, func(string) error { t.Fatal("the tree builder built untraced"); return nil }); !errors.Is(err, ErrUntraced) {
+		t.Fatalf("the tree builder outside a trace: %v, want ErrUntraced", err)
 	}
 }
 
@@ -565,7 +584,7 @@ func TestEachProcessReadsFromItsOwnWorkingDirectory(t *testing.T) {
 	if settlement := r.settle(t); len(settlement.Settled) != 1 {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got, want := r.entries(t, build.NameKey), []string{"content go.mod", "exists include/x.h", "content notes.txt", "content source/a.c"}; !slices.Equal(got, want) {
+	if got, want := r.entries(t, build.NameKey), []string{"settings binary", "content go.mod", "exists include/x.h", "content notes.txt", "content source/a.c"}; !slices.Equal(got, want) {
 		t.Fatalf("the read set is %q, want %q", got, want)
 	}
 }
@@ -639,7 +658,7 @@ func TestWhatTheBuildMadeIsNeverRead(t *testing.T) {
 	if settlement := r.settle(t); len(settlement.Settled) != 1 {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got, want := r.entries(t, build.NameKey), []string{"content go.mod", "content source/a.c"}; !slices.Equal(got, want) {
+	if got, want := r.entries(t, build.NameKey), []string{"settings binary", "content go.mod", "content source/a.c"}; !slices.Equal(got, want) {
 		t.Fatalf("the read set is %q, want %q", got, want)
 	}
 	r.retrace(t, "sibling")
@@ -647,9 +666,15 @@ func TestWhatTheBuildMadeIsNeverRead(t *testing.T) {
 	other := Inputs{Name: "sibling's"}
 	Product(t, other, building("built"))
 	build = r.built(t)["sibling's"]
+	// go test (the root) starts two test binaries; the one building reads what the other wrote.
+	test := r.pid + 3
 	r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, sibling)
 	r.write(sibling, "/tmp/adamic-test-sibling/out")
-	r.window(build.Build, func() { r.open(r.pid, "/tmp/adamic-test-sibling/out") })
+	r.add(sibling, "+++ exited with 0 +++")
+	r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, test)
+	r.marker(test, "build-begin", build.Build)
+	r.open(test, "/tmp/adamic-test-sibling/out")
+	r.marker(test, "build-end", build.Build)
 	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
 		t.Fatalf("a temp file a sibling made: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
@@ -742,5 +767,201 @@ func TestAFileIsValuedByItsGitObject(t *testing.T) {
 	write(t, r.root, "source/a.c", "int a2;\n")
 	if after, _ := evaluate(r.root, r.cache, nameKey, set, 0); after.key == inCheckout.key {
 		t.Fatal("a file changed after git was asked kept its old id")
+	}
+}
+
+// A product another test binary built (a sibling under go test, ended before this build) is an input, by its key:
+// what a sibling wrote is never this build's output, and a product is a product whoever wrote it (review 1).
+// Not parallel: newRig.
+func TestASiblingsProductIsAnInput(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	headerProduct := Product(t, header, building("header v1"))
+	Product(t, port, building("port built from header v1"))
+	built := r.built(t)
+	goTest, first, second := r.pid, r.pid+1, r.pid+2
+	r.add(goTest, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, first)
+	r.marker(first, "build-begin", built["header"].Build)
+	r.open(first, "include/x.h")
+	r.write(first, filepath.Join(filepath.Dir(headerProduct), ".building-x", "product"))
+	r.add(first, `rename(%q, %q) = 0`, filepath.Join(filepath.Dir(headerProduct), ".building-x"), headerProduct)
+	r.marker(first, "build-end", built["header"].Build)
+	r.add(first, "+++ exited with 0 +++")
+	r.add(goTest, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, second)
+	r.marker(second, "build-begin", built["port"].Build)
+	r.open(second, filepath.Join(headerProduct, "product"))
+	r.open(second, "source/a.c")
+	r.marker(second, "build-end", built["port"].Build)
+	r.add(second, "+++ exited with 0 +++")
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if got := r.entries(t, built["port"].NameKey); !slices.Contains(got, "product "+built["header"].NameKey) {
+		t.Fatalf("port's read set %q doesn't name header's product", got)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatal(err)
+	}
+	write(t, r.root, "include/x.h", "#define X 2\n")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("header's input changed and port read as %v", err)
+	}
+}
+
+// A write into the tree by any process of the run (go generate before go test, a test rewriting a golden file)
+// refuses every build: what they read isn't the tree that would be keyed (review 1).
+// Not parallel: newRig.
+func TestATreeWriteAnywhereInTheRunRefusesIt(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built from generated"))
+	build := r.built(t)["port"]
+	shell, generate, test := r.pid, r.pid+1, r.pid+2
+	r.add(shell, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, generate)
+	r.open(generate, "include/x.h")
+	r.write(generate, "source/a.c")
+	r.add(generate, "+++ exited with 0 +++")
+	r.add(shell, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, test)
+	r.marker(test, "build-begin", build.Build)
+	r.open(test, "source/a.c")
+	r.marker(test, "build-end", build.Build)
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "tree write: source/a.c") {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
+// A read set is valued when the run settles, so a tree that changed during the run (a commit, an edit) refuses every
+// build rather than key what was built under what the tree is now (review 2).
+// Not parallel: newRig.
+func TestATreeThatChangedDuringTheRunRefusesIt(t *testing.T) {
+	for name, change := range map[string]func(r *rig){
+		"a commit": func(r *rig) {
+			write(t, r.root, "source/a.c", "int a_changed_mid_run;\n")
+			gitIn(t, r.root, "commit", "-qam", "next")
+		},
+		"an edit":           func(r *rig) { write(t, r.root, "notes.txt", "edited mid-run\n") },
+		"an untracked file": func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") },
+	} {
+		t.Run(name, func(t *testing.T) {
+			r := newRig(t)
+			before, err := TreeState()
+			if err != nil {
+				t.Fatal(err)
+			}
+			r.before = before
+			Product(t, port, building("built from int a;"))
+			r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+			change(r)
+			forgetTracked()
+			if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the tree changed during the run") {
+				t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+			}
+		})
+	}
+}
+
+// What a build reads of the machine is keyed (review 3): a file a package installed by the package's version, a link,
+// a directory and a file no package owns by themselves; an upgrade or a changed file misses.
+// Not parallel: newRig, and it points the machine's places and dpkg's database at the test.
+func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
+	r := newRig(t)
+	machine, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	system := filepath.Join(machine, "usr")
+	dpkg := filepath.Join(machine, "dpkg")
+	ld, stdio, crt := filepath.Join(system, "bin/ld"), filepath.Join(system, "include/stdio.h"), filepath.Join(system, "lib/gcc/crtbegin.o")
+	write(t, system, "bin/ld", "the linker")
+	write(t, system, "include/stdio.h", "int printf(const char *, ...);")
+	write(t, system, "lib/gcc/crtbegin.o", "an object no package owns")
+	os.Symlink(ld, filepath.Join(system, "cc"))
+	write(t, dpkg, "info/binutils:amd64.list", system+"/bin\n"+ld+"\n")
+	write(t, dpkg, "info/libc6-dev:amd64.list", stdio+"\n")
+	status := func(libc string) {
+		write(t, dpkg, "status", "Package: binutils\nArchitecture: amd64\nVersion: 2.42-4\n\nPackage: libc6-dev\nArchitecture: amd64\nVersion: "+libc+"\n")
+		packageIndexes.Delete(dpkg)
+	}
+	status("2.39-0ubuntu8")
+	originalPlaces, originalDpkg := systemPlaces, dpkgDirectory
+	systemPlaces, dpkgDirectory = []string{system}, dpkg
+	t.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+		r.add(child, `execve(%q, ["ld"], 0x7ffd /* 30 vars */) = 0`, ld)
+		r.open(child, crt)
+		r.list(child, filepath.Join(system, "lib/gcc"))
+		r.open(child, stdio)
+		r.add(child, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=7, ...}, AT_SYMLINK_NOFOLLOW) = 0`, filepath.Join(system, "cc"))
+		r.add(child, "+++ exited with 0 +++")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"package binutils:amd64", "package libc6-dev:amd64", "system " + crt, "system " + filepath.Join(system, "lib/gcc"), "system " + filepath.Join(system, "cc")} {
+		if !slices.Contains(got, want) {
+			t.Fatalf("the read set %q lacks %q", got, want)
+		}
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatal(err)
+	}
+	status("2.39-0ubuntu9")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "package libc6-dev:amd64") {
+		t.Fatalf("libc6-dev upgraded and port read as %v", err)
+	}
+	status("2.39-0ubuntu8")
+	write(t, system, "lib/gcc/crtbegin.o", "another object")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+crt) {
+		t.Fatalf("an unowned file changed and port read as %v", err)
+	}
+}
+
+// A file git stops comparing with its index (assume-unchanged, skip-worktree) is hashed, never valued by its index
+// id, which may be stale (review 4).
+// Not parallel: newRig.
+func TestAFileGitStopsComparingIsHashed(t *testing.T) {
+	for _, flag := range []string{"--assume-unchanged", "--skip-worktree"} {
+		t.Run(flag, func(t *testing.T) {
+			r := newRig(t)
+			set := readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}}}
+			nameKey := NameKey(r.root, port)
+			old := time.Now().Add(-time.Hour)
+			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
+			gitIn(t, r.root, "update-index", "--refresh", "-q")
+			forgetTracked()
+			before, _ := evaluate(r.root, r.cache, nameKey, set, 0)
+			gitIn(t, r.root, "update-index", flag, "source/a.c")
+			write(t, r.root, "source/a.c", "int Z;\n")
+			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
+			forgetTracked()
+			if after, _ := evaluate(r.root, r.cache, nameKey, set, 0); after.key == before.key {
+				t.Fatalf("source/a.c edited under %s kept its key", flag)
+			}
+		})
+	}
+}
+
+// The binary's build settings (tags, ldflags, -race, GOEXPERIMENT) are in the recipe: a binary built otherwise finds
+// none of the products this one built (review 5).
+// Not parallel: newRig, and it sets the settings the key is valued with.
+func TestTheBinarysBuildSettingsKeyItsProducts(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatal(err)
+	}
+	settingsOverride = binarySettings() + "\n-race=true"
+	t.Cleanup(func() { settingsOverride = "" })
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "settings binary") {
+		t.Fatalf("a binary built with -race read as %v", err)
 	}
 }

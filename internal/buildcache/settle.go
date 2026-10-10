@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"maps"
 	"os"
 	"os/exec"
 	"path"
@@ -28,7 +29,11 @@ import (
 // placed, recorded or published: it is Loom's to fix, never the author's red. The rest are keyed by their read sets
 // and the recipe (the test binary's linked packages), placed under their keys, recorded beside them as read sets,
 // and published when the shared store is on.
-func Settle(directory string, trace io.Reader) (Settlement, error) {
+//
+// A read set is valued when the build settles, not when it read, so the tree must be the tree it read: before is
+// TreeState when the run began, and a run whose tree state differs at its end (a commit, a checkout, an edit, a
+// submodule moved) refuses every build, as does a run any of whose processes wrote into the tree.
+func Settle(directory string, trace io.Reader, before string) (Settlement, error) {
 	root, err := repositoryRoot()
 	if err != nil {
 		return Settlement{}, err
@@ -49,7 +54,43 @@ func Settle(directory string, trace io.Reader) (Settlement, error) {
 	if err != nil {
 		return Settlement{}, err
 	}
+	if after, err := TreeState(); err != nil || after != before {
+		state.lost = append(state.lost, "the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now")
+	}
+	for _, relative := range slices.Sorted(maps.Keys(state.treeWrites)) {
+		state.lost = append(state.lost, "the run wrote into the tree (tree write: "+relative+")")
+	}
 	return state.settle(entries), nil
+}
+
+// TreeState is the repository's state as git sees it: HEAD, every file's status (untracked ones too, but go.work.sum,
+// which go writes as it runs), and each submodule's HEAD and status. cmd/traced takes it before and after a run.
+func TreeState() (string, error) {
+	root, err := repositoryRoot()
+	if err != nil {
+		return "", err
+	}
+	var state strings.Builder
+	keying(func() {
+		for _, arguments := range [][]string{
+			{"rev-parse", "HEAD"},
+			{"status", "--porcelain=v2", "-uall"},
+			{"submodule", "status", "--recursive"},
+			{"submodule", "foreach", "--quiet", "--recursive", "git rev-parse HEAD && git status --porcelain=v2 -uall"},
+		} {
+			var output []byte
+			if output, err = exec.Command("git", append([]string{"-C", root}, arguments...)...).Output(); err != nil {
+				err = fmt.Errorf("git %s: %v", strings.Join(arguments, " "), err)
+				return
+			}
+			for _, line := range strings.Split(string(output), "\n") {
+				if !strings.HasSuffix(line, "go.work.sum") {
+					state.WriteString(line + "\n")
+				}
+			}
+		}
+	})
+	return state.String(), err
 }
 
 // A Settlement is what Settle did with each build, in the order the builds ended.
@@ -93,13 +134,32 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		facts.temporary = append(facts.temporary, variants(place)...)
 	}
 	facts.kernel = []string{"/proc", "/sys", "/dev", "/run"}
-	facts.system = []string{"/etc", "/usr", "/lib", "/lib32", "/lib64", "/libx32", "/bin", "/sbin"}
+	for _, place := range systemPlaces {
+		facts.system = append(facts.system, variants(place)...)
+	}
 	for _, entry := range filepath.SplitList(os.Getenv("PATH")) {
 		if filepath.IsAbs(entry) {
 			facts.searched[filepath.Clean(entry)] = true
 		}
 	}
 	return facts, nil
+}
+
+// inTree is name relative to the tree, when it is in it.
+func (facts *traceFacts) inTree(name string) (string, bool) {
+	for _, root := range facts.roots {
+		if name == root {
+			return ".", true
+		}
+		if under(name, root) {
+			return strings.TrimPrefix(name, root+"/"), true
+		}
+	}
+	return "", false
+}
+
+func isGit(relative string) bool {
+	return relative == ".git" || strings.HasPrefix(relative, ".git/") || strings.Contains(relative, "/.git/") || strings.HasSuffix(relative, "/.git")
 }
 
 func variants(place string) []string {
@@ -173,12 +233,10 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		if unkeyed(relative) {
 			return classed{}
 		}
-		if relative == ".git" || strings.HasPrefix(relative, ".git/") || strings.Contains(relative, "/.git/") || strings.HasSuffix(relative, "/.git") {
+		if isGit(relative) {
 			return classed{refusal + "git", relative}
 		}
-		if kinds&readWrite != 0 {
-			return classed{refusal + "tree write", relative}
-		}
+		// A write here never reaches a read set: any write into the tree refuses the whole run (Settle).
 		// A path that was there when it was read (opened, listed or stat'ed: anything but a lookup that missed) must be
 		// one the tree carries, whether or not it is still there: an installed node_modules is untracked, never absent.
 		path := filepath.Join(facts.root, relative)
@@ -250,17 +308,22 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 			}
 		}
 	}
+	for _, place := range facts.kernel {
+		if under(name, place) {
+			return classed{}
+		}
+	}
+	for _, place := range facts.system {
+		if under(name, place) {
+			return classed{"system", name}
+		}
+	}
 	for _, place := range facts.temporary {
 		if under(name, place) {
 			// What the build's own processes made there never reaches here (record leaves it out).
 			if kinds&(readContent|readExec) != 0 {
 				return classed{refusal + "temp not made by this run", name}
 			}
-			return classed{}
-		}
-	}
-	for _, place := range append(facts.kernel, facts.system...) {
-		if under(name, place) {
 			return classed{}
 		}
 	}
@@ -297,7 +360,10 @@ type traceState struct {
 	directory  map[int]string
 	keying     map[int]int
 	keyingTree map[int]bool
-	reads      map[int]map[string]int
+	reads      map[int]map[string]*pathReads
+	writers    map[string][]writer
+	treeWrites map[string]bool
+	sequence   int
 	waiting    map[int][]traceCall
 	unfinished map[int]string
 	open       map[string]int
@@ -305,6 +371,16 @@ type traceState struct {
 	order      []string
 	lost       []string
 	started    bool
+}
+
+// A pathReads is a process's reads of one path: their kinds, and when it first read the path (0 for a path it only wrote).
+type pathReads struct {
+	kinds, firstRead int
+}
+
+// A writer is a process that wrote a path, and when it first did; it stays a writer after it ends.
+type writer struct {
+	process, sequence int
 }
 
 type traceCall struct {
@@ -315,7 +391,7 @@ type traceCall struct {
 
 func newTraceState(facts *traceFacts) *traceState {
 	state := &traceState{facts: facts, process: map[int]int{}, parent: map[int]int{}, directory: map[int]string{}, keying: map[int]int{},
-		keyingTree: map[int]bool{}, reads: map[int]map[string]int{}, waiting: map[int][]traceCall{},
+		keyingTree: map[int]bool{}, reads: map[int]map[string]*pathReads{}, writers: map[string][]writer{}, treeWrites: map[string]bool{}, waiting: map[int][]traceCall{},
 		unfinished: map[int]string{}, open: map[string]int{}, ended: map[string]map[string]int{}}
 	return state
 }
@@ -362,11 +438,11 @@ func (state *traceState) read(trace io.Reader) error {
 	}
 	for pid, calls := range state.waiting {
 		if len(calls) > 0 {
-			state.lost = append(state.lost, fmt.Sprintf("process %d's %d calls, which the trace never placed under a parent", pid, len(calls)))
+			state.lost = append(state.lost, fmt.Sprintf("a lost trace: process %d's %d calls, which the trace never placed under a parent", pid, len(calls)))
 		}
 	}
 	for id := range state.open {
-		state.lost = append(state.lost, "build "+id+" never ended in the trace")
+		state.lost = append(state.lost, "a lost trace: build "+id+" never ended in the trace")
 	}
 	sort.Strings(state.lost)
 	return nil
@@ -412,7 +488,7 @@ func (state *traceState) handle(call traceCall) {
 		// The first process in the trace is the command strace ran, in the directory it ran from.
 		state.started = true
 		state.process[call.pid] = call.pid
-		state.reads[call.pid] = map[string]int{}
+		state.reads[call.pid] = map[string]*pathReads{}
 		state.directory[call.pid], _ = os.Getwd()
 	}
 	process, known := state.process[call.pid]
@@ -431,7 +507,7 @@ func (state *traceState) handle(call traceCall) {
 			state.process[child] = child
 			state.parent[child] = process
 			state.directory[child] = state.directory[process]
-			state.reads[child] = map[string]int{}
+			state.reads[child] = map[string]*pathReads{}
 			state.keyingTree[child] = state.keying[call.pid] > 0 || state.keyingTree[process]
 		}
 		waiting := state.waiting[child]
@@ -521,14 +597,28 @@ func (state *traceState) record(pid, process int, name string, kind int) {
 	if state.keying[pid] > 0 || state.keyingTree[process] {
 		return
 	}
-	// A path this process or one above it wrote before reading it is the run's own output, never an input.
-	if kind&readWrite == 0 && state.made(process, name) {
-		return
+	state.sequence++
+	if kind&readWrite != 0 {
+		if !slices.ContainsFunc(state.writers[name], func(other writer) bool { return other.process == process }) {
+			state.writers[name] = append(state.writers[name], writer{process, state.sequence})
+		}
+		// A write into the tree by any process of the run means what was read isn't the tree that is keyed.
+		if relative, ok := state.facts.inTree(name); ok && !unkeyed(relative) && !isGit(relative) {
+			state.treeWrites[relative] = true
+		}
 	}
 	if state.reads[process] == nil {
-		state.reads[process] = map[string]int{}
+		state.reads[process] = map[string]*pathReads{}
 	}
-	state.reads[process][name] |= kind
+	found := state.reads[process][name]
+	if found == nil {
+		found = &pathReads{}
+		state.reads[process][name] = found
+	}
+	found.kinds |= kind
+	if kind&^readWrite != 0 && found.firstRead == 0 {
+		found.firstRead = state.sequence
+	}
 }
 
 func (state *traceState) marker(pid, process int, marker string) {
@@ -548,14 +638,23 @@ func (state *traceState) marker(pid, process int, marker string) {
 			return
 		}
 		delete(state.open, id)
-		// Everything this process and the processes it started read so far, which is everything up to the build's end.
+		// Everything this process and the processes it started read so far, which is everything up to the build's end,
+		// but what they wrote before reading it: that is the build's own output, never an input. Only the build's own
+		// processes make output for it; what a sibling or a process above it wrote is an input like any other (a
+		// sibling's product, a generated file). A product is always a product, whoever wrote it.
 		snapshot := map[string]int{}
 		for other, reads := range state.reads {
 			if !state.descends(other, owner) {
 				continue
 			}
-			for name, kinds := range reads {
-				snapshot[name] |= kinds
+			for name, found := range reads {
+				kinds := found.kinds
+				if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, found.firstRead) {
+					kinds &= readWrite
+				}
+				if kinds != 0 {
+					snapshot[name] |= kinds
+				}
 			}
 		}
 		state.ended[id] = snapshot
@@ -563,22 +662,14 @@ func (state *traceState) marker(pid, process int, marker string) {
 	}
 }
 
-// made says whether process, or a process above it (which holds what its ended children wrote), wrote name or a
-// directory above it.
-func (state *traceState) made(process int, name string) bool {
-	for steps := 0; steps < 64; steps++ {
-		if reads := state.reads[process]; reads != nil {
-			for at := name; at != "/" && at != "."; at = filepath.Dir(at) {
-				if reads[at]&readWrite != 0 {
-					return true
-				}
+// madeBy says whether owner or a process it started wrote name, or a directory above it, before first reading it.
+func (state *traceState) madeBy(owner int, name string, firstRead int) bool {
+	for at := name; at != "/" && at != "."; at = filepath.Dir(at) {
+		for _, wrote := range state.writers[at] {
+			if wrote.sequence < firstRead && state.descends(wrote.process, owner) {
+				return true
 			}
 		}
-		parent, ok := state.parent[process]
-		if !ok {
-			return false
-		}
-		process = parent
 	}
 	return false
 }
@@ -611,8 +702,16 @@ func (state *traceState) exited(pid int) {
 	delete(state.directory, pid)
 	for ancestor, ok := state.parent[pid]; ok; ancestor, ok = state.parent[ancestor] {
 		if into, live := state.reads[ancestor]; live {
-			for name, kinds := range reads {
-				into[name] |= kinds
+			for name, found := range reads {
+				kept := into[name]
+				if kept == nil {
+					into[name] = found
+					continue
+				}
+				kept.kinds |= found.kinds
+				if found.firstRead != 0 && (kept.firstRead == 0 || found.firstRead < kept.firstRead) {
+					kept.firstRead = found.firstRead
+				}
 			}
 			return
 		}
@@ -747,13 +846,13 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 		settled[id] = true
 		if len(state.lost) > 0 {
-			refuse(entry, "a lost trace: "+strings.Join(state.lost, "; "))
+			refuse(entry, "the whole run can't be keyed: "+strings.Join(state.lost, "; "))
 			continue
 		}
 		set, reason := state.measured(entry, state.ended[id], products)
 		if reason == "" {
 			own := processes[entry.Process]
-			name := own.Package + " " + strings.Join(own.Settings, " ")
+			name := recipeName(own)
 			if _, ok := recipes[name]; !ok {
 				recipes[name] = recipeFor(facts.root, own)
 			}
@@ -764,9 +863,11 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			continue
 		}
 		set.Trace = filepath.Base(facts.trace)
+		settingsOverride = recipes[recipeName(processes[entry.Process])].settings
 		set, evaluated, product, err := recordUnion(facts.root, facts.cache, entry.NameKey, entry.Name, set, func(key string) string {
 			return placeSettled(facts.cache, key, entry)
 		})
+		settingsOverride = ""
 		if err != nil {
 			refuse(entry, err.Error())
 			continue
@@ -776,8 +877,13 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if set.Drift != nil {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
-		if storeAddress() != "" {
-			if err = publish(evaluated.key, entry.Name, product); err != nil {
+		// Only Workshop's tree builder publishes: the product, then its read set, so a set never names a product the
+		// store doesn't hold.
+		if publishing() {
+			if err = publish(evaluated.key, entry.Name, product); err == nil {
+				err = publishReads(entry.NameKey, set)
+			}
+			if err != nil {
 				line += "; publish failed: " + err.Error()
 			}
 		}
@@ -823,6 +929,15 @@ func (state *traceState) measured(entry journalEntry, reads map[string]int, prod
 				entries[readEntry{Kind: "product", Path: nameKey}] = true
 			case found.kind == "go":
 				entries[readEntry{Kind: "go", Path: "release"}] = true
+			case found.kind == "system":
+				// A file a package installed is keyed by the package; a directory, a link, a lookup that missed and a
+				// file no package owns, by itself.
+				info, err := os.Lstat(found.detail)
+				if owner := packageOwner(found.detail); err == nil && info.Mode().IsRegular() && owner != "" {
+					entries[readEntry{Kind: "package", Path: owner}] = true
+				} else {
+					entries[readEntry{Kind: "system", Path: found.detail}] = true
+				}
 			default:
 				entries[readEntry{Kind: found.kind, Path: found.detail}] = true
 				if found.kind == "content" || found.kind == "listing" {
@@ -957,12 +1072,17 @@ func declaredDrift(declared, reads []string) *drift {
 	return result
 }
 
+func recipeName(process journalEntry) string {
+	return process.Package + " " + strings.Join(process.Settings, " ")
+}
+
 // recipe is the code a build ran in process, which strace can't see: every file of every package in the tree that the
 // process's binary links (go list -deps, with -test for a test binary), each package's directory listing, each
 // module's go.mod and go.sum, and the workspace file (Kirk's decision 1: the linked packages, never coverage).
 type recipe struct {
-	entries []readEntry
-	reason  string
+	entries  []readEntry
+	settings string
+	reason   string
 }
 
 // recipeFor is recipeOf; a test in a tree of its own, which go list can't load as adamic, names its recipe itself.
@@ -1044,7 +1164,7 @@ func recipeOf(root string, process journalEntry) recipe {
 		sort.Strings(untracked)
 		return recipe{reason: "its binary links files git doesn't track: " + strings.Join(untracked[:min(6, len(untracked))], ", ")}
 	}
-	result := recipe{}
+	result := recipe{settings: settingsValue(process.Settings)}
 	for entry := range entries {
 		result.entries = append(result.entries, entry)
 	}
@@ -1056,5 +1176,5 @@ func withRecipe(entries []readEntry, code recipe) ([]readEntry, string) {
 	if code.reason != "" {
 		return nil, code.reason
 	}
-	return sortedEntries(entries, code.entries), ""
+	return sortedEntries(entries, code.entries, []readEntry{{Kind: "settings", Path: "binary"}}), ""
 }

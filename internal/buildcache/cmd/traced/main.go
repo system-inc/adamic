@@ -3,11 +3,14 @@
 //
 //	go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./stage1/cohere/...
 //
-// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS,
-// ADAMIC_BUILD_STORE for publishing). The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
+// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS, and
+// ADAMIC_BUILD_STORE=traced on Workshop's tree builder, the one run that publishes). The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
 // directory under the build cache, so every process that builds a product marks it in the trace and journals it;
 // the trace streams through a pipe into buildcache.Settle, never to disk. GOENV is off unless set, so go never reads
 // a configuration file in the home directory, which no key can name.
+//
+// The tree is taken as git sees it (HEAD, status, each submodule) before the run and after: a read set is valued when
+// the run ends, so a run whose tree changed meanwhile refuses every product, as does one that wrote into the tree.
 //
 // It prints one line per settled product (its key, how many reads, and how far its declared Files drift from them)
 // and one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are
@@ -81,6 +84,10 @@ func run(command []string) (int, error) {
 	if err = syscall.Mkfifo(pipe, 0o600); err != nil {
 		return 0, err
 	}
+	before, err := buildcache.TreeState()
+	if err != nil {
+		return 0, fmt.Errorf("the tree's state before the run: %v", err)
+	}
 	// Settle sees the environment the command runs in: the same cache, the same store, the same trace.
 	os.Setenv("ADAMIC_BUILD_TRACE", directory)
 	if os.Getenv("GOENV") == "" {
@@ -99,7 +106,7 @@ func run(command []string) (int, error) {
 			return
 		}
 		defer reader.Close()
-		settlement, err := buildcache.Settle(directory, reader)
+		settlement, err := buildcache.Settle(directory, reader, before)
 		done <- settled{settlement, err}
 	}()
 	strace := exec.Command("strace", append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...)

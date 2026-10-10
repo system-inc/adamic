@@ -60,7 +60,9 @@ type readSet struct {
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
 // above the tree, relative to it), home (paths in the home directory, ~-relative), product (a name key), tool (a path
-// under the tools directory, exec'd), toolset (a tools directory read but not run) or go (the release). Value is what it was when recorded, shortened, so a miss can
+// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), package (a
+// dpkg package whose files it read, by version), system (a machine file no package owns) or settings (the build
+// settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
 // name what changed; the key hashes the full value.
 type readEntry struct {
 	Kind  string `json:"kind"`
@@ -189,6 +191,19 @@ func sortedEntries(lists ...[]readEntry) []readEntry {
 	return all
 }
 
+// mergeReads adds sets fetched from the store to nameKey's, after the cache's own, skipping any it already holds.
+func mergeReads(cache, nameKey, name string, sets []readSet) error {
+	return withReads(cache, nameKey, func(file *readsFile) error {
+		file.Name = name
+		for _, set := range sets {
+			if !slices.ContainsFunc(file.Sets, func(kept readSet) bool { return kept.Key == set.Key && sameEntries(kept.Entries, set.Entries) }) {
+				file.Sets = append(file.Sets, set)
+			}
+		}
+		return nil
+	})
+}
+
 func sameEntries(one, other []readEntry) bool {
 	return slices.EqualFunc(one, other, func(a, b readEntry) bool { return a.Kind == b.Kind && a.Path == b.Path })
 }
@@ -270,6 +285,15 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		return "absent", nil
 	case "go":
 		return Tool("go", "version"), nil
+	case "package":
+		return packageVersion(entry.Path), nil
+	case "system":
+		if !filepath.IsAbs(entry.Path) {
+			return "", fmt.Errorf("a system entry %q isn't an absolute path", entry.Path)
+		}
+		return systemValue(entry.Path), nil
+	case "settings":
+		return binarySettings(), nil
 	}
 	return "", fmt.Errorf("a read set entry of unknown kind %q", entry.Kind)
 }
