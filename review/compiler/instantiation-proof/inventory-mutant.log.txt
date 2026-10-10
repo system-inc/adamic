@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/instantiation-proof/census-check.py", line 12, in <module>
+    assert name in by_name, ('missing inventory', name)
+           ^^^^^^^^^^^^^^^
+AssertionError: ('missing inventory', 'firstOrUndefined')

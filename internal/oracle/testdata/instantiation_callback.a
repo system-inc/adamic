@@ -1,0 +1,10 @@
+// src/compiler/core.ts:33 forEach, U is inferred through the callback result.
+function forEach<T, U>(values: readonly T[] | undefined, action: (value: T) => U | undefined): U | undefined {
+    if (values !== undefined) { for (const value of values) { const result = action(value); if (result !== undefined) { return result; } } }
+    return undefined;
+}
+interface Item { readonly name: string; }
+function outer<T>(values: readonly T[]): Item | undefined { return forEach(values, value => String(value).length > 1 ? { name: 'found'.repeat(2) } : undefined); }
+console.log(`${outer(['a', 'bb'])?.name ?? 'missing'}`);
+console.log(`${outer<string>([])?.name ?? 'missing'}`);
+console.log(`${forEach<number, Item>(undefined, value => ({ name: String(value) }))?.name ?? 'missing'}`);
