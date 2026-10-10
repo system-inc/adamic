@@ -99,3 +99,6 @@ func lines(text string) int {
 	}
 	return count
 }
+
+// Gate mutant phase-gofmt (#7x6trdv): gofmt -l lists this file; it builds, vets and tests clean. Never merge.
+func   phaseGofmtMutant() {}
