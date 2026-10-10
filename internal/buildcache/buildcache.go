@@ -591,14 +591,20 @@ var tools sync.Map
 // selects rather than the policy that selected it, the workspace's content rather than its path, and no locations.
 func Tool(name string, arguments ...string) string {
 	command := strings.Join(append([]string{name}, arguments...), " ")
-	if value, ok := tools.Load(command); ok {
-		return value.(string)
-	}
-	label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
-	var value string
-	keying(func() { value = toolValue(name, label, arguments) })
-	tools.Store(command, value)
-	return value
+	entry, _ := tools.LoadOrStore(command, &toolRun{})
+	report := entry.(*toolRun)
+	// Parallel tests asking at once wait on the first one's run rather than each running the tool.
+	report.once.Do(func() {
+		label := strings.Join(append([]string{filepath.Base(name)}, arguments...), " ")
+		keying(func() { report.value = toolValue(name, label, arguments) })
+	})
+	return report.value
+}
+
+// A toolRun is one tool's report, run once however many tests ask for it at the same time.
+type toolRun struct {
+	once  sync.Once
+	value string
 }
 
 // toolValue runs a tool for Tool: what it reads is the key's, never a build's.
