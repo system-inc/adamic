@@ -205,3 +205,8 @@ _Noreturn void adamic_unreachable(void) {
 	static const char message[] = "compiler bug: a function ended without returning";
 	adamic_panic(message, sizeof message - 1);
 }
+
+/* Gate mutant phase-darwin-compile (#7x6trdv): breaks only under macOS clang. Never merge. */
+#if defined(__APPLE__)
+#error "gate mutant phase-darwin-compile: this runtime does not build on macOS"
+#endif
