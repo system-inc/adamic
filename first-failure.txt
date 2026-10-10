@@ -1,0 +1,7 @@
+FIRST FAILURE (tests, at 363.9 s):
+github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_026
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo_026
+    answers_shards_test.go:436: build gitignore-go-oracle 18f6963684b0 hit 1.80
+cooked: shared setup exceeded 90s hard deadline
+
+(box load 12.3 on 64 cores at first failure)
