@@ -16,14 +16,15 @@ import (
 // A product's bytes mean the same on every machine (#tqrqx60). Workshop builds each product once and runners fetch it
 // by a key that names no machine, so a manifest, an overlay or a mutant's import holding Workshop's /home/ahra/...
 // would point nowhere on the runner, and the test reading it would fail as the author's red. A product names the tree
-// as <repository>, the build cache as <build cache>, and another product (or itself) as <build cache>/<key>; Relative
+// as <repository>, the build cache as <build cache>, another product (or itself) as <build cache>/<key>, and a gate
+// input by the variable that locates it, such as <ADAMIC_TYPESCRIPT_SOURCE>; Relative
 // writes those names and Absolute reads them back against the roots of the machine reading it. A product built here
 // that still names this machine fails its build, naming the file (relocatable).
 
 // Relative rewrites this machine's paths in value to the roots a reader supplies: the repository becomes <repository>,
 // a product directory <build cache>/<key> (an uncached build's temporary directory too, and a product's own directory
-// while it builds), and the build cache <build cache>. A path outside all three stays as it is, and relocatable refuses
-// a product that holds one of this machine's.
+// while it builds), the build cache <build cache>, and a directory an ADAMIC_ variable locates <ADAMIC_NAME>. A path
+// outside them all stays as it is, and relocatable refuses a product that holds one of this machine's.
 func Relative(value string) string {
 	var found []place
 	add := func(path, name string) {
@@ -43,6 +44,9 @@ func Relative(value string) string {
 	if root, err := repositoryRoot(); err == nil {
 		add(root, "<repository>")
 	}
+	for name, directory := range locations() {
+		add(directory, "<"+name+">")
+	}
 	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
 	for _, place := range found {
 		value = replacePath(value, place.path, place.name)
@@ -51,7 +55,8 @@ func Relative(value string) string {
 }
 
 // Absolute is Relative read back on this machine: <build cache>/<key> is that product's directory (where this process
-// built it uncached, or under the build cache), <build cache> the build cache, and <repository> the repository.
+// built it uncached, or under the build cache), <build cache> the build cache, <repository> the repository, and
+// <ADAMIC_NAME> where this machine's ADAMIC_NAME locates it (left as it is when unset, so the read fails naming it).
 func Absolute(value string) string {
 	cache, _ := cacheLocation()
 	value = productName.ReplaceAllStringFunc(value, func(name string) string {
@@ -65,10 +70,35 @@ func Absolute(value string) string {
 	if root, err := repositoryRoot(); err == nil {
 		value = strings.ReplaceAll(value, "<repository>", root)
 	}
-	return value
+	here := locations()
+	return locationName.ReplaceAllStringFunc(value, func(name string) string {
+		if directory, ok := here[strings.Trim(name, "<>")]; ok {
+			return directory
+		}
+		return name
+	})
 }
 
 var productName = regexp.MustCompile(`<build cache>/[0-9a-f]{64}`)
+var locationName = regexp.MustCompile(`<ADAMIC_[A-Z0-9_]+>`)
+
+// locations are the directories this machine's ADAMIC_ variables name (ADAMIC_TYPESCRIPT_SOURCE, a library's npm
+// install), by variable, absolute. The build cache's own variable is <build cache>.
+func locations() map[string]string {
+	found := map[string]string{}
+	for _, variable := range os.Environ() {
+		name, value, _ := strings.Cut(variable, "=")
+		if !strings.HasPrefix(name, "ADAMIC_") || name == "ADAMIC_BUILD_CACHE_DIR" || value == "" {
+			continue
+		}
+		if info, err := os.Stat(value); err == nil && info.IsDir() {
+			if absolute, err := filepath.Abs(value); err == nil {
+				found[name] = absolute
+			}
+		}
+	}
+	return found
+}
 
 // productDirectories maps each product directory this process builds outside the cache's own <key> (a build's scratch
 // directory, an uncached build's temporary one) to its key, and productKeys each key to the latest such directory.
@@ -153,14 +183,8 @@ func machinePlaces() []place {
 		add(home, "the home directory")
 	}
 	add(os.TempDir(), "the temporary directory")
-	for _, variable := range os.Environ() {
-		name, value, _ := strings.Cut(variable, "=")
-		if !strings.HasPrefix(name, "ADAMIC_") {
-			continue
-		}
-		if info, err := os.Stat(value); err == nil && info.IsDir() {
-			add(value, name)
-		}
+	for name, directory := range locations() {
+		add(directory, name)
 	}
 	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
 	return found
