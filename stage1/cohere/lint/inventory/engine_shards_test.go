@@ -12,7 +12,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 const testInventoryEngineShards = 8
@@ -21,71 +22,49 @@ const testInventoryEngineShards = 8
 // within this repository-relative file; enumeration order never enters the key.
 const inventoryEngineCaseFile = "stage1/cohere/lint/inventory/testdata/engine_test.go"
 
-// Build from the same two complete files as the unsplit suite. All output goes
-// into directory; the overlay and mutant never change the checkout or a product.
-func inventoryEngineBuild(t *testing.T, mutant bool) (string, string, time.Duration) {
+// inventoryEngineBuild is the engine's test binary, built ahead from the same two complete files as the unsplit suite
+// laid over cohere (buildcache.GoTest), and the directory it runs in. With mutant, the unknown-frequency mutant is
+// planted into testdata/engine.go inside the product (buildcache.GoTestMutated). Neither changes the checkout, and
+// both are Go builds keyed by go list, never by hand-listed inputs.
+func inventoryEngineBuild(t *testing.T, mutant bool) (string, string) {
 	t.Helper()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := ""
-	if mutant {
-		directory = t.TempDir()
-	} else {
-		directory, err = os.MkdirTemp("", "inventory-engine-shared-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		inventoryEngineScratch = directory
-	}
 	cohere := filepath.Join(root, "cohere")
 	virtual := filepath.Join(cohere, "adamic_inventory.go")
 	virtualTest := filepath.Join(cohere, "adamic_inventory_test.go")
-	source := filepath.Join(root, "stage1/cohere/lint/inventory/testdata/engine.go")
-	testSource := filepath.Join(root, "stage1/cohere/lint/inventory/testdata/engine_test.go")
-	name := "inventory-engine"
-	if mutant {
-		text, err := os.ReadFile(source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		before := "func countText(f frequency) string {\n\tif f.Count == nil {\n\t\treturn \"unknown\""
-		after := "func countText(f frequency) string {\n\tif f.Count == nil {\n\t\treturn \"0\""
-		if strings.Count(string(text), before) != 1 {
-			t.Fatal("unknown-frequency mutant has no unique target")
-		}
-		source = filepath.Join(directory, "mutant.go")
-		if err := os.WriteFile(source, []byte(strings.Replace(string(text), before, after, 1)), 0644); err != nil {
-			t.Fatal(err)
-		}
-		name += "-unknown-frequency-mutant"
-	}
-	binary := filepath.Join(directory, "engine.test")
-	build := func(directory string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, virtualTest: testSource}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(directory, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		command := inventoryEngineSetupCommand("go", "test", "-c", "-overlay="+path, "-o", binary, virtual, virtualTest)
-		command.Dir = cohere
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("%w\n%s", err, output)
-		}
-		return nil
-	}
-	started := time.Now()
-	if err := build(directory); err != nil {
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(root, inventoryUnknownFrequencyMutant.File), virtualTest: filepath.Join(root, inventoryEngineCaseFile)}})
+	if err != nil {
 		t.Fatal(err)
 	}
-	elapsed := time.Since(started)
-	t.Logf("build %s private-overlay %.6fs", name, elapsed.Seconds())
-	return binary, cohere, elapsed
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(path, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	arguments := []string{"-overlay=" + path}
+	if mutant {
+		return buildcache.GoTestMutated(t, "cohere", "engine.test", virtual+" "+virtualTest, arguments, []buildcache.Mutation{inventoryUnknownFrequencyMutant}), cohere
+	}
+	return buildcache.GoTest(t, "cohere", "engine.test", virtual+" "+virtualTest, arguments), cohere
+}
+
+// inventoryUnknownFrequencyMutant is a real production mutant: unknown frequency becomes measured zero.
+var inventoryUnknownFrequencyMutant = buildcache.Mutation{
+	File:   "stage1/cohere/lint/inventory/testdata/engine.go",
+	Before: "func countText(f frequency) string {\n\tif f.Count == nil {\n\t\treturn \"unknown\"",
+	After:  "func countText(f frequency) string {\n\tif f.Count == nil {\n\t\treturn \"0\"",
+}
+
+func TestProduct_InventoryEngine(t *testing.T) {
+	t.Parallel()
+	inventoryEngineBuild(t, false)
+}
+
+func TestProduct_InventoryEngineUnknownFrequencyMutant(t *testing.T) {
+	t.Parallel()
+	inventoryEngineBuild(t, true)
 }
 
 func inventoryEngineShard(name string) int {
@@ -216,7 +195,7 @@ func inventoryEngineSelector(value string) (func(int) bool, error) {
 // live case against it and require exactly its stable hash shard to reject it.
 func TestInventoryEngineShardMutant(t *testing.T) {
 	t.Parallel()
-	binary, cohere, _ := inventoryEngineBuild(t, true)
+	binary, cohere := inventoryEngineBuild(t, true)
 	shards := inventoryEngineUnion(t, binary, cohere)
 	caught := []string{}
 	for index, cases := range shards {
@@ -238,9 +217,7 @@ func TestInventoryEngineShardMutant(t *testing.T) {
 	t.Logf("unknown-frequency mutant caught by exactly %s (TestUnknownFrequencyIsNotZero)", expected)
 }
 
-// A per-run private overlay build is shared until TestMain cleans it up after
-// every top-level shard. It is a Go build: do not hand-list Product inputs.
-var inventoryEngineScratch string
+// The engine's build is shared by every top-level shard, and its union is validated once.
 var inventoryEngineSharedBuild struct {
 	once   sync.Once
 	binary string
@@ -248,19 +225,11 @@ var inventoryEngineSharedBuild struct {
 	shards [][]string
 }
 
-func TestMain(m *testing.M) {
-	code := m.Run()
-	if inventoryEngineScratch != "" {
-		os.RemoveAll(inventoryEngineScratch)
-	}
-	os.Exit(code)
-}
-
 func inventoryEngineShared(t *testing.T) (string, string, [][]string) {
 	t.Helper()
 	shared := &inventoryEngineSharedBuild
 	shared.once.Do(func() {
-		shared.binary, shared.cohere, _ = inventoryEngineBuild(t, false)
+		shared.binary, shared.cohere = inventoryEngineBuild(t, false)
 		shared.shards = inventoryEngineUnion(t, shared.binary, shared.cohere)
 	})
 	if shared.binary == "" || len(shared.shards) != testInventoryEngineShards {
