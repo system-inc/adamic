@@ -285,14 +285,15 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	t.Log("planted mismatch caught only by shard 002")
 }
 
-// A filtered leaf prepares its own inputs in a fresh process.
+// A filtered leaf looks up its own inputs in a fresh process, inheriting this run's products (a runner's are
+// Workshop's, read and never built; TestProduct_ proves each builds alone).
 func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	t.Parallel()
 	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
+	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
 	output, err := command.CombinedOutput()
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte(" miss ")) {
-		t.Fatalf("standalone cold shard: %v\n%s", err, output)
+	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !productLookedUp(output, `suggestion-alongside-\S+`) {
+		t.Fatalf("standalone shard: %v\n%s", err, output)
 	}
 }
 
