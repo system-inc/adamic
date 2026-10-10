@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -211,18 +212,18 @@ func TestAStoredProductThatDoesntCheckIsPoisoning(t *testing.T) {
 	}
 }
 
-// A product the store doesn't hold, or can't serve, is built only under a trace; untraced, the miss is refused and
-// nothing is built.
+// A product the store doesn't hold, or can't serve, is built here, for this machine alone, and nothing is published.
 // Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
-func TestAnUnstoredOrUnreachableProductIsBuiltOnlyUnderATrace(t *testing.T) {
+func TestAnUnstoredOrUnreachableProductIsBuiltHere(t *testing.T) {
 	for _, address := range []string{"", "http://127.0.0.1:1", "failing mid-fetch"} {
 		t.Run(address, func(t *testing.T) {
+			var store *fakeStore
 			if address == "" {
-				shared(t)
+				store, _ = shared(t)
 				recorded(t)
 			} else if address == "failing mid-fetch" {
 				// The ref and manifest read, then a blob's read fails: the store's trouble, not poisoning.
-				store, _ := shared(t)
+				store, _ = shared(t)
 				product := store.put(t, recorded(t), map[string]string{"product": "stored"})
 				store.broken = "/blobs/" + product.Files[0].SHA256
 			} else {
@@ -230,18 +231,17 @@ func TestAnUnstoredOrUnreachableProductIsBuiltOnlyUnderATrace(t *testing.T) {
 				t.Setenv("ADAMIC_BUILD_STORE", address)
 				recorded(t)
 			}
+			token(t)
 			var built bool
-			build := func(directory string) error {
+			Product(t, thisPackage, func(directory string) error {
 				built = true
 				return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
-			}
-			if _, err := Get(thisPackage, build); !errors.Is(err, ErrUntraced) || built {
-				t.Fatalf("an untraced miss: %v, built %t", err, built)
-			}
-			t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
-			Product(t, thisPackage, build)
+			})
 			if !built {
-				t.Fatal("not built under the trace")
+				t.Fatal("not built")
+			}
+			if store != nil && len(store.writes) != 0 {
+				t.Fatalf("an untraced build published %v", store.writes)
 			}
 		})
 	}
@@ -255,6 +255,15 @@ func TestOnlyASettledBuildIsPublishedAndAnotherMachineFetchesIt(t *testing.T) {
 	store, _ := shared(t)
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
 	token(t)
+	// A traced run that isn't the tree builder's (a store to read, not ADAMIC_BUILD_STORE=traced) publishes nothing.
+	measured := Inputs{Name: "measured"}
+	Product(t, measured, building("measured"))
+	r.window(r.built(t)["measured"].Build, func() { r.open(r.pid, "source/b.c") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(store.writes) != 0 {
+		t.Fatalf("a traced run reading the store: settled %q, refused %q, wrote %q", settlement.Settled, settlement.Refused, store.writes)
+	}
+	r.retrace(t, "tree-builder")
+	t.Setenv("ADAMIC_BUILD_STORE", "traced="+os.Getenv("ADAMIC_BUILD_STORE"))
 	Product(t, port, func(directory string) error {
 		os.MkdirAll(filepath.Join(directory, "bin"), 0o755)
 		os.WriteFile(filepath.Join(directory, "bin", "checker"), []byte("the checker"), 0o755)
@@ -271,14 +280,15 @@ func TestOnlyASettledBuildIsPublishedAndAnotherMachineFetchesIt(t *testing.T) {
 	}
 	file, _ := loadReads(r.cache, build.NameKey)
 	key := file.Sets[0].Key
-	// A candidate's settlement writes the candidate ref, never main's.
-	if len(store.writes) != 4 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build-candidate/"+key {
+	// A candidate's settlement writes the product's candidate ref, never main's, then its read set's.
+	if len(store.writes) != 6 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build-candidate/"+key ||
+		store.writes[5] != "/refs/reads-candidate/"+build.NameKey+".0" {
 		t.Fatalf("writes: %q", store.writes)
 	}
-	// Another machine: an empty cache but for the read sets, untraced. Fetched, never built, exec bit kept.
+	// Another machine: an empty cache, no read sets of its own, untraced, reading the store. The read set and then the
+	// product are fetched, never built, exec bit kept.
 	elsewhere := t.TempDir()
-	content, _ := os.ReadFile(readsPath(r.cache, build.NameKey))
-	os.WriteFile(readsPath(elsewhere, build.NameKey), content, 0o644)
+	t.Setenv("ADAMIC_BUILD_STORE", strings.TrimPrefix(os.Getenv("ADAMIC_BUILD_STORE"), "traced="))
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", elsewhere)
 	t.Setenv("ADAMIC_BUILD_TRACE", "")
 	directory := Product(t, port, func(string) error { t.Fatal("rebuilt what the store holds"); return nil })
@@ -294,6 +304,7 @@ func TestOnlyASettledBuildIsPublishedAndAnotherMachineFetchesIt(t *testing.T) {
 func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
 	r := newRig(t)
 	shared(t)
+	t.Setenv("ADAMIC_BUILD_STORE", "traced="+os.Getenv("ADAMIC_BUILD_STORE"))
 	token(t)
 	trace := r.trace
 	for _, content := range []string{"this machine's", "another build's"} {
@@ -303,7 +314,11 @@ func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
 		r.trace = filepath.Join(filepath.Dir(trace), filepath.Base(trace)+"-"+strings.Fields(content)[0])
 		os.MkdirAll(r.trace, 0o755)
 		t.Setenv("ADAMIC_BUILD_TRACE", r.trace)
+		// This machine can't read the store, so it builds its own, then publishes it under the same key.
+		publishingTo := os.Getenv("ADAMIC_BUILD_STORE")
+		t.Setenv("ADAMIC_BUILD_STORE", "traced=http://127.0.0.1:1")
 		Product(t, port, building(content))
+		t.Setenv("ADAMIC_BUILD_STORE", publishingTo)
 		build := r.built(t)["port"]
 		r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
 		settlement := r.settle(t)
@@ -353,17 +368,17 @@ func TestRefsAreSplitByTrust(t *testing.T) {
 	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "a candidate's" {
 		t.Fatalf("a candidate read %q", content)
 	}
-	// A trusted reader never takes it: with only a candidate's ref stored, the product is missing to it.
+	// A trusted reader never takes it: with only a candidate's ref stored, it builds its own.
 	t.Setenv("ADAMIC_BUILD_STORE_TRUST", "main")
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	recorded(t)
-	if _, err := Get(thisPackage, func(string) error { t.Fatal("built untraced"); return nil }); !errors.Is(err, ErrUntraced) {
-		t.Fatalf("a trusted reader with only a candidate's ref: %v", err)
+	if directory = Product(t, thisPackage, building("its own")); strings.Contains(directory, key) {
+		t.Fatalf("a trusted reader took a candidate's product at %s", directory)
 	}
 	// Main's gate: uncached, traced, settled, published to main's ref.
 	address := os.Getenv("ADAMIC_BUILD_STORE")
 	r := newRig(t)
-	t.Setenv("ADAMIC_BUILD_STORE", address)
+	t.Setenv("ADAMIC_BUILD_STORE", "traced="+address)
 	token(t)
 	t.Setenv("ADAMIC_BUILD_CACHE", "off")
 	Product(t, port, building("main's"))
@@ -374,16 +389,16 @@ func TestRefsAreSplitByTrust(t *testing.T) {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, _ := loadReads(r.cache, build.NameKey)
-	if last := store.writes[len(store.writes)-1]; last != "/refs/build/"+file.Sets[0].Key {
+	if !slices.Contains(store.writes, "/refs/build/"+file.Sets[0].Key) || !slices.Contains(store.writes, "/refs/reads/"+build.NameKey+".0") {
 		t.Fatalf("main's gate wrote %v", store.writes)
 	}
 }
 
 // The shared tier is off unless ADAMIC_BUILD_STORE turns it on (Oct 9 20:38Z): unset, nothing is fetched or published,
-// even on a machine holding the write credential, and an untraced miss isn't built either.
+// even on a machine holding the write credential, and a miss is built here.
 // Not parallel: points the build cache, the store's writer and the token at this test through t.Setenv.
 func TestTheSharedTierIsOffUnlessTurnedOn(t *testing.T) {
-	for value, want := range map[string]string{"": "", "off": "", "on": defaultStore, "http://127.0.0.1:9/": "http://127.0.0.1:9"} {
+	for value, want := range map[string]string{"": "", "off": "", "on": defaultStore, "traced": defaultStore, "traced=http://127.0.0.1:9": "http://127.0.0.1:9", "http://127.0.0.1:9/": "http://127.0.0.1:9"} {
 		t.Setenv("ADAMIC_BUILD_STORE", value)
 		if got := storeAddress(); got != want {
 			t.Fatalf("ADAMIC_BUILD_STORE=%q: the store is %q, want %q", value, got, want)
@@ -397,8 +412,8 @@ func TestTheSharedTierIsOffUnlessTurnedOn(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_STORE_WRITE", server.URL+"/public")
 	token(t)
 	store.put(t, recorded(t), map[string]string{"product": "stored"})
-	if _, err := Get(thisPackage, func(string) error { t.Fatal("built untraced"); return nil }); !errors.Is(err, ErrUntraced) {
-		t.Fatalf("an unset store: %v", err)
+	if content, _ := os.ReadFile(filepath.Join(Product(t, thisPackage, building("built here")), "product")); string(content) != "built here" {
+		t.Fatalf("an unset store's product reads %q", content)
 	}
 	if len(store.reads)+len(store.writes) != 0 {
 		t.Fatalf("an unset store reached the store: reads %v, writes %v", store.reads, store.writes)
