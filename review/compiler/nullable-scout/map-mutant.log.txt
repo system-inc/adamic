@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/nullable-scout/verify-map.py", line 16, in <module>
+    assert observed == selected, f'{mode}: missing, added or changed census reason/count'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: full: missing, added or changed census reason/count

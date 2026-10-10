@@ -1,0 +1,8 @@
+=== RUN   TestNullableScoutBrandedString
+=== PAUSE TestNullableScoutBrandedString
+=== CONT  TestNullableScoutBrandedString
+    nullable_scout_test.go:26: want current NotYet, got <nil>
+--- FAIL: TestNullableScoutBrandedString (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.224s
+FAIL

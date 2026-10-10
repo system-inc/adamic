@@ -1,0 +1,9 @@
+--- node-empty.cjs
++++ node-empty-mutant.cjs
+@@ -1,5 +1,5 @@
+ const assert = require('node:assert/strict');
+-for (const [value, type, text, number] of [[null, 'object', 'null', 0], [undefined, 'undefined', 'undefined', NaN]]) {
++for (const [value, type, text, number] of [[undefined, 'object', 'null', 0], [undefined, 'undefined', 'undefined', NaN]]) {
+     assert.equal(typeof value, type);
+     assert.equal(`${value}`, text);
+     assert.equal('x' + value, 'x' + text);

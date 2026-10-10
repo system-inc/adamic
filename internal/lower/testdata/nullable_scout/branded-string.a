@@ -1,0 +1,6 @@
+// TypeScript src/compiler/utilities.ts:2364 at 050880ce59e30b356b686bd3144efe24f875ebc8; reduced tryGetTextOfPropertyName result.
+type __String = string & { readonly __escapedIdentifier: void };
+function tryGetTextOfPropertyName(): __String | undefined {
+    return undefined;
+}
+console.log(typeof tryGetTextOfPropertyName());

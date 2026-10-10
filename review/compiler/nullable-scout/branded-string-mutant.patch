@@ -1,0 +1,9 @@
+--- internal/lower/testdata/nullable_scout/branded-string.a
++++ internal/lower/testdata/nullable_scout/branded-string.a
+@@ -1,5 +1,5 @@
+ // TypeScript src/compiler/utilities.ts:2364 at 050880ce59e30b356b686bd3144efe24f875ebc8; reduced tryGetTextOfPropertyName result.
+-type __String = string & { readonly __escapedIdentifier: void };
++type __String = string;
+ function tryGetTextOfPropertyName(): __String | undefined {
+     return undefined;
+ }

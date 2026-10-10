@@ -1,0 +1,5 @@
+// TypeScript src/compiler/core.ts:618 at 050880ce59e30b356b686bd3144efe24f875ebc8; reduced some optional generic array body.
+function some<T>(array: readonly T[] | undefined): boolean {
+    return array !== undefined && array[0] !== undefined;
+}
+console.log(String(some([{ text: 'x' }])));

@@ -1,0 +1,14 @@
+=== RUN   TestNullableScoutGenericReturn
+=== PAUSE TestNullableScoutGenericReturn
+=== RUN   TestNullableScoutGenericValue
+=== PAUSE TestNullableScoutGenericValue
+=== RUN   TestNullableScoutBrandedString
+=== PAUSE TestNullableScoutBrandedString
+=== CONT  TestNullableScoutGenericReturn
+=== CONT  TestNullableScoutGenericValue
+=== CONT  TestNullableScoutBrandedString
+--- PASS: TestNullableScoutGenericValue (0.23s)
+--- PASS: TestNullableScoutBrandedString (0.23s)
+--- PASS: TestNullableScoutGenericReturn (0.29s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.353s

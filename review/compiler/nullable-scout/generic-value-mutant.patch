@@ -1,0 +1,9 @@
+--- internal/lower/testdata/nullable_scout/generic-value.a
++++ internal/lower/testdata/nullable_scout/generic-value.a
+@@ -2,4 +2,5 @@
+ function some<T>(array: readonly T[] | undefined): boolean {
+     return array !== undefined && array[0] !== undefined;
+ }
+-console.log(String(some([{ text: 'x' }])));
++const inspect = some;
++console.log(String(inspect([{ text: 'x' }])));

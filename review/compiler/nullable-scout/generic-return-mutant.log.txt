@@ -1,0 +1,8 @@
+=== RUN   TestNullableScoutGenericReturn
+=== PAUSE TestNullableScoutGenericReturn
+=== CONT  TestNullableScoutGenericReturn
+    nullable_scout_test.go:16: /workspace/adamic/internal/lower/testdata/nullable_scout/generic-return.a:5:13: stage 0 can't lower a generic function as a value yet
+--- FAIL: TestNullableScoutGenericReturn (0.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.410s
+FAIL

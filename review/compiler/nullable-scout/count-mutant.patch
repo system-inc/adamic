@@ -1,0 +1,11 @@
+--- census-nullable-reasons.json
++++ census-count-mutant.json
+@@ -34,7 +34,7 @@
+     "a": [
+       {
+         "reason": "NotYet: a function returning T | undefined",
+-        "full": 73,
++        "full": 74,
+         "latent": 55,
+         "site": "internal/lower/functions.go:102; representation at internal/lower/expression.go:43; inference at internal/lower/generic.go:44",
+         "disposition": "Closes only after the binder is proven to instantiate to a single reference; scalar instantiations use Maybe, not this rule."

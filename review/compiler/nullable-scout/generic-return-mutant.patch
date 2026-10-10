@@ -1,0 +1,9 @@
+--- internal/lower/testdata/nullable_scout/generic-return.a
++++ internal/lower/testdata/nullable_scout/generic-return.a
+@@ -2,4 +2,5 @@
+ function withContext<T>(callback: () => T): T | undefined {
+     return callback();
+ }
+-console.log(typeof withContext(() => ({ text: 'x' })));
++const run = withContext;
++console.log(typeof run(() => ({ text: 'x' })));
