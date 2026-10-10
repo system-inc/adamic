@@ -1,0 +1,18 @@
+{
+  "cases": [
+    "report_test.LatentReportTests.test_exact_prefix_and_variance_owners",
+    "report_test.LatentReportTests.test_missing_source_is_rejected",
+    "report_test.LatentReportTests.test_table_groups_same_reason_across_kinds",
+    "entry_test.EntryReportTests.test_missing_reachable_file_record_is_rejected",
+    "entry_test.EntryReportTests.test_overlay_missing_hook_fails_loudly",
+    "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+    "compiler_test.CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run",
+    "compiler_test.CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim"
+  ],
+  "failures": [
+    "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant"
+  ],
+  "errors": [],
+  "skipped": [],
+  "ran": 8
+}

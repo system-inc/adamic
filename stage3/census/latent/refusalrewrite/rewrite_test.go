@@ -12,6 +12,7 @@ import (
 )
 
 func TestCompiler41231d51Shape(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
 		t.Fatal(err)
@@ -54,6 +55,7 @@ func TestCompiler41231d51Shape(t *testing.T) {
 }
 
 func TestMissingFunctionMutantFailsLoudly(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
 		t.Fatal(err)
@@ -69,6 +71,7 @@ func TestMissingFunctionMutantFailsLoudly(t *testing.T) {
 }
 
 func TestChangedVisitorMutantFailsLoudly(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
 		t.Fatal(err)
@@ -81,6 +84,7 @@ func TestChangedVisitorMutantFailsLoudly(t *testing.T) {
 }
 
 func TestVisitorsCollectContinueAndSkipDiagnosedBodies(t *testing.T) {
+	t.Parallel()
 	source := `package lower
 import "probe/ast"
 func (l *lowering) refuse(module *ast.SourceFile) error {

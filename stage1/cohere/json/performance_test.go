@@ -11,6 +11,7 @@ import (
 
 // The profiled -O2 -g binaries must answer the full corpus, not just the profile sample.
 func TestProfileSnapshotsAgree(t *testing.T) {
+	t.Parallel()
 	snapshots := os.Getenv("ADAMIC_JSON_PROFILE_BINARIES")
 	if snapshots == "" {
 		t.Skip("set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries")
@@ -28,6 +29,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	t.Logf("%d profiled snapshots agree on %d texts, %d answer bytes", len(filepath.SplitList(snapshots)), len(cases), len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestCachedWidthMutantIsCaught(t *testing.T) {
 	cases := []textCase{{"probe.json", `["` + strings.Repeat("wide", 25) + `",1]`}}
 	answers, _ := cohereAnswers(t, cases, false)

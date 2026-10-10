@@ -14,6 +14,7 @@ import (
 )
 
 // Opt in so ordinary correctness gates do not spend time measuring process startup.
+// Not parallel: measures compiler subprocess, in-process compilation, and process startup wall times in isolation.
 func TestCompilerStartupMeasurement(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST262_MEASURE") != "1" {
 		t.Skip("measurement only")

@@ -1,0 +1,13 @@
+{
+  "cases": [
+    "report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+    "report_test.LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties",
+    "report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail",
+    "report_test.ReportTests.test_missing_file_is_rejected",
+    "entry_test.EntryReportTests.test_missing_entry_is_rejected"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "ran": 5
+}

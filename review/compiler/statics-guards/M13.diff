@@ -1,0 +1,12 @@
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..42754446 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -574,7 +574,6 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+ // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
+ // the shape that was actually made. A narrowed number checks the declared optional representation.
+ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+-	property.Readiness = sourceExpression(node)
+ 	property.View = sourceExpression(node)
+ 	property.ViewWhere = l.program.Where(node)
+ 	if node.Kind == ast.KindPropertyAccessExpression {

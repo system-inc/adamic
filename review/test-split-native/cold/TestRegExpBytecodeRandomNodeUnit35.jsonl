@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:03:33.477795918Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:03:33.48437977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35"}
+{"Time":"2026-10-09T06:03:33.484442063Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"=== RUN   TestRegExpBytecodeRandomNodeUnit35\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:03:33.48446689Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"=== PAUSE TestRegExpBytecodeRandomNodeUnit35\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:03:33.484469244Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35"}
+{"Time":"2026-10-09T06:03:33.484471477Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35"}
+{"Time":"2026-10-09T06:03:33.484473931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"=== CONT  TestRegExpBytecodeRandomNodeUnit35\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:03:33.971572104Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"    regexp_test.go:495: compiling 250 patterns, 250 executions, 670034 C bytes\n"}
+{"Time":"2026-10-09T06:03:40.035319147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"    regexp_test.go:495: mode=[] native execution totals: 250 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T06:03:40.04680311Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"    regexp_test.go:495: mode=[unlimited] native execution totals: 250 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T06:03:40.047339554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Output":"--- PASS: TestRegExpBytecodeRandomNodeUnit35 (6.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:03:40.047388447Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit35","Elapsed":6.56}
+{"Time":"2026-10-09T06:03:40.04740985Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:03:40.048828401Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.571s\n"}
+{"Time":"2026-10-09T06:03:40.048852547Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.571}

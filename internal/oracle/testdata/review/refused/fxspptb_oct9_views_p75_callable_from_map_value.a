@@ -1,0 +1,11 @@
+// A wrong view made from a Map value, whose function-valued field is then called.
+interface Root { readonly kind: 'Holder'; }
+interface Holder extends Root { readonly compute: (value: number) => number; }
+const raw = { kind: 'Holder' as const, compute: (value: string): number => value.length };
+const holders = new Map<string, Root>();
+holders.set('a', raw);
+const got = holders.get('a');
+if (got !== undefined) {
+	const view = got as Holder;
+	console.log(`${view.compute(41)}`);
+}

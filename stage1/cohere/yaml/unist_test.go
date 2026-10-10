@@ -38,6 +38,7 @@ func goUnist(t *testing.T, cases string) []byte {
 	return run(t, "", nil, goBinary, cases)
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed /tmp/stage1-yaml-unist-* diagnostic files.
 func TestUnistMatchesGo(t *testing.T) {
 	cases, files, count := composeCases(t)
 	expected := goUnist(t, cases)
@@ -90,6 +91,7 @@ func TestUnistMatchesGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d unist answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestUnistMutants(t *testing.T) {
 	cases, _, _ := composeCases(t)
 	expected := goUnist(t, cases)
@@ -102,6 +104,7 @@ func TestUnistMutants(t *testing.T) {
 		{"point column shifted", "new UnistPoint(line, column, offset)", "new UnistPoint(line, column + 1, offset)"},
 		{"document end marker lost", "this.node(result).documentEndMarker = data.end >= 0;", "this.node(result).documentEndMarker = false;"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			directory := t.TempDir()
 			entries, err := filepath.Glob("*.ts")

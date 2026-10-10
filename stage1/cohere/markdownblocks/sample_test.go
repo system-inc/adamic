@@ -115,6 +115,7 @@ func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run
 	return answer
 }
 
+// Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestSampleRetainsFixedMarkdownInputs(t *testing.T) {
 	parallelMarkdown(t)
 	inputs := []auditInput{{Name: "a.md"}, {Name: "b.md"}, {Name: "generated/list"}, {Name: "generated/quote"}}

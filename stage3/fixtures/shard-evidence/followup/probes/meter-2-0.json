@@ -1,0 +1,12 @@
+{
+  "cases": [
+    "report_test.ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root",
+    "report_test.ReportTests.test_malformed_diagnostic_is_rejected",
+    "entry_test.EntryReportTests.test_wrong_root_is_rejected",
+    "compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "ran": 4
+}

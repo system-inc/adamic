@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/cohere/internal/format/formatoptions"
 )
 
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPrinter(t *testing.T) {
 	path := os.Getenv("ADAMIC_PRINTER_REQUEST")
 	if path == "" {

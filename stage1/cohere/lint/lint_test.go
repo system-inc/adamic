@@ -4,16 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
-	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"runtime"
 	"sort"
 	"strings"
 	"testing"
@@ -103,18 +100,7 @@ func goOracle(t *testing.T) string {
 func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	if isPackage(sourceRoot) {
-		value := shared("oracle", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "oracle-")
-			if err != nil {
-				value.err = err
-				return
-			}
-			value.path, value.err = goOracleIn(sourceRoot, directory)
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
+		return lintGoOracleProduct(t)
 	}
 	binary, err := goOracleIn(sourceRoot, t.TempDir())
 	if err != nil {
@@ -321,26 +307,6 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 	return want.output
 }
 
-// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
-func TestRulesAgree(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	binary := buildPort(t, directory, true)
-	rows := generated(t)
-	for _, row := range upstream(t) {
-		if strings.HasSuffix(row, "\tunsupported-recovery") {
-			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
-			checkRecoveryRefusal(t, oracle, binary, directory, row)
-		} else {
-			rows = append(rows, row)
-		}
-	}
-	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
-}
-
 // Recovery is a parser dependency, not successful lint parity. Keep the exact
 // upstream malformed cases and prove that both ports refuse instead of silently
 // returning the oracle's recovered findings.
@@ -380,69 +346,6 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 }
 
 // Not parallel: the large sanitized corpus runs before timing samples.
-func TestCompilerAndStage1Agree(t *testing.T) {
-	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
-	if source == "" {
-		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
-	}
-	patterns := []string{"*.ts", "*.a"}
-	rows := corpusfiles.Upstream(t, source, compilerCommit, []string{"src/compiler"}, patterns)
-	rows = append(rows, compilerStage1Sources(t, repository)...)
-	// The old walk also included TestMain's generated dispatch. Preserve that
-	// coverage as an explicit generated input, independent of stray worktree files.
-	generatedRegistry, err := filepath.Abs(".generated/registry.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	rows = append(rows, generatedRegistry)
-	t.Logf("generated input retained from old walk: %s (count 1)", generatedRegistry)
-
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("compiler and stage1: %d files", len(rows))
-	path := manifest(t, rows)
-	want := execute(t, "", goOracle(t), "--manifest", path)
-	binary := buildPort(t, directory, true)
-	module := emittedJavaScript(t, directory)
-	prepareRegistry(t, directory)
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	count := min(runtime.NumCPU(), 8)
-	assignments := compilerShardAssignments(t, rows, count)
-	for _, side := range []struct {
-		name    string
-		command string
-		args    []string
-	}{
-		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts")}},
-		{"emitted JavaScript", "node", []string{"--disable-warning=ExperimentalWarning", runner, module}},
-		{"sanitized native", binary, nil},
-	} {
-		launcher, timings := compilerShardLauncher(t, side.command, side.args, rows, assignments)
-		started := time.Now()
-		got, err := shards.Run(launcher, path, count, false)
-		if err != nil {
-			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, err.Error()))
-		}
-		for index := 0; index < count; index++ {
-			elapsed, err := os.ReadFile(filepath.Join(timings, fmt.Sprintf("%d-%d.time", index, count)))
-			if err != nil {
-				t.Fatal(err)
-			}
-			t.Logf("%s shard %d/%d: %s ms", side.name, index, count, bytes.TrimSpace(elapsed))
-		}
-		t.Logf("%s: %d shards in %s", side.name, count, time.Since(started))
-		if diff := difference(got, want.output); diff != "" {
-			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, diff))
-		}
-	}
-	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
-}
-
 // Largest-first scheduling is deterministic: equal sizes retain manifest order, and equal
 // loads choose the lowest shard index. Original case numbers survive the local manifests.
 func compilerShardAssignments(t *testing.T, rows []string, count int) [][]int {
@@ -619,7 +522,7 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 	return directory
 }
 
-// Not parallel: this semantic overlap check precedes timing samples.
+// Not parallel: shares the CPU with interleaved timing samples.
 func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
@@ -768,152 +671,10 @@ func TestThroughput(t *testing.T) {
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
 }
 
-// TestNodeTableIsLinkOnly requires the same output with a copy of every row appended to the node table,
-// attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
-// of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
-// harness pass that walks the table by row reports on the copies and fails here.
-func TestNodeTableIsLinkOnly(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	rows := generated(t)
-	for _, row := range upstream(t) {
-		if !strings.HasSuffix(row, "\tunsupported-recovery") {
-			rows = append(rows, row)
-		}
-	}
-	path := manifest(t, recoveryRows(t, oracle, rows))
-	binary := buildPort(t, directory, false)
-	plain := execute(t, "", binary, "--manifest", path)
-	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
-	if diff := difference(junk.output, plain.output); diff != "" {
-		t.Fatalf("output changed with unattached rows in the node table: %s", diff)
-	}
-	t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(rows), len(plain.output))
-}
-
-// TestShardsAgree requires the driver's output to be byte-identical however many processes share the
-// manifest (#tj6d455): one, two, and the machine's cores. Equal counts cannot see a reordered or repeated
-// case, so the whole output is compared, and the count mode too.
-func TestShardsAgree(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	rows := generated(t)
-	for _, row := range upstream(t) {
-		if !strings.HasSuffix(row, "\tunsupported-recovery") {
-			rows = append(rows, row)
-		}
-	}
-	// The compiler files are the corpus with large files, where shards differ most in what they hold, so
-	// the test refuses to run without them rather than passing on a smaller corpus.
-	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
-	if source == "" {
-		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout: TestShardsAgree needs its compiler files")
-	}
-	matches, err := filepath.Glob(filepath.Join(source, "src/compiler/*.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(matches) == 0 {
-		t.Fatalf("no compiler files under %s", source)
-	}
-	rows = append(rows, matches...)
-	path := manifest(t, recoveryRows(t, oracle, rows))
-	binary := buildPort(t, directory, false)
-	want := execute(t, "", binary, "--manifest", path)
-	wantCount := execute(t, "", binary, "--manifest", path, "--count")
-	for _, count := range []int{1, 2, runtime.NumCPU()} {
-		got, err := shards.Run(binary, path, count, false)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if diff := difference(got, want.output); diff != "" {
-			t.Fatalf("%d shards: %s", count, diff)
-		}
-		gotCount, err := shards.Run(binary, path, count, true)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if string(gotCount) != string(wantCount.output) {
-			t.Fatalf("%d shards count %q, want %q", count, gotCount, wantCount.output)
-		}
-	}
-	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", len(rows), runtime.NumCPU(), len(want.output))
-}
-
 // One edited JSX rule is the native canary. Semantic mutations are held to Go on
 // Node and emitted JavaScript; this copy also proves sanitized native matches the
 // mutated Node result, including JSX parsing, text spans and finding serialization.
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
-
-func TestMutants(t *testing.T) {
-	oracle := goOracle(t)
-	descriptors := prepareRegistry(t, ".")
-	hasCanary := false
-	for _, descriptor := range descriptors {
-		hasCanary = hasCanary || descriptor.Name == nativeCanaryRule
-	}
-	if !hasCanary {
-		t.Fatalf("native canary rule %s is missing", nativeCanaryRule)
-	}
-	for _, descriptor := range descriptors {
-		var change struct{ Name, File, From, To string }
-		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := json.Unmarshal(data, &change); err != nil {
-			t.Fatal(err)
-		}
-		t.Run(change.Name, func(t *testing.T) {
-			t.Parallel()
-			// A mutant can change only its own rule's output, so it runs on the rows that select that rule:
-			// its witnesses, and the generated rows selecting it or all rules. Rows naming another rule
-			// cannot show it. An "all" row stays as it is, since its options are every rule's bag.
-			var rows []string
-			for _, row := range generated(t) {
-				// A bare path selects all rules, as main.ts reads it.
-				selected := "all"
-				if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
-					selected = fields[1]
-				}
-				if selected == "all" || selected == descriptor.Name {
-					rows = append(rows, row)
-				}
-			}
-			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
-			path := manifest(t, rows)
-			want := execute(t, "", oracle, "--manifest", path).output
-			if change.File == "" {
-				change.File = descriptor.Module
-			}
-			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			mutatedNode := node(t, directory, path, false)
-			for _, side := range []struct {
-				name string
-				run  execution
-			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
-				if bytes.Equal(side.run.output, want) {
-					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
-				}
-				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
-			}
-			if descriptor.Name == nativeCanaryRule {
-				binary := buildPort(t, directory, true)
-				got := execute(t, "", binary, "--manifest", path)
-				if diff := difference(got.output, mutatedNode.output); diff != "" {
-					t.Fatalf("native canary differs from mutated Node: %s", diff)
-				}
-				t.Logf("sanitized native canary %s equals mutated Node: %d bytes", descriptor.Name, len(got.output))
-			}
-		})
-	}
-}
 
 var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
 

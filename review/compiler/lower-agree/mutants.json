@@ -1,0 +1,121 @@
+[
+  {
+    "mutant": "skip-stdout",
+    "test": "TestAgreementRejectsWrongLoweredOutput",
+    "exit": 1,
+    "wall_seconds": 8.028,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementRejectsWrongLoweredOutput$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "accept-empty",
+    "test": "TestAgreementRejectsEmptyAnswer",
+    "exit": 1,
+    "wall_seconds": 8.611,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementRejectsEmptyAnswer$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "enum-plus-one",
+    "test": "TestAgreementEnumConstantWitness",
+    "exit": 1,
+    "wall_seconds": 7.832,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementEnumConstantWitness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "drop-base-fields",
+    "test": "TestAgreementInheritedFieldWitness",
+    "exit": 1,
+    "wall_seconds": 7.941,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementInheritedFieldWitness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "drop-parameter-store",
+    "test": "TestAgreementParameterPropertyWitness",
+    "exit": 1,
+    "wall_seconds": 8.364,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementParameterPropertyWitness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "drop-static-initializer",
+    "test": "TestAgreementStaticInitializerWitness",
+    "exit": 1,
+    "wall_seconds": 7.624,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementStaticInitializerWitness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "swap-parseInt-radix",
+    "test": "TestAgreementParseIntRadixWitness",
+    "exit": 1,
+    "wall_seconds": 8.895,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestAgreementParseIntRadixWitness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

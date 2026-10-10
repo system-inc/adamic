@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_BENCHMARK") != "1" {
 		t.Skip("set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput")

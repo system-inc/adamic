@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:36:57.159441714Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:36:57.168106221Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI"}
+{"Time":"2026-10-09T04:36:57.168197015Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"=== RUN   TestBridgeABI\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:37:42.822373764Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:200: C ABI: 100 queries, owned outputs, handles and argument checks; \"世界🌍\"\n"}
+{"Time":"2026-10-09T04:37:42.822446552Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"--- PASS: TestBridgeABI (45.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:37:42.822454554Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Elapsed":45.65}
+{"Time":"2026-10-09T04:37:42.822473892Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:37:42.82599683Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t45.666s\n"}
+{"Time":"2026-10-09T04:37:42.826062276Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":45.667}

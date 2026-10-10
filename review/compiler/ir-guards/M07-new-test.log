@@ -1,0 +1,8 @@
+=== RUN   TestUnknownClosurePreservesThrowingEffect
+=== PAUSE TestUnknownClosurePreservesThrowingEffect
+=== CONT  TestUnknownClosurePreservesThrowingEffect
+    call_targets_effects_test.go:84: unknown closure lost the throwing effect of its sole always-throwing candidate
+--- FAIL: TestUnknownClosurePreservesThrowingEffect (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

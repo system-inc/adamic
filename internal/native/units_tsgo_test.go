@@ -3,6 +3,7 @@ package native
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,7 +14,8 @@ import (
 )
 
 // Not parallel: this test explicitly compares the object cache with its bypass on the same input.
-func TestSplitTSGoAgrees(t *testing.T) {
+func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
+	t.Helper()
 	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
 	if archive == "" {
 		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
@@ -44,25 +46,64 @@ func TestSplitTSGoAgrees(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	whole := filepath.Join(directory, "whole")
 	options := Options{Sanitize: true, Jobs: 5}
-	if err := BuildTSGo(source, whole, archive, options); err != nil {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
 		t.Fatal(err)
 	}
+	cache, err := newTestBuildCache(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	archiveBytes, err := os.ReadFile(archive)
+	if err != nil {
+		t.Fatal(err)
+	}
+	archiveProduct, err := cache.Tree("checker-archive", [][]byte{archiveBytes}, func(destination string) error {
+		return os.WriteFile(filepath.Join(destination, "tsgo.a"), archiveBytes, 0644)
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	archive = filepath.Join(archiveProduct, "tsgo.a")
+	optionBytes, _ := json.Marshal(options)
+	built, err := cache.Tree("whole-tsgo-baseline", [][]byte{[]byte(source), archiveBytes, optionBytes}, func(destination string) error {
+		return BuildTSGo(source, filepath.Join(destination, "whole"), archive, options)
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	whole := filepath.Join(built, "whole")
 	want, err := exec.Command(whole, config, manifest).CombinedOutput()
 	if err != nil {
 		t.Fatalf("whole checker: %v\n%s", err, want)
 	}
-	for _, uncached := range []string{"0", "1"} {
-		t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
-		split := filepath.Join(directory, "split")
-		if err := BuildSplitTSGo(source, split, archive, options); err != nil {
-			t.Fatal(err)
+	shard := testShard{unit, 2}
+	for index, uncached := range splitCacheModes {
+		if !shard.owns(index) {
+			continue
 		}
-		got, err := exec.Command(split, config, manifest).CombinedOutput()
-		if err != nil || !bytes.Equal(got, want) {
-			t.Fatalf("checker uncached=%s: %v\nwhole=%s\nsplit=%s", uncached, err, want, got)
-		}
-		t.Logf("checker uncached=%s: %d identical bytes: %s", uncached, len(got), got)
+		t.Run("cache_"+uncached, func(t *testing.T) {
+			t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
+			split := filepath.Join(directory, "split")
+			if err := BuildSplitTSGo(source, split, archive, options); err != nil {
+				t.Fatal(err)
+			}
+			got, err := exec.Command(split, config, manifest).CombinedOutput()
+			if err != nil || !bytes.Equal(got, want) {
+				t.Fatalf("checker uncached=%s: %v\nwhole=%s\nsplit=%s", uncached, err, want, got)
+			}
+			t.Logf("checker uncached=%s: %d identical bytes: %s", uncached, len(got), got)
+		})
 	}
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestSplitTSGoAgreesUnit00(t *testing.T) {
+	runSplitTSGoAgreesUnit(t, 0)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestSplitTSGoAgreesUnit01(t *testing.T) {
+	runSplitTSGoAgreesUnit(t, 1)
 }

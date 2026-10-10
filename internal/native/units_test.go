@@ -9,6 +9,7 @@ import (
 	"testing"
 )
 
+// Not parallel: t.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED.
 func TestUnitsPreserveSharedState(t *testing.T) {
 	source := `#include "adamic.h"
 #include <stdio.h>
@@ -45,6 +46,7 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 // The same bytes must be instrumented after a release compile. A flags-key mutant returns the
 // release object and loses UBSan's check, while linking and executing normally. No warning kills it.
 func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
+	t.Parallel()
 	compiler, err := exec.LookPath("clang")
 	if err != nil {
 		t.Fatal(err)
@@ -84,6 +86,7 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 }
 
 func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
+	t.Parallel()
 	source := "#include \"adamic.h\"\nstatic int adamic_x = 1;\nstatic int adamic_f(void) { /* } ; */ const char *s = \"adamic_x } ; \\\"\"; (void)s; return adamic_x; }\nint main(void) { return adamic_f()-1; }\n"
 	_, units, err := splitC(source)
 	if err != nil {

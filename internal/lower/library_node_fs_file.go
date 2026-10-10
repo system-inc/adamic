@@ -148,6 +148,14 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		// Splitting a literal into runtime parameters must neither drop effects
 		// from unused fields nor reorder the effects of its fields.
 		literalValue := func(value ir.Expression) ir.Expression {
+			// Nullable option context may box a constant under the union ABI.
+			// Only constants are effect-free; every other box keeps the effects refusal.
+			if boxed, ok := value.(ir.Box); ok {
+				switch boxed.Value.(type) {
+				case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
+					return boxed.Value
+				}
+			}
 			if optional, ok := value.(ir.MaybeOf); ok {
 				if optional.Value == nil {
 					return ir.Undefined{}

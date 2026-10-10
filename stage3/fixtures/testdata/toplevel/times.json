@@ -1,0 +1,325 @@
+[
+  {
+    "name": "TestFixturesAssertions",
+    "wall_seconds": 6.973,
+    "test_seconds": 0.55,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesAssertions$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesCycles",
+    "wall_seconds": 3.515,
+    "test_seconds": 0.54,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesCycles$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesEnums",
+    "wall_seconds": 4.245,
+    "test_seconds": 0.52,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesEnums$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesHost",
+    "wall_seconds": 6.607,
+    "test_seconds": 0.55,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesHost$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesNamespaces",
+    "wall_seconds": 3.846,
+    "test_seconds": 0.57,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesNamespaces$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesNestedFunctions",
+    "wall_seconds": 3.852,
+    "test_seconds": 0.48,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesNestedFunctions$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesObjects",
+    "wall_seconds": 3.997,
+    "test_seconds": 0.5,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesObjects$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesPredicates",
+    "wall_seconds": 3.189,
+    "test_seconds": 0.51,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesPredicates$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRecords",
+    "wall_seconds": 3.332,
+    "test_seconds": 0.55,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRecords$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRunner",
+    "wall_seconds": 2.726,
+    "test_seconds": 0.5,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRunner$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesTaste",
+    "wall_seconds": 4.753,
+    "test_seconds": 0.5,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesTaste$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestPrepareFixtureOracleHook",
+    "wall_seconds": 2.323,
+    "test_seconds": 0.5,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestPrepareFixtureOracleHook$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturePaths",
+    "wall_seconds": 2.129,
+    "test_seconds": 0.0,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturePaths$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixtureShardManifest",
+    "wall_seconds": 1.901,
+    "test_seconds": 0.0,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixtureShardManifest$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestTransformedNodeRunnerGuardHook",
+    "wall_seconds": 1.824,
+    "test_seconds": 0.0,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestTransformedNodeRunnerGuardHook$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestTransformedNodeRunnerGuard",
+    "wall_seconds": 1.824,
+    "test_seconds": 0.0,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestTransformedNodeRunnerGuard$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixtureDirectoriesHaveTopLevelTests",
+    "wall_seconds": 1.977,
+    "test_seconds": 0.0,
+    "exit": 0,
+    "timeout": false,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]

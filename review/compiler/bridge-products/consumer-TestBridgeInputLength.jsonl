@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:32.519386677Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:32.52761335Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength"}
+{"Time":"2026-10-09T06:52:32.528920264Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Output":"=== RUN   TestBridgeInputLength\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:32.938438011Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Output":"    units_test.go:71: build bridge-test-api 37cc78490e79 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:33.321647975Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Output":"    units_test.go:211: build bridge-test-api 37cc78490e79 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:33.395884485Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Output":"    units_test.go:211: input-length: AddressSanitizer: heap-buffer-overflow\n"}
+{"Time":"2026-10-09T06:52:33.396063359Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Output":"--- PASS: TestBridgeInputLength (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:33.396102637Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeInputLength","Elapsed":0.87}
+{"Time":"2026-10-09T06:52:33.396171719Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:33.403900679Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.884s\n"}
+{"Time":"2026-10-09T06:52:33.404052984Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.885}

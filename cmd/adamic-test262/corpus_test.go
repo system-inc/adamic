@@ -12,6 +12,7 @@ import (
 // TestClassifyCorpus locks the skip rules, including negative parse and early error. A runner that
 // ignores a negative expectation classifies those fixtures as attempted, and this fails.
 func TestClassifyCorpus(t *testing.T) {
+	t.Parallel()
 	matches, err := filepath.Glob("testdata/corpus/*.js")
 	if err != nil {
 		t.Fatal(err)
@@ -20,35 +21,38 @@ func TestClassifyCorpus(t *testing.T) {
 		t.Fatal("no corpus fixtures")
 	}
 	for _, path := range matches {
-		source, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		want, err := os.ReadFile(strings.TrimSuffix(path, ".js") + ".want")
-		if err != nil {
-			t.Fatal(err)
-		}
-		lines := strings.Split(strings.TrimSpace(string(want)), "\n")
-		got := classify(filepath.Base(path), string(source), false)
-		kind := "attempted"
-		if got.Skip != "" {
-			kind = "skipped"
-		}
-		if kind != lines[0] {
-			t.Errorf("%s: kind %s, want %s (skip %q)", path, kind, lines[0], got.Skip)
-		}
-		if kind == "skipped" && !strings.Contains(got.Skip, lines[1]) {
-			t.Errorf("%s: skip %q, want it to contain %q", path, got.Skip, lines[1])
-		}
-		if kind == "attempted" && len(lines) > 1 {
-			gotPhase := got.NegativePhase + " " + got.NegativeType
-			if strings.TrimSpace(gotPhase) != lines[1] {
-				t.Errorf("%s: negative %q, want %q", path, gotPhase, lines[1])
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
 			}
-		}
-		if kind == "attempted" && !strings.Contains(got.Program, "function assertSameValue") {
-			t.Errorf("%s: attempted program has no prelude", path)
-		}
+			want, err := os.ReadFile(strings.TrimSuffix(path, ".js") + ".want")
+			if err != nil {
+				t.Fatal(err)
+			}
+			lines := strings.Split(strings.TrimSpace(string(want)), "\n")
+			got := classify(filepath.Base(path), string(source), false)
+			kind := "attempted"
+			if got.Skip != "" {
+				kind = "skipped"
+			}
+			if kind != lines[0] {
+				t.Errorf("%s: kind %s, want %s (skip %q)", path, kind, lines[0], got.Skip)
+			}
+			if kind == "skipped" && !strings.Contains(got.Skip, lines[1]) {
+				t.Errorf("%s: skip %q, want it to contain %q", path, got.Skip, lines[1])
+			}
+			if kind == "attempted" && len(lines) > 1 {
+				gotPhase := got.NegativePhase + " " + got.NegativeType
+				if strings.TrimSpace(gotPhase) != lines[1] {
+					t.Errorf("%s: negative %q, want %q", path, gotPhase, lines[1])
+				}
+			}
+			if kind == "attempted" && !strings.Contains(got.Program, "function assertSameValue") {
+				t.Errorf("%s: attempted program has no prelude", path)
+			}
+		})
 	}
 }
 
@@ -56,6 +60,7 @@ func TestClassifyCorpus(t *testing.T) {
 // native_fails.json. A runner that ignores a negative expectation fails negative_observed.json,
 // because both sides exited non-zero and an ordinary comparison only passes when both exit 0.
 func TestVerdictCorpus(t *testing.T) {
+	t.Parallel()
 	matches, err := filepath.Glob("testdata/verdicts/*.json")
 	if err != nil {
 		t.Fatal(err)
@@ -64,26 +69,30 @@ func TestVerdictCorpus(t *testing.T) {
 		t.Fatal("no verdict fixtures")
 	}
 	for _, path := range matches {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		var fixture struct {
-			verdictInput
-			Name string `json:"name"`
-			Want string `json:"want"`
-		}
-		if err := json.Unmarshal(data, &fixture); err != nil {
-			t.Fatal(err)
-		}
-		got := decide(fixture.verdictInput)
-		if string(got.Kind) != fixture.Want {
-			t.Errorf("%s (%s): got %s (%s), want %s", path, fixture.Name, got.Kind, got.Reason, fixture.Want)
-		}
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var fixture struct {
+				verdictInput
+				Name string `json:"name"`
+				Want string `json:"want"`
+			}
+			if err := json.Unmarshal(data, &fixture); err != nil {
+				t.Fatal(err)
+			}
+			got := decide(fixture.verdictInput)
+			if string(got.Kind) != fixture.Want {
+				t.Errorf("%s (%s): got %s (%s), want %s", path, fixture.Name, got.Kind, got.Reason, fixture.Want)
+			}
+		})
 	}
 }
 
 func TestNormalizeReason(t *testing.T) {
+	t.Parallel()
 	cases := []struct {
 		stderr string
 		want   string
@@ -93,13 +102,16 @@ func TestNormalizeReason(t *testing.T) {
 		{"program.ts:1:12: error TS7006: Parameter 'x' implicitly has an 'any' type.\n", "error TS7006: Parameter '…' implicitly has an '…' type."},
 	}
 	for _, test := range cases {
-		kind, reason := compileClass(test.stderr, 1, false)
-		if kind != "refused" {
-			t.Errorf("%q: kind %s, want refused", test.stderr, kind)
-		}
-		if reason != test.want {
-			t.Errorf("normalize %q:\n got %q\nwant %q", test.stderr, reason, test.want)
-		}
+		t.Run(test.stderr, func(t *testing.T) {
+			t.Parallel()
+			kind, reason := compileClass(test.stderr, 1, false)
+			if kind != "refused" {
+				t.Errorf("%q: kind %s, want refused", test.stderr, kind)
+			}
+			if reason != test.want {
+				t.Errorf("normalize %q:\n got %q\nwant %q", test.stderr, reason, test.want)
+			}
+		})
 	}
 	kind, _ := compileClass("panic: something\ngoroutine 1 [running]:\n", 2, false)
 	if kind != "crashed" {
@@ -108,6 +120,7 @@ func TestNormalizeReason(t *testing.T) {
 }
 
 func TestRewriteHarnessCalls(t *testing.T) {
+	t.Parallel()
 	source := "const text = \"assert.sameValue(1, 2)\";\nassert.sameValue(1, 1);\nassert.throws(TypeError, function () {});\nassert.notSameValue(0, -0);\n"
 	got := rewriteHarnessCalls(source)
 	if strings.Contains(got, "\"assertSameValue") {
@@ -135,6 +148,7 @@ func TestRewriteHarnessCalls(t *testing.T) {
 }
 
 func TestFrontmatterShapes(t *testing.T) {
+	t.Parallel()
 	source := `/*---
 description: >
     several
@@ -176,6 +190,7 @@ assert(true);
 // both pass, one negative parse test that must be skipped, and one `var` test the compiler refuses.
 // Counting that refusal as a pass fails this.
 func TestMiniRunner(t *testing.T) {
+	t.Parallel()
 	if _, err := exec.LookPath("clang"); err != nil {
 		t.Skip("clang not on PATH")
 	}
@@ -215,6 +230,7 @@ func TestMiniRunner(t *testing.T) {
 
 // A large sort previously reached clang with its C cut at 256 KiB, falsely blaming the emitter.
 func TestLargeCompilerOutputIsComplete(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
 		t.Fatal(err)
@@ -244,6 +260,7 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 }
 
 func TestOutputOverflowIsReported(t *testing.T) {
+	t.Parallel()
 	buffer := limitedBuffer{limit: 3}
 	written, err := buffer.Write([]byte("abcdef"))
 	if err != nil || written != 6 || !buffer.exceeded || buffer.String() != "abc" {

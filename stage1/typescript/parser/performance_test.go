@@ -140,6 +140,7 @@ func performance(t *testing.T, whole bool) {
 // This mutant leaves every printed AST byte unchanged. Only the node-count
 // check used by the benchmark can catch it, not the ordinary tree comparison.
 func TestNodeCountCheckCatchesMutant(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	source := filepath.Join(directory, "expressions.ts")
 	if err := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); err != nil {

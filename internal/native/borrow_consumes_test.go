@@ -17,6 +17,7 @@ import (
 // it (borrow_defined_lent.a). Reading pureKind's list from the source makes the next operation added
 // there fail here until it's put in one column or the other.
 func TestPassThroughsAreNotConsumers(t *testing.T) {
+	t.Parallel()
 	passesThrough := map[string]ir.Expression{
 		"Read": ir.Read{}, "Conditional": ir.Conditional{}, "Coalesce": ir.Coalesce{}, "Box": ir.Box{},
 		"Narrow": ir.Narrow{}, "Unwrap": ir.Unwrap{}, "CheckedCast": ir.CheckedCast{}, "MaybeOf": ir.MaybeOf{},

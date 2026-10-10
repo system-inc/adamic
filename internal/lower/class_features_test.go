@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"context"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,10 +28,7 @@ func TestClassFeaturesReadonlyChecker(t *testing.T) {
 			t.Fatalf("want tsc readonly diagnostic, got %v", err)
 		}
 	}
-	_, err := lowerSource(t, `class Box { readonly value: string; readonly item = { text: 'initial' }; constructor() { this.value = 'set'; this.value = 'again'; } } const box = new Box(); box.item.text = 'changed'; console.log(box.item.text);`)
-	if err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, `class Box { readonly value: string; readonly item = { text: 'initial' }; constructor() { this.value = 'set'; this.value = 'again'; } } const box = new Box(); box.item.text = 'changed'; console.log(box.value + ':' + box.item.text);`)
 }
 
 func TestClassFeaturesPrivateChecker(t *testing.T) {
@@ -49,28 +45,15 @@ func TestClassFeaturesPrivateChecker(t *testing.T) {
 
 func TestClassFeaturesPrivateStorage(t *testing.T) {
 	t.Parallel()
-	checked, err := load.Load([]string{"../oracle/testdata/class_features_private.a"})
+	source, err := os.ReadFile("../oracle/testdata/class_features_private.a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := Lower(context.Background(), checked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	hidden := 0
-	for _, class := range program.Classes {
-		for _, field := range class.Fields {
-			if field.Private {
-				hidden++
-			}
-		}
-	}
-	if hidden < 2 {
-		t.Fatalf("private storage lost its visibility metadata: %d", hidden)
-	}
+	lowersAndAgreesWithNode(t, string(source))
 }
 
 func TestClassFeaturesAccessorRefusals(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`class Base { get value(): string { return 'base'; } set value(value: string) {} } class Child extends Base { get value(): string { return 'child'; } set value(value: 'one') {} } const child = new Child(); console.log(child.value);`,
 		`class Base { get value(): string { return 'base'; } set value(value: string) {} } class Child extends Base { get value(): string { return 'child'; } } const child = new Child(); console.log(child.value);`,
@@ -88,21 +71,17 @@ func TestClassFeaturesAccessorRefusals(t *testing.T) {
 }
 
 func TestClassFeaturesStaticDeclarationsExecute(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`class Box { static { console.log('static side effect'); } } console.log('done');`,
 		`class Box { static value = 'initialized'; static { console.log(this.value); } } console.log('done');`,
 	} {
-		program, err := lowerSource(t, source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if len(program.Classes) == 0 || !program.Classes[0].Static || len(program.Main) < 2 {
-			t.Fatal("static initialization was dropped")
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
 func TestClassFeaturesStaticSoundness(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`class Box { static first = this.read(); static later = 'ready'; static read(): string { return this.later; } } console.log(Box.first);`,
 		`class Box { static first = read(); static later = 'ready'; } function read(): string { return Box.later; } console.log(Box.first);`,
@@ -123,6 +102,7 @@ func TestClassFeaturesStaticSoundness(t *testing.T) {
 }
 
 func TestClassFeaturesAccessorCaptureCycle(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function make(): { readonly value: string } {
         let source: { readonly value: string } | undefined;
         const literal = { get value(): string { return source === undefined ? 'empty' : source.value; } };
@@ -135,6 +115,7 @@ func TestClassFeaturesAccessorCaptureCycle(t *testing.T) {
 }
 
 func TestClassFeaturesNarrowedAccessor(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `let calls = 0; const source: { readonly value: string | undefined } = { get value(): string | undefined { calls++; return calls === 1 ? 'first' : undefined; } }; if (source.value !== undefined) console.log(source.value);`)
 	if err == nil || !strings.Contains(err.Error(), "narrowed accessor reread") {
 		t.Fatalf("want changing getter reread refused, got %v", err)
@@ -142,6 +123,7 @@ func TestClassFeaturesNarrowedAccessor(t *testing.T) {
 }
 
 func TestClassFeaturesStaticParentCycle(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `class Base { static child: typeof Child | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
 	if err == nil || !strings.Contains(err.Error(), "cycle") {
 		t.Fatalf("constructor parent cycle accepted: %v", err)
@@ -149,6 +131,7 @@ func TestClassFeaturesStaticParentCycle(t *testing.T) {
 }
 
 func TestClassFeaturesStaticInterfaceCycle(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `type Constructable={new(required:string):Child}; class Base { static child: Constructable | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
 	if err == nil || !strings.Contains(err.Error(), "cycle") {
 		t.Fatalf("constructor interface cycle accepted: %v", err)

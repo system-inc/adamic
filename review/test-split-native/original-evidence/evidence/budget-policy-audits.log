@@ -1,0 +1,136 @@
+0-30.0/audit.log
+{
+  "limit_seconds": 30.0,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "probe",
+      "shard": null,
+      "invocation_seconds": 30.0,
+      "group_seconds": 1.0,
+      "max_unit_seconds": 1.0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "probe",
+          "action": "pass",
+          "seconds": 1.0,
+          "run": "^probe$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and input-hashed shared builds are not timed units. Observations are never cached."
+}
+
+0-30.001/audit.log
+probe selector probe invocation took 30.001 seconds
+{
+  "limit_seconds": 30.0,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "probe",
+      "shard": null,
+      "invocation_seconds": 30.001,
+      "group_seconds": 1.0,
+      "max_unit_seconds": 1.0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "probe",
+          "action": "pass",
+          "seconds": 1.0,
+          "run": "^probe$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and input-hashed shared builds are not timed units. Observations are never cached."
+}
+
+1-30.0/audit.log
+{
+  "limit_seconds": 30.0,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "probe",
+      "shard": null,
+      "invocation_seconds": 30.0,
+      "group_seconds": 1.0,
+      "max_unit_seconds": 1.0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "probe",
+          "action": "pass",
+          "seconds": 1.0,
+          "run": "^probe$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and input-hashed shared builds are not timed units. Observations are never cached."
+}
+
+1-30.001/audit.log
+Traceback (most recent call last):
+  File "/workspace/adamic/internal/native/test-split/budget.py", line 42, in <module>
+    hold_or_log(f"{name} selector {row.get('shard') or name} invocation took {row['wall']:.3f} seconds")
+  File "/workspace/adamic/internal/native/test-split/budget.py", line 21, in hold_or_log
+    if os.environ.get('ADAMIC_UNIT_BUDGET') == '1': raise ValueError(message)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: probe selector probe invocation took 30.001 seconds
+
+None-30.0/audit.log
+{
+  "limit_seconds": 30.0,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "probe",
+      "shard": null,
+      "invocation_seconds": 30.0,
+      "group_seconds": 1.0,
+      "max_unit_seconds": 1.0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "probe",
+          "action": "pass",
+          "seconds": 1.0,
+          "run": "^probe$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and input-hashed shared builds are not timed units. Observations are never cached."
+}
+
+None-30.001/audit.log
+probe selector probe invocation took 30.001 seconds
+{
+  "limit_seconds": 30.0,
+  "tests": [
+    {
+      "package": "internal/native",
+      "test": "probe",
+      "shard": null,
+      "invocation_seconds": 30.001,
+      "group_seconds": 1.0,
+      "max_unit_seconds": 1.0,
+      "units": 1,
+      "selectors": [
+        {
+          "test": "probe",
+          "action": "pass",
+          "seconds": 1.0,
+          "run": "^probe$"
+        }
+      ]
+    }
+  ],
+  "definition": "A unit is an independently selectable leaf. Parent groups and input-hashed shared builds are not timed units. Observations are never cached."
+}
+

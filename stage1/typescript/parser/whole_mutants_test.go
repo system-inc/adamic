@@ -1,43 +1,70 @@
 package parser
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
-func TestWholeMutants(t *testing.T) {
+const testWholeMutantsShards = 3
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices congruent to i modulo n;
+// unset runs all three top-level TestWholeMutants_NNN leaves. Each leaf
+// fetches hash-addressed inputs, then retains both sides and sanitizers.
+func wholeMutantsShard(t *testing.T, index int) {
+	started := time.Now()
+	if !wholeMutantShardSelected(t, index) {
+		t.Skip("assigned to another ADAMIC_TEST_SHARD")
+	}
+	mutations := wholeMutantCases()
+	if len(mutations) != testWholeMutantsShards {
+		t.Fatalf("enumerated %d mutants, declared %d", len(mutations), testWholeMutantsShards)
+	}
+	if index < 0 || index >= len(mutations) {
+		t.Fatalf("invalid mutant shard %d", index)
+	}
+	mutation := mutations[index]
 	manifest := wholeManifest(t, []string{`for (const x of xs) f(x); import type {X} from "x"; type T = keyof X;`})
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, got := range []execution{wholeNode(t, directory, manifest, false), execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")} {
+	productStarted := time.Now()
+	oracle := wholeMutantOracleProduct(t)
+	binary := wholeMutantPortProduct(t, directory, true)
+	mutant := copyPort(t, mutation.file, mutation.from, mutation.to)
+	mutantBinary := wholeMutantPortProduct(t, mutant, true)
+	products := time.Since(productStarted)
+	wholeMutantSetup(t, started, products)
+	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
+	for _, got := range []execution{wholeNode(t, directory, manifest, false), execute(t, "", binary, "--manifest", manifest, "--whole")} {
 		if diff := difference(got.output, want); diff != "" {
 			t.Fatal(diff)
 		}
 	}
-	mutations := []struct{ name, file, from, to string }{
-		{"for-of becomes for-in", "statements.ts", "of ? 'ForOfStatement' : 'ForInStatement'", "of ? 'ForInStatement' : 'ForInStatement'"},
-		{"type-only import phase lost", "statements.ts", "this.parser.node(clause).semantic = phase;", "this.parser.node(clause).semantic = 'Unknown';"},
-		{"keyof becomes readonly", "parser.ts", "this.node(left).operator = operator;", "this.node(left).operator = operator === 'KeyOfKeyword' ? 'ReadonlyKeyword' : operator;"},
-	}
-	for _, mutation := range mutations {
-		t.Run(mutation.name, func(t *testing.T) {
-			mutant := copyPort(t, mutation.file, mutation.from, mutation.to)
-			for _, side := range []struct {
-				name string
-				got  execution
-			}{{"Node", wholeNode(t, mutant, manifest, false)}, {"native", execute(t, "", buildPort(t, mutant, true), "--manifest", manifest, "--whole")}} {
-				diff := difference(side.got.output, want)
-				if diff == "" {
-					t.Fatalf("%s mutant survived", side.name)
-				}
-				t.Logf("%s caught: %s", side.name, strings.Split(diff, "\n")[0])
+	for _, side := range []struct {
+		name string
+		got  execution
+	}{
+		{"Node", wholeNode(t, mutant, manifest, false)},
+		{"native", execute(t, "", mutantBinary, "--manifest", manifest, "--whole")},
+	} {
+		got := side.got.output
+		// After the real sanitized run, emulate a survivor in exactly one case.
+		planted := os.Getenv("ADAMIC_WHOLE_MUTANT_SURVIVOR") == mutation.name && side.name == "native"
+		if planted {
+			got = want
+		}
+		diff := difference(got, want)
+		if diff == "" {
+			if planted {
+				t.Fatalf("%s planted mutant survived: %s", side.name, mutation.name)
 			}
-		})
+			t.Fatalf("%s mutant survived: %s", side.name, mutation.name)
+		}
+		t.Logf("%s %s caught: %s", side.name, mutation.name, strings.Split(diff, "\n")[0])
 	}
 }
 

@@ -3,11 +3,13 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 )
 
 func TestCheckpointKeysIncludeAllExecutionInputs(t *testing.T) {
+	t.Parallel()
 	base := resumeState{PlanDigest: "commit-and-plan", Context: "environment-tools-external-inputs", Index: 0}
 	pattern := []string{"^TestPass$"}
 	key := checkpointKey(base, "p", pattern)
@@ -76,6 +78,7 @@ func TestCheckpointKeysIncludeAllExecutionInputs(t *testing.T) {
 }
 
 func TestPackageCheckpointRequiresIntactCompleteEvidence(t *testing.T) {
+	t.Parallel()
 	dir := t.TempDir()
 	p := plan{Count: 1, Units: []unit{{Package: "p", Test: "TestPass", Shard: 0}}}
 	log := `{"Action":"run","Package":"p","Test":"TestPass"}
@@ -133,13 +136,38 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(t *testing.T) {
 	}
 }
 
-func TestTypeAwareChildrenAndParentCost(t *testing.T) {
-	names, err := literalChildren("../../stage1/cohere/typeaware/volume_test.go", "TestVolumeAgreementAndMutants", "changes")
+func TestLiteralChildrenAndParentCost(t *testing.T) {
+	t.Parallel()
+	// A table of the test's own, not another package's: typeaware split TestVolumeAgreementAndMutants into
+	// independent units (113707a8, Oct 9), and reading its file made this test red on main for every gate after.
+	file := filepath.Join(t.TempDir(), "volume_test.go")
+	source := `package p
+
+func TestVolume(t *testing.T) {
+	changes := []struct {
+		name string
+		edit func(string) string
+	}{
+		{"assignable-types", nil},
+		{"base shapes", nil},
+	}
+	for _, change := range changes {
+		_ = change
+	}
+}
+`
+	if err := os.WriteFile(file, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	names, err := literalChildren(file, "TestVolume", "changes")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(names) != 15 || names[0] != "assignable-types" || names[14] != "base-shapes" {
-		t.Fatalf("wrong audited volume rows: %v", names)
+	if !slices.Equal(names, []string{"assignable-types", "base_shapes"}) {
+		t.Fatalf("wrong rows from a named table: %v", names)
+	}
+	if _, err := literalChildren(file, "TestAbsent", "changes"); err == nil {
+		t.Fatal("an absent parent enumerated")
 	}
 	p := plan{Count: 2, Units: []unit{{Package: "p", Test: "TestParent/one", Shard: 0, Seconds: 3}, {Package: "p", Test: "TestParent/two", Shard: 1, Seconds: 5}}}
 	w := map[string]float64{"p::TestParent": 10, "p::TestParent/one": 3, "p::TestParent/two": 5}
@@ -153,6 +181,7 @@ func TestTypeAwareChildrenAndParentCost(t *testing.T) {
 }
 
 func TestResumeCleanupPreservesForeignPaths(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	checkpoint := filepath.Join(root, "checkpoint")
 	os.Mkdir(checkpoint, 0700)

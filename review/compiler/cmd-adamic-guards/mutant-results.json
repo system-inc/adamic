@@ -1,0 +1,67 @@
+[
+  {
+    "mutant": "M02",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestUsageExitStatus$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 5.447496056003729
+  },
+  {
+    "mutant": "M07",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildWASISanitizeTarget(Before|After)Source$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 5.338911931998155
+  },
+  {
+    "mutant": "invalid fixture load",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildWASISanitizeTarget(Before|After)Source$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 2.0794205510028405
+  },
+  {
+    "mutant": "M07 with WASI SDK",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildWASISanitizeTarget(Before|After)Source$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 9.201284474998829,
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+  }
+]

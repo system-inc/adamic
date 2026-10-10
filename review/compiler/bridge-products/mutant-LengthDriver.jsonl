@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T06:48:46.247235592Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:48:46.255784185Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver"}
+{"Time":"2026-10-09T06:48:46.255888489Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"=== RUN   TestBridgeProductInput_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.255912464Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"=== PAUSE TestBridgeProductInput_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.255914557Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver"}
+{"Time":"2026-10-09T06:48:46.255916971Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver"}
+{"Time":"2026-10-09T06:48:46.255920066Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"=== CONT  TestBridgeProductInput_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.616498943Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"    product_inputs_test.go:156: length-driver served stale product: \"version one\", want version two\n","OutputType":"error"}
+{"Time":"2026-10-09T06:48:46.619074337Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Output":"--- FAIL: TestBridgeProductInput_LengthDriver (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.619100025Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LengthDriver","Elapsed":0.36}
+{"Time":"2026-10-09T06:48:46.619119083Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.620235683Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.373s\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:46.620263424Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.373}

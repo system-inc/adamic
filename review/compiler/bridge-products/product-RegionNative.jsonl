@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:51:25.894397397Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:51:25.901340582Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T06:51:25.901408973Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== RUN   TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:25.901432488Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== PAUSE TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:25.901435062Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T06:51:25.901437355Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T06:51:25.901440159Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== CONT  TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:26.583430401Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    products_test.go:260: build bridge-test-region-stage0 a7920b020218 hit 0.03\n"}
+{"Time":"2026-10-09T06:51:26.926687797Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    products_test.go:261: build bridge-test-tsgo.a 1dccd8c0f00b hit 0.03\n"}
+{"Time":"2026-10-09T06:51:33.122367432Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    product_units_test.go:133: build bridge-test-region-native fa294734d8a3 miss 6.90\n"}
+{"Time":"2026-10-09T06:51:33.164214904Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"--- PASS: TestProduct_RegionNative (7.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:33.164265909Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Elapsed":7.26}
+{"Time":"2026-10-09T06:51:33.164505623Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:33.176548152Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t7.282s\n"}
+{"Time":"2026-10-09T06:51:33.176585518Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":7.282}

@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1311,7 +1311,7 @@
+ 	if property, isProperty := closure.(ir.Property); isProperty {
+ 		// object.name(...) through an interface: the object may be a class's, whose methods aren't
+ 		// fields (ir.Property's Method).
+-		property.Method = true
++		property.Method = false
+ 		closure = property
+ 	}
+ 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)

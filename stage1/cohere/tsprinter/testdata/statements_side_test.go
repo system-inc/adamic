@@ -51,6 +51,8 @@ func statementSyntax(node *ast.Node) bool {
 		return supportedSyntax(node)
 	}
 }
+
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicStatementCorpus(t *testing.T) {
 	data, err := os.ReadFile(os.Getenv("ADAMIC_TS_STATEMENT_REQUEST"))
 	if err != nil {
@@ -146,6 +148,7 @@ func TestAdamicStatementCorpus(t *testing.T) {
 
 // Pin the observed fork customizations independently of the Adamic printer.
 func TestAdamicStatementUpstreamDifferences(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile(os.Getenv("ADAMIC_TS_STATEMENT_UPSTREAM"))
 	if err != nil {
 		t.Fatal(err)

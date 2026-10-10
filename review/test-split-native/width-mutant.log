@@ -1,0 +1,5 @@
+--- FAIL: TestRetainedSplitCoverage (0.00s)
+    split_units_test.go:367: random regex units must partition all 10000 cases into 40 units of 250
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.008s
+FAIL

@@ -20,11 +20,13 @@ func init() {
 }
 
 func TestLibraryMapSetIteratorCopiesRefused(t *testing.T) {
+	t.Parallel()
 	for _, collection := range []string{"map", "set"} {
 		for _, part := range []string{"keys", "values", "entries"} {
 			for _, copy := range []string{"spread", "assign"} {
 				name := collection + "_" + part + "_" + copy
 				t.Run(name, func(t *testing.T) {
+					t.Parallel()
 					path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_"+name+".a"))
 					if err != nil {
 						t.Fatal(err)

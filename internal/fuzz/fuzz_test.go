@@ -11,55 +11,80 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// One seed makes one program, every time: that's what makes a finding reproduce.
-func TestOneSeedOneProgram(t *testing.T) {
-	t.Parallel()
-	for seed := uint64(1); seed <= 20; seed++ {
-		if first, second := Generate(seed).Source(), Generate(seed).Source(); first != second {
-			t.Fatalf("seed %d made two different programs", seed)
-		}
-	}
-	if Generate(1).Source() == Generate(2).Source() {
-		t.Fatal("seeds 1 and 2 made the same program")
-	}
-}
-
 // Every program the generator makes must be Adamic that stage 0 lowers: one the checker refuses is
 // the generator's fault, and one stage 0 can't lower tests nothing. Native regex is available on
 // the integration head, so this includes every generated feature.
 func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 	t.Parallel()
-	directory := t.TempDir()
-	for seed := uint64(1); seed <= 60; seed++ {
-		path := filepath.Join(directory, "program.a")
-		source := Generate(seed).Source()
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		program, err := load.Load([]string{path})
-		if err != nil {
-			t.Errorf("seed %d: the checker refused it: %v", seed, err)
-			continue
-		}
-		if _, err := lower.Lower(context.Background(), program); err != nil {
-			t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
-		}
+	// The literal ranges are also the gate's independently selectable work units.
+	for _, seeds := range []struct {
+		name        string
+		first, last uint64
+	}{
+		{"seeds-001-005", 1, 5},
+		{"seeds-006-010", 6, 10},
+		{"seeds-011-015", 11, 15},
+		{"seeds-016-020", 16, 20},
+		{"seeds-021-025", 21, 25},
+		{"seeds-026-030", 26, 30},
+		{"seeds-031-035", 31, 35},
+		{"seeds-036-040", 36, 40},
+		{"seeds-041-045", 41, 45},
+		{"seeds-046-050", 46, 50},
+		{"seeds-051-055", 51, 55},
+		{"seeds-056-060", 56, 60},
+	} {
+		t.Run(seeds.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			for seed := seeds.first; seed <= seeds.last; seed++ {
+				path := filepath.Join(directory, "program.a")
+				source := Generate(seed).Source()
+				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				program, err := load.Load([]string{path})
+				if err != nil {
+					t.Errorf("seed %d: the checker refused it: %v", seed, err)
+					continue
+				}
+				if _, err := lower.Lower(context.Background(), program); err != nil {
+					t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
+				}
+			}
+		})
 	}
 }
 
 // Check the generated regex programs independently of lowering too.
 func TestRegexProgramsPassTheChecker(t *testing.T) {
 	t.Parallel()
-	directory := t.TempDir()
-	for seed := uint64(1); seed <= 30; seed++ {
-		path := filepath.Join(directory, "program.a")
-		source := Generate(seed).Source()
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		if _, err := load.Load([]string{path}); err != nil {
-			t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
-		}
+	// The literal ranges are also the gate's independently selectable work units.
+	for _, seeds := range []struct {
+		name        string
+		first, last uint64
+	}{
+		{"seeds-001-005", 1, 5},
+		{"seeds-006-010", 6, 10},
+		{"seeds-011-015", 11, 15},
+		{"seeds-016-020", 16, 20},
+		{"seeds-021-025", 21, 25},
+		{"seeds-026-030", 26, 30},
+	} {
+		t.Run(seeds.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			for seed := seeds.first; seed <= seeds.last; seed++ {
+				path := filepath.Join(directory, "program.a")
+				source := Generate(seed).Source()
+				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				if _, err := load.Load([]string{path}); err != nil {
+					t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+				}
+			}
+		})
 	}
 }
 

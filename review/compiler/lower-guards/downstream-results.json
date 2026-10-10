@@ -1,0 +1,66 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNativeAgreesWithNode|TestNewExpressionCacheCaptureRemainsNotYet)$/internal/oracle/testdata/namespaces_(unknown_before|safe_initialization)[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 2.4217472210002597
+  },
+  {
+    "name": "M14",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/namespaces_unknown_before[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 11.591355343000032
+  },
+  {
+    "name": "M15",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/namespaces_safe_initialization[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall": 11.379442566998478
+  },
+  {
+    "name": "M11",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNewExpressionCacheCaptureRemainsNotYet|TestNativeAgreesWithNode)$/internal/oracle/testdata/new_expression_class_cache_(local|capture_notyet)[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 11.623199306006427
+  }
+]

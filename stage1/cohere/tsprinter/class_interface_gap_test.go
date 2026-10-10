@@ -12,6 +12,7 @@ import (
 )
 
 // The .txt suffix keeps this separately executed native gap out of the formatter corpus.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClassInterfaceMethodGap(t *testing.T) {
 	data, err := os.ReadFile("gaps/classInterfaceMethod.ts.txt")
 	if err != nil {
@@ -65,6 +66,7 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 	t.Log("explicit callback prints 17 on Node, native and backend; leak-free; gap check rejects this normal-run mutant")
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClosedOptionalBooleanFunctionGap(t *testing.T) {
 	data, err := os.ReadFile("gaps/optionalBooleanFunction.ts.txt")
 	if err != nil {

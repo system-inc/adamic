@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:59:03.383117219Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:59:03.390121349Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI"}
+{"Time":"2026-10-09T04:59:03.390203861Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"=== RUN   TestBridgeABI\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:59:03.722542273Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:199: product digest: api\n","OutputType":"error"}
+{"Time":"2026-10-09T04:59:03.723189409Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"--- FAIL: TestBridgeABI (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:59:03.723203049Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Elapsed":0.33}
+{"Time":"2026-10-09T04:59:03.723220555Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:59:03.725472913Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.342s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:59:03.725491831Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.342}

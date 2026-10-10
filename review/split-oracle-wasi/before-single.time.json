@@ -1,0 +1,20 @@
+{
+  "label": "before-single",
+  "wall_seconds": 75.003,
+  "exit_code": -9,
+  "cooked": true,
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestWASIAgreesWithNode$/^dedication$/^dedication.a$",
+    "-parallel",
+    "4",
+    "-count=1",
+    "-timeout",
+    "75s",
+    "-json"
+  ],
+  "empty_runtime_cache": true
+}

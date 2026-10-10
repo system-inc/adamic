@@ -1,0 +1,1623 @@
+{
+  "roots": 91,
+  "leaves": 95,
+  "max_wall": 40.30846954400022,
+  "max_root": 38.46,
+  "measurements": [
+    {
+      "test": "TestArtifactInputsAndReuse",
+      "elapsed": 0.04,
+      "root_elapsed": 0.04,
+      "wall": 12.387745182999424,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestArtifactInputsAndReuse$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestShardSelection",
+      "elapsed": 0,
+      "root_elapsed": 0,
+      "wall": 2.23754354599987,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestShardSelection$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedSplitCoverage/shard_union",
+      "elapsed": 0.01,
+      "root_elapsed": 0.01,
+      "wall": 1.997658698000123,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedSplitCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedSplitCoverage/decode_targets",
+      "elapsed": 0,
+      "root_elapsed": 0.01,
+      "wall": 1.997658698000123,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedSplitCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedSplitCoverage/WASI",
+      "elapsed": 0,
+      "root_elapsed": 0.01,
+      "wall": 1.997658698000123,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedSplitCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedSplitCoverage/split_cache",
+      "elapsed": 0,
+      "root_elapsed": 0.01,
+      "wall": 1.997658698000123,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedSplitCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedSplitCoverage/record_mutants",
+      "elapsed": 0,
+      "root_elapsed": 0.01,
+      "wall": 1.997658698000123,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedSplitCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRetainedTopLevelCoverage",
+      "elapsed": 0,
+      "root_elapsed": 0,
+      "wall": 1.9209851740006343,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRetainedTopLevelCoverage$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit00",
+      "elapsed": 6.89,
+      "root_elapsed": 6.89,
+      "wall": 8.922102612000344,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit00$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit01",
+      "elapsed": 12.04,
+      "root_elapsed": 12.04,
+      "wall": 14.329793974000495,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit01$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit02",
+      "elapsed": 7.26,
+      "root_elapsed": 7.26,
+      "wall": 23.63232261899975,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit02$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit03",
+      "elapsed": 7.44,
+      "root_elapsed": 7.44,
+      "wall": 9.513489460000528,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit03$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit04",
+      "elapsed": 8,
+      "root_elapsed": 8,
+      "wall": 11.621823413999664,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit04$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit05",
+      "elapsed": 7.42,
+      "root_elapsed": 7.42,
+      "wall": 10.234984708999946,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit05$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit06",
+      "elapsed": 6.78,
+      "root_elapsed": 6.78,
+      "wall": 8.676543534000302,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit06$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit07",
+      "elapsed": 6.38,
+      "root_elapsed": 6.38,
+      "wall": 8.394967088999692,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit07$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit08",
+      "elapsed": 6.74,
+      "root_elapsed": 6.74,
+      "wall": 8.542557848999422,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit08$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit09",
+      "elapsed": 6.92,
+      "root_elapsed": 6.92,
+      "wall": 9.041607144999944,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit09$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit10",
+      "elapsed": 6.76,
+      "root_elapsed": 6.76,
+      "wall": 8.80335518100037,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit10$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit11",
+      "elapsed": 6.75,
+      "root_elapsed": 6.75,
+      "wall": 8.783460980999735,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit11$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit12",
+      "elapsed": 6.71,
+      "root_elapsed": 6.71,
+      "wall": 8.695008612000493,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit12$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit13",
+      "elapsed": 6.86,
+      "root_elapsed": 6.86,
+      "wall": 8.80425723299959,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit13$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit14",
+      "elapsed": 6.94,
+      "root_elapsed": 6.94,
+      "wall": 8.935870088000229,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit14$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit15",
+      "elapsed": 6.87,
+      "root_elapsed": 6.87,
+      "wall": 8.888546447999943,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit15$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit16",
+      "elapsed": 6.86,
+      "root_elapsed": 6.86,
+      "wall": 9.034554243000457,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit16$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit17",
+      "elapsed": 6.95,
+      "root_elapsed": 6.95,
+      "wall": 8.886448715999904,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit17$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit18",
+      "elapsed": 6.86,
+      "root_elapsed": 6.86,
+      "wall": 8.852523727000516,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit18$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit19",
+      "elapsed": 6.87,
+      "root_elapsed": 6.87,
+      "wall": 8.899062750999292,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit19$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit20",
+      "elapsed": 7.06,
+      "root_elapsed": 7.06,
+      "wall": 9.108834914999534,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit20$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit21",
+      "elapsed": 7.53,
+      "root_elapsed": 7.53,
+      "wall": 9.775760464000086,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit21$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit22",
+      "elapsed": 6.89,
+      "root_elapsed": 6.89,
+      "wall": 8.854672426000434,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit22$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit23",
+      "elapsed": 6.7,
+      "root_elapsed": 6.7,
+      "wall": 8.508730911999919,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit23$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit24",
+      "elapsed": 6.63,
+      "root_elapsed": 6.63,
+      "wall": 8.785461638000015,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit24$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit25",
+      "elapsed": 6.56,
+      "root_elapsed": 6.56,
+      "wall": 8.420847290999518,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit25$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit26",
+      "elapsed": 6.53,
+      "root_elapsed": 6.53,
+      "wall": 8.329914125999494,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit26$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit27",
+      "elapsed": 6.92,
+      "root_elapsed": 6.92,
+      "wall": 8.923168999999689,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit27$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit28",
+      "elapsed": 6.98,
+      "root_elapsed": 6.98,
+      "wall": 9.117433813000389,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit28$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit29",
+      "elapsed": 6.75,
+      "root_elapsed": 6.75,
+      "wall": 9.042960347999724,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit29$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit30",
+      "elapsed": 6.73,
+      "root_elapsed": 6.73,
+      "wall": 8.858069273999718,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit30$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit31",
+      "elapsed": 6.82,
+      "root_elapsed": 6.82,
+      "wall": 8.75024445500003,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit31$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit32",
+      "elapsed": 6.9,
+      "root_elapsed": 6.9,
+      "wall": 8.986239634999947,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit32$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit33",
+      "elapsed": 6.58,
+      "root_elapsed": 6.58,
+      "wall": 8.620273935000114,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit33$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit34",
+      "elapsed": 6.62,
+      "root_elapsed": 6.62,
+      "wall": 8.398944866999955,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit34$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit35",
+      "elapsed": 6.56,
+      "root_elapsed": 6.56,
+      "wall": 8.40772742199988,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit35$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit36",
+      "elapsed": 6.9,
+      "root_elapsed": 6.9,
+      "wall": 8.921142318999955,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit36$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit37",
+      "elapsed": 6.62,
+      "root_elapsed": 6.62,
+      "wall": 8.756239061000088,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit37$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit38",
+      "elapsed": 6.72,
+      "root_elapsed": 6.72,
+      "wall": 8.612447597000028,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit38$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRegExpBytecodeRandomNodeUnit39",
+      "elapsed": 6.7,
+      "root_elapsed": 6.7,
+      "wall": 8.679556743999456,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRegExpBytecodeRandomNodeUnit39$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit00/indices-in-insertion-order",
+      "elapsed": 6.84,
+      "root_elapsed": 6.84,
+      "wall": 8.850169657999686,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit00$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit01/uint32-max-as-index",
+      "elapsed": 6.47,
+      "root_elapsed": 6.47,
+      "wall": 8.44197991799956,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit01$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit02/deleted-key-iterated",
+      "elapsed": 6.14,
+      "root_elapsed": 6.14,
+      "wall": 8.017166915999951,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit02$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit03/overwrite-key-leaked",
+      "elapsed": 6.23,
+      "root_elapsed": 6.23,
+      "wall": 8.083224254000015,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit03$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit04/stored-key-freed",
+      "elapsed": 6.39,
+      "root_elapsed": 6.39,
+      "wall": 8.262009793000288,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit04$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordMutantsUnit05/own-slot-null-read",
+      "elapsed": 6.57,
+      "root_elapsed": 6.57,
+      "wall": 8.610883062999164,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordMutantsUnit05$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestSplitTSGoAgreesUnit00/cache_0",
+      "elapsed": 12.33,
+      "root_elapsed": 36.56,
+      "wall": 38.371824179000214,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestSplitTSGoAgreesUnit00$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestSplitTSGoAgreesUnit01/cache_1",
+      "elapsed": 12.49,
+      "root_elapsed": 38.46,
+      "wall": 40.30846954400022,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestSplitTSGoAgreesUnit01$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit00/internal/load/testdata/0.1/compile/01_hello.ts",
+      "elapsed": 0.24,
+      "root_elapsed": 11.71,
+      "wall": 13.65002461899985,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit00$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit01/internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+      "elapsed": 0.23,
+      "root_elapsed": 8.12,
+      "wall": 9.999530080000113,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit01$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit02/internal/load/testdata/0.1/compile/03_shapes.ts",
+      "elapsed": 0.24,
+      "root_elapsed": 8.04,
+      "wall": 9.973898381000254,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit02$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit03/internal/load/testdata/0.1/compile/04_closures.ts",
+      "elapsed": 0.24,
+      "root_elapsed": 8.13,
+      "wall": 10.063192303000505,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit03$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit04/internal/load/testdata/0.1/compile/05_wordcount.ts",
+      "elapsed": 0.26,
+      "root_elapsed": 8.25,
+      "wall": 10.196928387000298,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit04$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit05/internal/load/testdata/0.1/compile/06_stack.ts",
+      "elapsed": 0.32,
+      "root_elapsed": 8.8,
+      "wall": 10.698983307000162,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit05$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit06/internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "elapsed": 0.24,
+      "root_elapsed": 8.31,
+      "wall": 10.317792767000356,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit06$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit07/internal/load/testdata/0.1/compile/08_results.ts",
+      "elapsed": 0.25,
+      "root_elapsed": 8.14,
+      "wall": 10.043147630999556,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit07$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit08/internal/load/testdata/0.1/compile/09_tree.ts",
+      "elapsed": 0.26,
+      "root_elapsed": 8.47,
+      "wall": 10.479835281000305,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit08$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit09/internal/load/testdata/0.1/compile/10_unicode.ts",
+      "elapsed": 0.23,
+      "root_elapsed": 8.02,
+      "wall": 9.838549805999719,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit09$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit10/internal/oracle/testdata/strings.a",
+      "elapsed": 0.24,
+      "root_elapsed": 8.19,
+      "wall": 10.087600260000727,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit10$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit11/internal/oracle/testdata/numbers.a",
+      "elapsed": 0.23,
+      "root_elapsed": 8.42,
+      "wall": 10.438537465000081,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit11$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit12/internal/oracle/testdata/bitwise_sweep.a",
+      "elapsed": 2.83,
+      "root_elapsed": 10.46,
+      "wall": 12.328348124000513,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit12$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit13/internal/oracle/testdata/functions.a",
+      "elapsed": 0.23,
+      "root_elapsed": 8.15,
+      "wall": 9.947035154999867,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit13$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit14/internal/oracle/testdata/regions.a",
+      "elapsed": 0.28,
+      "root_elapsed": 8.28,
+      "wall": 10.100390194000283,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit14$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit15/internal/oracle/testdata/regions_throw.a",
+      "elapsed": 0.24,
+      "root_elapsed": 8.04,
+      "wall": 9.908503608000501,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit15$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit16/internal/oracle/testdata/weak_parent.a",
+      "elapsed": 0.34,
+      "root_elapsed": 8.3,
+      "wall": 10.101893854000082,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit16$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit17/internal/oracle/testdata/weak_narrowed.a",
+      "elapsed": 0.28,
+      "root_elapsed": 8.8,
+      "wall": 10.784445323999535,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit17$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a",
+      "elapsed": 0.26,
+      "root_elapsed": 8.45,
+      "wall": 14.802198189000592,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit18$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit19/internal/oracle/testdata/reuse_weak_during_spread.a",
+      "elapsed": 0.3,
+      "root_elapsed": 8.7,
+      "wall": 10.492913258000044,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit19$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit20/internal/oracle/testdata/normalize.a",
+      "elapsed": 0.25,
+      "root_elapsed": 8.34,
+      "wall": 10.51985014299953,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit20$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit21/internal/oracle/testdata/maps_and_text.a",
+      "elapsed": 0.28,
+      "root_elapsed": 9.36,
+      "wall": 11.367026640000404,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit21$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit22/internal/oracle/testdata/stack_overflow.a",
+      "elapsed": 0.22,
+      "root_elapsed": 8.79,
+      "wall": 10.849479073000111,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit22$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit23/internal/oracle/testdata/stack_forever.a",
+      "elapsed": 0.21,
+      "root_elapsed": 7.89,
+      "wall": 9.794020295999871,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit23$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit24/internal/oracle/testdata/stack_tail_call.a",
+      "elapsed": 0.27,
+      "root_elapsed": 8.87,
+      "wall": 10.640496793000239,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit24$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit25/internal/oracle/testdata/panic.a",
+      "elapsed": 0.24,
+      "root_elapsed": 8.97,
+      "wall": 10.994591847000265,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit25$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit26/internal/oracle/testdata/json_stringify_numbers.a",
+      "elapsed": 0.27,
+      "root_elapsed": 8.78,
+      "wall": 10.854764964999958,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit26$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit27/internal/oracle/testdata/regexp_cycle_collections.a",
+      "elapsed": 0.3,
+      "root_elapsed": 8.73,
+      "wall": 10.73806347000027,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit27$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit28/internal/oracle/testdata/library_object_keys.a",
+      "elapsed": 0.26,
+      "root_elapsed": 8.71,
+      "wall": 10.574917528999322,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit28$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit29/internal/oracle/testdata/library_array_flat.a",
+      "elapsed": 0.32,
+      "root_elapsed": 8.86,
+      "wall": 10.807723829999304,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit29$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit30/internal/oracle/testdata/read_files.a",
+      "elapsed": 0.25,
+      "root_elapsed": 8.46,
+      "wall": 10.463434396999219,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit30$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit31/internal/native/wasm/io.a",
+      "elapsed": 0.27,
+      "root_elapsed": 8.73,
+      "wall": 10.696286401999714,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit31$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit32/internal/oracle/testdata/closures_throw.a",
+      "elapsed": 0.57,
+      "root_elapsed": 9.38,
+      "wall": 11.417373254000267,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit32$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit33/internal/oracle/testdata/write_stdout_order.a",
+      "elapsed": 0.24,
+      "root_elapsed": 8.46,
+      "wall": 10.6250590439995,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit33$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit34/internal/oracle/testdata/write_stderr_order.a",
+      "elapsed": 0.23,
+      "root_elapsed": 8.6,
+      "wall": 10.540883352000492,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit34$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestWASIUnit35/requests",
+      "elapsed": 6.68,
+      "root_elapsed": 15.12,
+      "wall": 17.133981627999674,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestWASIUnit35$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordReadMutants/prototype-membership-restored",
+      "elapsed": 6.36,
+      "root_elapsed": 6.36,
+      "wall": 8.519189697000002,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordReadMutants$/^prototype\\-membership\\-restored$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordReadMutants/missing-read-silent",
+      "elapsed": 6.35,
+      "root_elapsed": 6.35,
+      "wall": 8.327188925999508,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordReadMutants$/^missing\\-read\\-silent$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    },
+    {
+      "test": "TestRecordReadMutants/own-read-checked-as-missing",
+      "elapsed": 6.7,
+      "root_elapsed": 6.7,
+      "wall": 8.687141835999682,
+      "selector": [
+        "go",
+        "test",
+        "./internal/native",
+        "-run",
+        "^TestRecordReadMutants$/^own\\-read\\-checked\\-as\\-missing$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=90s",
+        "-json"
+      ]
+    }
+  ]
+}

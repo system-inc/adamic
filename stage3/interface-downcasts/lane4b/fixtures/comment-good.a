@@ -1,0 +1,30 @@
+interface JSDocComment { readonly text: string; readonly flags: number; }
+type NodeArray<T> = readonly T[];
+interface Base { readonly kind: string; }
+interface JSDoc extends Base { readonly comment: string | NodeArray<JSDocComment> | undefined; }
+function read(value: JSDoc): string {
+ const member = value.comment;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'string') return member;
+ if (typeof member !== 'object') return 'wrong';
+ const first = member[0];
+ if (first === undefined) return 'empty';
+ return `${first.text}:${first.flags}`;
+}
+const text = { kind: 'Doc', comment: 'plain' };
+const array = { kind: 'Doc', comment: [{ text: 'nested', flags: 7 }] };
+const absent = { kind: 'Doc', comment: undefined };
+const textSource: Base = text;
+const arraySource: Base = array;
+const absentSource: Base = absent;
+console.log(read(textSource as JSDoc));
+console.log(read(arraySource as JSDoc));
+console.log(read(absentSource as JSDoc));
+const generatedText = 'x'.length === 1 ? 'generated' : [{ text: 'unused', flags: 0 }];
+const generatedArray = 'x'.length === 2 ? 'unused' : [{ text: 'generated', flags: 8 }];
+const textRecord = { kind: 'Doc', comment: generatedText };
+const arrayRecord = { kind: 'Doc', comment: generatedArray };
+const generatedTextSource: Base = textRecord;
+const generatedArraySource: Base = arrayRecord;
+console.log(read(generatedTextSource as JSDoc));
+console.log(read(generatedArraySource as JSDoc));

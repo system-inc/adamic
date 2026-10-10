@@ -62,8 +62,9 @@ func firstRow(a, b []byte) int {
 	}
 	return 0
 }
+
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestFixedPatterns(t *testing.T) {
-	// Not parallel: recompiles the same sizable generated corpus for a semantic mutant.
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
 	expected := run(t, cohere, "go", "run", filepath.Join(root, "testdata/oracle.go"), filepath.Join(root, "table.json"), filepath.Join(root, "testdata/corpus.json"))
@@ -111,6 +112,7 @@ func TestFixedPatterns(t *testing.T) {
 	}
 }
 func TestDynamicPatternGap(t *testing.T) {
+	t.Parallel()
 	entry, _ := filepath.Abs("testdata/dynamic_gap.a")
 	repository, _ := filepath.Abs("../../../..")
 	out := run(t, ".", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), entry, "TODO")
@@ -129,6 +131,7 @@ func TestDynamicPatternGap(t *testing.T) {
 }
 
 func TestOptionDialectGap(t *testing.T) {
+	t.Parallel()
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
 	goAnswer := run(t, cohere, "go", "run", filepath.Join(root, "testdata/option_dialects.go"))
@@ -142,6 +145,7 @@ func TestOptionDialectGap(t *testing.T) {
 }
 
 func TestInventoryMatchesPinnedSource(t *testing.T) {
+	t.Parallel()
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
 	actual := run(t, cohere, "go", "run", filepath.Join(root, "testdata/inventory.go"), filepath.Join(cohere, "internal/lint/rules"))

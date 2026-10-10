@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestParserRepresentationProbes(t *testing.T) {
 	parallelMarkdown(t)
 	for _, gap := range []struct{ path, stdout, notYet, refused, refusedExact string }{

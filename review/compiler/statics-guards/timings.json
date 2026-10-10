@@ -1,0 +1,46 @@
+[
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestReadinessErrorIncludesReceiverExpression",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestNamespaceFactoryBindingsAgreeWithNode",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestPrivateAndPublicStaticsAgreeWithNode",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "seconds": 1.15
+  }
+]

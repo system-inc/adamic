@@ -1,0 +1,5 @@
+const map = new Map<string, number>([['a', 1]]);
+const keys = map.keys();
+const copy = { ...keys };
+const step = copy.next();
+console.log(`${step.done}`);

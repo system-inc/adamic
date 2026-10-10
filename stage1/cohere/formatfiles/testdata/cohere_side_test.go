@@ -282,6 +282,7 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 }
 
 // TestAdamicPortCases lays out the trees and writes the cases file and Go cohere's answers.
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {

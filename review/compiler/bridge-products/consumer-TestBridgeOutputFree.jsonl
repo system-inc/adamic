@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:52.671409535Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:52.678245579Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree"}
+{"Time":"2026-10-09T06:52:52.678333579Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Output":"=== RUN   TestBridgeOutputFree\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:53.029085271Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Output":"    units_test.go:71: build bridge-test-leak-driver de654189d1d0 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:53.392234417Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Output":"    units_test.go:220: build bridge-test-leak-driver de654189d1d0 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:53.547217949Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Output":"    units_test.go:220: output-free: LeakSanitizer: detected memory leaks\n"}
+{"Time":"2026-10-09T06:52:53.547296184Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Output":"--- PASS: TestBridgeOutputFree (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:53.547305829Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOutputFree","Elapsed":0.87}
+{"Time":"2026-10-09T06:52:53.547325818Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:53.551558087Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.880s\n"}
+{"Time":"2026-10-09T06:52:53.551586569Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.88}

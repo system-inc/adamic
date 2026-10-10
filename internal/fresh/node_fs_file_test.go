@@ -8,6 +8,7 @@ import (
 )
 
 func TestNodeFSFileOperationsAreKnown(t *testing.T) {
+	t.Parallel()
 	operations := map[string]ir.Type{
 		"read_sync": ir.Number, "read_buffer": ir.Array, "read_buffer_fd": ir.Array, "read_file": ir.String, "read_fd": ir.String, "open": ir.Number,
 		"write_buffer": 0, "write_buffer_fd": 0, "write": ir.Number, "close": 0, "write_file": 0, "write_fd": 0,
@@ -20,6 +21,7 @@ func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 	}
 	for operation, result := range operations {
 		t.Run(operation, func(t *testing.T) {
+			t.Parallel()
 			// A nested host expression also checks that arguments are walked.
 			program := &ir.Program{Main: []ir.Statement{ir.Evaluate{Value: ir.NodeFSFile{
 				Operation: operation, Of: result,
@@ -35,6 +37,7 @@ func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 }
 
 func TestNodeFSFileOperandsStillJudgeWrites(t *testing.T) {
+	t.Parallel()
 	closes := ir.ArrayPush{Array: ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "nodes", Of: ir.Array},
 		Value: ir.Read{Local: 0, Of: ir.Object}, Element: ir.Object, Site: 2}
 	program := regexTreeProgram(ir.NodeFSFile{Operation: "write", Of: ir.Number, Arguments: []ir.Expression{closes}})
@@ -52,6 +55,7 @@ func TestNodeFSFileOperandsStillJudgeWrites(t *testing.T) {
 }
 
 func TestNodeFSFileDoesNotEscapeBorrowedObjects(t *testing.T) {
+	t.Parallel()
 	for _, operation := range []string{"is_file", "date_time", "utimes_dates"} {
 		program := regexTreeProgram(ir.NodeFSFile{Operation: operation, Of: ir.Number, Arguments: []ir.Expression{ir.Read{Local: 0, Of: ir.Object}}})
 		writes := fresh.ProveWrites(program)
@@ -62,6 +66,7 @@ func TestNodeFSFileDoesNotEscapeBorrowedObjects(t *testing.T) {
 }
 
 func TestNodeFSFileResultsAreFresh(t *testing.T) {
+	t.Parallel()
 	for _, operation := range []string{"stat", "date_new"} {
 		program := &ir.Program{
 			Locals: []ir.Local{{Type: ir.Object, Function: 0}, {Type: ir.Object, Function: 0}},

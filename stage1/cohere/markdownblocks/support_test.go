@@ -199,6 +199,7 @@ func nativeBinaryResult(source string, options native.Options) (string, error) {
 	return build.binary, build.err
 }
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestNativeBuildModesAreDistinct(t *testing.T) {
 	parallelMarkdown(t)
 	const source = `#include <stdio.h>

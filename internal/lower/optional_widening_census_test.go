@@ -22,6 +22,7 @@ import (
 // The census is a type-relation inventory, not lowering or permission to compile unchecked code.
 // It uses the production rule with upstream's project options and reports every site, even when
 // other Adamic policies or the checker would stop compilation earlier.
+// Not parallel: writes the shared output path named by OPTIONAL_WIDENING_OUTPUT.
 func TestOptionalWideningCensus(t *testing.T) {
 	configPath := os.Getenv("OPTIONAL_WIDENING_CONFIG")
 	if configPath == "" {

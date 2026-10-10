@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T06:04:25.816934895Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:04:25.825104454Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01"}
+{"Time":"2026-10-09T06:04:25.825214719Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01","Output":"=== RUN   TestRecordMutantsUnit01\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:25.82524835Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01","Output":"=== PAUSE TestRecordMutantsUnit01\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:25.825251585Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01"}
+{"Time":"2026-10-09T06:04:25.82525514Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01"}
+{"Time":"2026-10-09T06:04:25.825257534Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01","Output":"=== CONT  TestRecordMutantsUnit01\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:25.825260478Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index"}
+{"Time":"2026-10-09T06:04:25.825264274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index","Output":"=== RUN   TestRecordMutantsUnit01/uint32-max-as-index\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:32.26294595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index","Output":"    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0\n"}
+{"Time":"2026-10-09T06:04:32.295115263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index","Output":"    record_test.go:244: caught by Node\n"}
+{"Time":"2026-10-09T06:04:32.29552681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index","Output":"--- PASS: TestRecordMutantsUnit01/uint32-max-as-index (6.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:32.295543575Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01/uint32-max-as-index","Elapsed":6.47}
+{"Time":"2026-10-09T06:04:32.29559391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01","Output":"--- PASS: TestRecordMutantsUnit01 (6.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:32.295600009Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit01","Elapsed":6.47}
+{"Time":"2026-10-09T06:04:32.295603835Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:32.313175625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.496s\n"}
+{"Time":"2026-10-09T06:04:32.313236346Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.496}

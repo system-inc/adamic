@@ -1,0 +1,298 @@
+[
+  {
+    "unit": "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage::build-only",
+    "seconds": 0.061,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage"
+    ],
+    "log": "/workspace/stage3-go-followup/0.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestCompiler41231d51Shape",
+    "seconds": 0.008,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/40fa5d7aea2da2e4f575650a4e8737f250de6ca07b4654e5cc6c26796be1d13c",
+      "-test.run=^TestCompiler41231d51Shape$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/1.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestMissingFunctionMutantFailsLoudly",
+    "seconds": 0.002,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/40fa5d7aea2da2e4f575650a4e8737f250de6ca07b4654e5cc6c26796be1d13c",
+      "-test.run=^TestMissingFunctionMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/2.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestChangedVisitorMutantFailsLoudly",
+    "seconds": 0.003,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/40fa5d7aea2da2e4f575650a4e8737f250de6ca07b4654e5cc6c26796be1d13c",
+      "-test.run=^TestChangedVisitorMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/3.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+    "seconds": 0.204,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/40fa5d7aea2da2e4f575650a4e8737f250de6ca07b4654e5cc6c26796be1d13c",
+      "-test.run=^TestVisitorsCollectContinueAndSkipDiagnosedBodies$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/4.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd::build-only",
+    "seconds": 0.041,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd"
+    ],
+    "log": "/workspace/stage3-go-followup/5.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay::build-only",
+    "seconds": 0.04,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay"
+    ],
+    "log": "/workspace/stage3-go-followup/6.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay/worker::build-only",
+    "seconds": 0.031,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay/worker"
+    ],
+    "log": "/workspace/stage3-go-followup/7.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownMutableContainerFailsLoudly",
+    "seconds": 0.047,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/94a89151cd23a2af967ba05af43a15f208b88b482807a8483a1d2bd4a15ef899",
+      "-test.run=^TestUnknownMutableContainerFailsLoudly$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/8.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownForeignPointerFailsLoudly",
+    "seconds": 0.044,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/94a89151cd23a2af967ba05af43a15f208b88b482807a8483a1d2bd4a15ef899",
+      "-test.run=^TestUnknownForeignPointerFailsLoudly$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/9.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite::TestMissingStatementFailsWithMethodName",
+    "seconds": 0.042,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/6ffb0fb456db7340a2c19c3e33d8397d1388f0047b7b43415aae7a7a4007ab77",
+      "-test.run=^TestMissingStatementFailsWithMethodName$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/10.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/tool::build-only",
+    "seconds": 0.029,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/tool"
+    ],
+    "log": "/workspace/stage3-go-followup/11.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/predicates/tools/tool::build-only",
+    "seconds": 0.032,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/predicates/tools/tool"
+    ],
+    "log": "/workspace/stage3-go-followup/12.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/tool::build-only",
+    "seconds": 0.093,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/tool"
+    ],
+    "log": "/workspace/stage3-go-followup/13.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/drivers/parser/probe::build-only",
+    "seconds": 0.076,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe"
+    ],
+    "log": "/workspace/stage3-go-followup/14.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixtures",
+    "seconds": 12.752,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/751430c5f4720e0d0ebd5d3cef53cbd263907ad6e92c0f21f6796269af5b9be2",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/15.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixturePaths",
+    "seconds": 0.008,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/751430c5f4720e0d0ebd5d3cef53cbd263907ad6e92c0f21f6796269af5b9be2",
+      "-test.run=^TestFixturePaths$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/16.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixtureShardManifest",
+    "seconds": 0.01,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/751430c5f4720e0d0ebd5d3cef53cbd263907ad6e92c0f21f6796269af5b9be2",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/17.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestTransformedNodeRunnerGuardHook",
+    "seconds": 0.007,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/751430c5f4720e0d0ebd5d3cef53cbd263907ad6e92c0f21f6796269af5b9be2",
+      "-test.run=^TestTransformedNodeRunnerGuardHook$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/18.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestTransformedNodeRunnerGuard",
+    "seconds": 0.03,
+    "exit": 0,
+    "command": [
+      "/home/agent/.cache/adamic-stage3/build-products/probes/751430c5f4720e0d0ebd5d3cef53cbd263907ad6e92c0f21f6796269af5b9be2",
+      "-test.run=^TestTransformedNodeRunnerGuard$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m"
+    ],
+    "log": "/workspace/stage3-go-followup/19.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259::build-only",
+    "seconds": 0.068,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259"
+    ],
+    "log": "/workspace/stage3-go-followup/20.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08::build-only",
+    "seconds": 0.072,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+    ],
+    "log": "/workspace/stage3-go-followup/21.log"
+  }
+]

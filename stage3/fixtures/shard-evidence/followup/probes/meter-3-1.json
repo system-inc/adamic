@@ -1,0 +1,12 @@
+{
+  "cases": [
+    "report_test.LatentReportTests.test_measurement_label_is_required",
+    "report_test.LatentReportTests.test_planted_notyet_moves_only_its_reason_count",
+    "report_test.ReportTests.test_missing_whole_program_is_rejected",
+    "entry_test.EntryReportTests.test_checker_and_lowering_diagnostics_must_agree"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "ran": 4
+}

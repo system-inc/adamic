@@ -1,0 +1,9 @@
+--- a/bridge/tsgo/checker/metadata.go
++++ b/bridge/tsgo/checker/metadata.go
+@@ -62,5 +62,5 @@
+ 		}
+ 	}
+ 	out.text(name)
+-	out.text(annotation)
++	out.text("mutant" + annotation)
+ }

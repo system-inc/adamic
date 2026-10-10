@@ -35,6 +35,12 @@ func upstreamOutcomes(t *testing.T) []upstreamOutcome {
 // parser errors; these outcomes are compared, never normalized into Go output.
 func comparePrinterLibrary(t *testing.T, name string, result run, specs, family string, embedded bool) {
 	t.Helper()
+	comparePrinterLibraryCases(t, name, result, specs, family, embedded, true)
+}
+
+// A unit checks every applicable pinned outcome; the parent checks the full census.
+func comparePrinterLibraryCases(t *testing.T, name string, result run, specs, family string, embedded, census bool) {
+	t.Helper()
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("%s: exit %d stderr %s", name, result.exitCode, result.stderr)
 	}
@@ -86,7 +92,7 @@ func comparePrinterLibrary(t *testing.T, name string, result run, specs, family 
 		}
 	}
 	for _, record := range records {
-		if record.Family == family && !seen[record.Label] {
+		if census && record.Family == family && !seen[record.Label] {
 			t.Errorf("%s: recorded upstream case absent: %s", name, record.Label)
 		}
 	}

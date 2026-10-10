@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:50:10.61394623Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:50:10.624067186Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified"}
+{"Time":"2026-10-09T04:50:10.624160774Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"=== RUN   TestBridgeProductCacheIsVerified\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:10.625127823Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"    coverage_test.go:171: wrong product count was accepted\n","OutputType":"error"}
+{"Time":"2026-10-09T04:50:10.625300227Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"--- FAIL: TestBridgeProductCacheIsVerified (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:10.625378082Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Elapsed":0}
+{"Time":"2026-10-09T04:50:10.625398312Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:10.625549345Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:10.625560391Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.012}

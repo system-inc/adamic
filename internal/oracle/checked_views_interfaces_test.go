@@ -3,6 +3,7 @@ package oracle
 import "testing"
 
 func TestCheckedViewInterfaces(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"interfaces-good", "true:okok\ntrue\n", ""},
 		{"interfaces-missing-inherited", "", "field read failed: view.child.ready is not initialized; expected boolean, found missing"},
@@ -10,6 +11,7 @@ func TestCheckedViewInterfaces(t *testing.T) {
 		{"interfaces-uninitialized-object", "", "field read failed: view.child.next is not initialized; expected Child, found uninitialized"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "lane1/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {

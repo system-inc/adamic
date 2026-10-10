@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T06:48:56.449488078Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:48:56.45811606Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver"}
+{"Time":"2026-10-09T06:48:56.458193103Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"=== RUN   TestBridgeProductInput_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.458219963Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"=== PAUSE TestBridgeProductInput_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.458222337Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver"}
+{"Time":"2026-10-09T06:48:56.45822463Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver"}
+{"Time":"2026-10-09T06:48:56.458226663Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"=== CONT  TestBridgeProductInput_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.850085866Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Output":"--- PASS: TestBridgeProductInput_LeakDriver (0.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.850138624Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductInput_LeakDriver","Elapsed":0.39}
+{"Time":"2026-10-09T06:48:56.850159305Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.851128001Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.401s\n"}
+{"Time":"2026-10-09T06:48:56.8511746Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.402}

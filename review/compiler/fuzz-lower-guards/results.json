@@ -1,0 +1,278 @@
+[
+  {
+    "label": "M16-baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestReduceRejectsDifferentRefusal$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.1281223179976223,
+    "result": {
+      "Time": "2026-10-09T10:23:59.945069843Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestReduceRejectsDifferentRefusal",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M16-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestReduceRejectsDifferentRefusal$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.693945750997955,
+    "result": {
+      "Time": "2026-10-09T10:24:05.66237912Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestReduceRejectsDifferentRefusal",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M16-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestReduceRejectsDifferentRefusal$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.077431241999875,
+    "result": {
+      "Time": "2026-10-09T10:24:07.733514659Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestReduceRejectsDifferentRefusal",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M05-baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestExactSignatureRejectsSuffix$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.075330439998652,
+    "result": {
+      "Time": "2026-10-09T10:24:09.84435495Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestExactSignatureRejectsSuffix",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M05-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestExactSignatureRejectsSuffix$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.947381617999781,
+    "result": {
+      "Time": "2026-10-09T10:24:15.751703207Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestExactSignatureRejectsSuffix",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M05-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestExactSignatureRejectsSuffix$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.9698840140008542,
+    "result": {
+      "Time": "2026-10-09T10:24:17.764076629Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestExactSignatureRejectsSuffix",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M14-baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestBytesSharedRejects63Bytes$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.9738747689989395,
+    "result": {
+      "Time": "2026-10-09T10:24:19.738979092Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestBytesSharedRejects63Bytes",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M14-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestBytesSharedRejects63Bytes$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.641216338997765,
+    "result": {
+      "Time": "2026-10-09T10:24:25.359471429Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestBytesSharedRejects63Bytes",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M14-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestBytesSharedRejects63Bytes$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.9219551819987828,
+    "result": {
+      "Time": "2026-10-09T10:24:27.300317608Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/fuzz",
+      "Test": "TestBytesSharedRejects63Bytes",
+      "Elapsed": 0
+    }
+  },
+  {
+    "label": "M04-baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestArgumentsLengthReadKeepsReaderFact$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.61390726999889,
+    "result": {
+      "Time": "2026-10-09T10:24:34.919787788Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestArgumentsLengthReadKeepsReaderFact",
+      "Elapsed": 0.03
+    }
+  },
+  {
+    "label": "M04-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestArgumentsLengthReadKeepsReaderFact$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 8.050187756001833,
+    "result": {
+      "Time": "2026-10-09T10:24:42.961266091Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestArgumentsLengthReadKeepsReaderFact",
+      "Elapsed": 0.03
+    }
+  },
+  {
+    "label": "M04-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestArgumentsLengthReadKeepsReaderFact$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.125164819000929,
+    "result": {
+      "Time": "2026-10-09T10:24:45.120193578Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestArgumentsLengthReadKeepsReaderFact",
+      "Elapsed": 0.03
+    }
+  }
+]

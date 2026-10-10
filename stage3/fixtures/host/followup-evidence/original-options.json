@@ -1,0 +1,177 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/01_readFile_utf8.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/02_readFile_utf16le.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/03_readFile_utf16be.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/04_readFile_missing.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/05_writeFile.a:35:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/06_fileExists.a:22:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/07_directoryExists.a:22:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/08_getDirectories.a:52:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/09_realpath.a:15:17: stage 0 can't lower node:fs.mkdtempSync yet"
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:18:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/11_setModifiedTime.a:12:9: stage 0 can't lower node:fs.utimesSync yet"
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/12_deleteFile.a:12:16: stage 0 can't lower node:fs.unlinkSync yet"
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/13_createDirectory.a:26:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/14_getCurrentDirectory.a:17:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:11:17: stage 0 can't lower node:fs.mkdtempSync yet"
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+    }
+  },
+  {
+    "file": "17_write.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/17_write.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/18_exit_0.a:14:5: stage 0 can't lower a value of type undefined yet"
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/19_exit_1.a:14:5: stage 0 can't lower a value of type undefined yet"
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/20_exit_2.a:14:5: stage 0 can't lower a value of type undefined yet"
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/21_createHash.a:16:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:19:7: stage 0 can't lower a value of type undefined yet"
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/23_newLine.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet"
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:28:35: Adamic 0.1 refuses a value of type { readonly throwIfNoEntry: false; } seen as (StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; }) | undefined, whose readonly field throwIfNoEntry becomes writable: a readonly field may hold something narrower than false, which a write of false would replace; keep throwIfNoEntry readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/25_readDirectory.a:864:10: error TS7030: Not all code paths return a value."
+    }
+  }
+]

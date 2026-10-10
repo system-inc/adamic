@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T05:22:51.948955905Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-09T05:22:51.956806784Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets"}
+{"Time":"2026-10-09T05:22:51.956934803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets","Output":"=== RUN   TestCallMayThrowUsesReachableTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:22:51.956962995Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets","Output":"=== PAUSE TestCallMayThrowUsesReachableTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:22:51.956965398Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets"}
+{"Time":"2026-10-09T05:22:51.956968182Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets"}
+{"Time":"2026-10-09T05:22:51.956970355Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets","Output":"=== CONT  TestCallMayThrowUsesReachableTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:22:51.956977045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets","Output":"--- PASS: TestCallMayThrowUsesReachableTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:22:51.956980861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallMayThrowUsesReachableTargets","Elapsed":0}
+{"Time":"2026-10-09T05:22:51.956991497Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:22:51.957162459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.008s\n"}
+{"Time":"2026-10-09T05:22:51.957175638Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.008}

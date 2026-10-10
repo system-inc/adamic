@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -68,7 +68,7 @@
+ 		// no import is a script to the checker, and its top-level names collide with the prelude's.
+ 		ModuleDetection:  core.ModuleDetectionKindForce,
+ 		ModuleResolution: core.ModuleResolutionKindBundler,
+-		Target:           core.ScriptTargetES2024,
++		Target:           core.ScriptTargetES5,
+ 		Lib:              []string{"lib.es2024.d.ts"},
+ 		Types:            []string{},
+ 	}

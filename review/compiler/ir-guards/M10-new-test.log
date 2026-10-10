@@ -1,0 +1,9 @@
+=== RUN   TestMixedOptionalFixedLayoutPreservesMaybeNumber
+=== PAUSE TestMixedOptionalFixedLayoutPreservesMaybeNumber
+=== CONT  TestMixedOptionalFixedLayoutPreservesMaybeNumber
+    argument_slots_guard_test.go:23: targets [0 1]: fixed layout [1], want [7] (MaybeNumber must preserve undefined)
+    argument_slots_guard_test.go:23: targets [1 0]: fixed layout [1], want [7] (MaybeNumber must preserve undefined)
+--- FAIL: TestMixedOptionalFixedLayoutPreservesMaybeNumber (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

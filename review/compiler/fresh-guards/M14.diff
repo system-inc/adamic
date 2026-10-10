@@ -1,0 +1,11 @@
+--- a/internal/fresh/library_node_buffer.go
++++ b/internal/fresh/library_node_buffer.go
+@@ -23,7 +23,7 @@
+ 		}
+ 		return value{}
+ 	default:
+-		a.unknown(call)
++		_ = call
+ 		return a.call(a.operands(call), call.Type())
+ 	}
+ }

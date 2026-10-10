@@ -1,0 +1,27 @@
+[
+  {
+    "test": "TestFSOpenStringFlagsLower",
+    "wall_seconds": 2.526,
+    "exit": 0
+  },
+  {
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "wall_seconds": 2.585,
+    "exit": 0
+  },
+  {
+    "test": "TestFSExistsOperation",
+    "wall_seconds": 2.327,
+    "exit": 0
+  },
+  {
+    "test": "TestFSStatThrowsByDefault",
+    "wall_seconds": 2.378,
+    "exit": 0
+  },
+  {
+    "test": "TestParseIntMapUsesIndexRadix",
+    "wall_seconds": 1.975,
+    "exit": 0
+  }
+]

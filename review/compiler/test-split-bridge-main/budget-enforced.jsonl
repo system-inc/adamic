@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T04:50:21.320363338Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:50:21.329663732Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI"}
+{"Time":"2026-10-09T04:50:21.329779303Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"=== RUN   TestBridgeABI\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:34.077868644Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:200: C ABI: 100 queries, owned outputs, handles and argument checks; \"世界🌍\"\n"}
+{"Time":"2026-10-09T04:50:34.077950555Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:67: bridge unit exceeded 60 seconds: 1m13.74822042s\n","OutputType":"error"}
+{"Time":"2026-10-09T04:50:34.077980499Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"--- FAIL: TestBridgeABI (12.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:34.077985586Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Elapsed":12.75}
+{"Time":"2026-10-09T04:50:34.078012076Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:34.082175253Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t12.761s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:34.082196274Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":12.762}

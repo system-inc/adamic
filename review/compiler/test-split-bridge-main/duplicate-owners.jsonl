@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:50:00.516952743Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:50:00.524003965Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece"}
+{"Time":"2026-10-09T04:50:00.524063764Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"=== RUN   TestBridgeUnitsCoverEveryPiece\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:00.524081229Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"    coverage_test.go:108: shard coverage 0/2: TestBridgeABI owns 2, want 1\n","OutputType":"error"}
+{"Time":"2026-10-09T04:50:00.524090092Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"--- FAIL: TestBridgeUnitsCoverEveryPiece (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:00.524105305Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Elapsed":0}
+{"Time":"2026-10-09T04:50:00.524114168Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:00.524341624Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:00.524360181Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.007}

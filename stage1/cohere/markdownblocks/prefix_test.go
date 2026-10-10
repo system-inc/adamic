@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMarkdownParserPrefixes(t *testing.T) {
 	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)

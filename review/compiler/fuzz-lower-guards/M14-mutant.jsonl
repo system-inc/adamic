@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:25.349019418Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:24:25.359318059Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:24:25.359422957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== RUN   TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359447123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== PAUSE TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359449667Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:24:25.35945209Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:24:25.359453993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== CONT  TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359456627Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"    reducer_guards_test.go:58: 63 bytes must not share a 128-byte owner\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:25.359469306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"--- FAIL: TestBytesSharedRejects63Bytes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359471429Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Elapsed":0}
+{"Time":"2026-10-09T10:24:25.359487974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359703242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:25.359723131Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.011}

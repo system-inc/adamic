@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:15.744298662Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:24:15.751574414Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:24:15.751661064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== RUN   TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.751681054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== PAUSE TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.751683358Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:24:15.751685931Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:24:15.751687464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== CONT  TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.751693052Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"    reducer_guards_test.go:51: exact signature abc matched abc-suffix\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:15.751700944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"--- FAIL: TestExactSignatureRejectsSuffix (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.751703207Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Elapsed":0}
+{"Time":"2026-10-09T10:24:15.751713893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.752043147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:15.752060683Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.008}

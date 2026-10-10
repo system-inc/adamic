@@ -14,6 +14,7 @@ import (
 )
 
 // Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
+// Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
 func TestMarkdownASTPreprocessing(t *testing.T) {
 	parallelMarkdownMemory(t, 3)
 	root, err := filepath.Abs(repository)

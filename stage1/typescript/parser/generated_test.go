@@ -100,6 +100,7 @@ func generatedExpressions() []string {
 }
 
 func TestGeneratedExpressionsAgree(t *testing.T) {
+	t.Parallel()
 	cases := generatedExpressions()
 	directory := t.TempDir()
 	var manifest strings.Builder

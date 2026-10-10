@@ -1,0 +1,17 @@
+{
+  "cases": [
+    "report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+    "report_test.ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first",
+    "entry_test.EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label",
+    "entry_test.EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners",
+    "entry_test.EntryReportTests.test_imported_and_global_diagnostics_block_lowering",
+    "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "compiler_test.CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run"
+  ],
+  "failures": [
+    "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees"
+  ],
+  "errors": [],
+  "skipped": [],
+  "ran": 7
+}

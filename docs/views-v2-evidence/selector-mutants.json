@@ -1,0 +1,51 @@
+[
+  {
+    "backend": "javascript",
+    "mutant": "kind",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "javascript",
+    "mutant": "literal",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "javascript",
+    "mutant": "adapter",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "native",
+    "mutant": "kind",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "native",
+    "mutant": "literal",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "native",
+    "mutant": "adapter",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  },
+  {
+    "backend": "native",
+    "mutant": "null-reference",
+    "exit": 0,
+    "caught": true,
+    "stderr": ""
+  }
+]

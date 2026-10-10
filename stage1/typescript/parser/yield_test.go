@@ -9,6 +9,7 @@ import (
 )
 
 func TestYieldLookaheadAgrees(t *testing.T) {
+	t.Parallel()
 	cases := []string{
 		"yield 0;", "yield 1n;", "yield 'x';", "yield true;", "yield null;", "yield this;", "yield value;",
 		"yield(0);", "yield?.(0);", "yield + 0;", "yield * value;", "yield;",

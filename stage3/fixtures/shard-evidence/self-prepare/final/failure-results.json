@@ -1,0 +1,22 @@
+[
+  {
+    "unit": "preparation-failure",
+    "command": [
+      "/workspace/stage3-self-prepare-final-evidence/fixtures.test",
+      "-test.run=^TestPrepareFixtureOracleHook$",
+      "-test.count=1"
+    ],
+    "seconds": 0.432,
+    "exit": 1
+  },
+  {
+    "unit": "recovery-after-build-failure",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/..."
+    ],
+    "seconds": 18.465,
+    "exit": 0
+  }
+]

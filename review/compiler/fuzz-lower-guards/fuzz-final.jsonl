@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T10:25:28.269431056Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:25:28.276908086Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:25:28.276985402Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== RUN   TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277006564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== PAUSE TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277009047Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:25:28.277011321Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:25:28.277013043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== RUN   TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277015317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== PAUSE TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277017029Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:25:28.277018902Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:25:28.277020454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== RUN   TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.27702427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== PAUSE TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277025842Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:25:28.277027615Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:25:28.277029117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== CONT  TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277069888Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T10:25:28.277072452Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== CONT  TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277076198Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T10:25:28.277078021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== CONT  TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277116638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"--- PASS: TestBytesSharedRejects63Bytes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277120084Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Elapsed":0}
+{"Time":"2026-10-09T10:25:28.27713111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"--- PASS: TestExactSignatureRejectsSuffix (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.27721075Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Elapsed":0}
+{"Time":"2026-10-09T10:25:28.277213464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"--- PASS: TestReduceRejectsDifferentRefusal (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277215787Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Elapsed":0}
+{"Time":"2026-10-09T10:25:28.277217319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:28.277389983Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t0.008s\n"}
+{"Time":"2026-10-09T10:25:28.27740757Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.008}

@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // Unsupported contracts are descriptors, never certificates. Their users must
@@ -16,6 +17,12 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		return id, nil
 	}
 	family := l.unsupportedViewFamily(target)
+	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
+		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
+	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+		return l.unionAggregateContract(node, target)
+	}
 	if l.callableViewContract(target) {
 		family = "callable"
 	}
@@ -46,6 +53,12 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if l.phantomUndefined(target) || target.Flags()&checker.TypeFlagsUndefined != 0 {
+		return ""
+	}
+	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
+		return ""
+	}
 	flags := target.Flags()
 	switch {
 	case flags&checker.TypeFlagsAny != 0:
@@ -58,7 +71,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
 		return "intersection"
-	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0:
+	case flags&checker.TypeFlagsNull != 0:
+		return ""
+	case flags&checker.TypeFlagsUndefined != 0:
 		return "nullish"
 	case isClassInstance(target):
 		return "nominal class"
@@ -76,6 +91,8 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
 func (l *lowering) checkLazyViewReads() error {
+	l.certifyUntaggedCallableProducers()
+	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return nil
@@ -177,6 +194,10 @@ func (l *lowering) checkLazyViewReads() error {
 			demanded = demanded || viewed[site]
 		}
 		if demanded {
+			if strings.Contains(family, "views-v3: array element kind") {
+				refused = &NotYet{Where: where, What: "checked view union arm awaits views-v3: array element kind"}
+				return false
+			}
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 		}
 		return true

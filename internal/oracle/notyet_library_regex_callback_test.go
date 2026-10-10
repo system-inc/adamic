@@ -13,7 +13,11 @@ func init() {
 }
 
 func TestNotYetLibraryRegexCallbackMutants(t *testing.T) {
+	t.Parallel()
 	for _, rule := range []string{"match", "literal", "unicode", "global", "offset", "reset", "collection-order"} {
-		t.Run(rule, func(t *testing.T) { librarySmallRuntimeMutant(t, "notyet_library_regex_callback.a", rule) })
+		t.Run(rule, func(t *testing.T) {
+			t.Parallel()
+			librarySmallRuntimeMutant(t, "notyet_library_regex_callback.a", rule)
+		})
 	}
 }

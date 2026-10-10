@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -91,7 +91,7 @@
+ 				return ir.TypedArrayNew{Of: kind, Source: ir.NumberConstant{Value: 0}}, true, nil
+ 			}
+ 			if literal := ast.SkipParentheses(arguments[0]); literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+-				return ir.TypedArrayNew{Of: kind, Source: ir.ArrayLiteral{Element: ir.Number}, FromArray: true}, true, nil
++				return ir.TypedArrayNew{Of: kind, Source: ir.ArrayLiteral{Element: ir.Number}, FromArray: false}, true, nil
+ 			}
+ 			source, err := l.expression(arguments[0])
+ 			if err != nil {

@@ -142,7 +142,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
 				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
@@ -177,6 +177,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
+	if literal.Tuple {
+		e.line("%s->tuple = true;", object)
+	}
 	if len(literal.Fields) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}
@@ -200,7 +203,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	for index, field := range literal.Fields {
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
 		}
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
@@ -420,18 +423,37 @@ func (e *emitter) cache() string {
 	return name
 }
 
-// Programs without reflection keep their original layouts and allocation code.
-func (e *emitter) dynamicProperties() bool {
-	found := false
+// Metadata queries share one walk. Lowering is complete before an emitter is made,
+// and emission does not change the expressions or field contracts these facts use.
+// A new emitter recomputes them even when a caller edits and re-emits the same IR.
+type objectMetadataNeeds struct {
+	dynamic    bool
+	fieldTypes bool
+}
+
+func (e *emitter) prepareObjectMetadata() {
+	if e.objectMetadata != nil {
+		return
+	}
+	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0}
 	walkExpressions(e.program, func(expression ir.Expression) {
-		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
-			found = true
-		}
-		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
-			found = true
+		switch expression := expression.(type) {
+		case ir.ObjectCall:
+			needs.dynamic = needs.dynamic || expression.Checked
+		case ir.DynamicProperty:
+			needs.dynamic = true
+		case ir.Property:
+			needs.fieldTypes = needs.fieldTypes || expression.View != ""
 		}
 	})
-	return found
+	needs.fieldTypes = needs.fieldTypes || needs.dynamic
+	e.objectMetadata = needs
+}
+
+// Programs without reflection keep their original layouts and allocation code.
+func (e *emitter) dynamicProperties() bool {
+	e.prepareObjectMetadata()
+	return e.objectMetadata.dynamic
 }
 
 func (e *emitter) methodEntryType() string {
@@ -442,16 +464,8 @@ func (e *emitter) methodEntryType() string {
 }
 
 func (e *emitter) fieldTypesNeeded() bool {
-	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
-		return true
-	}
-	needed := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		if property, ok := expression.(ir.Property); ok && property.View != "" {
-			needed = true
-		}
-	})
-	return needed
+	e.prepareObjectMetadata()
+	return e.objectMetadata.fieldTypes
 }
 
 // Hand-built IR can carry field contracts without the lowerer's summary maps.
@@ -466,4 +480,24 @@ func (e *emitter) fieldReadinessNeeded(name string) bool {
 		}
 	})
 	return needed
+}
+
+// Preserve null/undefined semantic tags before a checked read normalizes the
+// physical slot. Uninitialized boxed slots retain their original layout tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value.(type) {
+	case ir.Null:
+		return int(ir.NullRepresentation)
+	case ir.Undefined:
+		if value.Type().IsReference() {
+			return int(ir.UndefinedRepresentation)
+		}
+	}
+	return int(value.Type())
+}
+func fieldInitialRepresentation(field ir.Field) int {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return int(ir.Union)
+	}
+	return fieldRepresentation(field.Value)
 }

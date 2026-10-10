@@ -14,6 +14,7 @@ import (
 )
 
 func TestParserFactoryBindingHoisting(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/namespaces_parser_factory.a")
 	if err != nil {
 		t.Fatal(err)
@@ -31,16 +32,30 @@ func TestParserFactoryBindingHoisting(t *testing.T) {
 	if err := lowering.declareModule(file.Statements.Nodes); err != nil {
 		t.Fatal(err)
 	}
+	bindings := map[string]int{}
+	for _, local := range lowering.result.Locals {
+		if local.NamespaceVar {
+			bindings[local.Name]++
+		}
+	}
+	if len(bindings) != 2 || bindings["factoryCreateNodeArray"] != 1 || bindings["factoryCreateNumericLiteral"] != 1 {
+		t.Fatalf("NamespaceVar bindings = %v, want factoryCreateNodeArray and factoryCreateNumericLiteral once each", bindings)
+	}
 	for _, statement := range file.Statements.Nodes {
 		if statement.Kind == ast.KindModuleDeclaration {
-			if _, err := lowering.namespaceBody(statement); err != nil {
+			body, err := lowering.namespaceBody(statement)
+			if err != nil {
 				t.Fatal(err)
+			}
+			if len(body) == 0 {
+				t.Fatal("parser factory namespace body is empty")
 			}
 		}
 	}
 }
 
 func TestMissingBindingSymbolHasStructuredLocation(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte("const { field: local } = { field: 1 };"), 0644); err != nil {
 		t.Fatal(err)

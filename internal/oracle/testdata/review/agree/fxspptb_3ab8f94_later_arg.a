@@ -1,0 +1,53 @@
+// A local moved into a consumed parameter, then a later argument throws: the call is never made, and
+// the moved value is the statement's to let go of. Also a loop that throws partway, and a finally.
+type Tree = { value: number; label: string };
+function failNumber(when: boolean): number {
+	if (when) {
+		throw new Error(`failed${1}`);
+	}
+	return 1;
+}
+function consume(node: Tree, extra: number): Tree {
+	return { ...node, value: node.value + extra };
+}
+function laterArgument(): string {
+	try {
+		const local: Tree = { value: 7, label: `moved${7}` };
+		const other = consume(local, failNumber(true));
+		return `${other.value}`;
+	} catch (error) {
+		return `later caught`;
+	}
+}
+function inLoop(): string {
+	let result = '';
+	try {
+		for (let index = 0; index < 5; index++) {
+			const local: Tree = { value: index, label: `loop${index}` };
+			const other = consume(local, failNumber(index === 3));
+			result = `${result}${other.value},`;
+		}
+	} catch (error) {
+		result = `${result}loop caught`;
+	}
+	return result;
+}
+function throughFinally(): string {
+	const local: Tree = { value: 2, label: `fin${2}` };
+	const other = consume(local, failNumber(true));
+	return other.label;
+}
+function outer(): string {
+	try {
+		try {
+			return throughFinally();
+		} finally {
+			console.log(`finally ran`);
+		}
+	} catch (error) {
+		return `outer caught ${error instanceof Error ? error.message : ''}`;
+	}
+}
+console.log(laterArgument());
+console.log(inLoop());
+console.log(outer());

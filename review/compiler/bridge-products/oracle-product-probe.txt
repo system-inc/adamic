@@ -1,0 +1,7 @@
+=== RUN   TestProduct_Oracle
+=== PAUSE TestProduct_Oracle
+=== CONT  TestProduct_Oracle
+    product_units_test.go:83: build bridge-test-oracle 146e9c67169a miss 1.79
+--- PASS: TestProduct_Oracle (2.16s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	2.173s

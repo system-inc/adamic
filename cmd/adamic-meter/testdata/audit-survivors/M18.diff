@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/returns.go
++++ b/cmd/adamic-meter/returns.go
+@@ -25,7 +25,7 @@
+ // void 0 denotes undefined even when the identifier undefined is shadowed.
+ func returnAdaptations(paths []string, overlay map[string]string, before error) (map[string]string, int, error) {
+ 	var diagnostics *load.CheckError
+-	if !errors.As(before, &diagnostics) || diagnosticCount(before, "7030") == 0 {
++	if !errors.As(before, &diagnostics) || diagnosticCount(before, "7030") != 0 {
+ 		return overlay, 0, nil
+ 	}
+ 	program, owned, err := optionalProgram(paths, overlay)

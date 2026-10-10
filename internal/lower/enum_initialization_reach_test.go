@@ -9,8 +9,10 @@ import (
 )
 
 func TestEnumInitializationReach(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "unknown-before", "unknown-callback", "unknown-property"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path := "../../stage3/fixtures/enum-init-reach/" + name + ".a"
 			source := readEnumInitFixture(t, path)
 			if _, err := lowerSource(t, source); err != nil {
@@ -20,6 +22,7 @@ func TestEnumInitializationReach(t *testing.T) {
 	}
 	for _, name := range []string{"reaching-direct", "reaching-helper", "reaching-cycle", "reaching-constructor", "reaching-derived"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, readEnumInitFixture(t, "../../stage3/fixtures/enum-init-reach/"+name+".a"))
 			var gap *NotYet
 			if !errors.As(err, &gap) || gap.What != "reading an enum before its runtime initialization; move the call after the enum declaration" || !strings.Contains(gap.Where, ":2:") {
@@ -30,8 +33,10 @@ func TestEnumInitializationReach(t *testing.T) {
 }
 
 func TestEnumInitializationGraphMemo(t *testing.T) {
+	t.Parallel()
 	for _, depth := range []int{12, 24} {
 		t.Run(fmt.Sprint(depth), func(t *testing.T) {
+			t.Parallel()
 			source := "function f0():number{return Pending.Zero;}\n"
 			for level := 1; level <= depth; level++ {
 				source += fmt.Sprintf("function f%d():number {return f%d()+f%d();}\n", level, level-1, level-1)
@@ -66,6 +71,7 @@ func readEnumInitFixture(t *testing.T, path string) string {
 }
 
 func TestEnumNamespaceSharedCycle(t *testing.T) {
+	t.Parallel()
 	graph, statements := namespaceGraphForTest(t, `const key:'Zero'='Zero';
  function one():boolean {two();return Pending[key]===0;}
  function two():boolean {one();return Debug.ready;}

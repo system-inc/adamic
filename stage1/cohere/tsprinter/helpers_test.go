@@ -11,7 +11,6 @@ import (
 	"runtime"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
@@ -47,15 +46,23 @@ func firstDifference(got string, want string) string {
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(t *testing.T, path string) *ir.Program {
 	t.Helper()
+	program, err := lowerProgram(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return program
+}
+
+func lowerProgram(path string) (*ir.Program, error) {
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		return nil, fmt.Errorf("Load: %w", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		return nil, fmt.Errorf("Lower: %w", err)
 	}
-	return result
+	return result, nil
 }
 
 // bounded prepares a child; execute and combinedOutput run it with progress-based guards.
@@ -89,15 +96,7 @@ func executeOne(t *testing.T, environment []string, name string, arguments ...st
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	options := childguard.Options{}
-	if name == "node" && len(arguments) > 0 {
-		switch filepath.Base(arguments[0]) {
-		case "expressions.mjs", "embedded.mjs":
-			// At 2x CPU load these printers paused for 184s; 20m leaves over 6x headroom.
-			options.Stall = 20 * time.Minute
-		}
-	}
-	err := childguard.Run(command, options)
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -137,15 +136,31 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := nativeBinary(t, program, t.TempDir())
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
 	return execute(t, environment, binary, arguments...), binary
+}
+
+// nativeBinary allows a corpus-owning test to build before starting its run units.
+// The owner supplies the directory so it outlives preparation.
+func nativeBinary(t *testing.T, program *ir.Program, directory string) string {
+	t.Helper()
+	binary, err := buildNative(program, directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return binary
+}
+
+func buildNative(program *ir.Program, directory string) (string, error) {
+	binary := filepath.Join(directory, "port")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		return "", err
+	}
+	return binary, nil
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on

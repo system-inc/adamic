@@ -10,6 +10,7 @@ import (
 )
 
 func TestOverloadInferenceWitnesses(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/overload_inference_contracts.a")
 	if err != nil {
 		t.Fatal(err)

@@ -1,0 +1,139 @@
+package tsgo_test
+
+import (
+	"path/filepath"
+	"testing"
+)
+
+func bridgeRepository(t testing.TB) string {
+	t.Helper()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return repository
+}
+
+func bridgeCaseProducts(piece string) []string {
+	switch piece {
+	case "abi", "input-length":
+		return []string{"api"}
+	case "unlinked-build", "unlinked-c", "unlinked-js":
+		return []string{"stage0"}
+	case "output-length":
+		return []string{"length-driver"}
+	case "stale-handle":
+		return []string{"stale-driver"}
+	case "linkage":
+		return []string{"linkage.test"}
+	case "output-free":
+		return []string{"leak-driver"}
+	case "region":
+		return []string{"oracle", "healthy-region"}
+	case "region-ownership":
+		return []string{"region-native"}
+	case "oracle":
+		return []string{"oracle", "native-asan"}
+	case "timing-1", "timing-2", "timing-3":
+		return []string{"oracle", "native"}
+	case "wrong-position":
+		return []string{"oracle", "wrong-native"}
+	default:
+		panic("unknown bridge piece: " + piece)
+	}
+}
+
+func TestProduct_TsgoArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "tsgo.a")
+}
+
+func TestProduct_TsgoSanitizedArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "tsgo-asan.a")
+}
+
+func TestProduct_LengthArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "length.a")
+}
+
+func TestProduct_StaleArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "stale.a")
+}
+
+func TestProduct_WrongArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "wrong.a")
+}
+
+func TestProduct_LeakArchive(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "leak.a")
+}
+
+func TestProduct_Stage0(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "stage0")
+}
+
+func TestProduct_Oracle(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "oracle")
+}
+
+func TestProduct_ApiDriver(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "api")
+}
+
+func TestProduct_LengthDriver(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "length-driver")
+}
+
+func TestProduct_StaleDriver(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "stale-driver")
+}
+
+func TestProduct_LeakDriver(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "leak-driver")
+}
+
+func TestProduct_SanitizedNative(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "native-asan")
+}
+
+func TestProduct_Native(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "native")
+}
+
+func TestProduct_WrongNative(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "wrong-native")
+}
+
+func TestProduct_HealthyRegion(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "healthy-region")
+}
+
+func TestProduct_RegionStage0(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "region-stage0")
+}
+
+func TestProduct_RegionNative(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "region-native")
+}
+
+func TestProduct_LinkageTest(t *testing.T) {
+	t.Parallel()
+	bridgeProduct(t, bridgeRepository(t), "linkage.test")
+}

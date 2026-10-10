@@ -1,0 +1,1356 @@
+[
+  {
+    "unit": "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.08,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/0-github.com_system-inc_adamic_stage3_adapt_75-optional-widening_coverage::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestCompiler41231d51Shape",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestCompiler41231d51Shape$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.009,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/1-github.com_system-inc_adamic_stage3_census_latent_refusalrewrite::TestCompiler41231d51Shape.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestMissingFunctionMutantFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestMissingFunctionMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.002,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/2-github.com_system-inc_adamic_stage3_census_latent_refusalrewrite::TestMissingFunctionMutantFailsLoudly.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestChangedVisitorMutantFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestChangedVisitorMutantFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.003,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/3-github.com_system-inc_adamic_stage3_census_latent_refusalrewrite::TestChangedVisitorMutantFailsLoudly.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite::TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_refusalrewrite.test",
+      "-test.run=^TestVisitorsCollectContinueAndSkipDiagnosedBodies$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/refusalrewrite",
+    "seconds": 0.194,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/4-github.com_system-inc_adamic_stage3_census_latent_refusalrewrite::TestVisitorsCollectContinueAndSkipDiagnosedBodies.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.043,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/5-github.com_system-inc_adamic_stage3_census_latent_refusalrewrite_cmd::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.039,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/6-github.com_system-inc_adamic_stage3_census_latent_replay::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/replay/worker::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/replay/worker"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.028,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/7-github.com_system-inc_adamic_stage3_census_latent_replay_worker::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownMutableContainerFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statecopy.test",
+      "-test.run=^TestUnknownMutableContainerFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statecopy",
+    "seconds": 0.143,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/8-github.com_system-inc_adamic_stage3_census_latent_statecopy::TestUnknownMutableContainerFailsLoudly.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statecopy::TestUnknownForeignPointerFailsLoudly",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statecopy.test",
+      "-test.run=^TestUnknownForeignPointerFailsLoudly$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statecopy",
+    "seconds": 0.043,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/9-github.com_system-inc_adamic_stage3_census_latent_statecopy::TestUnknownForeignPointerFailsLoudly.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite::TestMissingStatementFailsWithMethodName",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_census_latent_statementrewrite.test",
+      "-test.run=^TestMissingStatementFailsWithMethodName$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/statementrewrite",
+    "seconds": 0.118,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/10-github.com_system-inc_adamic_stage3_census_latent_statementrewrite::TestMissingStatementFailsWithMethodName.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/latent/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/latent/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.025,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/11-github.com_system-inc_adamic_stage3_census_latent_tool::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/predicates/tools/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/predicates/tools/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.028,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/12-github.com_system-inc_adamic_stage3_census_predicates_tools_tool::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/census/tool::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/census/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.092,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/13-github.com_system-inc_adamic_stage3_census_tool::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/drivers/parser/probe::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/14-github.com_system-inc_adamic_stage3_drivers_parser_probe::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixtures",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/fixtures",
+    "seconds": 28.896,
+    "exit": 1,
+    "log": "/workspace/stage3-measurements/15-github.com_system-inc_adamic_stage3_fixtures::TestFixtures.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixturePaths",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_fixtures.test",
+      "-test.run=^TestFixturePaths$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/fixtures",
+    "seconds": 0.008,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/16-github.com_system-inc_adamic_stage3_fixtures::TestFixturePaths.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestTransformedNodeRunnerGuardHook",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuardHook$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/fixtures",
+    "seconds": 0.008,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/17-github.com_system-inc_adamic_stage3_fixtures::TestTransformedNodeRunnerGuardHook.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestTransformedNodeRunnerGuard",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuard$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/fixtures",
+    "seconds": 0.03,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/18-github.com_system-inc_adamic_stage3_fixtures::TestTransformedNodeRunnerGuard.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.066,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/19-github.com_system-inc_adamic_stage3_ledger_checker-259::build-only.log"
+  },
+  {
+    "unit": "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08::build-only",
+    "command": [
+      "go",
+      "test",
+      "-run",
+      "^$",
+      "-count=1",
+      "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.066,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/20-github.com_system-inc_adamic_stage3_ledger_checker-259_rerun-2026-10-08::build-only.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_sanctioned_observation_passes",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_sanctioned_observation_passes",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.508,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/21-stage3_lane_test_check.py::LandingLaneTests.test_sanctioned_observation_passes.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_unsanctioned_line",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_unsanctioned_line",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.505,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/22-stage3_lane_test_check.py::LandingLaneTests.test_unsanctioned_line.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_missing_sanctioned_line",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_missing_sanctioned_line",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.508,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/23-stage3_lane_test_check.py::LandingLaneTests.test_missing_sanctioned_line.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_changed_sanctioned_type",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_changed_sanctioned_type",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.523,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/24-stage3_lane_test_check.py::LandingLaneTests.test_changed_sanctioned_type.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_multiline_printer_form",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_multiline_printer_form",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.525,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/25-stage3_lane_test_check.py::LandingLaneTests.test_multiline_printer_form.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_proved_reference_changes_are_included",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_proved_reference_changes_are_included",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.523,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/26-stage3_lane_test_check.py::LandingLaneTests.test_proved_reference_changes_are_included.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_unproved_reference_change",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_unproved_reference_change",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.481,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/27-stage3_lane_test_check.py::LandingLaneTests.test_unproved_reference_change.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_extra_comment_line",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_extra_comment_line",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.482,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/28-stage3_lane_test_check.py::LandingLaneTests.test_extra_comment_line.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_source_pin",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_source_pin",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.332,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/29-stage3_lane_test_check.py::LandingLaneTests.test_source_pin.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_failed_install",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_failed_install",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.535,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/30-stage3_lane_test_check.py::LandingLaneTests.test_failed_install.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_unexpected_tests_exit",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_unexpected_tests_exit",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.546,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/31-stage3_lane_test_check.py::LandingLaneTests.test_unexpected_tests_exit.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_diff_must_describe_snapshots",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_diff_must_describe_snapshots",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.593,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/32-stage3_lane_test_check.py::LandingLaneTests.test_diff_must_describe_snapshots.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_method_conversion_is_not_a_property_union",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_method_conversion_is_not_a_property_union",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.506,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/33-stage3_lane_test_check.py::LandingLaneTests.test_method_conversion_is_not_a_property_union.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_manifest_includes_only_proved_property_handoffs",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_manifest_includes_only_proved_property_handoffs",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.28,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/34-stage3_lane_test_check.py::LandingLaneTests.test_manifest_includes_only_proved_property_handoffs.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_unknown_platform",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_unknown_platform",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.317,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/35-stage3_lane_test_check.py::LandingLaneTests.test_unknown_platform.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_unknown_platform_stops_runner_before_apply",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_unknown_platform_stops_runner_before_apply",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.312,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/36-stage3_lane_test_check.py::LandingLaneTests.test_unknown_platform_stops_runner_before_apply.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_measured_macos_counts",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_measured_macos_counts",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.495,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/37-stage3_lane_test_check.py::LandingLaneTests.test_measured_macos_counts.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_node_version_matches_report",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_node_version_matches_report",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.516,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/38-stage3_lane_test_check.py::LandingLaneTests.test_node_version_matches_report.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_wrong_passed_count",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_wrong_passed_count",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.514,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/39-stage3_lane_test_check.py::LandingLaneTests.test_wrong_passed_count.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_different_single_failure",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_different_single_failure",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.535,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/40-stage3_lane_test_check.py::LandingLaneTests.test_different_single_failure.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_wrong_baseline_path",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_wrong_baseline_path",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.532,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/41-stage3_lane_test_check.py::LandingLaneTests.test_wrong_baseline_path.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_failed_apply",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_failed_apply",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.577,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/42-stage3_lane_test_check.py::LandingLaneTests.test_failed_apply.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_wrong_oracle_exit",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_wrong_oracle_exit",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.497,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/43-stage3_lane_test_check.py::LandingLaneTests.test_wrong_oracle_exit.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_failed_build",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_failed_build",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.563,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/44-stage3_lane_test_check.py::LandingLaneTests.test_failed_build.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_zero_failure_is_not_the_expected_failure",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_zero_failure_is_not_the_expected_failure",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.529,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/45-stage3_lane_test_check.py::LandingLaneTests.test_zero_failure_is_not_the_expected_failure.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_pending_test",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_pending_test",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.501,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/46-stage3_lane_test_check.py::LandingLaneTests.test_pending_test.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_reporter_counts_must_agree",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_reporter_counts_must_agree",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.54,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/47-stage3_lane_test_check.py::LandingLaneTests.test_reporter_counts_must_agree.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_filtered_run",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_filtered_run",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 1.745,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/48-stage3_lane_test_check.py::LandingLaneTests.test_filtered_run.log"
+  },
+  {
+    "unit": "stage3/lane/test_check.py::LandingLaneTests.test_missing_evidence",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_check.LandingLaneTests.test_missing_evidence",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.477,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/49-stage3_lane_test_check.py::LandingLaneTests.test_missing_evidence.log"
+  },
+  {
+    "unit": "stage3/lane/test_table.py::LaneTableTests.test_table_is_preserved_beside_report",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_table.LaneTableTests.test_table_is_preserved_beside_report",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.121,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/50-stage3_lane_test_table.py::LaneTableTests.test_table_is_preserved_beside_report.log"
+  },
+  {
+    "unit": "stage3/lane/test_table.py::LaneTableTests.test_no_arguments_creates_fresh_results",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_table.LaneTableTests.test_no_arguments_creates_fresh_results",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.092,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/51-stage3_lane_test_table.py::LaneTableTests.test_no_arguments_creates_fresh_results.log"
+  },
+  {
+    "unit": "stage3/lane/test_table.py::LaneTableTests.test_shell_entry_point_with_no_arguments",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_table.LaneTableTests.test_shell_entry_point_with_no_arguments",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 0.144,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/52-stage3_lane_test_table.py::LaneTableTests.test_shell_entry_point_with_no_arguments.log"
+  },
+  {
+    "unit": "stage3/verdict/test_verdict.py::Comparisons.test_independent_stream_mutants",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_verdict.Comparisons.test_independent_stream_mutants",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/verdict",
+    "seconds": 0.104,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/53-stage3_verdict_test_verdict.py::Comparisons.test_independent_stream_mutants.log"
+  },
+  {
+    "unit": "stage3/verdict/test_verdict.py::Comparisons.test_baseline_root_mapping_and_filename_mutant",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_verdict.Comparisons.test_baseline_root_mapping_and_filename_mutant",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/verdict",
+    "seconds": 0.115,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/54-stage3_verdict_test_verdict.py::Comparisons.test_baseline_root_mapping_and_filename_mutant.log"
+  },
+  {
+    "unit": "stage3/verdict/test_verdict.py::Comparisons.test_library_placeholder_census_mutant",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_verdict.Comparisons.test_library_placeholder_census_mutant",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/verdict",
+    "seconds": 0.102,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/55-stage3_verdict_test_verdict.py::Comparisons.test_library_placeholder_census_mutant.log"
+  },
+  {
+    "unit": "stage3/verdict/test_verdict.py::Comparisons.test_census_mutants",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_verdict.Comparisons.test_census_mutants",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/verdict",
+    "seconds": 0.102,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/56-stage3_verdict_test_verdict.py::Comparisons.test_census_mutants.log"
+  },
+  {
+    "unit": "stage3/verdict/test_verdict.py::Comparisons.test_eof_difference",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "test_verdict.Comparisons.test_eof_difference",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/verdict",
+    "seconds": 0.098,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/57-stage3_verdict_test_verdict.py::Comparisons.test_eof_difference.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_checker_and_lowering_are_separate",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_checker_and_lowering_are_separate",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.068,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/58-stage3_meter_report_test.py::ReportTests.test_checker_and_lowering_are_separate.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_planted_diagnostic_changes_only_its_own_file",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.077,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/59-stage3_meter_report_test.py::ReportTests.test_planted_diagnostic_changes_only_its_own_file.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/60-stage3_meter_report_test.py::ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.081,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/61-stage3_meter_report_test.py::ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_malformed_diagnostic_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_malformed_diagnostic_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/62-stage3_meter_report_test.py::ReportTests.test_malformed_diagnostic_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_missing_file_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_missing_file_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/63-stage3_meter_report_test.py::ReportTests.test_missing_file_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_duplicate_file_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_duplicate_file_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.068,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/64-stage3_meter_report_test.py::ReportTests.test_duplicate_file_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_missing_whole_program_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_missing_whole_program_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/65-stage3_meter_report_test.py::ReportTests.test_missing_whole_program_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_unknown_kind_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_unknown_kind_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/66-stage3_meter_report_test.py::ReportTests.test_unknown_kind_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::ReportTests.test_whole_program_roots_are_checked",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.ReportTests.test_whole_program_roots_are_checked",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.068,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/67-stage3_meter_report_test.py::ReportTests.test_whole_program_roots_are_checked.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_planted_notyet_moves_only_its_reason_count",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_planted_notyet_moves_only_its_reason_count",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.087,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/68-stage3_meter_report_test.py::LatentReportTests.test_planted_notyet_moves_only_its_reason_count.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_unmatched_reason_is_owner_blank_and_in_unowned_first",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_unmatched_reason_is_owner_blank_and_in_unowned_first",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.072,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/69-stage3_meter_report_test.py::LatentReportTests.test_unmatched_reason_is_owner_blank_and_in_unowned_first.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/70-stage3_meter_report_test.py::LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_exact_prefix_and_variance_owners",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_exact_prefix_and_variance_owners",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.077,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/71-stage3_meter_report_test.py::LatentReportTests.test_exact_prefix_and_variance_owners.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_table_groups_same_reason_across_kinds",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_table_groups_same_reason_across_kinds",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.076,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/72-stage3_meter_report_test.py::LatentReportTests.test_table_groups_same_reason_across_kinds.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_missing_source_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_missing_source_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/73-stage3_meter_report_test.py::LatentReportTests.test_missing_source_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_measurement_label_is_required",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_measurement_label_is_required",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.074,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/74-stage3_meter_report_test.py::LatentReportTests.test_measurement_label_is_required.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.074,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/75-stage3_meter_report_test.py::LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.072,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/76-stage3_meter_report_test.py::LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/77-stage3_meter_report_test.py::CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_imported_and_global_diagnostics_block_lowering",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_imported_and_global_diagnostics_block_lowering",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/78-stage3_meter_entry_test.py::EntryReportTests.test_imported_and_global_diagnostics_block_lowering.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.079,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/79-stage3_meter_entry_test.py::EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_wrong_root_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_wrong_root_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/80-stage3_meter_entry_test.py::EntryReportTests.test_wrong_root_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_missing_reachable_file_record_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_missing_reachable_file_record_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.07,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/81-stage3_meter_entry_test.py::EntryReportTests.test_missing_reachable_file_record_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_blocked_stream_cannot_claim_lowering",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_blocked_stream_cannot_claim_lowering",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.071,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/82-stage3_meter_entry_test.py::EntryReportTests.test_blocked_stream_cannot_claim_lowering.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_missing_entry_is_rejected",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_missing_entry_is_rejected",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.086,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/83-stage3_meter_entry_test.py::EntryReportTests.test_missing_entry_is_rejected.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_checker_and_lowering_diagnostics_must_agree",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_checker_and_lowering_diagnostics_must_agree",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.068,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/84-stage3_meter_entry_test.py::EntryReportTests.test_checker_and_lowering_diagnostics_must_agree.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.069,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/85-stage3_meter_entry_test.py::EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryReportTests.test_overlay_missing_hook_fails_loudly",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryReportTests.test_overlay_missing_hook_fails_loudly",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.079,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/86-stage3_meter_entry_test.py::EntryReportTests.test_overlay_missing_hook_fails_loudly.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.068,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/87-stage3_meter_entry_test.py::EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.075,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/88-stage3_meter_entry_test.py::FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant.log"
+  },
+  {
+    "unit": "stage3/meter/compiler_test.py::CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.788,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/89-stage3_meter_compiler_test.py::CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees.log"
+  },
+  {
+    "unit": "stage3/meter/compiler_test.py::CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 1.405,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/90-stage3_meter_compiler_test.py::CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler.log"
+  },
+  {
+    "unit": "stage3/meter/compiler_test.py::CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 1.506,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/91-stage3_meter_compiler_test.py::CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim.log"
+  },
+  {
+    "unit": "stage3/meter/compiler_test.py::CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.132,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/92-stage3_meter_compiler_test.py::CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run.log"
+  },
+  {
+    "unit": "stage3/meter/compiler_test.py::CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.139,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/93-stage3_meter_compiler_test.py::CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run.log"
+  },
+  {
+    "unit": "stage3/census/latent/replay/replay_test.py::ReplayTests.test_nested_findings_match_full_census_in_order",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/replay",
+    "seconds": 18.783,
+    "exit": 5,
+    "log": "/workspace/stage3-measurements/94-stage3_census_latent_replay_replay_test.py::ReplayTests.test_nested_findings_match_full_census_in_order.log"
+  },
+  {
+    "unit": "stage3/census/latent/replay/replay_test.py::ReplayTests.test_parent_sibling_boundary_fails_signature_assertion",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "replay_test.ReplayTests.test_parent_sibling_boundary_fails_signature_assertion",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/replay",
+    "seconds": 5.125,
+    "exit": 5,
+    "log": "/workspace/stage3-measurements/95-stage3_census_latent_replay_replay_test.py::ReplayTests.test_parent_sibling_boundary_fails_signature_assertion.log"
+  }
+]

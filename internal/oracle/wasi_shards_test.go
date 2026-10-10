@@ -1,0 +1,177 @@
+package oracle
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"os"
+	"os/exec"
+	"sort"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Fixed gate grid. Names are sorted before round-robin assignment so registry
+// order cannot move fixtures. Remeasure isolated cold shards when changing it.
+const wasiFixtureShardCount = 8
+
+func wasiShardName(ordinal int) string { return fmt.Sprintf("shard-%03d", ordinal) }
+
+func wasiFixtureShards() [][]int {
+	rows := make([]int, len(fixtures))
+	for i := range rows {
+		rows[i] = i
+	}
+	sort.Slice(rows, func(i, j int) bool { return fixtures[rows[i]].path < fixtures[rows[j]].path })
+	shards := make([][]int, wasiFixtureShardCount)
+	for ordinal, row := range rows {
+		shards[ordinal%len(shards)] = append(shards[ordinal%len(shards)], row)
+	}
+	return shards
+}
+
+// Validate both case identities and names: duplicate registrations cannot be
+// hidden by Go's automatic suffixing of duplicate subtest names.
+func wasiFixtureUnion(shards [][]int) error {
+	seen := make([]bool, len(fixtures))
+	names := make(map[string]bool)
+	for ordinal, rows := range shards {
+		if len(rows) == 0 {
+			return fmt.Errorf("missing %s", wasiShardName(ordinal))
+		}
+		for _, row := range rows {
+			if row < 0 || row >= len(fixtures) {
+				return fmt.Errorf("unexpected fixture id %d", row)
+			}
+			if seen[row] || names[fixtures[row].path] {
+				return fmt.Errorf("repeated fixture %s", fixtures[row].path)
+			}
+			seen[row], names[fixtures[row].path] = true, true
+		}
+	}
+	for row, present := range seen {
+		if !present {
+			return fmt.Errorf("missing fixture %s", fixtures[row].path)
+		}
+	}
+	if len(shards) != wasiFixtureShardCount {
+		return fmt.Errorf("shard count %d, want %d", len(shards), wasiFixtureShardCount)
+	}
+	return nil
+}
+
+func wasiFixtureDifference(name string, expected, actual run) error {
+	if difference := disagreement(expected, actual); difference != "" {
+		return fmt.Errorf("%s: %s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", name, difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
+	}
+	return nil
+}
+
+func TestWASIShardUnion(t *testing.T) {
+	shards := wasiFixtureShards()
+	if err := wasiFixtureUnion(shards); err != nil {
+		t.Fatal(err)
+	}
+	for ordinal, rows := range shards {
+		for _, row := range rows {
+			t.Logf("wasi manifest: %s %s", wasiShardName(ordinal), fixtures[row].path)
+		}
+	}
+	t.Logf("union: %d/%d registered fixtures, exactly once, %d shards", len(fixtures), len(fixtures), len(shards))
+	missing := append([][]int(nil), shards...)
+	missing[0] = nil
+	if err := wasiFixtureUnion(missing); err == nil || !strings.Contains(err.Error(), "missing") {
+		t.Fatalf("absent shard accepted: %v", err)
+	}
+	duplicate := append([][]int(nil), shards...)
+	duplicate[0] = append(append([]int(nil), duplicate[0]...), shards[1][0])
+	if err := wasiFixtureUnion(duplicate); err == nil {
+		t.Fatal("duplicate fixture accepted")
+	}
+	omitted := append([][]int(nil), shards...)
+	omitted[0] = omitted[0][1:]
+	if err := wasiFixtureUnion(omitted); err == nil || !strings.Contains(err.Error(), "missing") {
+		t.Fatalf("omitted fixture accepted: %v", err)
+	}
+}
+
+// Use the live oracle comparison and a registered fixture identity, following
+// the stage 1 planted-disagreement proof. Only its owning shard may reject it.
+func TestWASIShardPlantedDisagreement(t *testing.T) {
+	planted := "dedication/dedication.a"
+	caught := 0
+	for ordinal, rows := range wasiFixtureShards() {
+		for _, row := range rows {
+			path := fixtures[row].path
+			expected, actual := run{stdout: []byte("agreed\n")}, run{stdout: []byte("agreed\n")}
+			if path == planted {
+				actual.stdout = []byte("disagreed\n")
+			}
+			name := wasiShardName(ordinal) + "/" + path
+			err := wasiFixtureDifference(name, expected, actual)
+			if path == planted {
+				if err == nil || !strings.Contains(err.Error(), name) || !strings.Contains(err.Error(), "stdout differs") {
+					t.Fatalf("planted fixture lost: %v", err)
+				}
+				caught++
+				t.Logf("caught planted fixture: %v", err)
+			} else if err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if caught != 1 {
+		t.Fatalf("planted fixture caught %d times, want 1", caught)
+	}
+}
+
+// Exercise the real lowering/build/run path without editing any fixture. The
+// child process must fail, naming the registered fixture in its owning shard.
+func TestWASIShardPlantedFixture(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	const planted = "dedication/dedication.a"
+	owner, row := -1, -1
+	for ordinal, rows := range wasiFixtureShards() {
+		for _, candidate := range rows {
+			if fixtures[candidate].path == planted {
+				owner, row = ordinal, candidate
+			}
+		}
+	}
+	if owner < 0 {
+		t.Fatal("planted fixture missing from registry")
+	}
+	name := wasiShardName(owner) + "/" + planted
+	if os.Getenv("ADAMIC_WASI_SHARD_PROBE") == "1" {
+		t.Run(wasiShardName(owner), func(t *testing.T) {
+			runWASIFixtures(t, []int{row}, func(path string, program *ir.Program) {
+				if path == planted {
+					program.Strings[0] += "!"
+				}
+			})
+		})
+		return
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, executable, "-test.run=^TestWASIShardPlantedFixture$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_WASI_SHARD_PROBE=1")
+	output, err := command.CombinedOutput()
+	var exit *exec.ExitError
+	if ctx.Err() != nil {
+		t.Fatal("planted fixture probe failed: killed at 90s")
+	}
+	if !errors.As(err, &exit) || !strings.Contains(string(output), "--- FAIL: TestWASIShardPlantedFixture/"+name) || !strings.Contains(string(output), "stdout differs") {
+		t.Fatalf("planted fixture was not caught in %s: %v\n%s", name, err, output)
+	}
+	t.Logf("real planted fixture caught in %s", name)
+}

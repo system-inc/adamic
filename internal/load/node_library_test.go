@@ -17,6 +17,7 @@ func nodeSource(t *testing.T, source string) (*Program, error) {
 }
 
 func TestNodeLibraryUsesPinnedDeclarations(t *testing.T) {
+	t.Parallel()
 	program, err := nodeSource(t, `import {readFileSync,statSync} from 'node:fs'; import type {Stats} from 'node:fs'; const bytes:Buffer=readFileSync('x'); const text:string=readFileSync('x','utf8'); const stat:Stats|undefined=statSync('x',{throwIfNoEntry:false}); console.log('checked');`)
 	if err != nil {
 		t.Fatal(err)
@@ -37,6 +38,7 @@ func TestNodeLibraryUsesPinnedDeclarations(t *testing.T) {
 }
 
 func TestNodeLibraryRejectsDifferentVersion(t *testing.T) {
+	t.Parallel()
 	dir := t.TempDir()
 	root := filepath.Join(dir, filepath.FromSlash(nodeTypesRelative))
 	if err := os.MkdirAll(root, 0700); err != nil {
@@ -55,6 +57,7 @@ func TestNodeLibraryRejectsDifferentVersion(t *testing.T) {
 }
 
 func TestNodeLibraryKeepsOfficialConsoleSignatures(t *testing.T) {
+	t.Parallel()
 	if _, err := nodeSource(t, `import type {Stats} from 'node:fs'; console.log(true); console.log(undefined); console.log('a','b');`); err != nil {
 		t.Fatal(err)
 	}

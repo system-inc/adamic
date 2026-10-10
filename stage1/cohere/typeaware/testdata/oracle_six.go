@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -89,12 +90,34 @@ func main() {
 		}
 		return
 	}
-	countOnly := len(args) > 2 && args[2] == "--count"
+	countOnly := slices.Contains(args[2:], "--count")
+	selected := map[string]bool{}
+	if flag := slices.Index(args, "--files"); flag >= 0 {
+		if flag+1 == len(args) {
+			panic("missing selected manifest")
+		}
+		text, err := os.ReadFile(args[flag+1])
+		if err != nil {
+			panic(err)
+		}
+		for _, path := range strings.Split(string(text), "\n") {
+			if path == "" {
+				continue
+			}
+			if !slices.Contains(paths, path) {
+				panic("selected file outside program roots")
+			}
+			selected[path] = true
+		}
+	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	findings := 0
 	var ruleTime time.Duration
 	for i, path := range paths {
+		if slices.Contains(args[2:], "--files") && !selected[path] {
+			continue
+		}
 		file := program.GetSourceFile(roots[i])
 		if file == nil {
 			panic("source not loaded")

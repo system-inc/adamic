@@ -1,0 +1,6 @@
+import { Buffer } from 'node:buffer';
+import { readSync } from 'node:fs';
+for (const text of ['', 'xx']) {
+    try { console.log(`zero ${text.length} ${readSync(-1, Buffer.from(text), 0, 0, null)}`); }
+    catch(error) { if(error instanceof Error) console.log(`error ${error.name}|${error.message}`); }
+}

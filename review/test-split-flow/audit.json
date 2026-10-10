@@ -1,0 +1,161 @@
+{
+  "before_tests": 205,
+  "after_tests": 1563,
+  "passed": 1561,
+  "skipped": [
+    "lower/TestOriginalCycleLedger",
+    "lower/TestOptionalWideningCensus"
+  ],
+  "analysis_pieces": 3385,
+  "corpus_units": 1360,
+  "before_over_30_test": [
+    {
+      "package": "flow",
+      "test": "TestLivenessHoldsOnEveryPath",
+      "before_test_seconds": 34.31,
+      "before_invocation_seconds": 34.329,
+      "after_max_test_seconds": 15.88,
+      "after_max_invocation_seconds": 15.907,
+      "units": 676,
+      "before_status": "pass",
+      "after_status": "pass"
+    },
+    {
+      "package": "fresh",
+      "test": "TestEveryWriteIsRecordedAndKnown",
+      "before_test_seconds": 31.72,
+      "before_invocation_seconds": 31.735,
+      "after_max_test_seconds": 1.36,
+      "after_max_invocation_seconds": 1.377,
+      "units": 681,
+      "before_status": "pass",
+      "after_status": "pass"
+    }
+  ],
+  "before_over_30_invocation": [
+    {
+      "package": "flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "before_test_seconds": 0.02,
+      "before_invocation_seconds": 34.482,
+      "after_max_test_seconds": 15.49,
+      "after_max_invocation_seconds": 15.507,
+      "units": 676,
+      "before_status": "pass",
+      "after_status": "pass"
+    },
+    {
+      "package": "flow",
+      "test": "TestLivenessHoldsOnEveryPath",
+      "before_test_seconds": 34.31,
+      "before_invocation_seconds": 34.329,
+      "after_max_test_seconds": 15.88,
+      "after_max_invocation_seconds": 15.907,
+      "units": 676,
+      "before_status": "pass",
+      "after_status": "pass"
+    },
+    {
+      "package": "fresh",
+      "test": "TestEveryWriteIsRecordedAndKnown",
+      "before_test_seconds": 31.72,
+      "before_invocation_seconds": 31.735,
+      "after_max_test_seconds": 1.36,
+      "after_max_invocation_seconds": 1.377,
+      "units": 681,
+      "before_status": "pass",
+      "after_status": "pass"
+    }
+  ],
+  "after_max_test": {
+    "package": "flow",
+    "test": "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+    "elapsed": 15.88,
+    "wall": 15.962833386001876,
+    "exit": 0,
+    "action": "pass",
+    "command": [
+      "go",
+      "tool",
+      "test2json",
+      "-t",
+      "-p",
+      "github.com/system-inc/adamic/internal/flow",
+      "/tmp/test-split-flow/after/flow.test",
+      "-test.v=test2json",
+      "-test.run=^TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30s"
+    ],
+    "log": "/tmp/test-split-flow/after/flow-TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95.jsonl"
+  },
+  "after_max_invocation": 15.907,
+  "observations": {
+    "SingleAssignment": {
+      "before": [
+        4708,
+        666,
+        4817,
+        13637
+      ],
+      "after": [
+        4708,
+        666,
+        4817,
+        13637
+      ],
+      "before_log_rows": 1,
+      "after_log_rows": 676
+    },
+    "MutationRanges": {
+      "before": [
+        98837,
+        0,
+        0
+      ],
+      "after": [
+        98837,
+        0,
+        0
+      ],
+      "before_log_rows": 1,
+      "after_log_rows": 676
+    },
+    "GraphPaths": {
+      "before": [
+        19369495,
+        20801062
+      ],
+      "after": [
+        19369495,
+        20801062
+      ],
+      "before_log_rows": 676,
+      "after_log_rows": 676
+    },
+    "Liveness": {
+      "before": [
+        60305640
+      ],
+      "after": [
+        60305640
+      ],
+      "before_log_rows": 1,
+      "after_log_rows": 676
+    },
+    "Writes": {
+      "before": [
+        1693,
+        1550
+      ],
+      "after": [
+        1693,
+        1550
+      ],
+      "before_log_rows": 1,
+      "after_log_rows": 681
+    }
+  },
+  "unchanged_production_and_fixture_inputs": 1921
+}

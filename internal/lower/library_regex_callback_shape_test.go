@@ -10,6 +10,7 @@ import (
 )
 
 func TestLibraryRegexOffsetRequiresNoCaptures(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"console.log('a'.replace(/(a)/, (match: string, offset: number) => `${match}:${offset}`));",
 		"console.log('a'.replace(/(?=(a))a/, (match: string, offset: number) => `${match}:${offset}`));",

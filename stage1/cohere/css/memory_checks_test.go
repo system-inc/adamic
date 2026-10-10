@@ -13,6 +13,7 @@ import (
 // These mutations affect only temporary generated C. The release mutant must
 // preserve output and pass ASan/UBSan with leak detection off. Only LSan kills it.
 // The access and arithmetic probes likewise preserve ordinary native output.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestComposedMemoryChecksCanFail(t *testing.T) {
 	if runtime.GOOS != "linux" {
 		t.Skip("Linux sanitizer harness proof")

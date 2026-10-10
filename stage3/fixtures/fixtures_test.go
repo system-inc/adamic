@@ -3,6 +3,8 @@ package fixtures
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -14,6 +16,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -45,7 +48,7 @@ type fixture struct {
 	Stage0   stage0   `json:"stage0"`
 }
 
-func execute(t *testing.T, directory string, environment []string, name string, arguments ...string) behavior {
+func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
@@ -113,6 +116,18 @@ func validFixturePath(name string) bool {
 	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
 }
 
+// Check the supported mode independently of the broader call and URL guards.
+// Its fatal must be observable even when another guard rejects the same runner.
+func nodeRunnerMode(t *testing.T, text string) int {
+	t.Helper()
+	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
+	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
+	if erasable+transformedCalls != 1 {
+		t.Fatal("source Node runner changed: review the transform-mode hook")
+	}
+	return erasable
+}
+
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
 // accepting either source mode without changing the original runner.
@@ -125,9 +140,8 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	}
 	text := string(source)
 	// Parameter properties may already require transform mode in the source oracle.
-	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
-	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
-	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	erasable := nodeRunnerMode(t, text)
+	if strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	if erasable == 1 {
@@ -142,8 +156,57 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	return transformed
 }
 
-func TestFixtures(t *testing.T) {
+func TestFixturesAssertions(t *testing.T) {
 	t.Parallel()
+	testFixtureDirectory(t, "assertions")
+}
+func TestFixturesCycles(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "cycles")
+}
+func TestFixturesEnums(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "enums")
+}
+func TestFixturesHost(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "host")
+}
+func TestFixturesNamespaces(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "namespaces")
+}
+func TestFixturesNestedFunctions(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "nested-functions")
+}
+func TestFixturesObjects(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "objects")
+}
+func TestFixturesPredicates(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "predicates")
+}
+func TestFixturesReal(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "real")
+}
+func TestFixturesRecords(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "records")
+}
+func TestFixturesRunner(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "runner")
+}
+func TestFixturesTaste(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "taste")
+}
+
+func testFixtureDirectory(t *testing.T, directory string) {
+	t.Helper()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -152,20 +215,9 @@ func TestFixtures(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	statuses, err := filepath.Glob(filepath.Join(root, "*", "status.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(statuses) == 0 {
-		t.Fatal("no fixture status.json files found")
-	}
-	// These helpers live in oracle's test files. Build their small exported test
-	// hook once, then run one process per compiling fixture in parallel.
-	hook := filepath.Join(t.TempDir(), "oracle.test")
-	built := execute(t, repository, nil, "go", "test", "-c", "-o", hook, "./internal/oracle")
-	if built.Exit != 0 {
-		t.Fatalf("building oracle hook: %s%s", built.Stdout, built.Stderr)
-	}
+	statuses := []string{filepath.Join(root, directory, "status.json")}
+	hook := fixtureOracleHook(t, repository)
+	shard, count := fixtureShard(t)
 	transformedRunner := transformedNodeRunner(t, repository)
 	for _, status := range statuses {
 		t.Run(filepath.Base(filepath.Dir(status)), func(t *testing.T) {
@@ -255,6 +307,11 @@ func TestFixtures(t *testing.T) {
 				case "Checker", "Refused", "NotYet", "Compiles", "CheckedStop":
 				default:
 					t.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
+				}
+				name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+				selected := fixtureShardIndex(name, count) == shard
+				if !selected {
+					continue
 				}
 				t.Run(entry.File, func(t *testing.T) {
 					t.Parallel()
@@ -374,4 +431,65 @@ func TestFixturePaths(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Indices are zero based, as in the gate. Invalid selectors must never turn an
+// intended run into a successful empty run.
+func fixtureShard(t *testing.T) (int, int) {
+	t.Helper()
+	text := os.Getenv("ADAMIC_TEST_SHARD")
+	if text == "" {
+		return 0, 1
+	}
+	parts := strings.Split(text, "/")
+	if len(parts) != 2 {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/n", text)
+	}
+	index, indexError := strconv.Atoi(parts[0])
+	count, countError := strconv.Atoi(parts[1])
+	if indexError != nil || countError != nil || count < 1 || index < 0 || index >= count {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: require 0 <= i < n", text)
+	}
+	return index, count
+}
+
+func TestFixtureShardManifest(t *testing.T) {
+	t.Parallel()
+	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(statuses) == 0 {
+		t.Fatal("no fixture status.json files found")
+	}
+	_, count := fixtureShard(t)
+	seen := map[string]bool{}
+	for _, status := range statuses {
+		data, err := os.ReadFile(status)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var entries []fixture
+		if err := json.Unmarshal(data, &entries); err != nil {
+			t.Fatal(err)
+		}
+		for _, entry := range entries {
+			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+			if seen[name] || !validFixturePath(entry.File) {
+				t.Fatalf("invalid or duplicate fixture %q", name)
+			}
+			seen[name] = true
+			t.Logf("%s shard=%d/%d", name, fixtureShardIndex(name, count), count)
+		}
+	}
+	if len(seen) == 0 {
+		t.Fatal("empty fixture shard manifest")
+	}
+}
+
+// Assignment depends only on the full fixture identity, so -run selection and
+// scheduling cannot move a fixture into a different shard.
+func fixtureShardIndex(name string, count int) int {
+	digest := sha256.Sum256([]byte(name))
+	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
 }

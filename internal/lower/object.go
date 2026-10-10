@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -547,7 +548,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) {
+		if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+			id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
+			if id > 0 && strings.Contains(l.result.ViewContracts[id-1].Unsupported, "views-v3: array element kind") {
+				return nil, l.notYet(node, "checked view union arm awaits "+l.result.ViewContracts[id-1].Unsupported)
+			}
+		}
+		if censusFieldSlotless(of) && !l.unionReadCertificate(node, of) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
@@ -1862,7 +1869,21 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if slotless(of) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
-	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
+	property := ir.Property{Object: object, Name: index.Text(), Of: of}
+	receiver := l.checker.GetTypeAtLocation(access.Expression)
+	if position, err := strconv.Atoi(index.Text()); err == nil {
+		elements := l.typeArguments(receiver)
+		if position >= 0 && position < len(elements) {
+			property.ViewTypeID = int(elements[position].Id())
+			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+			property.ViewReceiverTypeID = int(receiver.Id())
+			property.ViewType = l.checker.TypeToString(elements[position])
+			property.ViewAllowed = l.viewLiterals(elements[position])
+			property.View = sourceExpression(node)
+			property.ViewWhere = l.program.Where(node)
+		}
+	}
+	return property, nil
 }
 
 // setIndex lowers array[index] = value, as a statement.

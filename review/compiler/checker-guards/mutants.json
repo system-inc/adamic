@@ -1,0 +1,164 @@
+[
+  {
+    "mutant": "M1",
+    "test": "TestGuardSymbolOriginFFFF",
+    "catcher": "invalid frame length",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardSymbolOriginFFFF$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "M4",
+    "test": "TestGuardStrictNullChecks",
+    "catcher": "strict-null-checks metadata",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardStrictNullChecks$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "M5",
+    "test": "TestGuardSingleTypeRoot",
+    "catcher": "type root count",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardSingleTypeRoot$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "symbol-name",
+    "test": "TestGuardWriteSymbolOrigin",
+    "catcher": "symbol declaration origin",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardWriteSymbolOrigin$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "property-annotation",
+    "test": "TestGuardWritePropertyInfo",
+    "catcher": "method parameter metadata",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardWritePropertyInfo$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "diagnostic-separator",
+    "test": "TestGuardDiagnosticText",
+    "catcher": "diagnostic text",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardDiagnosticText$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "query-type",
+    "test": "TestGuardQuery",
+    "catcher": "binary expression query",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardQuery$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "parts-name",
+    "test": "TestGuardTypeParts",
+    "catcher": "number type parts",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardTypeParts$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "mutant": "scope-order",
+    "test": "TestGuardScopeTables",
+    "catcher": "binder scope table",
+    "mutant_exit": 1,
+    "restored_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-run",
+      "^TestGuardScopeTables$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

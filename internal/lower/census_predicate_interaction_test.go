@@ -3,7 +3,6 @@ package lower
 import (
 	"errors"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -13,17 +12,16 @@ import (
 // predicates merge. Node observes the declaration; Adamic must refuse its live
 // contract before considering the callback's representation.
 func TestCensusPredicateInteractionBoundary(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("testdata/census_marker_live_boundary.a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path).CombinedOutput()
-	if err != nil || string(output) != "boundary declaration loaded\n" {
-		t.Fatalf("Node: %q, %v", output, err)
+	// This is a refusal row, so acceptance agreement would fail before running Node.
+	// Use the shared bounded source runner and retain the independent declaration check.
+	observation := runAgreementNode(t, path)
+	if observation.code != 0 || string(observation.stdout) != "boundary declaration loaded\n" || len(observation.stderr) != 0 {
+		t.Fatalf("Node: stdout %q, stderr %q, exit %d", observation.stdout, observation.stderr, observation.code)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
@@ -37,6 +35,7 @@ func TestCensusPredicateInteractionBoundary(t *testing.T) {
 }
 
 func TestCensusPredicateInteractionEscapes(t *testing.T) {
+	t.Parallel()
 	for index, source := range []string{
 		`function apply(callback: (value: number) => value is number): boolean { return callback(1); }
    function guard(value: number): value is number { return typeof value === 'number'; }
@@ -49,6 +48,7 @@ func TestCensusPredicateInteractionEscapes(t *testing.T) {
    apply(guard);`,
 	} {
 		t.Run([]string{"function alias", "callback escape", "exported function"}[index], func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, "there is no body proving this parameter") {

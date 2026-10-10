@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T05:57:14.32846406Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T05:57:14.35671712Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T05:57:14.356866203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== RUN   TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:14.35691741Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== PAUSE TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:14.356920054Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T05:57:14.356925792Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T05:57:14.356927695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== CONT  TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:14.356934706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"--- PASS: TestShardSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:14.356941576Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Elapsed":0}
+{"Time":"2026-10-09T05:57:14.356952582Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:14.357147345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.028s\n"}
+{"Time":"2026-10-09T05:57:14.35720469Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.029}

@@ -1,0 +1,117 @@
+[
+  {
+    "test": "TestArgumentsLengthReadKeepsReaderFact",
+    "result": "pass",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestArgumentsLengthReadNeighbors",
+    "result": "pass",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/aliasing",
+    "result": "pass",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/arrow",
+    "result": "pass",
+    "seconds": 0.1
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/indexing",
+    "result": "pass",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/passing",
+    "result": "pass",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/returning",
+    "result": "pass",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/spreading",
+    "result": "pass",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures/writing",
+    "result": "pass",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/aliasing",
+    "result": "pass",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/arrow",
+    "result": "pass",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/compound_length",
+    "result": "pass",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/incrementing_length",
+    "result": "pass",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/indexing",
+    "result": "pass",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/parenthesized_write",
+    "result": "pass",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/passing",
+    "result": "pass",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/returning",
+    "result": "pass",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/spreading",
+    "result": "pass",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/writing_length",
+    "result": "pass",
+    "seconds": 0.04
+  },
+  {
+    "test": "TestArgumentsLengthRefusals/writing_object",
+    "result": "pass",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestBytesSharedRejects63Bytes",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestExactSignatureRejectsSuffix",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestReduceRejectsDifferentRefusal",
+    "result": "pass",
+    "seconds": 0
+  }
+]

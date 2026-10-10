@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:04:07.551933336Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:04:07.560459227Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:07.560549042Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== RUN   TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.560578997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== PAUSE TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.5605813Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:07.560583774Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:07.560585406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== CONT  TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.560589923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"    guards_test.go:69: want one unproven saved field write at site 1 in function 0, got [{Kind:1 Site:1 Name:saved Function:0 Proven:true Why:}]\n","OutputType":"error"}
+{"Time":"2026-10-09T08:04:07.560610003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"--- FAIL: TestClassMethodOutsideSelfCycleRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.560622842Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-09T08:04:07.560634269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.560770874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fresh\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:07.560780558Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.009}

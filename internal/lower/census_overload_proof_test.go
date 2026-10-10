@@ -6,6 +6,7 @@ import (
 )
 
 func TestCensusOverloadReturnProof(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, source string
 		checked      bool
@@ -27,6 +28,7 @@ function choose(value: string | undefined): string | undefined { if (value === '
 console.log(choose('no'));`, true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			program, err := lowerSource(t, probe.source)
 			if err != nil {
 				t.Fatal(err)

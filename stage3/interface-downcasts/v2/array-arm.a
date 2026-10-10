@@ -1,0 +1,8 @@
+// NotYet: views-v3: array element kind
+interface Node { readonly ready: boolean; }
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: Node | readonly Node[]; }
+const raw = { kind: 'Holder' as const, value: { ready: true } };
+const base: Root = raw;
+const viewed = base as View;
+console.log(`${viewed.value !== undefined}`);

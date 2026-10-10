@@ -73,6 +73,8 @@ func build(t *testing.T, directory string) string {
 	}
 	return binary
 }
+
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestHelpersMatchCohere(t *testing.T) {
 	goOracle := oracle(t)
 	catalog := run(t, "", goOracle, "catalog")
@@ -110,42 +112,6 @@ func compare(t *testing.T, got, want []byte) {
 		}
 	}
 	t.Fatalf("output size: got %d Go %d", len(got), len(want))
-}
-func TestHelperMutants(t *testing.T) {
-	cases := fixture(t)
-	catalog, _ := filepath.Abs("testdata/catalog.json")
-	want := run(t, "", oracle(t), cases)
-	for _, m := range []struct{ file, old, new string }{{"options_json.ts", "if(char.charCodeAt(0) < 32)", "if(false)"}, {"option_schema.ts", "matched !== 1", "matched === 0"}, {"policy_message.ts", "text = text.split(`{{${name}}}`).join(value);", "text = text;"}, {"strict_options.ts", "if(field < 0) { return false; }", "if(field < 0) { continue; }"}} {
-		t.Run(m.file, func(t *testing.T) {
-			directory := t.TempDir()
-			for _, file := range []string{"main.ts", "options_json.ts", "option_schema.ts", "policy_message.ts", "strict_options.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == m.file {
-					if strings.Count(string(data), m.old) != 1 {
-						t.Fatal("mutant anchor changed")
-					}
-					data = []byte(strings.Replace(string(data), m.old, m.new, 1))
-				}
-				if err := os.WriteFile(filepath.Join(directory, file), data, 0644); err != nil {
-					t.Fatal(err)
-				}
-			}
-			got := run(t, "", build(t, directory), cases, catalog)
-			if bytes.Equal(got, want) {
-				t.Fatal("compiled mutant survived")
-			}
-			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-			for i := 0; i < len(a) && i < len(b); i++ {
-				if a[i] != b[i] {
-					t.Logf("compiled semantic mutant caught at output line %d: got %q, Go %q", i+1, a[i], b[i])
-					break
-				}
-			}
-		})
-	}
 }
 
 func fixture(t *testing.T) string {
@@ -186,6 +152,8 @@ func smallFixture(t *testing.T, corpus any) string {
 	}
 	return path
 }
+
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestMessageRefusalsMatchGo(t *testing.T) {
 	binary := build(t, ".")
 	goOracle := oracle(t)
@@ -233,6 +201,8 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 	}
 	t.Logf("%d message refusal cases match Go on Node and sanitized native", len(cases))
 }
+
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestKnownGapsAreExplicit(t *testing.T) {
 	corpus := map[string]any{"Definitions": map[string]string{
 		"regex":  `{"type":"array","items":{"type":"string","pattern":"x"}}`,

@@ -47,15 +47,13 @@ console.log(String(make()()));`)
 
 func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(start: number): () => number {
+	// JavaScript cannot observe environment allocation counts or ownership layout.
+	program := lowersAndAgreesWithNode(t, `function make(start: number): () => number {
  let count = start;
  function first(): number { count += start; return count; }
  function second(): number { return first(); }
  return second;
 } console.log(String(make(2)()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	sites := 0
 	for _, function := range program.Functions {
 		for _, statement := range function.Body {
@@ -97,10 +95,9 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 }
 
 func TestNestedCapturedParametersAreOwned(t *testing.T) {
-	program, err := lowerSource(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Parallel()
+	// JavaScript garbage collection cannot observe captured parameter ownership.
+	program := lowersAndAgreesWithNode(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
 	found := false
 	for _, local := range program.Locals {
 		if local.EnvironmentCell && local.Type == ir.String {
@@ -116,15 +113,14 @@ func TestNestedCapturedParametersAreOwned(t *testing.T) {
 }
 
 func TestClosedFrameInputRejectsMutation(t *testing.T) {
-	program, err := lowerSource(t, `function parser(scanner: { scan: () => number }): () => number {
+	t.Parallel()
+	// Behavior cannot observe the closed-frame ownership proof or its invalidation.
+	program := lowersAndAgreesWithNode(t, `function parser(scanner: { scan: () => number }): () => number {
  let token = 0;
  function read(): number { return token; }
  function next(): number { return token = scanner.scan(); }
  next(); return read;
  } console.log(String(parser({scan: () => 1})()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	l := lowering{result: program}
 	input := -1
 	for i, local := range program.Locals {
@@ -146,6 +142,7 @@ func TestClosedFrameInputRejectsMutation(t *testing.T) {
 // Bypass only the suppression-directive gate to exercise the lowering guard
 // behind TypeScript's earlier TS2630 diagnostic. The public fixture pins TS2630.
 func TestNestedRebindingNotYet(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("../oracle/refusals/nested_rebinding.a")
 	if err != nil {
 		t.Fatal(err)
@@ -177,6 +174,7 @@ func TestNestedRebindingNotYet(t *testing.T) {
 }
 
 func TestNestedCallbackCycleIsRefused(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 1 : saved(); }
@@ -191,33 +189,38 @@ func TestNestedCallbackCycleIsRefused(t *testing.T) {
 }
 
 func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
-	path, err := filepath.Abs("../oracle/testdata/scanner_nested_overload.a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	file := program.Files()[0]
-	check, release := program.Checker(context.Background(), file)
-	defer release()
-	outer := file.Statements.Nodes[0]
-	signature := outer.Body().AsBlock().Statements.Nodes[0]
-	if signature.Body() != nil {
-		t.Fatal("probe must contain a bodyless overload")
-	}
-	l := &lowering{program: program, checker: check, result: &ir.Program{Functions: []ir.Function{{Name: "outer"}}}, function: &ir.Function{}, functionIndex: 0, this: -1}
+	t.Parallel()
 	for _, probe := range []struct {
 		name string
-		run  func() error
+		run  func(*lowering, *ast.Node) error
 		want string
 	}{
-		{"missing implementation", func() error { _, err := l.nestedDeclarations([]*ast.Node{signature}); return err }, "a nested function declaration without an implementation"},
-		{"body lowering", func() error { return l.lowerBody(0, signature, -1, nil, nil) }, "a function without a body"},
+		{"missing implementation", func(l *lowering, signature *ast.Node) error {
+			_, err := l.nestedDeclarations([]*ast.Node{signature})
+			return err
+		}, "a nested function declaration without an implementation"},
+		{"body lowering", func(l *lowering, signature *ast.Node) error { return l.lowerBody(0, signature, -1, nil, nil) }, "a function without a body"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			err := probe.run()
+			t.Parallel()
+			path, err := filepath.Abs("../oracle/testdata/scanner_nested_overload.a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			file := program.Files()[0]
+			check, release := program.Checker(context.Background(), file)
+			defer release()
+			outer := file.Statements.Nodes[0]
+			signature := outer.Body().AsBlock().Statements.Nodes[0]
+			if signature.Body() != nil {
+				t.Fatal("probe must contain a bodyless overload")
+			}
+			l := &lowering{program: program, checker: check, result: &ir.Program{Functions: []ir.Function{{Name: "outer"}}}, function: &ir.Function{}, functionIndex: 0, this: -1}
+			err = probe.run(l, signature)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
 				t.Fatalf("want NotYet %q, got %v", probe.want, err)
@@ -228,7 +231,5 @@ func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
 
 func TestNestedRestIsSupported(t *testing.T) {
 	t.Parallel()
-	if _, err := lowerSource(t, `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`)
 }

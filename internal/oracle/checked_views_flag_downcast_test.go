@@ -10,7 +10,9 @@ import (
 )
 
 func TestCheckedViewFlagDowncast(t *testing.T) {
+	t.Parallel()
 	t.Run("tsc source", func(t *testing.T) {
+		t.Parallel()
 		path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.a"))
 		if err != nil {
 			t.Fatal(err)
@@ -34,6 +36,7 @@ func TestCheckedViewFlagDowncast(t *testing.T) {
 		}
 	})
 	t.Run("wrong scalar and check removal", func(t *testing.T) {
+		t.Parallel()
 		program, path := interfaceFixture(t, "lane1/flag-downcast-wrong")
 		if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
 			t.Fatal("source Node: " + difference)

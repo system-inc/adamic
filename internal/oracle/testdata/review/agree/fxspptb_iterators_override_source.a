@@ -1,0 +1,35 @@
+interface Step {
+    readonly value: number;
+    readonly done: boolean;
+}
+class Counter {
+    index = 0;
+    readonly scale: number;
+    constructor(scale: number) {
+        this.scale = scale;
+    }
+    next(): Step {
+        const value = this.index;
+        this.index++;
+        return { value: value * this.scale, done: value >= 3 };
+    }
+}
+class Base {
+    [Symbol.iterator](): Counter {
+        return new Counter(1);
+    }
+    total(): number {
+        let sum = 0;
+        for(const value of this) {
+            sum += value;
+        }
+        return sum;
+    }
+}
+class Scaled extends Base {
+    override [Symbol.iterator](): Counter {
+        return new Counter(100);
+    }
+}
+console.log(`${new Scaled().total()}`);
+console.log(`${new Base().total()}`);

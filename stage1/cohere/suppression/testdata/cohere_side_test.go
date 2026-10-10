@@ -197,6 +197,7 @@ func adamicGenerated(random *rand.Rand) string {
 }
 
 // TestAdamicPortCases writes the cases file and Go cohere's answers.
+// Not parallel: registers subjects in the shared directives registry and writes environment-request output paths.
 func TestAdamicPortCases(t *testing.T) {
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {

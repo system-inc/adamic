@@ -1,0 +1,9 @@
+// Independent producer-certified callable union control.
+type Target=((value:number)=>number)|((value:string)=>number);
+interface Holder {readonly value:Target;}
+interface Receiver {readonly kind:'Receiver';readonly holder:Holder;}
+const raw={kind:'Receiver' as const,holder:{value:(value:boolean):number=>1}};
+const base:{readonly kind:'Receiver'}=raw;
+const view=base as Receiver;
+const callable=view.holder.value;
+console.log(`${callable!==undefined}`);

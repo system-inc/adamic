@@ -1,0 +1,44 @@
+{
+  "base_commit": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "cpu_quota": "400000 100000",
+  "nproc": "5",
+  "kernel": "Linux 6.18.44",
+  "go": "go version go1.27.1 linux/amd64",
+  "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+  "node": "v24.19.0",
+  "submodules": [
+    "7945d102a6c18dd36adf9114a758ce646e8b2359 cohere (7945d102)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfee1)"
+  ],
+  "instrument": "Python time.monotonic(), subprocess wall including log collection",
+  "instrument_sha256": {
+    "measure.py": "0ebff204c3a0a44a5f84b46a2548195818f4400e6fc41595cc21bc039e96f32e",
+    "prove.py": "25b0cf73305eb7f468478e7444c5a92743942099f976de6af8a54c2d7d6c3308"
+  },
+  "binary_sha256": {
+    "before": "790f57ab50e7d55d40a15ab5885d754b05ee86f4f9bb98208ec186d0dbdc6e8b",
+    "after": "a87db5f265c1abecf2a9b44daae3281482478112ef96996a09c5ff4987c378d4"
+  },
+  "source_sha256": {
+    "internal/fuzz/fuzz_test.go": "1556bd3b0f9e19815af480cd9b9dd6ac152fca7092bd5630ab751a97fe269ab9",
+    "internal/fuzz/generate.go": "450421140309c367c785428703daec83c6b675005fa173d36fafad96257bce17",
+    "internal/fuzz/judge_test.go": "8c5e1fcc174c075d3efe540736ae79bf47564528725268d43bddf5b2fe5a50b6",
+    "internal/fuzz/overrides.go": "967c745bc4a6ebaa6b82174722d5558ccc700da21278fe671311e61e3dc57c06",
+    "internal/fuzz/overrides_test.go": "e5b931c595838e6121fd9fb68dca9bdb6f797e3cb2954db4cabf8225ed1cab99",
+    "internal/fuzz/ownership.go": "ca1b376d77dd8bbd97f55d18a17172ef6830f5a082a9902902af9c881c08da70",
+    "internal/fuzz/program.go": "13855b9cb4d4b65d55bef5b00ff9b075720cd1e29748a3b46be973e1d0ffb937",
+    "internal/fuzz/reduce.go": "502ff50753a02699334e8ef78ccd0279124627360b564eb8e8012764aa871bbb",
+    "internal/fuzz/reduce_test.go": "294d5015efe8b5255ecc99981b0a23b1f1977143a1244412be88ee786b79056e",
+    "internal/fuzz/run.go": "2888f0caf66498df8561f3ad3911ea5b69769a7230899141c1033f09401f4eaa",
+    "internal/fuzz/run_test.go": "d19c1337feceabdb76b5b20217bb69771fa275df467a9cbbd3fdbccc7767feb8",
+    "internal/fuzz/runtime_test.go": "ac808ab14571180437350272694c2cf777d143774123c228dc73bb55249fdadb",
+    "internal/fuzz/shrink.go": "9e0da58671a700fbe276bb16b10131d4d69ff47c114becb7c2862cd8e272cb2b",
+    "internal/fuzz/source.go": "4054592ede8909a26f5a90439c98aef20f04775958e1a99aec95b11ff0cda241",
+    "internal/fuzz/undefined_numbers.go": "99e647515fa0c894a494a88995196f1a67595f203524d483e442e57096fb919f",
+    "internal/fuzz/undefined_numbers_test.go": "d84390fba11d3ca93d21f09f64cc188dcbdbb32605abe3ae9bc8dd4e37e7d122",
+    "internal/fuzz/widen.go": "c383f1c286eddab17eeb5a8817e1efe9fbeec5c17928b40ccfb6cba5aa4622ff"
+  },
+  "shared_setup_seconds": 209.766,
+  "cache_boundary": "Tool installation, dependency restoration, and Go action-cache preparation are shared setup. Each timed selector has a new process, new XDG_CACHE_HOME, GOMAXPROCS=4, ADAMIC_GATE_UNCACHED=1. Prepare inside a parent remains inside its timed process.",
+  "raw_logs_directory": "/tmp/adamic-split-fuzz"
+}

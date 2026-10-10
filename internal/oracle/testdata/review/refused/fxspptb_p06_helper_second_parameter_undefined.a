@@ -1,0 +1,17 @@
+function h(y?: unknown, x?: unknown): x is undefined {
+  return typeof x === "undefined";
+}
+function g(v: unknown): v is undefined {
+  return h(v);
+}
+function f(v: string | undefined): void {
+  if (g(v)) {
+    console.log("undefined? " + String(v));
+    const w: undefined = v;
+    console.log(w === undefined ? "yes" : "no");
+  } else {
+    console.log("string " + v.toUpperCase());
+  }
+}
+f("abc");
+f(undefined);

@@ -1,0 +1,326 @@
+[
+  {
+    "name": "TestFixturesAssertions",
+    "label": "mutant-TestFixturesAssertions",
+    "seconds": 3.545,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesAssertions$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesCycles",
+    "label": "mutant-TestFixturesCycles",
+    "seconds": 3.693,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesCycles$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesEnums",
+    "label": "mutant-TestFixturesEnums",
+    "seconds": 4.142,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesEnums$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesHost",
+    "label": "mutant-TestFixturesHost",
+    "seconds": 6.973,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesHost$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesNamespaces",
+    "label": "mutant-TestFixturesNamespaces",
+    "seconds": 3.702,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesNamespaces$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesNestedFunctions",
+    "label": "mutant-TestFixturesNestedFunctions",
+    "seconds": 3.848,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesNestedFunctions$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesObjects",
+    "label": "mutant-TestFixturesObjects",
+    "seconds": 3.851,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesObjects$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesPredicates",
+    "label": "mutant-TestFixturesPredicates",
+    "seconds": 3.143,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesPredicates$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesRecords",
+    "label": "mutant-TestFixturesRecords",
+    "seconds": 3.347,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRecords$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesRunner",
+    "label": "mutant-TestFixturesRunner",
+    "seconds": 2.933,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRunner$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixturesTaste",
+    "label": "mutant-TestFixturesTaste",
+    "seconds": 5.669,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesTaste$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixtureDirectoriesHaveTopLevelTests",
+    "label": "mutant-new-directory",
+    "seconds": 2.128,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v",
+      "-args",
+      "-fixtures",
+      "/workspace/stage3-toplevel-evidence/mutant-fixtures"
+    ]
+  },
+  {
+    "name": "TestFixtureDirectoriesHaveTopLevelTests",
+    "label": "mutant-removed-unit",
+    "seconds": 5.251,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixtureDirectoriesHaveTopLevelTests",
+    "label": "restored-directory-guard",
+    "seconds": 1.875,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRunner",
+    "label": "mutant-corrupt-hook",
+    "seconds": 2.431,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRunner$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "name": "TestFixturesRunner",
+    "label": "restored-runner",
+    "seconds": 2.937,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-run",
+      "^TestFixturesRunner$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]

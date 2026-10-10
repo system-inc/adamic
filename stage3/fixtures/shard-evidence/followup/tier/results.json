@@ -1,0 +1,37 @@
+[
+  {
+    "unit": "stage3-apply-tests",
+    "command": [
+      "python3",
+      "stage3/test_apply.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 100.963,
+    "exit": 0,
+    "cache": "/workspace/stage3-tier-isolated/stage3-apply-tests-cache"
+  },
+  {
+    "unit": "stage3-lane-tests",
+    "command": [
+      "bash",
+      "-c",
+      "mkdir -p \"$STAGE3_CACHE/api\" && cp ../api/package.json ../api/package-lock.json \"$STAGE3_CACHE/api/\" && npm ci --prefix \"$STAGE3_CACHE/api\" --ignore-scripts --no-audit --no-fund && python3 -m unittest test_check test_table"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "seconds": 7.72,
+    "exit": 0,
+    "cache": "/workspace/stage3-tier-isolated/stage3-lane-tests-cache"
+  },
+  {
+    "unit": "stage3-lane",
+    "command": [
+      "bash",
+      "stage3/lane/run.sh",
+      "/workspace/stage3-tier-isolated/lane-results"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 430.697,
+    "exit": 0,
+    "cache": "/workspace/stage3-tier-isolated/stage3-lane-cache"
+  }
+]

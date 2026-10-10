@@ -21,6 +21,7 @@ type oracleCase struct {
 // test262 commit 7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd. The clone used to
 // generate it is scratch data and is deliberately not part of this repository.
 func TestNodeAgreement(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("testdata/test262.json")
 	if err != nil {
 		t.Fatal(err)

@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T06:13:31.317575829Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:13:31.32966485Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:31.329765561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== RUN   TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:31.329800193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== PAUSE TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:31.329803458Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:31.329810098Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:31.329814344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== CONT  TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:31.329819001Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored"}
+{"Time":"2026-10-09T06:13:31.329822747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Output":"=== RUN   TestRecordReadMutants/prototype-membership-restored\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:37.693027998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Output":"    record_test.go:275: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0\n"}
+{"Time":"2026-10-09T06:13:37.693078483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Output":"    record_test.go:286: caught by exact diagnostic and exit check; forbidden result \"1\\n\"\n"}
+{"Time":"2026-10-09T06:13:37.693373335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Output":"--- PASS: TestRecordReadMutants/prototype-membership-restored (6.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:37.693385473Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Elapsed":6.36}
+{"Time":"2026-10-09T06:13:37.69342327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"--- PASS: TestRecordReadMutants (6.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:37.693480856Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Elapsed":6.36}
+{"Time":"2026-10-09T06:13:37.693486585Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:37.704541426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.386s\n"}
+{"Time":"2026-10-09T06:13:37.704642257Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.3870000000000005}

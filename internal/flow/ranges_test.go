@@ -3,7 +3,6 @@ package flow
 import (
 	"strconv"
 	"strings"
-	"sync"
 	"testing"
 )
 
@@ -17,65 +16,50 @@ import (
 // A range the pass left unset (a loop-carried value whose writes would invert it, which cohere
 // names RangeGapLoopCarriedInversion) claims nothing, so a mutation there is the pass declining, not
 // a wrong answer; those are counted and logged, and a consumer must decline on them too.
-func TestEveryMutationIsInItsRange(t *testing.T) {
-	t.Parallel()
-	var lock sync.Mutex
-	var mutations, declined, invalid int
-	t.Run("programs", func(t *testing.T) {
-		for _, path := range programs(t) {
-			t.Run(path, func(t *testing.T) {
-				t.Parallel()
-				run := traced(t, path)
-				ranges := map[int]*MutableRanges{}
-				values := map[int]map[InstructionId]map[DeclarationId]IdentifierId{}
-				for function, graph := range run.graphs {
-					ranges[function] = InferMutableRanges(graph)
-					values[function] = valuesBefore(graph)
-					if bad := ValidateMutableRanges(ranges[function]); len(bad) > 0 {
-						t.Errorf("function %d (%s): invalid ranges for %v", function, graph.Name, bad)
-						lock.Lock()
-						invalid += len(bad)
-						lock.Unlock()
-					}
-				}
-				seen, skipped := 0, 0
-				for _, event := range run.events {
-					if !strings.HasPrefix(event, "mutated ") {
-						continue
-					}
-					fields := strings.Fields(event)
-					local, _ := strconv.Atoi(fields[1])
-					index, _ := strconv.Atoi(fields[2])
-					at := run.marked[index]
-					graph := run.graphs[at.function]
-					value, ok := values[at.function][at.instruction][DeclarationId(local+1)]
-					if !ok {
-						t.Errorf("function %d (%s): %s was mutated at instruction %d, where no value of it reaches", at.function, graph.Name, graph.Program.Locals[local].Name, at.instruction)
-						continue
-					}
-					seen++
-					order := graph.Instructions[at.instruction].Order
-					mutable := ranges[at.function].Get(value)
-					switch {
-					case !mutable.IsSet():
-						skipped++
-					case !mutable.Contains(order):
-						t.Errorf("function %d (%s): %s was mutated at instruction %d (order %d), outside its range [%d, %d)",
-							at.function, graph.Name, graph.PlaceString(Place{Identifier: value}), at.instruction, order, mutable.Start, mutable.End)
-					}
-				}
-				lock.Lock()
-				mutations += seen
-				declined += skipped
-				lock.Unlock()
-			})
+func checkMutationRangesProgram(t *testing.T, path string) {
+	t.Helper()
+	invalid := 0
+	run := traced(t, path)
+	ranges := map[int]*MutableRanges{}
+	values := map[int]map[InstructionId]map[DeclarationId]IdentifierId{}
+	for function, graph := range run.graphs {
+		ranges[function] = InferMutableRanges(graph)
+		values[function] = valuesBefore(graph)
+		if bad := ValidateMutableRanges(ranges[function]); len(bad) > 0 {
+			t.Errorf("function %d (%s): invalid ranges for %v", function, graph.Name, bad)
+			invalid += len(bad)
 		}
-	})
-	// A run that saw no mutation proves nothing about ranges.
-	if mutations == 0 {
-		t.Errorf("no mutation was seen in any program")
 	}
-	t.Logf("%d mutations checked, %d on a range the pass left unset, %d invalid ranges", mutations, declined, invalid)
+	seen, skipped := 0, 0
+	for _, event := range run.events {
+		if !strings.HasPrefix(event, "mutated ") {
+			continue
+		}
+		fields := strings.Fields(event)
+		local, _ := strconv.Atoi(fields[1])
+		index, _ := strconv.Atoi(fields[2])
+		at := run.marked[index]
+		graph := run.graphs[at.function]
+		value, ok := values[at.function][at.instruction][DeclarationId(local+1)]
+		if !ok {
+			t.Errorf("function %d (%s): %s was mutated at instruction %d, where no value of it reaches", at.function, graph.Name, graph.Program.Locals[local].Name, at.instruction)
+			continue
+		}
+		seen++
+		order := graph.Instructions[at.instruction].Order
+		mutable := ranges[at.function].Get(value)
+		switch {
+		case !mutable.IsSet():
+			skipped++
+		case !mutable.Contains(order):
+			t.Errorf("function %d (%s): %s was mutated at instruction %d (order %d), outside its range [%d, %d)",
+				at.function, graph.Name, graph.PlaceString(Place{Identifier: value}), at.instruction, order, mutable.Start, mutable.End)
+		}
+	}
+	if path == "testdata/mutations.a" && seen == 0 {
+		t.Error("no mutation was seen in the witness program")
+	}
+	t.Logf("%d mutations checked, %d on a range the pass left unset, %d invalid ranges", seen, skipped, invalid)
 }
 
 // valuesBefore is, for every instruction, the value each variable holds just before it, found by a

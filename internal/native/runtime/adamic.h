@@ -250,8 +250,15 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	adamic_value slots[];
 } adamic_object;
+
+// Reserve the insertion-order tail as well as both per-slot byte tails.
+// The base has no order accessor yet; c1 uses this same allocation size.
+static inline size_t adamic_object_size(size_t count) {
+    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
 
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {

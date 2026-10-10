@@ -1,0 +1,21 @@
+{
+  "task": "#h98mfwt",
+  "test_grain_step": 79,
+  "initial_base": "f54b8bd32ca773fb7533e8cfe481922b3c82ccb3",
+  "delivery_base": "5dced8983f77722e05a93c510a49fa08509d7711",
+  "audit": "2d34d465",
+  "nproc": 5,
+  "cgroup_cpu_max": "400000 100000",
+  "gomaxprocs": 4,
+  "go": "1.27.1",
+  "node": "24.19.0",
+  "clang": "20.1.8",
+  "measurement": "empty XDG_CACHE_HOME per leaf, ADAMIC_GATE_UNCACHED=1, existing Go/toolchain cache retained with explicit GOCACHE",
+  "sha256": {
+    "internal/ir/call_targets.go": "95fe39f1a5a9d3290018e0f2aa67ec7d09621cceb1904ff8fd188cb45dab7d50",
+    "internal/ir/call_targets_effects_test.go": "335f013a9d653b0ebb1209e3f96c6136d1a9bc0e792496a560d15356d533840b",
+    "internal/oracle/call_targets_guards_test.go": "c32f99d8b96cf81b075d210a737ca62b851deffe6f73ad9c477b2d5e0054768d",
+    "internal/oracle/testdata/statements_small_throw.a": "d642ec09cdeb6ac72ec4dd1ee1d1dd53073fe70824cc13ca2ce3260a2697b37b",
+    "internal/oracle/testdata/nested_mutual.a": "cb2f574447c69697fe15a87add45d202365d7c73417aa24a050b23088848e2cf"
+  }
+}

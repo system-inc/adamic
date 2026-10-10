@@ -41,6 +41,7 @@ func TestCompilerGaps(t *testing.T) {
 // prefixUpdateValue.ts lowers on compiler/area-stack (views slice 1, Oct 8): a numeric
 // PrefixUnaryExpression whose value is read. Held to Node on native, the JavaScript backend and
 // the leak check. The port's separate decrement statement still stands; retiring it is cohere's.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClosedPrefixUpdateValueGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/prefixUpdateValue.ts")
 	if err != nil {
@@ -58,6 +59,7 @@ func TestClosedPrefixUpdateValueGap(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestNumberConstructor(t *testing.T) {
 	path, err := filepath.Abs("testdata/numberConstructor.ts")
 	if err != nil {

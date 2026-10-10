@@ -1,0 +1,170 @@
+{
+  "stockDiagnostics": 0,
+  "scannerJavaScriptIdentical": true,
+  "driverJavaScriptIdentical": true,
+  "publicCallbackIdentical": true,
+  "idempotent": true,
+  "mainInputHash": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+  "afterHash": "1b9acb7587b2c76b74b28fb62436eceae1e06b2051a3286ceaecbc2058790b08",
+  "map": [
+    {
+      "type": "Map<string, KeywordSyntaxKind>",
+      "initializer": "new Map<string, KeywordSyntaxKind>(Object.entries(textToKeywordObj))"
+    }
+  ],
+  "payloads": [
+    {
+      "line": 1264,
+      "expression": "literal",
+      "type": "string"
+    },
+    {
+      "line": 1584,
+      "expression": "\"\\\\x\" + code.toString(16).padStart(2, \"0\")",
+      "type": "string"
+    },
+    {
+      "line": 1587,
+      "expression": "\"\\\\x\" + code.toString(16).padStart(2, \"0\")",
+      "type": "string"
+    },
+    {
+      "line": 1601,
+      "expression": "text.substring(start, pos)",
+      "type": "string"
+    },
+    {
+      "line": 2785,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 2796,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 2803,
+      "expression": "String.fromCharCode(CharacterCodes.closeBrace)",
+      "type": "string"
+    },
+    {
+      "line": 2848,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3131,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3196,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3201,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3254,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3259,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3265,
+      "expression": "\"--\"",
+      "type": "\"--\""
+    },
+    {
+      "line": 3268,
+      "expression": "\"&&\"",
+      "type": "\"&&\""
+    },
+    {
+      "line": 3427,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3500,
+      "expression": "suggestion",
+      "type": "string"
+    },
+    {
+      "line": 3513,
+      "expression": "suggestion",
+      "type": "string"
+    },
+    {
+      "line": 3536,
+      "expression": "suggestion",
+      "type": "string"
+    },
+    {
+      "line": 3546,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3581,
+      "expression": "String.fromCharCode(ch)",
+      "type": "string"
+    },
+    {
+      "line": 3589,
+      "expression": "reference.name",
+      "type": "string"
+    },
+    {
+      "line": 3593,
+      "expression": "suggestion",
+      "type": "string"
+    },
+    {
+      "line": 3604,
+      "expression": "numberOfCapturingGroups",
+      "type": "number"
+    },
+    {
+      "line": 3616,
+      "expression": "getNameOfScriptTarget(availableFrom)",
+      "type": "string | undefined"
+    }
+  ],
+  "mutants": [
+    {
+      "site": "scanner-error",
+      "caughtBy": "stock TypeScript source/consumer checking",
+      "diagnosticCodes": [
+        2345
+      ]
+    },
+    {
+      "site": "keyword-map",
+      "caughtBy": "stock TypeScript source/consumer checking",
+      "diagnosticCodes": [
+        2769,
+        2322
+      ]
+    },
+    {
+      "site": "driver-error",
+      "caughtBy": "stock TypeScript source/consumer checking",
+      "diagnosticCodes": [
+        2345
+      ]
+    }
+  ],
+  "guardMutants": [
+    "drift",
+    "duplicate"
+  ]
+}

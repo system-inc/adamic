@@ -1,0 +1,200 @@
+[
+  {
+    "name": "uninitialized-join-read",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/uninitialized-join-read-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlow(Program|SingleAssignment|MutationRanges|GraphPaths|Liveness)_",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowProgram_testdata_joins_a_091c4a59e83f"
+    ],
+    "passed_units": 678,
+    "catcher": "nothing defines",
+    "log": "/tmp/test-split-flow/mutants/uninitialized-join-read.jsonl"
+  },
+  {
+    "name": "unrecorded-dedication-write",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/unrecorded-dedication-write-overlay.json",
+      "./internal/fresh",
+      "-json",
+      "-run",
+      "^TestFreshWrites_",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f"
+    ],
+    "passed_units": 680,
+    "catcher": "a write lowering didn't record",
+    "log": "/tmp/test-split-flow/mutants/unrecorded-dedication-write.jsonl"
+  },
+  {
+    "name": "flow-missing-program",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/flow-missing-program-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlowCorpusUnitsCoverEveryProgram$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowCorpusUnitsCoverEveryProgram"
+    ],
+    "passed_units": 0,
+    "catcher": "corpus count",
+    "log": "/tmp/test-split-flow/mutants/flow-missing-program.jsonl"
+  },
+  {
+    "name": "fresh-missing-program",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/fresh-missing-program-overlay.json",
+      "./internal/fresh",
+      "-json",
+      "-run",
+      "^TestFreshCorpusUnitsCoverEveryProgram$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFreshCorpusUnitsCoverEveryProgram"
+    ],
+    "passed_units": 0,
+    "catcher": "corpus count",
+    "log": "/tmp/test-split-flow/mutants/fresh-missing-program.jsonl"
+  },
+  {
+    "name": "missing-liveness-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/missing-liveness-check-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlowCorpusUnitsCoverEveryProgram$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowCorpusUnitsCoverEveryProgram"
+    ],
+    "passed_units": 0,
+    "catcher": "corpus count",
+    "log": "/tmp/test-split-flow/mutants/missing-liveness-check.jsonl"
+  },
+  {
+    "name": "rebuild-lowering-setup",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/rebuild-lowering-setup-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlowCorpusSetupIsShared$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowCorpusSetupIsShared"
+    ],
+    "passed_units": 0,
+    "catcher": "lowered program setup was rebuilt",
+    "log": "/tmp/test-split-flow/mutants/rebuild-lowering-setup.jsonl"
+  },
+  {
+    "name": "rebuild-trace-setup",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/rebuild-trace-setup-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlowCorpusSetupIsShared$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=10m"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowCorpusSetupIsShared"
+    ],
+    "passed_units": 0,
+    "catcher": "trace setup was rebuilt",
+    "log": "/tmp/test-split-flow/mutants/rebuild-trace-setup.jsonl"
+  },
+  {
+    "name": "flow-over-budget",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/flow-over-budget-overlay.json",
+      "./internal/flow",
+      "-json",
+      "-run",
+      "^TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f"
+    ],
+    "passed_units": 0,
+    "catcher": "test unit exceeded 30 seconds",
+    "log": "/tmp/test-split-flow/mutants/flow-over-budget.jsonl"
+  },
+  {
+    "name": "fresh-over-budget",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/test-split-flow/mutants/fresh-over-budget-overlay.json",
+      "./internal/fresh",
+      "-json",
+      "-run",
+      "^TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed_units": [
+      "TestFreshWrites_______dedication_dedication_a_5b18fcb1ef6f"
+    ],
+    "passed_units": 0,
+    "catcher": "test unit exceeded 30 seconds",
+    "log": "/tmp/test-split-flow/mutants/fresh-over-budget.jsonl"
+  }
+]

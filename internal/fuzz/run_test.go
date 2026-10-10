@@ -11,6 +11,7 @@ import (
 
 // The subprocess measures CPU rather than elapsed time, so contention cannot
 // shorten the finite workload. Keep it single-threaded like a generated loop.
+// Not parallel: changes process-wide runtime.GOMAXPROCS in the CPU helper subprocess.
 func TestExecuteCPUHelper(t *testing.T) {
 	mode := os.Getenv("ADAMIC_FUZZ_CPU_HELPER")
 	if mode == "" {
@@ -33,11 +34,13 @@ func TestExecuteCPUHelper(t *testing.T) {
 }
 
 func TestExecuteCPULimit(t *testing.T) {
+	t.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Run("infinite", func(t *testing.T) {
+		t.Parallel()
 		start := time.Now()
 		run := execute(t.TempDir(), []string{"ADAMIC_FUZZ_CPU_HELPER=spin"}, time.Second, executable, "-test.run=^TestExecuteCPUHelper$")
 		if !run.TimedOut {
@@ -48,12 +51,14 @@ func TestExecuteCPULimit(t *testing.T) {
 		}
 	})
 	t.Run("SIGXCPU", func(t *testing.T) {
+		t.Parallel()
 		run := execute(t.TempDir(), nil, time.Second, "/bin/sh", "-c", "kill -XCPU $$")
 		if !run.TimedOut {
 			t.Fatalf("SIGXCPU death was not timed out: %+v", run)
 		}
 	})
 	t.Run("saturated", func(t *testing.T) {
+		t.Parallel()
 		// Separate single-threaded processes keep all workers runnable even when
 		// the Go scheduler would preempt busy goroutines in this test process.
 		for i := 0; i < 2*runtime.NumCPU(); i++ {

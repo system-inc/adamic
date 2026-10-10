@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:53:17.070174072Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:53:17.077982573Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample"}
+{"Time":"2026-10-09T06:53:17.078073687Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"=== RUN   TestBridgeWrongPositionSample\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:17.433657042Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:71: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T06:53:17.77336808Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:71: build bridge-test-wrong-native 71046f136619 hit 0.03\n"}
+{"Time":"2026-10-09T06:53:17.814795394Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:255: queries: sample.ts, 162 positions, 1 unchanged program roots\n"}
+{"Time":"2026-10-09T06:53:18.139765855Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:256: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T06:53:18.210255463Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:256: go: tsgo: load_ns=25025053 query_ns=13664097 queries=162\n"}
+{"Time":"2026-10-09T06:53:18.515539264Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:257: build bridge-test-wrong-native 71046f136619 hit 0.03\n"}
+{"Time":"2026-10-09T06:53:18.617716284Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"    units_test.go:261: wrong-position: oracle mismatch at byte 6\n"}
+{"Time":"2026-10-09T06:53:18.617788932Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Output":"--- PASS: TestBridgeWrongPositionSample (1.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:18.617793118Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeWrongPositionSample","Elapsed":1.54}
+{"Time":"2026-10-09T06:53:18.617815341Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:53:18.62369603Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t1.553s\n"}
+{"Time":"2026-10-09T06:53:18.623732594Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":1.554}

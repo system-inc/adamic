@@ -1,0 +1,374 @@
+[
+  {
+    "unit": "meter",
+    "shard": "0/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 2.951,
+    "exit": 1,
+    "cases": [
+      "report_test.LatentReportTests.test_exact_prefix_and_variance_owners",
+      "report_test.LatentReportTests.test_missing_source_is_rejected",
+      "report_test.LatentReportTests.test_table_groups_same_reason_across_kinds",
+      "entry_test.EntryReportTests.test_missing_reachable_file_record_is_rejected",
+      "entry_test.EntryReportTests.test_overlay_missing_hook_fails_loudly",
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+      "compiler_test.CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run",
+      "compiler_test.CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim"
+    ],
+    "failures": [
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant"
+    ],
+    "errors": [],
+    "skipped": [],
+    "ran": 8
+  },
+  {
+    "unit": "meter",
+    "shard": "1/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 2.215,
+    "exit": 0,
+    "cases": [
+      "report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+      "report_test.ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first",
+      "entry_test.EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label",
+      "entry_test.EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners",
+      "entry_test.EntryReportTests.test_imported_and_global_diagnostics_block_lowering",
+      "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+      "compiler_test.CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 7
+  },
+  {
+    "unit": "meter",
+    "shard": "2/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 2.559,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root",
+      "report_test.ReportTests.test_malformed_diagnostic_is_rejected",
+      "entry_test.EntryReportTests.test_wrong_root_is_rejected",
+      "compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 4
+  },
+  {
+    "unit": "meter",
+    "shard": "3/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.19,
+    "exit": 0,
+    "cases": [
+      "report_test.LatentReportTests.test_measurement_label_is_required",
+      "report_test.LatentReportTests.test_planted_notyet_moves_only_its_reason_count",
+      "report_test.ReportTests.test_missing_whole_program_is_rejected",
+      "entry_test.EntryReportTests.test_checker_and_lowering_diagnostics_must_agree"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 4
+  },
+  {
+    "unit": "meter",
+    "shard": "4/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.225,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file",
+      "report_test.ReportTests.test_unknown_kind_is_rejected",
+      "entry_test.EntryReportTests.test_blocked_stream_cannot_claim_lowering"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 3
+  },
+  {
+    "unit": "meter",
+    "shard": "5/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.229,
+    "exit": 0,
+    "cases": [
+      "report_test.LatentReportTests.test_unmatched_reason_is_owner_blank_and_in_unowned_first",
+      "report_test.ReportTests.test_checker_and_lowering_are_separate"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 2
+  },
+  {
+    "unit": "meter",
+    "shard": "6/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.562,
+    "exit": 0,
+    "cases": [
+      "report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+      "report_test.LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties",
+      "report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail",
+      "report_test.ReportTests.test_missing_file_is_rejected",
+      "entry_test.EntryReportTests.test_missing_entry_is_rejected"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 5
+  },
+  {
+    "unit": "meter",
+    "shard": "7/8",
+    "mutant": false,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.606,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_duplicate_file_is_rejected",
+      "report_test.ReportTests.test_whole_program_roots_are_checked",
+      "entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 3
+  },
+  {
+    "unit": "meter",
+    "shard": "0/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 3.025,
+    "exit": 1,
+    "cases": [
+      "report_test.LatentReportTests.test_exact_prefix_and_variance_owners",
+      "report_test.LatentReportTests.test_missing_source_is_rejected",
+      "report_test.LatentReportTests.test_table_groups_same_reason_across_kinds",
+      "entry_test.EntryReportTests.test_missing_reachable_file_record_is_rejected",
+      "entry_test.EntryReportTests.test_overlay_missing_hook_fails_loudly",
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+      "compiler_test.CompilerSelectionTests.test_invalid_latent_mode_fails_before_creating_a_run",
+      "compiler_test.CompilerSelectionTests.test_legacy_latent_mode_and_stale_full_claim"
+    ],
+    "failures": [
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant"
+    ],
+    "errors": [],
+    "skipped": [],
+    "ran": 8
+  },
+  {
+    "unit": "meter",
+    "shard": "1/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 2.25,
+    "exit": 1,
+    "cases": [
+      "report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+      "report_test.ReportTests.test_pair_preserves_area_fields_and_prints_four_numbers_first",
+      "entry_test.EntryReportTests.test_clean_reach_cannot_carry_rejected_program_label",
+      "entry_test.EntryReportTests.test_clean_reach_ranks_unique_sites_with_owners",
+      "entry_test.EntryReportTests.test_imported_and_global_diagnostics_block_lowering",
+      "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+      "compiler_test.CompilerSelectionTests.test_invalid_mode_fails_before_creating_a_run"
+    ],
+    "failures": [
+      "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees"
+    ],
+    "errors": [],
+    "skipped": [],
+    "ran": 7
+  },
+  {
+    "unit": "meter",
+    "shard": "2/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 2.724,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_global_and_external_diagnostics_are_not_attributed_to_root",
+      "report_test.ReportTests.test_malformed_diagnostic_is_rejected",
+      "entry_test.EntryReportTests.test_wrong_root_is_rejected",
+      "compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 4
+  },
+  {
+    "unit": "meter",
+    "shard": "3/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.267,
+    "exit": 0,
+    "cases": [
+      "report_test.LatentReportTests.test_measurement_label_is_required",
+      "report_test.LatentReportTests.test_planted_notyet_moves_only_its_reason_count",
+      "report_test.ReportTests.test_missing_whole_program_is_rejected",
+      "entry_test.EntryReportTests.test_checker_and_lowering_diagnostics_must_agree"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 4
+  },
+  {
+    "unit": "meter",
+    "shard": "4/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.254,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file",
+      "report_test.ReportTests.test_unknown_kind_is_rejected",
+      "entry_test.EntryReportTests.test_blocked_stream_cannot_claim_lowering"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 3
+  },
+  {
+    "unit": "meter",
+    "shard": "5/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.282,
+    "exit": 0,
+    "cases": [
+      "report_test.LatentReportTests.test_unmatched_reason_is_owner_blank_and_in_unowned_first",
+      "report_test.ReportTests.test_checker_and_lowering_are_separate"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 2
+  },
+  {
+    "unit": "meter",
+    "shard": "6/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.429,
+    "exit": 0,
+    "cases": [
+      "report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+      "report_test.LatentReportTests.test_top_ten_excludes_dependency_skips_and_orders_ties",
+      "report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail",
+      "report_test.ReportTests.test_missing_file_is_rejected",
+      "entry_test.EntryReportTests.test_missing_entry_is_rejected"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 5
+  },
+  {
+    "unit": "meter",
+    "shard": "7/8",
+    "mutant": true,
+    "target": "compiler_test.CompilerSelectionTests.test_default_uses_checkout_compiler_for_both_trees",
+    "seconds": 1.504,
+    "exit": 0,
+    "cases": [
+      "report_test.ReportTests.test_duplicate_file_is_rejected",
+      "report_test.ReportTests.test_whole_program_roots_are_checked",
+      "entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file"
+    ],
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "ran": 3
+  },
+  {
+    "unit": "census",
+    "shard": "0/2",
+    "mutant": false,
+    "target": "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+    "seconds": 2.475,
+    "exit": 1,
+    "cases": [
+      "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order"
+    ],
+    "failures": [],
+    "errors": [
+      "setUpClass (replay_test.ReplayTests)"
+    ],
+    "skipped": [],
+    "ran": 0
+  },
+  {
+    "unit": "census",
+    "shard": "1/2",
+    "mutant": false,
+    "target": "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+    "seconds": 2.45,
+    "exit": 1,
+    "cases": [
+      "replay_test.ReplayTests.test_parent_sibling_boundary_fails_signature_assertion"
+    ],
+    "failures": [],
+    "errors": [
+      "setUpClass (replay_test.ReplayTests)"
+    ],
+    "skipped": [],
+    "ran": 0
+  },
+  {
+    "unit": "census",
+    "shard": "0/2",
+    "mutant": true,
+    "target": "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+    "seconds": 2.577,
+    "exit": 1,
+    "cases": [
+      "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order"
+    ],
+    "failures": [
+      "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order"
+    ],
+    "errors": [
+      "setUpClass (replay_test.ReplayTests)"
+    ],
+    "skipped": [],
+    "ran": 0
+  },
+  {
+    "unit": "census",
+    "shard": "1/2",
+    "mutant": true,
+    "target": "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+    "seconds": 2.478,
+    "exit": 1,
+    "cases": [
+      "replay_test.ReplayTests.test_parent_sibling_boundary_fails_signature_assertion"
+    ],
+    "failures": [],
+    "errors": [
+      "setUpClass (replay_test.ReplayTests)"
+    ],
+    "skipped": [],
+    "ran": 0
+  }
+]

@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -41,10 +42,16 @@ func TestPrinterThroughput(t *testing.T) {
 		t.Fatal(err)
 	}
 	port, _ := filepath.Abs("main.ts")
-	binary := filepath.Join(directory, "native")
-	if err = native.Build(native.C(lowered(t, port)), binary, native.Options{}); err != nil {
+	products := preparePrinterProducts(t, port)
+	source, err := os.ReadFile(filepath.Dir(products.backend) + "/port.c")
+	if err != nil {
 		t.Fatal(err)
 	}
+	binary := printerBuild(t, printerBuildInputs{
+		Name:  "release GraphQL throughput binary",
+		Files: append([]string{filepath.Dir(products.backend) + "/port.c"}, printerInputFiles(t, filepath.Join(repository, "internal/native"))...),
+		Flags: native.Flags(native.Options{}), Toolchain: buildcache.Tool("clang", "--version"),
+	}, func(directory string) error { return native.Build(string(source), directory+"/port", native.Options{}) }) + "/port"
 	cohere, _ := filepath.Abs(filepath.Join(repository, "cohere"))
 	driver, _ := filepath.Abs("testdata/cohere_driver.go")
 	fake := filepath.Join(cohere, "adamic_graphql_printer_benchmark.go")

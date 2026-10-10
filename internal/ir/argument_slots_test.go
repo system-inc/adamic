@@ -3,6 +3,7 @@ package ir
 import "testing"
 
 func TestArgumentLayouts(t *testing.T) {
+	t.Parallel()
 	p := Program{
 		Locals: []Local{{Type: Number}, {Type: MaybeNumber}, {Type: Array}},
 		Functions: []Function{

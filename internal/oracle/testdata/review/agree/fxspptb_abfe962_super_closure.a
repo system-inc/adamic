@@ -1,0 +1,13 @@
+class Base {
+    readonly name = `base${1}`;
+    describe(): string { return `B(${this.name})`; }
+}
+class Child extends Base {
+    override describe(): string {
+        const parts = [1, 2].map((value) => `${super.describe()}${value}`);
+        const later = (): string => super.describe();
+        return parts.join(',') + '/' + later();
+    }
+}
+const value: Base = new Child();
+console.log(value.describe());

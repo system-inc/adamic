@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestFrontMatterStage(t *testing.T) {
 	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)

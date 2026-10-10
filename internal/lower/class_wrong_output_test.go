@@ -7,6 +7,7 @@ import (
 )
 
 func TestClassWrongOutputIteratorReceiver(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_override_this.a")
 	if err != nil {
 		t.Fatal(err)
@@ -27,26 +28,22 @@ func TestClassWrongOutputIteratorReceiver(t *testing.T) {
 		"console.log([...new BaseIterator()].join(','));",
 		"class Unchanged extends BaseIterator {} console.log([...new Unchanged()].join(','));",
 	} {
-		if _, err := lowerSource(t, prefix+use); err != nil {
-			t.Fatalf("unchanged protocol refused: %v", err)
-		}
+		lowersAndAgreesWithNode(t, prefix+use)
 	}
 }
 
 func TestClassWrongOutputKeysRepair(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a")
 	if err != nil {
 		t.Fatal(err)
 	}
 	repaired := strings.Replace(string(source), "Object.keys(view)", "Object.keys({ value: view.value })", 1)
-	if _, err := lowerSource(t, repaired); err != nil {
-		t.Fatalf("explicit string-key copy refused: %v", err)
-	}
+	lowersAndAgreesWithNode(t, repaired)
 }
 
 func TestClassWrongOutputPrivateRepair(t *testing.T) {
+	t.Parallel()
 	source := "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } reveal(): string { return this.#secret; } static peek(box: Box): string { return box.reveal(); } } console.log(Box.peek(new Box(`s${1}`)));"
-	if _, err := lowerSource(t, source); err != nil {
-		t.Fatalf("instance delegation refused: %v", err)
-	}
+	lowersAndAgreesWithNode(t, source)
 }

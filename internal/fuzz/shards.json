@@ -1,0 +1,20 @@
+{
+  "TestGeneratedProgramsCheckAndLower": {
+    "literal": "fuzz_test.go"
+  },
+  "TestRegexProgramsPassTheChecker": {
+    "literal": "fuzz_test.go"
+  },
+  "TestUndefinedNumbersShapes": {
+    "literal": "undefined_numbers_test.go"
+  },
+  "TestOverridesShapesAndLower": {
+    "literal": "overrides_test.go"
+  },
+  "TestReduceKeepsTheSignature": {
+    "literal": "reduce_test.go"
+  },
+  "TestFuzzerSharesRuntimeLibrary": {
+    "literal": "runtime_test.go"
+  }
+}
