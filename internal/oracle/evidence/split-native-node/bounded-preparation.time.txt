@@ -1,0 +1,5 @@
+/bin/bash: line 3:  4059 Killed                  timeout --signal=KILL 75s go test -c -o /workspace/oracle-measure.test ./internal/oracle > /workspace/oracle-compile.log
+
+real	1m15.006s
+user	0m0.000s
+sys	0m0.002s

@@ -317,7 +317,7 @@ func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
 		case "TestNativeAgreesWithNode":
-			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
+			return literalChildren("internal/oracle/oracle_test.go", parent, "names")
 		case "TestInputAgreesWithNode":
 			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
 		case "TestFreshWriteProbesStayRefused":
