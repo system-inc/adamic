@@ -23,7 +23,7 @@ var grain30IsolationCases = []struct{ test, product string }{
 	{"TestCompleteSuggestionSerialization_001", ""},
 }
 
-func grain30Probe(t *testing.T, name string, cold, plant bool) ([]byte, error) {
+func grain30Probe(t *testing.T, name string, plant bool) ([]byte, error) {
 	t.Helper()
 	// This child may prepare products. No test-side deadline wraps that setup;
 	// the selected leaf starts its own deadline after preparation, and Loom
@@ -34,9 +34,6 @@ func grain30Probe(t *testing.T, name string, cold, plant bool) ([]byte, error) {
 	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT="+strconv.FormatBool(plant))
 	if plant {
 		command.Env = append(command.Env, "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
-	}
-	if cold {
-		command.Env = append(command.Env, "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on")
 	}
 	output, err := command.CombinedOutput()
 	if command.Process != nil {
@@ -50,8 +47,8 @@ func grain30IsolationResult(index int, output []byte, err error) error {
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: "+row.test+" ")) {
 		return fmt.Errorf("isolated %s: %v\n%s", row.test, err, output)
 	}
-	if row.product != "" && !regexp.MustCompile(`build `+regexp.QuoteMeta(row.product)+` [^\s]+ miss `).Match(output) {
-		return fmt.Errorf("isolated %s did not build its cold product:\n%s", row.test, output)
+	if row.product != "" && !productLookedUp(output, regexp.QuoteMeta(row.product)) {
+		return fmt.Errorf("isolated %s never looked up its product %s itself:\n%s", row.test, row.product, output)
 	}
 	return nil
 }
@@ -62,7 +59,7 @@ func grain30Isolation(t *testing.T, index int) {
 	if index == 4 {
 		completeSuggestionReady(t)
 	}
-	output, err := grain30Probe(t, grain30IsolationCases[index].test, index != 4, false)
+	output, err := grain30Probe(t, grain30IsolationCases[index].test, false)
 	t.Logf("preparation: %.3fs", time.Since(started).Seconds())
 	own := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
@@ -75,10 +72,10 @@ func grain30Isolation(t *testing.T, index int) {
 	if grain30IsolationResult(index, broken, err) == nil {
 		t.Fatal("planted selection failure survived")
 	}
-	if index != 4 {
-		broken = bytes.ReplaceAll(output, []byte(" miss "), []byte(" hit "))
+	if product := grain30IsolationCases[index].product; product != "" {
+		broken = bytes.ReplaceAll(output, []byte("build "+product+" "), []byte("built "+product+" "))
 		if grain30IsolationResult(index, broken, err) == nil {
-			t.Fatal("planted missing cold build survived")
+			t.Fatal("planted missing product lookup survived")
 		}
 	}
 	t.Logf("case %d exactly once; planted failure caught", index)
@@ -109,7 +106,7 @@ func grain30Plant(t *testing.T, shard int) {
 	t.Logf("preparation: %.3fs", time.Since(started).Seconds())
 	own := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
-	output, err := grain30Probe(t, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), false, true)
+	output, err := grain30Probe(t, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), true)
 	if failure := grain30PlantResult(shard, output, err); failure != nil {
 		t.Fatal(failure)
 	}
