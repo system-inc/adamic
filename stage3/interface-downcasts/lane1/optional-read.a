@@ -5,6 +5,6 @@ function identifier(node: Node): Identifier | undefined {
     if (node.kind === 80) return node as Identifier;
     return undefined;
 }
-const id: Identifier = { kind: 80, escapedText: 'name' };
+const id: Identifier = { kind: 80, escapedText: 'nane' };
 console.log(identifier(id)?.escapedText ?? 'missing');
 console.log(identifier({ kind: 110 })?.escapedText ?? 'missing');
