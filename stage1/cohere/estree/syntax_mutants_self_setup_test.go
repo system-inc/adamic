@@ -160,7 +160,8 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 			args = []string{"--audit", list, t.TempDir()}
 		}
 		want := execute(t, "", oracle, args...)
-		data, err := json.Marshal(syntaxMutantPrepared{Main: main, Binary: binary, Sources: sources, Want: want})
+		// Main and Binary are other products, named by their keys (#tqrqx60).
+		data, err := json.Marshal(syntaxMutantPrepared{Main: buildcache.Relative(main), Binary: buildcache.Relative(binary), Sources: sources, Want: want})
 		if err != nil {
 			return err
 		}
@@ -180,6 +181,7 @@ func prepareSyntaxMutants(t *testing.T) {
 		if err := json.Unmarshal(data, &prepared); err != nil {
 			t.Fatal(err)
 		}
+		prepared.Main, prepared.Binary = buildcache.Absolute(prepared.Main), buildcache.Absolute(prepared.Binary)
 		syntaxMutantsPrepared = append(syntaxMutantsPrepared, prepared)
 	}
 }

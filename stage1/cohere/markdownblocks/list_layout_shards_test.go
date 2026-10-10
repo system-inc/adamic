@@ -105,13 +105,17 @@ func buildListLayoutSetup(t *testing.T) {
 				mutants[i] = relative
 			}
 			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
-			// Go binaries are stored inside this product; native products have their own stable cache paths.
+			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
+			// in its own cache (#tqrqx60).
 			for i := 0; i < 2; i++ {
 				relative, err := filepath.Rel(directory, manifest.Paths[i])
 				if err != nil {
 					return err
 				}
 				manifest.Paths[i] = relative
+			}
+			for i := 2; i < len(manifest.Paths); i++ {
+				manifest.Paths[i] = buildcache.Relative(manifest.Paths[i])
 			}
 			data, err := json.Marshal(manifest)
 			if err != nil {
@@ -819,7 +823,7 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 	if len(manifest.Paths) != 5 {
 		t.Fatal("incomplete shared setup manifest")
 	}
-	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: manifest.Paths[2], release: manifest.Paths[3], canary: manifest.Paths[4], javascript: manifest.JavaScript}
+	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: buildcache.Absolute(manifest.Paths[2]), release: buildcache.Absolute(manifest.Paths[3]), canary: buildcache.Absolute(manifest.Paths[4]), javascript: manifest.JavaScript}
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}

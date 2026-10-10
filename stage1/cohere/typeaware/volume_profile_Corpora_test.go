@@ -314,7 +314,7 @@ func volumeProfileCorporaReadProducts(t *testing.T, directory string) volumeProf
 		t.Fatal(err)
 	}
 	var products volumeProfileCorporaProductPaths
-	if err := json.Unmarshal(data, &products); err != nil {
+	if err := json.Unmarshal([]byte(buildcache.Absolute(string(data))), &products); err != nil {
 		t.Fatal(err)
 	}
 	for _, path := range []string{products.Binary, products.Asan, products.Oracle} {
@@ -456,7 +456,8 @@ func volumeProfileCorporaBuildProducts(t *testing.T) volumeProfileCorporaProduct
 		if err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0600)
+		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
+		return os.WriteFile(filepath.Join(directory, "products.json"), []byte(buildcache.Relative(string(data))), 0600)
 	})
 	return volumeProfileCorporaReadProducts(t, directory)
 }
