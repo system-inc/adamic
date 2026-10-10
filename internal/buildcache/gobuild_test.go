@@ -418,3 +418,84 @@ func TestGoBuildInBuildsASynthesizedMainInAModule(t *testing.T) {
 		t.Fatalf("name %q, files %v", inputs.Name, inputs.Files)
 	}
 }
+
+// A mutation is planted into the product and keyed by what it plants (#ebc67r2): into a package's source or into an
+// overlay's replacement, never into the tree. The binary runs the mutant, the unmutated product is another, a changed
+// after-string is another again, the same mutation asked twice is a hit, and a mutation that would plant nothing or
+// plant into a file the build doesn't read is refused.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestGoTestMutatedPlantsAndKeysEachMutation(t *testing.T) {
+	_, log := cached(t)
+	forgetInputs()
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	module := "internal/buildcache/testdata/module"
+	source := module + "/greet/greet.go"
+	before, err := os.ReadFile(filepath.Join(root, source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sideFile := "internal/buildcache/testdata/module-side/side_test.go.txt"
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	declared, _ := json.Marshal(map[string]map[string]string{"Replace": {filepath.Join(root, module, "greet/adamic_side_test.go"): filepath.Join(root, sideFile)}})
+	if err := os.WriteFile(overlay, declared, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	arguments := []string{"-overlay=" + overlay}
+	run := func(binary, test string) string {
+		output, _ := exec.Command(binary, "-test.run=^"+test+"$", "-test.v").CombinedOutput()
+		return string(output)
+	}
+	howdy := []Mutation{{File: source, Before: `return "hello"`, After: `return "howdy"`}}
+	mutant := GoTestMutated(t, module, "greet.test", "./greet", arguments, howdy, "GOWORK=off")
+	if output := run(mutant, "TestGreeting"); !strings.Contains(output, "FAIL") || !strings.Contains(output, "howdy") {
+		t.Fatalf("the mutant's TestGreeting ran %q, want it failing on howdy", output)
+	}
+	if output := run(mutant, "TestSide"); !strings.Contains(output, "side says howdy") {
+		t.Fatalf("the mutant's harness ran %q", output)
+	}
+	if after, _ := os.ReadFile(filepath.Join(root, source)); string(after) != string(before) {
+		t.Fatal("planting a mutation changed the tree")
+	}
+	if output := run(GoTest(t, module, "greet.test", "./greet", arguments, "GOWORK=off"), "TestGreeting"); !strings.Contains(output, "PASS") {
+		t.Fatalf("the unmutated TestGreeting ran %q", output)
+	}
+	said := []Mutation{{File: sideFile, Before: `"side says"`, After: `"side said"`}}
+	if output := run(GoTestMutated(t, module, "greet.test", "./greet", arguments, said, "GOWORK=off"), "TestSide"); !strings.Contains(output, "side said hello") {
+		t.Fatalf("a mutated overlay replacement ran %q", output)
+	}
+	GoTestMutated(t, module, "greet.test", "./greet", arguments, howdy, "GOWORK=off")
+	if lines, _ := os.ReadFile(log); strings.Count(string(lines), " miss ") != 3 || strings.Count(string(lines), " hit ") != 1 {
+		t.Fatalf("census: %q", lines)
+	}
+
+	keyed := func(mutations []Mutation) (Inputs, error) {
+		return goRequest{verb: "test -c", module: module, output: "greet.test", pkg: "./greet", arguments: reproducible(arguments), mutations: mutations, environment: []string{"GOWORK=off"}}.inputs()
+	}
+	keyOf := func(mutations []Mutation) string {
+		t.Helper()
+		inputs, err := keyed(mutations)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return key(t, root, inputs)
+	}
+	hiya := []Mutation{{File: source, Before: `return "hello"`, After: `return "hiya"`}}
+	if keyOf(howdy) == keyOf(hiya) {
+		t.Fatal("a changed after-string left the key as it was")
+	}
+	if keyOf(howdy) == keyOf(nil) {
+		t.Fatal("the mutation left the key as it was")
+	}
+	for _, refused := range [][]Mutation{
+		{{File: source, Before: `return "goodbye"`, After: `return "x"`}},
+		{{File: source, Before: "", After: "x"}},
+		{{File: "internal/buildcache/testdata/hello/main.go", Before: "hello", After: "x"}},
+	} {
+		if _, err := keyed(refused); err == nil {
+			t.Errorf("%+v was keyed, want it refused", refused)
+		}
+	}
+}
