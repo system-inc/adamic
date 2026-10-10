@@ -301,13 +301,13 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 	return numbersProgram{dir: dir, main: main, c: filepath.Join(dir, "program.c"), javascript: filepath.Join(dir, "program.mjs")}
 }
 
+// numbersClangToolchain is clang by its report, without where this machine installed it (#t37sw0f).
 func numbersClangToolchain(t *testing.T) string {
 	t.Helper()
-	output, err := numbersSetupCommand(t, "clang", "--version").Output()
-	if err != nil {
+	if _, err := numbersSetupCommand(t, "clang", "--version").Output(); err != nil {
 		t.Fatal(err)
 	}
-	return strings.TrimSpace(string(output))
+	return buildcache.Tool("clang", "--version")
 }
 
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {

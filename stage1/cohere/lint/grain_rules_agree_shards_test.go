@@ -189,9 +189,7 @@ func rulesAgreeNative(t *testing.T) string {
 		inputs.Name = "lint-rules-agree-native-sanitized"
 		inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
 			"Split=true", "Jobs=4",
-			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
-			"ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"),
-			"ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 		rulesAgreeBinaryDirectory = buildcache.Product(t, inputs, func(output string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
@@ -222,7 +220,7 @@ func rulesAgreeOracle(t *testing.T) string {
 		oracleInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-go-oracle",
 			Files:     append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"),
-			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
+			Flags:     []string{"go build", "overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), buildcache.Tool("go", "env", "GOWORK")},
 			Toolchain: []string{runtime.Version()},
 		}
 		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {

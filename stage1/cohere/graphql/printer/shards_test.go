@@ -56,6 +56,10 @@ func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string
 func printerInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
+	tree, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
@@ -65,7 +69,8 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 			if err != nil {
 				return err
 			}
-			if entry.Name() == ".git" || entry.Name() == "node_modules" {
+			// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
+			if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
 				if entry.IsDir() {
 					return filepath.SkipDir
 				}

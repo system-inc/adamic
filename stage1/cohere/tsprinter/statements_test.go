@@ -48,8 +48,13 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 	}
 	oracleDir := printerGateGoOracle(t)
 	flags := []string{"Go oracle sha256=" + statementFileHash(t, oracleDir+"/oracle"), "width=80"}
+	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it (#t37sw0f).
 	for _, file := range files {
-		flags = append(flags, "input="+file+" sha256="+statementFileHash(t, file))
+		path, err := filepath.Abs(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		flags = append(flags, "input="+tsPrinterOutputLabel(path, root, upstream, true)+" sha256="+statementFileHash(t, file))
 	}
 	product := statementProduct(t, buildcache.Inputs{
 		Name:  "tsprinter-statements-oracle-output-v1",
@@ -240,7 +245,17 @@ func statementLibraryOracle(t *testing.T, number, side int, shard statementShard
 	}
 	script, _ = filepath.Abs(script)
 	return printerGateOnce(t, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
-		flags := append(oracleFlags, "builder sha256="+compilerHash, "cases sha256="+statementFileHash(t, shard.specs), "library="+library, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"), "NODE_PATH="+os.Getenv("NODE_PATH"))
+		// The cases name their files by absolute path, hashed out of Key's reach, so the hash reads them as the tree spells
+		// them; the npm library is keyed by its bytes (npm bytes sha256), the embedded one by Files, neither by where it is,
+		// and NODE_PATH is a location (#t37sw0f).
+		root, _ := filepath.Abs(repository)
+		upstream, _ := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+		specs, err := os.ReadFile(shard.specs)
+		if err != nil {
+			t.Fatal(err)
+		}
+		cases := strings.ReplaceAll(strings.ReplaceAll(string(specs), upstream+"/", "typescript/"), root+"/", "repo/")
+		flags := append(oracleFlags, "builder sha256="+compilerHash, "cases sha256="+statementBytesHash([]byte(cases)), "library="+name, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"))
 		return statementProduct(t, buildcache.Inputs{
 			Name:  fmt.Sprintf("tsprinter-statements-%s-oracle-shard-%03d-v1", name, number),
 			Files: files, Flags: flags,

@@ -323,7 +323,7 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 				continue
 			}
 			options := native.Options{Sanitize: sanitize}
-			inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED")), Toolchain: tools}
+			inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
 			dir := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 			if sanitize {
 				products.sanitized = filepath.Join(dir, "port")

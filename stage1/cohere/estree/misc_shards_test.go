@@ -180,7 +180,7 @@ func miscBuild(t *testing.T, path string) (string, string) {
 	}
 	start := time.Now()
 	flags := append([]string{"main=" + path}, native.Flags(native.Options{Sanitize: true})...)
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT"} {
+	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{

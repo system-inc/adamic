@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -131,16 +132,18 @@ func (h *harness) sixSourceInputs() []string {
 	return h.sixFiles
 }
 
-// Values are used as build inputs, never printed in timing logs. In particular,
-// proxy settings can contain credentials and must not be logged as a manifest.
+// Values are used as build inputs, never printed in timing logs. What only says where something is (PATH, HOME, the
+// temporary directory, go's caches, module proxies, GOROOT and GOPATH, GOENV's file), a parallel share
+// (ADAMIC_NATIVE_JOBS), a cache switch (ADAMIC_GATE_UNCACHED) or a release policy (GOTOOLCHAIN, whose release
+// runtime.Version and go version name) isn't one: it differs between Workshop and a runner and changes no product
+// (#t37sw0f). GOWORK is the workspace the command's own go env reports (sixBuildRecipe), named inside the tree;
+// WASI_SYSROOT serves wasm builds, which these aren't.
 var sixBuildEnvironment = []string{
-	"PATH", "HOME", "USERPROFILE", "XDG_CACHE_HOME", "TMPDIR", "TMP", "TEMP",
-	"GODEBUG", "GOFIPS140", "GOAUTH", "GOENV", "GOWORK", "GO111MODULE", "GOFLAGS", "GOTOOLCHAIN", "GOROOT", "GOPATH",
-	"GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOPROXY", "GOSUMDB", "GOPRIVATE", "GONOPROXY", "GONOSUMDB",
+	"GODEBUG", "GOFIPS140", "GO111MODULE", "GOFLAGS",
 	"GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GOMIPS", "GOMIPS64", "GOWASM", "GOEXPERIMENT",
 	"CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "PKG_CONFIG",
 	"CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "COMPILER_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET",
-	"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "WASI_SYSROOT",
+	"ADAMIC_NATIVE_SPLIT",
 }
 
 func sixEnvironment(command *exec.Cmd, name string) string {
@@ -172,17 +175,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	}
 	in := sixBuildInputs{Name: "typeaware six " + name, Files: append([]string(nil), h.sixSourceInputs()...), Flags: []string{"six-build-recipe-v1"}}
 	if h.sixVersions == nil {
-		h.sixVersions = []string{"runtime.Version()=" + runtime.Version()}
-		for _, tool := range []struct {
-			name string
-			args []string
-		}{{"go", []string{"version"}}, {"clang", []string{"--version"}}} {
-			data, err := typeAwareCommandOutput(exec.Command(tool.name, tool.args...))
-			if err != nil {
-				h.t.Fatal(err)
-			}
-			h.sixVersions = append(h.sixVersions, string(data))
-		}
+		h.sixVersions = []string{"runtime.Version()=" + runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	}
 	in.Toolchain = append([]string(nil), h.sixVersions...)
 	// Include effective Go configuration, not only exported values: GOENV may
@@ -202,11 +195,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	// CC's version also matters for cgo, including its default when CC is unset.
 	cc := strings.Fields(settings["CC"])
 	if len(cc) > 0 {
-		data, err := typeAwareCommandOutput(exec.Command(cc[0], append(cc[1:], "--version")...))
-		if err != nil {
-			h.t.Fatal(err)
-		}
-		in.Toolchain = append(in.Toolchain, string(data))
+		in.Toolchain = append(in.Toolchain, buildcache.Tool(cc[0], append(cc[1:], "--version")...))
 	}
 	for _, key := range sixBuildEnvironment {
 		in.Flags = append(in.Flags, "env "+key+"="+sixEnvironment(command, key))
@@ -214,15 +203,22 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	in.Flags = append(in.Flags, "cwd="+canonical(command.Dir))
 	// Go embeds VCS metadata by default. Preserve the existing flags and declare
 	// this implicit input too, rather than silently changing -buildvcs behavior.
-	revision, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "rev-parse", "HEAD"))
-	if err != nil {
-		h.t.Fatal(err)
+	// With -buildvcs=false in effect (cloud/setup.sh exports it) nothing is
+	// stamped, so the commit isn't an input and an unpacked source with no .git
+	// keys what a checkout does (#t37sw0f).
+	if slices.Contains(strings.Fields(settings["GOFLAGS"]), "-buildvcs=false") {
+		in.Flags = append(in.Flags, "vcs: not stamped, -buildvcs=false")
+	} else {
+		revision, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "rev-parse", "HEAD"))
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		status, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "status", "--porcelain"))
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		in.Flags = append(in.Flags, "vcs.revision="+strings.TrimSpace(string(revision)), fmt.Sprintf("vcs.modified=%t", len(status) != 0))
 	}
-	status, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "status", "--porcelain"))
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	in.Flags = append(in.Flags, "vcs.revision="+strings.TrimSpace(string(revision)), fmt.Sprintf("vcs.modified=%t", len(status) != 0))
 
 	file := ""
 	seen := map[string]bool{}

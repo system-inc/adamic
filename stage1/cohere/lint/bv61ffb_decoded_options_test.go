@@ -261,7 +261,7 @@ func decodedOptionsSetupTest(t *testing.T) {
 	})
 	inputs.Name = "lint-decoded-options-go-oracle-setup-v2"
 	inputs.Files = append(inputs.Files, "cohere/go.mod", "cohere/internal", "stage1/cohere/lint/testdata/oracle.go")
-	inputs.Flags = append(inputs.Flags, "Go oracle=full live registry", "GOTOOLCHAIN="+os.Getenv("GOTOOLCHAIN"))
+	inputs.Flags = append(inputs.Flags, "Go oracle=full live registry", buildcache.Tool("go", "version"))
 	oracleProduct := buildcache.Product(t, inputs, func(output string) error {
 		_, err := decodedOptionsGoOracle(ctx, output)
 		return err

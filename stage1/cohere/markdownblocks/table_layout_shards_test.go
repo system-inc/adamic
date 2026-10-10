@@ -192,7 +192,8 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 		}
 		modeInputs := inputs
 		modeInputs.Name = fmt.Sprintf("markdown table native %t", sanitize)
-		modeInputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
+		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
+		modeInputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		modeInputs.Toolchain = []string{runtime.Version(), buildcache.Tool("clang", "--version")}
 		builds = append(builds, startFixtureTask(&workers, func() (string, error) {
 			directory := buildcache.Product(t, modeInputs, func(directory string) error {

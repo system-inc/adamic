@@ -72,9 +72,10 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	if target == "" || target == "go" {
 		flags := []string{"-trimpath", "-buildvcs=false", "-ldflags=-buildid="}
 		inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: goTools, Flags: append([]string(nil), flags...)}
-		for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOWORK"} {
+		for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
 			inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
 		}
+		inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOWORK"))
 		dir := buildcache.Product(t, inputs, func(dir string) error {
 			replace := map[string]string{}
 			for to, from := range recipe.overlay {
@@ -125,7 +126,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 			continue
 		}
 		options := native.Options{Sanitize: sanitize}
-		flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+		flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-grain-%s-native-%t", name, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: nativeTools}, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 		if sanitize {
 			p.sanitized = filepath.Join(dir, "port")

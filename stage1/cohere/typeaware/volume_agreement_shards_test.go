@@ -103,7 +103,7 @@ func TestVolumeAgreementAndMutantsUnion(t *testing.T) {
 // has no test-side deadline; the build phase owns cache misses.
 func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 	inputs := volumeGuardInputs(context.Background(), "agreement-"+name, sanitize)
-	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "GOOS", "GOARCH", "CGO_ENABLED", "GOTOOLCHAIN"} {
+	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "GOOS", "GOARCH", "CGO_ENABLED"} {
 		inputs.Flags = append(inputs.Flags, key+"="+os.Getenv(key))
 	}
 	return inputs

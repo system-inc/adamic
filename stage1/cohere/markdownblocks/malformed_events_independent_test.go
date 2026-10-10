@@ -108,7 +108,7 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 	options := native.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
 	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
+	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
@@ -351,7 +351,7 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 	return buildcache.Product(t, buildcache.Inputs{
 		Name:      "markdownblocks-malformed-events-go-errors",
 		Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
-		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
+		Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(dir string) error {
 		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
