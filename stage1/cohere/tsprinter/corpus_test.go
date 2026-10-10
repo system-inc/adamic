@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 var repositoryCorpusRoots = []string{
@@ -18,15 +20,15 @@ func trackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 	if err != nil || !info.IsDir() {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
 	}
-	command := bounded(t, "git", "-C", checkout, "ls-files", "-z", "--", root)
-	data, err := output(command)
+	// git ls-files where the checkout has .git, else the manifest a Loom runner's unpacked source carries.
+	entries, err := tracked.Files(checkout)
 	if err != nil {
-		return nil, fmt.Errorf("corpus root %s: git ls-files: %w", root, err)
+		return nil, fmt.Errorf("corpus root %s: tracked files: %w", root, err)
 	}
 	var files []string
-	for _, path := range strings.Split(string(data), "\x00") {
-		if strings.HasSuffix(path, ".ts") {
-			files = append(files, filepath.Join(checkout, path))
+	for _, entry := range tracked.Under(entries, root) {
+		if strings.HasSuffix(entry.Path, ".ts") {
+			files = append(files, filepath.Join(checkout, entry.Path))
 		}
 	}
 	if len(files) == 0 {
@@ -94,5 +96,28 @@ func TestTrackedCorpusRoots(t *testing.T) {
 	}
 	if _, err := trackedRootFiles(t, directory, "empty"); err == nil || !strings.Contains(err.Error(), "empty") {
 		t.Fatalf("empty root was not named: %v", err)
+	}
+	// The same checkout as a Loom runner unpacks it, every file but .git, answers from the tree's manifest alike.
+	if result := execute(t, nil, "git", "-C", directory, "-c", "user.name=Corpus fixture", "-c", "user.email=corpus@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "fixture"); result.exitCode != 0 {
+		t.Fatal(string(result.stderr))
+	}
+	source := t.TempDir()
+	for _, name := range []string{"named/tracked.ts", "named/untracked.ts", "outside.ts"} {
+		if err := os.MkdirAll(filepath.Join(source, filepath.Dir(name)), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(source, name), []byte("x;\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := trackedRootFiles(t, source, "named"); err == nil || !strings.Contains(err.Error(), tracked.ManifestDirectory) {
+		t.Fatalf("a source with neither .git nor a manifest was listed: %v", err)
+	}
+	if err := tracked.Write(directory, source); err != nil {
+		t.Fatal(err)
+	}
+	files, err = trackedRootFiles(t, source, "named")
+	if err != nil || len(files) != 1 || files[0] != filepath.Join(source, "named/tracked.ts") {
+		t.Fatalf("named tracked corpus without .git: %v %v", files, err)
 	}
 }

@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // Not parallel: paired compiler timings must not compete with other tests in this process.
@@ -32,7 +34,13 @@ func TestMeasureClangUnits(t *testing.T) {
 	defer output.Close()
 	encoder := json.NewEncoder(output)
 	metadata := map[string]string{}
-	for name, arguments := range map[string][]string{"commit": {"git", "rev-parse", "HEAD"}, "nproc": {"nproc"}, "go": {"go", "version"}, "clang": {"clang", "--version"}, "node": {"node", "--version"}} {
+	// The tree's commit: git where it has .git, else the manifest a Loom runner's unpacked source carries.
+	commit, err := tracked.Head("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	metadata["commit"] = commit
+	for name, arguments := range map[string][]string{"nproc": {"nproc"}, "go": {"go", "version"}, "clang": {"clang", "--version"}, "node": {"node", "--version"}} {
 		data, err := exec.Command(arguments[0], arguments[1:]...).Output()
 		if err != nil {
 			t.Fatal(err)
