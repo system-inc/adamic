@@ -1,0 +1,92 @@
+{
+  "sha": "0da97da4d90586b57693e63c51773882fbfdf5b9",
+  "branch": "gate-mutant/binary-dies-partway",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "72ad75effe2dbcc0deedc3e7e34a8d5e29670eac",
+  "base_name": "main",
+  "tools_sha": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 22.7,
+      "cores": 64
+    },
+    "end": {
+      "load_1m": 22.7,
+      "cores": 64
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Cloud",
+    "cpus": 64,
+    "load": [
+      22.7,
+      26.0,
+      41.2
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 0.5,
+  "steps_seconds": {},
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "determinism",
+    "census"
+  ],
+  "stages_exit": {},
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "stopped": {
+    "reason": "mutant suite paused until cutover (system_adamic 23:54Z): landings outrank gate-tool runs",
+    "at_seconds": 0.5
+  },
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "fast",
+  "candidate": "a840ec0723dee3a596055f76146a36a44cc60b10",
+  "gated": "0da97da4d90586b57693e63c51773882fbfdf5b9",
+  "merged_onto": "72ad75effe2dbcc0deedc3e7e34a8d5e29670eac"
+}
