@@ -1,0 +1,142 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_primary_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_primary_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_boolean_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_boolean_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_node_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_node_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_node_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_node_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_type_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_type_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_type_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_type_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_comment_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_comment_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_comment_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_comment_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_overloaded_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_overloaded_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_function.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_function.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_function.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_methods.a:5:14: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_comment_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_binary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_comment_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_union_next.a:5:45: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_type_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_unary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_type_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_node_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_type_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_type_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_node_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_comment_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_boolean_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_comment_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_comment_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_primary_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_node_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_unary_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_boolean_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_optional_boolean_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_node_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_update_node_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_overloaded_function.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_lazy_object.a:9:57: stage 0 can't lower reading factory yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_primary_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_primary_function.a:3:24: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_closure_number_next.a:5:41: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_overloaded_function.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_overloaded_function.a:18:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a:11:9: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/getters_census_snapshot_next.a:7:56: stage 0 can't lower a non-accessor method in an accessor literal yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+    oracle_test.go:754: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a
+    oracle_test.go:597: gate cache native miss
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_methods.a (0.11s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_binary_function.a (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_union_next.a (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_function.a (0.11s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_type_function.a (0.10s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_type_function.a (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_comment_function.a (0.16s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_comment_function.a (0.17s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_unary_node_function.a (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_optional_boolean_function.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_update_node_function.a (0.10s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_lazy_object.a (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_primary_function.a (0.08s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_closure_number_next.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_overloaded_function.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_callback_pair_methods.a (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_higher_callback_pair_methods.a (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_snapshot_next.a (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_class_map.a (18.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/getters_census_throwing_object.a (26.72s)
+FAIL
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	27.179s
+FAIL
