@@ -1,0 +1,5 @@
+FIRST FAILURE (a-check, at 69.8 s):
+a-check failed for 2 files:
+review/compiler/fx5-every-refusal/initial-literal-layout.a: refused, expected checked (adamic: /home/cloud/fast-gate/tree-4/review/compiler/fx5-every-refusal/initial-literal-layout.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element )
+review/compiler/fx5-literal-refusal/all-number.a: refused, expected checked (adamic: /home/cloud/fast-gate/tree-4/review/compiler/fx5-literal-refusal/all-number.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type expli)
+(box load 57.2 on 64 cores at first failure)
