@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -69,7 +69,7 @@
+ 		ModuleDetection:  core.ModuleDetectionKindForce,
+ 		ModuleResolution: core.ModuleResolutionKindBundler,
+ 		Target:           core.ScriptTargetES2024,
+-		Lib:              []string{"lib.es2024.d.ts"},
++		Lib:              []string{"lib.es2024.d.ts", "lib.dom.d.ts"},
+ 		Types:            []string{},
+ 	}
+ }

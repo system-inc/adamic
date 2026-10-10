@@ -1,0 +1,27 @@
+{
+  "binary_sha256": "50ca13d885dec42d02f11311c0550690e413958c9d2b7ffcbc82a1c1dbdc073a",
+  "root": "/tmp/b17vtn1/original-adapted/src/compiler",
+  "seconds": 1800,
+  "rss_mib": 6144,
+  "go_env": {
+    "GOMEMLIMIT": "4GiB",
+    "GOGC": "200",
+    "GOMAXPROCS": "4"
+  },
+  "exclusive": true,
+  "original_batch_metrics": {
+    "command": [
+      "/tmp/b17vtn1/stream-census",
+      "/tmp/b17vtn1/original-adapted/src/compiler",
+      "/tmp/pqjagjf/retry/records/checker.ts.pending"
+    ],
+    "wall_seconds": 600.1709793999999,
+    "peak_rss_kib": 2086644,
+    "exit": 124,
+    "time_limit_seconds": 600.0,
+    "rss_limit_mib": 3072,
+    "address_space_limit_mib": 6144,
+    "rss_limit_killed": false,
+    "unit_deadline_limited": false
+  }
+}
