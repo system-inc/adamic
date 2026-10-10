@@ -1,0 +1,628 @@
+{
+  "workers": 4,
+  "deadline_epoch": 1791590295.0,
+  "attempts": [
+    {
+      "file": "utilities.ts",
+      "started_epoch": 1791583676.4567144,
+      "finished_epoch": 1791584031.440814,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/utilities.ts.pending"
+        ],
+        "wall_seconds": 354.77561397800037,
+        "peak_rss_kib": 2141536,
+        "exit": -9,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false
+      },
+      "completed": false
+    },
+    {
+      "file": "parser.ts",
+      "started_epoch": 1791583676.4562752,
+      "finished_epoch": 1791584225.7918825,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/parser.ts.pending"
+        ],
+        "wall_seconds": 549.1791472479999,
+        "peak_rss_kib": 3153308,
+        "exit": -9,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": true,
+        "unit_deadline_limited": false
+      },
+      "completed": false
+    },
+    {
+      "file": "checker.ts",
+      "started_epoch": 1791583676.4557893,
+      "finished_epoch": 1791584276.796404,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/checker.ts.pending"
+        ],
+        "wall_seconds": 600.1709793999999,
+        "peak_rss_kib": 2086644,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false
+      },
+      "completed": false
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "started_epoch": 1791583676.4568665,
+      "finished_epoch": 1791584276.788076,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/factory__nodeFactory.ts.pending"
+        ],
+        "wall_seconds": 600.1540704499998,
+        "peak_rss_kib": 2125656,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false
+      },
+      "completed": false
+    },
+    {
+      "file": "scanner.ts",
+      "started_epoch": 1791584276.7966676,
+      "finished_epoch": 1791584389.5941656,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/scanner.ts.pending"
+        ],
+        "wall_seconds": 112.58587647399963,
+        "peak_rss_kib": 1035624,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "emitter.ts",
+      "started_epoch": 1791584031.4411201,
+      "finished_epoch": 1791584631.8014152,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/emitter.ts.pending"
+        ],
+        "wall_seconds": 600.16435765,
+        "peak_rss_kib": 1456356,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false
+      },
+      "completed": false
+    },
+    {
+      "file": "program.ts",
+      "started_epoch": 1791584225.792116,
+      "finished_epoch": 1791584826.183588,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/program.ts.pending"
+        ],
+        "wall_seconds": 600.0746358780002,
+        "peak_rss_kib": 1036000,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "started_epoch": 1791584276.7882888,
+      "finished_epoch": 1791584877.192399,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/transformers__es2015.ts.pending"
+        ],
+        "wall_seconds": 600.2124462090001,
+        "peak_rss_kib": 1043996,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "binder.ts",
+      "started_epoch": 1791584389.5944097,
+      "finished_epoch": 1791584989.997235,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/binder.ts.pending"
+        ],
+        "wall_seconds": 600.1837171550005,
+        "peak_rss_kib": 1035304,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "commandLineParser.ts",
+      "started_epoch": 1791584631.8017004,
+      "finished_epoch": 1791585232.087141,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/commandLineParser.ts.pending"
+        ],
+        "wall_seconds": 600.0966145140001,
+        "peak_rss_kib": 1034868,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    },
+    {
+      "file": "transformers/generators.ts",
+      "started_epoch": 1791585232.0873592,
+      "finished_epoch": 1791585232.2017212,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "builder.ts",
+      "started_epoch": 1791585232.2018778,
+      "finished_epoch": 1791585232.332419,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/ts.ts",
+      "started_epoch": 1791585232.332559,
+      "finished_epoch": 1791585232.4814177,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "started_epoch": 1791585232.4815354,
+      "finished_epoch": 1791585232.652175,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "started_epoch": 1791585232.6523755,
+      "finished_epoch": 1791585232.7803795,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "started_epoch": 1791585232.7805157,
+      "finished_epoch": 1791585232.898089,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "started_epoch": 1791585232.898222,
+      "finished_epoch": 1791585233.0304701,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "core.ts",
+      "started_epoch": 1791585233.0305912,
+      "finished_epoch": 1791585233.1803436,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "visitorPublic.ts",
+      "started_epoch": 1791585233.1805122,
+      "finished_epoch": 1791585233.3452923,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "sys.ts",
+      "started_epoch": 1791585233.3454688,
+      "finished_epoch": 1791585233.4803433,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "started_epoch": 1791585233.480465,
+      "finished_epoch": 1791585233.5980718,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "resolutionCache.ts",
+      "started_epoch": 1791585233.5981948,
+      "finished_epoch": 1791585233.7323847,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "started_epoch": 1791585233.73251,
+      "finished_epoch": 1791585233.8476222,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "factory/utilities.ts",
+      "started_epoch": 1791585233.8477643,
+      "finished_epoch": 1791585233.9803662,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "started_epoch": 1791585233.980531,
+      "finished_epoch": 1791585234.0984707,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "started_epoch": 1791585234.0985954,
+      "finished_epoch": 1791585234.232394,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "started_epoch": 1791585234.2325299,
+      "finished_epoch": 1791585234.3468304,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "watchPublic.ts",
+      "started_epoch": 1791585234.3470178,
+      "finished_epoch": 1791585234.480405,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "debug.ts",
+      "started_epoch": 1791585234.4805393,
+      "finished_epoch": 1791585234.5980465,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "started_epoch": 1791585234.598162,
+      "finished_epoch": 1791585234.7304513,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "started_epoch": 1791585234.7305655,
+      "finished_epoch": 1791585234.8625777,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "started_epoch": 1791585234.8627698,
+      "finished_epoch": 1791585234.9948573,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "watch.ts",
+      "started_epoch": 1791585234.9949794,
+      "finished_epoch": 1791585235.1091835,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "started_epoch": 1791585235.1093004,
+      "finished_epoch": 1791585235.2385051,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "started_epoch": 1791585235.2387056,
+      "finished_epoch": 1791585235.3640182,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "started_epoch": 1791585235.3641486,
+      "finished_epoch": 1791585235.4928484,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "watchUtilities.ts",
+      "started_epoch": 1791585235.4929729,
+      "finished_epoch": 1791585235.6074483,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "started_epoch": 1791585235.6075673,
+      "finished_epoch": 1791585235.7324014,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "started_epoch": 1791585235.7325368,
+      "finished_epoch": 1791585235.8803535,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "sourcemap.ts",
+      "started_epoch": 1791585235.8804796,
+      "finished_epoch": 1791585235.9982755,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "started_epoch": 1791585235.9984865,
+      "finished_epoch": 1791585236.132374,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformer.ts",
+      "started_epoch": 1791585236.132494,
+      "finished_epoch": 1791585236.2803254,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "builderState.ts",
+      "started_epoch": 1791585236.280449,
+      "finished_epoch": 1791585236.394621,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "started_epoch": 1791585236.3947434,
+      "finished_epoch": 1791585236.480355,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "tracing.ts",
+      "started_epoch": 1791585236.484309,
+      "finished_epoch": 1791585236.6020994,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "started_epoch": 1791585236.602217,
+      "finished_epoch": 1791585236.7323766,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "started_epoch": 1791585236.7325006,
+      "finished_epoch": 1791585236.8164783,
+      "runner_exit": 0,
+      "metrics": null,
+      "completed": false
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "started_epoch": 1791584989.9974303,
+      "finished_epoch": 1791585289.8581147,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/transformers__esDecorators.ts.pending"
+        ],
+        "wall_seconds": 299.6608715019993,
+        "peak_rss_kib": 1038484,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "started_epoch": 1791584877.1925874,
+      "finished_epoch": 1791585351.9388416,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/transformers__classFields.ts.pending"
+        ],
+        "wall_seconds": 474.552685914,
+        "peak_rss_kib": 1036116,
+        "exit": 0,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": true
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "started_epoch": 1791584826.1838257,
+      "finished_epoch": 1791585426.5021696,
+      "runner_exit": 0,
+      "metrics": {
+        "command": [
+          "/tmp/b17vtn1/stream-census",
+          "/tmp/b17vtn1/original-adapted/src/compiler",
+          "/tmp/pqjagjf/retry/records/moduleNameResolver.ts.pending"
+        ],
+        "wall_seconds": 600.0848015709998,
+        "peak_rss_kib": 1036120,
+        "exit": 124,
+        "time_limit_seconds": 600.0,
+        "rss_limit_mib": 3072,
+        "address_space_limit_mib": 6144,
+        "rss_limit_killed": false,
+        "unit_deadline_limited": false,
+        "go_env": {
+          "GOMEMLIMIT": "1GiB",
+          "GOGC": "200",
+          "GOMAXPROCS": "1"
+        }
+      },
+      "completed": false
+    }
+  ]
+}

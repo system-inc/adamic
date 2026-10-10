@@ -1,0 +1,38 @@
+import hashlib,json,os,shutil,subprocess,time
+from pathlib import Path
+base=Path('/tmp/pqjagjf');run=base/'retry-priority';deadline=1791590295
+while time.time()<deadline+20:
+    p=run/'ATTEMPTS.json'
+    if p.exists() and len(json.loads(p.read_text())['attempts'])==39:break
+    time.sleep(2)
+else:raise SystemExit('priority journal not complete by deadline; manual bounded finalization required')
+print('Batch finished at '+time.strftime('%Y-%m-%d %H:%M:%S',time.gmtime()),flush=True)
+script='stage3/census/speculative/'
+if time.time()<=deadline-1805:
+    checker=base/'checker-exclusive';checker.mkdir(exist_ok=True)
+    binary=base/'progress-v2-census';source='/tmp/b17vtn1/original-adapted/src/compiler'
+    env=dict(os.environ,LATENT_ONLY_FILE=source+'/checker.ts',LATENT_SPECULATIVE='1',LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_PROGRESS_FILE=str(checker/'progress.json'),GOMEMLIMIT='4GiB',GOGC='200',GOMAXPROCS='4')
+    config=dict(binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),root=source,seconds=1800,rss_mib=6144,go_env={k:env[k] for k in ('GOMEMLIMIT','GOGC','GOMAXPROCS')},exclusive=True,original_batch_metrics=json.loads((run/'checker.ts.metrics.json').read_text()))
+    (checker/'INPUT.json').write_text(json.dumps(config,indent=2)+'\n')
+    print('Start exclusive checker: 1800s, four CPUs, RSS6GiB, AS12GiB',flush=True)
+    with (checker/'supervisor.log').open('w') as log:
+        result=subprocess.run(['python3',script+'timed_run.py','1800','6144',str(checker/'metrics.json'),str(checker/'checker.log'),str(binary),source,str(checker/'checker.jsonl')],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=1810)
+    metrics=json.loads((checker/'metrics.json').read_text());metrics['go_env']=config['go_env'];metrics['exclusive']=True;metrics['producer_binary_sha256']=config['binary_sha256'];(checker/'metrics.json').write_text(json.dumps(metrics,indent=2)+'\n')
+    if result.returncode==0:
+        raw=(checker/'checker.jsonl').read_bytes();rows=[json.loads(x) for x in raw.splitlines()]
+        reference=next((run/'records').glob('*.jsonl'));header=json.loads(reference.read_text().splitlines()[0])
+        assert len(rows)==2 and rows[0]==header and rows[1]['file']==source+'/checker.ts'
+        assert rows[1]['speculative_coverage']['unvisited_nodes']==0 and rows[1]['speculative_coverage']['source_bytes']==3154156
+        (run/'records/checker.ts.sha256').write_text(hashlib.sha256(raw).hexdigest()+'\n')
+        shutil.copyfile(checker/'checker.jsonl',run/'records/checker.ts.jsonl');shutil.copyfile(checker/'metrics.json',run/'checker.ts.metrics.json')
+        (run/'PRODUCERS.json').write_text(json.dumps([dict(file='checker.ts',**config)],indent=2)+'\n')
+        print('Exclusive checker completed; verified record joins cumulative corpus',flush=True)
+    else:print('Exclusive checker incomplete, exit '+str(result.returncode),flush=True)
+else:print('No full exclusive 1800-second budget remains; retain earlier bounded probe',flush=True)
+output=Path('/workspace/pqjagjf-storage/final-result');output.mkdir(parents=True,exist_ok=True)
+env=dict(os.environ,NODE_PATH='/home/agent/.cache/adamic-stage3/api/node_modules')
+with (base/'finalize-supervisor.log').open('w') as log:
+    subprocess.run(['python3',script+'timed_run.py','300','6144',str(base/'finalize.metrics.json'),str(base/'finalize.log'),'python3',script+'finalize_stream.py','/tmp/b17vtn1/original-adapted/src/compiler',str(run),str(output)],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=310,check=True)
+with (base/'verify-final.log').open('w') as log:
+    subprocess.run(['python3',script+'verify.py',str(output/'speculative.jsonl'),str(output/'RESULT.json'),'/tmp/b17vtn1/original-adapted/src/compiler'],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=90,check=True)
+print('Finalizer and verifier pass at '+time.strftime('%Y-%m-%d %H:%M:%S',time.gmtime()),flush=True)

@@ -158,7 +158,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	for _, path := range portFiles(t) {
 		files[filepath.ToSlash(filepath.Join("stage1/cohere/lint", path))] = true
 	}
-	for _, path := range []string{"go.work", "stage1/cohere/lint/profile_compilation_main_test.go", "stage1/cohere/lint/profile_compilation_ir_test.go", "stage1/cohere/lint/profile_test.go", "stage1/cohere/lint/lint_setup_clock_regression_test.go"} {
+	for _, path := range []string{"go.work", "stage1/cohere/lint/profile_compilation_main_test.go", "stage1/cohere/lint/profile_compilation_ir_test.go", "stage1/cohere/lint/profile_test.go", "stage1/cohere/lint/lint_setup_clock_remaining_test.go"} {
 		files[path] = true
 	}
 	var paths []string
