@@ -905,6 +905,13 @@ if [ "$(git rev-parse "${landing}^{tree}")" != "$tree" ]; then
 	echo "refused: the landing commit's tree isn't the landing's" >&2
 	exit 1
 fi
+# Check only (Queue's bridge, Oct 10): every check above ran and the landing commit is built, so a verdict can stand on
+# exactly push-main's judgment (zerorun, the ruled gate's census, --infra-red's output recheck, the lane checks) while
+# main moves only through the pusher on workshop. Nothing is pushed and nothing is merged back.
+if [ -n "${PUSH_MAIN_CHECK_ONLY:-}" ]; then
+	echo "checked: ${gated} would land as ${landing} over main ${old}"
+	exit 0
+fi
 # The lander's hands (Loom's cut, Oct 10): with PUSH_MAIN_HANDS set, main moves only through that command, given the
 # landing commit and the old main, which pushes it as a fast-forward with the lander's own key (on workshop, at cutover
 # the only key that can move main). It must leave main exactly at the landing commit or fail; nothing here forces.

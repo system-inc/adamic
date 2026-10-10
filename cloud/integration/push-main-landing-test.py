@@ -147,6 +147,21 @@ class LandingTests(unittest.TestCase):
         finally:
             del os.environ['PUSH_MAIN_HANDS']
 
+    def test_check_only_runs_every_check_and_moves_nothing(self):
+        sha = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test')
+        os.environ['PUSH_MAIN_CHECK_ONLY'] = '1'
+        try:
+            checked = self.push('--test-only', sha, 'checked')
+            self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+            self.assertIn('checked: %s would land as ' % sha, checked.stdout)
+            self.assertEqual(self.main_now(), self.main)
+            # A check still refuses: code in a test-only change.
+            refused = self.push('--test-only', self.change(self.main, 'code/a.go', 'package code\n\n// x\n', 'code'), 'not a split')
+            self.assertIn('not test-only', refused.stderr)
+            self.assertEqual(self.main_now(), self.main)
+        finally:
+            del os.environ['PUSH_MAIN_CHECK_ONLY']
+
     def test_a_deletion_no_code_reads_lands_ungated(self):
         self.write('documentation/table.csv', 'a,b\n')
         self.write('documentation/read.csv', 'a,b\n')
