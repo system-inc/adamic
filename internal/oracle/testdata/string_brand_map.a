@@ -1,0 +1,14 @@
+enum InternalSymbolName { Call = "__call", Constructor = "__constructor", Missing = "__missing" }
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+interface Symbol { readonly name: string; }
+function lookup(table: Map<__String, Symbol>, key: __String): Symbol | undefined { return table.get(key); }
+const table = new Map<__String, Symbol>();
+const key = ("___" + "name".repeat(20)) as __String;
+table.set(key, {name: "symbol".repeat(3)});
+console.log(lookup(table, key)?.name ?? "missing");
+console.log(lookup(table, "absent" as __String)?.name ?? "missing");
+console.log(`${table.has(key)}:${table.size}`);
+table.set(InternalSymbolName.Call, {name: "call"});
+console.log(lookup(table, InternalSymbolName.Call)?.name ?? "missing");
+table.delete(key);
+console.log(lookup(table, key)?.name ?? "deleted");

@@ -29,7 +29,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	if proof.stringBrand {
 		if l.includesUndefined(source) && !l.includesUndefined(target) {
-			return ir.Defined{Value: value, Message: "cast failed: undefined is not a " + l.checker.TypeToString(target)}, nil
+			return value, nil
 		}
 		return value, nil
 	}

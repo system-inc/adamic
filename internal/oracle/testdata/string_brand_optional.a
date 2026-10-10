@@ -1,0 +1,12 @@
+enum InternalSymbolName { Call = "__call", Constructor = "__constructor", Missing = "__missing" }
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+function read(values: readonly __String[], index: number): __String | undefined { return values[index]; }
+function select(present: boolean): __String | undefined { return read(values, present ? 0 : 99); }
+function show(value: __String | undefined): void {
+ console.log(`${value}:${typeof value}:${value === undefined}:${value ?? "missing"}`);
+}
+const values: readonly __String[] = [InternalSymbolName.Call, InternalSymbolName.Missing];
+show(read(values, 0)); show(read(values, 1)); show(read(values, 2));
+show(select(true)); show(select(false));
+const callback = (present: boolean): __String | undefined => select(present);
+show(callback(false)); show(callback(true));

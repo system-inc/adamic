@@ -1,0 +1,3 @@
+type Brand = string & { readonly actual: number };
+function keep(value: Brand): Brand { return value; }
+console.log(typeof keep);

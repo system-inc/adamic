@@ -46,9 +46,6 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return kind, true
 	}
 	flags := proven.Flags()
-	if stringShape, _ := l.stringBrandRepresentation(proven); stringShape {
-		return ir.String, true
-	}
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
 	}
@@ -173,9 +170,6 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
-	if stringShape, missing := l.stringBrandRepresentation(proven); stringShape && missing {
-		return true
-	}
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}

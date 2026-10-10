@@ -27,12 +27,6 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if proof.stringBrand {
-		if l.includesUndefined(source) && !l.includesUndefined(target) {
-			return ir.Defined{Value: value, Message: "cast failed: undefined is not a " + l.checker.TypeToString(target)}, nil
-		}
-		return value, nil
-	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
 	}

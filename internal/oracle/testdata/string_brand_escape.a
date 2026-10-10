@@ -1,0 +1,10 @@
+enum InternalSymbolName { Call = "__call", Constructor = "__constructor", Missing = "__missing" }
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+// Reduced from tsc utilities.ts; the cast uses the proven phantom string representation.
+function escapeLeadingUnderscores(identifier: string): __String {
+ return (identifier.length >= 2 && identifier.charCodeAt(0) === 95 && identifier.charCodeAt(1) === 95 ? "_" + identifier : identifier) as __String;
+}
+for (const input of ["", "_", "__", "___name", "name", "🌍__", "__" + "x".repeat(80)]) {
+ const escaped = escapeLeadingUnderscores(input.slice(0));
+ console.log(`${input}:${escaped}:${typeof escaped}`);
+}

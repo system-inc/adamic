@@ -1,0 +1,8 @@
+enum InternalSymbolName { Call = "__call", Constructor = "__constructor", Missing = "__missing" }
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+interface Raw { readonly kind: string; readonly value: unknown; }
+interface Holder { readonly kind: "holder"; readonly value: __String; }
+const raw: Raw = {kind: "holder", value: undefined};
+const holder = raw as Holder;
+const value = holder.value;
+console.log(`${value}:${typeof value}:${value === undefined}`);

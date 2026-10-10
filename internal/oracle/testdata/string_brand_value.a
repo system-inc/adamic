@@ -1,0 +1,6 @@
+enum InternalSymbolName { Call = "__call", Constructor = "__constructor", Missing = "__missing" }
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+const names: readonly __String[] = [InternalSymbolName.Call];
+const present = names[0];
+const absent = names[1];
+console.log(`${present}:${absent}:${typeof absent}:${absent === undefined}`);

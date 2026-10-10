@@ -1,0 +1,3 @@
+type Brand = string & { readonly __brand: void };
+function observe(value: Brand): void { console.log(typeof value.__brand); }
+observe("x" as Brand);

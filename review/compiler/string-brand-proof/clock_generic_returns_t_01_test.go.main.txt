@@ -57,22 +57,17 @@ console.log(typeof make());`)
 
 // A branded primitive is an intersection whose parts aren't all type references. Asking the
 // string part for type arguments made the checker dereference nil (x1 of views slice 1,
-// notyet_element_access/paths.a); the generic object proof must decline it even when another proof lowers strings.
+// notyet_element_access/paths.a); the proof now declines it and lowering stops normally.
 func TestClockGenericReturnsT01DeclinesBrandedPrimitives(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		`type Path = string & { __pathBrand: void }; function read(values: readonly Path[], index: number): Path | undefined { return values[index]; } console.log(typeof read([], 0));`,
 		`type Count = number & { __countBrand: void }; function read(values: readonly Count[], index: number): Count | undefined { return values[index]; } console.log(typeof read([], 0));`,
 	} {
-		graph, statements := namespaceGraphForTest(t, source)
-		for _, node := range statements {
-			if node.Kind == ast.KindFunctionDeclaration {
-				checked := graph.lowering.checker
-				result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
-				if _, known := graph.lowering.clockGenericReturnsT01(result); known {
-					t.Fatal("generic object proof admitted a branded primitive")
-				}
-			}
+		_, err := lowerSource(t, source)
+		var stop *NotYet
+		if !errors.As(err, &stop) {
+			t.Fatalf("want an explicit NotYet for a branded primitive result, got %v", err)
 		}
 	}
 }
