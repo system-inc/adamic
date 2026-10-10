@@ -2,6 +2,8 @@ module github.com/system-inc/adamic
 
 go 1.27
 
+toolchain go1.27.1
+
 // Stage 0 reads the checker's proven types in process, through the shims cohere generates over
 // typescript-go's internals. They live in the cohere submodule: one checker for both, pinned
 // to cohere's TypeScript submodule commit (see internal/load/pin_test.go), with nothing copied.
