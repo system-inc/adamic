@@ -20,6 +20,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -301,9 +302,12 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", ".")
+	// The module's test binary with the harness laid over it is a product (buildcache.GoTest), built ahead under
+	// GOWORK=off as before, and run here in the module's directory, where go test would run it.
+	binary := buildcache.GoTest(t, "cohere/static_single_assignment", "static_single_assignment.test", ".", []string{"-overlay=" + overlayPath}, "GOWORK=off")
+	command := bounded(t, binary, "-test.run=^TestAdamicPortCases$")
 	command.Dir = module
-	command.Env = append(os.Environ(), "GOWORK=off", "ADAMIC_PORT_REQUEST="+requestPath)
+	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
 	}
