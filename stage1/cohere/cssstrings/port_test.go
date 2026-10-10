@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -276,6 +277,12 @@ func prepareCSSStringsSetup(t *testing.T) {
 
 func runCSSStringsShard(t *testing.T, ordinal int) {
 	t.Helper()
+	// A shard ADAMIC_TEST_SHARD leaves out skips before any setup, so it fetches and builds nothing.
+	if chosen, err := stringsSelected(os.Getenv("ADAMIC_TEST_SHARD"), ordinal); err != nil {
+		t.Fatal(err)
+	} else if !chosen {
+		t.Skip("excluded by ADAMIC_TEST_SHARD")
+	}
 	// Fetch shared products once per process before starting this shard's clock.
 	prepareCSSStringsSetup(t)
 	if stringsTopSetup.run == nil {
@@ -325,7 +332,23 @@ func equal(t *testing.T, name string, a, b []byte) {
 	}
 }
 
+// stringsPreparedOracle is the Go oracle's binary, keyed and fetched once per process however many entry points ask
+// (the setup, its TestProduct_ and the answers product).
 func stringsPreparedOracle(t *testing.T) string {
+	t.Helper()
+	stringsOracle.once.Do(func() { stringsOracle.binary = stringsOracleBuild(t) })
+	if stringsOracle.binary == "" {
+		t.Fatal("the Go oracle product failed in the test that first asked for it")
+	}
+	return stringsOracle.binary
+}
+
+var stringsOracle struct {
+	once   sync.Once
+	binary string
+}
+
+func stringsOracleBuild(t *testing.T) string {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {

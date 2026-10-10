@@ -170,25 +170,35 @@ func verifyStringsUnion(t *testing.T, corpus stringsCorpus, units []stringsUnit)
 }
 
 func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) {
-	if value == "" {
-		return units, nil
-	}
-	parts := strings.Split(value, "/")
-	if len(parts) != 2 {
-		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
-	}
-	i, errI := strconv.Atoi(parts[0])
-	n, errN := strconv.Atoi(parts[1])
-	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
-		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
-	}
 	var selected []stringsUnit
 	for ordinal, unit := range units {
-		if ordinal%n == i {
+		chosen, err := stringsSelected(value, ordinal)
+		if err != nil {
+			return nil, err
+		}
+		if chosen {
 			selected = append(selected, unit)
 		}
 	}
 	return selected, nil
+}
+
+// stringsSelected reports whether ADAMIC_TEST_SHARD's value (zero-based i/n) selects the unit at ordinal: every unit when
+// empty, else those with ordinal % n == i. A shard knows it from its ordinal alone, before any setup.
+func stringsSelected(value string, ordinal int) (bool, error) {
+	if value == "" {
+		return true, nil
+	}
+	parts := strings.Split(value, "/")
+	if len(parts) != 2 {
+		return false, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
+	}
+	i, errI := strconv.Atoi(parts[0])
+	n, errN := strconv.Atoi(parts[1])
+	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
+		return false, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
+	}
+	return ordinal%n == i, nil
 }
 
 func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
