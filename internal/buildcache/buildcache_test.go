@@ -2,7 +2,9 @@ package buildcache
 
 import (
 	"errors"
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -212,6 +214,189 @@ func TestParallelCallersBuildOnce(t *testing.T) {
 		if product != products[0] {
 			t.Fatalf("products differ: %v", products)
 		}
+	}
+}
+
+// A key names what changes a product, never which machine computed it (#t37sw0f): the checkout's path, the home
+// directory, the build cache and Go's -p share are spelled the same on every machine, and every flag that changes the
+// output still moves the key. Each pair below is one machine against another; drop a rule from portable and its pair
+// fails.
+// Not parallel: points the home directory and the build cache at each machine's through t.Setenv.
+func TestAKeyNamesNoMachine(t *testing.T) {
+	asMachine := func(home, root, value string) string {
+		t.Setenv("HOME", home)
+		t.Setenv("ADAMIC_BUILD_CACHE_DIR", filepath.Join("/srv", filepath.Base(home), "products"))
+		return portable(root, value)
+	}
+	for _, same := range []struct{ name, workshop, runner string }{
+		{"the checkout's path", "repository=/home/ahra/work/adamic", "repository=/srv/runner/7/adamic"},
+		{"a path inside the checkout", "main=/home/ahra/work/adamic/stage1/cohere/lint", "main=/srv/runner/7/adamic/stage1/cohere/lint"},
+		{"the home directory", "CC=/home/ahra/adamic-tools/llvm/bin/clang", "CC=/home/cloud/adamic-tools/llvm/bin/clang"},
+		{"another product, by its path", "main=/srv/ahra/products/0123abcd/main.ts", "main=/srv/cloud/products/0123abcd/main.ts"},
+		{"GOFLAGS' -p share, last", "GOFLAGS=-buildvcs=false -trimpath -p=12", "GOFLAGS=-buildvcs=false -trimpath"},
+		{"GOFLAGS' -p share, first", "GOFLAGS=-p=12 -buildvcs=false -trimpath", "GOFLAGS=-p=3 -buildvcs=false -trimpath"},
+		{"GOFLAGS' -p share, alone", "GOFLAGS=-p=12", "GOFLAGS="},
+		{"go env -json's GOFLAGS", `{"GOFLAGS": "-p=12 -trimpath"}`, `{"GOFLAGS": "-trimpath"}`},
+		{"a go build argument", "arguments -trimpath -p 12 -tags=fancy", "arguments -trimpath -tags=fancy"},
+	} {
+		workshop := asMachine("/home/ahra", "/home/ahra/work/adamic", same.workshop)
+		runner := asMachine("/home/cloud", "/srv/runner/7/adamic", same.runner)
+		if workshop != runner {
+			t.Errorf("%s: Workshop keys %q, a runner %q", same.name, workshop, runner)
+		}
+	}
+	for _, kept := range []struct{ name, value string }{
+		{"a longer name beside the checkout", "/srv/work/adamic-bench/x"},
+		{"a path ending in the home directory's name", "/chroot/home/ahra"},
+		{"-parallel", "-parallel=4"},
+		{"-pgo", "-pgo=off"},
+		{"-p with a path", "-p=./tsconfig.json"},
+	} {
+		if got := asMachine("/home/ahra", "/srv/work/adamic", kept.value); got != kept.value {
+			t.Errorf("%s: %q became %q", kept.name, kept.value, got)
+		}
+	}
+	for _, moved := range []struct{ name, before, after string }{
+		{"a tag", "GOFLAGS=-tags=plain -p=4", "GOFLAGS=-tags=fancy -p=4"},
+		{"-trimpath", "GOFLAGS=-trimpath -p=4", "GOFLAGS=-p=4"},
+		{"a C flag", "CGO_CFLAGS=-O1", "CGO_CFLAGS=-O2"},
+		{"a path inside the tree", "main=/home/ahra/work/adamic/stage1/a", "main=/home/ahra/work/adamic/stage1/b"},
+		{"a path outside the home and the tree", "CC=/usr/bin/clang", "CC=/opt/llvm/bin/clang"},
+	} {
+		if asMachine("/home/ahra", "/home/ahra/work/adamic", moved.before) == asMachine("/home/ahra", "/home/ahra/work/adamic", moved.after) {
+			t.Errorf("changing %s left the value the same: %q and %q", moved.name, moved.before, moved.after)
+		}
+	}
+	// A home of / would rewrite every absolute path: it is never a place.
+	if got := asMachine("/", "/home/ahra/work/adamic", "/usr/bin/clang"); got != "/usr/bin/clang" {
+		t.Errorf("with HOME=/ a path became %q", got)
+	}
+
+	// Key itself: the same files under two checkouts, the name and each flag naming its own checkout and -p share,
+	// one key; a source byte moves it.
+	keyAs := func(home string, root string, share int) string {
+		t.Setenv("HOME", home)
+		return key(t, root, Inputs{Name: "port " + filepath.Join(root, "source/a.c"), Files: []string{"source", "flags.txt"},
+			Flags: []string{"source-root=" + filepath.Join(root, "source"), fmt.Sprintf("GOFLAGS=-trimpath -p=%d", share)}, Toolchain: []string{"clang 20.1.8"}})
+	}
+	one, two := repository(t), repository(t)
+	// A submodule's .git file names its git directory by absolute path; an unpacked source has none.
+	write(t, one, "source/.git", "gitdir: /home/ahra/work/adamic/.git/modules/source\n")
+	if workshop, runner := keyAs("/home/ahra", one, 12), keyAs("/home/cloud", two, 3); workshop != runner {
+		t.Fatalf("one tree at %s and %s keyed %s and %s", one, two, workshop, runner)
+	}
+	write(t, two, "source/a.c", "int a2;\n")
+	if keyAs("/home/ahra", one, 12) == keyAs("/home/cloud", two, 3) {
+		t.Fatal("a changed source byte left the key the same")
+	}
+}
+
+// A key hashes what the tree carries (#smkk3et): a checkout's untracked files, under its own repository or a
+// submodule's, never key a product, so a checkout and an unpacked source of it (tracked files only, no .git) key the
+// same. A tracked byte still moves the key, and a file named in Files counts whether or not git tracks it.
+func TestAKeyHashesWhatTheTreeCarries(t *testing.T) {
+	t.Parallel()
+	git := func(directory string, arguments ...string) {
+		t.Helper()
+		command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main"}, arguments...)...)
+		if output, err := command.CombinedOutput(); err != nil {
+			t.Fatalf("git %v: %v\n%s", arguments, err, output)
+		}
+	}
+	carried := map[string]string{"source/a.c": "int a;\n", "source/b.c": "int b;\n", "flags.txt": "-O2\n", "module/inner.c": "int inner;\n"}
+	checkout, unpacked := t.TempDir(), t.TempDir()
+	for name, content := range carried {
+		write(t, checkout, name, content)
+		write(t, unpacked, name, content)
+	}
+	git(filepath.Join(checkout, "module"), "init", "-q")
+	git(filepath.Join(checkout, "module"), "add", "inner.c")
+	git(filepath.Join(checkout, "module"), "commit", "-q", "-m", "module")
+	git(checkout, "init", "-q")
+	git(checkout, "add", "source", "flags.txt", "module")
+	for name, content := range map[string]string{"source/stray.txt": "a note\n", "source/build/out.o": "leftover", "module/stray.tmp": "x", "module/cache/entry": "y"} {
+		write(t, checkout, name, content)
+	}
+	// A checkout whose submodule's files are linked in without its git directory: the repository above knows it only
+	// as a gitlink, and every file under it counts.
+	linked := t.TempDir()
+	for name, content := range carried {
+		write(t, linked, name, content)
+	}
+	git(filepath.Join(linked, "module"), "init", "-q")
+	git(filepath.Join(linked, "module"), "add", "inner.c")
+	git(filepath.Join(linked, "module"), "commit", "-q", "-m", "module")
+	git(linked, "init", "-q")
+	git(linked, "add", "source", "flags.txt", "module")
+	if err := os.RemoveAll(filepath.Join(linked, "module", ".git")); err != nil {
+		t.Fatal(err)
+	}
+	inputs := Inputs{Name: "port", Files: []string{"source", "flags.txt", "module"}}
+	inSource := key(t, unpacked, inputs)
+	if inCheckout := key(t, checkout, inputs); inCheckout != inSource {
+		t.Fatalf("a checkout with untracked files keyed %s, its unpacked source %s", inCheckout, inSource)
+	}
+	if inLinked := key(t, linked, inputs); inLinked != inSource {
+		t.Fatalf("a checkout with its submodule's files linked in keyed %s, its unpacked source %s", inLinked, inSource)
+	}
+	before := key(t, checkout, inputs)
+	write(t, checkout, "module/inner.c", "int inner2;\n")
+	if key(t, checkout, inputs) == before {
+		t.Fatal("a tracked byte in a submodule left the key the same")
+	}
+	named := Inputs{Name: "port", Files: []string{"source/stray.txt"}}
+	first := key(t, checkout, named)
+	write(t, checkout, "source/stray.txt", "another note\n")
+	if key(t, checkout, named) == first {
+		t.Fatal("an untracked file named in Files isn't keyed")
+	}
+}
+
+// One tool installed under two prefixes reports the same, and a note on standard error (go downloading the tree's
+// release the first time) never enters its report (#t37sw0f).
+func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
+	t.Parallel()
+	report := func(prefix, note string) string {
+		bin := filepath.Join(prefix, "bin")
+		if err := os.MkdirAll(bin, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		script := "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: " + prefix + "/lib/fakecc/20\"\necho '" + note + "' >&2\n"
+		if err := os.WriteFile(filepath.Join(bin, "fakecc"), []byte(script), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		return Tool(filepath.Join(bin, "fakecc"), "--version")
+	}
+	workshop, runner := report(filepath.Join(t.TempDir(), "home/ahra/adamic-tools"), "fakecc: downloading 20.1.8"), report(filepath.Join(t.TempDir(), "opt/adamic-tools"), "")
+	if workshop != runner || !strings.Contains(workshop, "fakecc --version: fakecc version 20.1.8") || !strings.Contains(workshop, "<fakecc>/lib/fakecc/20") {
+		t.Fatalf("one tool under two prefixes reported\n%s\nand\n%s", workshop, runner)
+	}
+	// A tool that writes only to standard error is named by it.
+	silent := filepath.Join(t.TempDir(), "quiet")
+	os.WriteFile(silent, []byte("#!/bin/sh\necho 'quiet 1.0' >&2\n"), 0o755)
+	if got := Tool(silent, "-v"); got != "quiet -v: quiet 1.0" {
+		t.Fatalf("a tool reporting on standard error reported %q", got)
+	}
+}
+
+// GOTOOLCHAIN, GOROOT and GOTOOLDIR name the release they select; a location is never valued (#t37sw0f).
+func TestAGoSettingNamesTheReleaseNotThePolicy(t *testing.T) {
+	t.Parallel()
+	for _, same := range [][2]string{
+		{goSetting("GOTOOLCHAIN", "auto", "go1.27.1"), goSetting("GOTOOLCHAIN", "local", "go1.27.1")},
+		{goSetting("GOROOT", "/home/ahra/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64", "go1.27.1"), goSetting("GOROOT", "/usr/local/go", "go1.27.1")},
+		{goSetting("GOMODCACHE", "/home/ahra/go/pkg/mod", "go1.27.1"), goSetting("GOMODCACHE", "/var/cache/go", "go1.27.1")},
+		{goSetting("GOWORK", "", "go1.27.1"), goSetting("GOWORK", "off", "go1.27.1")},
+	} {
+		if same[0] != same[1] {
+			t.Errorf("%q and %q differ", same[0], same[1])
+		}
+	}
+	if goSetting("GOTOOLCHAIN", "auto", "go1.27.1") == goSetting("GOTOOLCHAIN", "auto", "go1.27.2") {
+		t.Error("two releases keyed the same")
+	}
+	if goSetting("CGO_ENABLED", "1", "go1.27.1") == goSetting("CGO_ENABLED", "0", "go1.27.1") {
+		t.Error("CGO_ENABLED left the setting the same")
 	}
 }
 
