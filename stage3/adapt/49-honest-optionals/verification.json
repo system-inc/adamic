@@ -1,0 +1,85 @@
+{
+  "status": "partial: 11 of 22 repaired; 11 blocked by unchanged JavaScript/public API constraints",
+  "main": "73352e874ddbda5a78c95c5c670860d43275e4d0",
+  "split": {
+    "placeholders": 50,
+    "property_or_call": 7,
+    "other": 15
+  },
+  "slots": {
+    "writes_before_observed_first_reads": 25,
+    "read_before_write": 19,
+    "no_observed_first_read": 6,
+    "projects_identical": 301
+  },
+  "moved_reads": {
+    "sites": 116,
+    "visited": 38,
+    "unvisited": 78,
+    "reads": 910898035,
+    "nullish": 0,
+    "projects_identical": 301
+  },
+  "mutants": {
+    "exact_owner_restorations": 11,
+    "runtime_unwraps": 22,
+    "slot_observer": 4,
+    "artifact_bytes": 3,
+    "owner_preflight": 1,
+    "instrumentation_audit": 1
+  },
+  "lane": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "execution": {
+      "commit": "6207a0ebdf5889280a5dd4f9e3ebaaa9c70ef41f",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 777.147
+    },
+    "results": "/tmp/step09-nonnull-73352e87-lane",
+    "verdict": "PASS stage3 landing lane"
+  },
+  "reported_gate_failure": {
+    "check": "test counts",
+    "expected_failing": 1,
+    "observed_failing": 4,
+    "extra_prefix": "tests/cases/compiler/unusedTypeParamet",
+    "reproduced_after_merge": false,
+    "root_cause": "Not established; no instrumentation found in adapted tree"
+  },
+  "commands": [
+    "bash stage3/lane/run.sh /tmp/step09-nonnull-73352e87-lane",
+    "python3 stage3/lane/check.py /tmp/step09-nonnull-73352e87-lane"
+  ],
+  "byte_proof": "artifact-proof.json",
+  "instrumentation": "instrumentation-audit.json"
+}

@@ -19,10 +19,14 @@ FORMAT = 'adamic-stage3-tree-v1'
 
 
 def product_key():
-    # Names, modes, empty directories and bytes all participate. Tables outside
+    # Names, executable status, empty directories and bytes participate. Tables outside
     # adapt are generated outputs, not inputs. API locks pin the adapter parser.
     digest = hashlib.sha256(FORMAT.encode())
-    digest.update(subprocess.check_output(['node', '--version']).strip())
+    for tool in ['node', 'npm', 'python3', 'git', 'tar']:
+        digest.update(subprocess.check_output([tool, '--version']).strip())
+    for name in ['NODE_OPTIONS', 'NODE_DISABLE_COMPILE_CACHE', 'LANG', 'LC_ALL', 'TZ',
+                 'npm_config_registry', 'NPM_CONFIG_REGISTRY', 'CENSUS_TYPESCRIPT', 'TSC_ADAPT_TYPESCRIPT']:
+        digest.update(json.dumps([name, os.environ.get(name, '')]).encode())
     inputs = [stage / 'source.json', stage / 'apply.py',
               stage / 'api/package.json', stage / 'api/package-lock.json']
     inputs += sorted(path for path in (stage / 'adapt').rglob('*')
@@ -34,7 +38,9 @@ def product_key():
         kind = ('symlink:' + os.readlink(path)) if path.is_symlink() else (
             'directory' if path.is_dir() else 'file')
         data = b'' if path.is_dir() else path.read_bytes()
-        record = json.dumps([name, kind, path.stat().st_mode & 0o777,
+        executable = path.is_file() and not path.is_symlink() and bool(path.stat().st_mode & 0o111)
+        # Match buildcache.Key: read/write permissions depend on checkout umask.
+        record = json.dumps([name, kind, executable,
                              hashlib.sha256(data).hexdigest()], separators=(',', ':'))
         digest.update(record.encode() + b'\n')
     return digest.hexdigest()
@@ -153,7 +159,8 @@ def publish_hook(store, key):
     return dict(format=FORMAT, key=key,
                 inputs=['stage3/source.json', 'stage3/apply.py', 'stage3/api/package.json',
                         'stage3/api/package-lock.json', 'stage3/adapt/** (except __pycache__)',
-                        'node --version'],
+                        'node/npm/python3/git/tar --version',
+                        'Node options, locale, timezone, npm registry and parser overrides'],
                 pinned_source=json.loads((stage / 'source.json').read_text()),
                 payloads=payloads, publish_order='parts first, manifest last')
 
@@ -161,20 +168,28 @@ def publish_hook(store, key):
 def run(*args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
-def build_product(out, cache):
+def build_product(out, cache, *, previous=None, through=None):
     if any(os.environ.get(name) for name in ['CENSUS_TYPESCRIPT', 'TSC_ADAPT_TYPESCRIPT']):
         raise RuntimeError('keyed builds require the pinned stage3/api parser, without overrides')
     pin = json.loads((stage / 'source.json').read_text())
-    mirror = cache / 'typescript.git'
-    if not mirror.exists():
-        run('git', 'clone', '--bare', '--depth', '1', '--branch', pin['tag'], pin['repository'], str(mirror))
-    head = subprocess.check_output(['git', '--git-dir', str(mirror), 'rev-parse', pin['tag'] + '^{commit}'], text=True).strip()
-    if head != pin['commit']:
-        sys.exit(f'pin mismatch: {head}')
-    run('git', 'clone', '--no-hardlinks', str(mirror), str(out))
-    run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
-    # The pristine measurement tree includes upstream's normal generated inputs.
-    run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
+    state = None
+    if previous is not None:
+        state = json.loads((previous / 'state.json').read_text())
+        shutil.copytree(previous / 'tree', out, symlinks=True)
+    else:
+        mirror = cache / 'typescript.git'
+        source_mirror = os.environ.get('STAGE3_SOURCE_MIRROR')
+        if not mirror.exists() and source_mirror:
+            shutil.copytree(source_mirror, mirror, symlinks=True)
+        if not mirror.exists():
+            run('git', 'clone', '--bare', '--depth', '1', '--branch', pin['tag'], pin['repository'], str(mirror))
+        head = subprocess.check_output(['git', '--git-dir', str(mirror), 'rev-parse', pin['tag'] + '^{commit}'], text=True).strip()
+        if head != pin['commit']:
+            sys.exit(f'pin mismatch: {head}')
+        run('git', 'clone', '--no-hardlinks', str(mirror), str(out))
+        run('git', '-C', str(out), 'checkout', '--detach', pin['commit'])
+        # The pristine measurement tree includes upstream's normal generated inputs.
+        run('node', str(stage / 'adapt/00-setup/adapt.cjs'), str(out))
     with tempfile.TemporaryDirectory(prefix='stage3-index-') as scratch:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
         def snapshot():
@@ -182,9 +197,11 @@ def build_product(out, cache):
             run('git', '-C', str(out), 'add', '--all', '--force', 'src', env=env, stdout=subprocess.DEVNULL)
             return subprocess.check_output(['git', '-C', str(out), 'write-tree'], env=env, text=True).strip()
         # Include tracked files outside src, too; generated build inputs are only in src.
-        run('git', '-C', str(out), 'read-tree', 'HEAD', env=env)
-        pristine = previous = snapshot()
-        rows = []
+        run('git', '-C', str(out), 'read-tree', state['previous'] if state else 'HEAD', env=env)
+        pristine = state['pristine'] if state else snapshot()
+        previous_tree = previous
+        previous = state['previous'] if state else pristine
+        rows = state['rows'] if state else []
         def counts(before, after):
             changes = subprocess.check_output(['git', '-C', str(out), 'diff', '--numstat', before, after], text=True).splitlines()
             added = removed = 0
@@ -198,13 +215,22 @@ def build_product(out, cache):
         adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
         adaptation_env = dict(os.environ)
         if any(directory.name != '00-setup' for directory in adaptations):
-            api = cache / 'api'
-            api.mkdir(exist_ok=True)
-            for manifest in ['package.json', 'package-lock.json']:
-                shutil.copyfile(stage / 'api' / manifest, api / manifest)
-            run('npm', 'ci', '--prefix', str(api), '--ignore-scripts', '--no-audit', '--no-fund')
+            api = (previous_tree if state else cache) / 'api'
+            if state:
+                shutil.copytree(api, cache / 'api', symlinks=True)
+                api = cache / 'api'
+            else:
+                api.mkdir(exist_ok=True)
+                for manifest in ['package.json', 'package-lock.json']:
+                    shutil.copyfile(stage / 'api' / manifest, api / manifest)
+                (cache / 'npm-global.rc').write_text('')
+                run('npm', 'ci', '--prefix', str(api), '--ignore-scripts', '--no-audit', '--no-fund',
+                    '--userconfig=/dev/null', '--globalconfig=' + str(cache / 'npm-global.rc'))
             adaptation_env['NODE_PATH'] = str(api / 'node_modules')
         for directory in adaptations:
+            if through is not None and (directory.name[:2] > through or
+                    state and directory.name <= state['last']):
+                continue
             if not directory.is_dir():
                 continue
             if len(directory.name) < 4 or not directory.name[:2].isdigit() or directory.name[2] != '-':
@@ -222,7 +248,41 @@ def build_product(out, cache):
         for name, files, added, removed in rows:
             text += f'| {name} | {files} | {added} | {removed} |\n'
         text += f'| **Total** | {total[0]} | {total[1]} | {total[2]} |\n'
-        (out / 'patch-set.md').write_text(text)
+        if through is None or through == '99':
+            (out / 'patch-set.md').write_text(text)
+        if through is not None:
+            (cache / 'state.json').write_text(json.dumps(dict(
+                pristine=pristine, previous=previous, rows=rows, last=rows[-1][0])))
+
+
+def step_worker(directory, through, previous):
+    directory = Path(directory)
+    build_product(directory / 'tree', directory,
+                  previous=Path(previous) if previous else None, through=through)
+    if through == '99':
+        save_product(str(directory / 'products'), product_key(), directory / 'tree')
+
+
+def go_product():
+    result = subprocess.check_output(
+        ['go', 'run', './stage3/applyproducts/fetch'], cwd=stage.parent,
+        env=dict(os.environ, GOWORK='off'), text=True)
+    return Path(result.strip())
+
+
+def fetch_product(out, cache):
+    product = go_product()
+    restore_product(str(product / 'products'), product_key(), out)
+    # Existing lane and adaptation proofs read this parser-cache path. Expose
+    # the immutable parser from the same fetched product, without npm setup.
+    cache.mkdir(parents=True, exist_ok=True)
+    api = cache / 'api'
+    if not api.exists() or api.is_symlink():
+        with tempfile.TemporaryDirectory(prefix='stage3-api-', dir=cache) as scratch:
+            alias = Path(scratch) / 'api'
+            alias.symlink_to(product / 'api', target_is_directory=True)
+            os.replace(alias, api)
+    return product
 
 
 def main():
@@ -262,21 +322,27 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.build_product:
         cache.mkdir(parents=True, exist_ok=True)
-        build_product(out, cache)
-        save_product(store, key, out)
+        product = fetch_product(out, cache)
+        if store.startswith(('http://', 'https://', 'file://')):
+            parser.error('--build-product requires a local product store')
+        Path(store).mkdir(parents=True, exist_ok=True)
+        for payload in (product / 'products').iterdir():
+            shutil.copyfile(payload, Path(store) / payload.name)
     else:
         try:
             restore_product(store, key, out)
         except ProductMissing:
             print(f'stage3 product cache miss: {key}; building adapted tree locally', file=sys.stderr)
             cache.mkdir(parents=True, exist_ok=True)
-            build_product(out, cache)
-            local_store = store if not store.startswith(('http://', 'https://', 'file://')) else str(cache / 'products')
-            save_product(local_store, key, out)
+            fetch_product(out, cache)
+            # The final Go product already owns packaging; tests only restore it.
     if args.write_table:
         (stage / 'patch-set.md').write_bytes((out / 'patch-set.md').read_bytes())
     print(out)
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 5 and sys.argv[1] == '--step-worker':
+        step_worker(sys.argv[2], sys.argv[3], sys.argv[4])
+    else:
+        main()
