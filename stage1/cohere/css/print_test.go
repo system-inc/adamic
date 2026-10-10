@@ -24,7 +24,6 @@ var printerMutants = []mutant{
 func printerAnswers(t *testing.T, cases, mode string) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/print_side_test.go")
 	directory := t.TempDir()
 	answers := filepath.Join(directory, "answers.txt")
 	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers, "Mode": mode})
@@ -32,13 +31,10 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", "internal", "format", "css", "adamic_print_side_test.go"): side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinterCases$", "./internal/format/css")
-	cmd.Dir = filepath.Join(repo, "cohere")
+	// The Go printer is css-printer-oracle-1, cohere's css package with testdata/print_side_test.go laid over it, built
+	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
+	cmd := bounded(t, cssOracleProduct(t, true), "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPrinterCases$")
+	cmd.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {
