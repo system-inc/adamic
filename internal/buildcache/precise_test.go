@@ -1023,3 +1023,39 @@ func TestTheBinarysBuildSettingsKeyItsProducts(t *testing.T) {
 		t.Fatalf("a binary built with -race read as %v", err)
 	}
 }
+
+// A read set file of another version (v2 had a package kind, gone since) is no read set: never valued, never trusted.
+// Not parallel: newRig.
+func TestAReadSetFileOfAnotherVersionIsIgnored(t *testing.T) {
+	r := newRig(t)
+	nameKey := NameKey(r.root, port)
+	write(t, r.cache, nameKey+".reads", `{"version": "buildcache reads v2", "name": "port", "sets": [{"key": "`+strings.Repeat("a", 64)+`", "entries": [{"kind": "package", "path": "libc6-dev:amd64"}]}]}`)
+	if file, err := loadReads(r.cache, nameKey); err != nil || len(file.Sets) != 0 {
+		t.Fatalf("a v2 read set file loaded as %+v, %v", file, err)
+	}
+}
+
+// A machine file's hash is kept across processes in the build cache, by path, inode, modification time and size: a
+// later process reads it back without hashing, and a file changed in place is hashed again.
+// Not parallel: newRig.
+func TestAMachineFilesHashIsKeptAcrossProcesses(t *testing.T) {
+	r := newRig(t)
+	path := filepath.Join(t.TempDir(), "crtbegin.o")
+	write(t, filepath.Dir(path), "crtbegin.o", "an object")
+	first := systemValue(path)
+	entries, _ := os.ReadDir(filepath.Join(r.cache, "machine"))
+	if len(entries) != 1 {
+		t.Fatalf("the machine cache holds %d entries", len(entries))
+	}
+	// Another process: nothing in memory; what the cache holds is what it reads.
+	kept := filepath.Join(r.cache, "machine", entries[0].Name())
+	os.WriteFile(kept, []byte("kept-by-an-earlier-process"), 0o644)
+	systemContents.Range(func(key, _ any) bool { systemContents.Delete(key); return true })
+	if got := systemValue(path); got != "file false kept-by-an-earlier-process" {
+		t.Fatalf("another process valued it %q, after %q", got, first)
+	}
+	write(t, filepath.Dir(path), "crtbegin.o", "another object, longer")
+	if got := systemValue(path); got == first || strings.Contains(got, "kept-by") {
+		t.Fatalf("a file changed in place valued %q", got)
+	}
+}

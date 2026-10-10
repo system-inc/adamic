@@ -205,6 +205,16 @@ func systemValue(path string) string {
 		if value, ok := systemContents.Load(stamp); ok {
 			return value.(string)
 		}
+		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp.
+		name := sha256.Sum256([]byte(fmt.Sprintf("%s\x00%s\x00%d\x00%d\x00%d", stamp.path, stamp.kind, stamp.inode, stamp.size, stamp.time)))
+		var kept string
+		if cache, err := cacheLocation(); err == nil {
+			kept = filepath.Join(cache, "machine", hex.EncodeToString(name[:]))
+			if value, err := os.ReadFile(kept); err == nil && len(value) > 0 {
+				systemContents.Store(stamp, string(value))
+				return string(value)
+			}
+		}
 		content, err := os.ReadFile(path)
 		if err != nil {
 			return "unreadable: " + err.Error()
@@ -216,6 +226,13 @@ func systemValue(path string) string {
 			value = fmt.Sprintf("%x", sha256.Sum256(content))
 		}
 		systemContents.Store(stamp, value)
+		if kept != "" && os.MkdirAll(filepath.Dir(kept), 0o755) == nil {
+			if temporary, err := os.CreateTemp(filepath.Dir(kept), ".value-"); err == nil {
+				temporary.WriteString(value)
+				temporary.Close()
+				os.Rename(temporary.Name(), kept)
+			}
+		}
 		return value
 	}
 	if owner, recorded := packageOwner(path); owner != "" {
