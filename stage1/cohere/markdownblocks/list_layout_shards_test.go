@@ -80,7 +80,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 			t.Fatal(err)
 		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v2", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -105,9 +105,14 @@ func buildListLayoutSetup(t *testing.T) {
 				mutants[i] = relative
 			}
 			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
-			// Go binaries are stored inside this product; native products have their own stable cache paths.
-			for i := 0; i < 2; i++ {
-				relative, err := filepath.Rel(directory, manifest.Paths[i])
+			// Go binaries are stored inside this product, named from it; native products are products of their own,
+			// named from the cache that holds them all, so the manifest names no machine's cache.
+			for i := range manifest.Paths {
+				base := directory
+				if i >= 2 {
+					base = filepath.Dir(directory)
+				}
+				relative, err := filepath.Rel(base, manifest.Paths[i])
 				if err != nil {
 					return err
 				}
@@ -125,6 +130,11 @@ func buildListLayoutSetup(t *testing.T) {
 
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
+
+// TestProduct_MarkdownListLayout builds the shared products every list layout shard reads (238 s inside
+// TestMarkdownListLayout_Setup on Oct 10: the lowered program, its sanitized and release natives, the canary and the
+// Go oracles), so Workshop builds them once and the shards and Setup only read them.
+func TestProduct_MarkdownListLayout(t *testing.T) { buildListLayoutSetup(t) }
 
 // A shard prepares the shared products itself, once per process: it fetches them when they are built
 // and builds them on a miss, so it never needs another top-level test to have run first.
@@ -817,7 +827,8 @@ func loadListLayoutSetup(t *testing.T, directory string) {
 	if len(manifest.Paths) != 5 {
 		t.Fatal("incomplete shared setup manifest")
 	}
-	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: manifest.Paths[2], release: manifest.Paths[3], canary: manifest.Paths[4], javascript: manifest.JavaScript}
+	cache := filepath.Dir(directory)
+	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: filepath.Join(cache, manifest.Paths[2]), release: filepath.Join(cache, manifest.Paths[3]), canary: filepath.Join(cache, manifest.Paths[4]), javascript: manifest.JavaScript}
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}

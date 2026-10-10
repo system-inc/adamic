@@ -338,6 +338,20 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 	}
 	return wholeDocumentPreflightShared
 }
+// TestProduct_WholeDocumentPreflightGoProducts builds the Go printer and its three mutants that every preflight unit
+// reads (markdownblocks-whole-document-preflight-go-products, 75 s measured inside a unit on Oct 10), so Workshop
+// builds them once and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
+func TestProduct_WholeDocumentPreflightGoProducts(t *testing.T) {
+	t.Parallel()
+	budget := newPreflightBudgetOf(t, t.Name(), 590*time.Second)
+	defer budget.close()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	prepareWholeDocumentPreflight(t, root, budget)
+}
+
 func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
 	t.Parallel()
 	fixture := wholeDocumentPreflight(t)
@@ -466,6 +480,7 @@ func TestWholeDocumentOraclePreflightMutants(t *testing.T) {
 // budget only after wholeDocumentPreflight returns, including standalone runs.
 type preflightBudget struct {
 	label  string
+	limit  time.Duration
 	ctx    context.Context
 	cancel context.CancelFunc
 	timer  *time.Timer
@@ -474,15 +489,21 @@ type preflightBudget struct {
 
 func newPreflightBudget(t *testing.T, label string) *preflightBudget {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	budget := &preflightBudget{ctx: ctx, cancel: cancel, label: label}
-	budget.timer = time.AfterFunc(90*time.Second, budget.cooked)
+	return newPreflightBudgetOf(t, label, 90*time.Second)
+}
+
+// newPreflightBudgetOf is a hard deadline of limit: 90 s for a unit, a product's 600 s (less a margin) for a build.
+func newPreflightBudgetOf(t *testing.T, label string, limit time.Duration) *preflightBudget {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	budget := &preflightBudget{ctx: ctx, cancel: cancel, label: label, limit: limit}
+	budget.timer = time.AfterFunc(limit, budget.cooked)
 	return budget
 }
 func (budget *preflightBudget) cooked() {
 	budget.cancel()
 	budget.groups.Range(func(pid, _ any) bool { _ = syscall.Kill(-pid.(int), syscall.SIGKILL); return true })
-	fmt.Fprintf(os.Stderr, "cooked: %s exceeded 90s hard deadline\n", budget.label)
+	fmt.Fprintf(os.Stderr, "cooked: %s exceeded %.0fs hard deadline\n", budget.label, budget.limit.Seconds())
 	os.Exit(124)
 }
 func (budget *preflightBudget) close() { budget.timer.Stop(); budget.cancel() }
