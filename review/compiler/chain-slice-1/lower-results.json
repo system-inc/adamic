@@ -1,0 +1,226 @@
+[
+  {
+    "shard": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementRejectsWrongLoweredOutput|TestAgreementRejectsEmptyAnswer|TestAgreementAcceptsComputedAnswer|TestAgreementAcceptsExpectedPanic|TestAgreementEnumConstantWitness|TestAgreementInheritedFieldWitness|TestAgreementParameterPropertyWitness|TestAgreementStaticInitializerWitness|TestAgreementParseIntRadixWitness|TestNativeAgreementRejectsWrongOutput|TestNativeAgreementRejectsWrongExit|TestArgumentsLengthRefusals|TestMixedTupleSpreadIsNotYet|TestArgumentsLengthReadNeighbors|TestArgumentsLengthRefusalFixtures|TestArgumentsLengthReadKeepsReaderFact|TestArrayPredicatePreservesDeclaredElementContract|TestArrayPredicateCannotInventAnElementContract|TestArrayPredicateDoesNotMisclassifyNativeTuples|TestUnknownArrayPredicateRefusesUnrepresentedObservations)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.042
+  },
+  {
+    "shard": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestArrayPredicateCoexistsWithUnknownReflection|TestUncheckableCastsStayRefused|TestCheckedCastProofAndElision|TestCensusMarkerResultIsAssignable|TestCensusMarkerZeroCallIsNotAssumedSafe|TestOptionalFunctionValueRelation|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverloadBinderGuards|TestCensusOverloadReturnProof|TestCensusPredicateInteractionBoundary|TestCensusPredicateInteractionEscapes|TestCensusPredicateMarkerKeepsProofBoundaries|TestCensusPredicateMarkerCallStaysNotYet|TestCensusOverloadRelation|TestCensusSmallFiniteKeyRead|TestCensusRestMutableElements|TestCensusBooleanDeadBranch|TestCheckPragmasAreRefused|TestCheckPragmaNeighborsCompile|TestTsgoHonorsNoCheckInAdamicFiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.402
+  },
+  {
+    "shard": 2,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestClassFeaturesReadonlyChecker|TestClassFeaturesPrivateChecker|TestClassFeaturesPrivateStorage|TestClassFeaturesAccessorRefusals|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesStaticSoundness|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesNarrowedAccessor|TestClassFeaturesStaticParentCycle|TestClassFeaturesStaticInterfaceCycle|TestInheritanceRefusesUnsoundOverrides|TestInheritanceKeepsCheckerConstructorRules|TestInheritanceAllowsSoundOverrides|TestInheritanceHasClassIdentity|TestInheritanceCycleFinderIncludesInheritedFields|TestInheritanceRejectsUnsupportedConstructorShapes|TestInheritanceRefusesFalseNominalViews|TestInheritanceRefusesThisBeforeSuperReturns|TestInheritanceKeepsNominalTupleDestructuring|TestInheritanceGenericMonomorphizations)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.78
+  },
+  {
+    "shard": 3,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestInheritanceRefusesGrowingGenericClasses|TestInheritanceGenericSoundness|TestInheritanceConditionalThisRules|TestInheritanceGenericViewsKeepNominalArguments|TestInheritanceGenericNominalConstraints|TestInheritanceGenericFactoryLayouts|TestInheritanceNativeSignatureNeighbors|TestInheritanceNativeSignatureLimits|TestClassArgumentsUseCheckerIdentity|TestClassStaticInitializerCallIsEmitted|TestClassStaticSideEffectMatchesNode|TestClassWrongOutputIteratorReceiver|TestClassWrongOutputKeysRepair|TestClassWrongOutputPrivateRepair|TestClockGenericReturnsT01Shapes|TestClockGenericReturnsT01DeclinesBrandedPrimitives|TestClockGenericReturnsT01RejectsNullBeforeBody|TestClockGenericReturnsT01RejectsIndexBeforeBody|TestConstructorCacheOneArgumentRemainsNotYet|TestDefiniteAssignmentUsesReadiness)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.956
+  },
+  {
+    "shard": 4,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestDefiniteAssignmentSoundNeighbors|TestNestedEmptyArrayElementKinds|TestEmptyLiteralGenericReturnUsesSamePath|TestEntriesAllocationProof|TestEntriesRecordBoundaries|TestFlagEnumsOpen|TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestFlagEnumAliasBoundaries|TestEnumMemberValuesAndReverseNameMatchNode|TestEnumFlagProofsWithoutObservableLoweringEffect|TestEnumReverseMappingUsesSingleSlot|TestEnumInitializationReach|TestEnumInitializationGraphMemo|TestEnumNamespaceSharedCycle|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 16.332
+  },
+  {
+    "shard": 5,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestStringEnumsStayClosed|TestNumericEnumNeverProof|TestNumericEnumLiteralPromises|TestEnumSlotViews|TestEnumSwitchExhaustiveness|TestEnumLimitsStayLoud|TestConstEnumErasesRuntimeObject|TestEnumIdentityAcrossModules|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites|TestParseIntMapUsesIndexRadix|TestFSOpenStringFlagsLower|TestFSRemoveDefaultRetryDelayLowers|TestFSExistsOperation|TestFSStatThrowsByDefault|TestFunctionValueUnionViewsStayNotYet|TestGenericFunctionPolymorphicRecursionIsRefused|TestGenericUnionFixtureHasSeparateInstances|TestGenericJSONUnionArrayIsNotYet|TestOriginalCycleLedger|TestUndecidedCycleReadsUseReadyChecks)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 15.139
+  },
+  {
+    "shard": 6,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestInputSpreadArgumentsAreNotYet|TestInputSpreadCoverage|TestDefaultTaggedInterfaceAdmission|TestDefaultTaggedInterfaceNeedsNoFlag|TestIteratorGapsAreExplicit|TestIteratorViewsCannotHideReturn|TestIteratorViewsCannotEraseReceivers|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestGeneratorsAreRefusedEvenWithoutYield|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodViewsDoNotLoseThis|TestLiteralMethodSignatureViewsDoNotLoseThis|TestIteratorDescriptorReasons|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestGenericIteratorViewsPreserveNativeArguments|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorSymbolKeysAreNotStringKeys|TestLibraryLanguageBoundaries|TestLibraryMapSetGapsStayRefused)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 12.859
+  },
+  {
+    "shard": 7,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestLibraryMapSetIteratorCopyTypesRefused|TestLibraryMethodValues|TestLibraryMethodValueBoundaries|TestLibraryMethodValueSafety|TestNodeBufferRefusals|TestNodeFSFileOptionsBorrow|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeFSFileRefusesOptionEffects|TestNodeFSFileRefusesVoidValues|TestNodeFSFileRefusesPinnedUnsupportedOverloads|TestNodeFSFileNamespaceImport|TestNodeFSFileQualifiedErrorType|TestNodeFSFileKeepsDetachedMethodRefusal|TestNodeFSFileBufferBorrow|TestNodeFSFileScratchOptionsBorrow|TestNodeFSFileScratchOverloadsAreNamed|TestNodeLibraryNamesUnimplementedMembers|TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames|TestNodeLibraryDistinguishesReceiverOwners|TestNodeLibraryQualifiedTypeAssertion)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 14.048
+  },
+  {
+    "shard": 8,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestLibraryRegexOffsetRequiresNoCaptures|TestLibraryStringRefusals|TestConsoleLowersToWriteLine|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestWhatZeroOneRefusesIsRefusedWithAFix|TestAMutableLocationSeenWiderIsRefused|TestAViewThatCantWriteIsNotRefused|TestATupleSeenAsAnArrayIsNotYet|TestAMethodReadAsAValueIsRefused|TestModuleNamespaceLimitsStayLoud|TestModuleNamespaceInitializedReadProof|TestCallableNamespaceLimitsStayLoud|TestCallableNamespaceReceiverStaysLoud|TestNamespaceClassEarlyConstructionStaysLoud|TestNamespaceReceiverArrowInheritsScope|TestNamespaceAmbientHostInitialization|TestNamespaceAmbientContextsDoNotExecute|TestNamespaceCallGraphLinearWork)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 9.548
+  },
+  {
+    "shard": 9,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestNamespaceCallGraphCycleUnion|TestNamespaceEnumInitializationIndependentOfModuleAnalysis|TestParserFactoryBindingHoisting|TestMissingBindingSymbolHasStructuredLocation|TestTscNamespaceDeclarationShapes|TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase|TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants|TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.241
+  },
+  {
+    "shard": 10,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported|TestAdamicNullishAssertionsAreRefused|TestNonNullAssertionLowersToNullishPanic|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningCensus|TestOptionalWideningRefused|TestOptionalWideningAllowed|TestOptionalWideningSpreadOverwrite|TestOverloadInferenceWitnesses|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature|TestParameterPropertiesSoundness|TestParameterPropertyCheckerContracts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.91
+  },
+  {
+    "shard": 11,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParameterPropertyCallbackReceiver|TestParameterPropertyValueMatchesNode|TestPredicateSummaryParameterIndex|TestPredicateOverloadRuntime|TestIndirectPredicateOverloadIsPending|TestPredicateBodyProof|TestConditionAssertionAdmission|TestPredicateCallbackContracts|TestEveryNeedsCallbackEffects|TestPredicateOverloadCallback|TestPredicateUseRegions|TestPredicateUsesBelongToEachCall|TestUnprovenPredicateReturnsAreRefused|TestPredicateBodiesAreProven|TestPrimitiveAdmittingSlotsUseBoxes|TestInheritedLibraryReadsNeverLoadOwnFields|TestPrototypeMethodsAreRefusedWithReasons|TestNullishPrototypeReadsAreRejectedByChecker|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestUnrepresentedPrototypeCallsAreNotYet)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 11.913
+  },
+  {
+    "shard": 12,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestProvenRelationsRefuse|TestProvenRelationsErase|TestReadinessElisionRequiresDominatingAssignment|TestRegExpNativeRefusals|TestRegExpSourceNode|TestRegExpUnicodeClassSourceAgreesWithNode|TestRegExpSlashClassSourceAgreesWithNode|TestRegExpEscapedSlashSourceAgreesWithNode|TestRepresentationClockSourceCheckedTypes|TestPrivateAndPublicStaticsAgreeWithNode|TestNamespaceFactoryBindingsAgreeWithNode|TestReadinessErrorIncludesReceiverExpression|TestSuppressionDirectivesAreRefused|TestSuppressionDirectiveSoundNeighbors|TestSwitchConditionalBreakFallsThrough|TestSwitchEmptyElseFallsThrough|TestSwitchEmptyCaseFallsThrough|TestSwitchEmptyBlockFallsThrough|TestTasteRepresentationLimitsStayExplicit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.533
+  },
+  {
+    "shard": 13,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestTypedArraysLower|TestTypedArrayGaps|TestTypedArrayViewsCannotChangeRepresentation|TestTypedArrayFromArray|TestTypedArrayFromEmptyArray|TestUnknownReflectionRefusals|TestViewObjectContractsAreAvailableToEraser|TestViewObjectWritesNeedSourceCertificate|TestMixedUnionContractGraph|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractUnknownMemberFails|TestMixedUnionContractRecursiveMember|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestMixedUnionContractPhantomVoidIsUndefined|TestUntaggedViewMemberTags|TestUntaggedViewStructuralFallback)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.141
+  }
+]

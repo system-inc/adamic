@@ -1,0 +1,10 @@
+{
+  "TestConstantPortabilityGCC": 0.03,
+  "TestStaticBooleanInitializerMutant": 0.03,
+  "TestStaticNumberInitializerMutant": 0.04,
+  "TestConstantPortabilityClang": 0.03,
+  "TestLongUnicodeLiteralByteCoverage": 0.08,
+  "TestLongStringBytesMutant": 0.33,
+  "TestLongUnicodePortabilityClang": 2.79,
+  "TestLongUnicodePortabilityGCC": 4.14
+}
