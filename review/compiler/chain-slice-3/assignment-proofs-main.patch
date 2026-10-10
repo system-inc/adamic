@@ -1,0 +1,928 @@
+diff --git a/internal/oracle/assignment_proofs_test.go b/internal/oracle/assignment_proofs_test.go
+new file mode 100644
+index 00000000..f0ce9256
+--- /dev/null
++++ b/internal/oracle/assignment_proofs_test.go
+@@ -0,0 +1,205 @@
++package oracle
++
++import (
++	"encoding/json"
++	"os"
++	"os/exec"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++const assignmentProofBucket = "stage3/fixtures/assignment-proofs"
++
++var assignmentProofFiles = []string{
++	"01_scanner_keyword.a", "02_if_narrowing.a", "03_return_defined.a",
++	"04_chained.a", "05_compound.a", "06_wider_target.a",
++}
++
++// Keep these witnesses out of the shared subtest loop. Each oracle and mutant
++// has its own top-level test, including frontend and native-build setup.
++func init() { additionalFixtureCounts = append(additionalFixtureCounts, assignmentProofCounts) }
++
++func assignmentProofCounts(t *testing.T) []string {
++	t.Helper()
++	var rows []string
++	for _, file := range assignmentProofFiles {
++		rows = append(rows, counted(t, assignmentProofBucket+"/"+file, false, nil, false, false))
++	}
++	return rows
++}
++
++type assignmentProofRecord struct {
++	File string
++	Node struct {
++		Stdout, Stderr string
++		Exit           int
++	}
++	Mutant struct {
++		Replace string
++		With    string `json:"with"`
++	}
++}
++
++func assignmentProofExpectation(t *testing.T, file string) assignmentProofRecord {
++	t.Helper()
++	data, err := os.ReadFile(filepath.Join(repository, assignmentProofBucket, "expectations.json"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	var contract struct{ Records []assignmentProofRecord }
++	if err := json.Unmarshal(data, &contract); err != nil {
++		t.Fatal(err)
++	}
++	for _, record := range contract.Records {
++		if record.File == file {
++			return record
++		}
++	}
++	t.Fatalf("no ruled expectation for %s", file)
++	return assignmentProofRecord{}
++}
++
++func assignmentProofPath(t *testing.T, file string) string {
++	t.Helper()
++	path, err := filepath.Abs(filepath.Join(repository, assignmentProofBucket, file))
++	if err != nil {
++		t.Fatal(err)
++	}
++	return path
++}
++
++func assignmentProofTypecheck(t *testing.T, path string) {
++	t.Helper()
++	command := exec.Command("node", filepath.Join(repository, assignmentProofBucket, "check-types.cjs"), path)
++	command.Env = append(os.Environ(), "NODE_PATH="+filepath.Join(repository, "stage3/api/node_modules"))
++	output, err := command.CombinedOutput()
++	if err != nil || string(output) != "PASS stock TypeScript 6.0.3, zero diagnostics\n" {
++		t.Fatalf("stock TypeScript: %v, %s", err, output)
++	}
++}
++
++// Node decides the output. Both backends, sanitized native and release native
++// must agree before an intentionally changed source is judged against its golden.
++func assignmentProofExecution(t *testing.T, path string) run {
++	t.Helper()
++	assignmentProofTypecheck(t, path)
++	truth := onNode(t, path)
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	js := onJavaScriptBackend(t, program)
++	sanitized, binary := natively(t, program)
++	release := released(t, program)
++	for _, lane := range []struct {
++		name   string
++		result run
++	}{
++		{"JavaScript", js}, {"ASan/UBSan", sanitized}, {"release", release},
++	} {
++		if difference := disagreement(truth, lane.result); difference != "" {
++			t.Fatalf("%s: %s; Node %+v; actual %+v", lane.name, difference, truth, lane.result)
++		}
++	}
++	if truth.exitCode == 0 {
++		if report := leaks(t, program, binary); report != "" {
++			t.Fatal(report)
++		}
++	}
++	return truth
++}
++
++func assignmentProofOracle(t *testing.T, file string) {
++	t.Helper()
++	record := assignmentProofExpectation(t, file)
++	truth := assignmentProofExecution(t, assignmentProofPath(t, file))
++	if string(truth.stdout) != record.Node.Stdout || string(truth.stderr) != record.Node.Stderr || truth.exitCode != record.Node.Exit {
++		t.Fatalf("Node disagrees with ruled bytes: %+v", truth)
++	}
++}
++
++func assignmentProofMutant(t *testing.T, file string) {
++	t.Helper()
++	record := assignmentProofExpectation(t, file)
++	source, err := os.ReadFile(assignmentProofPath(t, file))
++	if err != nil {
++		t.Fatal(err)
++	}
++	if strings.Count(string(source), record.Mutant.Replace) != 1 {
++		t.Fatal("mutation does not identify exactly one source expression")
++	}
++	path := filepath.Join(t.TempDir(), file)
++	changed := strings.Replace(string(source), record.Mutant.Replace, record.Mutant.With, 1)
++	if err := os.WriteFile(path, []byte(changed), 0600); err != nil {
++		t.Fatal(err)
++	}
++	truth := assignmentProofExecution(t, path)
++	if truth.exitCode != record.Node.Exit || string(truth.stderr) != record.Node.Stderr {
++		t.Fatalf("mutant failed outside stdout comparison: %+v", truth)
++	}
++	if string(truth.stdout) == record.Node.Stdout {
++		t.Fatal("mutant survived Node stdout byte comparison")
++	}
++	t.Logf("caught by Node stdout byte comparison after zero stock TypeScript diagnostics: golden %q, mutant %q", record.Node.Stdout, truth.stdout)
++}
++
++func TestAssignmentProofScannerKeyword(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "01_scanner_keyword.a")
++}
++
++func TestAssignmentProofScannerKeywordMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "01_scanner_keyword.a")
++}
++
++func TestAssignmentProofIfNarrowing(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "02_if_narrowing.a")
++}
++
++func TestAssignmentProofIfNarrowingMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "02_if_narrowing.a")
++}
++
++func TestAssignmentProofReturnDefined(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "03_return_defined.a")
++}
++
++func TestAssignmentProofReturnDefinedMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "03_return_defined.a")
++}
++
++func TestAssignmentProofChained(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "04_chained.a")
++}
++
++func TestAssignmentProofChainedMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "04_chained.a")
++}
++
++func TestAssignmentProofCompound(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "05_compound.a")
++}
++
++func TestAssignmentProofCompoundMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "05_compound.a")
++}
++
++func TestAssignmentProofWiderTarget(t *testing.T) {
++	t.Parallel()
++	assignmentProofOracle(t, "06_wider_target.a")
++}
++
++func TestAssignmentProofWiderTargetMutant(t *testing.T) {
++	t.Parallel()
++	assignmentProofMutant(t, "06_wider_target.a")
++}
+diff --git a/stage3/fixtures/assignment-proofs/01_scanner_keyword.a b/stage3/fixtures/assignment-proofs/01_scanner_keyword.a
+new file mode 100644
+index 00000000..251a862a
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/01_scanner_keyword.a
+@@ -0,0 +1,27 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// From TypeScript 6.0.3 src/compiler/scanner.ts:1815-1828.
++// Exact return/assignment expression and table-lookup guard; reduced enum/table/driver.
++const enum SyntaxKind { Unknown = 0, Identifier = 80, AbstractKeyword = 128, BreakKeyword = 83 }
++type KeywordSyntaxKind = SyntaxKind.AbstractKeyword | SyntaxKind.BreakKeyword;
++const CharacterCodes = { a: 97, z: 122 };
++const textToKeyword = new Map<string, KeywordSyntaxKind>([["abstract", SyntaxKind.AbstractKeyword], ["break", SyntaxKind.BreakKeyword]]);
++let token: SyntaxKind = SyntaxKind.Unknown;
++let tokenValue = "";
++function getIdentifierToken(): SyntaxKind.Identifier | KeywordSyntaxKind {
++    // Reserved words are between 2 and 12 characters long and start with a lowercase letter
++    const len = tokenValue.length;
++    if (len >= 2 && len <= 12) {
++        const ch = tokenValue.charCodeAt(0);
++        if (ch >= CharacterCodes.a && ch <= CharacterCodes.z) {
++            const keyword = textToKeyword.get(tokenValue);
++            if (keyword !== undefined) {
++                return token = keyword;
++            }
++        }
++    }
++    return token = SyntaxKind.Identifier;
++}
++for (const value of ["abstract", "break", "name", "Abstract", "x"]) {
++    tokenValue = value;
++    console.log(`${getIdentifierToken()} ${token}`);
++}
+diff --git a/stage3/fixtures/assignment-proofs/02_if_narrowing.a b/stage3/fixtures/assignment-proofs/02_if_narrowing.a
+new file mode 100644
+index 00000000..d577bd8b
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/02_if_narrowing.a
+@@ -0,0 +1,18 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
++let calls = 0;
++let present = true;
++function f(): string | undefined {
++    calls += 1;
++    return present ? "name" : undefined;
++}
++function lengthIfPresent(): number {
++    let x: string | undefined;
++    if ((x = f()) !== undefined) {
++        return x.length;
++    }
++    return -1;
++}
++console.log(`${lengthIfPresent()} ${calls}`);
++present = false;
++console.log(`${lengthIfPresent()} ${calls}`);
+diff --git a/stage3/fixtures/assignment-proofs/03_return_defined.a b/stage3/fixtures/assignment-proofs/03_return_defined.a
+new file mode 100644
+index 00000000..482f3c58
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/03_return_defined.a
+@@ -0,0 +1,15 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
++let cache: string | undefined;
++let calls = 0;
++function compute(): string {
++    calls += 1;
++    return `value${calls}`;
++}
++function fill(): string {
++    return (cache = compute());
++}
++const first: string = fill();
++console.log(`${first} ${cache} ${calls}`);
++const second: string = fill();
++console.log(`${second} ${cache} ${calls}`);
+diff --git a/stage3/fixtures/assignment-proofs/04_chained.a b/stage3/fixtures/assignment-proofs/04_chained.a
+new file mode 100644
+index 00000000..01660248
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/04_chained.a
+@@ -0,0 +1,15 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
++let a: string | undefined;
++let b: string | undefined;
++let calls = 0;
++function compute(): string {
++    calls += 1;
++    return `value${calls}`;
++}
++function assignBoth(): string {
++    const value = compute();
++    return a = b = value;
++}
++const result: string = assignBoth();
++console.log(`${result} ${a} ${b} ${calls}`);
+diff --git a/stage3/fixtures/assignment-proofs/05_compound.a b/stage3/fixtures/assignment-proofs/05_compound.a
+new file mode 100644
+index 00000000..03cb236f
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/05_compound.a
+@@ -0,0 +1,16 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
++let x = 10;
++let calls = 0;
++function right(): number {
++    calls += 1;
++    return 2;
++}
++function add(): number {
++    const y = right();
++    return x += y;
++}
++const first = add();
++console.log(`${first} ${x} ${calls}`);
++const second = add();
++console.log(`${second} ${x} ${calls}`);
+diff --git a/stage3/fixtures/assignment-proofs/06_wider_target.a b/stage3/fixtures/assignment-proofs/06_wider_target.a
+new file mode 100644
+index 00000000..b11127e9
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/06_wider_target.a
+@@ -0,0 +1,15 @@
++// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
++// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
++const enum Kind { Unknown = 0, Keyword = 128, Identifier = 80 }
++let wide: Kind = Kind.Unknown;
++let calls = 0;
++function keyword(): Kind.Keyword {
++    calls += 1;
++    return Kind.Keyword;
++}
++function assignKeyword(): Kind.Keyword {
++    const value: Kind.Keyword = keyword();
++    return wide = value;
++}
++const result: Kind.Keyword = assignKeyword();
++console.log(`${result} ${wide} ${calls}`);
+diff --git a/stage3/fixtures/assignment-proofs/NOTICE b/stage3/fixtures/assignment-proofs/NOTICE
+new file mode 100644
+index 00000000..76966755
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/NOTICE
+@@ -0,0 +1,6 @@
++TypeScript
++Copyright (c) Microsoft Corporation. All rights reserved.
++
++Scanner excerpt from TypeScript 6.0.3, commit
++050880ce59e30b356b686bd3144efe24f875ebc8. Apache-2.0.
++See ../../../LICENSE-APACHE. Other fixtures are authored ruling probes.
+diff --git a/stage3/fixtures/assignment-proofs/README.md b/stage3/fixtures/assignment-proofs/README.md
+new file mode 100644
+index 00000000..ba5bc75f
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/README.md
+@@ -0,0 +1,94 @@
++# Proofs through assignment expressions
++
++October 8, 11:16 ruling, compiler task #cvhj5fk: a simple assignment expression
++returns its RHS value and carries its membership, narrowing and definedness
++proofs. The target write is still checked independently. Compound assignment
++returns the newly computed target value, which needs its own proof; its result
++is not the RHS operand.
++
++The fixture-authorship branch started at origin/main `45487a809f89885a3fc651cd590e7dabf31362dc`.
++The fixture-authorship commit merged no feature branch or compiler change. The scanner witness is based on
++scout `91c49dcd` and preserves the entire upstream getIdentifierToken function,
++including `return token = keyword;` at scanner.ts:1823. expectations.json pins
++TypeScript 6.0.3 commit `050880ce59e30b356b686bd3144efe24f875ebc8`, its scanner
++source hash, and the exact function text. Only the enum, keyword table and driver
++are reduced; CharacterCodes preserves the original function's identifiers.
++The reduced typed Map does not prove the upstream Object.entries construction.
++
++The other five programs are authored ruling probes, explicitly labeled as such.
++All begin with an a-check pass header. Current NotYet observations are not
++refusal headers; a-check treats NotYet as checked. The ruled target is Compiles,
++recorded separately in [expectations.json](expectations.json), including Node
++bytes, proof obligations and the independent target-write requirement.
++[status.json](status.json) records current-main observations in the shared fixture
++schema with portable exact diagnostics.
++
++| Fixture | Proof and observable effects | Mutant caught by Node stdout bytes |
++| --- | --- | --- |
++| 01_scanner_keyword | Defined keyword membership flows into the result while token has the full enum type; tests two keywords and three misses. | Store/return Identifier in the keyword branch. |
++| 02_if_narrowing | `if ((x = f()) !== undefined)` narrows x; both present and absent branches execute; f runs once per call. | The absent input becomes `missing`, taking the present branch. |
++| 03_return_defined | `return (cache = compute())` returns a defined string through an optional cache; two calls prove single evaluation and stores. | Return compute directly, omitting the cache write. |
++| 04_chained | `a = b = value` carries definedness through both results and writes both targets once. | Omit b's assignment. |
++| 05_compound | `x += y` returns updated x: 12 then 14, with one RHS computation per call. | Replace += with =, returning/storing y. |
++| 06_wider_target | A Keyword member proof survives storage into full Kind; the member-typed return is preserved. | Return value directly, omitting the wider target write. |
++
++These mutants change actual source/input and remain valid strict TypeScript.
++They fail only at the source Node byte comparison, not a checker/build failure.
++They prove the fixture oracle can fail; they do not claim that the missing
++compiler implementation has been mutation-tested. Mutants are generated into
++scratch .a files, so intentionally wrong permanent programs need no refusal
++headers or gate exemptions.
++
++## Reproduction and observations
++
++```sh
++source /workspace/adamic-tools/env.sh
++export NODE_PATH="$HOME/.cache/adamic-stage3/api/node_modules"
++python3 stage3/fixtures/assignment-proofs/check.py > /tmp/step12-assign-check.log 2>&1
++go test ./stage3/fixtures -run 'TestFixtures/assignment-proofs' -count=1 -timeout 5m > /tmp/step12-assign-fixtures.log 2>&1
++```
++
++check.py runs stock TypeScript 6.0.3, source Node via oracle/node.mjs, and current
++`go run ./cmd/adamic build` on every fixture; any compiled binary must equal
++Node stdout, stderr and exit. Six isolated child mutant runs must exit 1 at
++`Node stdout byte comparison`, after zero TypeScript diagnostics. It writes
++raw build/type/Node/mutant logs to the scratch path printed at completion.
++[counts.md](counts.md) and [mutants.json](mutants.json) record the bucket counts
++and individual catchers. No central native oracle rows were added.
++
++Observed on current main: six Node goldens and six mutants pass their checks;
++all six Adamic builds stop NotYet at assignment-expression lowering. No native
++binary or native no-check proof is claimed. Use `check.py --require-adamic` after
++#cvhj5fk lands to require all six Compiles outcomes and byte equality. Future
++emission proof/check inspection remains the compiler worker's obligation; the
++metadata's no-recheck expectation alone is not emitted-code evidence.
++
++Setup timings: Node 0.020s, Go 0.023s, submodules 0.056s, markdown 0.067s,
++clang 0.142s, validated Go-build stamp 0.631s, deferred test binaries 0.633s,
++warm cache 0.634s, done 0.659s. nproc 5, CPU quota 4; Go 1.27.1, clang 20.1.8,
++Node 24.19.0. Only this bucket's checks and the filtered shared fixture test ran;
++no full package or full gate ran. Property setters, throwing RHSs, aliasing
++references and compound enum membership are not covered by these six probes.
++
++## Acceptance on codex/assignment-proofs
++
++All six Compiles outcomes pass on implementation commit
++`ccf8c172263872a93731658d782d0804d20ac294`, against the unchanged expectations.
++The six source mutants still fail their Node comparisons. The programs are now
++registered in `internal/oracle/assignment_proofs_test.go`, so the JavaScript
++backend, native sanitizer/leak lane, and native release lane all run alongside
++the seven implementation fixtures. Counts are recorded in
++`internal/oracle/counts.md`. No emitter change was needed for this acceptance run.
++
++The acceptance follow-up is documented in
++`review/assignment-proofs/acceptance.md`, including the emitted-C proof
++inspection and the existing RHS/dereference checks that remain.
++
++## Rebuilt on main
++
++The compiler/assignment-proofs-main rebuild omits ccf8c172: all six requested
++acceptance outcomes already pass on main. The fixture-only cherry-pick uses six
++top-level oracle tests and six top-level mutant tests, with counts registered
++through the existing additionalFixtureCounts hook. No compiler or runtime file
++changes. See review/assignment-proofs-main/report.md for current-main
++results, each test's setup-inclusive seconds and integration lane output.
+diff --git a/stage3/fixtures/assignment-proofs/check-types.cjs b/stage3/fixtures/assignment-proofs/check-types.cjs
+new file mode 100644
+index 00000000..a75cd0f3
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/check-types.cjs
+@@ -0,0 +1,14 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const assert = require('node:assert/strict');
++const ts = require('typescript');
++assert.equal(ts.version, '6.0.3');
++const file = path.resolve(process.argv[2]) + '.ts';
++const source = fs.readFileSync(process.argv[2], 'utf8') + '\ndeclare const console: { log: (text: string) => void };\n';
++const options = { strict: true, noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true, moduleDetection: ts.ModuleDetectionKind.Force, target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, lib: ['lib.es2024.d.ts'], types: [], noEmit: true };
++const host = ts.createCompilerHost(options), get = host.getSourceFile;
++host.getSourceFile = (name, version, error, fresh) => name === file ? ts.createSourceFile(name, source, version, true) : get(name, version, error, fresh);
++const diagnostics = ts.getPreEmitDiagnostics(ts.createProgram([file], options, host));
++assert.equal(diagnostics.length, 0, diagnostics.map(diagnostic => ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')).join('\n'));
++console.log('PASS stock TypeScript 6.0.3, zero diagnostics');
+diff --git a/stage3/fixtures/assignment-proofs/check.py b/stage3/fixtures/assignment-proofs/check.py
+new file mode 100644
+index 00000000..cf230b34
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/check.py
+@@ -0,0 +1,75 @@
++#!/usr/bin/env python3
++"""Run only this bucket; source Node is the oracle, not emitted JavaScript."""
++import argparse
++import json
++import pathlib
++import subprocess
++import tempfile
++
++bucket = pathlib.Path(__file__).resolve().parent
++repository = bucket.parents[2]
++parser = argparse.ArgumentParser()
++parser.add_argument('--mutant', type=int)
++parser.add_argument('--require-adamic', action='store_true')
++args = parser.parse_args()
++contract = json.loads((bucket / 'expectations.json').read_text())
++records = contract['records']
++assert contract['upstream_source']['function_text'] in (bucket / '01_scanner_keyword.a').read_text(), 'scanner upstream function provenance'
++logs = pathlib.Path(tempfile.mkdtemp(prefix='step12-assignment-'))
++status, mutants = [], []
++
++def node(file):
++    return subprocess.run(['node', '--disable-warning=ExperimentalWarning', str(repository / 'oracle/node.mjs'), str(file)], capture_output=True)
++
++def compare(run, expected, name):
++    assert run.stdout == expected['stdout'].encode(), f'{name}: Node stdout byte comparison'
++    assert run.stderr == expected['stderr'].encode(), f'{name}: Node stderr byte comparison'
++    assert run.returncode == expected['exit'], f'{name}: Node exit comparison'
++
++def typecheck(file):
++    run = subprocess.run(['node', str(bucket / 'check-types.cjs'), str(file)], capture_output=True)
++    (logs / (file.stem + '.types.log')).write_bytes(run.stdout + run.stderr)
++    assert run.returncode == 0, run.stderr.decode()
++
++for index, record in enumerate(records, 1):
++    if args.mutant is not None and args.mutant != index:
++        continue
++    file = bucket / record['file']
++    source = file.read_text()
++    assert source.startswith('// a-check: pass;'), record['file']
++    if args.mutant:
++        mutation = record['mutant']
++        assert source.count(mutation['replace']) == 1
++        file = logs / record['file']
++        file.write_text(source.replace(mutation['replace'], mutation['with']))
++    typecheck(file)
++    run = node(file)
++    (logs / (file.stem + '.node.stdout')).write_bytes(run.stdout)
++    (logs / (file.stem + '.node.stderr')).write_bytes(run.stderr)
++    compare(run, record['node'], record['file'])
++    binary = logs / (file.stem + '.native')
++    build = subprocess.run(['go', 'run', './cmd/adamic', 'build', str(file), '-o', str(binary)], cwd=repository, capture_output=True)
++    text = (build.stdout + build.stderr).decode()
++    (logs / (file.stem + '.build.log')).write_text(text)
++    if build.returncode == 0:
++        native = subprocess.run([str(binary)], capture_output=True)
++        assert (native.stdout, native.stderr, native.returncode) == (run.stdout, run.stderr, run.returncode), f'SILENT MISCOMPILE: {file}; logs {logs}'
++        outcome = 'Compiles'
++        what = ''
++    else:
++        outcome = 'NotYet' if "can't lower" in text or 'not yet' in text.lower() else 'Refused' if 'refuses' in text or 'refused' in text else 'Checker'
++        what = text.removeprefix("adamic: ").removesuffix("exit status 1\n").rstrip("\n").replace(str(repository) + "/", "")
++    if args.require_adamic:
++        assert outcome == record['expected_adamic']['outcome'], f'{file}: expected Compiles, observed {outcome}'
++    status.append({'file': record['file'], 'tsc': record['source'], 'reason': record['reason'], 'node': record['node'], 'stage0': {'outcome': outcome, 'what': what}})
++if not args.mutant:
++    for index, record in enumerate(records, 1):
++        run = subprocess.run(['python3', str(__file__), '--mutant', str(index)], capture_output=True)
++        (logs / (record['file'] + '.mutant.log')).write_bytes(run.stdout + run.stderr)
++        assert run.returncode == 1 and b'Node stdout byte comparison' in run.stderr, f'{record["file"]}: mutant did not fail the intended comparison: {run.stderr.decode()}'
++        mutants.append({'file': record['file'], 'exit': run.returncode, 'caught_by': 'source Node stdout byte comparison after zero stock TypeScript diagnostics', 'mutation': record['mutant']})
++    (bucket / 'status.json').write_text(json.dumps(status, indent=2) + '\n')
++    (bucket / 'mutants.json').write_text(json.dumps(mutants, indent=2) + '\n')
++    counts = {outcome: sum(row['stage0']['outcome'] == outcome for row in status) for outcome in ['Compiles', 'NotYet', 'Refused', 'Checker']}
++    (bucket / 'counts.md').write_text('# Assignment-proof fixture counts\n\n6 fixtures, 6 source Node goldens, 6 caught Node input/statement mutants.\n\nCurrent branch: ' + ', '.join(f'{name}={count}' for name, count in counts.items()) + '.\n\nRuled target: all 6 compile and match Node; proof propagation adds no redundant proof check. Native allocation counts are recorded in internal/oracle/counts.md; all six acceptance programs are registered with the central Node oracle.\n')
++    print(f'PASS: 6 Node goldens, 6 TypeScript checks, 6 caught mutants; current branch {counts}; logs {logs}')
+diff --git a/stage3/fixtures/assignment-proofs/counts.md b/stage3/fixtures/assignment-proofs/counts.md
+new file mode 100644
+index 00000000..f5eb4e0a
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/counts.md
+@@ -0,0 +1,7 @@
++# Assignment-proof fixture counts
++
++6 fixtures, 6 source Node goldens, 6 caught Node input/statement mutants.
++
++Current branch: Compiles=6, NotYet=0, Refused=0, Checker=0.
++
++Ruled target: all 6 compile and match Node; proof propagation adds no redundant proof check. Native allocation counts are recorded in internal/oracle/counts.md; all six acceptance programs are registered with the central Node oracle.
+diff --git a/stage3/fixtures/assignment-proofs/expectations.json b/stage3/fixtures/assignment-proofs/expectations.json
+new file mode 100644
+index 00000000..cefb94fe
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/expectations.json
+@@ -0,0 +1,171 @@
++{
++  "schema_version": 1,
++  "ruling": "#cvhj5fk, October 8 2026 11:16",
++  "scout_commit": "91c49dcd",
++  "records": [
++    {
++      "file": "01_scanner_keyword.a",
++      "source": [
++        "src/compiler/scanner.ts:1815-1828"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "KeywordSyntaxKind membership and definedness survive assignment into full SyntaxKind; both writes checked separately.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return token = keyword;",
++        "with": "return token = SyntaxKind.Identifier;",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    },
++    {
++      "file": "02_if_narrowing.a",
++      "source": [
++        "ruling #cvhj5fk, October 8 2026 11:16: authored 02_if_narrowing.a"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "The !== undefined guard narrows the assignment result and x; f runs once.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "4 1\n-1 2\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "4 1\n-1 2\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return present ? \"name\" : undefined;",
++        "with": "return present ? \"name\" : \"missing\";",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    },
++    {
++      "file": "03_return_defined.a",
++      "source": [
++        "ruling #cvhj5fk, October 8 2026 11:16: authored 03_return_defined.a"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "compute returns a defined string; result keeps that proof despite optional cache target; compute runs once.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "value1 value1 1\nvalue2 value2 2\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "value1 value1 1\nvalue2 value2 2\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return (cache = compute());",
++        "with": "return compute();",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    },
++    {
++      "file": "04_chained.a",
++      "source": [
++        "ruling #cvhj5fk, October 8 2026 11:16: authored 04_chained.a"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "Each simple assignment result retains the defined RHS; both targets receive it and computation runs once.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "value1 value1 value1 1\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "value1 value1 value1 1\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return a = b = value;",
++        "with": "return a = value;",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    },
++    {
++      "file": "05_compound.a",
++      "source": [
++        "ruling #cvhj5fk, October 8 2026 11:16: authored 05_compound.a"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "Compound assignment returns the updated x; it does not inherit y as its result.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "12 12 1\n14 14 2\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "12 12 1\n14 14 2\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return x += y;",
++        "with": "return x = y;",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    },
++    {
++      "file": "06_wider_target.a",
++      "source": [
++        "ruling #cvhj5fk, October 8 2026 11:16: authored 06_wider_target.a"
++      ],
++      "reason": "assignment expression proof propagation, step 12 ruling",
++      "proof": "Kind.Keyword membership survives assignment into the whole enum; result remains the member, with the store checked.",
++      "expected_adamic": {
++        "outcome": "Compiles",
++        "stdout": "128 128 1\n",
++        "stderr": "",
++        "exit": 0,
++        "proof_recheck_required": false,
++        "target_write_checked": true
++      },
++      "node": {
++        "stdout": "128 128 1\n",
++        "stderr": "",
++        "exit": 0
++      },
++      "mutant": {
++        "replace": "return wide = value;",
++        "with": "return value;",
++        "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++      }
++    }
++  ],
++  "upstream_source": {
++    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
++    "file": "src/compiler/scanner.ts",
++    "start": 1815,
++    "end": 1828,
++    "file_sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
++    "function_text": "function getIdentifierToken(): SyntaxKind.Identifier | KeywordSyntaxKind {\n    // Reserved words are between 2 and 12 characters long and start with a lowercase letter\n    const len = tokenValue.length;\n    if (len >= 2 && len <= 12) {\n        const ch = tokenValue.charCodeAt(0);\n        if (ch >= CharacterCodes.a && ch <= CharacterCodes.z) {\n            const keyword = textToKeyword.get(tokenValue);\n            if (keyword !== undefined) {\n                return token = keyword;\n            }\n        }\n    }\n    return token = SyntaxKind.Identifier;\n}\n"
++  }
++}
+diff --git a/stage3/fixtures/assignment-proofs/mutants.json b/stage3/fixtures/assignment-proofs/mutants.json
+new file mode 100644
+index 00000000..63c0da1d
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/mutants.json
+@@ -0,0 +1,62 @@
++[
++  {
++    "file": "01_scanner_keyword.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return token = keyword;",
++      "with": "return token = SyntaxKind.Identifier;",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  },
++  {
++    "file": "02_if_narrowing.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return present ? \"name\" : undefined;",
++      "with": "return present ? \"name\" : \"missing\";",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  },
++  {
++    "file": "03_return_defined.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return (cache = compute());",
++      "with": "return compute();",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  },
++  {
++    "file": "04_chained.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return a = b = value;",
++      "with": "return a = value;",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  },
++  {
++    "file": "05_compound.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return x += y;",
++      "with": "return x = y;",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  },
++  {
++    "file": "06_wider_target.a",
++    "exit": 1,
++    "caught_by": "source Node stdout byte comparison after zero stock TypeScript diagnostics",
++    "mutation": {
++      "replace": "return wide = value;",
++      "with": "return value;",
++      "expected": "Node byte comparison fails with zero TypeScript diagnostics"
++    }
++  }
++]
+diff --git a/stage3/fixtures/assignment-proofs/status.json b/stage3/fixtures/assignment-proofs/status.json
+new file mode 100644
+index 00000000..e9b2068a
+--- /dev/null
++++ b/stage3/fixtures/assignment-proofs/status.json
+@@ -0,0 +1,98 @@
++[
++  {
++    "file": "01_scanner_keyword.a",
++    "tsc": [
++      "src/compiler/scanner.ts:1815-1828"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "02_if_narrowing.a",
++    "tsc": [
++      "ruling #cvhj5fk, October 8 2026 11:16: authored 02_if_narrowing.a"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "4 1\n-1 2\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "03_return_defined.a",
++    "tsc": [
++      "ruling #cvhj5fk, October 8 2026 11:16: authored 03_return_defined.a"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "value1 value1 1\nvalue2 value2 2\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "04_chained.a",
++    "tsc": [
++      "ruling #cvhj5fk, October 8 2026 11:16: authored 04_chained.a"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "value1 value1 value1 1\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "05_compound.a",
++    "tsc": [
++      "ruling #cvhj5fk, October 8 2026 11:16: authored 05_compound.a"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "12 12 1\n14 14 2\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "06_wider_target.a",
++    "tsc": [
++      "ruling #cvhj5fk, October 8 2026 11:16: authored 06_wider_target.a"
++    ],
++    "reason": "assignment expression proof propagation, step 12 ruling",
++    "node": {
++      "stdout": "128 128 1\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  }
++]

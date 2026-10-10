@@ -1,0 +1,8 @@
+=== RUN   TestOptionalAfterCallPreservesEarlierThrow
+=== PAUSE TestOptionalAfterCallPreservesEarlierThrow
+=== CONT  TestOptionalAfterCallPreservesEarlierThrow
+    optional_after_call_throw_summary_test.go:17: nonthrowing Defined erased an earlier throw
+--- FAIL: TestOptionalAfterCallPreservesEarlierThrow (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.015s
+FAIL

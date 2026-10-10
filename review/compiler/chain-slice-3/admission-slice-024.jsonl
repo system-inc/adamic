@@ -1,0 +1,64 @@
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/plain/104.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/plain/104_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/104_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/s/042.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/s/042_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/s/042_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/rules/base-boundary-no-global-container/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:14:9: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:16:24: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:12:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/max-classes-per-file/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/max-classes-per-file/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a:16:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/max-depth/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/max-depth/options.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/max-depth/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a:12:32: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/max-nested-callbacks/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/max-nested-callbacks/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a:12:25: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:9:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:9:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:9:22: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:9:22: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-for-in/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:12:9: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:60:44: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:60:44: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:4:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:4:12: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:139:13: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:139:13: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/context.ts:109:16: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:12:28: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-caller/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-caller/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a:16:26: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-empty-character-class/escapes.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-empty-character-class/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-empty-character-class/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a:40:25: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-empty-pattern/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-empty-pattern/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a:12:13: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-empty-static-block/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-empty-static-block/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a:15:23: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-ex-assign/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-ex-assign/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a:11:44: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-iterator/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-iterator/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a:19:26: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/lint/rules/no-multi-assign/messages.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/rules/no-multi-assign/rule.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a:19:16: stage 0 can't lower a method of a class stage 0 doesn't have yet"}

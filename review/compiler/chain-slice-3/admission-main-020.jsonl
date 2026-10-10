@@ -1,0 +1,64 @@
+{"Path":"stage1/cohere/css/gaps/6_printer_regex_tree.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/css/gaps/printer_boundaries.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/cssstrings/gaps/1_multi_push.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts:2:1: stage 0 can't lower push with other than one value yet"}
+{"Path":"stage1/cohere/estree/gaps/cookedSurrogate.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/estree/location.ts:4:18: stage 0 can't lower a method of a class stage 0 doesn't have yet"}
+{"Path":"stage1/cohere/estree/gaps/crlf.ts","Status":"*load.CheckError","Error":"/workspace/adamic/stage1/cohere/estree/gaps/crlf.ts:1:1: error TS2304: Cannot find name 'x'."}
+{"Path":"stage1/cohere/estree/gaps/deepBinary.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/estree/gaps/emptyGenerics.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/estree/gaps/interfaceDefault.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet"}
+{"Path":"stage1/cohere/estree/gaps/interfaceTypeMethod.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts:10:12: stage 0 can't lower a class method through a view that erases its prototype origin yet"}
+{"Path":"stage1/cohere/estree/gaps/lineSeparator.ts","Status":"*load.CheckError","Error":"/workspace/adamic/stage1/cohere/estree/gaps/lineSeparator.ts:1:1: error TS2304: Cannot find name 'x'."}
+{"Path":"stage1/cohere/estree/gaps/methodReplacement.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts:11:1: Adamic 0.1 refuses a method read as a value (next would lose its object, and this with it); call it in an arrow that keeps the object: () =\u003e first.next() (unbound-method)"}
+{"Path":"stage1/cohere/estree/gaps/nbsp.ts","Status":"*load.CheckError","Error":"/workspace/adamic/stage1/cohere/estree/gaps/nbsp.ts:1:1: error TS2304: Cannot find name 'x'."}
+{"Path":"stage1/cohere/estree/gaps/parserRecovery.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/estree/gaps/portParserRecovery.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/estree/gaps/postfixValue.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts:3:23: stage 0 can't lower a PostfixUnaryExpression yet"}
+{"Path":"stage1/cohere/estree/gaps/rawInput.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/estree/gaps/typeMemberInitializer.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/1_from_char_code.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/2_bitwise.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/3_later_function.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/3_later_method.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/4_function_value.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/5_array_from.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/6_boolean_element.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/7_maybe_number_compared.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/8_tuple_value.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/gitignore/gaps/9_return_panic.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/graphql/gaps/1_throwing_function_value.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts:7:8: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"}
+{"Path":"stage1/cohere/graphql/printer/gaps/nestedConstructor.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/graphql/printer/gaps/nestedInner.ts:5:29: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"}
+{"Path":"stage1/cohere/graphql/printer/gaps/nestedInner.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/json/gaps/emptyFallback.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/json/gaps/multiplePush.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet"}
+{"Path":"stage1/cohere/json/gaps/repeatInTry.ts","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"}
+{"Path":"stage1/cohere/lint/comment_ranges.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/gaps/1_nested_constructor.ts","Status":"*lower.Refused","Error":"/workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"}
+{"Path":"stage1/cohere/lint/gaps/2_optional_index.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/gaps/3_numeric_or.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/gaps/4_last_index_position.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/gaps/5_parser_recovery.ts","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/options.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/options.a:2:76: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/patterns.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/corpus.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/dynamic_gap.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/runner.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/003.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/003_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/003_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/004.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/004_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/004_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/005.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/005_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/005_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/006.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/006_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/006_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/008.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/008_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/008_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/009.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/009_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/009_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/010.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/010_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/010_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/011.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/011_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/011_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/013.a","Status":"accepted","Error":""}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/013_runtime.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/013_runtime.a:7:26: stage 0 can't lower RegExp with a nonconstant pattern yet"}
+{"Path":"stage1/cohere/lint/regex/testdata/shapes/dynamic/014.a","Status":"accepted","Error":""}

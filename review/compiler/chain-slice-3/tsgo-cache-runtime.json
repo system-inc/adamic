@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/internal/oracle/testdata/arguments_length_extended.a"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/chain-slice-3-cache-products/fixture.mjs"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/chain-slice-3-cache-products/native-false-first"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/chain-slice-3-cache-products/native-false-warm"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/chain-slice-3-cache-products/native-true-first"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/chain-slice-3-cache-products/native-true-warm"
+    ],
+    "exit": 0,
+    "stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "stderr": ""
+  }
+]

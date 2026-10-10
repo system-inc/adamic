@@ -1,0 +1,419 @@
+diff --git a/internal/flow/build.go b/internal/flow/build.go
+index 6a789ded..dab1ea95 100644
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -476,6 +476,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
+ 				throws = true
+ 			}
+ 			switch value.Type() {
++			case reflect.TypeOf(ir.Defined{}):
++				if value.Interface().(ir.Defined).Throws() {
++					throws = true
++				}
+ 			case callType:
+ 				if program.CallMayThrow(value.Interface().(ir.Call)) {
+ 					throws = true
+diff --git a/internal/flow/optional_after_call_test.go b/internal/flow/optional_after_call_test.go
+new file mode 100644
+index 00000000..0868ad6c
+--- /dev/null
++++ b/internal/flow/optional_after_call_test.go
+@@ -0,0 +1,36 @@
++package flow
++
++import (
++	"encoding/json"
++	"strings"
++	"testing"
++)
++
++func TestOptionalAfterCallFlowEdges(t *testing.T) {
++	t.Parallel()
++	program := lowered(t, "../oracle/testdata/optional_after_call_required.a")
++	checked := 0
++	for function := -1; function < len(program.Functions); function++ {
++		graph := Build(program, function)
++		for _, instruction := range graph.Instructions {
++			if instruction == nil || instruction.Expression == nil {
++				continue
++			}
++			encoded, err := json.Marshal(instruction.Expression)
++			if err != nil {
++				t.Fatal(err)
++			}
++			// Independently select the inserted required-read error from the real fixture.
++			if !strings.Contains(string(encoded), "TypeError: Cannot read properties of undefined") {
++				continue
++			}
++			checked++
++			if !CanThrow(program, instruction) {
++				t.Fatal("catchable read lost its flow exception edge")
++			}
++		}
++	}
++	if checked == 0 {
++		t.Fatal("fixture contains no inserted required-read check")
++	}
++}
+diff --git a/internal/ir/defined.go b/internal/ir/defined.go
+new file mode 100644
+index 00000000..3bff2a51
+--- /dev/null
++++ b/internal/ir/defined.go
+@@ -0,0 +1,9 @@
++package ir
++
++import "strings"
++
++// Throws distinguishes JavaScript's catchable failed read from an Adamic type invariant panic.
++// Defined messages for reads carry the same TypeError prefix as Node's uncaught error text.
++func (d Defined) Throws() bool {
++	return strings.HasPrefix(d.Message, "TypeError: ")
++}
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..e017dc77 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -977,6 +977,13 @@ func (e *emitter) value(expression ir.Expression) string {
+ 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
+ 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
+ 	case ir.Defined:
++		if expression.Throws() {
++			absent := "undefined"
++			if expression.Null {
++				absent = "null"
++			}
++			return "((value) => { if (value === " + absent + ") throw new TypeError(" + quote(strings.TrimPrefix(expression.Message, "TypeError: ")) + "); return value; })(" + e.value(expression.Value) + ")"
++		}
+ 		if expression.Null {
+ 			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
+ 		}
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 6b81dc89..b63b91ed 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -188,6 +188,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
+ 			found = found || node.MayThrow()
+ 		case ir.Throw:
+ 			found = true
++		case ir.Defined:
++			found = node.Throws()
+ 		case ir.Call:
+ 			if l.result.CallMayThrow(node) {
+ 				found = true
+diff --git a/internal/lower/narrowed.go b/internal/lower/narrowed.go
+index 4051d893..ebfb1215 100644
+--- a/internal/lower/narrowed.go
++++ b/internal/lower/narrowed.go
+@@ -42,10 +42,10 @@ func (l *lowering) narrowedAway(node *ast.Node) bool {
+ }
+ 
+ // defined checks a reference the checker narrowed undefined out of. Read through a property next,
+-// it panics with the TypeError JavaScript throws there, word for word; anywhere else, with Adamic's
++// it throws the TypeError JavaScript throws there, word for word; anywhere else, panics with Adamic's
+ // own words, since JavaScript would go on with undefined in a place typed not to hold it.
+ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
+-	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || l.acceptsUndefined(node) {
++	if !value.Type().IsReference() || value.Type() == ir.Union || !l.narrowedAway(node) || l.acceptsUndefined(node) || optionalReceiver(node) {
+ 		return value
+ 	}
+ 	null := false
+@@ -143,3 +143,28 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
+ 	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+ 	return contextual != nil && l.includesUndefined(contextual)
+ }
++
++// optionalReceiver recognizes the operand tested by ?. before a property, element or call.
++// Parentheses around that operand do not change which value the optional operation tests.
++// The optional operation must see an absent value itself, rather than a narrowing check stopping it.
++func optionalReceiver(node *ast.Node) bool {
++	parent := node.Parent
++	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
++		node, parent = parent, parent.Parent
++	}
++	if parent == nil {
++		return false
++	}
++	switch parent.Kind {
++	case ast.KindPropertyAccessExpression:
++		access := parent.AsPropertyAccessExpression()
++		return access.Expression == node && access.QuestionDotToken != nil
++	case ast.KindElementAccessExpression:
++		access := parent.AsElementAccessExpression()
++		return access.Expression == node && access.QuestionDotToken != nil
++	case ast.KindCallExpression:
++		call := parent.AsCallExpression()
++		return call.Expression == node && call.QuestionDotToken != nil
++	}
++	return false
++}
+diff --git a/internal/native/reuse.go b/internal/native/reuse.go
+index 13d3416a..0d534dea 100644
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -4,6 +4,7 @@ import (
+ 	"fmt"
+ 	"reflect"
+ 	"slices"
++	"strings"
+ 
+ 	"github.com/system-inc/adamic/internal/flow"
+ 	"github.com/system-inc/adamic/internal/ir"
+@@ -370,11 +371,20 @@ func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
+ 	return name
+ }
+ 
+-// checkDefined emits ir.Defined's check of a value: NULL panics with the message.
++// checkDefined emits the failed read as a catchable TypeError, or an invariant panic.
+ func (e *emitter) checkDefined(value string, message string) {
+ 	e.line("if (%s == NULL) {", value)
+-	e.line("\tstatic const char message[] = %s;", cString(message))
+-	e.line("\tadamic_panic(message, sizeof message - 1);")
++	if (ir.Defined{Message: message}).Throws() {
++		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
++		e.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
++		e.line("\tadamic_thrown = adamic_error_new(&error_message);")
++		e.line("\tadamic_release(adamic_thrown->slots[0].reference);")
++		e.line("\tadamic_thrown->slots[0].reference = adamic_retain(&error_name);")
++		e.checkThrown()
++	} else {
++		e.line("\tstatic const char message[] = %s;", cString(message))
++		e.line("\tadamic_panic(message, sizeof message - 1);")
++	}
+ 	e.line("}")
+ }
+ 
+diff --git a/internal/oracle/optional_after_call_test.go b/internal/oracle/optional_after_call_test.go
+new file mode 100644
+index 00000000..719dfe85
+--- /dev/null
++++ b/internal/oracle/optional_after_call_test.go
+@@ -0,0 +1,65 @@
++package oracle
++
++import (
++	"path/filepath"
++	"testing"
++)
++
++func init() {
++	for _, name := range []string{"79", "193", "variants", "required", "propagation"} {
++		fixtures = append(fixtures, struct {
++			path    string
++			lowers  bool
++			checked bool
++		}{"internal/oracle/testdata/optional_after_call_" + name + ".a", true, false})
++	}
++	// Main now lowers this computed optional index; retain the original witness unchanged.
++	fixtures = append(fixtures, struct {
++		path    string
++		lowers  bool
++		checked bool
++	}{"internal/oracle/testdata/optional_after_call_gaps/computed.a", true, false})
++}
++
++// Each fixture has its own top-level test so the focused gate stays bounded.
++func TestOptionalAfterCall79(t *testing.T)       { t.Parallel(); optionalAfterCall(t, "79") }
++func TestOptionalAfterCall193(t *testing.T)      { t.Parallel(); optionalAfterCall(t, "193") }
++func TestOptionalAfterCallVariants(t *testing.T) { t.Parallel(); optionalAfterCall(t, "variants") }
++func TestOptionalAfterCallRequired(t *testing.T) { t.Parallel(); optionalAfterCall(t, "required") }
++func TestOptionalAfterCallPropagation(t *testing.T) {
++	t.Parallel()
++	optionalAfterCall(t, "propagation")
++}
++
++func optionalAfterCall(t *testing.T, name string) {
++	t.Helper()
++	fixture := "internal/oracle/testdata/optional_after_call_" + name + ".a"
++	if name == "computed" {
++		fixture = "internal/oracle/testdata/optional_after_call_gaps/computed.a"
++	}
++	path, err := filepath.Abs(filepath.Join(repository, fixture))
++	if err != nil {
++		t.Fatal(err)
++	}
++	want := onNode(t, path)
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	actual, sanitized := natively(t, program)
++	for backend, got := range map[string]run{"JavaScript": onJavaScriptBackend(t, program), "sanitized native": actual, "release native": released(t, program)} {
++		if difference := disagreement(want, got); difference != "" {
++			t.Errorf("%s: %s; Node exit=%d stdout=%q stderr=%q; backend exit=%d stdout=%q stderr=%q", backend, difference, want.exitCode, want.stdout, want.stderr, got.exitCode, got.stdout, got.stderr)
++		}
++	}
++	if want.exitCode == 0 {
++		if leaked := leaks(t, program, sanitized); leaked != "" {
++			t.Errorf("leaks: %s", leaked)
++		}
++	}
++}
++
++func TestOptionalAfterCallComputed(t *testing.T) {
++	t.Parallel()
++	optionalAfterCall(t, "computed")
++}
+diff --git a/internal/oracle/testdata/optional_after_call_193.a b/internal/oracle/testdata/optional_after_call_193.a
+new file mode 100644
+index 00000000..b0b2b991
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_193.a
+@@ -0,0 +1,17 @@
++// Seed 193, shrunk by adamic-fuzz.
++class BaseCounter {
++    label = 'b';
++}
++const plainCounter = new BaseCounter();
++interface Link {
++    value: number;
++    label: string;
++    readonly next: Link | undefined;
++}
++let chain: Link | undefined = { value: 100, label: 'a,b', next: undefined };
++function effect5(parameter6: number[], parameter7: number, parameter8: number = (parameter7 << -1), parameter9: number = Number.parseFloat(plainCounter.label)): number {
++    chain = chain?.next;
++    return 0;
++}
++effect5([0], 0);
++chain = chain?.next;
+diff --git a/internal/oracle/testdata/optional_after_call_79.a b/internal/oracle/testdata/optional_after_call_79.a
+new file mode 100644
+index 00000000..e23644d4
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_79.a
+@@ -0,0 +1,30 @@
++// Seed 79, shrunk by adamic-fuzz.
++interface Holder {
++    value: number;
++    name: string;
++    list: number[];
++}
++class BaseCounter {
++    count = 0;
++    bump(amount: number): number {
++        return this.count + amount;
++    }
++}
++class ChildCounter extends BaseCounter {
++    extra = 1;
++    override bump(amount: number): number {
++        const carried = super.bump(amount);
++        chain = chain?.next;
++        return carried + this.extra;
++    }
++}
++const holder: Holder = { value: 10, name: 'hello', list: [7, 2.25] };
++const counter = new ChildCounter();
++interface Link {
++    value: number;
++    label: string;
++    readonly next: Link | undefined;
++}
++let chain: Link | undefined = { value: 1.5, label: '世界', next: undefined };
++holder.list.splice(counter.bump(0), 0);
++chain = chain?.next;
+diff --git a/internal/oracle/testdata/optional_after_call_gaps/computed.a b/internal/oracle/testdata/optional_after_call_gaps/computed.a
+new file mode 100644
+index 00000000..5feabcf8
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_gaps/computed.a
+@@ -0,0 +1,6 @@
++// Keep the requested computed-index variant visible: stage 0 still refuses ?.[] on an array.
++let values: readonly number[] | undefined = [1];
++function drop(): void { values = undefined; }
++drop();
++const i = 0;
++console.log(`${values?.[i] ?? -1}`);
+diff --git a/internal/oracle/testdata/optional_after_call_propagation.a b/internal/oracle/testdata/optional_after_call_propagation.a
+new file mode 100644
+index 00000000..7e8974fe
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_propagation.a
+@@ -0,0 +1,36 @@
++// A failed required read leaves a function, while optional reads remain harmless.
++interface Link {
++    readonly label: string;
++    readonly next: Link | undefined;
++}
++function readRequired(): string {
++    let chain: Link | undefined = { label: `made ${1}`, next: undefined };
++    const drop = (): void => { chain = chain?.next; };
++    drop();
++    return chain.label;
++}
++try {
++    console.log(readRequired());
++} catch (error) {
++    if (error instanceof Error) {
++        console.log(`${error.name}: ${error.message}`);
++    }
++} finally {
++    console.log('finished');
++}
++
++// An exceptional assignment must preserve the old owner for the catch.
++function preserve(): void {
++    let chain: Link | undefined = { label: `made ${2}`, next: undefined };
++    const drop = (): void => { chain = chain?.next; };
++    let original = { text: `kept ${3}` };
++    drop();
++    try {
++        original = { ...original, text: chain.label };
++    } catch (error) {
++        if (error instanceof Error) {
++            console.log(`${error.name} ${original.text}`);
++        }
++    }
++}
++preserve();
+diff --git a/internal/oracle/testdata/optional_after_call_required.a b/internal/oracle/testdata/optional_after_call_required.a
+new file mode 100644
+index 00000000..285115d6
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_required.a
+@@ -0,0 +1,12 @@
++// Required access still throws, and a catch can take its TypeError.
++interface Link { readonly next: Link | undefined; }
++let chain: Link | undefined = { next: undefined };
++function drop(): void { chain = chain?.next; }
++drop();
++try {
++    console.log(`${chain.next === undefined}`);
++} catch (error) {
++    if (error instanceof Error) {
++        console.log(`${error.name}: ${error.message}`);
++    }
++}
+diff --git a/internal/oracle/testdata/optional_after_call_variants.a b/internal/oracle/testdata/optional_after_call_variants.a
+new file mode 100644
+index 00000000..ed53431a
+--- /dev/null
++++ b/internal/oracle/testdata/optional_after_call_variants.a
+@@ -0,0 +1,26 @@
++// Calls invalidate assignment narrowings, including captured locals and fields.
++type Pair = readonly [string, number];
++let pair: Pair | undefined = ['present', 1];
++function dropPair(): void { pair = undefined; }
++dropPair();
++console.log(`${pair?.[0] ?? 'absent'}`);
++interface Box { readonly m: () => string; }
++let box: Box | undefined = { m: () => 'called' };
++function dropBox(): void { box = undefined; }
++dropBox();
++console.log(box?.m() ?? 'absent');
++interface Link { readonly next: Link | undefined; }
++function captured(): void {
++    let chain: Link | undefined = { next: undefined };
++    const drop = (): void => { chain = chain?.next; };
++    drop();
++    chain = (chain)?.next;
++    console.log(`${chain === undefined}`);
++}
++captured();
++const holder: { chain: Link | undefined } = { chain: { next: undefined } };
++function dropField(): void { holder.chain = undefined; }
++if (holder.chain !== undefined) {
++    dropField();
++    console.log(`${holder.chain?.next === undefined}`);
++}
