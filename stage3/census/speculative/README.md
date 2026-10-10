@@ -141,3 +141,50 @@ Focused checks: `audit_retry.py`, `audit_progress.py`, `audit_stream.py`, `isola
 See [continuation method](continuation.md), [coverage and every runtime](evidence/continuation/COVERAGE.json), and [archived logs and records](evidence/continuation). SHA256.json inventories every archived file. Setup completed in 15.926s; nproc=5 with a four-CPU quota.
 
 Finalization took 61.210s with peak RSS 2540296KiB. Its whole-project boundary union recalibrated 280 raw depth tags before the independent recount. Published totals contain 18163 unique classified sites. All 50 retries received their intended budgets; no file was shortened by the two-hour deadline.
+
+## Server runner
+
+Run bash stage3/census/speculative/server-run.sh WORKDIR DEADLINE_EPOCH [WORKERS=14].
+Requires Python 3, GNU timeout, Go, Node, npm and git. For a detached 24-hour run:
+
+    mkdir -p /srv/loom/stage3-census
+    nohup bash stage3/census/speculative/server-run.sh /srv/loom/stage3-census "$(date -d '+24 hours' +%s)" 14 > /srv/loom/stage3-census/nohup.log 2>&1 &
+
+The runner initializes pinned submodules over HTTPS (600-second limit), then
+pins itself to WORKERS available CPUs, one per walk, with
+GOMEMLIMIT=3GiB, a 3GiB RSS watchdog and 6GiB address-space cap. It builds the
+historical f6bb0b41 adapted tree once (streaming.md requires those source bytes);
+preparation and each build have 900-second limits. It installs the pinned Node
+audit API under WORKDIR (600-second limit) and sets NODE_PATH for finalization. Baseline records live in
+evidence/continuation/retry-priority/records at 0442c4a9. Every source size/hash,
+archive checksum and decompressed record checksum is checked before relocation.
+Each invocation reruns _namespaces/ts.moduleSpecifiers.ts and requires byte
+identity with the relocated baseline before reuse. A mismatch refuses reuse,
+runs every file and says so loudly in progress.txt. INPUT.json preserves both
+producer hashes, roots, control proof and original/relocated record checksums.
+
+WORKDIR holds progress.txt updated every minute using watch_stream.py, checkpoint
+sidecars under run, logs, RESULT.json, README.md and per-file.tsv for all 79 files.
+Reused metrics are archived measurements; new attempts replace them.
+Finalization has a 900-second limit, followed by 90-second verification; its unchanged
+audits receive 240-second child limits to cover CPU contention. A report wrapper
+flushes output and exits after success or failure, avoiding costly AST teardown. Restart with
+the same directory and a new deadline: completed records are checked and skipped,
+and unfinished files get the new remaining budget. One directory allows one
+invocation. Preserve and rename a partial tree before retrying failed preparation.
+A fresh expired invocation launches nothing and publishes "nothing completed".
+The standalone producer proof exits 0 for identity or 2 for rejection:
+
+    bash stage3/census/speculative/server-run.sh --prove-producer BINARY COMPILER_ROOT OUTPUT SECONDS
+
+Local validation: a 720-second deadline with two workers exited 0, retained
+65/79 completed files, and published 3,760,099 examined bytes and 18,163 sites.
+A 90-second restart exited 0: all 65 record hashes and mtimes were unchanged,
+only the 14 unfinished files were queued, and the control proof ran again.
+The producer variants failed byte identity; the valid marker variant refused
+archive reuse, queued all 79 files, and finalized two fresh files (14 sites).
+No-output producer (stale proof), same-size source, compressed/decompressed archive,
+resumed-record checksum and
+concurrent-run mutants were rejected. An expired deadline exited 0 with all
+three artifacts, zero completed files and 79 TSV rows. Finalization and verify
+also caught their depth, coverage, byte-share and top20 artifact mutants.
