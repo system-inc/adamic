@@ -1,0 +1,464 @@
+[
+  {
+    "name": "eep1m5z-93122fa_t_t5",
+    "source": "review/compiler/chain-slice-7/eep1m5z-93122fa_t_t5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 1,
+      "seconds": 0.065,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v1",
+    "source": "review/compiler/chain-slice-7/eep1m5z-93122fa_t_v1.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v2",
+    "source": "review/compiler/chain-slice-7/eep1m5z-93122fa_t_v2.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v5",
+    "source": "review/compiler/chain-slice-7/eep1m5z-93122fa_t_v5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-classfeat_method_view",
+    "source": "review/compiler/chain-slice-7/eep1m5z-classfeat_method_view.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "worker one1\nlazy\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 1,
+      "seconds": 0.065,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 1,
+      "seconds": 0.118,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-classfeat_static_virtual",
+    "source": "review/compiler/chain-slice-7/eep1m5z-classfeat_static_virtual.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 1,
+      "seconds": 0.069,
+      "stdout": "",
+      "stderr": "[eval]:8\n    static          n()         { return this.label.toUpperCase(); }\n                                                    ^\n\nTypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at Derived.n ([eval]:8:53)\n    at Derived.m ([eval]:3:43)\n    at <static_initializer> ([eval]:6:25)\n    at [eval]:5:23\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async node:internal/modules/esm/loader:224:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n"
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 1,
+      "seconds": 0.068,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.069,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z",
+    "source": "review/compiler/chain-slice-7/eep1m5z.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.065,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-native"
+      ],
+      "exit": 1,
+      "seconds": 0.117,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.115,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z.a"
+      ],
+      "exit": 1,
+      "seconds": 0.119,
+      "stdout": "",
+      "stderr": "adamic: /tmp/eep-presence/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "supported",
+    "source": "review/compiler/chain-slice-7/supported.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "--input-type=module-typescript"
+      ],
+      "exit": 0,
+      "seconds": 0.114,
+      "stdout": "2\n2\nok\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/supported.a",
+        "-o",
+        "/tmp/eep-presence/supported-native"
+      ],
+      "exit": 0,
+      "seconds": 0.17,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/supported-native"
+      ],
+      "exit": 0,
+      "seconds": 0.002,
+      "stdout": "2\n2\nok\n",
+      "stderr": ""
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "build",
+        "/tmp/eep-presence/supported.a",
+        "-o",
+        "/tmp/eep-presence/supported-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.264,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/supported-sanitized"
+      ],
+      "exit": 0,
+      "seconds": 0.01,
+      "stdout": "2\n2\nok\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/chain-slice-7-adamic",
+        "js",
+        "/tmp/eep-presence/supported.a"
+      ],
+      "exit": 0,
+      "seconds": 0.118,
+      "stdout": "generated JavaScript: supported.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/supported.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.066,
+      "stdout": "2\n2\nok\n",
+      "stderr": ""
+    },
+    "classification": "FIXED"
+  }
+]

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-7/run-lower-shards.py", line 10, in <module>
+    assert r['exit']==0,r
+           ^^^^^^^^^^^^
+AssertionError: {'command': ['go', 'test', './internal/lower', '-list', '^Test', '-timeout', '80s'], 'exit': 124, 'seconds': 85.009, 'log': 'lower-list.log'}

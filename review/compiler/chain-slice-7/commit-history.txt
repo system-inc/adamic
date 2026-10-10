@@ -1,0 +1,1110 @@
+ba36dda243678155b192ecdf11bec1f479c1b05e 4885cec50290686df487b62aac47c85d871ed40c
+Check scalar uses of TypeScript any with runtime tags
+
+Preserve .ts any values as tagged unknown and check scalar contexts, operands and property reads. Keep explicit any refused in .a.
+
+Conservative assumption: scalar tags establish only plain scalar contracts. Dynamic calls, structural contracts, erased any containers and unsafe field metadata remain refused. The pinned stock entry stops in the loader, so independent coverage of the 271 inventory sites is not claimed.
+
+bf5479597c863bdc83b907c28a0b078138a32ce4 ba36dda243678155b192ecdf11bec1f479c1b05e f0c6e6fc2b493722403976a97758ee6227913e3c
+Merge commit 'f0c6e6fc' into codex/checked-unknown-any
+
+11cbb0be7a1260dec9d74895227c8289647cee99 bf5479597c863bdc83b907c28a0b078138a32ce4
+Check finite JSON structures at TypeScript any uses
+
+Prepare contracts from dynamic identifier uses before lowering bodies. Refuse alias mutation, unsupported views and structural boundaries without prepared contracts. Preserve source validation and recovery tags. Record independent stock declaration probes: 3 checked, 61 refused, 207 not reached.
+
+2ef0d19ef8f8cfeeb26c650b579aea0b18592960 11cbb0be7a1260dec9d74895227c8289647cee99 031a1259bc7973934792dc6cb1bd4074fc2204b9
+Merge current main into checked any work
+
+b726ac3d3543cbcbb730258c18a57ca3fbec6e0f 2ef0d19ef8f8cfeeb26c650b579aea0b18592960
+Provide stock ambient context for checked any coverage
+
+Count only checks attributed to the binding and refusals inside the unchanged declaration. Keep erased declarations, transported values and missing concrete consumers as named outside stops; do not invent caller bodies or relax strict checking.
+
+57ea02f8dd3fdce565b0a61ec612285334fe7498 b726ac3d3543cbcbb730258c18a57ca3fbec6e0f
+Check recursive dictionary and nullable any contracts
+
+Keep stock declarations unchanged and preserve source validation. Treat any-valued record dictionaries as pending compiler/records-maplike, retain callable refusals, and refuse alias writes conservatively. Coverage remains 3 checked, 88 refused and 180 not reached with exact outside reasons. Native and JavaScript witnesses, depth controls and boundary mutants pass; all existing count rows remain unchanged.
+
+1104ae2e8d50d89268368fdbba9ba1944f1847fc 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Rebuild iteration protocol from adfb8d3d on main
+
+Bring only the net scout-iteration change onto 7a10c877 for step 20.
+
+Conflicts and resolutions:
+- internal/lower/expression.go sameKeeping: preserve main sameCallable closure ABI, library callback exception and censusNeverRest checks; add inherited readonly-array representation and element compatibility, and prevent generic container matching from bypassing view checks.
+- internal/lower/object.go elementType: preserve main nested empty-array contextual and proven-element handling; normalize inherited ReadonlyArray context after the empty fallback and before contextual storage.
+- internal/lower/refusals.go: preserve indexed-write and descriptor enumeration refusals, and insert intrinsic iterator write refusal before library refusal handling.
+
+Conservative assumption: general Iterable dispatch remains pending under #85genag; no unruled protocol implementation is carried. Host/24 already compiles on current main and agrees with fresh Node/native, so no status or Node record changed.
+
+Regenerate counts on Linux: only six new accepted iteration rows added. All required gates and all 17 source mutants pass their expected checks. See docs/iteration-main.md for commands, observed tsc stops and proof archive.
+
+6a1f8791546d99c0bafb6c9b2e2568babb75a88b 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Rebuild the generics scout on main
+
+Apply the net change from codex/scout-generics f3a560a7 without its old
+base, on origin/main 7a10c877. Keep the documentation, census tools and
+15 fixture contracts. Main already passes all supported outcomes through
+its structural generic inference, so omit the redundant resolved-mapper
+addition. No compiler or runtime implementation changes are included.
+
+Conflict: internal/oracle/counts.md. Preserve every main row, add the
+scout's own rows, then regenerate. Eight new fixture rows are recorded;
+no existing row changes. generic.go merged cleanly, but its scout-only
+addition was removed after all outcomes passed against unmodified main.
+
+Update fixture 13 to its later T["value"] local stop and fixture 14 to
+Lowered. Add pinned refusal headers to fixtures 06, 07 and 08 for a-check.
+Preserve historical hashes and measurements; record current observations
+separately. Do not duplicate compiler/generic-body-relations.
+
+Build, internal vet, changed-file a-check, stage1 Gap/Gaps/Probes,
+stage3 fixtures, uncached Node/native/JavaScript oracle with sanitizers
+and leak checks, and refreshed counts pass. Nine retained mutants are
+caught. Rerun all five historical mapper mutants: two fail, three survive
+on main and are retired with that omitted mapper path.
+
+The normal tsc entry first fails checking at builder.ts:1246:69.
+The next generic source replay is unverified: the census state snapshot
+panics on unexported IR field argumentFacts at selected core.ts:220:1.
+Do not claim the historical retirement totals as new main measurements.
+Details and all counts rows: docs/step-16-generics/landing-report.md.
+
+d5feab7d2f9403f9173b03fd092b39e6382e0368 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Name the namespace value boundary and prove live binding requirements
+
+Started from origin/main 7a10c877. No source branch was imported. Conflicts: none; no resolutions were needed.
+
+Conservative assumption: namespace escape stays temporary NotYet until live container aliasing can be represented. No language policy changed. Qualified controls retain Node behavior; stored, passed and returned snapshots prove that copying fields is unsound.
+
+2cc109e541e375c14df22698df257abe974a8db8 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Prove dependent generic body relations before instantiation
+
+Check initializers, writes and returns using the source's dependent binder,
+not the constraint that lets the checker accept a concrete value. Keep reads
+from T dependent, and assert each relation under the resolved arguments.
+Use the resolved signature mapper for indexed-only arguments and preserve
+already supplied class-call mappings. Resolve polymorphic this in the witness.
+Include index values and free mapped-type components in the proof.
+
+Conservative reading: a narrower readonly binder is not the same binder.
+Generic function defaults requiring another binder instantiation are refused.
+Casts retain their existing checks. The cohere pin has no .a sources, so its
+requested census is empty rather than substituted with a .ts census.
+
+Record 43 adapted compiler sites, hashed inputs, passing regressions, Node
+fixtures, counts and three caught Go-overlay mutants. Base is current main
+7a10c877, advanced before the first unit commit with no conflicts.
+
+Moved-result: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot Refused mutable view at 12:21 -> Refused generic initializer Pack at 12:8
+Moved-result: TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property Refused mutable view at 15:35 -> Refused generic initializer Held<Pack> at 15:8
+Moved-result: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot accepted -> Refused generic initializer Pack, now TestGenericBodyRelationsReadonlyBound
+Moved-result: stage3/fixtures/enums/06_set_node_flags.a Refused invariant-mutable at 79:10 -> Refused generic assignment T["flags"] at 79:9, in stage3 and oracle records
+Moved-result: TestNativeAgreesWithNode/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a NotYet -> Refused generic return at 8:5, now TestGenericBodyRelationsMaybeBind
+
+9a02e97cd70569a34451f263aef4778e684b9fb6 6a1f8791546d99c0bafb6c9b2e2568babb75a88b
+Reset derived census caches and measure d72728e5 hidden source
+
+205586a0899488595200f3fca470874ef9282b37 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Rebuild step 21 exceptions on current main
+
+Transport the net change d72728e5..1ac4d401 onto main 7a10c877,
+without importing the source branch's old base or merge history.
+Preserve the adopted exception rulings; no new language choice is made.
+
+Conflict resolutions:
+- javascript.go: retain main's static method map and add nominal builtin
+  Error prototype ancestry before class identity registration.
+- exceptions.go: retain tagged arbitrary payload lowering and remove the
+  obsolete Error-only and constant-origin restrictions.
+- expression.go: retain main's localRead and namespace readiness paths;
+  move the source's nominal Error ancestry checks to locals.go, keeping
+  the array predicate check. Update moved mutant anchors.
+- library_object.go: retain main's enumeration and presence behavior;
+  refuse Error reflection without represented own descriptors.
+- lower_test.go: remove obsolete library and saved-Error refusal probes;
+  retain unrelated refusals and positive library admission coverage.
+- counts.md: regenerate with the landing compiler instead of selecting
+  either conflicting snapshot. Explain 16 new and 91 changed rows.
+
+Update three stage-1 closed gap expectations, keeping their source
+programs and Node, native sanitizer, backend and leak assertions.
+Keep the unknown-read proposal refused with its expected TS18046.
+Record fresh sweeps, mutant catchers and the tsc entry's next stop.
+
+48391dcf2903b3b91d619c4f02dde3ddbd7f22a8 9a02e97cd70569a34451f263aef4778e684b9fb6
+Record the generic replay after the census copier repair
+
+The selected contains declaration now stops at core.ts:220:62 on a value of type T. Its replay hidden intersection falls from 379 to 224 bytes. Record 155 bytes examined by the census, with no whole-corpus or native compilation credit. The copier baseline and both mutants pass their intended catchers; the hidden arithmetic baseline and five mutants also pass their intended catchers.
+
+28bf5bfbea924356e4e82c7de5848c053f4707f6 7a10c877667582a15326acb10fa22fa7a0c45fb8
+Rebuild optional calls fcbbfdb8 on main
+
+Import only the lane's net change from 4885cec5 through fcbbfdb8 onto
+main 7a10c877. Keep saved callable and receiver selection, lazy arguments
+and indices, continuous-chain propagation and source return ABI.
+
+No textual conflicts. Reconcile both sides of three semantic interactions:
+- optional_chain.go keeps main's typed-buffer index and required-value
+  unwrap contract within the saved receiver path.
+- static_single_assignment gap 2 now requires native parity and no leaks;
+  construct.ts restores the original optional chain in renameReturns.
+- markdownblocks gap 17 now requires Node, native and backend parity
+  with sanitizers and no leaks, instead of the retired NotYet.
+Main's readObjectField still supplies checked-view and readiness evidence.
+All refusal, cycle and signature proofs remain in their existing paths.
+
+Conservative assumption: callable accessors, Weak callable slots,
+checked/uninitialized callable fields and unsupported representations
+remain NotYet pending step 18 storage contract #tvq1eqm. No language
+acceptance or refusal policy is relaxed.
+
+Add a counted discarded-reference check after one array visitor release
+mutant escaped LeakSanitizer. The control balances 42/42/0; that mutant
+records 42 allocations, 41 frees and zero regions. All 29 lane mutants
+are caught, including the source observations and census reader check.
+
+Build, vet internal, changed-.a a-check, stage 1 gaps, stage 3 fixtures,
+scoped Node/sanitizer/release/leak oracles and receiver/ABI checks pass.
+SSA's port oracle and twelve existing output mutants pass. Linux counts
+add 25 rows and move 42; every changed row is audited in
+ docs/step-18/main-rebuild.md and held to Node. No stage 3 status or Node
+record changes. Native tsc entry first stops at builder.ts:1246:69 TS2345;
+checker diagnostics prevent an entry-level claim about later barriers.
+
+05b062f9eb0a41794fa90970a9da5a611cdb5a1c 28bf5bfbea924356e4e82c7de5848c053f4707f6
+Propose optional callable and accessor storage contract
+
+8925709412da5ba42879dd4a86fe3c47e7cde47c 1104ae2e8d50d89268368fdbba9ba1944f1847fc
+Dispatch iterator methods under the step 20 ruling
+
+Cache next with its receiver and close on abrupt body exits, preserving original throws. Read method and result getters through existing accessor dispatch and account for their effects and thrown paths. Six mutants fail against Node in both backends.
+
+Conservative assumption: zero required arguments does not prove the native optional-argument ABI. Protocol methods with parameters and built-in storage object views remain pending. Malformed .ts checks await compiler/per-backend-stops 5f3b2e36, absent from this base. No dependency carried.
+
+6b3238d4a71416e1d7d13773cb90111d7a1c7c2b 05b062f9eb0a41794fa90970a9da5a611cdb5a1c
+Implement ruled optional function field storage
+
+Keep selected callable and receiver before arguments. Preserve lexical arrows and represented ordinary function receivers. For .ts union-slot type lies, evaluate arguments before the ruled exit 70; .a refuses storage not proven callable. Keep unchecked and Weak storage pending. Node, both backends with sanitizers and leaks, six mutants, scoped lower tests, vet, a-check and regenerated Linux counts pass. The per-backend-stops dependency is absent; both backend stops agree, so no divergence entry is needed.
+
+8f8ed55c485d7530a3548d3029d39edec5541536 d5feab7d2f9403f9173b03fd092b39e6382e0368 6f933fa04292441026791bbf3143bdf2dbaa3f02
+Merge remote-tracking branch 'origin/main' into compiler/namespace-value
+
+518eca83194c70032f1d456fa3b5f05ecbe88cac 8925709412da5ba42879dd4a86fe3c47e7cde47c e511df280248e408109103396292b5958da94c68
+Merge main into compiler/iteration-main for general dispatch
+
+Merge e511df280248e408109103396292b5958da94c68. Conflicts: none. Automatic merges retain views v2 checked JavaScript reads alongside iterator accessor dispatch, union ownership rules alongside protocol getter effects, array-view iteration and computed iterator slots alongside current view boxing and contracts, and both sets of Linux counts proofs.
+
+Keep erased array, tuple and built-in iterator object views pending on a protocol adapter. Refuse absent declared methods and optional close results that can be undefined until the ruled terminal checks are available. The named per-backend-stops 5f3b2e36 dependency remains absent, with four .ts proofs pending.
+
+Green build, vet internal, a-check 35 changed Adamic sources, stage1 Gap/Gaps/Probes, stage3 fixtures, Linux counts, fresh Node in both backends with native sanitizers and leaks, and all six mutants caught in both backends. Recorded Node observations remain byte for byte, with no accepted regression.
+
+8f26a917669393c9f17f56e0325889a04eb75a26 6b3238d4a71416e1d7d13773cb90111d7a1c7c2b
+Implement ruled optional method selection in whole chains
+
+Keep nullish receiver guards outside the full continuation, and check required callable selections after argument effects. Preserve inherited methods and own undefined shadowing. Correct the source type-lie test to the oracle-normalized Node TypeError, replacing the raw-exit assertion tightened after the shape-1 control run. Node, both backends with sanitizers and leaks, seven mutants, scoped analysis checks, vet, a-check and Linux counts pass.
+
+bb37f6fbce79ca47e94cc00d03829c4374e84a67 8f8ed55c485d7530a3548d3029d39edec5541536
+Lower namespace values as live ordered objects
+
+Share one container per namespace symbol, stage export installations in
+execution order and check wider-view writes to readonly members. Hold the
+witnesses to TypeScript emission on Node and both compiler backends.
+
+Keep module linking unchanged. Global-script merging across source files
+awaits a linker ruling; imported aliases share the exported container.
+Descriptor reflection, nullable exports and unsupported exported forms
+remain named boundaries.
+
+Restore conflict in internal/native/runtime/object.c: retain both
+view_unions_mixed.h from main and namespace.h from this implementation.
+Restore conflict in internal/lower/namespaces_test.go: retain main's
+parallel scheduling and assert tracing escape now lowers.
+
+Merged main 6f933fa04292441026791bbf3143bdf2dbaa3f02. All requested local
+checks pass. Independent runtime-check removals and semantic mutants
+are caught. Shared divergence registration awaits compiler/per-backend-stops.
+
+26ccff9ca899d97dd1344ff961f1a400fceadf19 bb37f6fbce79ca47e94cc00d03829c4374e84a67
+Test shared namespace identity and live writes across imports
+
+Preserve ES module semantics: namespace declarations merge within their
+exporting module and its one object is shared through imports. Check a
+consumer read after an escaped-alias write, identity after mutation and
+unchanged enumeration order. Record the clarified scope and refresh the
+single changed counts row. No compiler implementation changed.
+
+ce0e1476c7e876e2f192ab370a51d8021963e2ec 8f26a917669393c9f17f56e0325889a04eb75a26
+Implement ruled optional calls through callable getters
+
+Invoke represented getters once before the callable check and arguments, preserving the saved receiver and owned closure. Propagate getter throws before arguments. Preserve JavaScript static-method metadata during selection. Prove dynamic receiver members, nominal relations and writable-slot relations. Register the exact runtime selection readers in the call-target audit. Node, both backends with sanitizers and leaks, ten mutants, scoped analysis checks, vet, a-check and regenerated Linux counts pass. Weak, unchecked storage and dynamic descriptors remain NotYet.
+
+6b2e806407c7fe1c3e801ba5ab722cde2172abdc aaf68770a93ec5fa8d744e5df91844ddc0d9d1c0
+Rebuild assignment-proof acceptance as top-level tests on main
+
+Apply fixtures commit 4d17f1d4 with conflicts resolved against main. Omit ccf8c172 because all six acceptance programs pass without it. Replace its dependent shared-fixture registration with six top-level oracle tests and six top-level source-mutant tests; register only the six acceptance count rows. Production compiler and runtime code remain identical to main.
+
+60a306f7f6b01c71ebccf04e736daed37de69607 6b2e806407c7fe1c3e801ba5ab722cde2172abdc 84743fda78eca175a7027af8fba2ee2328b4c5a3
+Merge remote-tracking branch 'origin/main' into compiler/assignment-proofs-main
+
+1a981c1682ec819501a6915e1e5fd80c6868059f c7853d80d26b43bd0dd87760a9efe3b1f263f856
+Let optional receivers survive invalidated narrowings and keep required reads catchable
+
+25f0ace4480dc5c2cde2dbeb904e2e5c3e2d3108 1a981c1682ec819501a6915e1e5fd80c6868059f 84743fda78eca175a7027af8fba2ee2328b4c5a3
+Merge remote-tracking branch 'origin/main' into compiler/optional-chain-after-call-main
+
+dbf018778f9cdeca18fa7d904b7e424047d2d1ba c7090c5862645522f5e9a461d1c68f5cf5a80a55
+Publish the project-aware loader with reference and option audit evidence
+
+6b64c6bc87437c056ec0efdb07b742f916a8c8ff dbf018778f9cdeca18fa7d904b7e424047d2d1ba
+Load compatible project references as source roots
+
+Use one checking and emission contract across the entry and every referenced project. Compare options before strengthening, include transitive configured sources once, and keep execution entries separate. Conservatively refuse unrecognized option differences and ambient type differences rather than composing them implicitly.
+
+10476347e92337239cf82de7335053cdd1b4f39e 6b64c6bc87437c056ec0efdb07b742f916a8c8ff
+Record project reference validation logs
+
+6fc22f2ee4b5ce85add9c2a1aa282c4b9092398d 10476347e92337239cf82de7335053cdd1b4f39e
+Union ambient types across source-root project references
+
+Use the same transitive package-name union in production and option audits. Validate merged declarations even when separate projects skip library checking, so conflicting declarations fail through frontend diagnostics. Keep all other option compatibility rules and pin lib and paths refusals. Record Node comparisons, eleven caught mutants, and the next tsc entry diagnostic.
+
+e9edb6d848589f52b89269ba11a07280c5a79921 6fc22f2ee4b5ce85add9c2a1aa282c4b9092398d
+Make project loader fixtures pass standalone Adamic checking
+
+Fix topic-owned fixture errors reported by a-check: interpolate numeric console values and import the authored number aliases as types. Stage those aliases as ambient declarations only in the project oracle, preserving the types-union and duplicate-declaration witnesses. Check all thirteen authored files before oracle staging. The four failing paths are absent on 784b577a, so no area fixtures merge is needed.
+
+6776d1637c5c2db03b3f6cd39c26833f456c22c9 25f0ace4480dc5c2cde2dbeb904e2e5c3e2d3108 3a7e52163f22a905e63c752802c78b806e380c00
+Merge remote-tracking branch 'origin/main' into compiler/optional-chain-after-call-main
+
+56ee1ddc3e209b9323dd208ebd7957c6c1a4533c 7459656e052d7172479a7ce14e35c314b3e622f1
+Emit portable string bytes and static aggregate initializers
+
+Resolve emit_values.go by retaining main's absent helper and adding zeroInitializer for static aggregate storage. Resolve counts.md only by Linux TestCountsAreRecorded regeneration; retain all main rows and add the fixture row.
+
+230a996db7b1bd5ee31f6b882e1b6c57e32d0d6d 56ee1ddc3e209b9323dd208ebd7957c6c1a4533c
+Cover every valid high UTF-8 byte in long literals
+
+784d33ac316f81d5338f3ed8a08702f6643e9f93 6776d1637c5c2db03b3f6cd39c26833f456c22c9
+Record optional-chain checks on main and bounded test evidence
+
+72e4203086012e117a8de8860b7b09409b3b2034 60a306f7f6b01c71ebccf04e736daed37de69607
+Record main assignment-proof acceptance and mutant evidence
+
+cf8e99e4457dc76a996b190a4c93d0ae999b492f 72e4203086012e117a8de8860b7b09409b3b2034 3a7e52163f22a905e63c752802c78b806e380c00
+Merge remote-tracking branch 'origin/main' into compiler/assignment-proofs-main
+
+5028fa69dfad3a3c52a96c97402840e4502804df 784d33ac316f81d5338f3ed8a08702f6643e9f93
+Record final integration lane verification
+
+fe0b4752875c6f58cc008a9588b7bd2cdc42752d cf8e99e4457dc76a996b190a4c93d0ae999b492f
+Record final committed lane check and correct report hook lines
+
+c33bad21dfb595fa5ed018bf21c39bda276a6d4a fe0b4752875c6f58cc008a9588b7bd2cdc42752d da6efa977afacaf643c899229d7daad2705aee02
+Merge remote-tracking branch 'origin/main' into compiler/assignment-proofs-main
+
+120d7e6931fb4397a4ecfb8cd9db3d87dd090dbb da6efa977afacaf643c899229d7daad2705aee02
+Lower array push and unshift spread arguments in evaluation order
+
+7699159521c76294fa5c2825ffe1d9660a579344 120d7e6931fb4397a4ecfb8cd9db3d87dd090dbb
+Lower JSON object shorthand using its value binding
+
+d251834cc2d8435ae0a8f2693ec6df6d25ef71f1 e9edb6d848589f52b89269ba11a07280c5a79921
+Preserve Node declaration loading when rebuilding project references on main
+
+3b2050d31606ae92f99e6df75b66c8b273aeb813 d251834cc2d8435ae0a8f2693ec6df6d25ef71f1 da6efa977afacaf643c899229d7daad2705aee02
+Merge current main into the project reference landing candidate
+
+89f4f025a5c8e7156e6a0205021fe18cc9c8e83d 3b2050d31606ae92f99e6df75b66c8b273aeb813
+Record project reference main validation and lane checks
+
+e82c9646451296b678274fc6990296da71217cfe 7699159521c76294fa5c2825ffe1d9660a579344 fe3852f03ae69a6fce2f1d08b26e69bb759bdd44
+Merge remote-tracking branch 'origin/main' into compiler/spread-shorthand
+
+12dce3bf4ed8a7f3a0c04b29e0b1b56e26dbdc39 ce0e1476c7e876e2f192ab370a51d8021963e2ec
+Implement ruled optional calls through saved receiver-independent callbacks
+
+Follow callable allocation members and getter returns without binding detached methods. Unknown origins for local copies feeding optional invocation stay NotYet; established ordinary-call and truthiness checks retain their previous scope. Weak and unchecked storage and descriptor mutation remain pending.
+
+Both backends agree with Node under native sanitizers. All eight required mutant behaviors and five additional proof or timing mutants are caught. Counts add one balanced read-then-call row. The adapted tsc entry still stops at builder.ts:1246:69 with TS2345.
+
+099a7aaf97709fba714d6eaf6e1c8f8255973733 230a996db7b1bd5ee31f6b882e1b6c57e32d0d6d
+Check portable constants with current runtime headers and both C compilers
+
+Split compiler diagnostics and mutation proofs into top-level parallel leaves. Compare the source fixture with Node and both backends using complete clang and GCC sanitizer builds. Prove all 115 valid high UTF-8 bytes occur in long literals. All observed leaves remain under 60 seconds including setup.
+
+Keep production compilation flags and current views, closures, packed caches and omitted-argument handling unchanged. GCC supplies nonfatal diagnostic proof because clang accepts the restored constructs. The GCC tool is installed here but is not yet in devtools tools.txt; the existing parameterized harness tests it directly.
+
+16b341f639a9406aaf67567f7eee0b80b72818d2 099a7aaf97709fba714d6eaf6e1c8f8255973733 66fdf48082957d6bb1688393118f28bf5a8335a8
+Merge main into compiler/c-portability-main
+
+Merge 66fdf48082957d6bb1688393118f28bf5a8335a8. Conflicts: none. Preserve the stage1 test splits and the portable static-global and unsigned-byte emission changes.
+
+b3724c90b7602ef1c6ea1518175ed2da9c033d98 64392012e796b4bbcc498347706f6000bf3930aa 5028fa69dfad3a3c52a96c97402840e4502804df
+Merge compiler/optional-chain-after-call-main at 5028fa69 into side stack lowering-a
+
+4823360668944f7b85d8d65149db41b230ea078f b3724c90b7602ef1c6ea1518175ed2da9c033d98 e82c9646451296b678274fc6990296da71217cfe
+Merge compiler/spread-shorthand at e82c9646 into side stack lowering-a
+
+82484e42aaa915853370a50d62949bb188b6bbb1 4823360668944f7b85d8d65149db41b230ea078f
+Side stack lowering-a: 2 members on 64392012, gated whole once (@system_adamic, October 8)
+
+- compiler/optional-chain-after-call-main 5028fa69
+- compiler/spread-shorthand e82c9646
+
+Left out:
+- compiler/optional-calls-main 12dce3bf (conflicts: internal/oracle/counts.md)
+
+Gate-runs: deferred
+
+db76fd4e2d1d5963de12adad4981ab97be6fb14c 16b341f639a9406aaf67567f7eee0b80b72818d2 333fbf339ec75406f0c17bd79ca10b2d28e4d28b
+Merge current main into compiler/c-portability-main
+
+Main 333fbf339 adds stage1 test preparation changes. No conflicts. Preserve those tests and the portable C emitter changes.
+
+ebad12cf143890e9972b7cfda4dfdf0c4b106484 db76fd4e2d1d5963de12adad4981ab97be6fb14c
+Record portability rebuild proofs and lane checks
+
+c3782de6302742fae496d92a69dbdc8d17448bb0 7459656e052d7172479a7ce14e35c314b3e622f1
+Refuse Function annotations in Adamic and preserve TypeScript callable arity
+
+Task ex6eqh1. Use closure storage for opaque TypeScript Function values, preserving captures and identity. Refuse unchecked calls with a call-signature fix. Keep unsupported constructor reflection outside this witnessed change.
+
+Focused Node, JavaScript, sanitized native and leak oracles pass. Annotation, invocation and zero-length mutants fail their behavioral tests. Counts adds only three fixture rows; existing rows are unchanged. Baseline observations and commands are in stage3/refusal-rulings-main/REPORT.md.
+
+2c1482aa5bdfb4f0659d5510d03f00ab64b16332 c33bad21dfb595fa5ed018bf21c39bda276a6d4a
+Move assignment-proof evidence under review/ for the test-only lane
+
+pr-lane takes evidence under review/, not cloud/reports/, so the six
+acceptance programs' results and logs move there and the fixture README
+points at the new path. No test or fixture changes.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+a6f05066866debe937c40062e276fcd385d60363 2c1482aa5bdfb4f0659d5510d03f00ab64b16332
+Move the acceptance evidence under review/ as well
+
+The acceptance run's emitted C and logs sat in cloud/reports/assignment-proofs/;
+they move to review/assignment-proofs/ with the README path updated. No test or
+fixture changes.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+12132ea185dfdc7155734e053d96293dd377bc04 12dce3bf4ed8a7f3a0c04b29e0b1b56e26dbdc39 82484e42aaa915853370a50d62949bb188b6bbb1
+Merge cloud/land-stack-lowering-a-82484e42 into compiler/optional-calls-main
+
+Conflict: internal/oracle/counts.md was regenerated once on Linux from the merged fixture registrations, preserving every row from both parents. The final table adds 58 rows and changes 16 versus optional-calls-main; the audit lists every value and reason.
+
+Keep both compiler lanes and the incoming main changes. Repair the interaction between optional callable selection and incoming semantic null and undefined slot tags, so absent callbacks skip arguments. The new tag mutant is caught, all step 18 and batch fixtures agree with Node in both backends under sanitizers, and all storage and optional-after-call mutants are caught. Format an incoming JavaScript test helper with gofmt.
+
+b6ef2cb451574600d568d42600e8182b1a321439 12132ea185dfdc7155734e053d96293dd377bc04
+Fix the step 18 parallel check and move merge evidence to review
+
+Add t.Parallel first in TestStep18OptionalMethodPaths. Its focused rerun passes in 0.53 seconds and the repository parallel analyzer passes. Follow the evidence-layout addendum by moving this merge report and results to review/compiler/optional-calls-main and preserving compressed test and mutant logs there.
+
+ea70e6115f58bde897c89293a8322ed43d0b97b0 89f4f025a5c8e7156e6a0205021fe18cc9c8e83d 0a3bea5c87cbcf1ad0cf58a66ad77d6441333c71
+Retain current main test-only fixes for project references
+
+3c04ab0dcc4ce846501f67e68a09b243aebec8cb ea70e6115f58bde897c89293a8322ed43d0b97b0
+Place project loader evidence under review
+
+e2aa3750c4eae75f673672419ad524f182d6343d 3c04ab0dcc4ce846501f67e68a09b243aebec8cb
+Keep loader handoff and final lane result with review evidence
+
+c8ab7ae29e0ef2d4015a12d74f219ad1f69ed41f 52ad98d6a7f9760e1240bd171da4cf707cd4caec b6ef2cb451574600d568d42600e8182b1a321439
+Merge compiler/optional-calls-main at b6ef2cb4 into side stack lowering-b
+
+2ae8eb953f8ea20d2c4a600bef9d0f81408f54da c8ab7ae29e0ef2d4015a12d74f219ad1f69ed41f
+Side stack lowering-b: 1 members on 52ad98d6, gated whole once (@system_adamic, October 8)
+
+- compiler/optional-calls-main b6ef2cb4
+
+Left out:
+- compiler/c-portability-main ebad12cf (conflicts: internal/oracle/counts.md)
+
+Gate-runs: deferred
+
+4e04e0f232b48954262b9aa986187776c4a62e93 2ae8eb953f8ea20d2c4a600bef9d0f81408f54da ebad12cf143890e9972b7cfda4dfdf0c4b106484
+Merge compiler/c-portability-main ebad12cf into compiler/lowering-chain
+
+Resolve the only conflict, internal/oracle/counts.md, by one Linux regeneration. Preserve every row from both parents, adding only the long Unicode literal fixture. Clang and GCC C11 signed-char controls agree with Node in both backends under sanitizers. All three warning mutants are caught without treating a compiler error as proof.
+
+8799f5183578321a676d5c18ee837d9c79876126 c3782de6302742fae496d92a69dbdc8d17448bb0
+Refuse phantom merged fields in Adamic and check TypeScript reads
+
+Task h3tshdq. Refuse required interface members without class initialization evidence at the declaration, including unused classes. Reuse checked-view presence and type contracts for dotted and constant bracket TypeScript reads. Pin the Node undefined versus backend exit 70 divergence explicitly.
+
+Node and both backends pass the focused contracts with ASan, UBSan and successful-program leak checks. Declaration, dotted-read and bracket-read mutants fail their behavioral tests. Five new counts rows are explained in review/compiler/refusal-rulings-main/REPORT.md; existing rows are unchanged. Shared refusal pins now include source lines and columns. Move all evidence and the mutant runner under review as requested.
+
+036c064453c30c2c641aace867e4dad3889f794f 4e04e0f232b48954262b9aa986187776c4a62e93
+Record the lowering chain stop on the exception payload mismatch
+
+Member 1 remains the sole compiler merge, at 4e04e0f23. Member 2 own exception controls and five semantic mutants pass, but its once-only count sweep fails on 81 inherited fixtures. The optional-chain required-read emitter accesses slots through adamic_thrown while exceptions changes that pending payload to adamic_heap *. Abort member 2 and leave members 3 through 9 unattempted, as required by the serial stop rule.
+
+Preserve test events, row ledgers, diagnostics and the byte-identical narrowed-array reproducer under review/compiler/lowering-chain. The temporary Node adapter test edits are restored. Move the incoming historical portability report and archive under review as well. Compiler and fixture sources are identical to the green member-1 prefix.
+
+0205e1a1ecd2da53ec46a9773eb6b4d7532f60c4 036c064453c30c2c641aace867e4dad3889f794f
+Record the assignment and typeaware additions behind the stopped chain
+
+Members 10 and 11 stay pending behind member 2. Preserve the requested typeaware file-only patch rule rather than merging its old branch. No patch or performance claim is made before the preceding members land.
+
+a918e7fcd408b4460527fb274d1fe26188f2fc6b 10328fb55766a27a2868959827c495c4278ad40f
+Define synchronous generator resume and frame ownership rules
+
+8afa72ad5554816ebc83a349607d0b89dd51a7f1 0205e1a1ecd2da53ec46a9773eb6b4d7532f60c4 2cc109e541e375c14df22698df257abe974a8db8
+Merge compiler/generic-body-relations 2cc109e5
+
+Both sides merge without textual conflicts. Preserve the earlier generic relation diagnostic and unchanged Node evidence. Regenerate counts once, retaining every row and adding both generic fixtures. Move incoming evidence to review and mark the independent census test parallel.
+
+d3f7a9263f6a12bda86aedd406474efe1dc223b4 f54b8bd32ca773fb7533e8cfe481922b3c82ccb3
+Stop eight differential witnesses before unsafe lowering
+
+Conservatively stop the six implementation gaps in common lowering. Keep supported neighboring shapes admitted and reuse constructor readiness for arrow captures. Real runtime and C representation fixes are deferred.
+
+9836491bd53152fc1de5b44985179e7b725b76ca 7c9ad7da7b8fe8553e184734fde6c0941952288b
+Refuse scalar callback widening through array intrinsics
+
+Task #1xxqbrk. Main passes raw numeric array slots to wider boxed-union callback parameters. Refuse that representation mismatch at the callback, naming its parameter and array element type and asking for an element-type annotation. Node goldens and exact diagnostic pins catch a revert mutant in all eight requested intrinsics. Reference elements and generic call sites remain admitted.
+
+e43e3ddc3834f18e65fc5e45ee34e9da628cdf7d d3f7a9263f6a12bda86aedd406474efe1dc223b4 cd9930fa8c178e71eb6f4e2d81355b99b3e0d660
+Merge remote-tracking branch 'origin/main' into compiler/miscompile-fxspptb-2a
+
+5be69414f61c29632e63f4eea0f502445d0db6f6 e43e3ddc3834f18e65fc5e45ee34e9da628cdf7d
+Record containment validation and integration lane results
+
+9e1e73e0b528f1252d92e00429ba3a8b3c7667b6 8afa72ad5554816ebc83a349607d0b89dd51a7f1
+Record generics scout interaction with generic body relations
+
+2a144461afd65c121d7e6ce7a9760c44ae8a9c4a 9e1e73e0b528f1252d92e00429ba3a8b3c7667b6 48391dcf2903b3b91d619c4f02dde3ddbd7f22a8
+Merge compiler/generics-scout-main 48391dcf
+
+Resolve counts.md by regenerating once, keeping every row from both sides. Keep member 3 ruled body proofs and update the three later expectations to their exact Refused outcomes. Their unchanged Node controls still print 2. Preserve both retained semantic mutants.
+
+Pinned diagnostics:
+stage3/fixtures/generics/11_indexed_result.a:1:68: Adamic 0.1 refuses generic body return into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+stage3/fixtures/generics/12_mixed_indexed_result.a:1:87: Adamic 0.1 refuses generic body return into slot U | T["value"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+stage3/fixtures/generics/13_constrained_local.a:2:11: Adamic 0.1 refuses generic body initializer into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+
+Move incoming evidence to review. Mark the three touched tests parallel. All final fixtures, mutants, exact refusal checks and counts pass.
+
+498730f70df219d950a20f91036bc0ae4d347a2d 2a144461afd65c121d7e6ce7a9760c44ae8a9c4a 518eca83194c70032f1d456fa3b5f05ecbe88cac
+Merge compiler/iteration-main 518eca83
+
+Resolve counts.md by regenerating once, preserving both sides. Keep array view and general protocol dispatch, including cached next, getter effects and IteratorClose. Existing user iterator counts move for owned receiver cells and cached closures. Node controls and semantic mutants pass. Move historical evidence to review and mark touched tests parallel.
+
+2b13a3d1bab431f2bceec803ddf048cb57cd6735 f54b8bd32ca773fb7533e8cfe481922b3c82ccb3
+Stop incompatible Weak method and callback views and check narrowed union liveness
+
+Reject method views changing a Weak handle parameter or result to a target pointer. Stop only callback calls whose array stores Weak handles and whose callback expects targets, preserving indexing and for-of on narrowed arrays. Check absence for union Weak reads with the same native liveness panic as single-target reads. Pin the ten supplied programs and three compiling controls to source Node and both backends. Three independent revert mutants recover the old wrong output or runtime faults.
+
+d5ce98e0b423786f0bfc89e6a0e333d65acce12b 2b13a3d1bab431f2bceec803ddf048cb57cd6735 c66b494016cf39852de3bda5bfb86259e93f69d8
+Merge main into compiler/miscompile-fxspptb-2b
+
+Main c66b49401 adds stage1 test preparation and extension coverage. No conflicts. Preserve those tests and the narrow Weak representation stops.
+
+e60c7fa519703c24b75e1847bc41766dff2d131d d5ce98e0b423786f0bfc89e6a0e333d65acce12b
+Record Weak controls and narrowed liveness fixture counts
+
+Linux regeneration adds five rows. Three controls finish with balanced allocations and frees. The union and single-target Weak fixtures count the values held at their ruled terminal liveness panic. Existing runtime and predicate rows remain unchanged.
+
+b3a0527e7e0b6c980c0fd11796095c01c7e9711f e60c7fa519703c24b75e1847bc41766dff2d131d 7506c6e9a00a698539328d787b80fdd1f51d18b9
+Merge current main into compiler/miscompile-fxspptb-2b
+
+Main 7506c6e9a adds stage1 test preparation and printer test splits. No conflicts. Preserve those tests and the Weak representation checks.
+
+db195ccd2b5d0f35a29b7f86114bddaf074b67f8 e8b02f8ca1ab02b5ecf1cd1b2b5a8f6d026d0703
+Record the first uses of unset TypeScript placeholders
+
+0131f51f3437642b1f7386d2a138ffd6f8f32428 db195ccd2b5d0f35a29b7f86114bddaf074b67f8
+Preserve placeholder initialization and reset machinery
+
+Reuse readiness flags for literal placeholder initializers and resets, including annotated scanner fields. Add positive scanner, local and field fixtures and their recorded counts. Keep existing checked read behavior pending the ruling on observing and transporting unset placeholders. Negative fixtures and compiler mutants remain pending that ruling.
+
+b5c543fb974ed2101b9cd6e597983054453a3045 498730f70df219d950a20f91036bc0ae4d347a2d 26ccff9ca899d97dd1344ff961f1a400fceadf19
+Merge compiler/namespace-value 26ccff9c
+
+Keep both CallableAccessor and Namespace fields in ir.Property. Regenerate counts once and preserve both parents rows. Namespace identity, live exports, staged keys and readonly guards agree with the ruled Node observations and mutants. Preserve tracing Node evidence while its stage0 outcome becomes Compiles. Move historical reports to review. Rename every Go evidence file to .go.txt, update overlay references and runners, and recheck their semantic catchers.
+
+6416a497eba793315d7e5132eddc47a0c6b9aec4 0131f51f3437642b1f7386d2a138ffd6f8f32428
+Preserve placeholder nullish values and check every typed use
+
+Treat inferred transfers conservatively as unset-capable until a typed-use boundary proves or checks readiness. Retain ordinary assertion policy and unsupported Weak, accessor and escaping reset boundaries. Record Node fixtures, caught mutants and all changed Linux counts.
+
+6458bff125bd6512052f79f3b6e109b91d12089c 6416a497eba793315d7e5132eddc47a0c6b9aec4
+Initialize placeholder state for standalone refusal passes
+
+28af90505a5b7936c6719e62326b1bcd7e00c35b 6458bff125bd6512052f79f3b6e109b91d12089c
+Refresh catalog patches for placeholder lowering
+
+Prepare entries 09 and 12 against a1c350315bb16b4c283a0ada1acbfebeddbbbbd4.
+Entry 09 follows the moved literal fitting and typeOfSymbol member selection,
+retaining placeholder storage while reversing the original required-field and
+numeric-read fixes. Entry 12 retains placeholder discovery and removes only
+the original suppression-directive refusal.
+
+Neither expected failure changes. check.sh --entry 09 -jobs 1 and then
+--entry 12 -jobs 1 both exit 0: clean controls pass, 09 prints numeric zero
+instead of undefined with stdout differs, and all 24 required suppression
+cases fail with got <nil>, want directive refusal. Only catalog data changes.
+
+6de2edb53d6caf66ddae371591fb521d06684084 b3a0527e7e0b6c980c0fd11796095c01c7e9711f
+Record Weak differential outcomes and revert mutant evidence
+
+895034708caa5a7dfc1090e6c849f9d4ce7286d4 28af90505a5b7936c6719e62326b1bcd7e00c35b
+Adapt placeholder storage to main and record rebuild conflicts
+
+71131229 applied cleanly. 19193932 conflicted in javascript.go, refusals.go, emit_statements.go and counts.md: keep namespace ready writes, enumeration index signatures and checkedAssertionSource while adding placeholder resets; retain main rows. b2528aea conflicted in ir.go, javascript.go, view_fields.go, counts.md and view_fields_test.go: retain both IR metadata sets and checked-view adapters, preserve main physical representation tags and parallel tests, update placeholder expectations and retain main rows. c8f858b9 and 74f36d3d applied cleanly.
+
+Main physical undefined/null field tags must remain observable through placeholder views. No c2 dependency was needed: main plus the five requested commits builds. Split new placeholder test cases into top-level tests. Move source evidence under review/compiler/placeholder-nonnull-main. Mutant Go sources use .go.txt.
+
+9e9215f197df088d82f64313fc799f6d98849afb b5c543fb974ed2101b9cd6e597983054453a3045 57ea02f8dd3fdce565b0a61ec612285334fe7498
+Merge compiler/checked-any 57ea02f8
+
+Resolve refusals.go by keeping the generic body proof before all checked-any and JSON policy checks. Keep iterator and CheckedJSON cases in native expression dispatch. Regenerate counts, preserving fitting programs and retiring exactly the two class-data runtime rows: explicit any in .a now refuses at 1:98. Their Node controls stay true. Five earlier pending array probes pin the same stricter rule at 3:91 with Node unchanged. This is the ruled .a promise, not array V3 support. Both backends, sanitizers and boundary-removal mutants pass. Historical evidence moves to review and every Go evidence generator uses .go.txt.
+
+b727f62e4a60a636ce00e71681cd0da3dfe405f4 5be69414f61c29632e63f4eea0f502445d0db6f6 acd029d991f84ef02b946531b23c456905efe238
+Merge remote-tracking branch 'origin/main' into compiler/miscompile-fxspptb-2a
+
+4a07f732c1cf3f2a3761e96b4a07ea992b93ec93 b727f62e4a60a636ce00e71681cd0da3dfe405f4
+Match Error undefined messages to Node without changing corpus programs
+
+Restore the existing never-rest marker verbatim. Preserve undefined through lowering and use private empty-message fallback storage without an own message field. Hold omitted, undefined and present messages to Node in both backends, and prove null-read and own-presence mutants fail.
+
+f39014171aaf6b10156142cc1848201d2505913c 895034708caa5a7dfc1090e6c849f9d4ce7286d4
+Preserve placeholder union tags in JavaScript checked writes
+
+Keep the same declared union initialization representation as native while preserving honest nullish reads. DefaultTaggedSourceViews boxed-write fixture catches the incompatible scalar write. Record sequential test reruns after temporary disk exhaustion. Compiler mutant sources remain .go.txt.
+
+0bdc5146a2b5d87253cdd4f835b45abaebff51a5 4a07f732c1cf3f2a3761e96b4a07ea992b93ec93 6d53fa22fcf916e1f2ad55cf8163b2803b06f60a
+Merge remote-tracking branch 'origin/main' into compiler/miscompile-fxspptb-2a
+
+373f0055ac30e7e600b3ef783b7fba84cc37ebad 0bdc5146a2b5d87253cdd4f835b45abaebff51a5
+Record Error correction lane validation
+
+118eb6c6e902b82377a9d1d9b14ca76866354c66 9e9215f197df088d82f64313fc799f6d98849afb e2aa3750c4eae75f673672419ad524f182d6343d
+Merge compiler/project-references-main
+
+Resolve counts.md by Linux regeneration, keeping every live row and the prior ruled class-view retirements. Keep both checking and execution root behavior. Move source evidence under the delivery review directory; mutant Go evidence uses .go.txt.
+
+bafb9ef4334a8fb36713c92b0bb372d43edd546a f39014171aaf6b10156142cc1848201d2505913c
+Record placeholder rebuild mutants and catalog checks
+
+b3ec80bd58f75c1c22057c9aa15dca76876c2a13 118eb6c6e902b82377a9d1d9b14ca76866354c66 8799f5183578321a676d5c18ee837d9c79876126
+Merge compiler/refusal-rulings-main
+
+Resolve expression.go by keeping both readonly-array view storage and Function closure storage. Resolve counts.md by Linux regeneration. Keep all earlier refusals and checked-any paths. Move evidence into the delivery review directory and use .go.txt mutation replacements.
+
+417dccd3798d7ac7f6e3e42a76e4d288dda6ee46 b3ec80bd58f75c1c22057c9aa15dca76876c2a13 a6f05066866debe937c40062e276fcd385d60363
+Merge compiler/assignment-proofs-main
+
+Resolve counts.md by Linux regeneration. Keep all existing controls and add all six ruled assignment fixtures. Move historical evidence under the delivery review directory. Correct the counts ledger parser to include TypeScript-mode rows; member 9 added eight rows.
+
+fc02927baf1ddf59a6e152ac938c80c52ffe9cd2 9836491bd53152fc1de5b44985179e7b725b76ca
+Adapt intrinsic callback arguments to their parameter storage
+
+Task #1xxqbrk. Capture the callback once and use ordinary IR to box wider union arguments in both backends. Preserve nullable reference tokens, actual argument count, callback effects and ownership on returns and throws. Keep unrepresented structural conversions refused and keep existing library callback adapters.
+
+All 35 executable witnesses match Node under both backends, native sanitizers and leaks. Five omission mutants are caught. Counts gain 35 rows with no existing row moved. Conservative choice: do not open rest, overload or structural-array reader admissions.
+
+c40c1af0775ad72111ae50647bab976eecf3ec81 fc02927baf1ddf59a6e152ac938c80c52ffe9cd2 c1aa2c9bf89245da7b95b829634d9fe28ec48945
+Merge remote-tracking branch 'origin/main' into compiler/callback-widening
+
+36472529e68f72938c8eaf9d9cf81651367f5760 c40c1af0775ad72111ae50647bab976eecf3ec81
+Record callback widening checks after merging main
+
+#1xxqbrk. Record individual four-CPU timings, fixture checks and integration lane output.
+
+63f5bb078d525d3b4325778029cbfdb92eed4b38 417dccd3798d7ac7f6e3e42a76e4d288dda6ee46
+Apply typeaware-time tsgo.go runtime cache from 4e973695
+
+Import only the internal/native/tsgo.go diff, not the source branch. Keep sourceFlags and the current ABI header in the cache key. Current typeaware native helper exercises this path; release and sanitizer outputs match Node. Record the disk failure, cache-clean retry and warning-flag harness correction. Correct historical row totals to include TypeScript labels without changing counts values.
+
+0604ddf60b5d244eeafae84855844e2dc4efc427 63f5bb078d525d3b4325778029cbfdb92eed4b38 6de2edb53d6caf66ddae371591fb521d06684084
+Merge compiler/miscompile-fxspptb-2b
+
+Resolve checked_views_v2_source_test.go by retaining ruled explicit-any refusals and incoming t.Parallel. Keep Node controls byte for byte. Update the older detached structural callable-field expectation to the earlier step 18 conservative receiver-proof refusal, with Node control retained. Regenerate counts on Linux once; no hand merge. Move evidence into the delivery review directory.
+
+5d8f670a5bf4834523f3d39a95342a244ae98821 a918e7fcd408b4460527fb274d1fe26188f2fc6b
+Lower synchronous generators into owned resumable frames
+
+Keep parameters and call-time defaults owned before suspension. Resume next, return and represented Error throw completions through finally and delegation without retaining a native stack. Record generated frame writes for cycle analysis.
+
+Conservative assumption: opaque receiver origins, replaced protocols, nested body captures, and used yields whose next type excludes undefined stay stopped until their calling convention or resume proof exists. Arbitrary thrown values await represented exception values.
+
+ba05fa10e3baab4def7768d88b489996ec713e0b 5d8f670a5bf4834523f3d39a95342a244ae98821 ee8b5215a8e4b1be7387efd9dc5e941fb9c3c9b2
+Merge current main test splits before generator landing
+
+cc6105255d4b71f6a550ce01d8718b7ccbb65642 ba05fa10e3baab4def7768d88b489996ec713e0b
+Prove call-time destructuring and retained parameter cycle paths
+
+Retain type metadata for the whole destructured generator parameter, including fields the pattern does not bind. Keep unsupported defaulted parameter patterns refused. Record Node, ownership, flow, freshness, mutation and scratch entry observations.
+
+5d78222bf2c05e3b6ba1c42a79ccb760dceb8863 bafb9ef4334a8fb36713c92b0bb372d43edd546a
+Document parser factory completion and NodeArray contracts on train slice 1
+
+4b81c7988ea34b7d996902af508c58dc13484867 5d78222bf2c05e3b6ba1c42a79ccb760dceb8863
+Compute bounded factory completion facts and pin pending staged field writes
+
+0aa2ae702a232ad8d05f16f9c966747940b6cb60 4b81c7988ea34b7d996902af508c58dc13484867
+Plan fixed NodeArray metadata slots and record pending backend contracts
+
+ec06ea4d6145b056a4b2b547787d055ab9c3beb9 cc6105255d4b71f6a550ce01d8718b7ccbb65642 b524594354a2abb7eaafd1286fd5189ff507ff2f
+Merge current main standalone acceptance tests before pushing generators
+
+6f0ebd1520af6483be34bb089b70cc504c723e94 ec06ea4d6145b056a4b2b547787d055ab9c3beb9
+Record final generator proof and lane check results
+
+2bc77aa13ff036abee4cee3c04234601a67a0907 0aa2ae702a232ad8d05f16f9c966747940b6cb60
+Lower parser construction presence and NodeArray metadata on rehearsal
+
+Reserve scalar factory fields without publishing keys. Observe unwritten fields as undefined through existing union and readiness machinery. Check declared-type uses. Publish string keys in first-write order and keep NodeArray extras inside the array allocation.
+
+Base is authorized rehearsal 3d0620c6. Passing rehearsal tests remain pending codex/placeholder-nonnull integration. Observable null placeholders remain NotYet, never false undefined. Program-region lifetime remains pending step 06. Preserve b95d352b ancestry for a nonforce feature-branch push. Focused source oracles, native sanitizers and leaks, runtime mutants, counts, a-check and vet pass. See stage3/parser-ahead/REPORT.md.
+
+28f89257c2af68a9d70083e41ec4a6d12ef9d4d4 2bc77aa13ff036abee4cee3c04234601a67a0907
+Check speculative results and recheck delivered placeholders
+
+29d32a68cd6a83f29f94eee95a2430f566cf5e61 28f89257c2af68a9d70083e41ec4a6d12ef9d4d4
+Name stack guard failures and keep tiny stack limits guarded
+
+e503868c680ce67691e602446539f64f463d4e95 29d32a68cd6a83f29f94eee95a2430f566cf5e61
+Rebuild parser construction and checks on delivered placeholders
+
+Rebuilt step 24 factory construction, NodeArray metadata, speculative result checks and named recursive stack guards on bafb9ef4.
+Commits: 5d78222bf, 4b81c7988, 0aa2ae702, 2bc77aa13, 28f89257c, 29d32a68c; final adaptation commit accompanies this report.
+Build, focused parser oracles, shared regressions, a-check, vet and counts pass; lane results are recorded separately.
+Eleven compiler mutants and the source runtime, payload, rewind and stack-removal mutants are caught by their tests.
+Program-region lifetime remains pending; optional-only array casts remain refused and are not recorded as accepted.
+
+Taken source commits: f96d3616, 9fe58a5a, bf8ebbfb, 3c6f863d, 1c06a80d, 3ee3dfed, in that order. Dropped delivered placeholder commits 19193932, b2528aea, c8f858b9 and earlier duplicates b95d352b, e990d7d2, 29f7a000. No unrelated source ancestry was merged.
+
+3c6f863d conflicts: javascript.go combines placeholder readiness with absent construction slots and retains physical type tags; readiness.go permits writes to reserved absent slots while retaining runtime representation checks; cast_proof.go keeps main structural views plus construction and NodeArray facts; locals.go retains placeholder and unset-field provenance; emit_objects.go preserves honest nullish readiness and construction publication; emit_statements.go combines construction/readiness requirements; adamic.h, object.c and region.c retain tuple identity and add write_order; counts.md preserves base rows and adds parser rows. 1c06a80d conflicts only in cast_proof.go and adds speculation alongside those facts. Other picks were clean. The construction allocator also initializes main's tuple marker to false.
+
+Cleared placeholder pending marks: complete and escaped factory results, factory unset presence tests and save locals, checked declared-type uses, NodeArray unset observations, and null placeholder preservation pass their source fixtures with the delivered base. TestParserProgramRegionLifetime uses exactly t.Skip("awaits compiler/program-region-lowering: parser trees in the Program region"). The optional-only NodeArray presence witness pins its existing unproven-relation refusal. The bounded completion analyzer does not erase production checks. This is not certification of the complete TypeScript parser or Program-region lifetimes.
+
+Commands and evidence: go build ./... (exit 0); ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/oracle -run '^TestParser(FactoryCompletion|FactoryReadBeforeCompletion|NodeArray|Ahead|Construction|Speculation|Stack|ProgramRegion)' -count=1 -v (all selected checks pass, requested lifetime skip); focused shared placeholder/view/stack oracles pass; python3 stage3/parser-ahead/check-local.py passes all a-check expectations and writes pre-push.json; go vet ./internal/ir ./internal/lower ./internal/javascript ./internal/native ./internal/oracle passes; TestCountsAreRecorded -count=1 -args -update-counts ran once and passed in 71.708s. Existing counts leaf was not added or changed. New split leaves and their seconds are in test-seconds.json; maximum regular leaf is 8.83s, setup included remains below 60s.
+
+Setup used GOPROXY=https://proxy.golang.org|direct. Timing lines: node 0.021s, go 0.024s, submodules 0.066s, markdown 0.080s, clang 0.180s, go build 37.912s, deferred test binaries 38.096s, cache warm 38.098s, done 38.127s. nproc=5; CPU quota=4.
+
+Counts: 19 new rows, listed in counts-rows.md; no existing numeric row changes. Factory already-complete/complete/escaped rows measure their one shared allocation and different checked writes. Factory-unset counts presence/save-local observations; factory-use counts allocations retained at the pinned stop. Own-key-order counts key arrays and JSON strings. Node-array-keys counts indexed and extra key enumeration; node-array-json counts element-only serialization; node-array-length counts element length; node-array-unset counts absence observations and later publications. Node-array fields counts four metadata fields and null-placeholder counts its nullish checks. Named lookahead, named tryparse and arrow tryparse count each callback's result specialization; truthiness-rewind counts saved scanner state and observations; misfit counts resources retained at its stop. Stack legal and benchmark count normal recursive releases (859 frames and repeated work respectively). All successful runs balance allocations/frees; stop fixtures record resources live at exit 70.
+
+Mutants: branch-union, omit-escape-missing, erase-earlier-read and trust-assertion fail completion assertions. Four slot mutants fail TestParserNodeArrayLayout. drop-unset-use fails TestParserConstructionUnsetUse; drop-speculation-check fails TestParserSpeculationMisfit; disable-tiny-stack fails TestParserStackTinyLimit. Their commands, seconds and caught flags are in mutants-results.json. Runtime synthesized-key and declaration-order mutants change Node's own-key output; array-extras-in-JSON changes [1,2] to [1,2,-1]. Factory payload mutation changes ready to wrong in both backends. Rewind removal changes scanner-state output. Guard removal executes and produces AddressSanitizer stack-overflow, caught by TestParserStackGuardMutant. No build failure is counted as a mutant catch. The initial runner attempt had a stale tiny-stack search and was corrected; compiler-mutants-final.log records the successful complete rerun.
+
+Historical source-* reports retain original rehearsal observations and are evidence only. Current pass claims use logs/ and mutants-results.json. All evidence is under review/compiler/step24-parser-main; mutant sources use .go.txt or .c.txt. Push target is compiler/step24-parser-main only.
+
+Guard cost: ADAMIC_MEASURE_STACK_GUARD=1 focused measurement passed in 22.90s. 36 measured paired release runs after 4 warmups: recursive benchmark median 264.182ms guarded versus 258.391ms removed, +2.24%; small speculation fixtures ranged -1.18% to -6.99%, dominated by process launch. See logs/guard-cost.log.
+
+4e556439e65a0d6d12b155348ab763541a2f7e46 0604ddf60b5d244eeafae84855844e2dc4efc427 bafb9ef4334a8fb36713c92b0bb372d43edd546a
+Merge compiler/placeholder-nonnull-main bafb9ef4
+
+Keep both sides of every conflict:
+- internal/ir/ir.go retains namespace installation flags and adds Unset.
+- internal/javascript/javascript.go keeps checked JSON reads and placeholder view reads.
+- internal/lower/assignment_value.go keeps namespace-backed results and their placeholder use checks.
+- internal/lower/assignments.go keeps namespace assignments and the unsupported-slot reset guard.
+- internal/lower/expression.go keeps evolving objects, placeholder storage, checked-any operands, nullish operand snapshots and the distinct null tag.
+- internal/lower/locals.go keeps namespace singleton reads and private placeholder reads.
+- internal/lower/readiness.go preserves namespace views and placeholder views.
+- internal/lower/refusals.go keeps both preparations, checked JSON index signatures and the literal placeholder exception. Initialize placeholder result state before JSON preparation so refusal-only callers do not panic.
+- internal/native/emit_branches.go retains borrowed reference conversions and adds boxed primitive unwrapping.
+- internal/oracle/counts.md is regenerated once on Linux: 21 new rows (19 lane fixtures and two namespace interaction controls), 21 existing rows change with placeholder readiness and tagged storage.
+
+Compose namespace singleton storage with placeholders: install/reset literal tags, read the tagged value before checking a typed use, and preserve raw nullish observations. Two Node-held controls prove initialization, reset and unset use; new leaves take 1.64 s and 0.43 s. Existing lane controls and mutants pass; drop-flow-check overlay is caught on saved and namespace reads. Stage3 Node records remain unchanged while two refused assertions now reach the captured-callable cycle refusal. Evidence lives under review/compiler/lowering-chain.
+
+52b8e8661245f1a4d65470027a2e26079edf6173 4e556439e65a0d6d12b155348ab763541a2f7e46 e503868c680ce67691e602446539f64f463d4e95
+Merge compiler/step24-parser-main e503868c
+
+Place this member directly after placeholder-nonnull-main as requested.
+Keep both sides of all four conflicts:
+- internal/lower/object.go recognizes NodeArray metadata before retaining the existing readonly-array view fallback.
+- internal/native/emit_expressions.go reads native array metadata through its array layout and retains checked-JSON object reads.
+- internal/native/emit_objects.go keeps checked-JSON field type metadata and adds construction metadata requirements.
+- internal/oracle/counts.md is regenerated once on Linux; 19 rows added and no existing numeric row changed.
+
+Node-held source controls, both backends, sanitizer and leak checks, factory/payload/rewind/stack runtime mutants and the drop-unset-use production overlay pass. Program-region lifetime remains pending on compiler/program-region-lowering. Stack guard measurement runs explicitly in 24.72 s; every new or touched test leaf remains below 60 s. The initial counts assertion expected rows before regeneration; its replay passes.
+
+The uncommitted part A merge was aborted only to honor this order; its successful controls remain evidence for the earlier attempt and it will be replayed. Include all 21 existing placeholder counts rows with old/new numbers and their member-specific causes in review/compiler/lowering-chain/member-13-existing-counts.md and REPORT.md. No counts were edited by hand.
+
+d753283ace09127e9410e04fcc28487c93146a44 52b8e8661245f1a4d65470027a2e26079edf6173 373f0055ac30e7e600b3ef783b7fba84cc37ebad
+Merge compiler/miscompile-fxspptb-2a 373f0055
+
+Resolve internal/lower/refusals.go by keeping both the existing function-call refusal and the incoming known-lowering-gap guard. Counts auto-merge and are regenerated once on Linux: three new rows and no existing numeric rows changed.
+
+Keep the undefined Error message correction, including inherited empty fallback storage without an own message property. The original census marker source stays unchanged. Node, JavaScript, native sanitizers and leak checks pass for the admitted controls; all narrow stop witnesses retain their Node controls. The Error-spread Go overlay is caught by both expected stops without a build failure. Incoming call-target edits add tests only, avoiding duplicate production changes already present. Typeaware test splits preserve build-product reuse; focused publication, callback and planted-failure controls pass.
+
+This is the replay after the parser member, as requested. The earlier successful uncommitted attempt was aborted only to honor that order. Its observations remain labeled as prior evidence. The maximum selected top-level leaf on the successful replay is 20.81 s. Evidence is under review/compiler/lowering-chain.
+
+4ab6cfd4a7526784fcfbd0d212496758caff5354 d753283ace09127e9410e04fcc28487c93146a44 36472529e68f72938c8eaf9d9cf81651367f5760
+Merge compiler/callback-widening 36472529
+
+The only conflict is internal/oracle/counts.md. Preserve the green prefix as the seed and regenerate once on Linux: 35 new rows, no existing numeric row changed.
+
+Call-site adapters capture each callback once and fit its element, index, array and accumulator arguments to represented wider parameters. Preserve nullable-reference null tokens and known Effects-returned closure targets. Unrepresented array-to-structural conversions stay narrowly refused.
+
+All named oracle, flow, freshness and IR controls pass; 35 programs agree with Node in both backends, release native, sanitizers and leaks. The production nullable-token omission overlay is caught without a build failure. Step18, Weak, namespace-placeholder and NodeArray overlap controls remain green. Evidence is under review/compiler/lowering-chain; no evidence is compilable Go.
+
+ba024b07db1396ef3dab2276ad81e651bf017739 4ab6cfd4a7526784fcfbd0d212496758caff5354 6f0ebd1520af6483be34bb089b70cc504c723e94
+Merge compiler/generators-main 6f0ebd15
+
+Keep SourceLength and Generator function metadata. Keep cached dynamic ordinary iterator dispatch and truthy result reads alongside generator dispatch, yield type and explicit undefined next/return inputs. Generator close uses its proven receiver call instead of the ordinary zero-argument adapter; freshness recognizes protocol reads conservatively as calls. Regenerate counts once, preserving both sets of fixtures. Keep upstream native and stage 1 test splits; relocate their evidence under review/compiler/lowering-chain.
+
+c6cd4c9b74e5d1924ba2f82ca33bc41c6572aa13 ba024b07db1396ef3dab2276ad81e651bf017739
+Record generator checks and the exceptions runtime conflict
+
+c0b206949dfc7c7122149f0e1f734c5e0e9c5b34 b49f1e371fd1fa6ad398c098a6f71c1e2fd49c10
+Emit self-comparisons through representation helpers on main
+
+Rebuild 10ad5d57 for task #7c6b4pq. Keep IEEE equality for NaN and signed zero. Split fixture checks into top-level parallel tests; keep evidence under review.
+
+387c2826d6cf5bfca4a94a95ba393e7464bca414 c0b206949dfc7c7122149f0e1f734c5e0e9c5b34
+Record self-comparison validation on main
+
+d8e6f59c6d60bcd7551e1ec1fe9d0b733a418f7c c6cd4c9b74e5d1924ba2f82ca33bc41c6572aa13 205586a0899488595200f3fca470874ef9282b37
+Merge compiler/exceptions-21-main 205586a0
+
+Runtime cleared reconciliation in task #c0ktyvy. Keep NodeArray keys and the Error reflection stop in library_object.go. Keep heap thrown payload and pending flag, all Error/RangeError/TypeError and host classes, kind/code constructors, and step 21 uncaught cleanup in adamic.h and exceptions.c. Kind construction uses absent_message_shape for null messages, retaining the private empty fallback, field metadata and adamic_error_field_name. Flush uncaught stdout through adamic_output_flush. Required-read TypeError uses adamic_error_new_kind and the existing heap cast helper. Keep raw exit-1 language exceptions and hash-pinned existing terminal stack/write guards in the oracle. Seed counts from ours and regenerate once. Historical step 18 Node observations are preserved; current controls use step 21 language completion. Move evidence into review/compiler/lowering-chain.
+
+Runtime stack note: adamic_thrown and adamic_exception_pending are _Thread_local there; preserve that when stacks meet. V3 array_holes.c sets adamic_thrown for RangeError and should then use adamic_error_new_kind. docs/runtime-statics.md is absent on this base.
+
+4f23173f06ee3387ab3af836f2427147f95c7918 553ad06abb069736161b2d46532d9036e92f30b3
+Reject runtime feature mismatches and preserve monolithic feature flags on main
+
+Rebuild 7e0a99fd and 5e5cb3f1 for task #hmab710 without c2 stack or record commits. Resolve the WASI harness against main by retaining its cache and top-level shards. Keep feature and regexp mutant leaves top-level and evidence under review.
+
+e1efb527a314d834fc6fb282108e992558048eca 4f23173f06ee3387ab3af836f2427147f95c7918
+Record feature-set link checks and mutants on main
+
+72a2497d3c0a25ba4ec41e13aebf2fe2b77d7b80 d8e6f59c6d60bcd7551e1ec1fe9d0b733a418f7c
+Make the closed CSS repeat gap parallel and record its checks
+
+2ca18b1bdcaea15c94b22d65976ee5ee3a51385b 72a2497d3c0a25ba4ec41e13aebf2fe2b77d7b80
+Declare the chain's two compiler-consuming probes for the dependency census
+
+stage3/checked-any/probe (from checked any's stock ambient context, b726ac3d)
+imports internal/load, internal/lower and internal/native, so it is declared
+against the compiler packages a lowering change reaches. stage3/project-loader/probe
+(from the project-aware loader, dbf01877) imports only internal/load, which
+imports no other compiler package. Both files are new on this chain and absent
+on main; the gate's census refused the chain cut until they were declared.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+aea8796012122b214e1e2e570ee2b50aa33d1429 2ca18b1bdcaea15c94b22d65976ee5ee3a51385b
+Fix admitted indexed witnesses and optional RegExp chains
+
+Close gate items 2, 3 and 4. Preserve the ruled stdout/exit-only uncaught contract and update its stale request expectation. Keep represented RegExp metadata/group storage through continuous optional chains. Count regeneration is once for this first delivered subset; other gate reds remain in progress.
+
+91b0148f0a51a9b8ba46cf3ce672047f0b596fa1 aea8796012122b214e1e2e570ee2b50aa33d1429
+Keep ordinary mixed file builds on Adamic options
+
+Project-reference loading is selected only for projects with references. Keep project-only ownership, noCheck, composite, transitive and ambient-union checks; ordinary file builds match main. Typeaware remains unchanged. Check every authored checked-any spec witness instead of assuming a main.ts entry.
+
+1eaed07b736e7b6ef87d9e87994c9bf6e6303096 91b0148f0a51a9b8ba46cf3ce672047f0b596fa1
+Remove the stale tsprinter serial baseline entry
+
+71972e180956b9a5d82700f31994ab01988a6efc 1eaed07b736e7b6ef87d9e87994c9bf6e6303096
+Make lowering chain initialization throws catchable and close stale gate expectations
+
+Preserve terminal hoisted-var and placeholder representation guards. Propagate inserted lexical readiness exceptions through calls and ownership cleanup after readiness proves safe reads. Keep the ruled quiet uncaught handler and its output flush. Audit all 19 existing counts changes and five added rows; preserve stage 3 Node observations.
+
+Runtime stack follow-up: adamic_thrown and adamic_exception_pending are _Thread_local there. V3 array_holes.c RangeError should use adamic_error_new_kind when the stacks meet. The new ReferenceError name is immortal static storage; docs/runtime-statics.md is absent on this base.
+
+1bf711d5a33da19c63a2f5871c85d8a6b166b642 291ee604ad0dd90894ad4503054eea60bf4f5ee6
+Guard inherited fields and override diagnostic reasons
+
+Add nonempty IR floors to all three inheritance acceptance family members. M02 loses B.x and fails the lowering guard and Node oracle; M07 changes NotYet to Refused and fails its diagnostic guard; empty Lower fails all acceptance members. Production code unchanged.
+
+16a0b626b14b8fd6b541edc6cbb92e63b8ac55f5 1bf711d5a33da19c63a2f5871c85d8a6b166b642
+Record inheritance guard test and lane results
+
+f188e805ef2b3f421712a01c29c9139a80faf6dc 16a0b626b14b8fd6b541edc6cbb92e63b8ac55f5 71972e180956b9a5d82700f31994ab01988a6efc
+Merge compiler/lowering-chain-fixed 71972e18 into inherit-guards
+
+counts.md: the chain's rows kept, inherit-guards' one row (inherited_fields_guard.a) added beside them; TestCountsAreRecorded confirms on the next run.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+396e655d843ea11282027ffaa3a4f34361ff32fe f188e805ef2b3f421712a01c29c9139a80faf6dc 387c2826d6cf5bfca4a94a95ba393e7464bca414
+Merge compiler/self-compare-main 387c2826 onto the chain
+
+b7c8d7a8e184fcbb7be6a4c80c1d91555634f188 396e655d843ea11282027ffaa3a4f34361ff32fe e1efb527a314d834fc6fb282108e992558048eca
+Merge compiler/feature-set-link-main e1efb527 onto the chain
+
+2391c655a4287fee747af74d31f5781e99be19e5 b7c8d7a8e184fcbb7be6a4c80c1d91555634f188
+Pin ruled backend outcomes and make JavaScript stack overflow terminal
+
+Only the exact weak-after-free fixture may diverge. All other outcomes retain byte-exact comparison. Stack exhaustion remains an inserted terminal stop in both backends.
+
+(cherry picked from commit 5f3b2e36fd4594b9e93e1cf15c5d03f8f632261b)
+
+df57ed18956e74caa7e126ba59225033ad06f015 2391c655a4287fee747af74d31f5781e99be19e5
+Read removed search indices as undefined and check callback admission
+
+Preserve the checker callback contract separately from native storage. Hold the read value across callback mutations and report the method, index and element type when undefined cannot enter the callback.
+
+Treat omitted and defaulted value parameters as admitting undefined because no undefined value is used as T before the default binds it. Add both find branches because the supplied fixtures contain no find program.
+
+(cherry picked from commit 0167f5b4213c093fe568e2854598d36e81b33800)
+
+c0c4e10211577ff1d0d67a86215c65eb782f65b8 df57ed18956e74caa7e126ba59225033ad06f015
+Record search shrink chain validation
+
+1b0894b461a244e634ebf94afdc05e0ee5a51b66 2391c655a4287fee747af74d31f5781e99be19e5
+Restore backend stop counts row order
+
+7a151f7fdb2ec8431320b73d7aa515fa1318e243 1b0894b461a244e634ebf94afdc05e0ee5a51b66
+Pin named native stack stops on the lowering chain
+
+5aa9df2ea79cf7db9cd9adc1aad21a4d0c20ddc5 7a151f7fdb2ec8431320b73d7aa515fa1318e243 c0c4e10211577ff1d0d67a86215c65eb782f65b8
+Merge search shrink checks onto the lowering chain
+
+b215cedbded249e742c74278ee387878a02c1284 2391c655a4287fee747af74d31f5781e99be19e5
+Rebuild optional presence on main with independent object state
+
+Carry only the optional-presence lane onto main. Conservatively require proven plain data origins for deletion and hasOwn. Checked-view optional writes await views-v1 integration. Validate the generator with the usual source-selected sanitized runtime through a scratch overlay; leave the stock driver ABI repair separate.
+
+4d505a5ce5954f4b432e0c8f02b376615f00df62 b215cedbded249e742c74278ee387878a02c1284
+Retain the chain catalog refresh for optional presence
+
+Cherry-pick fa35481dcb is already implemented by the chain placeholder context. Keep its newer patch and provenance.
+
+5f277ebb0b2f45eef40712c7fc38ac4f0df5770a 4d505a5ce5954f4b432e0c8f02b376615f00df62
+Refresh pending view diagnostics and enable binder flow oracle
+
+Main c293674e still refuses optional checked-field alias conversion after views-v1. Recognize that exact diagnostic and the pre-v1 target-slot refusal without claiming acceptance. Binder flow already records Compiles in stage3, but its oracle registration still expected NotYet. Enable native, JavaScript and WASI parity with Node and add its regenerated Linux counts. Restoring the stale registration fails the named oracle with a missing NotYet diagnostic.
+
+84f194fc6d40115c9d62244a509d4974f27f51ec 5f277ebb0b2f45eef40712c7fc38ac4f0df5770a
+Correct the binder flow region count label
+
+5d0d69b766b4d34e5d35aa5d4a5100fd6b121317 71972e180956b9a5d82700f31994ab01988a6efc 09fe4b54913753188a9357982bfd47cdf36ef97c
+Merge main into lowering chain reds and keep shared cycle oracle checks
+
+510c9f33163430a7702c41230fc20721a40ba9e8 387c2826d6cf5bfca4a94a95ba393e7464bca414 fc31f9f15f95d841d4cd230a37ba55852866f2c8
+Merge remote-tracking branch 'origin/main' into compiler/self-compare-main
+
+75810381575beac8e99ffbfcbd99881d4ccb484e 84f194fc6d40115c9d62244a509d4974f27f51ec
+Complete optional presence rebuild on the chain layout
+
+Keep the chain SIZE_MAX presence state and dynamic-read admission boundaries except proven numeric readiness. Deliver the first rebuild unit only; checked-view optional writes remain for the next unit.
+
+a6cb566048492864d497d20ba055c9351a82059e 5d0d69b766b4d34e5d35aa5d4a5100fd6b121317
+Close lowering chain reds and restore the structural Map boundary
+
+Conservative reading: cfa29460 retains structural Map dispatch as unsupported and 28bf5bfb does not relax that policy. Keep parser and JSON push workarounds because their tests do not require removal. Reconcile merged lowering tests with the already ruled exit 1 contract.
+
+a36b48f6d20eb16b42d6dbebdb3cb1bb5ad28969 a6cb566048492864d497d20ba055c9351a82059e a3fbb92735d4329078cf0f5a75907207beade769
+Merge remote-tracking branch 'origin/main' into compiler/lowering-chain-reds
+
+9679fbe4f04491388e86a25aec690179dfca9bf2 510c9f33163430a7702c41230fc20721a40ba9e8
+Keep static inline helpers defined in split build headers
+
+9ebca6155bf9ef9d5f60b89cb02c21cf7199d7ee 9679fbe4f04491388e86a25aec690179dfca9bf2 60397548dd8a9494a7d2aaa874b7648b8e625607
+Merge remote-tracking branch 'origin/main' into compiler/self-compare-main
+
+324e2bf1db40ca00c1dec8f28dbba8b04aefcb21 75810381575beac8e99ffbfcbd99881d4ccb484e
+Record optional presence chain validation and pending boundary
+
+ca082675791f3a4906f8f4e483f52212ff5d8870 9ebca6155bf9ef9d5f60b89cb02c21cf7199d7ee
+Record split inline mutant and final lane validation
+
+9a51ddac87dcf080ae016a1f2af2765771c57e07 a36b48f6d20eb16b42d6dbebdb3cb1bb5ad28969 cf79ecec3723604428ab91ebcb283400d05a1548
+Merge main and retain its approved static initializer reader
+
+f130c8465bb87a6ec35c8d133f82ed77e7e56500 5aa9df2ea79cf7db9cd9adc1aad21a4d0c20ddc5
+Audit search shrink callback counts on the lowering chain
+
+The four union callback search calls now receive their declared representation
+at the search loop, removing the captured cell and adapter closure. Each
+fixture still agrees with Node in native and JavaScript; skip-check is caught.
+
+A/F/R/L/P/G, paths under internal/oracle/testdata/callback_widening/:
+number-find.a: 8/8/8/14/5/0 -> 6/6/2/8/3/0
+number-findIndex.a: 10/10/8/16/6/0 -> 8/8/2/10/4/0
+number-findLast.a: 10/10/8/16/6/0 -> 8/8/2/10/4/0
+object-find.a: 9/9/17/22/7/0 -> 7/7/9/14/5/0
+
+All other row values stay unchanged. Canonical generation also places the
+three unchanged self-comparison rows after the search-shrink rows.
+See review/compiler/after-chain/search-shrink-counts.md for exact calls,
+generated-C accounting and validation. No compiler source changed.
+
+b0ef560b3b1d34e950f621894ce2ee949d2522fd f130c8465bb87a6ec35c8d133f82ed77e7e56500 ca082675791f3a4906f8f4e483f52212ff5d8870
+Merge split inline header fix into the lowering chain
+
+Resolve the import-cycle test conflict using agreeEntry for the Node and JavaScript comparisons, replacing the superseded comparison block.
+
+0fc3454340a9da21fd5489da31ee668a04f4ba6c b0ef560b3b1d34e950f621894ce2ee949d2522fd
+Refresh retained WASI coverage pins and record merge blockers
+
+3f27d3e586a462f48fcfddb0a69a632c36656346 9a51ddac87dcf080ae016a1f2af2765771c57e07
+Record lowering chain red tests and mutant evidence
+
+163e39f8c233ce0ca5cf147b06180e682c99cabc 324e2bf1db40ca00c1dec8f28dbba8b04aefcb21
+Keep dynamic types in the reserving copy descriptor
+
+Retain dynamic_shape in padding and both region bitmap initializers. Focused optional-field counts including all peak rows remain unchanged. The descriptor-copy mutant is caught in release and sanitized runs.
+
+c775dc61d44d5cf59722ca9a19afb4de080c79b4 3f27d3e586a462f48fcfddb0a69a632c36656346
+Record Node readiness exit and prove its guard mutant fails
+
+3d872bb18d822e883bb6364e398e106f51677d3e c775dc61d44d5cf59722ca9a19afb4de080c79b4 3a1c8b5792fb66503290d2d494ce96302bc4386d
+Merge current main and retain chain counts with additive fixture rows
+
+df2feef402f0ec5a0338a7418b9f4385ceaadd9f 3d872bb18d822e883bb6364e398e106f51677d3e
+Record merged main package reruns and measured additive counts
+
+fcc9df328b9703a34a74811edba8f790f8f3fd5d df2feef402f0ec5a0338a7418b9f4385ceaadd9f
+Record final passing integration lane checks
+
+0071c42eaf99f6b2f0bffb640a3ca0de999c0288 0fc3454340a9da21fd5489da31ee668a04f4ba6c fcc9df328b9703a34a74811edba8f790f8f3fd5d
+Merge lowering chain pool fixes into after chain
+
+Keep the reds branch readiness test with source Node and both backends held to the ruled uncaught exit 1 contract. Preserve the union of recorded counts.
+
+7e683fc1291d13b62c184100fd47d60ddc41ecfc 0071c42eaf99f6b2f0bffb640a3ca0de999c0288
+Record composed chain validation and canonical buffer counts order
+
+Place node_buffer_digest_twice before node_buffer_finalized to match registration order. Both rows remain 5/5/7/10/3/0, and every other fixture value is unchanged.
+
+0d080c778fb9d0c66bb3fd3453ed789cf2237aa0 7e683fc1291d13b62c184100fd47d60ddc41ecfc 0406ad39be5c29480608ae85593bafbf7671c9bc
+Merge main acceptance waves with chain Node contracts
+
+Keep shared Node agreement and inheritance answer floors. Source Node confirms missing-file stat and unlink exit 1 with absent and before remove respectively. Preserve the ruled stdout and exit contract for uncaught errors; omit only engine-specific exit-1 stderr comparisons. The stat default mutant remains caught by stdout. Counts are unchanged.
+
+a7edbde53b4ae2dfe93e8e1c721946d89d373155 0d080c778fb9d0c66bb3fd3453ed789cf2237aa0 a467d1a1571c43e0f01fc4efcb43890280e4a1ac
+Merge main into after-chain: the rest wave's acceptance rows
+
+lower_test.go's unbound-method neighbors: the detached function-field row keeps the chain's step 18 pinned refusal with its Node control (main's wave expected it not refused, which the chain's receiver-proof boundary changes); every other neighbor keeps main's Node agreement.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+d26baa81cab4b0ccbfd2989bd5665a746c77f38f 163e39f8c233ce0ca5cf147b06180e682c99cabc
+Enable checked view optional scalar writes on V1
+
+f98dabcd8d7c0ba74444c2062c6664d1b4f8b932 d26baa81cab4b0ccbfd2989bd5665a746c77f38f
+Record checked optional write lane validation
+
+84d03d57143e086cee27442ad97b6ba225b9f758 f98dabcd8d7c0ba74444c2062c6664d1b4f8b932
+Document checked store ownership and accept optional string undefined writes
+
+c014d5450cc21c5f3b6094be1fa111c4330a5522 84d03d57143e086cee27442ad97b6ba225b9f758
+Restrict undefined string writes to optional destination storage
+
+Carry construction optionality in existing shape type metadata and preserve it through copies. The optional string fixture adds a spread witness: allocations and frees 7 to 10, retains 10 to 20, releases 15 to 28; peak remains 5. No other measured existing count row moved.
+
+897d0e7989ecfc2175f25966b8def3efe51b1ec8 c014d5450cc21c5f3b6094be1fa111c4330a5522
+Make checked store type metadata mask explicit
+
+91685e61e0c56b7299aee71a7d5abf520f1152f9 a7edbde53b4ae2dfe93e8e1c721946d89d373155 cf735d9fba9e38de6368575e5630e44375a86eaf
+Merge current main before fixing chain gate failures
+
+379dbfb360863cc5db2dd172a613dbb25a3c36a8 91685e61e0c56b7299aee71a7d5abf520f1152f9
+Initialize the records harness borrowed object metadata
+
+a233eec33ba8227dff1c5e7f6bf60018a0c0f117 379dbfb360863cc5db2dd172a613dbb25a3c36a8
+Classify runtime corpus stores and hold closed push gaps to their oracles
+
+Treat namespace containers and builtin Error string initializers as runtime stores without source holder types, while retaining their freshness proofs and ordinary source-site guards.
+
+320c177685173bfef964328f660c75c2346fd83d a233eec33ba8227dff1c5e7f6bf60018a0c0f117 76c59c81e8617cea1892a01841494895927a712c
+Merge remote-tracking branch 'origin/main' into compiler/after-chain-fix-fresh
+
+2b2b1095e5ccb41fbe9f690fc822327693251694 379dbfb360863cc5db2dd172a613dbb25a3c36a8
+Repair oracle gates for catchable readiness and named stack stops
+
+Keep the requested 379dbfb3 base. Isolate maybeBind from explicit-any refusal and retain exact WASI rulings. Catch the omitted namespace class registration and pin its ReferenceError message.
+
+The alias-write oracle exposes a nil property symbol in placeholder discovery. Include its minimal guard as the necessary compiler repair for this oracle family, leaving other lowering and native files untouched.
+
+b60f08f9938193d7316037fc0585b0856a556528 2b2b1095e5ccb41fbe9f690fc822327693251694 76c59c81e8617cea1892a01841494895927a712c
+Merge remote-tracking branch 'origin/main' into compiler/after-chain-fix-oracle
+
+7c78f1b5d0b3f1edd0379f8c4360a7edbca9aadf 320c177685173bfef964328f660c75c2346fd83d
+Record family checks, mutants and current main verification
+
+f771b403391d648aa46488819c30f11e12dc52a6 b60f08f9938193d7316037fc0585b0856a556528
+Record oracle repair tests and mutant evidence
+
+d3558780acf76e2d18a26ae65fb27708de847627 f771b403391d648aa46488819c30f11e12dc52a6 7c78f1b5d0b3f1edd0379f8c4360a7edbca9aadf
+Merge the fresh and gaps family into the chain fixes
+
+70bffe5e20028f0bf62c512d4c51be8d1cc0071c d3558780acf76e2d18a26ae65fb27708de847627 2102ee6b93e0281dc8593abe96c8311aa66ea594
+Merge remote-tracking branch 'origin/main' into compiler/after-chain-fixed-verify
+
+5235536092fe1190225e480f82822de8f682b63c 70bffe5e20028f0bf62c512d4c51be8d1cc0071c 6eef5ae586af0354d3032d36535e54cefb2da43a
+Merge remote-tracking branch 'origin/main' into compiler/after-chain-fixed-verify
+
+7615fc36c46e48a4e61328e6891421fa1c180e44 5235536092fe1190225e480f82822de8f682b63c
+Verify the combined chain fixes against the red list and current main
+
+50654a407f9bcc3a7fb821da88088b9d99e6a728 7615fc36c46e48a4e61328e6891421fa1c180e44
+Record final committed delivery lane checks
+
+4478575d2fcfc73ccfd80dd62a3884526ef2abd0 897d0e7989ecfc2175f25966b8def3efe51b1ec8
+Refuse unsupported tuple lengths and class presence hazards
+
+Conservatively refuse static reads when an earlier initializer calls this rather than infer call reachability. Build on the requested optional-presence-chain dependency instead of current main.
+
+0592f1ae225e67028c16ce8ec52ae7751a82970c 4478575d2fcfc73ccfd80dd62a3884526ef2abd0
+Record presence classifications and validation limits
+
+5f08a92cc6363645f7aa0c6cbc4898eaf2c04118 0592f1ae225e67028c16ce8ec52ae7751a82970c
+Include raw validation logs and final lane result
+
+ff9a3809f62f957e741f6d865574c9fbeb574fc9 5f08a92cc6363645f7aa0c6cbc4898eaf2c04118
+Verify presence admission sweep and attribute inherited lower failures
+
+21ceb23cb860505d94b862bfeeaa79d166e2c22e ff9a3809f62f957e741f6d865574c9fbeb574fc9
+Record successful presence followup lane checks
+
+5d6c68f397d63a8c6ae15b15b4ddbd17bcd4f600 897d0e7989ecfc2175f25966b8def3efe51b1ec8 50654a407f9bcc3a7fb821da88088b9d99e6a728
+Merge verified lowering chain while retaining optional presence support
+
+39c749d293dc0f9d01bf87fbd676a8ad60c5b984 5d6c68f397d63a8c6ae15b15b4ddbd17bcd4f600 21ceb23cb860505d94b862bfeeaa79d166e2c22e
+Merge remote-tracking branch 'origin/compiler/eep-presence' into compiler/optional-presence-next
+
+167aaf0c5c04a93e03f9afcbcd2a644ca5420c82 39c749d293dc0f9d01bf87fbd676a8ad60c5b984
+Reconcile merged call target readers and regenerate presence counts
+
+12a9c350cc252181a460bc9b2e1a7eb959a111d8 167aaf0c5c04a93e03f9afcbcd2a644ca5420c82
+Record merged presence fixtures mutants and complete lower validation
+
+0292780a0ab4549a0de2d24702167b9773558085 12a9c350cc252181a460bc9b2e1a7eb959a111d8
+Record successful merged presence lane checks
+
+5a8fd7142846b471613cc3a65f946f304152ad65 0292780a0ab4549a0de2d24702167b9773558085 b8bcadb2c493173855f19d7e5c508b34f5eeb5b6
+Merge main preserving compiler consumers and feature-aware WASI checks
+
+a1dae0d302ceea97cd35b9b58d2ed339498b6d07 5a8fd7142846b471613cc3a65f946f304152ad65
+Record main-based lowering candidate validation and mutant catches
+
+c81ba26193ce58fe7eb8c15d3ea1e46a58052fef a1dae0d302ceea97cd35b9b58d2ed339498b6d07
+Record successful landing candidate lane checks
+
+18d3a0e51bdf4867e340039ca01d2a24a5d8821e c81ba26193ce58fe7eb8c15d3ea1e46a58052fef df0595f2d63c6fe32623b4e9d0b085374f505bef
+Merge current main retaining all compiler cache and probe dependencies
+
+e0d4cb0555c79e830d920dfbddbae68ea4899332 18d3a0e51bdf4867e340039ca01d2a24a5d8821e
+Record current-main presence fixtures mutants and bounded validation
+
+27798411087ecf70269d95973efb4aeac0af8569 e0d4cb0555c79e830d920dfbddbae68ea4899332 88adf55532b89fb155d68eacbf490bea34ffda26
+Merge remote-tracking branch 'origin/main' into compiler/optional-presence-next
+
+831a10e7ca78b606636760d5cddee5d54c8aff55 27798411087ecf70269d95973efb4aeac0af8569
+Record latest-main input equivalence reader check and complete vet
+
+2a28375f9c8c487d29abb89f38489858fc9d5c92 831a10e7ca78b606636760d5cddee5d54c8aff55
+Record green latest-main integration lane checks
+
+3535387095d50f05d80e2717aed468843e59bc18 2a28375f9c8c487d29abb89f38489858fc9d5c92
+Match profiling runtimes to emitted program features
+
+Use the unit-specific chain base 2a28375f. Share the minimal lint profile linker with the Node regression. Preserve custom runtime mutant snapshots while propagating source flags.
+
+ac1bf92b5c5eed039ce3c1c585b3f0f6119fad3b 3535387095d50f05d80e2717aed468843e59bc18
+Record lint feature linking tests and mutant evidence
+
+f5236b48ee11d680c5288e3074c2fec6ad26a09a ac1bf92b5c5eed039ce3c1c585b3f0f6119fad3b
+Record final lane verification
+
