@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // A list's items go with their own commas, the trailing one too, and nothing else goes with them.
@@ -69,7 +71,7 @@ const plantedMinimum = `function first(list: number[]): number {
 func TestReduceKeepsTheSignature(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	checkout, err := Prepare("../..", filepath.Join(directory, "checkout"))
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
 	if err != nil {
 		t.Fatal(err)
 	}
