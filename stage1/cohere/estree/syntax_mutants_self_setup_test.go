@@ -182,6 +182,7 @@ func prepareSyntaxMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		prepared.Main, prepared.Binary = buildcache.Absolute(prepared.Main), buildcache.Absolute(prepared.Binary)
+		prepared.Main = resolvedPort(t, filepath.Dir(prepared.Main), filepath.Base(prepared.Main))
 		syntaxMutantsPrepared = append(syntaxMutantsPrepared, prepared)
 	}
 }

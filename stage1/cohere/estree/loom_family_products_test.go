@@ -17,6 +17,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -65,7 +66,8 @@ var unattachedDecoratorPrepared struct {
 func unattachedDecoratorReady(t *testing.T) (string, string, string) {
 	t.Helper()
 	unattachedDecoratorPrepared.once.Do(func() {
-		unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary = syntaxMutantProducts(t, unattachedDecoratorMutation())
+		main, binary := syntaxMutantProducts(t, unattachedDecoratorMutation())
+		unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary = resolvedPort(t, filepath.Dir(main), filepath.Base(main)), binary
 		unattachedDecoratorPrepared.oracle = filepath.Join(syntaxMutantOracleProduct(t), "oracle")
 	})
 	if unattachedDecoratorPrepared.oracle == "" {
@@ -275,7 +277,11 @@ func estreeFamilyLowerCheckpoint(dir string, snapshot map[string][]byte) error {
 	if err != nil {
 		return fmt.Errorf("encode checked IR: %w", err)
 	}
-	return closeErr
+	if closeErr != nil {
+		return closeErr
+	}
+	// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
+	return buildcache.RelativeFiles(source)
 }
 func estreeFamilyReadCheckpoint(dir string) (*ir.Program, error) {
 	estreeFamilyRegisterIR()

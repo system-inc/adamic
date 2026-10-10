@@ -206,7 +206,11 @@ func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
 		if err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644)
+		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); err != nil {
+			return err
+		}
+		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(source)
 	})
 	return lowered
 }
@@ -294,7 +298,7 @@ func threePortReady(t *testing.T) *threePortPrepared {
 		for _, mutation := range threePortMutations() {
 			lowered := threePortLoweredProduct(t, mutation)
 			prepared.Ports = append(prepared.Ports, threePortPreparedPort{
-				filepath.Join(lowered, "source", "main.ts"), threePortNativeProduct(t, mutation),
+				resolvedPort(t, lowered, "source/main.ts"), threePortNativeProduct(t, mutation),
 			})
 		}
 		threePortShared.prepared = prepared

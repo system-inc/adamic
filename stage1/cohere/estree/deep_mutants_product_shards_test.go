@@ -182,7 +182,7 @@ func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutants
 	ready := value.(*deepMutantsReady)
 	ready.once.Do(func() {
 		lowered, _ := deepMutantsLowered(t, mutation)
-		ready.source = filepath.Join(lowered, "source/main.ts")
+		ready.source = resolvedPort(t, lowered, "source/main.ts")
 		ready.native = deepMutantsNative(t, mutation)
 	})
 	if ready.native == "" {

@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -199,6 +200,17 @@ func mutantPort(t *testing.T, file, from, to string) string {
 		}
 	}
 	return filepath.Join(directory, "main.ts")
+}
+
+// resolvedPort is name inside a product holding a mutant port, in the copy whose imports name this checkout, which
+// node and the loader read; the product itself names it <repository> (#tqrqx60).
+func resolvedPort(t *testing.T, product, name string) string {
+	t.Helper()
+	directory, err := buildcache.Resolved(product)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return filepath.Join(directory, name)
 }
 
 func TestOriginalLibraries(t *testing.T) {
