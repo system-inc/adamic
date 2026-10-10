@@ -1,5 +1,5 @@
 Built the nullable contract doc, census candidate map, source-site evidence and three reduced lowering fixtures toward Outcome 53.
-Delivery commits are reported in the final response; base is origin/main 79f2067b, inspection base 59edda91.
+Scout commit c0640d34; evidence commit is reported in the final response; base is origin/main 79f2067b, inspection base 59edda91.
 Focused lowering tests pass in 0.202s; IR reader guard passes in 34.373s; map and Node checks pass.
 Five mutants fail: changed census count, null replaced by undefined, two generic function-value input mutations, and erased string brand.
 Not covered: exhaustive causal replay, exhaustive per-type inventory, generic field red tests, native operation implementation or runtime oracle/count refresh.
@@ -26,3 +26,5 @@ No oracle fixture was registered. These compile-time probes therefore have no al
 Recommendation: keep generic returns before generic values/fields, but split concrete binder recovery from representation. Then prove branded strings without accepting arbitrary primitive/object intersections. Hold shared empty-case conversions to Node before replacing the RegExp-specific paths. Date requires its own library/host scope clarification on this main. Keep scalar Maybe work, unknown/object slot tags, record-field descriptors and overload soundness in separate pieces.
 
 Conservative assumptions: keyword-matching census reasons are a review queue, not a causal proof; unconstrained T needs per-instantiation evidence. The unresolved reviewer choice is whether to retain the two now-positive reductions or require different red witnesses from the larger tsc sites. This delivery retains honest positive controls and reports that the requested three NotYet pins were not achieved.
+
+Integration lane checks exit 0: `lane checks 9.8 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages`. The checkout initially fetched integration branches only into FETCH_HEAD; explicit remote refspecs populated origin/cloud/merge-tree and origin/devtools/fast-gate, then the prescribed checker command ran successfully.

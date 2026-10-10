@@ -117,7 +117,7 @@ The machine-readable companion preserves every selected reason and count. `sourc
 
 | Path | Sites | Fixtures |
 | --- | --- | --- |
-| General references plus undefined skip the empty member and share the reference kind; scalar optionals use explicit pairs | internal/lower/expression.go:119,153; internal/native/emit_values.go:83 | maybe_collections.a, maybe_numbers.a, maybe_booleans.a, internal/load/testdata/0.1/09_tree.ts |
+| General references plus undefined skip the empty member and share the reference kind; scalar optionals use explicit pairs | internal/lower/expression.go:119,153; internal/native/emit_values.go:83 | maybe_collections.a, maybe_numbers.a, maybe_booleans.a, internal/load/testdata/0.1/compile/09_tree.ts |
 | Null plus strings/scalars, or null plus undefined, uses boxed Union on current main; null plus other reference kinds can use a nullable pointer | internal/lower/expression.go:97; internal/native/union.go:37 | regexp_null_narrowed.a, typeof fixtures |
 | RegExp exec/match/indices library types are explicitly recognized as Array; null match results are pointer returns | internal/lower/expression.go:84; internal/lower/regexp.go:216; internal/native/regexp.go:4,48; internal/javascript/javascript.go:725 | regexp.a, regexp_exec.a, regexp_match.a, regexp_null_narrowed.a |
 | typeof carries the empty-pointer meaning and container slot presence | internal/lower/typeof.go:9; internal/native/emit_slots.go:53; internal/native/union.go:65 | regexp_null_narrowed.a, typeof fixtures |
