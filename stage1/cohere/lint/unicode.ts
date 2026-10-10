@@ -1633,20 +1633,3 @@ export function printable(point: number): boolean {
     }
     return true;
 }
-
-export function foldedRange(character: string, first: number, last: number): boolean {
-    const point = character.codePointAt(0) ?? 0;
-    if(point >= first && point <= last) {
-        return true;
-    }
-    const minimum = folds.get(point) ?? point;
-    if(minimum >= first && minimum <= last) {
-        return true;
-    }
-    for(const key of folds.keys()) {
-        if(key >= first && key <= last && folds.get(key) === minimum) {
-            return true;
-        }
-    }
-    return false;
-}
