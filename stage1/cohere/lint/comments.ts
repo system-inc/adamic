@@ -44,7 +44,7 @@ export function selfDirective(value: string): boolean {
         return false;
     }
     let start = 0;
-    while(start < value.length && space(value[start] ?? '')) {
+    while(start < value.length && whitespace(value.charCodeAt(start))) {
         start++;
     }
     const trimmed = value.slice(start);
@@ -65,6 +65,8 @@ export function selfDirective(value: string): boolean {
 }
 // whitespace is JavaScript's `\s`, WhiteSpace and LineTerminator: 25 code points, the no-break space and
 // the byte order mark among them, and not Go's U+0085.
+// The matcher, the quote's words and the directive's trim all use it, as cohere's text package does;
+// every one is a single UTF-16 unit, so a unit at a time is exact.
 function whitespace(point: number): boolean {
     return (
         (point >= 9 && point <= 13) ||
@@ -144,11 +146,11 @@ export function quote(value: string): string {
     let normalized = '';
     let cursor = 0;
     while(cursor < value.length) {
-        while(cursor < value.length && space(value[cursor] ?? '')) {
+        while(cursor < value.length && whitespace(value.charCodeAt(cursor))) {
             cursor++;
         }
         const start = cursor;
-        while(cursor < value.length && !space(value[cursor] ?? '')) {
+        while(cursor < value.length && !whitespace(value.charCodeAt(cursor))) {
             cursor++;
         }
         if(start === cursor) {
