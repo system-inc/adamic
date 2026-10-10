@@ -60,9 +60,9 @@ type readSet struct {
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
 // above the tree, relative to it), home (paths in the home directory, ~-relative), product (a name key), tool (a path
-// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), package (a
-// dpkg package whose files it read, by version), system (a machine file no package owns) or settings (the build
-// settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
+// under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
+// machine file, by the dpkg package that installed it unchanged or by itself) or settings (the build settings of the
+// binary that ran the build). Value is what it was when recorded, shortened, so a miss can
 // name what changed; the key hashes the full value.
 type readEntry struct {
 	Kind  string `json:"kind"`
@@ -285,8 +285,6 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		return "absent", nil
 	case "go":
 		return Tool("go", "version"), nil
-	case "package":
-		return packageVersion(entry.Path), nil
 	case "system":
 		if !filepath.IsAbs(entry.Path) {
 			return "", fmt.Errorf("a system entry %q isn't an absolute path", entry.Path)
