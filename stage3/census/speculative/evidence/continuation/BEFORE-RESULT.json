@@ -1,0 +1,2748 @@
+{
+  "base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "mapper_fix": "already on main: 6b33ec61da399ae79cfba0900c9f753ed38faa1a equivalent generic binder inference; census copier preserves opaque mapper",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 1523,
+    "Refused": 668,
+    "error": 2
+  },
+  "stream_inventory": {
+    "inputs": {
+      "binary_sha256": "a4a0f07f5d4d413d0d7e712e7ec3ee958fd26caffb815ada8b2b1b40abb2a564",
+      "root": "/tmp/b17vtn1/original-adapted/src/compiler",
+      "files": [
+        {
+          "file": "_namespaces/ts.moduleSpecifiers.ts",
+          "bytes": 111,
+          "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+        },
+        {
+          "file": "_namespaces/ts.performance.ts",
+          "bytes": 101,
+          "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+        },
+        {
+          "file": "_namespaces/ts.ts",
+          "bytes": 3288,
+          "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b"
+        },
+        {
+          "file": "binder.ts",
+          "bytes": 195107,
+          "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39"
+        },
+        {
+          "file": "builder.ts",
+          "bytes": 117298,
+          "sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+        },
+        {
+          "file": "builderPublic.ts",
+          "bytes": 11609,
+          "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+        },
+        {
+          "file": "builderState.ts",
+          "bytes": 26209,
+          "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+        },
+        {
+          "file": "builderStatePublic.ts",
+          "bytes": 392,
+          "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+        },
+        {
+          "file": "checker.ts",
+          "bytes": 3154156,
+          "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb"
+        },
+        {
+          "file": "commandLineParser.ts",
+          "bytes": 183733,
+          "sha256": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec"
+        },
+        {
+          "file": "core.ts",
+          "bytes": 92680,
+          "sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+        },
+        {
+          "file": "corePublic.ts",
+          "bytes": 1320,
+          "sha256": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44"
+        },
+        {
+          "file": "debug.ts",
+          "bytes": 57713,
+          "sha256": "ca255a522710019f5f852647b077cebc35d8771e966241e2f5fdc56f63f3a0a7"
+        },
+        {
+          "file": "diagnosticInformationMap.generated.ts",
+          "bytes": 579194,
+          "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+        },
+        {
+          "file": "emitter.ts",
+          "bytes": 274627,
+          "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+        },
+        {
+          "file": "executeCommandLine.ts",
+          "bytes": 54177,
+          "sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+        },
+        {
+          "file": "expressionToTypeNode.ts",
+          "bytes": 70354,
+          "sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b"
+        },
+        {
+          "file": "factory/baseNodeFactory.ts",
+          "bytes": 2682,
+          "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+        },
+        {
+          "file": "factory/emitHelpers.ts",
+          "bytes": 69184,
+          "sha256": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7"
+        },
+        {
+          "file": "factory/emitNode.ts",
+          "bytes": 12800,
+          "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+        },
+        {
+          "file": "factory/nodeChildren.ts",
+          "bytes": 2252,
+          "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+        },
+        {
+          "file": "factory/nodeConverters.ts",
+          "bytes": 7275,
+          "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+        },
+        {
+          "file": "factory/nodeFactory.ts",
+          "bytes": 336646,
+          "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3"
+        },
+        {
+          "file": "factory/nodeTests.ts",
+          "bytes": 37936,
+          "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+        },
+        {
+          "file": "factory/parenthesizerRules.ts",
+          "bytes": 34072,
+          "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+        },
+        {
+          "file": "factory/utilities.ts",
+          "bytes": 76615,
+          "sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a"
+        },
+        {
+          "file": "factory/utilitiesPublic.ts",
+          "bytes": 2131,
+          "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+        },
+        {
+          "file": "hostErrors.ts",
+          "bytes": 447,
+          "sha256": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf"
+        },
+        {
+          "file": "moduleNameResolver.ts",
+          "bytes": 183618,
+          "sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128"
+        },
+        {
+          "file": "moduleSpecifiers.ts",
+          "bytes": 80070,
+          "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+        },
+        {
+          "file": "parser.ts",
+          "bytes": 541260,
+          "sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4"
+        },
+        {
+          "file": "path.ts",
+          "bytes": 44181,
+          "sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+        },
+        {
+          "file": "performance.ts",
+          "bytes": 6161,
+          "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+        },
+        {
+          "file": "performanceCore.ts",
+          "bytes": 3279,
+          "sha256": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242"
+        },
+        {
+          "file": "program.ts",
+          "bytes": 271300,
+          "sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284"
+        },
+        {
+          "file": "programDiagnostics.ts",
+          "bytes": 21401,
+          "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+        },
+        {
+          "file": "resolutionCache.ts",
+          "bytes": 82223,
+          "sha256": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673"
+        },
+        {
+          "file": "scanner.ts",
+          "bytes": 219390,
+          "sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750"
+        },
+        {
+          "file": "semver.ts",
+          "bytes": 18012,
+          "sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+        },
+        {
+          "file": "sourcemap.ts",
+          "bytes": 32210,
+          "sha256": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513"
+        },
+        {
+          "file": "symbolWalker.ts",
+          "bytes": 8267,
+          "sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216"
+        },
+        {
+          "file": "sys.ts",
+          "bytes": 86254,
+          "sha256": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c"
+        },
+        {
+          "file": "tracing.ts",
+          "bytes": 15322,
+          "sha256": "c93e0678045906b86323d834b005182a3a334355c89faebb6455cdbb26b67dd5"
+        },
+        {
+          "file": "transformer.ts",
+          "bytes": 29875,
+          "sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c"
+        },
+        {
+          "file": "transformers/classFields.ts",
+          "bytes": 156676,
+          "sha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c"
+        },
+        {
+          "file": "transformers/classThis.ts",
+          "bytes": 5565,
+          "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+        },
+        {
+          "file": "transformers/declarations/diagnostics.ts",
+          "bytes": 46404,
+          "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d"
+        },
+        {
+          "file": "transformers/declarations.ts",
+          "bytes": 99818,
+          "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed"
+        },
+        {
+          "file": "transformers/destructuring.ts",
+          "bytes": 30894,
+          "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+        },
+        {
+          "file": "transformers/es2015.ts",
+          "bytes": 231789,
+          "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4"
+        },
+        {
+          "file": "transformers/es2016.ts",
+          "bytes": 4519,
+          "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7"
+        },
+        {
+          "file": "transformers/es2017.ts",
+          "bytes": 50181,
+          "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755"
+        },
+        {
+          "file": "transformers/es2018.ts",
+          "bytes": 69980,
+          "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88"
+        },
+        {
+          "file": "transformers/es2019.ts",
+          "bytes": 1563,
+          "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+        },
+        {
+          "file": "transformers/es2020.ts",
+          "bytes": 13128,
+          "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a"
+        },
+        {
+          "file": "transformers/es2021.ts",
+          "bytes": 4144,
+          "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684"
+        },
+        {
+          "file": "transformers/esDecorators.ts",
+          "bytes": 127380,
+          "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633"
+        },
+        {
+          "file": "transformers/esnext.ts",
+          "bytes": 32645,
+          "sha256": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119"
+        },
+        {
+          "file": "transformers/generators.ts",
+          "bytes": 124036,
+          "sha256": "75ef4834f020bda555a8757a587af77a8f2e111f328e300666ccdcf30d4ccc79"
+        },
+        {
+          "file": "transformers/jsx.ts",
+          "bytes": 36207,
+          "sha256": "8f9884b8ecee51c0798ae00957eb6696161ab8941294da522bd4d85e1bdf9e01"
+        },
+        {
+          "file": "transformers/legacyDecorators.ts",
+          "bytes": 36740,
+          "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0"
+        },
+        {
+          "file": "transformers/module/esnextAnd2015.ts",
+          "bytes": 18686,
+          "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71"
+        },
+        {
+          "file": "transformers/module/impliedNodeFormatDependent.ts",
+          "bytes": 3750,
+          "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+        },
+        {
+          "file": "transformers/module/module.ts",
+          "bytes": 111793,
+          "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c"
+        },
+        {
+          "file": "transformers/module/system.ts",
+          "bytes": 85481,
+          "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6"
+        },
+        {
+          "file": "transformers/namedEvaluation.ts",
+          "bytes": 22318,
+          "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+        },
+        {
+          "file": "transformers/taggedTemplate.ts",
+          "bytes": 5489,
+          "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+        },
+        {
+          "file": "transformers/ts.ts",
+          "bytes": 116741,
+          "sha256": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469"
+        },
+        {
+          "file": "transformers/typeSerializer.ts",
+          "bytes": 28972,
+          "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd"
+        },
+        {
+          "file": "transformers/utilities.ts",
+          "bytes": 35851,
+          "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+        },
+        {
+          "file": "tsbuild.ts",
+          "bytes": 5332,
+          "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+        },
+        {
+          "file": "tsbuildPublic.ts",
+          "bytes": 114655,
+          "sha256": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88"
+        },
+        {
+          "file": "types.ts",
+          "bytes": 491930,
+          "sha256": "e7386f9325015a3668b93e927751540186aea2e180454c5a2ca6aa8ac4b6dce0"
+        },
+        {
+          "file": "utilities.ts",
+          "bytes": 514740,
+          "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef"
+        },
+        {
+          "file": "utilitiesPublic.ts",
+          "bytes": 104608,
+          "sha256": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
+        },
+        {
+          "file": "visitorPublic.ts",
+          "bytes": 88114,
+          "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+        },
+        {
+          "file": "watch.ts",
+          "bytes": 45924,
+          "sha256": "c002991223605d063f5339d68387b148686cdabcfe8192ac95d760adf7f9b7bf"
+        },
+        {
+          "file": "watchPublic.ts",
+          "bytes": 61201,
+          "sha256": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874"
+        },
+        {
+          "file": "watchUtilities.ts",
+          "bytes": 35634,
+          "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+        }
+      ],
+      "seconds": 30.0,
+      "rss_mib": 6144,
+      "project": "whole compiler; only the census walk is filtered"
+    },
+    "completed": [
+      {
+        "file": "_namespaces/ts.moduleSpecifiers.ts",
+        "bytes": 111,
+        "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/_namespaces__ts.moduleSpecifiers.ts.pending"
+          ],
+          "wall_seconds": 1.8884767220001777,
+          "peak_rss_kib": 390092,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "_namespaces/ts.performance.ts",
+        "bytes": 101,
+        "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/_namespaces__ts.performance.ts.pending"
+          ],
+          "wall_seconds": 1.9769405520000873,
+          "peak_rss_kib": 327244,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "_namespaces/ts.ts",
+        "bytes": 3288,
+        "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/_namespaces__ts.ts.pending"
+          ],
+          "wall_seconds": 2.1911488999999165,
+          "peak_rss_kib": 764816,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "builderPublic.ts",
+        "bytes": 11609,
+        "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/builderPublic.ts.pending"
+          ],
+          "wall_seconds": 2.3976373770001373,
+          "peak_rss_kib": 480076,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "builderStatePublic.ts",
+        "bytes": 392,
+        "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/builderStatePublic.ts.pending"
+          ],
+          "wall_seconds": 1.982087889000013,
+          "peak_rss_kib": 370960,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "corePublic.ts",
+        "bytes": 1320,
+        "sha256": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/corePublic.ts.pending"
+          ],
+          "wall_seconds": 2.10012438800004,
+          "peak_rss_kib": 422544,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "diagnosticInformationMap.generated.ts",
+        "bytes": 579194,
+        "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/diagnosticInformationMap.generated.ts.pending"
+          ],
+          "wall_seconds": 2.294825354000068,
+          "peak_rss_kib": 380176,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "factory/baseNodeFactory.ts",
+        "bytes": 2682,
+        "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__baseNodeFactory.ts.pending"
+          ],
+          "wall_seconds": 3.0063342640000883,
+          "peak_rss_kib": 484880,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "factory/nodeChildren.ts",
+        "bytes": 2252,
+        "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__nodeChildren.ts.pending"
+          ],
+          "wall_seconds": 2.3063741220003067,
+          "peak_rss_kib": 486668,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "factory/nodeConverters.ts",
+        "bytes": 7275,
+        "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__nodeConverters.ts.pending"
+          ],
+          "wall_seconds": 15.798030525000286,
+          "peak_rss_kib": 926284,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "factory/nodeTests.ts",
+        "bytes": 37936,
+        "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__nodeTests.ts.pending"
+          ],
+          "wall_seconds": 25.493861315999766,
+          "peak_rss_kib": 1072492,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "factory/utilitiesPublic.ts",
+        "bytes": 2131,
+        "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__utilitiesPublic.ts.pending"
+          ],
+          "wall_seconds": 2.190947576000326,
+          "peak_rss_kib": 448972,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "hostErrors.ts",
+        "bytes": 447,
+        "sha256": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/hostErrors.ts.pending"
+          ],
+          "wall_seconds": 2.4949505860004138,
+          "peak_rss_kib": 398988,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "path.ts",
+        "bytes": 44181,
+        "sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/path.ts.pending"
+          ],
+          "wall_seconds": 29.559723030999976,
+          "peak_rss_kib": 1221068,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "performance.ts",
+        "bytes": 6161,
+        "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/performance.ts.pending"
+          ],
+          "wall_seconds": 11.211103896000168,
+          "peak_rss_kib": 757776,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "performanceCore.ts",
+        "bytes": 3279,
+        "sha256": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/performanceCore.ts.pending"
+          ],
+          "wall_seconds": 2.809445395000239,
+          "peak_rss_kib": 521360,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "programDiagnostics.ts",
+        "bytes": 21401,
+        "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/programDiagnostics.ts.pending"
+          ],
+          "wall_seconds": 14.54977484400024,
+          "peak_rss_kib": 939912,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "semver.ts",
+        "bytes": 18012,
+        "sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/semver.ts.pending"
+          ],
+          "wall_seconds": 7.270393790000071,
+          "peak_rss_kib": 1021900,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "symbolWalker.ts",
+        "bytes": 8267,
+        "sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/symbolWalker.ts.pending"
+          ],
+          "wall_seconds": 5.620295121000254,
+          "peak_rss_kib": 887312,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/classThis.ts",
+        "bytes": 5565,
+        "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__classThis.ts.pending"
+          ],
+          "wall_seconds": 2.9152416580000136,
+          "peak_rss_kib": 592000,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/es2016.ts",
+        "bytes": 4519,
+        "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2016.ts.pending"
+          ],
+          "wall_seconds": 14.853524386999652,
+          "peak_rss_kib": 851636,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/es2019.ts",
+        "bytes": 1563,
+        "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2019.ts.pending"
+          ],
+          "wall_seconds": 12.077498967999873,
+          "peak_rss_kib": 724684,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/es2021.ts",
+        "bytes": 4144,
+        "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2021.ts.pending"
+          ],
+          "wall_seconds": 13.52222979499993,
+          "peak_rss_kib": 795720,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/module/impliedNodeFormatDependent.ts",
+        "bytes": 3750,
+        "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__module__impliedNodeFormatDependent.ts.pending"
+          ],
+          "wall_seconds": 3.635193633000199,
+          "peak_rss_kib": 754508,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/namedEvaluation.ts",
+        "bytes": 22318,
+        "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__namedEvaluation.ts.pending"
+          ],
+          "wall_seconds": 10.765668247000121,
+          "peak_rss_kib": 834820,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/taggedTemplate.ts",
+        "bytes": 5489,
+        "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__taggedTemplate.ts.pending"
+          ],
+          "wall_seconds": 20.22127422299991,
+          "peak_rss_kib": 835148,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "transformers/typeSerializer.ts",
+        "bytes": 28972,
+        "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__typeSerializer.ts.pending"
+          ],
+          "wall_seconds": 14.494360044000132,
+          "peak_rss_kib": 955376,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "tsbuild.ts",
+        "bytes": 5332,
+        "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/tsbuild.ts.pending"
+          ],
+          "wall_seconds": 1.9950924620002297,
+          "peak_rss_kib": 444560,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      },
+      {
+        "file": "types.ts",
+        "bytes": 491930,
+        "sha256": "e7386f9325015a3668b93e927751540186aea2e180454c5a2ca6aa8ac4b6dce0",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/types.ts.pending"
+          ],
+          "wall_seconds": 4.160743989999901,
+          "peak_rss_kib": 1024728,
+          "exit": 0,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        }
+      }
+    ],
+    "incomplete": [
+      {
+        "file": "binder.ts",
+        "bytes": 195107,
+        "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/binder.ts.pending"
+          ],
+          "wall_seconds": 30.108719304000033,
+          "peak_rss_kib": 1142160,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "builder.ts",
+        "bytes": 117298,
+        "sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/builder.ts.pending"
+          ],
+          "wall_seconds": 30.098337435000076,
+          "peak_rss_kib": 785752,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "builderState.ts",
+        "bytes": 26209,
+        "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/builderState.ts.pending"
+          ],
+          "wall_seconds": 30.10536365500002,
+          "peak_rss_kib": 869836,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "checker.ts",
+        "bytes": 3154156,
+        "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/checker.ts.pending"
+          ],
+          "wall_seconds": 30.05027351900003,
+          "peak_rss_kib": 790988,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "commandLineParser.ts",
+        "bytes": 183733,
+        "sha256": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/commandLineParser.ts.pending"
+          ],
+          "wall_seconds": 30.06040133899978,
+          "peak_rss_kib": 804896,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "core.ts",
+        "bytes": 92680,
+        "sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/core.ts.pending"
+          ],
+          "wall_seconds": 30.110901000000013,
+          "peak_rss_kib": 1299072,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "debug.ts",
+        "bytes": 57713,
+        "sha256": "ca255a522710019f5f852647b077cebc35d8771e966241e2f5fdc56f63f3a0a7",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/debug.ts.pending"
+          ],
+          "wall_seconds": 30.100973481999972,
+          "peak_rss_kib": 852716,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "emitter.ts",
+        "bytes": 274627,
+        "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/emitter.ts.pending"
+          ],
+          "wall_seconds": 30.06734091400017,
+          "peak_rss_kib": 906596,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "executeCommandLine.ts",
+        "bytes": 54177,
+        "sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/executeCommandLine.ts.pending"
+          ],
+          "wall_seconds": 30.057041733999995,
+          "peak_rss_kib": 806172,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "expressionToTypeNode.ts",
+        "bytes": 70354,
+        "sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/expressionToTypeNode.ts.pending"
+          ],
+          "wall_seconds": 30.078492404999906,
+          "peak_rss_kib": 1044052,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "factory/emitHelpers.ts",
+        "bytes": 69184,
+        "sha256": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__emitHelpers.ts.pending"
+          ],
+          "wall_seconds": 30.131145926000045,
+          "peak_rss_kib": 866912,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "factory/emitNode.ts",
+        "bytes": 12800,
+        "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__emitNode.ts.pending"
+          ],
+          "wall_seconds": 30.100967864999802,
+          "peak_rss_kib": 836748,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "factory/nodeFactory.ts",
+        "bytes": 336646,
+        "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__nodeFactory.ts.pending"
+          ],
+          "wall_seconds": 30.07386447199997,
+          "peak_rss_kib": 996696,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "factory/parenthesizerRules.ts",
+        "bytes": 34072,
+        "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__parenthesizerRules.ts.pending"
+          ],
+          "wall_seconds": 30.05431728099984,
+          "peak_rss_kib": 890044,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "factory/utilities.ts",
+        "bytes": 76615,
+        "sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/factory__utilities.ts.pending"
+          ],
+          "wall_seconds": 30.080682024000225,
+          "peak_rss_kib": 945020,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "moduleNameResolver.ts",
+        "bytes": 183618,
+        "sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/moduleNameResolver.ts.pending"
+          ],
+          "wall_seconds": 30.110434749999968,
+          "peak_rss_kib": 831488,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "moduleSpecifiers.ts",
+        "bytes": 80070,
+        "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/moduleSpecifiers.ts.pending"
+          ],
+          "wall_seconds": 30.129881834000116,
+          "peak_rss_kib": 851712,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "parser.ts",
+        "bytes": 541260,
+        "sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/parser.ts.pending"
+          ],
+          "wall_seconds": 30.136699863999866,
+          "peak_rss_kib": 1035120,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "program.ts",
+        "bytes": 271300,
+        "sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/program.ts.pending"
+          ],
+          "wall_seconds": 30.140350336999973,
+          "peak_rss_kib": 888080,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "resolutionCache.ts",
+        "bytes": 82223,
+        "sha256": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/resolutionCache.ts.pending"
+          ],
+          "wall_seconds": 30.076837206000164,
+          "peak_rss_kib": 934276,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "scanner.ts",
+        "bytes": 219390,
+        "sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/scanner.ts.pending"
+          ],
+          "wall_seconds": 30.090604183000096,
+          "peak_rss_kib": 852028,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "sourcemap.ts",
+        "bytes": 32210,
+        "sha256": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/sourcemap.ts.pending"
+          ],
+          "wall_seconds": 30.055738278000263,
+          "peak_rss_kib": 845296,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "sys.ts",
+        "bytes": 86254,
+        "sha256": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/sys.ts.pending"
+          ],
+          "wall_seconds": 30.077817047999815,
+          "peak_rss_kib": 927048,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "tracing.ts",
+        "bytes": 15322,
+        "sha256": "c93e0678045906b86323d834b005182a3a334355c89faebb6455cdbb26b67dd5",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/tracing.ts.pending"
+          ],
+          "wall_seconds": 30.12992572400026,
+          "peak_rss_kib": 858972,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformer.ts",
+        "bytes": 29875,
+        "sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformer.ts.pending"
+          ],
+          "wall_seconds": 30.060490669000046,
+          "peak_rss_kib": 838672,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/classFields.ts",
+        "bytes": 156676,
+        "sha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__classFields.ts.pending"
+          ],
+          "wall_seconds": 30.0733583440001,
+          "peak_rss_kib": 847752,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/declarations/diagnostics.ts",
+        "bytes": 46404,
+        "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__declarations__diagnostics.ts.pending"
+          ],
+          "wall_seconds": 30.0841711380001,
+          "peak_rss_kib": 897752,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/declarations.ts",
+        "bytes": 99818,
+        "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__declarations.ts.pending"
+          ],
+          "wall_seconds": 30.126857514999983,
+          "peak_rss_kib": 842304,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/destructuring.ts",
+        "bytes": 30894,
+        "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__destructuring.ts.pending"
+          ],
+          "wall_seconds": 30.086604843999794,
+          "peak_rss_kib": 815328,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/es2015.ts",
+        "bytes": 231789,
+        "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2015.ts.pending"
+          ],
+          "wall_seconds": 30.11232056599988,
+          "peak_rss_kib": 901484,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/es2017.ts",
+        "bytes": 50181,
+        "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2017.ts.pending"
+          ],
+          "wall_seconds": 30.121976257000142,
+          "peak_rss_kib": 783420,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/es2018.ts",
+        "bytes": 69980,
+        "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2018.ts.pending"
+          ],
+          "wall_seconds": 30.11677220999991,
+          "peak_rss_kib": 722456,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/es2020.ts",
+        "bytes": 13128,
+        "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__es2020.ts.pending"
+          ],
+          "wall_seconds": 30.10816323300014,
+          "peak_rss_kib": 696720,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/esDecorators.ts",
+        "bytes": 127380,
+        "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__esDecorators.ts.pending"
+          ],
+          "wall_seconds": 30.047476463000066,
+          "peak_rss_kib": 782588,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/esnext.ts",
+        "bytes": 32645,
+        "sha256": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__esnext.ts.pending"
+          ],
+          "wall_seconds": 30.10256465600014,
+          "peak_rss_kib": 751792,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/generators.ts",
+        "bytes": 124036,
+        "sha256": "75ef4834f020bda555a8757a587af77a8f2e111f328e300666ccdcf30d4ccc79",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__generators.ts.pending"
+          ],
+          "wall_seconds": 30.064976863000084,
+          "peak_rss_kib": 789708,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/jsx.ts",
+        "bytes": 36207,
+        "sha256": "8f9884b8ecee51c0798ae00957eb6696161ab8941294da522bd4d85e1bdf9e01",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__jsx.ts.pending"
+          ],
+          "wall_seconds": 30.04255295599978,
+          "peak_rss_kib": 738052,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/legacyDecorators.ts",
+        "bytes": 36740,
+        "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__legacyDecorators.ts.pending"
+          ],
+          "wall_seconds": 30.098456291000275,
+          "peak_rss_kib": 699084,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/module/esnextAnd2015.ts",
+        "bytes": 18686,
+        "sha256": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__module__esnextAnd2015.ts.pending"
+          ],
+          "wall_seconds": 30.116428152000026,
+          "peak_rss_kib": 785936,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/module/module.ts",
+        "bytes": 111793,
+        "sha256": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__module__module.ts.pending"
+          ],
+          "wall_seconds": 30.140689665999844,
+          "peak_rss_kib": 869880,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/module/system.ts",
+        "bytes": 85481,
+        "sha256": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__module__system.ts.pending"
+          ],
+          "wall_seconds": 30.113008404000084,
+          "peak_rss_kib": 921792,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/ts.ts",
+        "bytes": 116741,
+        "sha256": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__ts.ts.pending"
+          ],
+          "wall_seconds": 30.127232970000023,
+          "peak_rss_kib": 772040,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "transformers/utilities.ts",
+        "bytes": 35851,
+        "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/transformers__utilities.ts.pending"
+          ],
+          "wall_seconds": 30.116134959000192,
+          "peak_rss_kib": 861068,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "tsbuildPublic.ts",
+        "bytes": 114655,
+        "sha256": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/tsbuildPublic.ts.pending"
+          ],
+          "wall_seconds": 30.146504757000002,
+          "peak_rss_kib": 818928,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "utilities.ts",
+        "bytes": 514740,
+        "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/utilities.ts.pending"
+          ],
+          "wall_seconds": 30.112854741000092,
+          "peak_rss_kib": 811660,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "utilitiesPublic.ts",
+        "bytes": 104608,
+        "sha256": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/utilitiesPublic.ts.pending"
+          ],
+          "wall_seconds": 30.05739123000012,
+          "peak_rss_kib": 1048760,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "visitorPublic.ts",
+        "bytes": 88114,
+        "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/visitorPublic.ts.pending"
+          ],
+          "wall_seconds": 30.080803253000113,
+          "peak_rss_kib": 662316,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "watch.ts",
+        "bytes": 45924,
+        "sha256": "c002991223605d063f5339d68387b148686cdabcfe8192ac95d760adf7f9b7bf",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/watch.ts.pending"
+          ],
+          "wall_seconds": 30.071775204999767,
+          "peak_rss_kib": 827868,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "watchPublic.ts",
+        "bytes": 61201,
+        "sha256": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/watchPublic.ts.pending"
+          ],
+          "wall_seconds": 30.085988540000017,
+          "peak_rss_kib": 820492,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      },
+      {
+        "file": "watchUtilities.ts",
+        "bytes": 35634,
+        "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93",
+        "metrics": {
+          "command": [
+            "/tmp/b17vtn1/stream-census",
+            "/tmp/b17vtn1/original-adapted/src/compiler",
+            "/tmp/b17vtn1/whole/records/watchUtilities.ts.pending"
+          ],
+          "wall_seconds": 30.091772803999902,
+          "peak_rss_kib": 899908,
+          "exit": 124,
+          "time_limit_seconds": 30.0,
+          "rss_limit_mib": 6144,
+          "address_space_limit_mib": 12288,
+          "rss_limit_killed": false
+        },
+        "reason": "wall timeout"
+      }
+    ]
+  },
+  "counts": {
+    "NotYet": [
+      819,
+      169,
+      52,
+      21,
+      8
+    ],
+    "Refused": [
+      498,
+      79,
+      23,
+      20,
+      4
+    ]
+  },
+  "top20": [
+    {
+      "kind": "NotYet",
+      "root_kind": "reading SyntaxKind",
+      "counts": [
+        342,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+      "counts": [
+        228,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a generic function as a value",
+      "counts": [
+        78,
+        15,
+        6,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "an object refinement using an open numeric enum as a literal tag",
+      "counts": [
+        76,
+        14,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "an overloaded function as a value",
+      "counts": [
+        40,
+        7,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading ScriptTarget",
+      "counts": [
+        39,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "a cast the runtime can't check",
+      "counts": [
+        9,
+        14,
+        5,
+        5,
+        2
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "an assignment value to a member",
+      "counts": [
+        13,
+        11,
+        5,
+        1,
+        1
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type Path",
+      "counts": [
+        24,
+        2,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member push read as an own field",
+      "counts": [
+        12,
+        16,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "this outside a method",
+      "counts": [
+        2,
+        16,
+        3,
+        5,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type T",
+      "counts": [
+        17,
+        6,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "reading CharacterCodes",
+      "counts": [
+        23,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a call through ?. (an optional call)",
+      "counts": [
+        7,
+        8,
+        6,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type __String",
+      "counts": [
+        19,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "root_kind": "a value of type any",
+      "counts": [
+        11,
+        6,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member charCodeAt read as an own field",
+      "counts": [
+        16,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member slice read as an own field",
+      "counts": [
+        9,
+        6,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member substring read as an own field",
+      "counts": [
+        11,
+        1,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "Refused",
+      "root_kind": "inherited library member get read as an own field",
+      "counts": [
+        8,
+        2,
+        3,
+        1,
+        0
+      ]
+    }
+  ],
+  "source_bytes": 10615807,
+  "examined_bytes": 1323621,
+  "examined_share": 0.12468397362536829,
+  "typescript_source_bytes": 10009820,
+  "typescript_examined_share": 0.13223224793253024,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 2193,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "files": [
+    {
+      "file": "_namespaces/ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "source_bytes": 111,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 432,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "_namespaces/ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "source_bytes": 101,
+      "total_nodes": 4,
+      "visited_nodes": 4,
+      "attempted_nodes": 432,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "_namespaces/ts.ts",
+      "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+      "source_bytes": 3288,
+      "total_nodes": 166,
+      "visited_nodes": 166,
+      "attempted_nodes": 508,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "builderPublic.ts",
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+      "source_bytes": 11609,
+      "total_nodes": 750,
+      "visited_nodes": 750,
+      "attempted_nodes": 579,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "source_bytes": 392,
+      "total_nodes": 44,
+      "visited_nodes": 44,
+      "attempted_nodes": 434,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "corePublic.ts",
+      "sha256": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44",
+      "source_bytes": 1320,
+      "total_nodes": 120,
+      "visited_nodes": 120,
+      "attempted_nodes": 453,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "diagnosticInformationMap.generated.ts",
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+      "source_bytes": 579194,
+      "total_nodes": 27775,
+      "visited_nodes": 27775,
+      "attempted_nodes": 17507,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+      "source_bytes": 2682,
+      "total_nodes": 316,
+      "visited_nodes": 316,
+      "attempted_nodes": 561,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeChildren.ts",
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+      "source_bytes": 2252,
+      "total_nodes": 254,
+      "visited_nodes": 254,
+      "attempted_nodes": 571,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+      "source_bytes": 7275,
+      "total_nodes": 670,
+      "visited_nodes": 714,
+      "attempted_nodes": 1094,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+      "source_bytes": 37936,
+      "total_nodes": 5245,
+      "visited_nodes": 5245,
+      "attempted_nodes": 2254,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+      "source_bytes": 2131,
+      "total_nodes": 347,
+      "visited_nodes": 355,
+      "attempted_nodes": 648,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "hostErrors.ts",
+      "sha256": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf",
+      "source_bytes": 447,
+      "total_nodes": 90,
+      "visited_nodes": 90,
+      "attempted_nodes": 481,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "path.ts",
+      "sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677",
+      "source_bytes": 44181,
+      "total_nodes": 3704,
+      "visited_nodes": 3704,
+      "attempted_nodes": 2834,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "performance.ts",
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "source_bytes": 6161,
+      "total_nodes": 640,
+      "visited_nodes": 640,
+      "attempted_nodes": 797,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "performanceCore.ts",
+      "sha256": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242",
+      "source_bytes": 3279,
+      "total_nodes": 299,
+      "visited_nodes": 299,
+      "attempted_nodes": 561,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+      "source_bytes": 21401,
+      "total_nodes": 1968,
+      "visited_nodes": 2122,
+      "attempted_nodes": 2026,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "semver.ts",
+      "sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af",
+      "source_bytes": 18012,
+      "total_nodes": 2040,
+      "visited_nodes": 2040,
+      "attempted_nodes": 1808,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "symbolWalker.ts",
+      "sha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "source_bytes": 8267,
+      "total_nodes": 892,
+      "visited_nodes": 926,
+      "attempted_nodes": 1023,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/classThis.ts",
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd",
+      "source_bytes": 5565,
+      "total_nodes": 460,
+      "visited_nodes": 468,
+      "attempted_nodes": 747,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/es2016.ts",
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+      "source_bytes": 4519,
+      "total_nodes": 426,
+      "visited_nodes": 485,
+      "attempted_nodes": 915,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/es2019.ts",
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+      "source_bytes": 1563,
+      "total_nodes": 176,
+      "visited_nodes": 227,
+      "attempted_nodes": 692,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/es2021.ts",
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+      "source_bytes": 4144,
+      "total_nodes": 360,
+      "visited_nodes": 411,
+      "attempted_nodes": 819,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/module/impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "source_bytes": 3750,
+      "total_nodes": 411,
+      "visited_nodes": 411,
+      "attempted_nodes": 723,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/namedEvaluation.ts",
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+      "source_bytes": 22318,
+      "total_nodes": 1678,
+      "visited_nodes": 1702,
+      "attempted_nodes": 1545,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/taggedTemplate.ts",
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+      "source_bytes": 5489,
+      "total_nodes": 489,
+      "visited_nodes": 548,
+      "attempted_nodes": 965,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "transformers/typeSerializer.ts",
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd",
+      "source_bytes": 28972,
+      "total_nodes": 2354,
+      "visited_nodes": 2368,
+      "attempted_nodes": 1954,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "tsbuild.ts",
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "source_bytes": 5332,
+      "total_nodes": 348,
+      "visited_nodes": 348,
+      "attempted_nodes": 473,
+      "unvisited_nodes": 0
+    },
+    {
+      "file": "types.ts",
+      "sha256": "e7386f9325015a3668b93e927751540186aea2e180454c5a2ca6aa8ac4b6dce0",
+      "source_bytes": 491930,
+      "total_nodes": 43890,
+      "visited_nodes": 43890,
+      "attempted_nodes": 6904,
+      "unvisited_nodes": 0
+    }
+  ],
+  "unexamined": [
+    {
+      "file": "binder.ts",
+      "bytes": 195107,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "builder.ts",
+      "bytes": 117298,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "builderState.ts",
+      "bytes": 26209,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "checker.ts",
+      "bytes": 3154156,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "commandLineParser.ts",
+      "bytes": 183733,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "core.ts",
+      "bytes": 92680,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "debug.ts",
+      "bytes": 57713,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "diagnosticMessages.generated.json",
+      "bytes": 306771,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "diagnosticMessages.json",
+      "bytes": 299061,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "emitter.ts",
+      "bytes": 274627,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "bytes": 54177,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "bytes": 70354,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "bytes": 69184,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "bytes": 12800,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "bytes": 336646,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "bytes": 34072,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "factory/utilities.ts",
+      "bytes": 76615,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "bytes": 183618,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "bytes": 80070,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "parser.ts",
+      "bytes": 541260,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "program.ts",
+      "bytes": 271300,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "bytes": 82223,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "scanner.ts",
+      "bytes": 219390,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "sourcemap.ts",
+      "bytes": 32210,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "sys.ts",
+      "bytes": 86254,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "tracing.ts",
+      "bytes": 15322,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformer.ts",
+      "bytes": 29875,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "bytes": 156676,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "bytes": 46404,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "bytes": 99818,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "bytes": 30894,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "bytes": 231789,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "bytes": 50181,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "bytes": 69980,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "bytes": 13128,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "bytes": 127380,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "bytes": 32645,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/generators.ts",
+      "bytes": 124036,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "bytes": 36207,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "bytes": 36740,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "bytes": 18686,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "bytes": 111793,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "bytes": 85481,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/ts.ts",
+      "bytes": 116741,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "bytes": 35851,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "bytes": 114655,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "tsconfig.json",
+      "bytes": 155,
+      "reason": "non-TypeScript input; no lowering sites"
+    },
+    {
+      "file": "utilities.ts",
+      "bytes": 514740,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "bytes": 104608,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "visitorPublic.ts",
+      "bytes": 88114,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "watch.ts",
+      "bytes": 45924,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "watchPublic.ts",
+      "bytes": 61201,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "bytes": 35634,
+      "reason": "per-file measurement incomplete; see stream inventory"
+    }
+  ]
+}

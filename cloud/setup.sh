@@ -213,24 +213,8 @@ else
 	step "shared cache off (adamic-gocacheprog build failed; see $run/gocacheprog.log)"
 fi
 
-# One file every shell sources: the agent's shell in Codex is a different session from this one.
-cat > "$tools/env.sh" << ENV
-export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
-export GOTOOLCHAIN=auto
-export GOPROXY="https://proxy.golang.org|direct"
-export TMPDIR=$gate
-export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
-ENV
-# Persist only a successful bootstrap; recheck opt-out and branch presence in later shells.
-# Credentials stay in the caller's environment: cloud setup never grants cache write trust.
-printf 'unset GOCACHEPROG\n' >> "$tools/env.sh"
-if [ "$gocacheprog" = on ]; then
-	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
-		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$tools/env.sh"
-fi
-if "$wasiSDK"; then
- printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
-fi
+# One file every shell sources; write-env.sh keeps the lines other steps wrote, such as a box's gate inputs.
+bash "$repository/cloud/write-env.sh" "$tools" "$gate" "$markdownDependencies" "$repository" "$gocacheprog" "$("$wasiSDK" && echo "$wasiDirectory" || true)"
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"
