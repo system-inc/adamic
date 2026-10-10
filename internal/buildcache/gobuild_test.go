@@ -108,6 +108,96 @@ func TestGoBuildKeysArgumentsAndEnvironment(t *testing.T) {
 	}
 }
 
+// A runner asks for the product Workshop built (#t37sw0f): the same tree checked out at two absolute paths, built with
+// two -p shares (the core count each machine computes into GOFLAGS, and one passed as an argument) and pointed at by
+// three workspace files (found in the tree, named in the tree, and one outside it using the same directory), keys
+// byte-identically, and its recorded inputs are byte-identical too, so the key's equality is the inputs' and not an
+// accident. A source byte, a build tag and the Go release each move it.
+// Not parallel: changes the working directory (t.Chdir) and the environment (t.Setenv).
+func TestGoBuildKeysTheSameTreeTheSameFromAnyMachine(t *testing.T) {
+	cached(t)
+	tree := map[string]string{
+		"go.mod":        "module github.com/system-inc/adamic\n\ngo 1.21\n",
+		"go.work":       "go 1.21\n\nuse .\n",
+		"app/main.go":   "package main\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(\"hello\", tagged) }\n",
+		"app/plain.go":  "//go:build !fancy\n\npackage main\n\nconst tagged = \"plain\"\n",
+		"app/fancy.go":  "//go:build fancy\n\npackage main\n\nconst tagged = \"fancy\"\n",
+		"unrelated.txt": "read by nothing\n",
+	}
+	base := t.TempDir()
+	checkout := func(path string) string {
+		directory := filepath.Join(base, path)
+		for name, content := range tree {
+			write(t, directory, name, content)
+		}
+		return directory
+	}
+	workshop, runner := checkout("home/ahra/work/adamic"), checkout("srv/runner/7/elsewhere/adamic")
+	outside := filepath.Join(base, "loom", "go.work")
+	write(t, base, "loom/go.work", "go 1.21\n\nuse "+runner+"\n")
+	type machine struct{ directory, workspace, flags string }
+	keyed := func(on machine, arguments ...string) (string, string) {
+		t.Helper()
+		inRepository(t, on.directory)
+		t.Setenv("GOWORK", on.workspace)
+		t.Setenv("GOFLAGS", on.flags)
+		inputs, err := GoInputs("app", "./app", reproducible(arguments), nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		root, err := repositoryRoot()
+		if err != nil {
+			t.Fatal(err)
+		}
+		return key(t, root, inputs), describe(root, inputs)
+	}
+	reference, described := keyed(machine{workshop, filepath.Join(workshop, "go.work"), "-buildvcs=false -trimpath -p=12"})
+	for name, other := range map[string]machine{
+		"another checkout, its go.work found, another -p share first": {runner, "", "-p=3 -buildvcs=false -trimpath"},
+		"another checkout, a workspace file outside it using it":      {runner, outside, "-buildvcs=false -p=7 -trimpath"},
+	} {
+		if key, description := keyed(other); key != reference || description != described {
+			t.Errorf("%s keyed %s, Workshop %s; inputs\n%s\nagainst Workshop's\n%s", name, key, reference, description, described)
+		}
+	}
+	plain := machine{runner, "", "-buildvcs=false -trimpath"}
+	if key, _ := keyed(plain, "-p", "4"); key != reference {
+		t.Errorf("a -p 4 argument moved the key to %s from %s", key, reference)
+	}
+	if strings.Contains(described, base) || strings.Contains(described, "-p=") {
+		t.Errorf("the recorded inputs name a machine:\n%s", described)
+	}
+
+	// What changes the product moves the key: a build tag, a source byte, the Go release.
+	if key, _ := keyed(plain, "-tags=fancy"); key == reference {
+		t.Error("-tags=fancy left the key the same")
+	}
+	write(t, runner, "app/main.go", strings.Replace(tree["app/main.go"], "hello", "howdy", 1))
+	if key, _ := keyed(plain); key == reference {
+		t.Error("a changed source byte left the key the same")
+	}
+	write(t, runner, "app/main.go", tree["app/main.go"])
+	if key, _ := keyed(plain); key != reference {
+		t.Fatalf("the source put back keyed %s, not %s", key, reference)
+	}
+	// Another release, as a go that reports go1.99.0 and otherwise is this one (the release keys twice: Tool's go
+	// version and GOTOOLCHAIN's selection, which is go env's GOVERSION).
+	real, err := exec.LookPath("go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fake := filepath.Join(t.TempDir(), "go")
+	os.WriteFile(fake, []byte("#!/bin/sh\ncase \"$1\" in\nversion) echo 'go version go1.99.0 fake/arch'; exit 0 ;;\n"+
+		"env) "+real+" \"$@\" | sed -E 's/\"GOVERSION\": \"[^\"]*\"/\"GOVERSION\": \"go1.99.0\"/'; exit 0 ;;\nesac\nexec "+real+" \"$@\"\n"), 0o755)
+	t.Setenv("PATH", filepath.Dir(fake)+string(os.PathListSeparator)+os.Getenv("PATH"))
+	forget := func() { tools.Range(func(name, _ any) bool { tools.Delete(name); return true }) }
+	forget()
+	t.Cleanup(forget)
+	if key, description := keyed(plain); key == reference || !strings.Contains(description, "GOTOOLCHAIN selects go1.99.0") {
+		t.Errorf("another Go release keyed %s against %s:\n%s", key, reference, description)
+	}
+}
+
 // GoBuild builds the same bytes from any checkout path, so a product another machine published audits clean: the cgo
 // package, copied into two module directories at different paths and built with GoBuild's flags, is byte-identical.
 func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {

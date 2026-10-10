@@ -67,9 +67,113 @@ func reproducible(arguments []string) []string {
 // product with -a, which compiles every package again, and the flag in the key retires a product built without it.
 const rebuildEverything = "go build -a: a header outside its package"
 
-// The go env values a build reads beyond its sources, resolved by go itself so a default counts like a setting.
+// The go env values a build reads beyond its sources, resolved by go itself so a default counts like a setting, and
+// keyed as goSetting says: GOFLAGS without its -p share (portable), the workspace by content, the release
+// GOTOOLCHAIN selects.
 var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX",
 	"CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"}
+
+// goSettings runs go env for names in directory (the working directory when empty) with environment added, and
+// returns each variable as goSetting keys it, in the order asked, with the values go reported. -json among names is
+// ignored: the report is the same either way.
+func goSettings(directory string, environment, names []string) ([]string, map[string]string, error) {
+	var asked []string
+	for _, name := range names {
+		if name != "-json" {
+			asked = append(asked, name)
+		}
+	}
+	command := exec.Command("go", append([]string{"env", "-json", "GOVERSION"}, asked...)...)
+	command.Dir = directory
+	command.Env = append(os.Environ(), environment...)
+	output, err := command.Output()
+	if err != nil {
+		var exit *exec.ExitError
+		if errors.As(err, &exit) {
+			return nil, nil, fmt.Errorf("go env: %v\n%s", err, exit.Stderr)
+		}
+		return nil, nil, err
+	}
+	values := map[string]string{}
+	if err := json.Unmarshal(output, &values); err != nil {
+		return nil, nil, fmt.Errorf("go env: %v", err)
+	}
+	settings := make([]string, 0, len(asked))
+	for _, name := range asked {
+		settings = append(settings, goSetting(name, values[name], values["GOVERSION"]))
+	}
+	return settings, values, nil
+}
+
+// goLocations say where go keeps or fetches things, not what it builds: the release is keyed by GOVERSION, modules by
+// go.sum, so two machines with their caches, module downloads and configuration files in different homes build the
+// same bytes.
+var goLocations = []string{"GOPATH", "GOENV", "GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOBIN", "GOCACHEPROG", "GOPROXY", "GOSUMDB",
+	"GOPRIVATE", "GONOPROXY", "GONOSUMDB", "GOINSECURE", "GOAUTH", "GOVCS"}
+
+// goSetting is one go env variable as a key names it (#t37sw0f). GOTOOLCHAIN is a policy (auto on the cloud boxes,
+// local elsewhere) and GOROOT and GOTOOLDIR are where a release sits; what changes a product is the release itself, so
+// all three name it. The workspace is goWorkspace's. A location is named as one and never valued. Everything else is
+// its value, which Key makes portable.
+func goSetting(name, value, release string) string {
+	switch {
+	case name == "GOTOOLCHAIN":
+		return "GOTOOLCHAIN selects " + release
+	case name == "GOROOT" || name == "GOTOOLDIR":
+		return name + " holds " + release
+	case name == "GOWORK":
+		return goWorkspace(value)
+	case slices.Contains(goLocations, name):
+		return name + " is a location, not keyed"
+	}
+	return name + "=" + value
+}
+
+// goWorkspace keys the workspace a build reads by what it says, never by which file said it (#t37sw0f): none
+// (GOWORK=off and no go.work found are the same build), or the file as go reads it (go work edit -json), with each
+// local path in it (a use, a replacement's directory) resolved against the file's own directory and made portable.
+// So the tree's own go.work, found from two checkouts, and a go.work outside the tree that uses the same directories
+// are one workspace; another go line, toolchain, use or replacement is another.
+func goWorkspace(path string) string {
+	if path == "" || path == "off" {
+		return "GOWORK=off"
+	}
+	output, err := exec.Command("go", "work", "edit", "-json", path).Output()
+	if err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	var workspace struct {
+		Go, Toolchain string
+		Godebug       []struct{ Key, Value string }
+		Use           []struct{ DiskPath, ModulePath string }
+		Replace       []struct {
+			Old, New struct{ Path, Version string }
+		}
+	}
+	if err := json.Unmarshal(output, &workspace); err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	root, _ := repositoryRoot()
+	local := func(name string) string {
+		if !filepath.IsAbs(name) {
+			name = filepath.Join(filepath.Dir(path), name)
+		}
+		return portable(root, filepath.Clean(name))
+	}
+	for index := range workspace.Use {
+		workspace.Use[index].DiskPath = local(workspace.Use[index].DiskPath)
+	}
+	for index := range workspace.Replace {
+		if workspace.Replace[index].New.Version == "" {
+			workspace.Replace[index].New.Path = local(workspace.Replace[index].New.Path)
+		}
+	}
+	canonical, err := json.Marshal(workspace)
+	if err != nil {
+		return "GOWORK unreadable: " + err.Error()
+	}
+	return "GOWORK " + string(canonical)
+}
 
 // GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
 func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
@@ -183,11 +287,10 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	if err := add(root, existing(root, "go.work", "go.work.sum")); err != nil {
 		return Inputs{}, err
 	}
-	resolved, err := run(append([]string{"env"}, goEnvironment...)...)
+	settings, values, err := goSettings(root, environment, goEnvironment)
 	if err != nil {
 		return Inputs{}, err
 	}
-	values := strings.Split(strings.TrimRight(string(resolved), "\n"), "\n")
 	for _, target := range overlay.files {
 		files[target] = true
 	}
@@ -195,13 +298,9 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
-	for index, name := range goEnvironment {
-		if index < len(values) {
-			inputs.Flags = append(inputs.Flags, name+"="+values[index])
-			if name == "CC" && values[index] != "" {
-				inputs.Toolchain = append(inputs.Toolchain, Tool(strings.Fields(values[index])[0], "--version"))
-			}
-		}
+	inputs.Flags = append(inputs.Flags, settings...)
+	if compiler := strings.Fields(values["CC"]); len(compiler) > 0 {
+		inputs.Toolchain = append(inputs.Toolchain, Tool(compiler[0], "--version"))
 	}
 	for name := range files {
 		inputs.Files = append(inputs.Files, name)
