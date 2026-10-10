@@ -1,0 +1,5 @@
+--- internal/lower/object.go
++++ internal/lower/object.go
+@@ -329 +329 @@
+-	if element.Flags()&checker.TypeFlagsNever != 0 {
++	if element.Flags()&checker.TypeFlagsNever != 0 && false {

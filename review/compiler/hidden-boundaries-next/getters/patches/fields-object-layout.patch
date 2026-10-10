@@ -1,0 +1,5 @@
+--- internal/lower/generic_constraint_storage.go
++++ internal/lower/generic_constraint_storage.go
+@@ -26 +26 @@
+-		return ir.Union, true
++		return ir.Object, true

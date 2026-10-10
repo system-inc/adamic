@@ -1,0 +1,5 @@
+--- internal/lower/census_overload_proof.go
++++ internal/lower/census_overload_proof.go
+@@ -129 +129 @@
+-					return l.censusRelated(narrowed(index, flow), promised)
++					return l.checker.IsTypeAssignableTo(promised, narrowed(index, flow))

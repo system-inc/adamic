@@ -1,0 +1,5 @@
+--- internal/lower/overload_visitor_calls.go
++++ internal/lower/overload_visitor_calls.go
+@@ -178 +178 @@
+-				l.localTypes[local] = bindings[i]
++				l.localTypes[local] = l.concrete(l.checker.GetTypeAtLocation(parameter))

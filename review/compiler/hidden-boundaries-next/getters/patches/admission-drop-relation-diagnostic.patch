@@ -1,0 +1,5 @@
+--- internal/lower/census_small.go
++++ internal/lower/census_small.go
+@@ -256 +256 @@
+-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}) + "; " + l.overloadResultRelation(produced, promised), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
++		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}

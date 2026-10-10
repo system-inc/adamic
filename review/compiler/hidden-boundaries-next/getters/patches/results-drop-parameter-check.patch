@@ -1,0 +1,6 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -317 +317,2 @@
+-			checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}
++			_ = message
++checked.Arguments[position] = fit(argument, held)

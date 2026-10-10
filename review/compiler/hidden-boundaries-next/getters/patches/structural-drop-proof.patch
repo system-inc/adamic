@@ -1,0 +1,5 @@
+--- internal/lower/overload_structural.go
++++ internal/lower/overload_structural.go
+@@ -16 +16 @@
+-	return l.censusProveOverloadResult(implementation, overload)
++	return false

@@ -1,0 +1,5 @@
+--- internal/lower/overload_return_call.go
++++ internal/lower/overload_return_call.go
+@@ -36 +36 @@
+-	return l.censusRelated(produced, promised) && l.overloadReturnStorage(produced, promised)
++	return l.classAssignable(produced, promised) && l.overloadReturnStorage(produced, promised)

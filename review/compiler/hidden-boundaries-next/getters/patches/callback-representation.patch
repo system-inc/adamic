@@ -1,0 +1,5 @@
+--- internal/lower/overload_callback.go
++++ internal/lower/overload_callback.go
+@@ -71 +71 @@
+-	return actualKnown && outputKnown && actual == output && !censusCallableSlotless(actual)
++	return actualKnown && outputKnown && (actual == output || actual != output) && !censusCallableSlotless(actual)

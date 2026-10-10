@@ -1,0 +1,5 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -532 +532 @@
+-			return nil, l.notYet(node, "a generic function as a value")
++			return ir.Undefined{Of: ir.Closure}, nil

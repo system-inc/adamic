@@ -1,0 +1,5 @@
+--- internal/lower/method_destructuring.go
++++ internal/lower/method_destructuring.go
+@@ -36,0 +37,2 @@
++ return true
++

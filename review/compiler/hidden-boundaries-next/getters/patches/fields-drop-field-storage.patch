@@ -1,0 +1,5 @@
+--- internal/lower/overload_result_fields.go
++++ internal/lower/overload_result_fields.go
+@@ -62 +62 @@
+-	if !compatible {
++	if false && !compatible {

@@ -1,0 +1,910 @@
+[
+  {
+    "mutant": "results-trust-optional-property",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadResultsRefusesOptionalResultProperty"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/results-trust-optional-property-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadResultsRefusesOptionalResultProperty$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "results-trust-result",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadResultsLiarStopsEvaluateLiar",
+      "TestOverloadResultsLiarStopsLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/results-trust-result-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadResultsLiarStops",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "results-drop-specialization",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/overload_results_binding.a",
+      "TestNativeAgreesWithNode"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/results-drop-specialization-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "results-drop-parameter-check",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadResultsLiarStopsParameterLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/results-drop-parameter-check-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadResultsLiarStopsParameterLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "results-trust-shared-result",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadResultsRefusesSharedWritableResult",
+      "TestOverloadResultsRefusesSharedReadonlyResult"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/results-trust-shared-result-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadResultsRefuses",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "callback-input",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadCallbackUnservedInput"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/callback-input-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadCallbackUnservedInput$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "callback-result",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadCallbackUnservedResult"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/callback-result-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadCallbackUnservedResult$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "callback-representation",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadCallbackUnservedRepresentation"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/callback-representation-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadCallbackUnservedRepresentation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "callback-field-storage",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadCallbackFieldStorage"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/callback-field-storage-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadCallbackFieldStorage$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "structural-drop-proof",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralResults"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/structural-drop-proof-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralResults$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "structural-trust-shape",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesMissingBlockField"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/structural-trust-shape-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesMissingBlockField$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "structural-reverse-covariance",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesReverseReadonlyVariance"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/structural-reverse-covariance-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesReverseReadonlyVariance$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "structural-mutable-variance",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesWritableVariance"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/structural-mutable-variance-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesWritableVariance$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-drop-field-storage",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesMixedFieldStorage"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-drop-field-storage-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesMixedFieldStorage$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-drop-constraint-storage",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintNumber",
+      "TestHiddenTNodeConstraintMutationRemainsNotYet",
+      "TestHiddenTNodeConstraintString",
+      "TestHiddenTNodeConstraintObjectUnion",
+      "TestHiddenTNodeConstraintObject",
+      "TestHiddenTNodeConstraintBoolean"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-drop-constraint-storage-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraint",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-object-layout",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintMutationRemainsNotYet"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-object-layout-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintMutationRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-array-layout",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintArrayLayout"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-array-layout-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintArrayLayout$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-unconstrained-layout",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintUnknown",
+      "TestHiddenTNodeConstraintUnconstrained",
+      "TestHiddenTNodeConstraintAny"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-unconstrained-layout-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraint",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-ignore-substitution",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintAny",
+      "TestHiddenTNodeConstraintArrayLayout",
+      "TestHiddenTNodeConstraintNumber",
+      "TestHiddenTNodeConstraintUnconstrained",
+      "TestHiddenTNodeConstraintUnknown",
+      "TestHiddenTNodeConstraintStructuralLength",
+      "TestHiddenTNodeConstraintObjectUnion",
+      "TestHiddenTNodeConstraintObject",
+      "TestHiddenTNodeConstraintBoolean",
+      "TestHiddenTNodeConstraintString"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-ignore-substitution-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraint",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "fields-ignore-mapper",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeConstraintStructuralLength",
+      "TestHiddenTNodeConstraintUnconstrained",
+      "TestHiddenTNodeConstraintObject",
+      "TestHiddenTNodeConstraintObjectUnion",
+      "TestHiddenTNodeConstraintArrayLayout",
+      "TestHiddenTNodeConstraintAny",
+      "TestHiddenTNodeConstraintBoolean",
+      "TestHiddenTNodeConstraintUnknown",
+      "TestHiddenTNodeConstraintString"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/fields-ignore-mapper-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraint",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-drop-fixed-return-proof",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralResults"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-drop-fixed-return-proof-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralResults$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-reverse-result-covariance",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesFactoryLiteralCovariance"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-reverse-result-covariance-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesFactoryLiteralCovariance$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-trust-visitor-input",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesVisitorDomainLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-trust-visitor-input-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesVisitorDomainLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-trust-writable-result",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesFactoryWritableInvariance"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-trust-writable-result-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesFactoryWritableInvariance$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-drop-return-storage",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesFactoryFieldStorage"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-drop-return-storage-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesFactoryFieldStorage$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "admission-drop-relation-diagnostic",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadStructuralRefusesFactoryResultCovariance"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/admission-drop-relation-diagnostic-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefusesFactoryResultCovariance$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "field-hatch-kind",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadFieldHatchKindLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/field-hatch-kind-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadFieldHatchKindLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "field-hatch-value",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadFieldHatchValueLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/field-hatch-value-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadFieldHatchValueLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "values-drop-indirect-check",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadValuesReturnedLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/values-drop-indirect-check-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadValuesReturnedLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "values-skip-single-signature-check",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadValuesNarrowLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/values-skip-single-signature-check-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadValuesNarrowLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "visitors-erase-TIn-to-Node",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadVisitorsHelperLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/visitors-erase-TIn-to-Node-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadVisitorsHelperLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "visitors-admit-unproven-invocation",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestOverloadVisitorsOverloadedHelperLiar"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/visitors-admit-unproven-invocation-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOverloadVisitorsOverloadedHelperLiar$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "binder-result-drop-check",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binder_result_checked.a",
+      "TestNativeAgreesWithNode"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/binder-result-drop-check-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/census_overload_binder_result_checked.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "default",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+      "TestNativeAgreesWithNode"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/default-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/hidden_boundary_generic_tnode.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "generic-value",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenTNodeGenericValueRemainsNotYet"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/generic-value-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeGenericValueRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "never-storage",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a",
+      "TestNativeAgreesWithNode"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/never-storage-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/hidden_boundary_never_array.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "never-writable",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestHiddenNeverArrayRejectsWritableWidening"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/never-writable-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenNeverArrayRejectsWritableWidening$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "mutant": "step3-receiver-proof-mutant",
+    "exit": 1,
+    "caught": true,
+    "failures": [
+      "TestMethodDestructuringSafetyReceiver",
+      "TestMethodDestructuringSafetyStructuralReceiver",
+      "TestMethodDestructuringSafetyExplicitReceiver",
+      "TestMethodDestructuringSafetyDefaultReceiver",
+      "TestMethodDestructuringSafetyArrowReceiver"
+    ],
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-next/step3-receiver-proof-mutant-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestMethodDestructuringSafety",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  }
+]

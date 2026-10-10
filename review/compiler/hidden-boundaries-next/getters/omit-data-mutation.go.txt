@@ -80,7 +80,7 @@ const adamicPrint = (value, seen) => {
 	// A snapshot must not execute a getter: it can mutate, throw, or recursively enter the trace.
 	return '{' + Object.keys(value).map((key) => {
 		const descriptor = Object.getOwnPropertyDescriptor(value, key);
-		return key + ':' + ('value' in descriptor ? adamicPrint(descriptor.value, seen) : '<accessor>');
+		return key + ':' + ('value' in descriptor ? '<data>' : '<accessor>');
 	}).join(',') + '}';
 };
 // A panic on Node is a throw a catch can take, though natively it ends the program where it stands, so

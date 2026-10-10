@@ -1,0 +1,5 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -352 +352 @@
+-		body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
++		if closure == nil { body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}) }

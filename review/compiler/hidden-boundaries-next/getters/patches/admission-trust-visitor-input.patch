@@ -1,0 +1,5 @@
+--- internal/lower/census_small.go
++++ internal/lower/census_small.go
+@@ -226 +226 @@
+-		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) {
++		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) && len(l.checker.GetSignaturesOfType(l.concrete(given), checker.SignatureKindCall)) == 0 {

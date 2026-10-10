@@ -1,0 +1,7 @@
+--- internal/lower/generic_constraint_storage.go
++++ internal/lower/generic_constraint_storage.go
+@@ -25 +25,3 @@
+-	case ir.Object:
++	case ir.Array:
++ return ir.Array, true
++ case ir.Object:

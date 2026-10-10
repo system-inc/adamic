@@ -1,0 +1,4 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -511,0 +512 @@
++		if l.genericDepth > 0 && node.Text() == "node" { return ir.NumberConstant{}, nil }

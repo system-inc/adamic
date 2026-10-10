@@ -1,0 +1,5 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -65 +65 @@
+-			return substituted, true
++			_ = substituted; return l.constraintStorage(proven)
