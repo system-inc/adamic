@@ -13,16 +13,8 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	cohere, _ := filepath.Abs(repository + "/cohere")
-	side, _ := filepath.Abs("testdata/doc_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
-	path := directory + "/overlay.json"
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	// Cohere's doc package with the harness laid over it is a product built ahead; the unit only runs it, in the
-	// package's directory (#5qykzj5).
-	binary := buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", []string{"-overlay=" + path})
-	command := bounded(t, binary, "-test.run=^TestAdamicDocuments$")
+	// The unit only runs the oracle, in the package's directory.
+	command := bounded(t, documentOracle(t), "-test.run=^TestAdamicDocuments$")
 	command.Dir = cohere + "/internal/format/doc"
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
 	if output, err := combinedOutput(command); err != nil {
@@ -35,6 +27,25 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	planCorpus(t, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
+
+// documentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
+func documentOracle(t *testing.T) string {
+	t.Helper()
+	cohere, _ := filepath.Abs(repository + "/cohere")
+	side, _ := filepath.Abs("testdata/doc_side_test.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
+	path := t.TempDir() + "/overlay.json"
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", []string{"-overlay=" + path})
+}
+
+func TestProduct_TSPrinterDocumentOracle(t *testing.T) {
+	t.Parallel()
+	documentOracle(t)
+}
+
 func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	t.Parallel()
 	cases, want, specs := documentCorpus(t)
