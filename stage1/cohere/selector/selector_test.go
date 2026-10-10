@@ -16,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
@@ -224,26 +225,11 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/selector")
-	command.Dir = cohere
+	// The package's test binary with the harness laid over it is a product built ahead (cohereSideOracle), run here in
+	// the package's directory, where go test would run it; the child guard owns hang detection.
+	binary, packageDirectory := cohereSideOracle(t)
+	command := bounded(t, binary, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
@@ -615,4 +601,36 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 			t.Log("entered parser, no return within 1s of entering, killed")
 		})
 	}
+}
+
+// cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
+// product (buildcache.GoTest) built ahead, and the directory go test would run it in.
+func cohereSideOracle(t testing.TB) (string, string) {
+	t.Helper()
+	directory := t.TempDir()
+	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "selector")
+	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
+	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := buildcache.GoTest(t, "cohere", "selector.test", "./internal/format/css/selector", []string{"-overlay=" + overlayPath})
+	return binary, packageDirectory
+}
+
+func TestProduct_SelectorGoOracle(t *testing.T) {
+	t.Parallel()
+	cohereSideOracle(t)
 }
