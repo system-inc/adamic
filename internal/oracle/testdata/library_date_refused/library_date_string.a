@@ -1,0 +1,12 @@
+function present(value: Date): void { console.log(String(value)); console.log(`${value}`); console.log('' + value); console.log(value.toString()); }
+function optional(value: Date | undefined): void { console.log(String(value)); console.log(`${value}`); console.log('' + value); }
+function nullable(value: Date | null): void { console.log(String(value)); console.log(`${value}`); console.log('' + value); }
+for (const stamp of [0, 946684800000, 1593604800000, 1615712399000, 1615712400000, 1636271999000, 1636272000000, 2147483647000, NaN, Infinity, 8640000000000001]) { const date = new Date(stamp); present(date); optional(date); nullable(date); }
+optional(undefined); nullable(null);
+let calls = 0;
+function next(): Date { calls++; return new Date(946684800000); }
+console.log(String(next())); console.log(`${next()}`); console.log('' + next()); console.log(String(calls));
+let random = 17;
+for (let i=0;i<500;i++) { random=(random*1664525+1013904223) >>> 0; const d=new Date(Math.floor(random/4294967296*2147483647000)); console.log(String(d)); }
+function suffix(): string { console.log('right operand'); return ' suffix'; }
+console.log(new Date(946684800000) + suffix());

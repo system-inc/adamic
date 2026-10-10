@@ -1,0 +1,202 @@
+{
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "files": [
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/generate-enums.ts",
+      "sha256": "25e1a44e7efa3783bad0e97000c7121dc5ff27f6b00d4ded185b5ff7886930a1"
+    },
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/options.test.ts",
+      "sha256": "85f2d238283b8a42bb11c39dd619c7c1b0990dcb0d8b44e17a45e9aea1d029c7"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/compiler/duplicateLocalVariable1.ts",
+      "sha256": "0a45f244a698bd97b8146837b2cdf5b10b1698285020c43309819c07bbe7d77e"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/fixSignatureCaching.ts",
+      "sha256": "c3c09e1d2827ffa2ff78276b9b6d85669e987f03dd7f9eea06e88dbd9867bc24"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "sha256": "fe7a0b0002625d35ccd4868e94d9075b8b74f7a202cd9445a2c687465699425d"
+    }
+  ],
+  "dynamic": [
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/generate-enums.ts",
+      "line": 106,
+      "column": 38,
+      "expression": "new RegExp(`^(${prefix}\\\\w+)\\\\s+(?:\\\\S+\\\\s*)?=\\\\s*(.+)$`)",
+      "reason": "nonconstant pattern",
+      "fixture": "enums"
+    },
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/generate-enums.ts",
+      "line": 109,
+      "column": 26,
+      "expression": "new RegExp(`^(${prefix}\\\\w+)$`)",
+      "reason": "nonconstant pattern",
+      "fixture": "enums"
+    },
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/generate-enums.ts",
+      "line": 238,
+      "column": 53,
+      "expression": "new RegExp(`^${prefix}`)",
+      "reason": "nonconstant pattern",
+      "fixture": "enums"
+    },
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/options.test.ts",
+      "line": 193,
+      "column": 63,
+      "expression": "new RegExp(`Unsupported comparison type for ${name}:`)",
+      "reason": "nonconstant pattern",
+      "fixture": "option_errors"
+    },
+    {
+      "file": "cohere/TypeScript/tools/scripts/tsc/options.test.ts",
+      "line": 312,
+      "column": 32,
+      "expression": "new RegExp(schema.pattern)",
+      "reason": "nonconstant pattern",
+      "fixture": "schema"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+      "line": 4127,
+      "column": 45,
+      "expression": "new RegExp(rawExcludeRegex, useCaseSensitiveFileNames ? \"\" : \"i\")",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:wildcards"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 138,
+      "column": 20,
+      "expression": "new RegExp(pattern)",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:module_specifiers"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 143,
+      "column": 20,
+      "expression": "new RegExp(pattern)",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:module_specifiers"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 148,
+      "column": 24,
+      "expression": "new RegExp(pattern)",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:module_specifiers"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+      "line": 154,
+      "column": 16,
+      "expression": "new RegExp(pattern, flags)",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:module_specifiers"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+      "line": 10707,
+      "column": 20,
+      "expression": "new RegExp(`(\\\\s${name}\\\\s*=\\\\s*)(?:(?:'([^']*)')|(?:\"([^\"]*)\"))`, \"im\")",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:pragma"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+      "line": 5046,
+      "column": 75,
+      "expression": "new RegExp(directoryPath, \"i\")",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:program_path"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+      "line": 9818,
+      "column": 12,
+      "expression": "new RegExp(pattern, useCaseSensitiveFileNames ? \"\" : \"i\")",
+      "reason": "nonconstant pattern",
+      "fixture": "scout:wildcards"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/compiler/duplicateLocalVariable1.ts",
+      "line": 43,
+      "column": 37,
+      "expression": "new RegExp(testcase.errorMessageRegEx)",
+      "reason": "nonconstant pattern",
+      "fixture": "error_messages"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/fixSignatureCaching.ts",
+      "line": 326,
+      "column": 31,
+      "expression": "new RegExp(object[key], 'i')",
+      "reason": "nonconstant pattern",
+      "fixture": "mobile_detect"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/fixSignatureCaching.ts",
+      "line": 346,
+      "column": 33,
+      "expression": "new RegExp(value, 'i')",
+      "reason": "nonconstant pattern",
+      "fixture": "mobile_detect"
+    },
+    {
+      "file": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/fixSignatureCaching.ts",
+      "line": 930,
+      "column": 27,
+      "expression": "new RegExp(pattern, 'i')",
+      "reason": "nonconstant pattern",
+      "fixture": "mobile_detect"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 5,
+      "column": 16,
+      "expression": "new RegExp(emojiPatternSource, 'gu')",
+      "reason": "nonconstant pattern",
+      "fixture": "emoji"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 6,
+      "column": 16,
+      "expression": "new RegExp(narrowEmojiPatternSource, 'u')",
+      "reason": "nonconstant pattern",
+      "fixture": "emoji"
+    }
+  ],
+  "inventoryPatterns": 969,
+  "sourceTokenRejected": 238,
+  "distinctPatterns": 503
+}

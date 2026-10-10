@@ -32,13 +32,14 @@ Workaround: a parse owns an indexed node table. Every node stores child indexes;
 no parent pointer or child pointer owns another node. Traversal starts at root
 indexes. The representation accommodates speculative parse rollback as well.
 
-## 2. Spread into Array.push
+## 2. Spread into Array.push: closed
 
-`gaps/2_push_spread.ts` prints `1,2,3` on Node; stage 0 refuses
-`a SpreadElement` at the spread argument of push. The parser initially
-appended an argument list with `children.push(...arguments)`, which met this
-same refusal. Workaround: an explicit loop appends each numeric child index.
-This does not limit parsing spread syntax in the source being parsed.
+Closed on library/area-on-main-4 (`d767edf5`). The unchanged
+`gaps/2_push_spread.ts` prints `1,2,3` on source Node, native
+ASan/UBSan/LeakSanitizer and emitted JavaScript. `TestPushSpreadGap` now
+requires that agreement rather than `a SpreadElement`.
+The new-expression parser appends its argument indexes with `children.push(...args)`
+again. This does not change parsing spread syntax in the input program.
 
 ## 4. Class methods through a structural interface
 
@@ -180,13 +181,17 @@ finishes successfully on Node and sanitized native and prints exactly the same
 AST bytes as Go in tree mode, but reports 0 nodes instead of Go's 18 in count
 mode. Only the count check catches it. See `validation/count-mutant.log`.
 
-## 5. Function values with optional parameters: closed
+## 5. Function values with optional parameters: native regression
 
-Closed by `f69bf6082b6db19ec0037ef8d2a51a9a5d46a8d8`, found with
+Historically closed by `f69bf6082b6db19ec0037ef8d2a51a9a5d46a8d8`, found with
 `git log -S 'a function value with an optional parameter' -- internal/lower`.
-`gaps/5_optional_function_value.ts` still prints `1`. Its retired refusal test
-is now `TestClosedOptionalFunctionValueGap`, requiring source Node, native
-ASan/UBSan/LeakSanitizer and JavaScript-backend agreement.
+On library/area-on-main-4 (`d767edf5`), the unchanged
+`gaps/5_optional_function_value.ts` prints `1` on source Node but `0` on
+native ASan/UBSan/LeakSanitizer, both with exit 0 and empty stderr.
+This is a wrong default-argument result, not a lowering refusal or a closed gap.
+`TestClosedOptionalFunctionValueGap` remains strict and fails on that disagreement;
+repair needs compiler-owned files outside this family. The test continues to
+require source Node, native ASan/UBSan/LeakSanitizer and JavaScript-backend agreement.
 
 The statement callback interface admits optional `make` children and optional
 `type` minimum/conditional arguments. Its callback arrows supply the defaults;

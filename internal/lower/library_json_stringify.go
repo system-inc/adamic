@@ -64,7 +64,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 	return result, true, nil
 }
 func jsonScalar(s *ir.JSONSchema) bool {
-	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
+	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "nullable_string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
@@ -83,11 +83,6 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		add := func(name string, v *ast.Node) error {
 			if name == "toJSON" || name == "__proto__" {
 				return l.notYet(v, "JSON.stringify a literal with "+name+" semantics")
-			}
-			for _, f := range literal.Fields {
-				if f.Name == name {
-					return l.notYet(v, "JSON.stringify duplicate literal keys")
-				}
 			}
 			value, child, err := l.jsonInput(v)
 			if err != nil {
@@ -157,17 +152,35 @@ func jsonIndex(name string) (uint64, bool) {
 	return n, err == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
 }
 func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+	generic := t.Flags()&checker.TypeFlagsTypeParameter != 0
+	t = l.concrete(t)
+	// Generic instantiations with the same Union representation share a body. Even a scalar
+	// first call could therefore supply its descriptor to a later container union (probe B).
+	// Refuse generic boxed unions before that body is cached. Nullable references have
+	// a complete concrete schema and must retain their proven empty-case bit.
+	if held, known := l.representation(t); generic && known && held == ir.Union {
+		return nil, l.notYet(node, "JSON.stringify a generic union without per-instantiation container metadata")
+	}
 	if depth == 0 && l.censusCallReturnsUndefined(node) {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
 	}
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return &ir.JSONSchema{Kind: "null"}, nil
+	}
 	if t.Flags()&checker.TypeFlagsUndefined != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
 	if t.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
+	}
+	if l.isLibraryType(l.checker.GetNonNullableType(t), "Date") {
+		if l.includesUndefined(t) || l.includesNull(t) {
+			return nil, l.notYet(node, "JSON.stringify an optional Date")
+		}
+		return &ir.JSONSchema{Kind: "date"}, nil
 	}
 	of, known := l.representation(t)
 	if !known {
@@ -180,7 +193,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
 		child, err := l.jsonType(node, element, depth+1)
-		return &ir.JSONSchema{Kind: "array", Element: child}, err
+		return &ir.JSONSchema{Kind: "array", Element: child, Null: l.includesNull(t)}, err
 	}
 	if of == ir.Object || of == ir.Weak {
 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
@@ -200,5 +213,5 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if !ok {
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
-	return &ir.JSONSchema{Kind: kind}, nil
+	return &ir.JSONSchema{Kind: kind, Null: l.includesNull(t)}, nil
 }

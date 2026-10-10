@@ -1,0 +1,25 @@
+const map = new Map<string, number>([['a', 1]]);
+const entries = map.entries();
+console.log(Object.prototype.toString.call(entries));
+console.log(Object.prototype.toString.call(map.keys()));
+console.log(Object.prototype.toString.call(map.values()));
+console.log(map[Symbol.iterator]().toString());
+console.log(new Set<number>([1]).entries().toLocaleString());
+console.log(new Set<number>([1]).keys().toString());
+console.log([1, 2].entries().toString());
+console.log([1, 2].keys().toLocaleString());
+console.log([1, 2].values().toString());
+console.log('a😀b'[Symbol.iterator]().toString());
+console.log('a😀b'[Symbol.iterator]().toLocaleString());
+console.log(entries.next().toString());
+console.log(entries.next().toLocaleString());
+console.log(entries.toString());
+console.log(`${entries[Symbol.iterator]() === entries}`);
+console.log(String(entries));
+console.log(`${entries}`);
+function printIterator(iterator: MapIterator<string> | ArrayIterator<string>): void {
+ console.log(iterator.toString());
+ console.log(Object.prototype.toString.call(iterator));
+}
+printIterator(map.keys());
+printIterator(['x'].values());

@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"slices"
+	"regexp"
+	"runtime"
 	"strings"
 	"syscall"
 	"testing"
@@ -13,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"close", "write_file", "mkdir", "date", "write_buffer"}
+var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
 
 // Preserve the imported runtime witnesses, but do not compile an unsound Error view.
 // Their exact diagnostics are checked by TestClosureMergeRefusals.
@@ -139,7 +140,13 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 					t.Errorf("%s filesystem: %s", name, difference)
 				}
 			}
-			if leaked := inputLeaks(t, func() inputRun { return fsFilePrepare(t, shared, "leaks") }, program, binary); leaked != "" {
+			// Each leak run mutates its tree, so each gets a fresh one (macOS runs two).
+			leakRuns := 0
+			prepareLeaks := func() inputRun {
+				leakRuns++
+				return fsFilePrepare(t, shared, fmt.Sprintf("leaks-%d", leakRuns))
+			}
+			if leaked := inputLeaks(t, prepareLeaks, program, binary); leaked != "" {
 				t.Errorf("leaks: %s", leaked)
 			}
 			t.Logf("Node bytes, effects, ASan/UBSan and leak check passed")
@@ -152,6 +159,9 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 func TestNodeFSFileMutants(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
+		{"mkdtempSync suffix", "mkdtemp", "mkdtemp", `static adamic_string *fs_file_mutant(const adamic_string *prefix) {static adamic_string suffix=ADAMIC_STRING("!");adamic_string *changed=adamic_string_concat(2,(adamic_string *const[]){(adamic_string *)prefix,&suffix});adamic_string *result=adamic_fs_file_mkdtemp(changed);adamic_release(changed);return result;}`},
+		{"rmSync force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,true);}`},
+
 		{"writeFileSync Buffer bytes", "write_buffer", "write_buffer", `static double fs_file_mutant(const adamic_string *path,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {static adamic_string truncate=ADAMIC_STRING("w");if(flag->length==1&&flag->bytes[0]=='a')flag=&truncate;return adamic_fs_file_write_buffer(path,data,flag,mode,flush);}`},
 		{"writeFileSync Buffer fd", "write_buffer", "write_buffer_fd", `static double fs_file_mutant(double fd,const adamic_array *data,const adamic_string *flag,double mode,bool flush) {(void)fd;(void)data;(void)flag;(void)mode;(void)flush;return 0;}`},
 		{"readSync byte count", "read_sync", "read_sync", `static double fs_file_mutant(double fd,adamic_array *buffer,double offset,double length,double position) {return adamic_fs_file_read_sync(fd,buffer,offset,length,position)+1;}`},
@@ -175,7 +185,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 		{"mkdirSync first directory", "mkdir", "mkdir", `static adamic_string *fs_file_mutant(const adamic_string *path,bool recursive,double mode) { adamic_string *result=adamic_fs_file_mkdir(path,recursive,mode);adamic_release(result);return NULL; }`},
 		{"unlinkSync swallowed failure", "unlink", "unlink", `static double fs_file_mutant(const adamic_string *path) { double result=adamic_fs_file_unlink(path);if(adamic_thrown!=NULL){adamic_release(adamic_thrown);adamic_thrown=NULL;}return result; }`},
 		{"utimesSync milliseconds", "utimes", "utimes", `static double fs_file_mutant(const adamic_string *path,double atime,double mtime) { return adamic_fs_file_utimes(path,atime,mtime+1); }`},
-		{"Date timestamp", "date", "date_time", `static double fs_file_mutant(const adamic_object *date) { return adamic_fs_file_date_time(date)+1; }`},
+		{"Date timestamp", "date", "date_time", `static double fs_file_mutant(const adamic_object *date) { return adamic_date_value(date)+1; }`},
 
 		{"System fileExists", "system", "is_file", `static bool fs_file_mutant(const adamic_object *value) { (void)value;return false; }`},
 		{"System getFileSize", "system", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL)result->slots[0].number+=1;return result; }`},
@@ -186,9 +196,6 @@ func TestNodeFSFileMutants(t *testing.T) {
 		{"System writeFile BOM", "system", "write", `static double fs_file_mutant(double fd,const adamic_string *value,double position) { if(value->length>=3 && (unsigned char)value->bytes[0]==0xef && (unsigned char)value->bytes[1]==0xbb && (unsigned char)value->bytes[2]==0xbf){adamic_string shortened=*value;shortened.bytes+=3;shortened.length-=3;return adamic_fs_file_write(fd,&shortened,position);}return adamic_fs_file_write(fd,value,position); }`},
 	}
 	for _, one := range cases {
-		if slices.Contains(fsFileRefusedFixtures, one.fixture) {
-			continue // The source is refused before runtime mutation is possible.
-		}
 		t.Run(one.name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_file_"+one.fixture+".a"))
@@ -201,7 +208,18 @@ func TestNodeFSFileMutants(t *testing.T) {
 			}
 			code := native.C(program)
 			original := code
-			code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
+			if method := map[string]string{"is_file": "isFile", "is_directory": "isDirectory", "is_symbolic_link": "isSymbolicLink"}[one.operation]; method != "" {
+				// StatsBase now uses the same runtime-kind dispatcher as Dirent.
+				// Mutate only this predicate; keep the original one-argument
+				// helper and its Node-only behavioral comparison unchanged.
+				pattern := regexp.MustCompile(`adamic_node_fs_dirent_is\(([^,\n]+), "` + method + `"\)`)
+				code = pattern.ReplaceAllString(code, "fs_file_mutant(${1})")
+			} else if one.operation == "date_time" {
+				// The complete Date runtime now owns the same scalar timestamp slot.
+				code = strings.ReplaceAll(code, "adamic_date_value(", "fs_file_mutant(")
+			} else {
+				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
+			}
 			if code == original {
 				t.Fatal("mutant changed nothing")
 			}
@@ -212,7 +230,12 @@ func TestNodeFSFileMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			how := fsFilePrepare(t, shared, "mutant-input")
-			got := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, how.arguments...)
+			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
+			environment := []string{"UBSAN_OPTIONS=halt_on_error=1"}
+			if runtime.GOOS == "linux" {
+				environment = append(environment, "ASAN_OPTIONS=detect_leaks=1")
+			}
+			got := executeInput(t, how, environment, binary, how.arguments...)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("mutant failed outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}

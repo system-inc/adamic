@@ -1,0 +1,11 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '[';
+const flags = programArguments()[1] ?? 'u';
+try {
+    const regex = new RegExp(pattern, flags);
+    console.log(`accepted ${regex.flags}`);
+} catch (error) {
+    if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+    else console.log('not an Error');
+}
+console.log('finished');

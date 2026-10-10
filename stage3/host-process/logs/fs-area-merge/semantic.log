@@ -1,0 +1,12 @@
+01_readFile_utf8.a: Node exit=0, stage0=Checker
+02_readFile_utf16le.a: Node exit=0, stage0=Checker
+03_readFile_utf16be.a: Node exit=0, stage0=Checker
+04_readFile_missing.a: Node exit=0, stage0=Checker
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/workspace/adamic/stage3/fixtures/host/check.py", line 61, in <module>
+    print(row['file'] + ': Node exit=' + str(observed['exit']) + ', stage0=' + outcome)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/fixtures/host/check.py", line 35, in compare
+    raise AssertionError(label + ': exact observation differs')
+AssertionError: 05_writeFile.a stage0: exact observation differs

@@ -1,0 +1,4 @@
+function arrayFrom<T>(items: MapIterator<T>): T[] { return [...items]; }
+for (const [key, value] of arrayFrom(new Map<string, number>([['a', 1], ['b', 2]]).entries())) {
+    console.log(`${key.toUpperCase()}=${value}`);
+}

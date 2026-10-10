@@ -1,0 +1,16 @@
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a
+    wasi_test.go:40: gate cache node miss
+--- PASS: TestWASIAgreesWithNode (19.16s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a (19.15s)
+=== RUN   TestWASIRunnerCatchesMutants
+--- PASS: TestWASIRunnerCatchesMutants (0.36s)
+=== RUN   TestWASIEmission
+=== RUN   TestWASIEmission/internal/oracle/testdata/node_buffer_fallback.a
+--- PASS: TestWASIEmission (0.11s)
+    --- PASS: TestWASIEmission/internal/oracle/testdata/node_buffer_fallback.a (0.09s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.642s

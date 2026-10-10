@@ -1,0 +1,31 @@
+const map = new Map<number, string>([
+    [-0, 'zero'],
+    [NaN, 'nan'],
+    [1, 'one'],
+    [2, 'two'],
+    [3, 'three'],
+    [4, 'four'],
+]);
+map.set(0, 'updated zero');
+map.set(0 / 0, 'updated nan');
+console.log(`${map.size} ${map.get(-0)} ${map.get(NaN)}`);
+map.delete(2);
+map.set(2, 'last');
+let order = '';
+map.forEach(function(value, key) {
+    order += `${key}:${1 / key}:${value}|`;
+});
+console.log(order);
+const set = new Set<number>([-0, NaN, 1, 2, 3, 4, 0, 0 / 0]);
+console.log(`${set.size} ${set.has(0)} ${set.has(NaN)}`);
+set.delete(2);
+set.add(2);
+order = '';
+for(const key of set) {
+    order += `${key}:${1 / key}|`;
+}
+console.log(order);
+console.log(`${map.delete(NaN)} ${map.has(NaN)} ${set.delete(NaN)} ${set.has(NaN)}`);
+map.set(NaN, 'again');
+set.add(NaN);
+console.log(`${map.size} ${map.get(NaN)} ${set.size} ${set.has(NaN)}`);

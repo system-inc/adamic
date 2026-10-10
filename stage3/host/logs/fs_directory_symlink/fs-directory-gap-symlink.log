@@ -1,0 +1,16 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+    input_test.go:111: gate cache probe miss
+    input_test.go:148: open /tmp/adamic-gate/adamic-input-3635556620/run2/broken: no such file or directory
+--- FAIL: TestInputAgreesWithNode (0.00s)
+    --- FAIL: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (28.63s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+FAIL	github.com/system-inc/adamic/internal/oracle	28.665s
+FAIL

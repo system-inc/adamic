@@ -1,0 +1,72 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "nodeMatches": true,
+    "adaptedSourceSha256": "98c869fbf8510df95dba2ce004f539d65422768013914c552dca5b78a11c2c77",
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/01_readFile_utf8.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/01_readFile_utf8.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "nodeMutantCaught": true
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "nodeMatches": true,
+    "adaptedSourceSha256": "374de5ecc317fa6c41ee21bb4d5f3fb0bdfee5346900ab743b9bdb34a284cd7e",
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/02_readFile_utf16le.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/02_readFile_utf16le.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "nodeMutantCaught": true
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "nodeMatches": true,
+    "adaptedSourceSha256": "5e8093063707d6c0c9e9fa382475b30d093d18b17b977e7bd1d84a2a27cdd8f6",
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/03_readFile_utf16be.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/03_readFile_utf16be.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "nodeMutantCaught": true
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "nodeMatches": true,
+    "adaptedSourceSha256": "18ac95a51734fb0e19adcd9a2e038b422cd66f43aacf2282630523a68540a791",
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/04_readFile_missing.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/04_readFile_missing.a:19:29: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "nodeMutantCaught": true
+  },
+  {
+    "file": "13_createDirectory.a",
+    "nodeMatches": true,
+    "adaptedSourceSha256": "f937fe2575d55b2f1a88d19b1ce4232fb036fb3eb40190e6d1fc708708d88514",
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/13_createDirectory.a:2:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /tmp/fs-adaptation47-fixtures2/fixtures/13_createDirectory.a:2:66: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map\n"
+    },
+    "nodeMutantCaught": true
+  }
+]

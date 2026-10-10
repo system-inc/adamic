@@ -1,0 +1,4 @@
+// debug.ts:944. Null prototype is ownership-safe; compiler owns the proven dynamic own-key representation.
+const nodes: Record<number, {id:number}> = Object.create(null);
+nodes[1] = {id:1};
+console.log(`${nodes[1].id}`);

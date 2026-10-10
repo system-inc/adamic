@@ -1,0 +1,38 @@
+=== RUN   TestNodeProcessMethodPresence
+=== PAUSE TestNodeProcessMethodPresence
+=== RUN   TestWASIHostRuntimeRefusals
+=== RUN   TestWASIHostRuntimeRefusals/mkdtemp
+=== RUN   TestWASIHostRuntimeRefusals/pid
+=== RUN   TestWASIHostRuntimeRefusals/platform
+=== RUN   TestWASIHostRuntimeRefusals/columns
+=== RUN   TestWASIHostRuntimeRefusals/memory_usage
+=== RUN   TestWASIHostRuntimeRefusals/argv
+=== RUN   TestWASIHostRuntimeRefusals/open
+=== RUN   TestWASIHostRuntimeRefusals/mkdir
+=== RUN   TestWASIHostRuntimeRefusals/utimes
+--- PASS: TestWASIHostRuntimeRefusals (1.16s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdtemp (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/pid (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/platform (0.14s)
+    --- PASS: TestWASIHostRuntimeRefusals/columns (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/memory_usage (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/argv (0.13s)
+    --- PASS: TestWASIHostRuntimeRefusals/open (0.12s)
+    --- PASS: TestWASIHostRuntimeRefusals/mkdir (0.12s)
+    --- PASS: TestWASIHostRuntimeRefusals/utimes (0.12s)
+=== CONT  TestNodeProcessMethodPresence
+=== RUN   TestNodeProcessMethodPresence/node_process_method_presence.a
+    node_process_method_presence_test.go:73: presence agrees with Node; absent descriptors run cleanly and differ only in stdout
+=== RUN   TestNodeProcessMethodPresence/node_process_global_presence.a
+    node_process_method_presence_test.go:73: presence agrees with Node; absent descriptors run cleanly and differ only in stdout
+=== RUN   TestNodeProcessMethodPresence/node_process_parser_presence.a
+    node_process_method_presence_test.go:73: presence agrees with Node; absent descriptors run cleanly and differ only in stdout
+--- PASS: TestNodeProcessMethodPresence (3.49s)
+    --- PASS: TestNodeProcessMethodPresence/node_process_method_presence.a (1.26s)
+    --- PASS: TestNodeProcessMethodPresence/node_process_global_presence.a (1.12s)
+    --- PASS: TestNodeProcessMethodPresence/node_process_parser_presence.a (1.11s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.663s

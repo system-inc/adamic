@@ -1,0 +1,2 @@
+declare function collect<T>(items: Iterable<T>): T[];
+for (const [key, value] of collect(new Map<string, number>().entries())) { key.toUpperCase(); }

@@ -1,0 +1,2 @@
+import { programArguments } from 'adamic';
+console.log(`${new RegExp(programArguments()[0] ?? 'TODO', 'u').test('TODO')}`);

@@ -130,6 +130,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 			return adamic_record_has(object, &key);
 		}
+		if (object->has_captured_stack && strcmp(name, "stack") == 0) return true;
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) != 0) continue;
 			if (object->class == NULL || name[0] != '#') return true;
@@ -143,7 +144,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 				if (strcmp(name, class->accessors[index].name) == 0) return true;
 			}
 		}
-		return object_prototype_name(name);
+		return !object->null_prototype && object_prototype_name(name);
 	}
 	if (value->kind == adamic_kind_array) {
 		const adamic_array *array = (const adamic_array *)value;
@@ -185,6 +186,7 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 			const adamic_value *slot = adamic_record_get(object, &key);
 			return slot == NULL ? NULL : adamic_retain(slot->reference);
 		}
+		if (object->has_captured_stack && strcmp(name, "stack") == 0) return adamic_retain(object->captured_stack.reference);
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) == 0) return dynamic_slot(object, index);
 		}

@@ -1,0 +1,4 @@
+// Unchanged executable probe from stage3-parser-proof 17c1c610.
+import * as fs from "node:fs";
+declare const process: NodeJS.Process;
+console.log(`${typeof process !== "undefined" && !!process.nextTick}`);

@@ -259,9 +259,5 @@ export function byteSlice(text: string, start: number, end: number = utf8Length(
 }
 
 export function repeatText(text: string, count: number): string {
-    let result = '';
-    for(let i = 0; i < count; i++) {
-        result += text;
-    }
-    return result;
+    return text.repeat(count);
 }

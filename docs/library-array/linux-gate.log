@@ -1,0 +1,30 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	3.730s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	234.089s
+ok  	github.com/system-inc/adamic/internal/flow	284.463s
+ok  	github.com/system-inc/adamic/internal/fresh	92.714s
+ok  	github.com/system-inc/adamic/internal/fuzz	31.498s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	5.740s
+ok  	github.com/system-inc/adamic/internal/lower	89.550s
+ok  	github.com/system-inc/adamic/internal/native	627.339s
+ok  	github.com/system-inc/adamic/internal/oracle	100.343s
+ok  	github.com/system-inc/adamic/internal/regexp	30.429s
+legacy canonicalize values: 65536 code units against Node toUpperCase, disagreements 0
+legacy canonicalize: 65536 patterns x 65536 code units = 4294967296, disagreements 0
+--- FAIL: TestCanonicalizeUnicodeNode (445.31s)
+    canonicalize_test.go:238: node: signal: killed
+        
+node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0
+node string-property check: 7906 sequences, disagreements 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	588.521s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	325.874s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	47.088s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	76.414s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	87.454s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	128.315s

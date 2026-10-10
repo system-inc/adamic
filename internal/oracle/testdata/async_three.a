@@ -1,0 +1,14 @@
+async function leaf(seed: string): Promise<string> {
+    console.log(`leaf ${seed}`);
+    const held = `${seed}!`;
+    const first = await Promise.resolve(held);
+    console.log(`first ${first}`);
+    const second = await Promise.resolve(42);
+    console.log(`second ${second}`);
+    const third = await Promise.resolve(true);
+    console.log(`third ${third} ${held}`);
+    return held;
+}
+console.log('before');
+const result = await leaf(`input${1}`);
+console.log(`done ${result}`);

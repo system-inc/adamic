@@ -469,6 +469,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			throws = throws || ir.LibraryMayThrow(value.Interface()) || ir.NumberFormatMayThrow(value.Interface())
 			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
 				throws = true
 			}
@@ -476,6 +477,21 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.RegExpNew{}):
+				throws = throws || value.Interface().(ir.RegExpNew).Index < 0
+			case reflect.TypeOf(ir.RegExpCall{}):
+				throws = throws || value.Interface().(ir.RegExpCall).MayThrow()
+			case reflect.TypeOf(ir.StringFromCodes{}):
+				if value.Interface().(ir.StringFromCodes).CodePoints {
+					throws = true
+				}
+			case reflect.TypeOf(ir.ProcessCall{}):
+				// Invalid exit codes and host failures throw before a valid exit
+				// can terminate the process; retain their catch/finally edges.
+				operation := value.Interface().(ir.ProcessCall).Operation
+				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+			case reflect.TypeOf(ir.NodeHostCall{}):
+				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

@@ -8,20 +8,138 @@ ported from other projects, each under its own license, reproduced here in full.
 Adamic's runtime (`internal/native/runtime/`) is compiled into every native program Adamic builds, so a
 binary Adamic makes carries what is ported into the runtime, and these notices travel with it.
 
+### Node.js
+
+- Source: https://github.com/nodejs/node/blob/v24.14.1/lib/fs.js
+- Version: Node.js v24.14.1, lib/fs.js, realpathSync (POSIX component walk).
+- In Adamic: `internal/native/runtime/directory.c`, `real_path_input` and `adamic_real_path`.
+- Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native/runtime/node_path.c`.
+- Also ported: Node.js v24.19.0, `lib/internal/util/inspect.js` `strEscape`, `meta`,
+  quote selection, `formatPrimitive` string layout and negative-zero formatting,
+  and `lib/internal/errors.js`
+  `addNumericalSeparator`, `ERR_OUT_OF_RANGE` and the `ERR_INVALID_ARG_VALUE` preview,
+  in `internal/native/runtime/node_fs_file.c`.
+- License: `MIT`
+
+```text
+Copyright Node.js contributors. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+```
+
 ### V8
 
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Date parsing (`internal/native/runtime/date_parse_impl.h`, after
+    `src/date/dateparser.h`, `src/date/dateparser.cc` and `src/date/dateparser-inl.h`);
+  - Date MakeDay bounds and UTC formatting (`internal/native/runtime/date.c`, after
+    `src/date/date.cc` and `src/builtins/builtins-date.cc`), and Date own-name queries
+    in that file, after the Date installation in `src/init/bootstrapper.cc` as
+    vendored by Node.js v24.19.0;
+  - Strict ISO Date parsing (`internal/native/runtime/date_iso_parse_impl.h`, after
+    V8 src/date/dateparser-inl.h, src/date/dateparser.cc and src/date/dateparser.h
+    as vendored in Node v24.19.0);
+  - Array and String iterator next (`runtime/map_set.c`, after
+    `deps/v8/src/builtins/builtins-array-gen.cc` ArrayIteratorPrototypeNext and
+    `deps/v8/src/builtins/string-iterator.tq`, Node.js v24.19.0; dense Array path);
+  - Descending Array findLast and findLastIndex Get loops
+    (`internal/lower/library_array_find_last.go`, after
+    `src/builtins/array-findlast.tq` and `src/builtins/array-findlastindex.tq`),
+    and the shared iterator Symbol.toStringTag family values
+    (`internal/native/runtime/map_set.c`, `internal/javascript/library_map_set.go`,
+    `internal/lower/library_iterator_tag.go`, after `src/init/bootstrapper.cc`),
+    from Node.js v24.19.0's V8;
+  - dense Array reduceRight lowering (`internal/lower/library_array_tail.go`, after
+    src/builtins/array-reduce-right.tq), and default-sort dispatch in that file
+    reusing the existing UTF-16 comparator in `internal/lower/library_array.go`
+    (after SortCompareDefault in third_party/v8/builtins/array-sort.tq), from
+    Node v24.19.0's V8 13.6.233.17-node.51;
+  - OrdinaryToPrimitive with statically proven conversion members
+    (`internal/lower/library_object_conversion.go`, after src/objects/objects.cc,
+    V8 13.6.233); catchable library errors and string length guards
+    (`internal/native/runtime/library_errors.c`, `library_errors.h`, `library_object.c`,
+    `string_repeat_impl.h`, `normalize.c`, `number.c`, `dtoa.c`, `radix.c`, after
+    src/builtins/builtins-number.cc, string-repeat.tq, string-pad.tq and
+    src/common/message-template.h, V8 13.6.233);
+  - Proven counted prototype links (`internal/native/runtime/library_prototypes.c`,
+    `library_prototypes.h`, `internal/lower/library_prototype_links.go`, after
+    JSObject::SetPrototype in src/objects/js-objects.cc, V8 13.6.233);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
+  - Object primitive conversion (`internal/lower/library_object_coercion.go`, after
+    JSReceiver::OrdinaryToPrimitive in src/objects/js-objects.cc, Node 24.19.0);
+  - Object primitive own-name reflection (`runtime/object_names.c`, after
+    src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
+  - Plain data-property descriptors (`runtime/library_object_descriptors.c`), restricted from
+    PropertyDescriptor::ToObject in src/objects/property-descriptor.cc and
+    JSReceiver::ValidateAndApplyPropertyDescriptor / DefineProperties in src/objects/js-objects.cc,
+    V8 13.6.233; lowering proves existing slots and refuses accessors and individual attribute changes;
+  - Object sealing, freezing and extensibility, including constructor-proven internal-slot receivers
+    (`internal/native/runtime/object_integrity.c`, after
+    src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - String substr (`internal/lower/library_string_substr.go`, after
+    src/builtins/string-substr.tq);
+  - variadic Array push (`internal/lower/library_array_push.go`, after
+    GenericArrayPush in src/builtins/builtins-array.cc, Node.js v24.19.0);
+  - catchable String repeat (`internal/lower/library_string_repeat.go`, after
+    src/builtins/string-repeat.tq, V8 13.6.233.17);
+  - positioned String lastIndexOf (`internal/native/runtime/string_search_impl.h`, after
+    String::LastIndexOf in Node v24.19.0 deps/v8/src/objects/string.cc);
+  - String generic receiver nullish checks and undefined padding-fill defaults
+    (`internal/lower/library_string.go`, `internal/lower/optional.go`, after
+    ToThisString in `src/codegen/code-stub-assembler.cc` and StringPad in
+    `src/builtins/string-pad.tq`, Node.js v24.19.0's V8);
+  - positioned String affixes (`internal/lower/library_string.go`, after
+    src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
+  - String well-formed Unicode (`runtime/string_wellformed.c`, after
+    src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
+    adapted to canonical WTF-8 storage);
+  - String RegExp global-flag validation (`runtime/regexp.c`, after
+    src/builtins/builtins-string-gen.cc and src/builtins/string-replaceall.tq, V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
+    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
+    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - Array filter, every and some callback truthiness lowering
+    (`internal/lower/library_array_predicate.go`, after ArrayFilterLoopContinuation,
+    ArrayEveryLoopContinuation and ArraySomeLoopContinuation in Node.js v24.19.0's
+    `deps/v8/src/builtins/array-filter.tq`, `array-every.tq` and `array-some.tq`;
+    dense arrays only, using represented values for ToBoolean);
+  - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
+    SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
+    and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
+  - RegExp interval bound saturation (`internal/regexp/parser.go` and
+    `internal/native/runtime/regexp_compile_parser.c`, after
+    RegExpParserImpl::ParseIntervalQuantifier in Node v24.19.0's
+    deps/v8/src/regexp/regexp-parser.cc and RegExpTree::kInfinity in
+    deps/v8/src/regexp/regexp-ast.h);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
   - Math integer and float conversions (`runtime/library_math_number.c`, after src/builtins/math.tq
     and src/numbers/conversions-inl.h, V8 13.6.233.17);
+  - Number formatting validation and catchable range errors (`runtime/library_number_format.c`,
+    declarations in `runtime/library_number_format.h`, after src/builtins/builtins-number.cc
+    and src/builtins/number.tq, V8 13.6.233.17);
   - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
   - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
     src/numbers/conversions.cc);
@@ -77,6 +195,10 @@ is preserved.
 - License: `Unicode-3.0`
 - In Adamic: the case-mapping tables in `runtime/case_tables.h`, generated from those files by
   `internal/native/case_generate.go` for `toUpperCase` and `toLowerCase`.
+- Runtime regex compiler properties in `runtime/regexp_compile_tables.h`, generated by
+  `internal/regexp/testdata/generate-runtime-properties.py` from the same Unicode 17.0.0
+  tables as `internal/unicodeproperties/tables.go`, including the Unicode emoji sequence data.
+  The generated header preserves the Go tables' UCD input SHA-256 digests.
 
 ````text
 UNICODE LICENSE V3
@@ -176,15 +298,121 @@ SOFTWARE.
 
 ## In the compiler
 
+The collection helper bodies in `stage1/typescript/collections/core.a` and their
+six `internal/oracle/testdata/scout19_*.a` witnesses, plus the ruled composition
+in `stage1/typescript/collections/multimap.a`, the source input
+`stage3/scout/19-slice2/multimap-composition/original.a`, and the
+`internal/oracle/testdata/scout19_slice2_*.a` witnesses are excerpts adapted from
+Microsoft TypeScript at `d92d9bfee114c80be2c375d72edae966176e3a4f`,
+`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`,
+`types.ts`, `path.ts`, `utilitiesPublic.ts`, and `transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
+under Apache License 2.0; the source notice and license are retained in
+[cohere/TypeScript/NOTICE.txt](cohere/TypeScript/NOTICE.txt) and
+[cohere/TypeScript/LICENSE.txt](cohere/TypeScript/LICENSE.txt).
+
+The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`,
+`cmd/adamic-test262/testdata/regexp-syntax/harness/`, and
+`cmd/adamic-test262/testdata/regexp-constructor-errors/harness/` are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
+`cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
+(Copyright (C) 2017 Mathias Bynens).
+Their BSD license is reproduced in [regexp/LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE)
+[regexp-syntax/LICENSE](cmd/adamic-test262/testdata/regexp-syntax/LICENSE), and
+[regexp-constructor-errors/LICENSE](cmd/adamic-test262/testdata/regexp-constructor-errors/LICENSE).
+
 The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler it carries (typescript-go,
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
 
+`internal/regexp/testdata/capture-tsc.json` and the callback patterns in
+`internal/regexp/capture_facts_test.go` are derived from the pinned compiler
+source in `cohere/TypeScript/tsc/testdata/fixtures/compiler` (Microsoft
+Corporation, Apache License 2.0). The participation analysis is original code
+following ECMA-262, rather than a V8 or Node implementation port.
+
 `internal/flow` lifts its single-assignment construction, redundant-phi elimination, verifier and graph
 maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
 cohere's THIRD_PARTY_NOTICES.md.
+
+The reductions in `internal/oracle/testdata/library_tsc_census_*.a` adapt calls
+from the pinned TypeScript compiler sources under
+`cohere/TypeScript/tsc/testdata/fixtures/compiler` (Copyright Microsoft Corporation,
+Apache-2.0). Their source file and line are recorded in each fixture. The Apache
+license is reproduced in [LICENSE-APACHE](LICENSE-APACHE).
+
+The runtime-constructor fixtures in `internal/oracle/testdata/regexp_runtime_constructors/`
+adapt the constructor expressions in TypeScript's `tools/scripts/tsc/generate-enums.ts`,
+`options.test.ts`, `options-schema.ts`, and compiler test cases
+`duplicateLocalVariable1.ts` and `fixSignatureCaching.ts` at cohere commit
+`7945d102a6c18dd36adf9114a758ce646e8b2359`. TypeScript's Apache-2.0 license is
+reproduced in `cohere/TypeScript/tsc/LICENSE`. Their input generator reads the original
+Go enum definitions and JSON schema. The emoji witness adapts cohere's
+`stage1/cohere/css/print_doc.ts` surrogate mapping and consumes
+`print_width_data.ts` under cohere's MIT OR Apache-2.0 license.
+The native failure-policy change does not introduce a V8 or Node algorithm port.
+
+### @types/node
+
+- Source: https://registry.npmjs.org/@types/node
+- Version: 25.3.3
+- License: `MIT`
+- In Adamic: unchanged declarations embedded from `internal/load/node_types/node_modules/@types/node`.
+
+```text
+    MIT License
+
+    Copyright (c) Microsoft Corporation.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE
+```
+
+### undici-types
+
+- Source: https://registry.npmjs.org/undici-types
+- Version: 7.18.2
+- License: `MIT`
+- In Adamic: unchanged declarations embedded from `internal/load/node_types/node_modules/undici-types`.
+
+```text
+MIT License
+
+Copyright (c) Matteo Collina and Undici contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## In stage 1
 
@@ -277,3 +505,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ````
+
+The numeric helper witness `internal/oracle/testdata/library_iterator_tsc_helpers.a` adapts
+TypeScript 6.0.3 `src/compiler/utilities.ts` (`forEachEntry`) and `src/compiler/core.ts`
+(`firstDefinedIterator`, `reduceLeftIterator`), commit `050880ce59e30b356b686bd3144efe24f875ebc8`.
+Copyright (c) Microsoft Corporation, Apache License 2.0; see [cohere/NOTICE](cohere/NOTICE)
+and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md) for the license.
+
+Named RegExp capture dictionaries follow V8 `src/runtime/runtime-regexp.cc` (null-prototype named capture objects); the existing V8 license notice above applies.

@@ -94,11 +94,14 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // condition applies JavaScript ToBoolean to one evaluation of its operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.libraryErrorCondition(node); known {
+		return value, err
+	}
 	value, err := l.expression(node)
 	if err != nil {
 		return nil, err
 	}
-	return censusCondition(value), nil
+	return censusCondition(libraryIteratorDoneTruth(value)), nil
 }
 
 // initializerIsLet reports whether a for loop declares its variables with let, which JavaScript gives

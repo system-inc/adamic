@@ -1,0 +1,4 @@
+// Reduced from sys.ts:884
+const path = 'a/b/c';
+const searchPath = 'b/';
+console.log(`${path.includes(searchPath)}`);

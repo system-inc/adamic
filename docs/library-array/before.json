@@ -1,0 +1,1302 @@
+{
+  "test262": "/workspace/test262",
+  "commit": "c8c798898646638cd0c24879f8e0374e847e7d74",
+  "adapt": true,
+  "filters": [
+    {
+      "path": "built-ins/Array",
+      "pass": 125,
+      "fail": 0,
+      "refused": 2339,
+      "crashed": 8,
+      "skipped": 610,
+      "total": 3082,
+      "directories": [
+        {
+          "path": "built-ins/Array",
+          "pass": 1,
+          "fail": 0,
+          "refused": 42,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 50
+        },
+        {
+          "path": "built-ins/Array/Symbol.species",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 4
+        },
+        {
+          "path": "built-ins/Array/from",
+          "pass": 0,
+          "fail": 0,
+          "refused": 20,
+          "crashed": 0,
+          "skipped": 27,
+          "total": 47
+        },
+        {
+          "path": "built-ins/Array/fromAsync",
+          "pass": 0,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 94,
+          "total": 95
+        },
+        {
+          "path": "built-ins/Array/isArray",
+          "pass": 0,
+          "fail": 0,
+          "refused": 24,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 29
+        },
+        {
+          "path": "built-ins/Array/length",
+          "pass": 0,
+          "fail": 0,
+          "refused": 26,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 30
+        },
+        {
+          "path": "built-ins/Array/of",
+          "pass": 0,
+          "fail": 0,
+          "refused": 9,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 16
+        },
+        {
+          "path": "built-ins/Array/prototype",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 7
+        },
+        {
+          "path": "built-ins/Array/prototype/Symbol.iterator",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 1,
+          "total": 1
+        },
+        {
+          "path": "built-ins/Array/prototype/Symbol.unscopables",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 5
+        },
+        {
+          "path": "built-ins/Array/prototype/at",
+          "pass": 0,
+          "fail": 0,
+          "refused": 7,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 13
+        },
+        {
+          "path": "built-ins/Array/prototype/concat",
+          "pass": 0,
+          "fail": 0,
+          "refused": 15,
+          "crashed": 0,
+          "skipped": 54,
+          "total": 69
+        },
+        {
+          "path": "built-ins/Array/prototype/copyWithin",
+          "pass": 10,
+          "fail": 0,
+          "refused": 18,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 39
+        },
+        {
+          "path": "built-ins/Array/prototype/entries",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 9,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Array/prototype/every",
+          "pass": 9,
+          "fail": 0,
+          "refused": 198,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 218
+        },
+        {
+          "path": "built-ins/Array/prototype/fill",
+          "pass": 2,
+          "fail": 0,
+          "refused": 11,
+          "crashed": 0,
+          "skipped": 9,
+          "total": 22
+        },
+        {
+          "path": "built-ins/Array/prototype/filter",
+          "pass": 8,
+          "fail": 0,
+          "refused": 209,
+          "crashed": 0,
+          "skipped": 25,
+          "total": 242
+        },
+        {
+          "path": "built-ins/Array/prototype/find",
+          "pass": 0,
+          "fail": 0,
+          "refused": 11,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 23
+        },
+        {
+          "path": "built-ins/Array/prototype/findIndex",
+          "pass": 0,
+          "fail": 0,
+          "refused": 11,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 23
+        },
+        {
+          "path": "built-ins/Array/prototype/findLast",
+          "pass": 0,
+          "fail": 0,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 24
+        },
+        {
+          "path": "built-ins/Array/prototype/findLastIndex",
+          "pass": 0,
+          "fail": 0,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 24
+        },
+        {
+          "path": "built-ins/Array/prototype/flat",
+          "pass": 0,
+          "fail": 0,
+          "refused": 10,
+          "crashed": 0,
+          "skipped": 9,
+          "total": 19
+        },
+        {
+          "path": "built-ins/Array/prototype/flatMap",
+          "pass": 0,
+          "fail": 0,
+          "refused": 6,
+          "crashed": 0,
+          "skipped": 18,
+          "total": 24
+        },
+        {
+          "path": "built-ins/Array/prototype/forEach",
+          "pass": 9,
+          "fail": 0,
+          "refused": 169,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 190
+        },
+        {
+          "path": "built-ins/Array/prototype/includes",
+          "pass": 4,
+          "fail": 0,
+          "refused": 14,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 30
+        },
+        {
+          "path": "built-ins/Array/prototype/indexOf",
+          "pass": 26,
+          "fail": 0,
+          "refused": 161,
+          "crashed": 4,
+          "skipped": 10,
+          "total": 201
+        },
+        {
+          "path": "built-ins/Array/prototype/join",
+          "pass": 0,
+          "fail": 0,
+          "refused": 16,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 23
+        },
+        {
+          "path": "built-ins/Array/prototype/keys",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 9,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Array/prototype/lastIndexOf",
+          "pass": 22,
+          "fail": 0,
+          "refused": 163,
+          "crashed": 4,
+          "skipped": 9,
+          "total": 198
+        },
+        {
+          "path": "built-ins/Array/prototype/map",
+          "pass": 8,
+          "fail": 0,
+          "refused": 183,
+          "crashed": 0,
+          "skipped": 25,
+          "total": 216
+        },
+        {
+          "path": "built-ins/Array/prototype/pop",
+          "pass": 0,
+          "fail": 0,
+          "refused": 19,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 23
+        },
+        {
+          "path": "built-ins/Array/prototype/push",
+          "pass": 0,
+          "fail": 0,
+          "refused": 20,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 24
+        },
+        {
+          "path": "built-ins/Array/prototype/reduce",
+          "pass": 2,
+          "fail": 0,
+          "refused": 247,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 260
+        },
+        {
+          "path": "built-ins/Array/prototype/reduceRight",
+          "pass": 0,
+          "fail": 0,
+          "refused": 249,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 260
+        },
+        {
+          "path": "built-ins/Array/prototype/reverse",
+          "pass": 0,
+          "fail": 0,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 18
+        },
+        {
+          "path": "built-ins/Array/prototype/shift",
+          "pass": 0,
+          "fail": 0,
+          "refused": 16,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 20
+        },
+        {
+          "path": "built-ins/Array/prototype/slice",
+          "pass": 0,
+          "fail": 0,
+          "refused": 48,
+          "crashed": 0,
+          "skipped": 23,
+          "total": 71
+        },
+        {
+          "path": "built-ins/Array/prototype/some",
+          "pass": 9,
+          "fail": 0,
+          "refused": 198,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 219
+        },
+        {
+          "path": "built-ins/Array/prototype/sort",
+          "pass": 6,
+          "fail": 0,
+          "refused": 37,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 54
+        },
+        {
+          "path": "built-ins/Array/prototype/splice",
+          "pass": 2,
+          "fail": 0,
+          "refused": 56,
+          "crashed": 0,
+          "skipped": 23,
+          "total": 81
+        },
+        {
+          "path": "built-ins/Array/prototype/toLocaleString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 7,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Array/prototype/toReversed",
+          "pass": 0,
+          "fail": 0,
+          "refused": 12,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 17
+        },
+        {
+          "path": "built-ins/Array/prototype/toSorted",
+          "pass": 0,
+          "fail": 0,
+          "refused": 15,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 21
+        },
+        {
+          "path": "built-ins/Array/prototype/toSpliced",
+          "pass": 7,
+          "fail": 0,
+          "refused": 18,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 30
+        },
+        {
+          "path": "built-ins/Array/prototype/toString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 6,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 11
+        },
+        {
+          "path": "built-ins/Array/prototype/unshift",
+          "pass": 0,
+          "fail": 0,
+          "refused": 18,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 22
+        },
+        {
+          "path": "built-ins/Array/prototype/values",
+          "pass": 0,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 9,
+          "total": 12
+        },
+        {
+          "path": "built-ins/Array/prototype/with",
+          "pass": 0,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 17,
+          "total": 21
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "error TS7006: Parameter '\u2026' implicitly has an '\u2026' type.",
+          "count": 828
+        },
+        {
+          "reason": "error TS2345: Argument of type '\u2026' is not assignable to parameter of type '\u2026'.",
+          "count": 238
+        },
+        {
+          "reason": "error TS2339: Property '\u2026' does not exist on type '\u2026'.",
+          "count": 177
+        },
+        {
+          "reason": "error TS7009: '\u2026' expression, whose target lacks a construct signature, implicitly has an '\u2026' type.",
+          "count": 135
+        },
+        {
+          "reason": "error TS7005: Variable '\u2026' implicitly has an '\u2026' type.",
+          "count": 70
+        },
+        {
+          "reason": "error TS2769: No overload matches this call.",
+          "count": 53
+        },
+        {
+          "reason": "refuses a method read as a value (indexOf would lose its object, and this with it)",
+          "count": 51
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 50
+        },
+        {
+          "reason": "refuses a method read as a value (lastIndexOf would lose its object, and this with it)",
+          "count": 49
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'{}'.",
+          "count": 32
+        },
+        {
+          "reason": "error TS2554: Expected 2-3 arguments, but got 1.",
+          "count": 27
+        },
+        {
+          "reason": "error TS2554: Expected 3 arguments, but got 2.",
+          "count": 27
+        },
+        {
+          "reason": "refuses delete",
+          "count": 26
+        },
+        {
+          "reason": "error TS7034: Variable '\u2026' implicitly has type '\u2026' in some locations where its type cannot be determined.",
+          "count": 24
+        },
+        {
+          "reason": "not yet: an array of never",
+          "count": 23
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Object'.",
+          "count": 22
+        },
+        {
+          "reason": "error TS2554: Expected 1-2 arguments, but got 0.",
+          "count": 21
+        },
+        {
+          "reason": "refuses Object.defineProperty",
+          "count": 20
+        },
+        {
+          "reason": "not yet: an OmittedExpression in an array literal",
+          "count": 18
+        },
+        {
+          "reason": "refuses arguments",
+          "count": 18
+        },
+        {
+          "reason": "refuses inherited library member isArray read as an own field",
+          "count": 18
+        },
+        {
+          "reason": "error TS2367: This comparison appears to be unintentional because the types '\u2026' and '\u2026' have no overlap.",
+          "count": 17
+        },
+        {
+          "reason": "refuses inherited library member prototype read as an own field",
+          "count": 17
+        },
+        {
+          "reason": "error TS2790: The operand of a '\u2026' operator must be optional.",
+          "count": 15
+        },
+        {
+          "reason": "error TS2322: Type '\u2026' is not assignable to type '\u2026'.",
+          "count": 14
+        },
+        {
+          "reason": "error TS2683: '\u2026' implicitly has type '\u2026' because it does not have a type annotation.",
+          "count": 14
+        },
+        {
+          "reason": "refuses a filter callback that doesn't return a boolean",
+          "count": 14
+        },
+        {
+          "reason": "error TS2403: Subsequent variable declarations must have the same type.  Variable '\u2026' must be of type '\u2026', but here has type '\u2026'.",
+          "count": 11
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'{ length: number; }'.",
+          "count": 11
+        },
+        {
+          "reason": "refuses a every callback that doesn't return a boolean",
+          "count": 11
+        },
+        {
+          "reason": "refuses a some callback that doesn't return a boolean",
+          "count": 11
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Boolean'.",
+          "count": 10
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Number'.",
+          "count": 9
+        },
+        {
+          "reason": "not yet: reading arr",
+          "count": 9
+        },
+        {
+          "reason": "refuses inherited library member reduceRight read as an own field",
+          "count": 9
+        },
+        {
+          "reason": "error TS7015: Element implicitly has an '\u2026' type because index expression is not of type '\u2026'.",
+          "count": 7
+        },
+        {
+          "reason": "error TS7030: Not all code paths return a value.",
+          "count": 7
+        },
+        {
+          "reason": "not yet: a value of type any",
+          "count": 7
+        },
+        {
+          "reason": "error TS2304: Cannot find name '\u2026'.",
+          "count": 6
+        },
+        {
+          "reason": "error TS2554: Expected 0 arguments, but got 2.",
+          "count": 6
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'(a: any, b: any) => any'.",
+          "count": 6
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 6
+        },
+        {
+          "reason": "refuses var",
+          "count": 6
+        },
+        {
+          "reason": "error TS18048: '\u2026' is possibly '\u2026'.",
+          "count": 5
+        },
+        {
+          "reason": "error TS2554: Expected 3 arguments, but got 1.",
+          "count": 5
+        },
+        {
+          "reason": "not yet: Array as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 5
+        },
+        {
+          "reason": "not yet: reading srcArr",
+          "count": 4
+        },
+        {
+          "reason": "refuses a getter",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (copyWithin would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (findIndex would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (findLastIndex would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toReversed would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses a method read as a value (toSorted would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "refuses isPrototypeOf",
+          "count": 4
+        },
+        {
+          "reason": "error TS2542: Index signature in type '\u2026' only permits reading.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2551: Property '\u2026' does not exist on type '\u2026'. Did you mean '\u2026'?",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 0 arguments, but got 3.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 2 arguments, but got 1.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 3-4 arguments, but got 2.",
+          "count": 3
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Date'.",
+          "count": 3
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'RegExp'.",
+          "count": 3
+        },
+        {
+          "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 3
+        },
+        {
+          "reason": "not yet: a NewExpression as a statement",
+          "count": 3
+        },
+        {
+          "reason": "not yet: an array of number | boolean",
+          "count": 3
+        },
+        {
+          "reason": "not yet: an array of void",
+          "count": 3
+        },
+        {
+          "reason": "not yet: reading Math",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (find would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (findLast would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (pop would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (slice would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (toSpliced would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses reduce without an initial value",
+          "count": 3
+        },
+        {
+          "reason": "refuses sort without a comparator",
+          "count": 3
+        },
+        {
+          "reason": "error TS2378: A '\u2026' accessor must return a value.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2454: Variable '\u2026' is used before being assigned.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 2 arguments, but got 4.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 2-3 arguments, but got 5.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2554: Expected 3-4 arguments, but got 1.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2555: Expected at least 3 arguments, but got 1.",
+          "count": 2
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'JSON'.",
+          "count": 2
+        },
+        {
+          "reason": "not yet: a BinaryExpression with a string and a number",
+          "count": 2
+        },
+        {
+          "reason": "not yet: a value of type undefined",
+          "count": 2
+        },
+        {
+          "reason": "not yet: an array of null",
+          "count": 2
+        },
+        {
+          "reason": "not yet: an array of string | number",
+          "count": 2
+        },
+        {
+          "reason": "not yet: assigning a field of a value",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (concat would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (every would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (forEach would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (isArray would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (join would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (of would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (push would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (shift would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "refuses a method read as a value (unshift would lose its object, and this with it)",
+          "count": 2
+        },
+        {
+          "reason": "error TS2550: Property '\u2026' does not exist on type '\u2026'. Do you need to change your target library? Try changing the '\u2026' compiler option to '\u2026' or later.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2554: Expected 2-3 arguments, but got 4.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2554: Expected 2-4 arguments, but got 1.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2555: Expected at least 1 arguments, but got 0.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2555: Expected at least 3 arguments, but got 2.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2571: Object is of type '\u2026'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2740: Type '\u2026' is missing the following properties from type '\u2026': pop, push, concat, join, and 33 more.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'ArrayConstructor'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Error'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'Math'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'SyntaxError'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '\u2026' type because expression of type '\u2026' can'\u2026'{ 0: number; 1: number; 2: number; length: number; }'.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Array.from with other than { length } and a callback",
+          "count": 1
+        },
+        {
+          "reason": "not yet: Object.freeze on a shape not proven by a plain literal or its const binding",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a comparator that doesn't return a number",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type void",
+          "count": 1
+        },
+        {
+          "reason": "not yet: an array of T",
+          "count": 1
+        },
+        {
+          "reason": "not yet: an array of string | number | boolean | { toString: () => boolean; } | null | undefined",
+          "count": 1
+        },
+        {
+          "reason": "not yet: an array of undefined",
+          "count": 1
+        },
+        {
+          "reason": "not yet: an array of { toLocaleString: () => void; } | null | undefined",
+          "count": 1
+        },
+        {
+          "reason": "not yet: copyWithin with a nonnumeric bound",
+          "count": 1
+        },
+        {
+          "reason": "not yet: find with a callback returning never",
+          "count": 1
+        },
+        {
+          "reason": "not yet: findIndex with a callback returning never",
+          "count": 1
+        },
+        {
+          "reason": "not yet: findLast with a callback returning never",
+          "count": 1
+        },
+        {
+          "reason": "not yet: findLastIndex with a callback returning never",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (entries would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (fill would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (filter would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (flatMap would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (includes would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (keys would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (map would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (reduce would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (reduceRight would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (reverse would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (some would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (splice would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (values would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a method read as a value (with would lose its object, and this with it)",
+          "count": 1
+        },
+        {
+          "reason": "refuses a number as a condition",
+          "count": 1
+        },
+        {
+          "reason": "refuses in",
+          "count": 1
+        },
+        {
+          "reason": "refuses the void operator",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 154
+        },
+        {
+          "reason": "async",
+          "count": 90
+        },
+        {
+          "reason": "harness include resizableArrayBufferUtils.js",
+          "count": 71
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 48
+        },
+        {
+          "reason": "feature Symbol.species",
+          "count": 44
+        },
+        {
+          "reason": "noStrict (sloppy mode only; Adamic modules are always strict)",
+          "count": 34
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 27
+        },
+        {
+          "reason": "feature Symbol.isConcatSpreadable",
+          "count": 26
+        },
+        {
+          "reason": "feature Symbol.iterator",
+          "count": 23
+        },
+        {
+          "reason": "feature Proxy",
+          "count": 15
+        },
+        {
+          "reason": "with",
+          "count": 13
+        },
+        {
+          "reason": "harness include testTypedArray.js",
+          "count": 11
+        },
+        {
+          "reason": "features Symbol.species, cross-realm",
+          "count": 10
+        },
+        {
+          "reason": "features Proxy, Symbol.species",
+          "count": 6
+        },
+        {
+          "reason": "Symbol",
+          "count": 5
+        },
+        {
+          "reason": "getters",
+          "count": 4
+        },
+        {
+          "reason": "harness include proxyTrapsHelper.js",
+          "count": 4
+        },
+        {
+          "reason": "Proxy",
+          "count": 3
+        },
+        {
+          "reason": "feature cross-realm",
+          "count": 3
+        },
+        {
+          "reason": "features Proxy, Symbol.isConcatSpreadable",
+          "count": 3
+        },
+        {
+          "reason": "features Reflect, Symbol, cross-realm",
+          "count": 3
+        },
+        {
+          "reason": "features Symbol, Symbol.species",
+          "count": 3
+        },
+        {
+          "reason": "feature Int32Array",
+          "count": 2
+        },
+        {
+          "reason": "feature Reflect",
+          "count": 2
+        },
+        {
+          "reason": "feature Symbol.toPrimitive",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, Proxy, Reflect, Symbol.toStringTag",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, Symbol",
+          "count": 1
+        },
+        {
+          "reason": "features Reflect, Reflect.set, Symbol, Symbol.toPrimitive",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, Symbol.isConcatSpreadable",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, Symbol.isConcatSpreadable, Symbol.iterator, Symbol.species",
+          "count": 1
+        }
+      ],
+      "crashReasons": [
+        {
+          "reason": "built-ins/Array/prototype/indexOf/15.4.4.14-5-10.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/indexOf/15.4.4.14-5-11.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/indexOf/15.4.4.14-5-31.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/indexOf/15.4.4.14-5-32.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-10.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-11.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-31.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-32.js: clang: /tmp/library-array-before/program.c:217:83: error: passing 'double' to parameter of incompatible type 'void *'",
+          "count": 1
+        }
+      ],
+      "failReasons": [],
+      "passes": [
+        "built-ins/Array/constructor.js",
+        "built-ins/Array/prototype/copyWithin/negative-end.js",
+        "built-ins/Array/prototype/copyWithin/negative-out-of-bounds-end.js",
+        "built-ins/Array/prototype/copyWithin/negative-out-of-bounds-start.js",
+        "built-ins/Array/prototype/copyWithin/negative-out-of-bounds-target.js",
+        "built-ins/Array/prototype/copyWithin/negative-start.js",
+        "built-ins/Array/prototype/copyWithin/negative-target.js",
+        "built-ins/Array/prototype/copyWithin/non-negative-out-of-bounds-end.js",
+        "built-ins/Array/prototype/copyWithin/non-negative-out-of-bounds-target-and-start.js",
+        "built-ins/Array/prototype/copyWithin/non-negative-target-and-start.js",
+        "built-ins/Array/prototype/copyWithin/non-negative-target-start-and-end.js",
+        "built-ins/Array/prototype/every/15.4.4.16-4-12.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-i-2.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-ii-10.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-ii-12.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-ii-3.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-ii-4.js",
+        "built-ins/Array/prototype/every/15.4.4.16-7-c-ii-9.js",
+        "built-ins/Array/prototype/every/15.4.4.16-8-11.js",
+        "built-ins/Array/prototype/every/15.4.4.16-8-12.js",
+        "built-ins/Array/prototype/fill/fill-values-relative-end.js",
+        "built-ins/Array/prototype/fill/fill-values-relative-start.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-10-1.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-2-2.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-4-12.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-9-c-ii-10.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-9-c-ii-12.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-9-c-ii-4.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-9-c-ii-9.js",
+        "built-ins/Array/prototype/filter/15.4.4.20-9-c-iii-1-5.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-2-2.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-4-12.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-7.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-c-i-2.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-c-ii-10.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-c-ii-12.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-c-ii-4.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-7-c-ii-9.js",
+        "built-ins/Array/prototype/forEach/15.4.4.18-8-11.js",
+        "built-ins/Array/prototype/includes/fromIndex-equal-or-greater-length-returns-false.js",
+        "built-ins/Array/prototype/includes/fromIndex-infinity.js",
+        "built-ins/Array/prototype/includes/fromIndex-minus-zero.js",
+        "built-ins/Array/prototype/includes/using-fromindex.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-13.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-14.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-33.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-4.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-6.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-7.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-8.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-5-9.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-7-1.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-7-2.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-7-4.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-7-5.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-8-2.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-8-3.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-8-4.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-i-2.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-10.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-11.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-4.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-5.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-6.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-7.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-8.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-ii-9.js",
+        "built-ins/Array/prototype/indexOf/15.4.4.14-9-b-iii-1.js",
+        "built-ins/Array/prototype/indexOf/fromindex-zero-conversion.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-13.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-33.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-6.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-5-7.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-6-2.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-6-3.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-6-5.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-6-6.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-7-2.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-7-3.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-7-4.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-i-2.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-10.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-11.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-4.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-5.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-6.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-7.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-8.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-ii-9.js",
+        "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-b-iii-1.js",
+        "built-ins/Array/prototype/lastIndexOf/fromindex-zero-conversion.js",
+        "built-ins/Array/prototype/map/15.4.4.19-2-2.js",
+        "built-ins/Array/prototype/map/15.4.4.19-4-12.js",
+        "built-ins/Array/prototype/map/15.4.4.19-8-c-ii-10.js",
+        "built-ins/Array/prototype/map/15.4.4.19-8-c-ii-12.js",
+        "built-ins/Array/prototype/map/15.4.4.19-8-c-ii-9.js",
+        "built-ins/Array/prototype/map/15.4.4.19-9-1.js",
+        "built-ins/Array/prototype/map/15.4.4.19-9-13.js",
+        "built-ins/Array/prototype/map/15.4.4.19-9-2.js",
+        "built-ins/Array/prototype/reduce/15.4.4.21-10-5.js",
+        "built-ins/Array/prototype/reduce/15.4.4.21-9-c-ii-17.js",
+        "built-ins/Array/prototype/some/15.4.4.17-4-12.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-1.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-10.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-12.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-3.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-4.js",
+        "built-ins/Array/prototype/some/15.4.4.17-7-c-ii-9.js",
+        "built-ins/Array/prototype/some/15.4.4.17-8-11.js",
+        "built-ins/Array/prototype/some/15.4.4.17-8-12.js",
+        "built-ins/Array/prototype/sort/S15.4.4.11_A2.2_T1.js",
+        "built-ins/Array/prototype/sort/S15.4.4.11_A2.2_T2.js",
+        "built-ins/Array/prototype/sort/stability-11-elements.js",
+        "built-ins/Array/prototype/sort/stability-2048-elements.js",
+        "built-ins/Array/prototype/sort/stability-5-elements.js",
+        "built-ins/Array/prototype/sort/stability-513-elements.js",
+        "built-ins/Array/prototype/splice/15.4.4.12-9-a-1.js",
+        "built-ins/Array/prototype/splice/called_with_one_argument.js",
+        "built-ins/Array/prototype/toSpliced/deleteCount-clamped-between-zero-and-remaining-count.js",
+        "built-ins/Array/prototype/toSpliced/deleteCount-missing.js",
+        "built-ins/Array/prototype/toSpliced/deleteCount-undefined.js",
+        "built-ins/Array/prototype/toSpliced/start-bigger-than-length.js",
+        "built-ins/Array/prototype/toSpliced/start-neg-infinity-is-zero.js",
+        "built-ins/Array/prototype/toSpliced/start-neg-less-than-minus-length-is-zero.js",
+        "built-ins/Array/prototype/toSpliced/start-neg-subtracted-from-length.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 3821
+        },
+        {
+          "reason": "throw-error",
+          "count": 1149
+        },
+        {
+          "reason": "callback-param",
+          "count": 836
+        },
+        {
+          "reason": "strict-eq",
+          "count": 3
+        }
+      ]
+    }
+  ]
+}

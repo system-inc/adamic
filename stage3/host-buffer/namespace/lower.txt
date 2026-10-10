@@ -1,0 +1,74 @@
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== CONT  TestNodeBufferRefusals
+=== RUN   TestNodeBufferRefusals/namespace_alias
+=== PAUSE TestNodeBufferRefusals/namespace_alias
+=== RUN   TestNodeBufferRefusals/namespace_reflection
+=== PAUSE TestNodeBufferRefusals/namespace_reflection
+=== RUN   TestNodeBufferRefusals/namespace_missing_member
+=== PAUSE TestNodeBufferRefusals/namespace_missing_member
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/namespace_alias
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== CONT  TestNodeBufferRefusals/digest
+=== CONT  TestNodeBufferRefusals/catch
+=== CONT  TestNodeBufferRefusals/buffer_read
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+=== CONT  TestNodeBufferRefusals/namespace_missing_member
+=== CONT  TestNodeBufferRefusals/namespace_reflection
+=== CONT  TestNodeBufferRefusals/typed_array_view
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/crypto_random
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== CONT  TestNodeBufferRefusals/detached
+=== CONT  TestNodeBufferRefusals/algorithm
+=== CONT  TestNodeBufferRefusals/encoding
+--- PASS: TestNodeBufferRefusals (0.00s)
+    --- PASS: TestNodeBufferRefusals/hash_inherited_read (0.81s)
+    --- PASS: TestNodeBufferRefusals/buffer_isUtf8 (0.83s)
+    --- PASS: TestNodeBufferRefusals/catch (0.84s)
+    --- PASS: TestNodeBufferRefusals/digest (0.86s)
+    --- PASS: TestNodeBufferRefusals/namespace_alias (0.86s)
+    --- PASS: TestNodeBufferRefusals/buffer_alloc (0.57s)
+    --- PASS: TestNodeBufferRefusals/namespace_reflection (0.57s)
+    --- PASS: TestNodeBufferRefusals/namespace_missing_member (0.59s)
+    --- PASS: TestNodeBufferRefusals/typed_array_view (0.58s)
+    --- PASS: TestNodeBufferRefusals/buffer_read (0.66s)
+    --- PASS: TestNodeBufferRefusals/crypto_constructor (0.46s)
+    --- PASS: TestNodeBufferRefusals/crypto_random (0.50s)
+    --- PASS: TestNodeBufferRefusals/structural_hash_view (0.53s)
+    --- PASS: TestNodeBufferRefusals/hash_copy (0.53s)
+    --- PASS: TestNodeBufferRefusals/detached (0.52s)
+    --- PASS: TestNodeBufferRefusals/algorithm (0.29s)
+    --- PASS: TestNodeBufferRefusals/encoding (0.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.234s

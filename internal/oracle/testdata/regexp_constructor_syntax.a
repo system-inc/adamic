@@ -1,0 +1,18 @@
+function observe(pattern: string, flags: string): void {
+ try {
+  new RegExp(pattern, flags);
+  console.log('accepted');
+ } catch (error) {
+  if (error instanceof Error) {
+   console.log(error.name);
+   console.log(error.message);
+  }
+ }
+}
+observe('[z-a]', '');
+observe('\\u', 'u');
+observe('(?ii:a)', '');
+observe('(?2:a)', '');
+observe('a', 'gg');
+observe('a', 'uv');
+observe('a', 'x');

@@ -25,12 +25,11 @@ function run(path: string, mode: string, countOnly: boolean): number {
         let bytes = 0;
         for(let index = 0; index < read.text.length; index++) {
             const code = read.text.codePointAt(index) ?? 0;
-            if(code > 0xffff) {
-                offsets.push(bytes);
-                index++;
-            }
+            const start = bytes;
+            if(code > 0xffff) index++;
             bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
-            offsets.push(bytes);
+            if(code > 0xffff) offsets.push(start, bytes);
+            else offsets.push(bytes);
         }
         if(bytes !== utf8Length(read.text)) {
             panic('source byte mapping differs');

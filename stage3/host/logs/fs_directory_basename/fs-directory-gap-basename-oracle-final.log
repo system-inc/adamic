@@ -1,0 +1,97 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNodeFSDirectorySymlinkMutants
+=== PAUSE TestNodeFSDirectorySymlinkMutants
+=== RUN   TestNodePathBasenameMutants
+=== PAUSE TestNodePathBasenameMutants
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNodePathBasenameMutants
+=== CONT  TestNodeFSDirectorySymlinkMutants
+=== RUN   TestNodeFSDirectorySymlinkMutants/target
+=== PAUSE TestNodeFSDirectorySymlinkMutants/target
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestNodePathBasenameMutants/suffix
+=== PAUSE TestNodePathBasenameMutants/suffix
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+=== RUN   TestNodePathBasenameMutants/dirname
+=== PAUSE TestNodePathBasenameMutants/dirname
+=== CONT  TestNodePathBasenameMutants/suffix
+=== RUN   TestNodeFSDirectorySymlinkMutants/code
+=== PAUSE TestNodeFSDirectorySymlinkMutants/code
+=== RUN   TestNodeFSDirectorySymlinkMutants/message
+=== PAUSE TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestNodeFSDirectorySymlinkMutants/target
+=== NAME  TestNodePathBasenameMutants/suffix
+    node_path_basename_test.go:51: caught only by Node stdout comparison; sanitizers and leaks clean
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestNodeFSDirectorySymlinkMutants/target
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestNodePathBasenameMutants/dirname
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== NAME  TestNodePathBasenameMutants/dirname
+    node_path_basename_test.go:51: caught only by Node stdout comparison; sanitizers and leaks clean
+--- PASS: TestNodePathBasenameMutants (0.00s)
+    --- PASS: TestNodePathBasenameMutants/suffix (1.31s)
+    --- PASS: TestNodePathBasenameMutants/dirname (1.31s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a
+    input_test.go:111: gate cache probe hit
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    input_test.go:111: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+    input_test.go:111: gate cache probe miss
+=== CONT  TestNodeFSDirectorySymlinkMutants/message
+=== CONT  TestNodeFSDirectorySymlinkMutants/code
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_layout.a (1.10s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (2.46s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (2.54s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (2.38s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (1.96s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_basename.a (0.61s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_relative.a (2.08s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (2.31s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (2.14s)
+=== NAME  TestNodeFSDirectorySymlinkMutants/message
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+=== NAME  TestNodeFSDirectorySymlinkMutants/code
+    node_fs_directory_symlink_test.go:76: caught only by Node stdout comparison; sanitizers and leaks clean
+--- PASS: TestNodeFSDirectorySymlinkMutants (0.00s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/target (2.00s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/message (1.29s)
+    --- PASS: TestNodeFSDirectorySymlinkMutants/code (1.18s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=1 misses=8
+ok  	github.com/system-inc/adamic/internal/oracle	8.592s

@@ -16,6 +16,7 @@ parser.add_argument('--compiler', type=Path, required=True)
 parser.add_argument('--logs', type=Path, required=True)
 parser.add_argument('--report', type=Path, required=True)
 parser.add_argument('--mutants', action='store_true')
+parser.add_argument('--all', action='store_true', help='observe all 25 host fixtures')
 args = parser.parse_args()
 args.logs.mkdir(parents=True, exist_ok=True)
 owned = {'01', '02', '03', '04', '05', '06', '10', '11', '12', '13'}
@@ -63,7 +64,7 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
     scratch = Path(scratch)
     for row in json.loads((bucket / 'status.json').read_text()):
         prefix = row['file'][:2]
-        if prefix not in owned:
+        if prefix not in owned and not args.all:
             continue
         path = bucket / row['file']
         truth = node(path, row['file'] + '.node')
@@ -84,7 +85,7 @@ with tempfile.TemporaryDirectory(prefix='fs-file-host-') as scratch:
                     observed = node(module, row['file'] + '.javascript')
                 assert observed == truth, 'SILENT MISCOMPILE: ' + row['file'] + ' ' + backend
                 result[backend]['agrees'] = True
-        if args.mutants:
+        if args.mutants and prefix in mutations:
             before, after = mutations[prefix]
             source = path.read_text()
             assert before in source, row['file'] + ': mutant changed nothing'

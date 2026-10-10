@@ -84,7 +84,10 @@ func TestLibraryStringMutants(t *testing.T) {
 					}
 				case ir.Concat:
 					if test.name == "concat" && len(node.Parts) == 4 {
-						if first, constant := node.Parts[0].(ir.StringConstant); constant && program.Strings[first.Index] == "abc" {
+						first, constant := node.Parts[0].(ir.StringConstant)
+						argument, read := node.Parts[0].(ir.Read)
+						helper := read && program.Functions[program.Locals[argument.Local].Function].Name == "library_string_concat"
+						if (constant && program.Strings[first.Index] == "abc") || helper {
 							node.Parts = node.Parts[:3]
 							changed = true
 							return node

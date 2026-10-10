@@ -1,0 +1,12 @@
+--- FAIL: TestCountsAreRecorded (294.44s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (3.70s)
+            counts_test.go:167: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:14:28: Adamic 0.1 refuses an unproven relation from Error to ErrnoException: optional field errno has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_native_long_backtrack.a (62.24s)
+            counts_test.go:148: no counts at the end of stderr (exit -1): ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	294.670s
+FAIL

@@ -14,7 +14,7 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	t.Parallel()
 	for _, gap := range []struct{ path, stdout, refusal string }{
 		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
-		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
+		{"gaps/5_repeat_in_try.ts", "a\n", ""},
 	} {
 		t.Run(gap.path, func(t *testing.T) {
 			t.Parallel()
@@ -30,7 +30,23 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), program)
+			lowered, err := lower.Lower(context.Background(), program)
+			if gap.refusal == "" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				nativeRun, binary := natively(t, lowered)
+				for _, side := range []run{nativeRun, onJavaScriptBackend(t, lowered)} {
+					if side.exitCode != 0 || len(side.stderr) != 0 || string(side.stdout) != gap.stdout {
+						t.Fatalf("closed gap differs from Node: %+v", side)
+					}
+				}
+				if report := leaks(t, lowered, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Logf("closed gap: Node, JavaScript and sanitized native print %q", gap.stdout)
+				return
+			}
 			if err == nil {
 				t.Fatal("gap closed: update GAPS.md and remove the workaround or unblock native composition")
 			}
