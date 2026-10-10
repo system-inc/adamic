@@ -227,5 +227,9 @@ func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to strin
 	}
 	binary := filepath.Join(h.directory, name)
 	h.must(name, volumeProfileMutantCommand(h.t, stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive))
+	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
+	if err := buildcache.RelativeFiles(directory); err != nil {
+		h.t.Fatal(err)
+	}
 	return binary
 }
