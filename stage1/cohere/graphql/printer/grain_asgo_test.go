@@ -3,7 +3,6 @@ package printer
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -36,7 +35,7 @@ func (p *printerAsGoOnce) get(t *testing.T, build func() string) string {
 	return p.path
 }
 
-var asGoSource, asGoOracle, asGoLowered, asGoSanitized, asGoRelease printerAsGoOnce
+var asGoSource, asGoLowered, asGoSanitized, asGoRelease printerAsGoOnce
 var asGoCorpus [4]struct {
 	once       sync.Once
 	path, want string
@@ -56,49 +55,8 @@ func printerAsGoSource(t *testing.T) string {
 
 func printerAsGoOracle(t *testing.T) string {
 	t.Helper()
-	return asGoOracle.get(t, func() string {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		cohere := filepath.Join(root, "cohere")
-		// Until GoBuild lands, Product hashes the full pinned Go dependency tree,
-		// overlay sources, workspace files, flags and Go toolchain environment.
-		files := printerInputFiles(t, cohere, "testdata/cohere_side_test.go", "../testdata/cohere_side_test.go", "grain_asgo_test.go", root+"/go.mod", root+"/go.work")
-		for _, name := range []string{"go.sum", "go.work.sum"} {
-			if _, err := os.Stat(root + "/" + name); err == nil {
-				files = append(files, root+"/"+name)
-			} else if !os.IsNotExist(err) {
-				t.Fatal(err)
-			}
-		}
-		return printerBuild(t, printerBuildInputs{
-			Name: "GraphQL printer Go oracle", Files: files,
-			Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -overlay ./internal/format/graphql"},
-			Toolchain: buildcache.Tool("go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "GOTOOLCHAIN", "GOAMD64", "GOARM64", "GOARM", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM"),
-		}, func(dir string) error {
-			side, _ := filepath.Abs("testdata/cohere_side_test.go")
-			generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-				cohere + "/internal/format/graphql/adamic_printer_test.go":   side,
-				cohere + "/internal/format/graphql/adamic_generator_test.go": generator,
-			}})
-			if err != nil {
-				return err
-			}
-			path := filepath.Join(t.TempDir(), "overlay.json")
-			if err := os.WriteFile(path, overlay, 0644); err != nil {
-				return err
-			}
-			// Shared setup has no test-side deadline; the gate limits its unit.
-			command := exec.CommandContext(context.Background(), "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/graphql")
-			command.Dir = cohere
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go oracle: %w\n%s", err, output)
-			}
-			return nil
-		}) + "/oracle"
-	})
+	// The same test binary as printerOracle's, one recipe and one product (#nrg4zhk): it had its own copy.
+	return printerOracle(t)
 }
 
 func printerAsGoLowered(t *testing.T) string {

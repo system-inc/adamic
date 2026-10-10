@@ -4,14 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -32,7 +30,6 @@ func (p *printerMutantProductOnce) get(t *testing.T, build func() string) string
 }
 
 var mutantSources, mutantLowered, mutantSanitized [3]printerMutantProductOnce
-var mutantOracle printerMutantProductOnce
 var mutantCorpus struct {
 	once       sync.Once
 	path, want string
@@ -76,32 +73,8 @@ func printerMutantProducts(t *testing.T, number int) printerProducts {
 
 func printerMutantOracle(t *testing.T) string {
 	t.Helper()
-	return mutantOracle.get(t, func() string {
-		// GoBuild is not available yet. Hash the entire pinned Cohere tree rather
-		// than a hand-selected dependency list, plus the overlay and workspace.
-		files := printerInputFiles(t, filepath.Join(repository, "cohere"), "testdata/cohere_side_test.go", "../testdata/cohere_side_test.go", "shards_test.go", "grain_mutant_test.go", filepath.Join(repository, "go.mod"), filepath.Join(repository, "go.work"))
-		for _, name := range []string{"go.sum", "go.work.sum"} {
-			path := filepath.Join(repository, name)
-			if _, err := os.Stat(path); err == nil {
-				files = append(files, printerInputFiles(t, path)...)
-			} else if !os.IsNotExist(err) {
-				t.Fatal(err)
-			}
-		}
-
-		return printerBuild(t, printerBuildInputs{
-			Name: "GraphQL mutant Go oracle", Files: files,
-			Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -overlay ./internal/format/graphql"},
-			Toolchain: buildcache.Tool("go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "GOTOOLCHAIN", "GOAMD64", "GOARM64", "GOARM", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM"),
-		}, func(dir string) error {
-			binary := printerOracle(t)
-			data, err := os.ReadFile(binary)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(dir+"/oracle", data, 0755)
-		}) + "/oracle"
-	})
+	// The same test binary as printerOracle's, one recipe and one product (#nrg4zhk): it had its own copy.
+	return printerOracle(t)
 }
 
 func printerMutantCorpus(t *testing.T) (string, string) {
