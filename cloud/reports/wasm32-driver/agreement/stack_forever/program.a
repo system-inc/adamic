@@ -1,0 +1,7 @@
+// Recursion with no end, in tail position: Node runs out of stack at once, and so must native,
+// rather than loop forever.
+function loop(n: number): number {
+	return loop(n + 1);
+}
+console.log('start');
+console.log(`${loop(0)}`);

@@ -112,6 +112,9 @@ func checkSingleAssignmentProgram(t *testing.T, path string) {
 	var totals SSAStats
 	var functions int
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Skipf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+	}
 	for function := -1; function < len(program.Functions); function++ {
 		name := "main"
 		if function >= 0 {
@@ -309,7 +312,7 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 // These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.
 func refusedConstructorFixture(path string) bool {
 	switch filepath.Base(path) {
-	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+	case "new_expression_class_cache_capture_notyet.a":
 		return true
 	}
 	return false

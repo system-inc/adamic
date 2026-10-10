@@ -141,7 +141,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
   adamic_object_check_write(target, name);
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
   adamic_value value = source->slots[index];
   if (source->shape->references[index]) {
@@ -170,14 +170,15 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   if (name == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
   memcpy(name, key->bytes, key->length);
   name[key->length] = '\0';
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_heap *observed;
   if (adamic_record_is(object)) {
    const adamic_value *slot = adamic_record_get_own(object, key);
    observed = slot == NULL ? NULL : adamic_retain(slot->reference);
   } else {
-   (void)adamic_object_data_field(object, name, &cache);
-   observed = adamic_object_initialized(object)[cache.index] ? adamic_dynamic_property(&object->heap, name) : NULL;
+   // Readiness is indexed from the slot the lookup returned, never from the packed cache word.
+   const adamic_value *slot = adamic_object_data_field(object, name, &cache);
+   observed = adamic_object_initialized(object)[adamic_slot_index(object, slot)] ? adamic_dynamic_property(&object->heap, name) : NULL;
   }
   const char *actual_name = observed == NULL ? "undefined" : observed->kind == adamic_kind_number ? "number" : observed->kind == adamic_kind_boolean ? "boolean" : observed->kind == adamic_kind_string ? "string" : observed->kind == adamic_kind_closure ? "function" : "object";
   adamic_value value = {.number = 0};

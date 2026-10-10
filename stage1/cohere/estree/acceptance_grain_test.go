@@ -179,6 +179,7 @@ func runAcceptanceMutantShard(t *testing.T, shard int) {
 	t.Helper()
 	setup := time.Now()
 	main, binary, oracle := acceptanceMutantsPrepareShard(t, shard)
+	script := mutantEmittedProduct(t, main)
 	t.Logf("setup wall=%.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { t.Logf("own work wall=%.3fs", time.Since(started).Seconds()) }()
@@ -191,8 +192,9 @@ func runAcceptanceMutantShard(t *testing.T, shard int) {
 	list := manifest(t, acceptanceGrammar())
 	want := acceptanceMutantsExecute(t, ctx, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
-		"Node":   acceptanceMutantsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
-		"native": acceptanceMutantsExecute(t, ctx, binary, "--manifest", list),
+		"Node":    acceptanceMutantsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
+		"native":  acceptanceMutantsExecute(t, ctx, binary, "--manifest", list),
+		"emitted": mutantEmittedOutput(t, main, script, "--manifest", list),
 	} {
 		if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_PROOF") == "1" && shard == 0 && name == "native" {
 			// Only the catch-initializer witness output is repaired: every

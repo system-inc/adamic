@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+async function work(item: number): Promise<number> { return await item; }
+parallelMap(items, work);

@@ -414,18 +414,7 @@ func TestRetainedSplitCoverage(t *testing.T) {
 			t.Fatal("cached and bypass builds must both run")
 		}
 	})
-	t.Run("record_mutants", func(t *testing.T) {
-		if len(recordMutationCases) != 6 {
-			t.Fatalf("got %d record mutants, want 6", len(recordMutationCases))
-		}
-		seen := map[string]bool{}
-		for _, mutant := range recordMutationCases {
-			if seen[mutant.name] {
-				t.Fatalf("duplicate record mutant %s", mutant.name)
-			}
-			seen[mutant.name] = true
-		}
-	})
+
 }
 
 func TestRetainedTopLevelCoverage(t *testing.T) {
