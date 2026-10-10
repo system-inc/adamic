@@ -17,6 +17,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -361,9 +362,31 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 }
 
 // Read sets travel with the products (#vt46geg): a machine with no read sets of its own finds a product in the store
-// by its name key. Refs never change, so each settled set is its own ref, refs/<namespace>/<name key>.<n>, numbered from
-// 0 in the order they were published; a reader finds the newest by probing and reads back the newest keptSets. The
-// namespaces split by trust as products' do: reads (main's) and reads-candidate.
+// by its name key. R2 expires refs/ and blobs/ seven days after they were written, and the Worker never rewrites a
+// ref or a blob it holds, so a read set stays findable only by being written again, new: the tree builder publishes
+// nameKey's whole read set file as refs/<namespace>/<name key>.<day>.<n> (day since the Unix epoch, n from 0 within the
+// day), naming a blob that holds the file and the day it was published, so each day's blob is new bytes and fresh. It
+// publishes on every settlement and, on any use of a product, when the newest ref is more than readsFresh days old
+// (refresh on use, as Loom's builder keeps its own refs; no bucket lifecycle exemption). A reader looks from tomorrow
+// back over the lifetime and takes the newest day that has one, so it never depends on the oldest surviving ref.
+// The namespaces split by trust as products' do: reads (main's; the tree builder runs with ADAMIC_BUILD_STORE_TRUST=main)
+// and reads-candidate.
+const (
+	readsLifetime = 7
+	readsFresh    = 5
+)
+
+type publishedReads struct {
+	NameKey string    `json:"nameKey"`
+	Day     int       `json:"day"`
+	File    readsFile `json:"file"`
+}
+
+// readsClock is the clock read set refs are named by; a test moves it across days.
+var readsClock = time.Now
+
+func readsDay() int { return int(readsClock().Unix() / 86400) }
+
 func readsNamespaces() []string {
 	if trusted() {
 		return []string{"reads"}
@@ -371,68 +394,76 @@ func readsNamespaces() []string {
 	return []string{"reads", "reads-candidate"}
 }
 
-// fetchReads is nameKey's read sets in the store, newest first, at most keptSets per namespace. An unreachable store or
-// a set that doesn't check is no sets: a lookup then misses, never trusts it.
+func readsWriteNamespace() string {
+	if trusted() {
+		return "reads"
+	}
+	return "reads-candidate"
+}
+
+func readsRef(store, namespace, nameKey string, day, index int) string {
+	return fmt.Sprintf("%s/refs/%s/%s.%d.%d", store, namespace, nameKey, day, index)
+}
+
+// newestReads is the newest read set ref in namespace: the latest day from tomorrow (a writer's clock ahead of this
+// one) back over the lifetime that has one, and the highest index that day; ok is false when there is none.
+func newestReads(store, namespace, nameKey string) (day, index int, ok bool) {
+	for day = readsDay() + 1; day >= readsDay()-readsLifetime; day-- {
+		if _, err := download(readsRef(store, namespace, nameKey, day, 0)); err != nil {
+			continue
+		}
+		for index = 0; ; index++ {
+			if _, err := download(readsRef(store, namespace, nameKey, day, index+1)); err != nil {
+				return day, index, true
+			}
+		}
+	}
+	return 0, 0, false
+}
+
+// fetchReads is nameKey's read sets in the store, newest first. An unreachable store, or a file that doesn't check, is
+// no sets: a lookup then misses, never trusts it.
 func fetchReads(nameKey string) []readSet {
 	store := storeAddress()
 	var sets []readSet
 	for _, namespace := range readsNamespaces() {
-		low := highestReads(store, namespace, nameKey)
-		for index := low; index >= 0 && index > low-keptSets; index-- {
-			reference, err := download(fmt.Sprintf("%s/refs/%s/%s.%d", store, namespace, nameKey, index))
-			if err != nil {
-				break
-			}
-			content, err := blob(store, strings.TrimSpace(string(reference)))
-			if err != nil {
-				break
-			}
-			var set readSet
-			if json.Unmarshal(content, &set) == nil && len(set.Entries) > 0 {
-				sets = append(sets, set)
-			}
+		day, index, ok := newestReads(store, namespace, nameKey)
+		if !ok {
+			continue
+		}
+		reference, err := download(readsRef(store, namespace, nameKey, day, index))
+		if err != nil {
+			continue
+		}
+		content, err := blob(store, strings.TrimSpace(string(reference)))
+		if err != nil {
+			continue
+		}
+		var published publishedReads
+		if json.Unmarshal(content, &published) == nil && published.NameKey == nameKey && published.File.Version == readsVersion {
+			sets = append(sets, published.File.Sets...)
 		}
 	}
 	return sets
 }
 
-// highestReads is the highest index published under refs/<namespace>/<nameKey>.<n>, or -1: doubling until one is
-// missing, then halving back.
-func highestReads(store, namespace, nameKey string) int {
-	exists := func(index int) bool {
-		_, err := download(fmt.Sprintf("%s/refs/%s/%s.%d", store, namespace, nameKey, index))
-		return err == nil
-	}
-	if !exists(0) {
-		return -1
-	}
-	low, high := 0, 1
-	for exists(high) {
-		low, high = high, high*2
-	}
-	for high-low > 1 {
-		if middle := (low + high) / 2; exists(middle) {
-			low = middle
-		} else {
-			high = middle
-		}
-	}
-	return low
-}
-
-// publishReads stores a settled set as nameKey's next ref: its blob, then the first free index, retried past one a
-// racing publisher took.
-func publishReads(nameKey string, set readSet) error {
+// publishReads stores nameKey's read set file as today's next ref, after its blob.
+func publishReads(cache, nameKey string) error {
 	token := publishToken()
 	if token == "" || storeAddress() == "" {
 		return nil
+	}
+	file, err := loadReads(cache, nameKey)
+	if err != nil || len(file.Sets) == 0 {
+		return err
 	}
 	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
 	if writer == "" {
 		writer = defaultWriter
 	}
 	writer = strings.TrimSuffix(writer, "/")
-	encoded, err := json.Marshal(set)
+	day := readsDay()
+	encoded, err := json.Marshal(publishedReads{NameKey: nameKey, Day: day, File: file})
 	if err != nil {
 		return err
 	}
@@ -441,15 +472,35 @@ func publishReads(nameKey string, set readSet) error {
 	if err = upload(writer+"/blobs/"+hash, token, encoded); err != nil {
 		return err
 	}
-	namespace := "reads-candidate"
-	if trusted() {
-		namespace = "reads"
+	namespace := readsWriteNamespace()
+	index := 0
+	if newest, highest, ok := newestReads(storeAddress(), namespace, nameKey); ok && newest == day {
+		index = highest + 1
 	}
-	for index := highestReads(storeAddress(), namespace, nameKey) + 1; index < 1<<20; index++ {
-		err = upload(fmt.Sprintf("%s/refs/%s/%s.%d", writer, namespace, nameKey, index), token, []byte(hash))
+	for ; index < 1<<10; index++ {
+		err = upload(readsRef(writer, namespace, nameKey, day, index), token, []byte(hash))
 		if err == nil || !strings.Contains(err.Error(), "409") {
 			return err
 		}
 	}
-	return errors.New("no free read set index")
+	return errors.New("no free read set index today")
+}
+
+var refreshedReads sync.Map
+
+// refreshReads, on the tree builder's use of a product, publishes its read sets again when the store's newest is more
+// than readsFresh days old or gone, once per process, so a product in use never outlives its read sets.
+func refreshReads(cache, nameKey string) {
+	if !publishing() || publishToken() == "" {
+		return
+	}
+	if _, done := refreshedReads.LoadOrStore(nameKey, true); done {
+		return
+	}
+	if day, _, ok := newestReads(storeAddress(), readsWriteNamespace(), nameKey); ok && day > readsDay()-readsFresh {
+		return
+	}
+	if err := publishReads(cache, nameKey); err != nil {
+		note("refresh read sets %s: %v", nameKey[:12], err)
+	}
 }
