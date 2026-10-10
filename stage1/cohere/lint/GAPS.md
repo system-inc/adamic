@@ -62,10 +62,10 @@ JavaScript backend print what Node prints (TestClosedComparatorGaps). The workar
 ## Go regex and Unicode services
 
 Warning-comment matching uses a fixed literal pattern shape rather than a
-runtime regular expression object: ASCII word boundaries, an optional
-whitespace/decoration prefix with backtracking, and Unicode simple folding.
-Decoration matching retains Go's case-insensitive character class, including
-hyphen ranges and omitted matchers for reversed ranges.
+runtime regular expression object: `iu` word boundaries (ASCII, the long s and
+the Kelvin sign), an optional JavaScript-whitespace/decoration prefix with
+backtracking, and Unicode simple folding. Decoration characters are matched one
+by one, case-insensitively, `-` included, as ESLint's escaped class reads them.
 Go `unicode.SimpleFold` and `strconv.IsPrint` tables are generated once into
 `unicode.ts` by `testdata/unicode.go` (the file records Unicode version).
 The runtime port executes only Adamic code and data. The real Go rule remains
