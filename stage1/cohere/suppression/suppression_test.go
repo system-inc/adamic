@@ -24,7 +24,6 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/nativeproduct"
 )
 
@@ -330,31 +329,15 @@ func portProgram(t *testing.T, directory string) *ir.Program {
 	return lowered(t, filepath.Join(directory, "main.ts"))
 }
 
-// nativeBinary is program built by clang, a product (nativeproduct.Build) its TestProduct_ twin builds ahead:
-// sanitized for natively, plain for macOS's leaks.
-func nativeBinary(t testing.TB, program *ir.Program, sanitize bool) string {
-	t.Helper()
-	return nativeproduct.Build(t, native.C(program), native.Options{Sanitize: sanitize})
-}
-
-// nativeTwin builds ahead what a test builds of program: the sanitized binary, and on macOS the plain one leaks runs.
-func nativeTwin(t *testing.T, program *ir.Program) {
-	t.Helper()
-	nativeBinary(t, program, true)
-	if runtime.GOOS == "darwin" {
-		nativeBinary(t, program, false)
-	}
-}
-
 func TestProduct_SuppressionPortNative(t *testing.T) {
 	t.Parallel()
-	nativeTwin(t, portProgram(t, portDirectory(t, nil)))
+	nativeproduct.Twin(t, portProgram(t, portDirectory(t, nil)))
 }
 
 func TestProduct_SuppressionMutantsNative(t *testing.T) {
 	t.Parallel()
 	for _, mutant := range mutants {
-		nativeBinary(t, portProgram(t, portDirectory(t, &mutant)), true)
+		nativeproduct.Lowered(t, portProgram(t, portDirectory(t, &mutant)), true)
 	}
 }
 
@@ -427,7 +410,7 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := nativeBinary(t, program, true)
+	binary := nativeproduct.Lowered(t, program, true)
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
@@ -442,7 +425,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", nativeBinary(t, program, false)}, arguments...)...)
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", nativeproduct.Lowered(t, program, false)}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}

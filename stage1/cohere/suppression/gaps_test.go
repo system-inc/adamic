@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nativeproduct"
 )
 
 // gaps are GAPS.md's smallest programs, each with what Node prints running it, and where stage 0 stands
@@ -107,6 +108,6 @@ func TestProduct_SuppressionGapsNative(t *testing.T) {
 		if err != nil {
 			t.Fatalf("%s: %v", gap.path, err)
 		}
-		nativeTwin(t, program)
+		nativeproduct.Twin(t, program)
 	}
 }

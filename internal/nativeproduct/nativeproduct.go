@@ -9,9 +9,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -24,6 +26,23 @@ func Build(t testing.TB, source string, options native.Options) string {
 		return native.Build(source, filepath.Join(directory, "program"), options)
 	})
 	return filepath.Join(directory, "program")
+}
+
+// Lowered is Build of a lowered program's C, sanitized (the sanitizers on, as a port's natively runs it) or plain (as
+// macOS's leaks runs it).
+func Lowered(t testing.TB, program *ir.Program, sanitize bool) string {
+	t.Helper()
+	return Build(t, native.C(program), native.Options{Sanitize: sanitize})
+}
+
+// Twin builds ahead what a port's natively and leaks read of program, for its TestProduct_ twin: the sanitized binary,
+// and on macOS the plain one leaks runs.
+func Twin(t testing.TB, program *ir.Program) {
+	t.Helper()
+	Lowered(t, program, true)
+	if runtime.GOOS == "darwin" {
+		Lowered(t, program, false)
+	}
 }
 
 // Inputs is Build's key for source built with options.
