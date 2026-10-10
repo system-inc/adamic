@@ -18,6 +18,10 @@ identity = {'GIT_AUTHOR_NAME': 't', 'GIT_AUTHOR_EMAIL': 't@t', 'GIT_COMMITTER_NA
 os.environ.update(identity)
 
 
+def testOnly(path):
+    return path.endswith('_test.go')
+
+
 def git(where, *arguments):
     return subprocess.run(['git', '-C', where, *arguments], check=True, capture_output=True, text=True).stdout.strip()
 
@@ -71,6 +75,55 @@ class Merged(unittest.TestCase):
         self.assertEqual(prQueue.merged(self.work, main, head, 'Land pull request #7'), (None, ['main.go']))
         self.assertNotIn('Land', git(self.work, 'log', '--all', '--format=%s'))
         self.assertEqual(git(self.work, 'rev-parse', 'HEAD'), main)
+
+    def test_a_test_only_head_on_an_older_main_is_submitted_as_its_merge_with_only_its_own_paths(self):
+        head = self.commit({'internal/x/a_test.go': 'package x\n'}, self.base)
+        main = self.commit({'main.go': 'package main\n\nfunc main() {}\n'}, self.base)
+        found = prQueue.candidate(self.work, main, 7, head, testOnly)
+        self.assertEqual(found['action'], 'submit')
+        self.assertEqual(found['body'], {'sha': found['sha'], 'base': main, 'paths': ['internal/x/a_test.go']})
+        self.assertEqual(git(self.work, 'rev-list', '--parents', '-n', '1', found['sha']).split()[1:], [main, head])
+
+    def test_a_head_that_changes_anything_but_tests_is_never_submitted(self):
+        head = self.commit({'internal/x/a_test.go': 'package x\n', 'internal/x/a.go': 'package x\n'}, self.base)
+        self.assertEqual(prQueue.candidate(self.work, self.base, 7, head, testOnly), {'action': 'outside', 'paths': ['internal/x/a.go']})
+
+    def test_a_conflict_or_a_head_main_holds_is_never_submitted(self):
+        head = self.commit({'main.go': 'package main // head\n'}, self.base)
+        main = self.commit({'main.go': 'package main // main\n'}, self.base)
+        self.assertEqual(prQueue.candidate(self.work, main, 7, head, testOnly), {'action': 'conflict', 'paths': ['main.go']})
+        held = self.commit({'b_test.go': 'package main\n'}, main)
+        self.assertEqual(prQueue.candidate(self.work, held, 7, main, testOnly), {'action': 'held'})
+
+    def test_check_mode_decides_and_touches_nothing_on_origin_and_on_mode_publishes_then_submits_once(self):
+        head = self.commit({'internal/x/a_test.go': 'package x\n'}, self.base)
+        main = self.commit({'main.go': 'package main\n\nfunc main() {}\n'}, self.base)
+        posts = []
+
+        def post(body, owner, secret):
+            posts.append((body, owner))
+            return 201, {'change': 'chg_' + 'a' * 26, 'state': 'queued'}
+
+        checked = prQueue.throughQueue('check', self.work, main, 7, head, testOnly, 'owner', 'secret', post)
+        self.assertEqual((checked['action'], posts), ('submit', []))
+        self.assertEqual(git(self.origin, 'for-each-ref', '--format=%(refname)'), '')
+        landed = prQueue.throughQueue('on', self.work, main, 7, head, testOnly, 'owner', 'secret', post)
+        self.assertEqual((landed['status'], landed['answer']['change']), (201, 'chg_' + 'a' * 26))
+        self.assertEqual(posts, [({'sha': landed['sha'], 'base': main, 'paths': ['internal/x/a_test.go']}, 'owner')])
+        # The queue's git facts need the sha on GitHub before it's submitted.
+        self.assertEqual(git(self.origin, 'rev-parse', 'refs/heads/cloud/pr-queue-7-' + landed['sha'][:8]), landed['sha'])
+        # Anything but a submit posts nothing, in either mode.
+        outside = self.commit({'internal/x/a.go': 'package x\n'}, self.base)
+        self.assertEqual(prQueue.throughQueue('on', self.work, main, 8, outside, testOnly, 'owner', 'secret', post)['action'], 'outside')
+        self.assertEqual(len(posts), 1)
+
+    def test_a_submit_token_is_the_wires_shape_signed_with_the_secret(self):
+        claims, signature = prQueue.token('secret\n', 'system_adamic_loom_queue').split('.')
+        decoded = __import__('json').loads(__import__('base64').urlsafe_b64decode(claims + '=' * (-len(claims) % 4)))
+        self.assertEqual(sorted(decoded), ['expires', 'run', 'scope'])
+        self.assertEqual((decoded['run'], decoded['scope']), ('system_adamic_loom_queue', 'submit'))
+        expected = __import__('hmac').new(b'secret', claims.encode(), 'sha256').digest()
+        self.assertEqual(__import__('base64').urlsafe_b64encode(expected).rstrip(b'=').decode(), signature)
 
     def test_publish_puts_each_sha_on_its_own_branch_and_never_rewrites_one(self):
         head = self.commit({'a_test.go': 'package main\n'}, self.base)

@@ -7,9 +7,14 @@ main's tip and whose second is the head (git merge-tree and commit-tree, nothing
 with the paths. publish() puts it on its own branch, cloud/pr-queue-<number>-<sha8>, since the queue's git facts need
 the sha on GitHub; one branch per sha, so no push ever rewrites one.
 
+candidate() is the whole decision for one head, with no network: submit the landing commit, or why not. submit() posts
+it with a submit token minted for the lane's owner, the way the wire verifies it (loom wire/source/Token.ts).
+
 usage: imported by pr-lane.py
 """
-import subprocess
+import base64, hashlib, hmac, json, subprocess, time, urllib.error, urllib.request
+
+pipeline = "https://loom-pipeline.kirk-ouimet.workers.dev"
 
 
 def git(repository, *arguments):
@@ -33,6 +38,56 @@ def merged(repository, main, head, message):
     if committed.returncode != 0:
         raise RuntimeError("git commit-tree: %s" % committed.stderr.strip())
     return committed.stdout.strip(), []
+
+
+def candidate(repository, main, number, head, testOnly):
+    """What the lane does with pull request number's head on main: {action: submit, sha, body} (body is POST /changes'
+    without its owner), {action: held} when main already holds it, {action: conflict, paths}, or {action: outside,
+    paths} when the landing commit changes a path testOnly refuses."""
+    sha, conflicts = merged(repository, main, head, "Land pull request #%s (%s) over main %s" % (number, head[:8], main[:8]))
+    if conflicts:
+        return {"action": "conflict", "paths": conflicts}
+    if sha is None:
+        return {"action": "held"}
+    paths = sorted(path for path in git(repository, "diff", "--no-renames", "--name-only", main, sha).stdout.splitlines() if path)
+    outside = [path for path in paths if not testOnly(path)]
+    if outside or not paths:
+        return {"action": "outside", "paths": outside}
+    return {"action": "submit", "sha": sha, "body": {"sha": sha, "base": main, "paths": paths}}
+
+
+def token(secret, owner):
+    """A submit token for owner, good for ten minutes."""
+    payload = base64.urlsafe_b64encode(json.dumps({"run": owner, "scope": "submit", "expires": int(time.time()) + 600},
+                                                  separators=(",", ":")).encode()).rstrip(b"=")
+    return (payload + b"." + base64.urlsafe_b64encode(hmac.new(secret.strip().encode(), payload, hashlib.sha256).digest()).rstrip(b"=")).decode()
+
+
+def submit(body, owner, secret):
+    """POST /changes as owner: (status, answer)."""
+    request = urllib.request.Request(pipeline + "/changes", data=json.dumps(dict(body, owner=owner)).encode(), method="POST",
+                                     headers={"Authorization": "Bearer " + token(secret, owner), "Content-Type": "application/json",
+                                              "User-Agent": "adamic-pr-lane"})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return response.status, json.loads(response.read() or b"null")
+    except urllib.error.HTTPError as error:
+        text = error.read()
+        try:
+            return error.code, json.loads(text)
+        except ValueError:
+            return error.code, {"error": text.decode(errors="replace")[:300]}
+
+
+def throughQueue(mode, repository, main, number, head, testOnly, owner, secret, post=None):
+    """One head through the front door. mode "check" decides and touches nothing outside this clone (the proof before
+    cutover); "on" publishes the landing commit and submits it. The candidate, plus {status, answer} when it posted."""
+    found = candidate(repository, main, number, head, testOnly)
+    if mode != "on" or found["action"] != "submit":
+        return found
+    publish(repository, found["sha"], number)
+    status, answer = (post or submit)(found["body"], owner, secret)
+    return dict(found, status=status, answer=answer)
 
 
 def publish(repository, sha, number):
