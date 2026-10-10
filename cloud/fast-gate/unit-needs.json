@@ -4,8 +4,8 @@
     {
       "package": "stage1/cohere/typeaware",
       "memoryMegabytes": 9710,
-      "cpus": 4,
-      "record": "measured on Cloud (Fabric, Oct 10 02:05Z): unit ec123b7f alone, runner 8a70ebce, 4 contended cores (AllowedCPUs 60-63), warm tree; test phase from prepare-ready 01:37:47Z to exit 0 at 02:00:49Z, wall 1390.9 s, cgroup memory.peak 9710 MB (sampled every 5 s, ~/loom-fabric/rss-ec123b7f/memory.log), largest process 2.36 GB; setup measured apart peaked at 9.9 GB (go build ./... at link). Its real cost is time: about 23 minutes, inside the 1800 s ceiling only with --silence-drop until the runner heartbeats through go test"
+      "cpus": 16,
+      "record": "wall time (Loom 02:08Z, Release 02:21Z): unit ec123b7f's test phase took 1390.9 s wall on 4 contended cores (user 3498.5 s, sys 605.5 s), about 23 minutes, past Kirk's 10-minute rule; on 16 cores it is about 5 to 6 minutes. Declared at 16 cpus because no honest 32-cpu pool exists tonight (Cloud at load 48 of 64; Fabric 02:20Z). Memory measured on Cloud (Fabric 02:05Z): cgroup memory.peak 9710 MB in the test phase, ~/loom-fabric/rss-ec123b7f/memory.log; setup peaked at 9.9 GB (go build ./... at link)"
     }
   ]
 }
