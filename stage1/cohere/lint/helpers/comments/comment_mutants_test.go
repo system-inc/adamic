@@ -119,15 +119,7 @@ func runCommentMutant(t *testing.T, index int) {
 			t.Fatal(err)
 		}
 	}
-	got := run(t, "", build(t, directory), path)
-	requireCommentMutantKilled(t, got, want)
-	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			t.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
-			break
-		}
-	}
+	catchMutant(t, prepare(t, directory, true), path, want)
 }
 
 func requireCommentMutantKilled(t *testing.T, got, want []byte) {

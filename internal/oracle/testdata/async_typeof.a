@@ -1,0 +1,25 @@
+console.log(typeof f);
+
+async function f(): Promise<void> {
+	console.log('typeof must not call f');
+}
+
+async function inspect(f: number): Promise<void> {
+	console.log(typeof (f));
+	await Promise.resolve();
+	console.log(`shadow after await: ${typeof f}`);
+}
+
+async function observe(): Promise<void> {
+	console.log(`inside: ${typeof (f)}`);
+	await Promise.resolve();
+	console.log(typeof f);
+}
+
+const kind = typeof ((f));
+console.log(kind);
+console.log(`nested: ${typeof f}`);
+const text = 'text';
+console.log(typeof text);
+await inspect(3);
+await observe();

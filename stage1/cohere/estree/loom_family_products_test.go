@@ -87,6 +87,7 @@ func TestUnattachedDecoratorControl(t *testing.T) {
 	t.Parallel()
 	setup := time.Now()
 	main, binary, oracle := unattachedDecoratorReady(t)
+	script := mutantEmittedProduct(t, main)
 	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
@@ -98,8 +99,9 @@ func TestUnattachedDecoratorControl(t *testing.T) {
 		t.Fatalf("Go decorator refusals changed: %s", statuses)
 	}
 	for name, got := range map[string][]byte{
-		"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
-		"native": threePortExecute(t, ctx, binary, "--manifest", list),
+		"Node":    threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
+		"native":  threePortExecute(t, ctx, binary, "--manifest", list),
+		"emitted": mutantEmittedOutput(t, main, script, "--manifest", list),
 	} {
 		if strings.Count(string(got), "0 Program ") != 2 {
 			t.Fatal(name + " decorator control did not finish with two incorrect acceptances")

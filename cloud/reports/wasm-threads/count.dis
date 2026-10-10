@@ -1,0 +1,118 @@
+
+/tmp/wasm-threads/wasm-objects/count.o:	file format wasm
+
+Disassembly of section CODE:
+
+00000000 <CODE>:
+        # 2 functions in section.
+
+00000001 <adamic_count_allocation>:
+        .local i32, i32, i32, i32
+       5: 41 00        	i32.const	0
+       7: 41 00        	i32.const	0
+       9: 28 02 80 80 80 80 00 	i32.load	0
+			0000000b:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+0
+      10: 41 01        	i32.const	1
+      12: 6a           	i32.add 
+      13: 36 02 80 80 80 80 00 	i32.store	0
+			00000015:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+0
+      1a: 41 00        	i32.const	0
+      1c: 41 00        	i32.const	0
+      1e: 28 02 90 80 80 80 00 	i32.load	16
+			00000020:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+16
+      25: 41 01        	i32.const	1
+      27: 6a           	i32.add 
+      28: 22 00        	local.tee	0
+      2a: 36 02 90 80 80 80 00 	i32.store	16
+			0000002c:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+16
+      31: 41 00        	i32.const	0
+      33: 28 02 94 80 80 80 00 	i32.load	20
+			00000035:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+20
+      3a: 21 01        	local.set	1
+      3c: 02 40        	block   	
+      3e: 03 40        	loop    	                        # label1:
+      40: 20 01        	local.get	1
+      42: 20 00        	local.get	0
+      44: 4f           	i32.ge_u
+      45: 0d 01        	br_if   	1                       # 1: down to label0
+      47: 41 00        	i32.const	0
+      49: 20 00        	local.get	0
+      4b: 41 00        	i32.const	0
+      4d: 28 02 94 80 80 80 00 	i32.load	20
+			0000004f:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+20
+      54: 22 02        	local.tee	2
+      56: 20 02        	local.get	2
+      58: 20 01        	local.get	1
+      5a: 46           	i32.eq  
+      5b: 1b           	f32.select
+      5c: 36 02 94 80 80 80 00 	i32.store	20
+			0000005e:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+20
+      63: 20 02        	local.get	2
+      65: 20 01        	local.get	1
+      67: 47           	i32.ne  
+      68: 21 03        	local.set	3
+      6a: 20 02        	local.get	2
+      6c: 21 01        	local.set	1
+      6e: 20 03        	local.get	3
+      70: 0d 00        	br_if   	0                       # 0: up to label1
+      72: 0b           	end
+      73: 0b           	end
+      74: 0b           	end
+
+00000075 <adamic_count_report>:
+        .local i32, i32
+      7a: 23 80 80 80 80 00    	global.get	0
+			0000007b:  R_WASM_GLOBAL_INDEX_LEB	__stack_pointer+0
+      80: 41 f0 01     	i32.const	240
+      83: 6b           	i32.sub 
+      84: 22 00        	local.tee	0
+      86: 24 80 80 80 80 00    	global.set	0
+			00000087:  R_WASM_GLOBAL_INDEX_LEB	__stack_pointer+0
+      8c: 20 00        	local.get	0
+      8e: 41 10        	i32.const	16
+      90: 6a           	i32.add 
+      91: 41 00        	i32.const	0
+      93: 29 02 94 80 80 80 00 	i64.load	20:p2align=2
+			00000095:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+20
+      9a: 37 03 00     	i64.store	0
+      9d: 20 00        	local.get	0
+      9f: 41 00        	i32.const	0
+      a1: 29 02 80 80 80 80 00 	i64.load	0:p2align=2
+			000000a3:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+0
+      a8: 37 03 00     	i64.store	0
+      ab: 20 00        	local.get	0
+      ad: 41 00        	i32.const	0
+      af: 29 02 88 80 80 80 00 	i64.load	8:p2align=2
+			000000b1:  R_WASM_MEMORY_ADDR_LEB	adamic_counted+8
+      b6: 37 03 08     	i64.store	8
+      b9: 02 40        	block   	
+      bb: 20 00        	local.get	0
+      bd: 41 20        	i32.const	32
+      bf: 6a           	i32.add 
+      c0: 41 c8 01     	i32.const	200
+      c3: 41 9c 80 80 80 00    	i32.const	28
+			000000c4:  R_WASM_MEMORY_ADDR_SLEB	.L.str+0
+      c9: 20 00        	local.get	0
+      cb: 10 80 80 80 80 00    	call	0
+			000000cc:  R_WASM_FUNCTION_INDEX_LEB	snprintf+0
+      d1: 22 01        	local.tee	1
+      d3: 41 7f        	i32.const	-1
+      d5: 6a           	i32.add 
+      d6: 41 c6 01     	i32.const	198
+      d9: 4b           	i32.gt_u
+      da: 0d 00        	br_if   	0                       # 0: down to label2
+      dc: 41 02        	i32.const	2
+      de: 20 00        	local.get	0
+      e0: 41 20        	i32.const	32
+      e2: 6a           	i32.add 
+      e3: 20 01        	local.get	1
+      e5: 10 81 80 80 80 00    	call	1
+			000000e6:  R_WASM_FUNCTION_INDEX_LEB	write+0
+      eb: 1a           	drop
+      ec: 0b           	end
+      ed: 20 00        	local.get	0
+      ef: 41 f0 01     	i32.const	240
+      f2: 6a           	i32.add 
+      f3: 24 80 80 80 80 00    	global.set	0
+			000000f4:  R_WASM_GLOBAL_INDEX_LEB	__stack_pointer+0
+      f9: 0b           	end

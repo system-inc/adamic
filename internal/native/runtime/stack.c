@@ -15,7 +15,7 @@
 #include <sys/resource.h>
 #endif
 
-uintptr_t adamic_stack_limit;
+_Thread_local uintptr_t adamic_stack_limit;
 
 #ifdef ADAMIC_TARGET_WASI
 // wasm-ld reserves a downward-growing linear stack. Keep 16 KB for the panic path.
@@ -65,4 +65,15 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 _Noreturn void adamic_stack_overflow(void) {
 	static const char message[] = "RangeError: Maximum call stack size exceeded";
 	adamic_panic(message, sizeof message - 1);
+}
+
+void adamic_stack_thread_start(void) {
+#ifdef ADAMIC_TARGET_WASI
+	// The only executor already has the linear-stack limit from its constructor.
+	return;
+#else
+	// Pool workers are created with an explicit 8 MiB stack; keep the same panic margin.
+	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
+	adamic_stack_limit = base - ASSUMED_STACK + MARGIN;
+#endif
 }

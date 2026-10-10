@@ -16,7 +16,7 @@ import (
 	"unicode/utf8"
 )
 
-func adamicCohereTexts(t *testing.T) []string {
+func adamicCompositionCorpusTexts(t *testing.T) []string {
 	t.Helper()
 	var paths []string
 	err := filepath.WalkDir("..", func(path string, entry fs.DirEntry, err error) error {
@@ -86,7 +86,7 @@ func adamicCohereTexts(t *testing.T) []string {
 	return texts
 }
 
-func TestAdamicPortCases(t *testing.T) {
+func TestAdamicCompositionCorpusCases(t *testing.T) {
 	var request struct{ Cases, Answers, Repository, Fixtures string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
@@ -99,7 +99,7 @@ func TestAdamicPortCases(t *testing.T) {
 	if err := json.Unmarshal(data, &request); err != nil {
 		t.Fatal(err)
 	}
-	texts := adamicCohereTexts(t)
+	texts := adamicCompositionCorpusTexts(t)
 	for _, fixture := range parseFixtures {
 		texts = append(texts, fixture.text)
 	}

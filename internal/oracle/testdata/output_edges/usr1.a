@@ -1,0 +1,8 @@
+// SIGUSR1 starts Node's inspector and the program goes on; natively it's ignored, and the program goes
+// on too. The probe sends it during the loop: both print both lines and exit 0.
+console.log('started, about to work for a while');
+let total = 0;
+for (let index = 0; index < 600000000; index += 1) {
+	total = (total + index * 7) & 1048575;
+}
+console.log(`finished ${total}`);

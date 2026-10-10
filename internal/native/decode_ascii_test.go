@@ -20,7 +20,7 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	if target == "wasi" && os.Getenv("ADAMIC_TEST_WASI") != "1" {
-		t.Skip("set ADAMIC_TEST_WASI=1")
+		t.Skip("ADAMIC_TEST_WASI != 1: WASI decode units require explicit toolchain opt-in")
 	}
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -89,8 +89,8 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	compiler := "clang"
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls", "-I", runtimeDirectory}
 	if target == "wasi" {
-		if os.Getenv("ADAMIC_TEST_WASI") != "1" {
-			t.Skip("set ADAMIC_TEST_WASI=1")
+		if wasiCompilerOptIn := os.Getenv("ADAMIC_TEST_WASI"); wasiCompilerOptIn != "1" {
+			t.Skip("ADAMIC_TEST_WASI != 1: WASI compiler setup requires explicit toolchain opt-in")
 		}
 		sysroot := os.Getenv("WASI_SYSROOT")
 		if sysroot == "" {

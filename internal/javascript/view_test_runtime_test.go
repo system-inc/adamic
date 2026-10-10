@@ -33,4 +33,3 @@ func runViewNode(t *testing.T, source, stdout, stderr string, exit int) {
 		t.Fatalf("exit %d, stdout %q, stderr %q; want %d, %q, %q", code, out.String(), errout.String(), exit, stdout, stderr)
 	}
 }
-
