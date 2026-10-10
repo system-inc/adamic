@@ -3,11 +3,11 @@
 // reused, so a test's time starts after the fetch (@system_adamic's ruling on the 30 s rule, Oct 8).
 //
 // A product's address is its name key (its name, flags and tool reports) and the read set its last traced build
-// measured, valued on the tree at hand (reads.go, #vt46geg): a change misses only the products that read it. Only
-// Workshop builds under a trace (cmd/traced), and only a settled traced build is placed under its key or published
-// (settle.go). A product with no read set yet, or none that names a cached product, builds traced there. Anywhere
-// else a miss is refused (ErrUntraced) unless ADAMIC_BUILD_STORE=off asks for a build for this machine alone, keyed
-// by the declared Files and never published.
+// measured, valued on the tree at hand (reads.go, #vt46geg): a change misses only the products that read it. A product
+// is found by the cache's read sets, then the store's. Only Workshop's tree builder (ADAMIC_BUILD_STORE=traced, under
+// cmd/traced) builds traced, and only a settled traced build is placed under its key or published (settle.go). Every
+// other miss builds as before, for this machine alone: keyed by the declared Files, never published, never found by a
+// read set, and never failing for want of a trace.
 //
 // A product on disk is always complete: it is filled in a private directory and placed whole by rename, so a failed
 // build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh directory: the uncached proof mode,
@@ -76,10 +76,9 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 	return directory, err
 }
 
-// ErrUntraced is a product this machine would have to build without a trace: building is Workshop's, under
-// cmd/traced, so what the build reads becomes its key (#vt46geg). ADAMIC_BUILD_STORE=off builds here explicitly, for
-// this machine alone: such a product is keyed by its declared Files, never published and never found by a read set.
-var ErrUntraced = errors.New("only a traced build may build it here")
+// ErrUntraced is a product Workshop's tree builder (ADAMIC_BUILD_STORE=traced) would build outside cmd/traced: what it
+// publishes must be keyed by what its build read, so building untraced there is refused rather than published.
+var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
 func get(inputs Inputs, build func(directory string) error) (string, string, error) {
 	started := time.Now()
@@ -122,6 +121,19 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	})
 	if err != nil {
 		return "", "", err
+	}
+	// The store's read sets for this name key join the cache's, so a machine with none of its own finds what the store
+	// holds (#vt46geg).
+	if looked.directory == "" && storeAddress() != "" {
+		if remote := fetchReads(nameKey); len(remote) > 0 {
+			if err = mergeReads(cache, nameKey, inputs.Name, remote); err != nil {
+				return "", "", err
+			}
+			keying(func() { looked, err = productFor(root, cache, nameKey, 0) })
+			if err != nil {
+				return "", "", err
+			}
+		}
 	}
 	if looked.directory != "" {
 		journal(journalEntry{Event: "found", NameKey: nameKey, Directory: looked.directory})
@@ -175,23 +187,25 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			journal(journalEntry{Event: "found", NameKey: nameKey, Directory: product})
 		}
 		return product, record(inputs.Name, nameKey, outcome, started), nil
-	case os.Getenv("ADAMIC_BUILD_STORE") == "off":
-		var key string
-		keying(func() { key, err = Key(root, inputs) })
-		if err != nil {
-			return "", "", err
-		}
-		built, err := filled(filepath.Join(cache, "local", key), described, build)
-		if err != nil {
-			return "", "", err
-		}
-		outcome := "hit"
-		if built {
-			outcome = "miss"
-		}
-		return filepath.Join(cache, "local", key), record(inputs.Name, key, outcome, started), nil
+	case publishing():
+		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w, so a build's reads become its key", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
 	}
-	return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w: Workshop builds products under cmd/traced (strace, Linux), so a build's reads become its key. ADAMIC_BUILD_STORE=off builds it here for this machine alone; ADAMIC_BUILD_CACHE=off builds it uncached", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
+	// Untraced, as every machine but Workshop's tree builder builds: for this machine alone, keyed by the declared
+	// Files, never published and never found by a read set.
+	var key string
+	keying(func() { key, err = Key(root, inputs) })
+	if err != nil {
+		return "", "", err
+	}
+	built, err := filled(filepath.Join(cache, "local", key), described, build)
+	if err != nil {
+		return "", "", err
+	}
+	outcome := "hit"
+	if built {
+		outcome = "miss"
+	}
+	return filepath.Join(cache, "local", key), record(inputs.Name, key, outcome, started), nil
 }
 
 // tracedBuild builds into directory between markers naming the build, and returns its name key and id.
@@ -522,7 +536,7 @@ func repositoryAt(directory string) *trackedFiles {
 		var err error
 		// git reads .git, which no product's read set may hold: listing what the tree carries is keying.
 		keying(func() {
-			if listed, err = exec.Command("git", "-C", directory, "ls-files", "-s", "-z").Output(); err == nil {
+			if listed, err = exec.Command("git", "-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
 				dirty, err = exec.Command("git", "-C", directory, "diff-files", "--name-only", "-z").Output()
 			}
 		})
@@ -533,13 +547,17 @@ func repositoryAt(directory string) *trackedFiles {
 			files.dirty[name] = true
 		}
 		for _, line := range strings.Split(string(listed), "\x00") {
-			// <mode> <id> <stage>\t<path>
+			// <tag> <mode> <id> <stage>\t<path>: a tag other than H (assume-unchanged in lower case, S for
+			// skip-worktree) is a file git stops comparing with its index, so its id may be stale and it is hashed.
 			fields, name, ok := strings.Cut(line, "\t")
 			if !ok || name == "" {
 				continue
 			}
-			if parts := strings.Fields(fields); len(parts) == 3 {
-				files.objects[name] = gitObject{mode: parts[0], id: parts[1]}
+			if parts := strings.Fields(fields); len(parts) == 4 {
+				files.objects[name] = gitObject{mode: parts[1], id: parts[2]}
+				if parts[0] != "H" {
+					files.dirty[name] = true
+				}
 			}
 			files.paths[name] = true
 			for parent := path.Dir(name); parent != "."; parent = path.Dir(parent) {
