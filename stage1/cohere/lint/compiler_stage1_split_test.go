@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 const compilerAgreementFileBuckets = 64
@@ -138,15 +139,14 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 	defer compilerAgreementInputMu.Unlock()
 	t.Helper()
 	if compilerAgreementFiles == nil {
-		command, cancel := compilerAgreementCommand("git", "ls-files", "--recurse-submodules", "-z")
-		defer cancel()
-		command.Dir = repository
-		output, err := command.Output()
+		// git ls-files --recurse-submodules where the tree has .git, else the same listing, in the same order, from
+		// the manifest a Loom runner's unpacked source carries: the key must be one on both.
+		listed, err := tracked.Recursive(repository)
 		if err != nil {
 			t.Fatal(err)
 		}
 		var files []string
-		for _, path := range strings.Split(string(output), "\x00") {
+		for _, path := range listed {
 			switch filepath.Ext(path) {
 			case ".go", ".ts", ".a", ".c", ".h", ".json", ".mod", ".sum", ".work":
 				// Test edits cannot alter production build products, except the

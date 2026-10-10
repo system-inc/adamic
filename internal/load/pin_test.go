@@ -1,9 +1,9 @@
 package load
 
 import (
-	"os/exec"
-	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/tracked"
 )
 
 // typeScriptCommit is the typescript-go stage 0 was last verified against: the TypeScript submodule
@@ -16,11 +16,12 @@ const typeScriptCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 
 func TestTypeScriptIsThePinnedCommit(t *testing.T) {
 	t.Parallel()
-	output, err := exec.Command("git", "-C", "../../cohere/TypeScript", "rev-parse", "HEAD").Output()
+	// git where the submodule has .git, else the tree's manifest, as a Loom runner's unpacked source has.
+	got, err := tracked.Head("../../cohere/TypeScript")
 	if err != nil {
 		t.Fatalf("reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)", err)
 	}
-	if got := strings.TrimSpace(string(output)); got != typeScriptCommit {
+	if got != typeScriptCommit {
 		t.Errorf("TypeScript is at %s, and stage 0 was verified against %s. Run the suite against it, then update typeScriptCommit", got, typeScriptCommit)
 	}
 }
