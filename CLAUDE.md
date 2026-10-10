@@ -38,8 +38,10 @@ Whole functions are kept together; trace extracted files with `git log --follow 
 ```
 gofmt -l cmd internal
 go vet ./...
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+ADAMIC_BUILD_STORE=off ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
+
+`ADAMIC_BUILD_STORE=off` builds test products for this machine alone. Only Workshop builds products for others, under `go run ./internal/buildcache/cmd/traced -- <command>`, which keys each by what its build read (`docs/test-products.md`); anywhere else an untraced miss is refused.
 
 The oracle caches fixture observations under the user cache directory. It still regenerates C and
 JavaScript and rechecks ordinary comparisons and recorded counts. Timed stream and permission probes
