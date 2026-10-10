@@ -1,0 +1,487 @@
+github.com/system-inc/adamic/stage1/cohere/json	TestExternalComparisonCatchesThreePrinterMutants (setup)	1073.74	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestDocumentedStageZeroGaps (setup)	1060.57	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTreesShardCoverage (setup)	983.51	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestCorpusPinDiagnostics (setup)	965.08	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownASTPreprocessing (setup)	771.61	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMicromarkInputChunks (setup)	760.42	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixShardPlantedDisagreement (setup)	644.98	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestFrontMatterStage (setup)	553.72	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownWhitespaceLayoutMutants (setup)	438.49	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestStatementsShardUnionRejectsMissingAndRepeatedIDs (setup)	432.63	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestClosedComparatorGaps (setup)	416.50	pass
+github.com/system-inc/adamic/internal/oracle	TestCountsAreRecorded (setup)	397.31	pass
+github.com/system-inc/adamic/internal/oracle	TestNodeFSFileAgreesWithNode (setup)	390.76	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewObjectPrimitiveSource (setup)	386.56	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewUntaggedCallableUnion (setup)	384.59	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewUntaggedOwnClassData (setup)	381.20	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewUntaggedRecursive (setup)	380.65	pass
+github.com/system-inc/adamic/internal/oracle	TestClassWrongOutput103 (setup)	380.60	pass
+github.com/system-inc/adamic/internal/oracle	TestClassWrongOutput107 (setup)	380.51	pass
+github.com/system-inc/adamic/internal/oracle	TestClassWrongOutput106 (setup)	379.60	pass
+github.com/system-inc/adamic/internal/oracle	TestTypeScriptConditionsAgreeWithNode (setup)	379.31	pass
+github.com/system-inc/adamic/internal/oracle	TestDebuggerNativeEmitsNothing (setup)	374.68	pass
+github.com/system-inc/adamic/internal/oracle	TestElementAccessCompilerAreaBoundaries (setup)	374.68	pass
+github.com/system-inc/adamic/internal/oracle	TestArgumentsLengthWrongSlotMutant (setup)	372.52	pass
+github.com/system-inc/adamic/internal/oracle	TestGateCacheToolchains (setup)	371.72	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedCastRunsNoCatchOrFinally (setup)	370.59	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewOptionalReadBoundary (setup)	370.58	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedCastFailureContract (setup)	370.50	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedCastMutants (setup)	370.50	pass
+github.com/system-inc/adamic/internal/oracle	TestCensusSmallStoppedSourceOnNode (setup)	370.28	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewFlagDowncast (setup)	370.28	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewInterfaces (setup)	370.28	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewObjects (setup)	370.28	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewV2ReadsAfterWrites (setup)	370.26	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedViewV2RepresentationMutants (setup)	369.94	pass
+github.com/system-inc/adamic/internal/oracle	TestNodeFSFileMutants (setup)	369.16	pass
+github.com/system-inc/adamic/internal/oracle	TestEntriesProvenance (setup)	368.70	pass
+github.com/system-inc/adamic/internal/oracle	TestEnumInitializationUnknownPinned (setup)	368.70	pass
+github.com/system-inc/adamic/internal/oracle	TestEnumInitializationNode (setup)	368.33	pass
+github.com/system-inc/adamic/internal/oracle	TestCheckedNonNullTypeScript (setup)	368.11	pass
+github.com/system-inc/adamic/internal/oracle	TestPossibleNonNullAdamicAssertionsAreRefused (setup)	367.91	pass
+github.com/system-inc/adamic/internal/oracle	TestStage3EnumBoundaries (setup)	367.06	pass
+github.com/system-inc/adamic/internal/oracle	TestNotYetLibraryRegexCallbackMutants (setup)	366.00	pass
+github.com/system-inc/adamic/internal/oracle	TestNonNullLiteralUnionInitializers (setup)	364.84	pass
+github.com/system-inc/adamic/internal/oracle	TestNotYetLibraryRegexOffsetMutants (setup)	364.75	pass
+github.com/system-inc/adamic/internal/oracle	TestNotYetLibraryStringBoundsMutants (setup)	364.10	pass
+github.com/system-inc/adamic/internal/oracle	TestArgumentsLengthTypeScriptSource (setup)	363.95	pass
+github.com/system-inc/adamic/internal/oracle	TestImpossibleNonNullFixturesAreRefused (setup)	362.67	pass
+github.com/system-inc/adamic/internal/oracle	TestFallthroughMutants (setup)	362.63	pass
+github.com/system-inc/adamic/internal/oracle	TestFreshWriteProbesStayRefused (setup)	362.50	pass
+github.com/system-inc/adamic/internal/oracle	TestOct6InheritanceMutants (setup)	362.39	pass
+github.com/system-inc/adamic/internal/oracle	TestASignalLeavesWhatWasPrinted (setup)	361.54	pass
+github.com/system-inc/adamic/internal/oracle	TestOverloadContractRulings (setup)	359.23	pass
+github.com/system-inc/adamic/internal/oracle	TestInterfaceCastScalarTags (setup)	354.70	pass
+github.com/system-inc/adamic/internal/oracle	TestInterfaceCastRuntimeMutants (setup)	354.56	pass
+github.com/system-inc/adamic/internal/oracle	TestArrayFamilyMutants (setup)	354.48	pass
+github.com/system-inc/adamic/internal/oracle	TestInterfaceCastOracle (setup)	354.29	pass
+github.com/system-inc/adamic/internal/oracle	TestJSONStringifyRefusals (setup)	353.61	pass
+github.com/system-inc/adamic/internal/oracle	TestLibraryMapSetIteratorCopiesRefused (setup)	353.18	pass
+github.com/system-inc/adamic/internal/oracle	TestPredicateMiscompileRefusals (setup)	353.13	pass
+github.com/system-inc/adamic/internal/oracle	TestReadinessMutants (setup)	352.23	pass
+github.com/system-inc/adamic/internal/oracle	TestRegExpReplacementNodeMutants (setup)	349.08	pass
+github.com/system-inc/adamic/internal/oracle	TestRegExpReplacementTypeGuardMutants (setup)	348.79	pass
+github.com/system-inc/adamic/internal/oracle	TestRepresentationClockSourceMutant (setup)	347.87	pass
+github.com/system-inc/adamic/internal/oracle	TestReviewProgramsAgreeWithNode (setup)	347.64	pass
+github.com/system-inc/adamic/internal/oracle	TestLibraryMethodOwnLoadMutants (setup)	346.67	pass
+github.com/system-inc/adamic/internal/oracle	TestLibraryMethodValueMutants (setup)	346.05	pass
+github.com/system-inc/adamic/internal/oracle	TestLibraryStringMutants (setup)	345.97	pass
+github.com/system-inc/adamic/internal/oracle	TestMathNumberOracleCatchesMutants (setup)	345.95	pass
+github.com/system-inc/adamic/internal/oracle	TestLibraryMethodCaptureMutants (setup)	345.86	pass
+github.com/system-inc/adamic/internal/oracle	TestLiteralUndefinedOracleCatchesMutant (setup)	345.86	pass
+github.com/system-inc/adamic/internal/oracle	TestReviewProgramsRefuse (setup)	345.73	pass
+github.com/system-inc/adamic/internal/oracle	TestReviewProgramsSelfTest (setup)	345.32	pass
+github.com/system-inc/adamic/internal/oracle	TestScannerNestedReferenceMutants (setup)	344.71	pass
+github.com/system-inc/adamic/internal/oracle	TestScannerNestedReferences (setup)	344.71	pass
+github.com/system-inc/adamic/internal/oracle	TestLongArgumentsLeaveTheStackItsLimit (setup)	343.80	pass
+github.com/system-inc/adamic/internal/oracle	TestSmallStacksStillPanic (setup)	343.52	pass
+github.com/system-inc/adamic/internal/oracle	TestStage3EnumFallthrough (setup)	343.52	pass
+github.com/system-inc/adamic/internal/oracle	TestStatementRegionsAreUsed (setup)	342.71	pass
+github.com/system-inc/adamic/internal/oracle	TestStatementsSmallRulings (setup)	340.94	pass
+github.com/system-inc/adamic/internal/oracle	TestStatementsSmallTypeScriptIncrement (setup)	340.53	pass
+github.com/system-inc/adamic/internal/oracle	TestSwitchCaseDeclarationMutants (setup)	340.24	pass
+github.com/system-inc/adamic/internal/oracle	TestSyntaxModuleDeclarationMutants (setup)	338.88	pass
+github.com/system-inc/adamic/internal/oracle	TestSyntaxSubstrMutants (setup)	338.88	pass
+github.com/system-inc/adamic/internal/oracle	TestTypeOfNullMutant (setup)	337.59	pass
+github.com/system-inc/adamic/internal/oracle	TestDefaultTaggedSourceViews (setup)	336.87	pass
+github.com/system-inc/adamic/internal/oracle	TestRequiredViewFieldPrimitive (setup)	336.64	pass
+github.com/system-inc/adamic/internal/oracle	TestUnknownNarrowingMutants (setup)	336.55	pass
+github.com/system-inc/adamic/internal/oracle	TestNarrowedFieldUsesSharedReadiness (setup)	336.44	pass
+github.com/system-inc/adamic/internal/oracle	TestNamespaceRuledMutants (setup)	334.00	pass
+github.com/system-inc/adamic/internal/native	TestMapHashProbeBound (setup)	332.96	pass
+github.com/system-inc/adamic/internal/oracle	TestNamespaceStateMutants (setup)	330.83	pass
+github.com/system-inc/adamic/internal/oracle	TestNarrowedUnionMemberCheck (setup)	330.73	pass
+github.com/system-inc/adamic/internal/native	TestMapHashProbeCatchesMutants (setup)	329.96	pass
+github.com/system-inc/adamic/internal/native	TestStringIndexMatchesNode (setup)	312.58	pass
+github.com/system-inc/adamic/internal/native	TestSplitUnitCoverage (setup)	301.13	pass
+github.com/system-inc/adamic/internal/native	TestRetainedSplitCoverage (setup)	294.06	pass
+github.com/system-inc/adamic/internal/native	TestCaseMappingMatchesNode (setup)	279.44	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestRecoveryLoweredRecipe (setup)	272.11	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownLeafComposition_004 (setup)	261.32	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownLeafComposition_005 (setup)	259.35	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownLeafComposition_006 (setup)	256.24	pass
+github.com/system-inc/adamic/internal/native	TestTypedArrayRuntime (setup)	248.85	pass
+github.com/system-inc/adamic/internal/native	TestClosureConventionWrongOrder (setup)	248.04	pass
+github.com/system-inc/adamic/internal/native	TestOptionalMethodThunksMatchNode (setup)	241.30	pass
+github.com/system-inc/adamic/internal/native	TestRecordsAgainstNode (setup)	231.08	pass
+github.com/system-inc/adamic/internal/native	TestRecordReadMutants (setup)	228.42	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit00 (setup)	228.02	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit01 (setup)	227.11	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit02 (setup)	226.76	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit03 (setup)	224.44	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit04 (setup)	223.36	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit05 (setup)	221.96	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestCompilerGaps (setup)	200.14	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestLexerGaps (setup)	185.65	pass
+github.com/system-inc/adamic/internal/native	TestViewMixedUnionUnknownAndUnavailable (setup)	184.99	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught (setup)	154.91	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestMutantsReactJsxNoCommentTextnodes_Setup	152.65	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout_Setup	147.85	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestExpressionsAgree	146.63	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestProgressGuard (setup)	143.88	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestRepositoryCorpusMutants (setup)	143.51	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestJSONPortShardUnion (setup)	143.03	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	137.28	pass
+github.com/system-inc/adamic/internal/buildcache	TestEveryInputChangesTheKey (setup)	125.87	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_Setup	118.05	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_14	117.08	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_05	114.41	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_Setup	111.31	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceGrammar	109.01	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestConsumerCommentHelpers	106.96	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDeepGrammar	105.63	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_000	102.90	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterOptimizedMatchesGo	102.14	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_07	98.01	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_028	97.60	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceDiagnostics	96.52	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_014	94.04	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompilerAgreementSanitizedNative	93.59	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_01	93.54	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_015	93.04	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestCorpusShardCoverage (setup)	92.74	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutantPlantedFailure	91.52	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMatchesGo	91.34	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceDiagnosticControl	90.02	pass
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestShapeFixtures (setup)	87.60	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_001_001	86.68	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_000	86.13	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestInspectRequestRefusals (setup)	83.22	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeCompilerAgrees	79.06	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestNodeCountCheckCatchesMutant	77.82	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDecodedOptionsAndMutant_000	77.80	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestAdaptVarToLet (setup)	77.32	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_113	76.96	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_015	76.48	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants_028	76.42	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestGeneratedAgreement	75.85	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_025	75.43	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestComposeMatchGo	74.08	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_04	73.78	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_030	73.76	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTreesSetupIsolation	73.01	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_LintMutantNativeCanary	72.77	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDecoratedExports (setup)	72.11	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_10	71.47	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_123	70.99	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation	TestCompileProfiles	70.58	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_014	70.11	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_018	69.77	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants_003	69.64	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle	TestCompileProfiles	69.56	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume_asan	68.52	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining	TestCompileProfiles	68.08	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDotARename_001	67.90	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNative	67.65	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias	TestCompileProfiles	66.33	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSParserOptimizedMatchesNode	66.08	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_107	64.78	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownTable_native_true	64.57	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownLeafNativeSanitized	64.49	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_EmittedMismatchNative	63.86	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_106	63.14	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownQuote_native_true	62.92	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_016	62.84	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree_028	62.84	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_019	62.63	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_manifest	62.29	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_09	61.90	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_native_asan	61.77	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_078	61.47	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_native_true	60.38	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_LintOwnedWitnessesSanitized	60.01	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_corpus_record	59.67	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDecoratedExportMutant (setup)	59.61	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_corpus_native_asan	59.38	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_RulesAgreeNative	58.44	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentsMatchCohere	58.20	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestOptionalBooleanPrinterMatchesGo	58.09	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_114	57.96	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_1951	57.72	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_1952	57.71	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_1887	57.69	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_1953	57.66	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_122	57.16	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_104	57.04	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_075	56.92	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownStructure_native	56.25	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_061_001	55.86	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementCompiler_025	55.76	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants_004	55.40	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants_002	55.37	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_074	55.05	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestLargeCompilerOutputIsComplete	55.03	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants_003	54.56	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants_000	54.42	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_001	53.55	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_controls_native_asan	53.30	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCIIUnit40	53.28	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCIIUnit42	53.20	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	53.15	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCIIUnit41	53.10	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_119	52.82	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_007	52.82	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_008	52.82	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCIIUnit43	52.64	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_017	52.53	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDotARename_000	52.42	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_08	52.17	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_095	51.91	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_110_001	51.89	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeMutants_001	51.42	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ProfileCompilationOracleOutputs	51.30	pass
+github.com/system-inc/adamic/internal/native	TestNoReaderCallingConvention (setup)	50.92	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_006	50.67	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_007	50.64	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestGeneratedExpressionsAgree	50.20	pass
+github.com/system-inc/adamic/internal/buildcache	TestProductIdentityAfterEveryInputChanges	49.81	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_002	49.70	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_EstreeStallPort	49.68	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_086	49.50	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_005	48.88	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_EstreeBoundedPort	48.86	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_003	48.72	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants_004	48.56	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ProfileCompilationProfiled	48.52	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelpersMatchCohere	48.48	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_LossyInputControlNative	48.43	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_112	48.16	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants_001	48.16	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohereClassOrder_000	47.96	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_AcceptanceCatchNative	47.95	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_AcceptanceClassNative	47.69	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_006	47.50	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ShardsAgreeNative	47.44	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ShardsAgreePrepared	47.10	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_EstreeExportPort	46.76	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_016	46.49	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompilerAgreementReleaseNative	45.95	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestJsxParserGapIsExplicit	45.85	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_6294	45.81	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_025	45.68	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_024	45.59	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections (setup)	45.57	pass
+github.com/system-inc/adamic/internal/lower	TestCheckedCastProofAndElision (setup)	45.48	pass
+github.com/system-inc/adamic/internal/lower	TestUncheckableCastsStayRefused (setup)	45.48	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/non-null-assertion/main.a (setup)	45.25	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestUnicodeNodeShardPlantedFailure	45.24	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant_010	45.19	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_06	45.10	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_014	45.00	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeCountCheckCatchesMutant	44.95	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesPredicates/predicates (setup)	44.86	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/function-without-body/main.a (setup)	44.86	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_policy_native	44.83	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/optional-boolean-field/main.a (setup)	44.82	pass
+github.com/system-inc/adamic/internal/lower	TestOptionalFunctionValueRelation (setup)	44.68	pass
+github.com/system-inc/adamic/internal/lower	TestArgumentsLengthRefusals (setup)	44.62	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_111	44.53	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_5759	44.50	pass
+github.com/system-inc/adamic/internal/lower	TestCensusOverloadBinderGuards (setup)	44.45	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_103	44.17	pass
+github.com/system-inc/adamic/internal/lower	TestArgumentsLengthRefusalFixtures (setup)	44.10	pass
+github.com/system-inc/adamic/internal/lower	TestCensusOverloadReturnProof (setup)	44.10	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/undefined_behavior_sanitizer	44.06	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_scalar_edges_sanitized_native	43.82	pass
+github.com/system-inc/adamic/internal/lower	TestCensusPredicateInteractionEscapes (setup)	43.71	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/leak_sanitizer	43.67	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/structural-method-statics/main.a (setup)	43.56	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/generic-optional-return/main.a (setup)	43.48	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/prefix-unary-value/main.a (setup)	43.33	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_026	43.32	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/binary-value-value/main.a (setup)	43.31	pass
+github.com/system-inc/adamic/internal/lower	TestCensusOverloadRelation (setup)	43.22	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeGeneratedAgrees	43.17	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestJsxAdapterGuardMutant	43.15	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/any-value/main.a (setup)	43.10	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative2	43.05	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative1	43.05	pass
+github.com/system-inc/adamic/internal/native	TestCaseMappingMatchesNode/points	43.01	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative1	42.90	pass
+github.com/system-inc/adamic/internal/lower	TestClockGenericReturnsT01Shapes (setup)	42.87	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths_009	42.86	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_096	42.81	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative0	42.79	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_082	42.38	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths_010	42.36	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants/JSX_name_payload	42.24	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_027	42.19	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_suite_asan	42.17	pass
+github.com/system-inc/adamic/internal/buildcache	TestProductIdentityAfterAHeaderOutsideThePackageChanges	42.10	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/value-condition/main.a (setup)	41.96	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/address_sanitizer	41.70	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesReal/real/type-predicate/main.a (setup)	41.66	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/02_reverse_barrel/main.a (setup)	41.63	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_021	41.55	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/03_extensions/main.a (setup)	41.47	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_013	41.25	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/05_safe_load_read/main.a (setup)	41.22	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/04_directory_callback/main.a (setup)	41.07	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_13	40.89	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative2	40.77	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_020	40.77	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestObsoleteImportAttributesAgrees	40.74	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths_008	40.67	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants (setup)	40.56	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_6204	40.39	pass
+github.com/system-inc/adamic/bridge/tsgo	TestBridgeRegionOwnership	40.33	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/07_namespace_barrel/main.a (setup)	40.32	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestEveryTypeNodeKindAgrees	40.24	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_008	40.17	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants_022	40.15	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceKeepsCheckerConstructorRules (setup)	40.10	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceRefusesUnsoundOverrides (setup)	40.10	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_077	40.00	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceRefusesFalseNominalViews (setup)	39.97	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceRejectsUnsupportedConstructorShapes (setup)	39.97	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestCookedSurrogateMutant	39.84	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_016	39.76	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/08_named_reexports/main.a (setup)	39.68	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_GrainMarkdown_width_sanitized	39.63	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestClassifyCorpus (setup)	39.59	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestNormalizeReason (setup)	39.59	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestVerdictCorpus (setup)	39.59	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_018	39.58	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestPortStallControl_000	39.51	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/09_function_value_load/main.a (setup)	39.49	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections/escaped_name_accepted	39.43	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxScannerMutants/raw_attribute_value	39.29	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/10_hoisted_before_body/main.a (setup)	39.23	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/06_import_order_mutant/main.a (setup)	39.18	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestLossyInputRefusal	39.17	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestTheCanonicalRangeChecksCanFail	39.13	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestCookedSurrogates	39.12	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_059	39.06	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMdastIdentifierScalars	38.84	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestYieldLookaheadAgrees	38.71	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesCycles/cycles/01_call_time/main.a (setup)	38.66	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxRefusals	38.54	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_011	38.45	pass
+github.com/system-inc/adamic/internal/lower	TestNestedEmptyArrayElementKinds (setup)	38.29	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ProfileCompilationCounted	38.18	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceGenericSoundness (setup)	38.10	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/02_node_range.a (setup)	37.94	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_110_002	37.92	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	37.91	pass
+github.com/system-inc/adamic/internal/lower	TestEntriesAllocationProof (setup)	37.84	pass
+github.com/system-inc/adamic/internal/lower	TestEntriesRecordBoundaries (setup)	37.81	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestJSXMutant (setup)	37.69	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/04_parse_tree_mask.a (setup)	37.68	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/03_jsdoc_range.a (setup)	37.64	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterFileDriver	37.55	pass
+github.com/system-inc/adamic/internal/lower	TestFlagEnumsOpen (setup)	37.52	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxGrammar	37.52	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_017	37.50	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterWhitespaceGap_004	37.46	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_jsx_tree_setup	37.40	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/06_set_node_flags.a (setup)	37.26	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_005	37.24	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_022	37.20	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative0	37.11	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_019	37.05	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/07_regex_array_map.a (setup)	37.03	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceNativeSignatureNeighbors (setup)	36.96	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ProfileCompilationScanner	36.88	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo_023	36.84	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	36.82	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxNameBoundaryRejections/private_name_accepted	36.81	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceNativeSignatureLimits (setup)	36.74	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_strict_this_native	36.66	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/05_local_export_flags.a (setup)	36.41	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_typeaware_native_asan	36.33	pass
+github.com/system-inc/adamic/internal/lower	TestClassArgumentsUseCheckerIdentity (setup)	36.33	pass
+github.com/system-inc/adamic/cloud	TestLintWaveCheck	36.29	pass
+github.com/system-inc/adamic/internal/flow	TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95	36.25	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/09_symbol_exclusion_mask.a (setup)	36.25	pass
+github.com/system-inc/adamic/internal/flow	TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95	36.06	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_16	36.05	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/10_string_enum.a (setup)	35.74	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/11_format_syntax_kind.a (setup)	35.74	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohereClassOrder_001	35.61	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_093	35.56	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_008	35.44	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a (setup)	35.42	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestUnistMatchesGo	35.16	pass
+github.com/system-inc/adamic/internal/flow	TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95	34.90	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume	34.88	pass
+github.com/system-inc/adamic/internal/lower	TestEnumInitializationGraphMemo (setup)	34.83	pass
+github.com/system-inc/adamic/internal/lower	TestEnumInitializationReach (setup)	34.83	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/13_regex_map_keys.a (setup)	34.73	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/08_debug_format_enum.a (setup)	34.31	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRunner/runner/02_is_string.a (setup)	34.24	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_022	34.09	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesEnums/enums/01_token_range.a (setup)	34.01	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRunner/runner/03_return_true.a (setup)	34.01	pass
+github.com/system-inc/adamic/internal/lower	TestNumericEnumNeverProof (setup)	33.91	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/02_get_property.a (setup)	33.88	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_094	33.86	pass
+github.com/system-inc/adamic/internal/lower	TestNumericEnumLiteralPromises (setup)	33.85	pass
+github.com/system-inc/adamic/internal/lower	TestEnumSlotViews (setup)	33.84	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/03_own_keys.a (setup)	33.84	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/04_own_values.a (setup)	33.65	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/05_integer_order.a (setup)	33.59	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/07_optional_view.a (setup)	33.50	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/06_delete_readd.a (setup)	33.49	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_054	33.35	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_WitnessScriptKindNative	33.34	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/08_option_boolean.a (setup)	33.29	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/09_option_undefined.a (setup)	33.27	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/10_option_wrong_type.a (setup)	33.17	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestTokenizerEvents_491	33.14	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/11_option_string.a (setup)	33.12	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_first_binding	32.99	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_scope_containment	32.96	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_010	32.95	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/12_nested_entries.a (setup)	32.95	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/13_strict_option.a (setup)	32.92	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_15	32.91	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelperMutants_002	32.83	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/14_group_by.a (setup)	32.80	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_00	32.76	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/15_inherited_read.a (setup)	32.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/16_built_strings.a (setup)	32.54	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo_000	32.44	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/17_compare_missing_object.a (setup)	32.44	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_binding_slot	32.41	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelperMutants_003	32.39	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_021	32.29	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/18_compare_missing_scalar.a (setup)	32.22	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/19_compare_empty_objects.a (setup)	32.17	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ShardsAgreeLowered	32.16	pass
+github.com/system-inc/adamic/internal/lower	TestParameterPropertiesSoundness (setup)	32.06	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRecords/records/01_has_property.a (setup)	31.89	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesRunner/runner/01_queue_empty.a (setup)	31.88	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/02_jsx_names.a (setup)	31.83	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelperMutants_000	31.70	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterWhitespaceGap_003	31.67	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/03_react_names.a (setup)	31.56	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_120	31.52	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTreesUnion	31.51	pass
+github.com/system-inc/adamic/internal/native	TestWASIUnit12	31.33	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompilerAgreementLowered	31.24	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_ShardsAgreeCapture	31.23	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestCSTMatchesGo	31.18	pass
+github.com/system-inc/adamic/internal/lower	TestPredicateOverloadRuntime (setup)	31.07	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/05_debug_log_merge.a (setup)	31.02	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_5049	30.96	pass
+github.com/system-inc/adamic/stage1/typescript/scanner	TestScannerAgreesWithTypescriptGo_014	30.96	pass
+github.com/system-inc/adamic/internal/lower	TestPredicateSummaryParameterIndex (setup)	30.94	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_EmittedMismatchLowered	30.90	pass
+github.com/system-inc/adamic/bridge/tsgo	TestBridgeRegion	30.90	pass
+github.com/system-inc/adamic/stage1/cohere/selector	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	30.90	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_CheckerSanitized_02	30.81	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/06_binary_expression_state.a (setup)	30.65	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_006	30.62	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelperMutants_001	30.61	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/04_debug_state.a (setup)	30.59	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_FactoryHooksNative	30.57	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeRandomMatchesNode	30.56	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_016	30.54	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a (setup)	30.51	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_NodeTableNative	30.29	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/10_tracing_escape.a (setup)	30.28	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesNamespaces/namespaces/09_incremental_parser.a (setup)	30.27	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_014	30.23	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_005	30.22	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_012	30.21	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_013	30.04	pass

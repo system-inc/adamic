@@ -1,0 +1,18 @@
+{
+  "number": 1,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "98008bbba2881939e07a9d74031994102a3bbe36",
+  "worktree": "/home/ahra/full-gate/out/98008bbba288-20261009T233223Z/catalog-units/00-204ohghe/adamic-catalog-worktree-wlf21aw5/entry-01",
+  "setup_seconds": 103.57515839597909,
+  "ok": true,
+  "check_seconds": 56.57671316899359,
+  "cleanup_seconds": 8.224525826022727,
+  "wall_seconds": 171.3295364989899,
+  "load_before": "19.91 21.58 20.36 60/952 4180611",
+  "load_after": "69.52 44.52 29.48 74/1167 91403",
+  "messages": [
+    "01 shared-slice-append: applies-and-fails-as-recorded",
+    "01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "01 wall=171.330s setup=103.575s check=56.577s cleanup=8.225s load=19.91 21.58 20.36 60/952 4180611 -> 69.52 44.52 29.48 74/1167 91403"
+  ]
+}
