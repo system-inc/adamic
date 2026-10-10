@@ -26,7 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nativeproduct"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -54,7 +54,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	t.Parallel()
 	casesPath, goAnswers := askedCases(t)
 	portSource := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(portSource, "main.ts"))
+	program := portProgram(t, portSource)
 
 	t.Run("natively and on Node, as Go cohere", func(t *testing.T) {
 		t.Parallel()
@@ -131,7 +131,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
 			mutated := portDirectory(t, &mutant)
-			mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
+			mutatedProgram := portProgram(t, mutated)
 			for _, side := range []struct {
 				name string
 				run  run
@@ -380,6 +380,25 @@ func firstDifference(got string, want string) string {
 	return "the same lines, not the same bytes"
 }
 
+// portProgram is the port in directory (portDirectory's, a mutant planted or not), lowered: what the tests build
+// natively and the TestProduct_ twins build ahead, from this one function so the two can't drift.
+func portProgram(t *testing.T, directory string) *ir.Program {
+	t.Helper()
+	return lowered(t, filepath.Join(directory, "main.ts"))
+}
+
+func TestProduct_GraphQLPortNative(t *testing.T) {
+	t.Parallel()
+	nativeproduct.Twin(t, portProgram(t, portDirectory(t, nil)))
+}
+
+func TestProduct_GraphQLMutantsNative(t *testing.T) {
+	t.Parallel()
+	for _, mutant := range mutants {
+		nativeproduct.Lowered(t, portProgram(t, portDirectory(t, &mutant)), true)
+	}
+}
+
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
 func lowered(t *testing.T, path string) *ir.Program {
 	t.Helper()
@@ -457,10 +476,7 @@ func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
 // its own run.
 func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := nativeproduct.Lowered(t, program, true)
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
@@ -475,11 +491,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", nativeproduct.Lowered(t, program, false)}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
