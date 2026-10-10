@@ -1,0 +1,8 @@
+=== RUN   TestStringBrandCastKeepsLiterals
+=== PAUSE TestStringBrandCastKeepsLiterals
+=== CONT  TestStringBrandCastKeepsLiterals
+    string_brand_test.go:51: unproven string literal refinement admitted
+--- FAIL: TestStringBrandCastKeepsLiterals (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.065s
+FAIL

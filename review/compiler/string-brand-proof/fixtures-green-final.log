@@ -1,0 +1,52 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== RUN   TestStringBrandValue
+=== PAUSE TestStringBrandValue
+=== RUN   TestStringBrandDestructureRefused
+=== PAUSE TestStringBrandDestructureRefused
+=== RUN   TestStringBrandUnknownCastRefused
+=== PAUSE TestStringBrandUnknownCastRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandOptional
+=== CONT  TestStringBrandIndexRefused
+=== CONT  TestStringBrandDestructureRefused
+=== CONT  TestStringBrandMap
+--- PASS: TestStringBrandIndexRefused (1.91s)
+=== CONT  TestStringBrandUnescape
+=== NAME  TestStringBrandOptional
+    string_brand_test.go:50: /workspace/adamic/internal/oracle/testdata/string_brand_optional.a:4:102: Adamic 0.1 refuses an arbitrary number or a value from another enum assigned to InternalSymbolName.Call; its members are a closed union; use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)
+--- FAIL: TestStringBrandOptional (2.34s)
+=== CONT  TestStringBrandUnknownCastRefused
+--- PASS: TestStringBrandDestructureRefused (2.39s)
+=== CONT  TestStringBrandValue
+--- PASS: TestStringBrandUnknownCastRefused (1.05s)
+=== CONT  TestStringBrandRealRefused
+--- PASS: TestStringBrandRealRefused (0.27s)
+=== CONT  TestStringBrandReadRefused
+--- PASS: TestStringBrandReadRefused (0.76s)
+=== CONT  TestStringBrandPlain
+--- PASS: TestStringBrandUnescape (5.98s)
+--- PASS: TestStringBrandMap (7.91s)
+--- PASS: TestStringBrandValue (6.07s)
+--- PASS: TestStringBrandPlain (4.52s)
+--- PASS: TestStringBrandEscape (9.24s)
+FAIL
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.092s
+FAIL

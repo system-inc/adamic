@@ -1,0 +1,10 @@
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.34s)
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.399s

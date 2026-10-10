@@ -1,0 +1,36 @@
+compared 100 of 1354
+compared 200 of 1354
+compared 300 of 1354
+compared 400 of 1354
+compared 500 of 1354
+compared 600 of 1354
+compared 700 of 1354
+compared 800 of 1354
+compared 900 of 1354
+compared 1000 of 1354
+compared 1100 of 1354
+compared 1200 of 1354
+compared 1300 of 1354
+{
+  "files": 1354,
+  "newly_admitted": [
+    "internal/oracle/testdata/string_brand_escape.a",
+    "internal/oracle/testdata/string_brand_map.a",
+    "internal/oracle/testdata/string_brand_optional.a",
+    "internal/oracle/testdata/string_brand_plain.a",
+    "internal/oracle/testdata/string_brand_unescape.a",
+    "internal/oracle/testdata/string_brand_value.a"
+  ],
+  "lost_admissions": [],
+  "first_error_counts": {
+    "main": {
+      "a value of type __String | undefined": 1,
+      "a function returning __String | undefined": 1
+    },
+    "after": {
+      "a value of type __String | undefined": 0,
+      "a function returning __String | undefined": 0
+    }
+  },
+  "mode": "CLI first-error per file; not the historical full-mode 44-site census"
+}

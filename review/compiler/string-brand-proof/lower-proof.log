@@ -1,0 +1,22 @@
+=== RUN   TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== PAUSE TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== RUN   TestStringBrandRepresentation
+=== PAUSE TestStringBrandRepresentation
+=== RUN   TestStringBrandRepresentationRejectsLayout
+=== PAUSE TestStringBrandRepresentationRejectsLayout
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestStringBrandRepresentationRejectsLayout
+=== CONT  TestStringBrandRepresentation
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.74s)
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.97s)
+--- PASS: TestClockGenericReturnsT01DeclinesBrandedPrimitives (1.30s)
+--- PASS: TestStringBrandRepresentation (1.70s)
+--- PASS: TestStringBrandRepresentationRejectsLayout (2.37s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.499s

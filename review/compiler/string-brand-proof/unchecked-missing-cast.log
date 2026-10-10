@@ -1,0 +1,8 @@
+=== RUN   TestStringBrandCastChecksMissing
+=== PAUSE TestStringBrandCastChecksMissing
+=== CONT  TestStringBrandCastChecksMissing
+    string_brand_test.go:71: missing checked undefined removal
+--- FAIL: TestStringBrandCastChecksMissing (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.066s
+FAIL
