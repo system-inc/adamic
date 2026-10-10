@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -25,8 +26,8 @@ func TestShapeFixtures(t *testing.T) {
 	if err := json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "shapes-gate")
-	run(t, repository, "go", "build", "-o", binary, "stage1/cohere/lint/regex/testdata/shapes/gate.go")
+	// The gate is a product built ahead (#5qykzj5).
+	binary := buildcache.GoBuild(t, "shapes-gate", "./stage1/cohere/lint/regex/testdata/shapes/gate.go", nil)
 	invoke := func(arguments ...string) ([]byte, error) {
 		command := exec.Command(binary, arguments...)
 		command.Dir = repository
