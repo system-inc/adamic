@@ -4,15 +4,40 @@ import { OptionsJson } from './options_json.ts';
 export class StrictOptions {
     readonly shapes: OptionsJson;
     readonly root: number;
+    // A recursive Go type's shape, by name, which a `ref` shape points at.
+    readonly definitions: number;
     unsupported = '';
-    constructor(descriptor: string) { this.shapes = new OptionsJson(descriptor); this.root = this.shapes.parse(); }
+    constructor(descriptor: string) {
+        this.shapes = new OptionsJson(descriptor); this.root = this.shapes.parse();
+        this.definitions = this.root < 0 || this.shapes.node(this.root).kind !== 'object' ? -1 : this.shapes.field(this.root, 'definitions');
+    }
+    flag(shape: number, name: string): boolean { const index = this.shapes.field(shape, name); return index >= 0 && this.shapes.node(index).text === 'true'; }
     matches(shape: number, values: OptionsJson, index: number): boolean {
         const kindIndex = this.shapes.field(shape, 'kind'); const kind = this.shapes.node(kindIndex).text;
         if(kind === 'unsupported') { this.unsupported = 'custom or unsupported Go option type'; return false; }
+        if(kind === 'ref') {
+            const name = this.shapes.node(this.shapes.field(shape, 'name')).text;
+            const definition = this.definitions < 0 ? -1 : this.shapes.field(this.definitions, name);
+            if(definition < 0) { this.unsupported = 'missing definition ' + name; return false; }
+            return this.matches(definition, values, index);
+        }
         const value = values.node(index);
-        // encoding/json null leaves scalars/structs untouched and sets pointers/slices/maps to nil.
-        if(value.kind === 'null') { return true; }
+        // encoding/json null leaves scalars/structs untouched and sets pointers/slices/maps to nil. A
+        // custom decoder's later check can still refuse the zero value that leaves, which `nonNull` states.
+        if(value.kind === 'null') { return !this.flag(shape, 'nonNull'); }
+        // The shapes a custom decoder accepts, as the descriptor states them by hand.
+        if(kind === 'anyOf') { return this.shapes.node(this.shapes.field(shape, 'options')).children.some(option => this.matches(option, values, index)); }
+        if(kind === 'tuple') {
+            const items = this.shapes.node(this.shapes.field(shape, 'items')).children;
+            if(value.kind !== 'array' || value.children.length !== items.length) { return false; }
+            for(let i = 0; i < items.length; i++) {
+                if(!this.matches(items[i] ?? panic('tuple item'), values, value.children[i] ?? panic('tuple value'))) { return false; }
+            }
+            return true;
+        }
         if(kind !== value.kind) { return false; }
+        const enumeration = this.shapes.field(shape, 'enum');
+        if(enumeration >= 0 && !this.shapes.node(enumeration).children.some(word => this.shapes.node(word).text === value.text)) { return false; }
         if(kind === 'array') {
             const item = this.shapes.field(shape, 'item');
             return value.children.every(child => this.matches(item, values, child));
@@ -38,6 +63,10 @@ export class StrictOptions {
                 const target = this.shapes.field(field, 'shape');
                 if(!this.matches(target, values, value.children[i] ?? panic('option value'))) { return false; }
             }
+            // A required field is a tagged one a custom decoder refuses when absent, so it is looked up exactly.
+            for(const name of this.shapes.node(fields).keys) {
+                if(this.flag(this.shapes.field(fields, name), 'required') && values.field(index, name) < 0) { return false; }
+            }
         }
         if(kind === 'number') {
             if(!Number.isFinite(value.number)) { return false; }
@@ -51,6 +80,11 @@ export class StrictOptions {
                 const limit = negative ? bound.slice(1) : bound;
                 if(digits.length > limit.length || (digits.length === limit.length && digits > limit)) { return false; }
 
+            }
+            // A custom decoder's float64 read: any lexeme, judged by its value, whole and within a magnitude.
+            if(this.flag(shape, 'whole')) {
+                const magnitude = Number.parseFloat(this.shapes.node(this.shapes.field(shape, 'magnitude')).text);
+                if(!Number.isInteger(value.number) || Math.abs(value.number) > magnitude) { return false; }
             }
         }
         return true;
