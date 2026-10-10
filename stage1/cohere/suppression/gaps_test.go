@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -41,11 +42,7 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				t.Fatalf("on Node: exit %d, stdout %q; GAPS.md records %q", nodeRun.exitCode, nodeRun.stdout, gap.stdout)
 			}
 
-			program, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatalf("Load: %v", err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
+			lowered, err := gapProgram(t, path)
 			if gap.notYet != "" {
 				if err == nil {
 					t.Fatalf("this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)")
@@ -80,5 +77,36 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				t.Errorf("leaks:\n%s", leaked)
 			}
 		})
+	}
+}
+
+// gapProgram is the gap at path, loaded (failing the test if that fails) and lowered, with stage 0's refusal if it
+// refuses: what the gap test reads and the TestProduct_ twin builds ahead, from this one function so they can't drift.
+func gapProgram(t *testing.T, path string) (*ir.Program, error) {
+	t.Helper()
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	return lower.Lower(context.Background(), program)
+}
+
+// TestProduct_SuppressionGapsNative builds ahead each closed gap's binaries. A gap clang refuses (badC) is a build
+// that must fail, so it stays its test's own; a refused one (notYet) builds nothing.
+func TestProduct_SuppressionGapsNative(t *testing.T) {
+	t.Parallel()
+	for _, gap := range gaps {
+		if gap.notYet != "" || gap.badC != "" {
+			continue
+		}
+		path, err := filepath.Abs(gap.path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		program, err := gapProgram(t, path)
+		if err != nil {
+			t.Fatalf("%s: %v", gap.path, err)
+		}
+		nativeTwin(t, program)
 	}
 }
