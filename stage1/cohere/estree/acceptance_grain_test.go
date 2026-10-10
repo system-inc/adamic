@@ -75,10 +75,11 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 				return err
 			}
 		}
-		return nil
+		// mutantPort's imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(dir)
 	})
 	if !compile {
-		return filepath.Join(lowered, "main.ts"), ""
+		return resolvedPort(t, lowered, "main.ts"), ""
 	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
@@ -90,7 +91,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
-	return filepath.Join(lowered, "main.ts"), filepath.Join(product, "port")
+	return resolvedPort(t, lowered, "main.ts"), filepath.Join(product, "port")
 }
 
 // Each independently selected shard builds or fetches only its own mutant.

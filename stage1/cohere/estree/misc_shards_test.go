@@ -265,9 +265,10 @@ func miscMutant(t *testing.T, file, from, to string) string {
 		if !found {
 			return fmt.Errorf("missing mutant source %s", file)
 		}
-		return nil
+		// The imports name this checkout; the product names it <repository> (#tqrqx60).
+		return buildcache.RelativeFiles(directory)
 	})
-	return filepath.Join(directory, "main.ts")
+	return resolvedPort(t, directory, "main.ts")
 }
 
 type miscAnswer struct {
