@@ -1,0 +1,14 @@
+test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part) ... FAIL
+
+======================================================================
+FAIL: test_nested_attempt_exposes_only_its_examined_part (__main__.Arithmetic.test_nested_attempt_exposes_only_its_examined_part)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/hidden-d72728e5-tools/stage3/census/hidden/test_hidden.py", line 73, in test_nested_attempt_exposes_only_its_examined_part
+    self.assertEqual(total(rows, stock), 45, '80 blocked - (45 child bytes - 10 failed bytes)')
+AssertionError: 80 != 45 : 80 blocked - (45 child bytes - 10 failed bytes)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

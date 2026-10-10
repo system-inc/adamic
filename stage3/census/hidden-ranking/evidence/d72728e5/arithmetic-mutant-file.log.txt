@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/hidden-d72728e5-tools/stage3/census/hidden/audit.py", line 77, in <module>
+    assert reported['hidden_bytes'] == count, f'file hidden bytes: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: file hidden bytes: _namespaces/ts.moduleSpecifiers.ts
