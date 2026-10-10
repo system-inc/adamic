@@ -448,6 +448,8 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		command := compositionSetupCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
 		command.Dir = filepath.Join(repo, "cohere")
 		output, err := command.CombinedOutput()

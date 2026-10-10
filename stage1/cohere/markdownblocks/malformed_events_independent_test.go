@@ -371,6 +371,8 @@ func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) st
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
 		command.Dir = cohere
 		if output, err := command.CombinedOutput(); err != nil {

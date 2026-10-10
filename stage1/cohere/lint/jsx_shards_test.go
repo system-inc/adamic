@@ -91,6 +91,8 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
 		var stdout, stderr bytes.Buffer

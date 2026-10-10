@@ -274,6 +274,8 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(overlayPath)
 			command := quoteLayoutSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
 			command.Dir = cohere
 			if output, err := combinedOutput(command); err != nil {

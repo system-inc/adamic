@@ -203,6 +203,8 @@ func scalarsMatchGoGoProduct(t *testing.T) string {
 			if err := os.WriteFile(path, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(path)
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
 			command := exec.CommandContext(ctx, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-scalars"), "./command/formatter_comparison")

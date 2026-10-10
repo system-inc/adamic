@@ -489,6 +489,8 @@ func testShardsAgreeGoOracleIn(sourceRoot, directory string) (string, error) {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		return "", err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
 	if _, err := testShardsAgreeRun(root, nil, "go", args...); err != nil {
@@ -525,6 +527,8 @@ func testShardsAgreeCaptureUpstream(sourceRoot, directory string) ([]string, err
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(overlayPath)
 	capture := filepath.Join(directory, "capture")
 	environment := []string{"COHERE_DOCS_CAPTURE=" + capture}
 	descriptors, err := registry.Generate(sourceRoot)
