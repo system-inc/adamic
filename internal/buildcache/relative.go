@@ -179,13 +179,15 @@ func RelativeFiles(directory string) error {
 	})
 }
 
-// resolvedDirectories holds each directory Resolved has answered in this process.
-var resolvedDirectories sync.Map
+// resolvedDirectories holds each directory Resolved has answered in this process, and resolvedCopies each copy it made
+// or found, by the key of the product it copies, which is how a key names the copy (portable).
+var resolvedDirectories, resolvedCopies sync.Map
 
 // Resolved is a product's directory as this machine reads it, for a reader that hands its files to a tool that can't
 // read Relative's names itself (node running a mutant port, the loader lowering it): a copy beside the product whose
 // text files are read back through Absolute, made once per machine and roots, or the product itself when no file holds
-// a name. The copy is never a product and never published; the product itself stays as it was built. A directory that
+// a name. The copy is never a product and never published; the product itself stays as it was built, and a key that
+// names a file in the copy names it in the product, <build cache>/<key>/... (places). A directory that
 // isn't a product (a package's own, which a caller may pass alike) is read as it is, and nothing is written beside it.
 func Resolved(directory string) (string, error) {
 	if found, ok := resolvedDirectories.Load(directory); ok {
@@ -231,6 +233,11 @@ func Resolved(directory string) (string, error) {
 			}
 		}
 	}
+	key := filepath.Base(directory)
+	if built, ok := productDirectories.Load(directory); ok {
+		key = built.(string)
+	}
+	resolvedCopies.Store(place, key)
 	resolvedDirectories.Store(directory, place)
 	return place, nil
 }
