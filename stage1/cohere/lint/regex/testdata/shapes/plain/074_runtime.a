@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:65; `^inset-shadow$`
+// tailwind/no_deprecated_classes.go:87; `^overflow-ellipsis$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "inset-shadow", 4);
-observe(regex, "xinset-shadow", 5);
-observe(regex, "inset-shadow\n", 6);
+observe(regex, "overflow-ellipsis", 4);
+observe(regex, "xoverflow-ellipsis", 5);
+observe(regex, "overflow-ellipsis\n", 6);
