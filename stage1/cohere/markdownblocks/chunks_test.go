@@ -72,23 +72,7 @@ func TestMicromarkInputChunks(t *testing.T) {
 		write(t, fullCases, numericBatch(fullInputs))
 	}
 	cohere := filepath.Join(root, "cohere")
-	mainPath := filepath.Join(cohere, "cmd/adamic_chunks/main.go")
-	driver, err := filepath.Abs("testdata/chunks_go.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, err := filepath.Abs("testdata/chunks_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_chunks.go"): bridge}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
-	goBinary := buildcache.GoBuildIn(t, "cohere", "go-chunks", mainPath, []string{"-overlay=" + overlayPath})
+	goBinary := chunksGoOracle(t)
 	fullWant := execute(t, nil, goBinary, fullCases)
 	clean(t, "full Go mutant oracle", fullWant)
 	want := fullWant
@@ -189,4 +173,36 @@ func TestMicromarkInputChunks(t *testing.T) {
 		t.Logf("%s %.1f texts/s; three runs, startup and identical numeric UTF-16/chunk transport included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
 	}
 	t.Logf("%d cases: %d physical documents; 4943 layout documents; all 65536 UTF-16 units, including lone surrogates; special-code sequences through length five; column/BOM/NUL/CRLF/tab edges", len(inputs), len(selection.Paths))
+}
+
+// chunksGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
+func chunksGoOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	cohere := filepath.Join(root, "cohere")
+	mainPath := filepath.Join(cohere, "cmd/adamic_chunks/main.go")
+	driver, err := filepath.Abs("testdata/chunks_go.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, err := filepath.Abs("testdata/chunks_bridge.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{mainPath: driver, filepath.Join(cohere, "internal/format/markdown/micromark/adamic_chunks.go"): bridge}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(dir, "overlay.json")
+	write(t, overlayPath, overlay)
+	return buildcache.GoBuildIn(t, "cohere", "go-chunks", mainPath, []string{"-overlay=" + overlayPath})
+}
+
+func TestProduct_MarkdownChunksGo(t *testing.T) {
+	t.Parallel()
+	chunksGoOracle(t)
 }

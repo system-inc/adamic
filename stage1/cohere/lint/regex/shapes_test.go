@@ -26,8 +26,7 @@ func TestShapeFixtures(t *testing.T) {
 	if err := json.Unmarshal(data, &rows); err != nil {
 		t.Fatal(err)
 	}
-	// The gate is a product built ahead (#5qykzj5).
-	binary := buildcache.GoBuild(t, "shapes-gate", "./stage1/cohere/lint/regex/testdata/shapes/gate.go", nil)
+	binary := shapesGate(t)
 	invoke := func(arguments ...string) ([]byte, error) {
 		command := exec.Command(binary, arguments...)
 		command.Dir = repository
@@ -67,4 +66,10 @@ func TestShapeFixtures(t *testing.T) {
 			t.Fatalf("native is now required: %v\n%s", err, forced)
 		}
 	})
+}
+
+// shapesGate is testdata/shapes/gate.go, a product built ahead (#5qykzj5).
+func shapesGate(t *testing.T) string {
+	t.Helper()
+	return buildcache.GoBuild(t, "shapes-gate", "./stage1/cohere/lint/regex/testdata/shapes/gate.go", nil)
 }

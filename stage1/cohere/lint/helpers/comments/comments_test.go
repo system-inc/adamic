@@ -87,6 +87,11 @@ func oracle(t *testing.T) string {
 	return buildcache.GoBuildIn(t, "cohere", "go-oracle", virtual, []string{"-overlay=" + path})
 }
 
+func TestProduct_CommentsOracle(t *testing.T) {
+	t.Parallel()
+	oracle(t)
+}
+
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestCommentsMatchCohere(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
