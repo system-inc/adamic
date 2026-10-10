@@ -22,6 +22,11 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	typescript := filepath.Join(t.TempDir(), "typescript")
+	if err = os.Mkdir(typescript, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_TYPESCRIPT_SOURCE", typescript)
 	inputs := func(name string) Inputs { in := thisPackage; in.Name = "relocatable " + name; return in }
 	writes := func(content func(directory string) string) func(directory string) error {
 		return func(directory string) error {
@@ -36,6 +41,7 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 		{"another product", "the build cache", func(string) string { return filepath.Join(cache, strings.Repeat("ab", 32), "main.ts") }},
 		{"its own directory", "the build cache", func(directory string) string { return "overlay " + filepath.Join(directory, "main.go") }},
 		{"a tool in the home directory", "the home directory", func(string) string { return "clang=" + filepath.Join(home, "adamic-tools/llvm/bin/clang") }},
+		{"a gate input", "ADAMIC_TYPESCRIPT_SOURCE", func(string) string { return filepath.Join(typescript, "src/compiler/checker.ts") + "\tchecker" }},
 	} {
 		_, err := Get(inputs(refused.name), writes(refused.content))
 		if err == nil || !strings.Contains(err.Error(), "manifest.json names") || !strings.Contains(err.Error(), refused.place) {
@@ -54,7 +60,7 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 	var own string
 	product := Product(t, inputs("relative"), writes(func(directory string) string {
 		own = Relative(filepath.Join(directory, "main.go"))
-		return Relative(filepath.Join(root, "go.mod")) + "\n" + Relative(other) + "\n" + own
+		return Relative(filepath.Join(root, "go.mod")) + "\n" + Relative(other) + "\n" + own + "\n" + Relative(filepath.Join(typescript, "src/compiler/checker.ts"))
 	}))
 	content, err := os.ReadFile(filepath.Join(product, "manifest.json"))
 	if err != nil {
@@ -62,10 +68,10 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 	}
 	lines := strings.Split(string(content), "\n")
 	key := filepath.Base(product)
-	if want := []string{"<repository>/go.mod", "<build cache>/" + strings.Repeat("ab", 32) + "/main.ts", "<build cache>/" + key + "/main.go"}; strings.Join(lines, "\n") != strings.Join(want, "\n") {
+	if want := []string{"<repository>/go.mod", "<build cache>/" + strings.Repeat("ab", 32) + "/main.ts", "<build cache>/" + key + "/main.go", "<ADAMIC_TYPESCRIPT_SOURCE>/src/compiler/checker.ts"}; strings.Join(lines, "\n") != strings.Join(want, "\n") {
 		t.Fatalf("Relative wrote %q, want %q", lines, want)
 	}
-	for index, want := range []string{filepath.Join(root, "go.mod"), other, filepath.Join(product, "main.go")} {
+	for index, want := range []string{filepath.Join(root, "go.mod"), other, filepath.Join(product, "main.go"), filepath.Join(typescript, "src/compiler/checker.ts")} {
 		if got := Absolute(lines[index]); got != want {
 			t.Errorf("Absolute(%q) is %q, want %q", lines[index], got, want)
 		}
