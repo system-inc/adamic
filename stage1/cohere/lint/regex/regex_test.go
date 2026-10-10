@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -51,6 +52,18 @@ func backends(t *testing.T, root string) [][]byte {
 	repository, _ := filepath.Abs("../../../..")
 	return [][]byte{run(t, root, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), entry), run(t, root, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), js), run(t, root, bin)}
 }
+
+// cohereProgram is one of testdata's Go programs built in cohere's module, where it ran with go run: a product built
+// ahead, so the unit only runs it (#5qykzj5).
+func cohereProgram(t *testing.T, file, output string) string {
+	t.Helper()
+	path, err := filepath.Abs(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return buildcache.GoBuildIn(t, "cohere", output, path, nil)
+}
+
 func firstRow(a, b []byte) int {
 	left := strings.Split(string(a), "\n")
 	right := strings.Split(string(b), "\n")
@@ -67,7 +80,7 @@ func firstRow(a, b []byte) int {
 func TestFixedPatterns(t *testing.T) {
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
-	expected := run(t, cohere, "go", "run", filepath.Join(root, "testdata/oracle.go"), filepath.Join(root, "table.json"), filepath.Join(root, "testdata/corpus.json"))
+	expected := run(t, cohere, cohereProgram(t, "testdata/oracle.go", "regex-oracle"), filepath.Join(root, "table.json"), filepath.Join(root, "testdata/corpus.json"))
 	var rows []struct {
 		ID      string  `json:"id"`
 		Pattern *string `json:"go_pattern"`
@@ -134,7 +147,7 @@ func TestOptionDialectGap(t *testing.T) {
 	t.Parallel()
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
-	goAnswer := run(t, cohere, "go", "run", filepath.Join(root, "testdata/option_dialects.go"))
+	goAnswer := run(t, cohere, cohereProgram(t, "testdata/option_dialects.go", "regex-option-dialects"))
 	nodeAnswer := run(t, root, "node", filepath.Join(root, "testdata/option_dialects.mjs"))
 	expectedGo := "\\s\tfalse\na$\tfalse\n(?i)todo\ttrue\n\\p{Greek}\ttrue\na\\z\ttrue\n(?P<word>a)\ttrue\n"
 	expectedNode := "\\s\ttrue\na$\tfalse\n(?i)todo\tSyntaxError\n\\p{Greek}\tSyntaxError\na\\z\tSyntaxError\n(?P<word>a)\tSyntaxError\n"
@@ -146,9 +159,8 @@ func TestOptionDialectGap(t *testing.T) {
 
 func TestInventoryMatchesPinnedSource(t *testing.T) {
 	t.Parallel()
-	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
-	actual := run(t, cohere, "go", "run", filepath.Join(root, "testdata/inventory.go"), filepath.Join(cohere, "internal/lint/rules"))
+	actual := run(t, cohere, cohereProgram(t, "testdata/inventory.go", "regex-inventory"), filepath.Join(cohere, "internal/lint/rules"))
 	expected, err := os.ReadFile("sites.json")
 	if err != nil {
 		t.Fatal(err)
