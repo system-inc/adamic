@@ -1,0 +1,12 @@
+FIRST FAILURE (tests, at 131.2 s):
+github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_022
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo_022
+    answers_shards_test.go:436: build gitignore-go-oracle 18f6963684b0 hit 17.92
+    answers_shards_test.go:436: union: 34046 live case ids, each exactly once (55 trees, 21 pattern lists, 1445 globs)
+    answers_shards_test.go:436: shared setup ready: 21.351s
+    answers_shards_test.go:447: build gitignore-port-R2_[[:xdigit:]]_taking_G ec29ea9a8924 hit 1.82
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo_022
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo_022
+cooked: shard-022 exceeded 90s hard deadline
+
+(box load 10.4 on 64 cores at first failure)
