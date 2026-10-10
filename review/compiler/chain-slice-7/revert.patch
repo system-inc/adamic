@@ -1,0 +1,12 @@
+--- internal/lower/object.go
++++ internal/lower/object.go
+@@ -339,9 +339,6 @@
+ 
+ // property lowers object.name, array.length, and Math's constants.
+ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+-	if err := l.eepPropertyPresence(node); err != nil {
+-		return nil, err
+-	}
+ 	if err := l.staticProperty(node); err != nil {
+ 		return nil, err
+ 	}

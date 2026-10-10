@@ -1,0 +1,24 @@
+{
+  "listed": 284,
+  "shards": 18,
+  "maximum_shard_seconds": 9.828,
+  "verdicts": {
+    "pass": 282,
+    "fail": 0,
+    "skip": 2
+  },
+  "skips": [
+    "TestOriginalCycleLedger",
+    "TestOptionalWideningCensus"
+  ],
+  "eep_test_seconds": {
+    "TestEEPPresenceSupported": 0.1,
+    "TestEEPPresence3": 0.03,
+    "TestEEPPresence6": 0.06,
+    "TestEEPPresence5": 0.06,
+    "TestEEPPresence1": 0.08,
+    "TestEEPPresence4": 0.09,
+    "TestEEPPresence0": 0.06,
+    "TestEEPPresence2": 0.08
+  }
+}
