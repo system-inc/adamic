@@ -47,6 +47,8 @@ func estreeGoOracleBuild(t *testing.T, dir string) string {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(path)
 	binary := filepath.Join(dir, "oracle")
 	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
 	return binary

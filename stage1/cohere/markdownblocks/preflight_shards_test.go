@@ -74,6 +74,8 @@ func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightB
 			if err := os.WriteFile(path, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(path)
 			command := preflightCommand(t, budget, "go", "build", "-overlay="+path, "-o", binary, mainPath)
 			command.Dir = cohere
 			var output bytes.Buffer

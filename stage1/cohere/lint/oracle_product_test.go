@@ -77,6 +77,8 @@ func lintGoOracleProduct(t *testing.T) string {
 			if err := os.WriteFile(path, overlay, 0644); err != nil {
 				return err
 			}
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(path)
 			binary := filepath.Join(directory, "oracle")
 			args := append([]string{"build", "-trimpath", "-ldflags=-buildid=", "-overlay=" + path, "-o", binary}, virtualFiles...)
 			command := exec.CommandContext(t.Context(), "go", args...)

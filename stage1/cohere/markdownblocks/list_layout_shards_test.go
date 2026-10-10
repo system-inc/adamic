@@ -314,6 +314,8 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		}
 		overlayPath := filepath.Join(dir, name+".json")
 		write(t, overlayPath, overlay)
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		binary := filepath.Join(dir, name)
 		command := listLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", binary, main)
 		command.Dir = cohere

@@ -193,7 +193,8 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		if err != nil {
 			return "", err
 		}
-		output := filepath.Join(directory, "overlay.json")
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		output := filepath.Join(t.TempDir(), "overlay.json")
 		return output, os.WriteFile(output, data, 0o644)
 	}
 	destination := filepath.Join(directory, name)

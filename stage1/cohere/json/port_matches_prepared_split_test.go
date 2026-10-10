@@ -390,6 +390,8 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 	if err := os.WriteFile(overlay, encoded, 0644); err != nil {
 		return err
 	}
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	defer os.Remove(overlay)
 	ctx := context.Background()
 	command := exec.CommandContext(ctx, "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}

@@ -475,6 +475,8 @@ func leafCompositionGoProduct(t *testing.T, root, name, driverName string) strin
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
+		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+		defer os.Remove(overlayPath)
 		command := leafCompositionCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)
 		command.Dir = cohere
 		if output, err := command.CombinedOutput(); err != nil {

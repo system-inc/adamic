@@ -293,7 +293,10 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 			if err != nil {
 				return err
 			}
-			cmd := exec.Command("go", "build", "-overlay", builder.write("volume-oracle-overlay.json", string(data)), "-o", filepath.Join(directory, "volume-oracle"), virtual)
+			overlay := builder.write("volume-oracle-overlay.json", string(data))
+			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+			defer os.Remove(overlay)
+			cmd := exec.Command("go", "build", "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)
 			cmd.Dir = filepath.Join(h.repository, "cohere")
 			volumeGuardMust(builder, "volume-oracle-build", cmd)
 			return nil
