@@ -35,6 +35,22 @@ var flags = native.Flags(native.Options{Sanitize: true})
 // Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		return nil, err
+	}
+	adamic := filepath.Join(directory, "adamic")
+	build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
+	build.Dir = root
+	if output, err := build.CombinedOutput(); err != nil {
+		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
+	}
+	return PrepareBuilt(root, adamic, directory)
+}
+
+// PrepareBuilt is Prepare for a checkout whose adamic command is already built, at adamic: how a test
+// drives this tree through the shared compiler product (buildcache.Adamic) rather than a go build of
+// its own.
+func PrepareBuilt(root string, adamic string, directory string) (*Checkout, error) {
 	root, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err
@@ -42,12 +58,7 @@ func Prepare(root string, directory string) (*Checkout, error) {
 	if err := os.MkdirAll(directory, 0o755); err != nil {
 		return nil, err
 	}
-	checkout := &Checkout{Root: root, directory: directory, adamic: filepath.Join(directory, "adamic")}
-	build := exec.Command("go", "build", "-o", checkout.adamic, "./cmd/adamic")
-	build.Dir = root
-	if output, err := build.CombinedOutput(); err != nil {
-		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
-	}
+	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
 	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
 	if err != nil {
 		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)

@@ -4,13 +4,14 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	checkout, err := Prepare("../..", filepath.Join(directory, "checkout"))
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
 	if err != nil {
 		t.Fatal(err)
 	}
