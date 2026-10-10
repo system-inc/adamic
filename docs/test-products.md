@@ -29,6 +29,12 @@ func tsgoChecker(t testing.TB) string {
 - `Inputs` names the product: `Flags` (every flag and environment value the build reads) and `Toolchain` (`buildcache.Tool(...)` or `runtime.Version()`) with the name make its name key. `Files` (repository-relative) are the declared inputs: a tripwire held against what the build reads, and the key of a build for this machine alone.
 - `buildcache.Product` returns the product's directory. A product directory is always complete: a failed build leaves nothing.
 
+## Go builds
+
+A product that is a Go program never hand-lists its inputs. `buildcache.GoBuild(t, output, pkg, arguments, environment...)` builds `go build` at the repository root. `buildcache.GoTest(t, module, output, pkg, arguments, environment...)` builds `go test -c` in a module of its own (cohere, `cohere/TypeScript/tsc`), which is how a port's Go oracle is built: a package of the module with a harness laid over it by `-overlay`. `buildcache.Adamic(t)` is the stage 0 compiler, one product for every test that runs adamic.
+
+Each keys what `go list` says it compiles (with `-test`, the test files too), the modules' `go.mod`, `go.sum` and `go.work`, the overlay's map and each replacement's content (a replacement outside the repository is refused), the arguments, go's environment and the toolchains. A path the overlay adds isn't on disk and is keyed only through the overlay. A process keys each request once. A planner can key it with no go at all: `ADAMIC_BUILD_INPUTS` names a file of JSON lines, each a request and its inputs, and a tree build writes those lines as it keys when `ADAMIC_BUILD_INPUTS_RECORD` names a file (#pc0jvv4).
+
 ## Keys: what a build read
 
 A product's key is its name key and the read set its last traced build measured, valued on the tree at hand (#vt46geg), so a change misses only the products that read it. Only Workshop's tree builder builds products for others; it opts in with `ADAMIC_BUILD_STORE=traced`, runs as main's (`ADAMIC_BUILD_STORE_TRUST=main`, without which everything it publishes lands in the candidate namespaces, `build-candidate` and `reads-candidate`, that a trusted reader never reads), and runs under the tracer:

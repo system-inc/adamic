@@ -172,6 +172,7 @@ func inRepository(t *testing.T, directory string) {
 }
 
 func resetRepositoryRoot() {
+	forgetInputs()
 	root.once = sync.Once{}
 	root.directory = ""
 	root.err = nil
@@ -245,6 +246,8 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 		for _, way := range []string{"cold"} {
 			t.Setenv("ADAMIC_BUILD_CACHE_DIR", cold)
 			before, _ := os.ReadFile(log)
+			// Each step changed the tree under this process, which a unit's never does: key it afresh.
+			forgetInputs()
 			binary := GoBuild(t, output, pkg, *arguments, *environment...)
 			after, _ := os.ReadFile(log)
 			// The census line this build wrote: 'build <name> <key12> <outcome> <seconds>', after any note about the store.
