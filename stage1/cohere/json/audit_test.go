@@ -12,6 +12,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
 )
@@ -247,41 +248,16 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	if err != nil {
 		t.Fatal(err)
 	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(scratch, "overlay.json")
-	replacements := map[string]string{
-		filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side,
-	}
-	for _, mutation := range mutations {
-		path := filepath.Join(cohere, "internal/format/javascript", mutation.file)
-		encoded, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		source := string(encoded)
-		if strings.Count(source, mutation.from) != 1 {
-			t.Fatalf("mutant %s must change one place", mutation.name)
-		}
-		mutated := filepath.Join(scratch, mutation.file)
-		if err := os.WriteFile(mutated, []byte(strings.Replace(source, mutation.from, mutation.to, 1)), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		replacements[path] = mutated
-	}
-	writeJSON(t, overlayPath, map[string]any{"Replace": replacements})
 	goPath := filepath.Join(scratch, "go.json")
-	// Unmutated, cohere with the harness laid over it is the "json upstream parity audit oracle" product, built ahead, and
-	// this unit only runs it in the package's directory (#5qykzj5). A printer mutant's sources are written here, outside
-	// the repository, so its oracle is still this unit's own build, under ADAMIC_JSON_PRETTIER only (#ebc67r2).
-	command := bounded(t, filepath.Join(upstreamParityOracleProduct(t), "oracle"), "-test.v", "-test.run=^TestAdamicJSONAudit$")
-	command.Dir = filepath.Join(cohere, "internal/format/javascript")
+	// Cohere with the harness laid over it is a product built ahead, and this unit only runs it in the package's
+	// directory (#5qykzj5): unmutated, the "json upstream parity audit oracle"; with printer mutants, the same package's
+	// test binary with them planted (printerMutantOracle, #ebc67r2).
+	oracle := filepath.Join(upstreamParityOracleProduct(t), "oracle")
 	if len(mutations) > 0 {
-		command = bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
-		command.Dir = cohere
+		oracle = printerMutantOracle(t, mutations...)
 	}
+	command := bounded(t, oracle, "-test.v", "-test.run=^TestAdamicJSONAudit$")
+	command.Dir = filepath.Join(cohere, "internal/format/javascript")
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
@@ -336,6 +312,51 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 // notices real formatting changes while both sides still exit successfully.
 type printerMutation struct{ name, file, from, to string }
 
+// jsonPrinterMutations are the printer mutants the external comparison must catch, each a change to one file of
+// cohere's javascript package.
+var jsonPrinterMutations = []printerMutation{
+	{"missing final newline", "print_json.go", `return concatIn(path, print("node", nil), hardline)`, `return print("node", nil)`},
+	{"missing property space", "print_json.go", `print("key", nil), ": ", print("value", nil)`, `print("key", nil), ":", print("value", nil)`},
+	{"wrong filename parser", "printer.go", `return "json-stringify"`, `return "json"`},
+}
+
+// printerMutantOracle is cohere's javascript package's test binary with the audit harness laid over it and mutations
+// planted, a product built ahead (buildcache.GoTestMutated): the mutated sources live in the product, never in a
+// directory of this unit's.
+func printerMutantOracle(t *testing.T, mutations ...printerMutation) string {
+	t.Helper()
+	cohere, err := filepath.Abs("../../../cohere")
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/cohere_side_test.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	writeJSON(t, overlayPath, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
+	var planted []buildcache.Mutation
+	for _, mutation := range mutations {
+		planted = append(planted, buildcache.Mutation{File: "cohere/internal/format/javascript/" + mutation.file, Before: mutation.from, After: mutation.to})
+	}
+	return buildcache.GoTestMutated(t, "cohere", "javascript.test", "./internal/format/javascript", []string{"-overlay=" + overlayPath}, planted)
+}
+
+func TestProduct_JSONPrinterMutant_0(t *testing.T) {
+	t.Parallel()
+	printerMutantOracle(t, jsonPrinterMutations[0])
+}
+
+func TestProduct_JSONPrinterMutant_1(t *testing.T) {
+	t.Parallel()
+	printerMutantOracle(t, jsonPrinterMutations[1])
+}
+
+func TestProduct_JSONPrinterMutant_2(t *testing.T) {
+	t.Parallel()
+	printerMutantOracle(t, jsonPrinterMutations[2])
+}
+
 func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
@@ -353,11 +374,7 @@ func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
 			t.Fatalf("control %s: Go %+v, Prettier %+v", item.Name, goAnswers[index], prettierAnswers[index])
 		}
 	}
-	for _, mutation := range []printerMutation{
-		{"missing final newline", "print_json.go", `return concatIn(path, print("node", nil), hardline)`, `return print("node", nil)`},
-		{"missing property space", "print_json.go", `print("key", nil), ": ", print("value", nil)`, `print("key", nil), ":", print("value", nil)`},
-		{"wrong filename parser", "printer.go", `return "json-stringify"`, `return "json"`},
-	} {
+	for _, mutation := range jsonPrinterMutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			t.Parallel()
 			changed, external := oracleAnswers(t, cases, mutation)
