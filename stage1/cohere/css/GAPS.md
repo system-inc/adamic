@@ -89,45 +89,42 @@ See `NATIVE_REPORT.md` for observed results and native throughput.
 
 ## Printer boundaries against full Prettier
 
-[gaps/printer_boundaries.ts](gaps/printer_boundaries.ts) and
-[gaps/printer_library.mjs](gaps/printer_library.mjs) prove four full-API
-boundaries. Go's internal CSS entry receives raw input, whereas Prettier's
-full format entry preserves a BOM, normalizes carriage returns, bypasses
-parsing for whitespace-only nonbreaking space, and delegates nonempty YAML
-front matter to its YAML printer. Go CSS explicitly refuses that delegation.
-The Adamic printer follows Go. These are entry-point differences, not newly
-claimed Prettier defects.
+`TestCSSPrinterAgreesWithGo_000` through `TestCSSPrinterAgreesWithGo_031`
+hold four full-API boundaries against npm Prettier and the fork, in default
+and narrow option modes. Their `comparePrinterLibrary` helper reads
+[`testdata/printer_library_gaps.json`](testdata/printer_library_gaps.json)
+and matches each discrepancy's exact input, option mode, oracle variant and
+both answers; all other format or acceptance differences fail.
 
-`testdata/printer_library_gaps.json` records exact input, option mode, oracle
-variant and both answers; all other format or acceptance differences fail.
-For each option set each original oracle has 4,952 byte-identical formats,
-19,080 shared refusals and 44 recorded discrepancy occurrences: BOM 12, CR 2,
-nonbreaking space 2, YAML 28. Error messages from Prettier's public API include
-code frames and are not compared with Go's internal error API. Go errors and
-positions are held exactly. JSON escaping differences are decoded before
-comparing formatted string bytes. No arbitrary invalid-UTF-8 output is promised.
+Go's internal CSS entry receives raw input, whereas Prettier's full format
+entry preserves a BOM, normalizes carriage returns, bypasses parsing for
+whitespace-only nonbreaking space, and delegates nonempty YAML front matter
+to its YAML printer. Go CSS explicitly refuses that delegation. The Adamic
+printer follows Go. These are entry-point differences, not newly claimed
+Prettier defects.
+
+Error messages from Prettier's public API include code frames and are not
+compared with Go's internal error API. Go errors and positions are held
+exactly. JSON escaping differences are decoded before comparing formatted
+string bytes. No arbitrary invalid-UTF-8 output is promised.
 
 ## 7. Appending to a shared string slice: closed
 
 The shared-slice append fix included in `50045bd` closed the capacity-underflow
-bug. [testdata/shared_slice_append.ts](testdata/shared_slice_append.ts) moved out
-of `gaps/` unchanged. `TestSharedSliceAppendAgreesWithNode` now requires `1152`
-and exit 0 from Node, native ASan/UBSan and the JavaScript backend, with a
-separate LeakSanitizer check.
+bug. The regression is now held by `TestCSSPrinterOptimizedMatchesGo`, per
+the deletion audit (#qs8ca07).
 
 The printer retains its earlier direct-concatenation workaround pending a new
 benchmark. `PERFORMANCE.md` records the historical failure and rejected unsafe
-candidate; its old `gaps/7_shared_slice_append.ts` path now refers to the moved
-regression above.
+candidate.
 
 Optional boolean closure validation on compiler/area-gaps:
 
 ```sh
 go test -v ./stage1/cohere/css -run '^(TestClosedOptionalBooleanConditionGap|TestTheCanonicalRangeChecksCanFail|TestCompositionMatchesGo)$' -count=1 -timeout 30m
-go test -v ./stage1/cohere/css -run '^TestOptionalBooleanPrinterMatchesGo$' -count=1 -timeout 30m
 ```
 
-Both passed (180.627s and 60.278s). Composition compares 24,014 cases with Go,
+The retained command passed (180.627s). Composition compares 24,014 cases with Go,
 Node and both backends; the tiny printer corpus compares six flag/namespace
 cases, including important and SCSS default flags, with all those sides.
 Sanitizer and leak checks pass. Existing custom-property, comment and closing
