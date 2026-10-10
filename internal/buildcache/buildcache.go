@@ -221,7 +221,10 @@ type place struct{ path, name string }
 // places are the directories portable rewrites, longest first, so a checkout inside the home directory becomes
 // <repository> rather than ~/....: the repository, the build cache (a key that names another product by its path,
 // such as estree's main=<build cache>/<key>/main.ts, names it by its key), the home directory, and each as its symbolic
-// links resolve (macOS spells /tmp as /private/tmp).
+// links resolve (macOS spells /tmp as /private/tmp). A product this process holds anywhere else is <build cache>/<key>
+// too, as Relative names it: one built outside the cache (uncached, or its scratch directory while it builds), and the
+// copy Resolved made of one, whose name holds a hash of this machine's roots (#sgemgmn: estree's misc port, keyed by
+// its resolved main.ts, missed on every checkout but the one that built it).
 func places(root string) []place {
 	var found []place
 	add := func(path, name string) {
@@ -242,6 +245,12 @@ func places(root string) []place {
 	}
 	if home, err := os.UserHomeDir(); err == nil {
 		add(home, "~")
+	}
+	for _, products := range []*sync.Map{&productDirectories, &resolvedCopies} {
+		products.Range(func(directory, key any) bool {
+			add(directory.(string), "<build cache>/"+key.(string))
+			return true
+		})
 	}
 	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
 	return found
