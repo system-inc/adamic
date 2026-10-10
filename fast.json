@@ -1,0 +1,18 @@
+{
+  "sha": "9061ce16f81796e0c1fb6f1a6bde82699f28a506",
+  "candidate": "9061ce16f81796e0c1fb6f1a6bde82699f28a506",
+  "base": "0bf6186d9753b2ee809965d2510531275e43d867",
+  "base_name": "main",
+  "branch": "cloud/land-stack-stage3-batch6-9061ce16",
+  "tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "status": "red",
+  "failure": {
+    "step": "merge",
+    "after_seconds": 0.0,
+    "detail": "conflicts with main 0bf6186d9753b2ee809965d2510531275e43d867 in stage3/census/latent/README.md stage3/census/latent/full.go.txt"
+  },
+  "merge_conflicts": [
+    "stage3/census/latent/README.md",
+    "stage3/census/latent/full.go.txt"
+  ]
+}
