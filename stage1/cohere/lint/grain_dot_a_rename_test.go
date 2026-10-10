@@ -153,8 +153,9 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 	})
 }
 
-// C emission exceeds the build phase's 60s grain. Keep lowered/native
-// products shard-prepared until that production dependency is split.
+// Every product the shards read is declared, so Workshop's loom build-tree builds each once and a shard only reads
+// them. C emission is over the 60 s a test may take, never the 600 s a product may (Loom's KindCeilings): measured
+// Oct 10 inside the shards at 97% busy, lowering 71 s and the sanitized native 86 to 152 s.
 func TestProduct_DotARenameSource(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
@@ -167,6 +168,26 @@ func TestProduct_DotARenameOracle(t *testing.T) {
 	started := time.Now()
 	dotARenameOracle(t)
 	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
+}
+
+func TestProduct_DotARenameOriginalLowered(t *testing.T) {
+	t.Parallel()
+	dotARenameLowered(t, false)
+}
+
+func TestProduct_DotARenameRenamedLowered(t *testing.T) {
+	t.Parallel()
+	dotARenameLowered(t, true)
+}
+
+func TestProduct_DotARenameOriginalNative(t *testing.T) {
+	t.Parallel()
+	dotARenameNative(t, false)
+}
+
+func TestProduct_DotARenameRenamedNative(t *testing.T) {
+	t.Parallel()
+	dotARenameNative(t, true)
 }
 
 func dotARenameGoOracleIn(sourceRoot, directory string) (string, error) {
