@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
 func TestRunFilterAttemptLimit(t *testing.T) {
 	t.Parallel()
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if err != nil {
 		t.Fatal(err)
 	}
