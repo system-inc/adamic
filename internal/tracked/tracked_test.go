@@ -390,3 +390,22 @@ func TestUnrecordedFilesAreNamed(t *testing.T) {
 		t.Fatalf("git's own checkout: %q (%v)", extra, err)
 	}
 }
+
+// An untracked name git would read as pathspec magic (":(glob)...", ":!...") is a name like any other: check-ignore
+// takes it literally, so Unrecorded names it rather than failing on it, and an ignored one stays ignored.
+func TestUnrecordedNamesArePathsNotPathspecs(t *testing.T) {
+	t.Parallel()
+	checkout := checkout(t)
+	write(t, filepath.Join(checkout, ".gitignore"), "*.log\n", 0o644)
+	runGit(t, checkout, "add", ".gitignore")
+	runGit(t, checkout, "commit", "-qm", "ignore rules")
+	source := unpack(t, checkout, true)
+	// At the repository's top, where the walk hands them to git as they are.
+	for _, name := range []string{":(glob)x.md", ":!y.md", ":(top)z.log"} {
+		write(t, filepath.Join(source, name), "magic\n", 0o644)
+	}
+	extra, err := Unrecorded(source, ".")
+	if err != nil || !reflect.DeepEqual(extra, []string{":!y.md", ":(glob)x.md"}) {
+		t.Fatalf("names that look like pathspecs: %q (%v)", extra, err)
+	}
+}

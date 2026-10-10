@@ -269,8 +269,11 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		return nil, err
 	}
 	var input bytes.Buffer
+	// Each name is a path, never a pathspec: an untracked file named ":(glob)x" or ":!y" is just a file. "./" keeps
+	// its first character from reading as magic; GIT_LITERAL_PATHSPECS can't, since check-ignore refuses every magic,
+	// literal among them (git 2.54).
 	for _, name := range asked {
-		input.WriteString(name)
+		input.WriteString("./" + name)
 		input.WriteByte(0)
 	}
 	command := exec.Command("git", "--git-dir="+scratch, "--work-tree="+directory, "-c", "core.bare=false", "-c", "core.excludesFile="+os.DevNull,
@@ -290,7 +293,7 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 	}
 	ignored := map[string]bool{}
 	for _, name := range names(output) {
-		ignored[name] = true
+		ignored[strings.TrimPrefix(name, "./")] = true
 	}
 	return ignored, nil
 }
