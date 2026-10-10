@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 	"testing"
@@ -130,12 +129,8 @@ func verifyCorpusPin(t *testing.T, cases []textCase) {
 	if err := json.Unmarshal(encoded, &expected); err != nil {
 		t.Fatalf("%s corpus pin: %v", t.Name(), err)
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	actual, count, err := validatePinnedCorpus(root, cases, expected)
-	t.Logf("corpus repository: %d tracked JSON files; read from Git pin %s", count, repositoryCorpusCommit)
+	actual, count, err := validatePinnedCorpus(t, cases, expected)
+	t.Logf("corpus repository: %d tracked JSON files; read from the corpus product at Git pin %s", count, repositoryCorpusCommit)
 	if err != nil {
 		t.Fatalf("%s: %v", t.Name(), err)
 	}
@@ -190,11 +185,7 @@ func TestCorpusPinRejectsMissingProvisionedInputs(t *testing.T) {
 	if len(cases)-len(short) != 18 {
 		t.Fatal("provisioned input witness changed")
 	}
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, _, err = validatePinnedCorpus(root, short, full)
+	_, _, err = validatePinnedCorpus(t, short, full)
 	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), "provisioned: got 0, pinned 18") {
 		t.Fatalf("short-box pin mutant survived: %v", err)
 	}
