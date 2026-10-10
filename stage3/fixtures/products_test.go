@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -79,8 +80,27 @@ locations = {'GOWORK','GOTOOLDIR','GOTOOLCHAIN','GOENV','GOROOT','GOPATH'}
 print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Flags':['-buildvcs=false','-c','./internal/oracle','repository='+str(root), workspace] + flags + [k+'='+str(v) for k,v in sorted(settings.items()) if k not in locations], 'Toolchain':tools}))
 `
 
+// fixtureHookInputs is the oracle hook's key for repository, discovered once per process: every fixture asks for the
+// product, and discovery runs python, go list, go env and go version (16 callers ran it 16 times). Parallel fixtures
+// wait on the first discovery; a failed one isn't remembered.
 func fixtureHookInputs(t testing.TB, repository string) buildcache.Inputs {
-	return fixtureHookInputsEnvironment(t, repository, nil)
+	t.Helper()
+	fixtureHookKeys.Lock()
+	defer fixtureHookKeys.Unlock()
+	if inputs, ok := fixtureHookKeys.inputs[repository]; ok {
+		return inputs
+	}
+	inputs := fixtureHookInputsEnvironment(t, repository, nil)
+	if fixtureHookKeys.inputs == nil {
+		fixtureHookKeys.inputs = map[string]buildcache.Inputs{}
+	}
+	fixtureHookKeys.inputs[repository] = inputs
+	return inputs
+}
+
+var fixtureHookKeys struct {
+	sync.Mutex
+	inputs map[string]buildcache.Inputs
 }
 
 func fixtureHookInputsEnvironment(t testing.TB, repository string, environment []string) buildcache.Inputs {
