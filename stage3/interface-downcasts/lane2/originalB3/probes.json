@@ -1,0 +1,1873 @@
+[
+  {
+    "name": "deferredmapper-targets-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": true
+  },
+  {
+    "name": "deferredmapper-targets-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": true
+  },
+  {
+    "name": "deferredmapper-targets-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": true
+  },
+  {
+    "name": "deferredmapper-targets-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!().flags is not a TypeFlags; expected TypeFlags, found string",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": true
+  },
+  {
+    "name": "deferredmapper-targets-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": true
+  },
+  {
+    "name": "deferredmapper-sources-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "deferredmapper-sources-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "deferredmapper-sources-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "deferredmapper-sources-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "deferredmapper-sources-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.sources",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "nonincrementalbuildinfo-root-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "NonIncrementalBuildInfo"
+    ],
+    "pair": "NonIncrementalBuildInfo.root",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "nonincrementalbuildinfo-root-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "NonIncrementalBuildInfo"
+    ],
+    "pair": "NonIncrementalBuildInfo.root",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "nonincrementalbuildinfo-root-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "NonIncrementalBuildInfo"
+    ],
+    "pair": "NonIncrementalBuildInfo.root",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "nonincrementalbuildinfo-root-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "NonIncrementalBuildInfo"
+    ],
+    "pair": "NonIncrementalBuildInfo.root",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "nonincrementalbuildinfo-root-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "NonIncrementalBuildInfo"
+    ],
+    "pair": "NonIncrementalBuildInfo.root",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "builderprogramstate-affectedfiles-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "BuilderProgramState",
+      "SourceFile"
+    ],
+    "pair": "BuilderProgramState.affectedFiles",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected Canonicalized, found number",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizedfiles-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedFiles",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected Canonicalized, found number",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "sortedandcanonicalizedmutablefilesystementries-sortedandcanonicalizeddirectories-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ],
+    "pair": "SortedAndCanonicalizedMutableFileSystemEntries.sortedAndCanonicalizedDirectories",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.name is not a string; expected string, found number",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "unscopedemithelper-dependencies-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnscopedEmitHelper",
+      "ScopedEmitHelper"
+    ],
+    "pair": "UnscopedEmitHelper.dependencies",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludefiles-receiver-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeFiles",
+    "mode": "receiver-undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "watchoptions---undefined-excludedirectories-receiver-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "WatchOptions"
+    ],
+    "pair": "WatchOptions | undefined.excludeDirectories",
+    "mode": "receiver-undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithdetachedlocation-relatedinformation-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithDetachedLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithDetachedLocation.relatedInformation",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredindexinfos-good",
+    "source": "true\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "IndexInfo"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "isReadonly",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredindexinfos-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "isReadonly",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredindexinfos-lazy-element",
+    "source": "true\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "IndexInfo"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "isReadonly",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredindexinfos-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.isReadonly is not a boolean; expected boolean, found string",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "IndexInfo"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "isReadonly",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredindexinfos-alias",
+    "source": "false\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "IndexInfo"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredIndexInfos",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "isReadonly",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredconstructsignatures-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredConstructSignatures",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetypewithdeclaredmembers-declaredcallsignatures-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceTypeWithDeclaredMembers",
+      "Signature"
+    ],
+    "pair": "InterfaceTypeWithDeclaredMembers.declaredCallSignatures",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-types-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.types",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-modulesuffixes-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.moduleSuffixes",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "compileroptions-customconditions-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CompilerOptions"
+    ],
+    "pair": "CompilerOptions.customConditions",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "field read failed: viewed?.validatedIncludeSpecs is not initialized; expected readonly string[] | undefined, found missing",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs---undefined-validatedincludespecs-receiver-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs | undefined.validatedIncludeSpecs",
+    "mode": "receiver-undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-good",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "good",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "lazy",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-lazy-element",
+    "source": "a\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "lazy-element",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-bad",
+    "source": "42\n",
+    "refusal": "",
+    "diagnostic": "element read failed: items.slice(0, 1)[element] expected string, found number",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "bad",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-alias",
+    "source": "second\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "alias",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "field read failed: viewed.validatedExcludeSpecs is not initialized; expected readonly string[] | undefined, found missing",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "absent",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "configfilespecs-validatedexcludespecs-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "ConfigFileSpecs"
+    ],
+    "pair": "ConfigFileSpecs.validatedExcludeSpecs",
+    "mode": "undefined",
+    "stringElement": true,
+    "nested": false,
+    "callable": false
+  },
+  {
+    "name": "tsconfigsourcefile-statements-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "TsConfigSourceFile",
+      "JsonObjectExpressionStatement"
+    ],
+    "pair": "TsConfigSourceFile.statements",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "tsconfigsourcefile-statements-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "TsConfigSourceFile"
+    ],
+    "pair": "TsConfigSourceFile.statements",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "tsconfigsourcefile-statements-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "TsConfigSourceFile",
+      "JsonObjectExpressionStatement"
+    ],
+    "pair": "TsConfigSourceFile.statements",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "tsconfigsourcefile-statements-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "TsConfigSourceFile",
+      "JsonObjectExpressionStatement"
+    ],
+    "pair": "TsConfigSourceFile.statements",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "tsconfigsourcefile-statements-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "TsConfigSourceFile",
+      "JsonObjectExpressionStatement"
+    ],
+    "pair": "TsConfigSourceFile.statements",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "diagnosticwithlocation-relatedinformation-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "DiagnosticWithLocation",
+      "DiagnosticRelatedInformation"
+    ],
+    "pair": "DiagnosticWithLocation.relatedInformation",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "deferredmapper-targets-replacement",
+    "source": "9\n",
+    "diagnostic": "element read failed: <array write> expected function, found uncertified source element contract",
+    "javascriptDiagnostic": "element read failed: <array write> expected uncertified storage, found uncertified source element contract",
+    "codeRequired": true,
+    "contracts": [
+      "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "Type"
+    ],
+    "pair": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }.targets",
+    "mode": "replacement",
+    "callable": true,
+    "leaf": "flags"
+  }
+]

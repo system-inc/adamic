@@ -310,6 +310,9 @@ func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expressi
 
 // callOrMethod lowers a call to one of the module's functions, or to a method of one of its classes.
 func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.closureSurfaceCall(node); handled {
+		return value, err
+	}
 	if value, handled, err := l.classGenericCall(node); handled {
 		return value, err
 	}

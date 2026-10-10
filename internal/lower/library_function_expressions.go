@@ -7,7 +7,8 @@ import (
 
 // functionExpression lowers ordinary function expressions and switch declarations with the same
 // calling convention and counted captures as arrows. Ordinary
-// functions have their own dynamic this; until that convention exists, every use of it is refused.
+// functions receive a dynamic object this when its explicit source domain is checkable.
+// Inferred dynamic receivers remain refused.
 func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	if node.Body() == nil {
 		return nil, l.notYet(node, "a function without a body")
@@ -18,10 +19,9 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	if len(node.TypeParameters()) != 0 {
 		return nil, l.notYet(node, "a generic function expression")
 	}
+	explicitThis := false
 	for _, parameter := range node.Parameters() {
-		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
-			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
-		}
+		explicitThis = explicitThis || ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this"
 	}
 	var invalid error
 	var visit ast.Visitor
@@ -33,7 +33,7 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 		if ast.IsFunctionLike(inner) && inner.Kind != ast.KindArrowFunction {
 			return false
 		}
-		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) {
+		if inner.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(inner) && !explicitThis {
 			invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method"}
 			return true
 		}

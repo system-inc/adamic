@@ -76,7 +76,7 @@ const adamicPrint = (value, seen) => {
 	seen.add(value);
 	if (typeof value.code === 'function') return 'closure' + adamicIdentity(value);
 	if (value instanceof Map) return 'map(' + [...value].map(([key, entry]) => adamicPrint(key, seen) + '=>' + adamicPrint(entry, seen)).join(',') + ')';
-	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
+	if (Array.isArray(value)) return 'array(' + value.length + '){' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
 	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
 };
 // A panic on Node is a throw a catch can take, though natively it ends the program where it stands, so

@@ -79,3 +79,17 @@ func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
 		}
 	}
 }
+
+func TestClosureTargetsPreserveBoundaryValue(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{}
+	property := ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "run", Of: ir.Closure}
+	targets := program.ClosureTargets(ir.CallClosure{Closure: property})
+	if !targets.Unknown || len(targets.Functions) != 0 || !reflect.DeepEqual(targets.Value, property) {
+		t.Fatalf("property retains its receiver without fabricating a target: %#v", targets)
+	}
+	direct := program.ClosureTargets(ir.CallClosure{Closure: property, Direct: 2})
+	if direct.Unknown || !reflect.DeepEqual(direct.Functions, []int{1}) || !reflect.DeepEqual(direct.Value, property) {
+		t.Fatalf("direct target lost boundary value: %#v", direct)
+	}
+}

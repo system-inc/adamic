@@ -1,0 +1,26 @@
+=== RUN   TestCheckedViewOptionalReadBoundary
+=== PAUSE TestCheckedViewOptionalReadBoundary
+=== CONT  TestCheckedViewOptionalReadBoundary
+    checked_views_optional_read_test.go:23: gate cache node miss
+=== RUN   TestCheckedViewOptionalReadBoundary/ordinary_control
+=== PAUSE TestCheckedViewOptionalReadBoundary/ordinary_control
+=== RUN   TestCheckedViewOptionalReadBoundary/native
+=== PAUSE TestCheckedViewOptionalReadBoundary/native
+=== RUN   TestCheckedViewOptionalReadBoundary/JavaScript
+=== PAUSE TestCheckedViewOptionalReadBoundary/JavaScript
+=== CONT  TestCheckedViewOptionalReadBoundary/ordinary_control
+=== CONT  TestCheckedViewOptionalReadBoundary/JavaScript
+=== CONT  TestCheckedViewOptionalReadBoundary/native
+=== NAME  TestCheckedViewOptionalReadBoundary/ordinary_control
+    checked_views_optional_read_test.go:29: gate cache node miss
+    checked_views_optional_read_test.go:33: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+--- PASS: TestCheckedViewOptionalReadBoundary (0.53s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/JavaScript (0.40s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/native (0.47s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/ordinary_control (3.31s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.901s

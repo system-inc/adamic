@@ -1,0 +1,46 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts (0.56s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts (0.58s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts (0.61s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts (0.72s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts (0.76s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts (0.54s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts (0.58s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts (0.63s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts (0.53s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts (0.58s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	1.315s

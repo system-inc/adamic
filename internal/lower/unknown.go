@@ -159,6 +159,9 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	}
 	present := l.checker.GetNonNullableType(own)
 	if held, known := l.representation(present); known && held == ir.Closure {
+		if l.readonlyViewCallableStorage(outer, own) {
+			return nil
+		}
 		return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")
 	}
 	for _, name := range []string{"JSON", "Math", "Reflect"} {

@@ -1,0 +1,11 @@
+=== RUN   TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== PAUSE TestV4EscapeAdapterNullablePrimitiveCallRefusal
+=== CONT  TestV4EscapeAdapterNullablePrimitiveCallRefusal
+    checked_views_v4_surface_refusals_test.go:47: gate cache node miss
+    checked_views_v4_surface_refusals_test.go:47: Node succeeds; compiler refuses before either backend: /tmp/adamic-gate/TestV4EscapeAdapterNullablePrimitiveCallRefusal4204515931/001/unsupported-surface.ts:4:144: Adamic 0.1 refuses call or apply with a primitive or unrepresented thisArg; use an object or undefined receiver until checked primitive receivers are supported
+--- PASS: TestV4EscapeAdapterNullablePrimitiveCallRefusal (0.49s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.507s

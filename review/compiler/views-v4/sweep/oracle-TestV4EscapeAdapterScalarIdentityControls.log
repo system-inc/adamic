@@ -1,0 +1,19 @@
+=== RUN   TestV4EscapeAdapterScalarIdentityControls
+=== PAUSE TestV4EscapeAdapterScalarIdentityControls
+=== CONT  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:216: gate cache node miss
+    checked_views_v4_identity_test.go:224: gate cache node miss
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:216: gate cache node miss
+    checked_views_v4_identity_test.go:224: gate cache node miss
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+--- PASS: TestV4EscapeAdapterScalarIdentityControls (1.16s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.176s

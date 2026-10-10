@@ -1,0 +1,32 @@
+=== RUN   TestV4EscapeAdapterCallReceiverCheck
+=== PAUSE TestV4EscapeAdapterCallReceiverCheck
+=== RUN   TestV4EscapeAdapterCallReceiverRefusal
+=== PAUSE TestV4EscapeAdapterCallReceiverRefusal
+=== RUN   TestV4ExistingExplicitMethodReceiver
+=== PAUSE TestV4ExistingExplicitMethodReceiver
+=== CONT  TestV4EscapeAdapterCallReceiverCheck
+=== CONT  TestV4ExistingExplicitMethodReceiver
+=== CONT  TestV4EscapeAdapterCallReceiverRefusal
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:123: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallReceiverRefusal
+    checked_views_v4_call_apply_test.go:162: gate cache node miss
+=== NAME  TestV4ExistingExplicitMethodReceiver
+    checked_views_v4_method_receiver_test.go:14: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallReceiverRefusal (0.71s)
+=== NAME  TestV4ExistingExplicitMethodReceiver
+    checked_views_v4_method_receiver_test.go:14: gate cache node miss
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in javascript: exit 0 output "7:99\n11\n"
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in native: exit 0 output "7:99\n11\n"
+    checked_views_v4_method_receiver_test.go:14: guard mutant admitted in sanitized: exit 0 output "7:99\n11\n"
+--- PASS: TestV4ExistingExplicitMethodReceiver (1.31s)
+=== NAME  TestV4EscapeAdapterCallReceiverCheck
+    checked_views_v4_call_apply_test.go:125: gate cache node miss
+    checked_views_v4_call_apply_test.go:148: gate cache node miss
+    checked_views_v4_call_apply_test.go:152: receiver-domain omission caught in native/ASan/UBSan/LSan and JavaScript
+--- PASS: TestV4EscapeAdapterCallReceiverCheck (2.07s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.159s

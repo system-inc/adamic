@@ -143,7 +143,7 @@ func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Ex
 	if direct >= 0 {
 		return ir.Call{Function: direct, Arguments: arguments, Returns: returns}
 	}
-	return ir.CallClosure{Closure: function, Arguments: arguments, Returns: returns}
+	return ir.CallClosure{Closure: function, Arguments: arguments, Returns: returns, ReceiverPacked: receiver}
 }
 
 func (l *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {

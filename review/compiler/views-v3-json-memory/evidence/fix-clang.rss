@@ -1,0 +1,5 @@
+max_rss_kib=287616
+wall_seconds=9.511506
+exit_code=0
+signal=0
+command=clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /home/agent/.cache/adamic/runtime/3b4cced53cccd2c0bfc08da80660a0decc655ad71f3ac5425859611f0876e840 -c /workspace/v3-json-artifacts/fixed-json.c -o /workspace/v3-json-artifacts/fixed-json.o

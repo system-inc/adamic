@@ -1,0 +1,14 @@
+=== RUN   TestV4EscapeAdapterBoxed
+=== PAUSE TestV4EscapeAdapterBoxed
+=== CONT  TestV4EscapeAdapterBoxed
+    checked_views_v4_escape_test.go:323: gate cache node miss
+    checked_views_v4_escape_test.go:323: gate cache node miss
+    checked_views_v4_escape_test.go:323: guard mutant admitted in javascript: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:323: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:323: guard mutant admitted in sanitized: exit 0 output "5\n"
+--- PASS: TestV4EscapeAdapterBoxed (0.54s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.546s
