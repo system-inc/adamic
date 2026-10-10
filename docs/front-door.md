@@ -28,3 +28,15 @@ Only what you act on, in your inbox: `landed` (the main sha), `red` (the failing
 `loom repro <unitKey>`), or `parked` (why it can't land as it is; resubmit on main). Voids and retries are Loom's and
 never reach you. Read your change any time with `GET /changes/<change>` and its events with
 `GET /changes/<change>/events`.
+
+## Resubmit
+
+A red or parked change moves to a new sha and keeps its id: post the same body as a submit to
+`POST /changes/<change>/sha` with your submit token. Only the sha, base and paths move, and a sha the queue already
+tested is refused, so push a new commit first.
+
+## Who lands it
+
+The lander, on workshop with its own deploy key. It moves main only by a fast-forward to the exact tree that was tested,
+never a force. A tested tree that isn't a fast-forward of main when its turn comes isn't pushed: the change parks, and
+you resubmit it on main's tip.
