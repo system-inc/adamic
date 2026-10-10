@@ -75,7 +75,7 @@ func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inpu
 	t.Helper()
 	inputs.Name = "jsx-textnodes-mutant-native"
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
-	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
+	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	built := buildcache.Product(t, inputs, func(out string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))

@@ -212,7 +212,7 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 	inputs := buildcache.Inputs{
 		Name:      "markdown-quote-layout-lowered",
 		Files:     []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/load", "internal/lower", "internal/ir", "internal/native", "internal/javascript", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod"},
-		Flags:     []string{"C and JavaScript", os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")},
+		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
@@ -266,7 +266,7 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
 		goInputs := buildcache.Inputs{
 			Name:      "markdown-quote-layout-go-" + mode.name,
 			Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
-			Flags:     []string{"go build", "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")},
+			Flags:     []string{"go build", "overlay=" + mode.name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")},
 			Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version")},
 		}
 		dir := buildcache.Product(t, goInputs, func(dir string) error {

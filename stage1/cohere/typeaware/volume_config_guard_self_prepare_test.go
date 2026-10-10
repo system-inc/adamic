@@ -98,7 +98,7 @@ func volumeGuardArchive(h *volumeGuardHarness, name, overlay string, sanitize bo
 	return filepath.Join(directory, "checker.a")
 }
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: []string{fmt.Sprint(sanitize), os.Getenv("CC"), os.Getenv("CGO_CFLAGS"), os.Getenv("CGO_LDFLAGS"), os.Getenv("GOFLAGS"), os.Getenv("ADAMIC_TOOLS")}, Toolchain: []string{volumeGuardTool(ctx, "clang", "--version"), volumeGuardTool(ctx, "go", "version")}}
+	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: []string{fmt.Sprint(sanitize), os.Getenv("CC"), os.Getenv("CGO_CFLAGS"), os.Getenv("CGO_LDFLAGS"), os.Getenv("GOFLAGS")}, Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
 }
 func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)
@@ -493,16 +493,6 @@ func volumeGuardMust(h *volumeGuardHarness, name string, cmd *exec.Cmd) result {
 		h.t.Fatalf("%s: %v\n%s\n%s", name, observed.err, observed.stdout, observed.stderr)
 	}
 	return observed
-}
-func volumeGuardTool(parent context.Context, name string, args ...string) string {
-	cmd, cancel := volumeGuardCommand(parent, name, args...)
-	defer cancel()
-	output, err := volumeGuardOutput(cmd)
-	report := strings.Join(append([]string{name}, args...), " ") + ": " + strings.TrimSpace(string(output))
-	if err != nil {
-		report += " (" + err.Error() + ")"
-	}
-	return report
 }
 
 var volumeGuardCommandGroups sync.Map

@@ -73,7 +73,7 @@ func witnessScriptKindNativeProduct(t *testing.T) string {
 	inputs := witnessScriptKindInputs()
 	options := native.Options{Sanitize: true, Split: true}
 	inputs.Name = "witness-script-kind-native-no-debugger-v1"
-	inputs.Flags = append(native.Flags(options), "Split=true", "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	inputs.Flags = append(native.Flags(options), "Split=true")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(t, inputs, func(out string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
@@ -88,7 +88,7 @@ func witnessScriptKindOracleProduct(t *testing.T) string {
 	t.Helper()
 	inputs := witnessScriptKindInputs()
 	inputs.Name = "witness-script-kind-go-oracle-v1"
-	inputs.Flags = []string{"go build", "overlay=full-rule-registry", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
+	inputs.Flags = []string{"go build", "overlay=full-rule-registry", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
 	return buildcache.Product(t, inputs, func(out string) error {
 		_, err := witnessScriptKindGoOracleIn(context.Background(), packageDirectory, out)

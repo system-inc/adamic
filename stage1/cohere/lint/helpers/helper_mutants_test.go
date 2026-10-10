@@ -60,7 +60,7 @@ func helperMutantProduct(t *testing.T, index int) string {
 		if index >= 0 {
 			m := helperMutations()[index]
 			name = "helper-mutants-" + m.file
-			flags = []string{"native.Build", "Sanitize=true", "mutation=" + m.old + "=>" + m.replacement}
+			flags = []string{"native.Build", "Sanitize=true", "mutation=" + m.old + "=>" + m.replacement, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
 			tools = append(tools, buildcache.Tool("clang", "--version"))
 			files = append(files, "go.mod", "go.work", "internal", "stage1/cohere/lint/helpers/main.ts", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/option_schema.ts", "stage1/cohere/lint/helpers/policy_message.ts", "stage1/cohere/lint/helpers/strict_options.ts")
 		}

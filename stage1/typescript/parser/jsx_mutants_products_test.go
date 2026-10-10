@@ -35,7 +35,7 @@ func jsxMutantsOracle(t *testing.T) string {
 		t.Fatal(err)
 	}
 	virtual := filepath.Join(root, "adamic_parser_oracle.go")
-	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS"), os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{buildcache.Tool("go", "version")}}
+	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS")}, Toolchain: []string{buildcache.Tool("go", "version")}}
 	directory := jsxMutantsFetch(t, inputs, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 		if err != nil {

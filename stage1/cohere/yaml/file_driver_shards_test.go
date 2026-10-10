@@ -311,7 +311,7 @@ func fileDriverGoFormat(t *testing.T, cases string) []byte {
 	files := append(fileDriverBuildFiles(t), "stage1/cohere/yaml/testdata/format_go.go")
 	product := buildcache.Product(t, buildcache.Inputs{
 		Name: "yaml-file-driver-go-format", Files: files,
-		Flags:     []string{"build", "overlay=format_go.go", "./command/formatter_comparison", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")},
+		Flags:     []string{"build", "overlay=format_go.go", "./command/formatter_comparison"},
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}, func(directory string) error {
 		fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-format"), "./command/formatter_comparison")

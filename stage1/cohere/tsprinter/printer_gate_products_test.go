@@ -39,7 +39,7 @@ func printerGateGoOracle(t *testing.T) string {
 	t.Helper()
 	return printerGateOnce(t, "go-oracle", func() string {
 		flags := []string{"go test -c -trimpath -ldflags=-buildid= -overlay=<scratch>/overlay.json ./internal/format/javascript"}
-		for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT", "CGO_ENABLED", "GOOS", "GOARCH", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
+		for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "CGO_ENABLED", "GOOS", "GOARCH", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
 			flags = append(flags, name+"="+os.Getenv(name))
 		}
 		return buildcache.Product(t, buildcache.Inputs{
@@ -112,7 +112,7 @@ func printerGateNative(t *testing.T, family string, sanitize bool) string {
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 		flags := append([]string{"C sha256=" + statementBytesHash(source), "split=true", "jobs=4"}, native.Flags(options)...)
-		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 			flags = append(flags, variable+"="+os.Getenv(variable))
 		}
 		return buildcache.Product(t, buildcache.Inputs{

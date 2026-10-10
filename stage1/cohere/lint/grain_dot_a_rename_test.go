@@ -131,7 +131,7 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 	}
 	lowered := dotARenameLowered(t, renamed)
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4", "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED")))
+	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
 	return dotARenameProduct(t, slot, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {

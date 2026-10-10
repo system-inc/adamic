@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func expressionSelection(t *testing.T, count int) []bool {
@@ -285,6 +287,10 @@ func TestExpressionUnitUnionRejectsMissingAndRepeated(t *testing.T) {
 func expressionInputFiles(t *testing.T, roots ...string) []string {
 	t.Helper()
 	seen := map[string]bool{}
+	tree, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
@@ -294,7 +300,8 @@ func expressionInputFiles(t *testing.T, roots ...string) []string {
 			if err != nil {
 				return err
 			}
-			if entry.Name() == ".git" {
+			// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
+			if entry.Name() == ".git" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
 				if entry.IsDir() {
 					return filepath.SkipDir
 				}

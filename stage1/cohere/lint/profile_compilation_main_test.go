@@ -192,6 +192,8 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		variant.Name = "lint-profile-" + kind
 		options := native.Options{Count: kind == "counted", Jobs: 1}
 		variant.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
+		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
+		variant.Flags = append(variant.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if kind == "profiled" {
 			variant.Flags = append(variant.Flags, "-g", "-lm")
 		}

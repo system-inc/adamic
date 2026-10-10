@@ -35,7 +35,7 @@ func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Input
 	inputs := buildcache.Inputs{
 		Name:  "estree-syntax-mutant-lowered-" + item.name,
 		Files: estreeFamilyDependencyFiles(t),
-		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
 	return inputs
@@ -123,7 +123,7 @@ var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
 	return inputs
 }

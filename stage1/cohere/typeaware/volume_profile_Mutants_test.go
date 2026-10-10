@@ -137,10 +137,7 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 		}
 		inputs = append(inputs, relative)
 	}
-	toolchain := []string{
-		"clang --version: " + strings.TrimSpace(string(h.must("clang-version", volumeProfileMutantCommand(t, "clang", "--version")).stdout)),
-		"go version: " + strings.TrimSpace(string(h.must("go-version", volumeProfileMutantCommand(t, "go", "version")).stdout)),
-	}
+	toolchain := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
 	// Include mutated source bytes explicitly, independent of scratch paths.
 	digest := sha256.New()
 	for _, path := range files {

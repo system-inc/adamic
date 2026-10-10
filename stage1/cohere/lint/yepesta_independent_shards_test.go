@@ -333,7 +333,7 @@ type yepestaBundle struct {
 }
 
 func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v1", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Flags: []string{packageDirectory, "shards=16", os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("ADAMIC_NATIVE_JOBS")}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "yepesta-setup-v1", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Flags: []string{packageDirectory, "shards=16", os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
 
 // Preparation runs once per process, including when a single shard is selected.

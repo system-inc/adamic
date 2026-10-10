@@ -452,8 +452,9 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	inputs := jsxTreeInputs(t, entry)
 	inputs.Name = "jsx-tree-native"
 	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
-	inputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
-	inputs.Toolchain = string(execute(t, "", "clang", "--version").output)
+	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Toolchain = buildcache.Tool("clang", "--version")
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {

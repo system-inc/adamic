@@ -252,7 +252,7 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	inputs := buildcache.Inputs{
 		Name:      "markdown-whitespace-layout-lowered-" + probe,
 		Files:     whitespaceLayoutBuildFiles(),
-		Flags:     []string{"C and JavaScript", os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")},
+		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
 	loweredDir := buildcache.Product(t, inputs, func(dir string) error {

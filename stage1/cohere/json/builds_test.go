@@ -64,6 +64,11 @@ func jsonGoToolchain() ([]string, error) {
 		}
 	}
 	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
+	// Where go keeps things and the policy that picked its release say nothing about a product (the release is go
+	// version above), and differ between Workshop and a runner (#t37sw0f).
+	for _, name := range []string{"GOROOT", "GOTOOLDIR", "GOPATH", "GOENV", "GOCACHE", "GOMODCACHE", "GOTMPDIR", "GOBIN", "GOCACHEPROG", "GOPROXY", "GOSUMDB", "GOPRIVATE", "GONOPROXY", "GONOSUMDB", "GOINSECURE", "GOAUTH", "GOVCS", "GOTOOLCHAIN", "GOTELEMETRY", "GOTELEMETRYDIR"} {
+		delete(resolved, name)
+	}
 	settings, err = json.Marshal(resolved)
 	if err != nil {
 		return nil, err
@@ -77,8 +82,7 @@ func jsonClangToolchain() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	version, err := exec.Command(clang, "--version").Output()
-	if err != nil {
+	if _, err := exec.Command(clang, "--version").Output(); err != nil {
 		return nil, err
 	}
 	archiver := filepath.Join(filepath.Dir(clang), "llvm-ar")
@@ -88,11 +92,11 @@ func jsonClangToolchain() ([]string, error) {
 			return nil, err
 		}
 	}
-	arVersion, err := exec.Command(archiver, "--version").Output()
-	if err != nil {
+	if _, err := exec.Command(archiver, "--version").Output(); err != nil {
 		return nil, err
 	}
-	return []string{clang, string(version), archiver, string(arVersion), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
+	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
+	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
 }
 
 // buildJSONGoOracle writes the driver and overlay only into its product directory.
@@ -127,7 +131,7 @@ func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
-	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, jsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT", "GOENV")...), Toolchain: toolchain}
+	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, jsonBuildEnvironment("GOFLAGS", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: toolchain}
 }
 
 // The immutable lowering product contains the copied TypeScript and both emitted
@@ -175,7 +179,7 @@ func jsonNativePortInputs(source string, sanitize bool, toolchain []string) json
 	// Generated C is a captured input, not a repository file. Its digest includes
 	// emitted feature defines; internal/ also covers runtime sources/link policy.
 	flags = append(flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("options=%+v", options), "-I=<runtime product>", "-o=<dir>/port", "-lm")
-	flags = append(flags, jsonBuildEnvironment("PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "XDG_CACHE_HOME", "HOME", "TMPDIR", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
+	flags = append(flags, jsonBuildEnvironment("ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
 	return jsonBuildInputs{Name: name, Files: []string{"internal", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
 }
 

@@ -403,9 +403,10 @@ func upstreamParityOracleProduct(t *testing.T) string {
 			t.Fatal(err)
 		}
 		flags := []string{"go test -c ./internal/format/javascript", "overlay=cohere_side_test.go"}
-		for _, name := range []string{"GOFLAGS", "GOTOOLCHAIN", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOWORK", "GOENV"} {
+		for _, name := range []string{"GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT"} {
 			flags = append(flags, name+"="+os.Getenv(name))
 		}
+		flags = append(flags, buildcache.Tool("go", "env", "GOWORK"))
 		product := buildcache.Product(t, buildcache.Inputs{Name: "json upstream parity audit oracle", Files: []string{"cohere", "stage1/cohere/json/testdata/cohere_side_test.go"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
 			overlay := filepath.Join(dir, "overlay.json")
 			encoded, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
