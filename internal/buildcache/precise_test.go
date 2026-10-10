@@ -1,6 +1,7 @@
 package buildcache
 
 import (
+	"crypto/md5"
 	"errors"
 	"fmt"
 	"net/http/httptest"
@@ -833,24 +834,62 @@ func TestATreeWriteAnywhereInTheRunRefusesIt(t *testing.T) {
 // build rather than key what was built under what the tree is now (review 2).
 // Not parallel: newRig.
 func TestATreeThatChangedDuringTheRunRefusesIt(t *testing.T) {
-	for name, change := range map[string]func(r *rig){
-		"a commit": func(r *rig) {
+	for name, run := range map[string]struct{ before, during func(r *rig) }{
+		"a commit": {during: func(r *rig) {
 			write(t, r.root, "source/a.c", "int a_changed_mid_run;\n")
 			gitIn(t, r.root, "commit", "-qam", "next")
+		}},
+		"an edit":           {during: func(r *rig) { write(t, r.root, "notes.txt", "edited mid-run\n") }},
+		"an untracked file": {during: func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") }},
+		// Status says a file is modified, never what it holds: one dirty before the run and edited again during it.
+		"a dirty file edited again": {
+			before: func(r *rig) { write(t, r.root, "source/a.c", "int dirty_before;\n") },
+			during: func(r *rig) { write(t, r.root, "source/a.c", "int edited_mid_run;\n") },
 		},
-		"an edit":           func(r *rig) { write(t, r.root, "notes.txt", "edited mid-run\n") },
-		"an untracked file": func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") },
+		"an untracked file edited again": {
+			before: func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") },
+			during: func(r *rig) { write(t, r.root, "left.txt", "another leftover\n") },
+		},
+		"a submodule's dirty file edited again": {
+			before: func(r *rig) {
+				module := t.TempDir()
+				write(t, module, "inner.c", "int inner;\n")
+				gitIn(t, module, "init", "-q")
+				gitIn(t, module, "add", ".")
+				gitIn(t, module, "commit", "-q", "-m", "module")
+				gitIn(t, r.root, "-c", "protocol.file.allow=always", "submodule", "add", "-q", module, "module")
+				gitIn(t, r.root, "commit", "-q", "-m", "module")
+				write(t, r.root, "module/inner.c", "int dirty_before;\n")
+			},
+			during: func(r *rig) { write(t, r.root, "module/inner.c", "int edited_mid_run;\n") },
+		},
+		"a package upgraded": {
+			before: func(r *rig) {
+				dpkg := t.TempDir()
+				write(t, dpkg, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu8\n")
+				original := dpkgDirectory
+				dpkgDirectory = dpkg
+				t.Cleanup(func() { dpkgDirectory = original })
+			},
+			during: func(r *rig) {
+				write(t, dpkgDirectory, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu9\n")
+			},
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			r := newRig(t)
+			if run.before != nil {
+				run.before(r)
+				forgetTracked()
+			}
 			before, err := TreeState()
 			if err != nil {
 				t.Fatal(err)
 			}
 			r.before = before
-			Product(t, port, building("built from int a;"))
+			Product(t, port, building("built"))
 			r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-			change(r)
+			run.during(r)
 			forgetTracked()
 			if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the tree changed during the run") {
 				t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
@@ -871,12 +910,19 @@ func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
 	system := filepath.Join(machine, "usr")
 	dpkg := filepath.Join(machine, "dpkg")
 	ld, stdio, crt := filepath.Join(system, "bin/ld"), filepath.Join(system, "include/stdio.h"), filepath.Join(system, "lib/gcc/crtbegin.o")
-	write(t, system, "bin/ld", "the linker")
-	write(t, system, "include/stdio.h", "int printf(const char *, ...);")
+	installed := map[string]string{ld: "the linker", stdio: "int printf(const char *, ...);"}
+	for path, content := range installed {
+		write(t, filepath.Dir(path), filepath.Base(path), content)
+	}
 	write(t, system, "lib/gcc/crtbegin.o", "an object no package owns")
 	os.Symlink(ld, filepath.Join(system, "cc"))
+	sums := func(path string) string {
+		return fmt.Sprintf("%x  %s\n", md5.Sum([]byte(installed[path])), strings.TrimPrefix(path, "/"))
+	}
 	write(t, dpkg, "info/binutils:amd64.list", system+"/bin\n"+ld+"\n")
+	write(t, dpkg, "info/binutils:amd64.md5sums", sums(ld))
 	write(t, dpkg, "info/libc6-dev:amd64.list", stdio+"\n")
+	write(t, dpkg, "info/libc6-dev:amd64.md5sums", sums(stdio))
 	status := func(libc string) {
 		write(t, dpkg, "status", "Package: binutils\nArchitecture: amd64\nVersion: 2.42-4\n\nPackage: libc6-dev\nArchitecture: amd64\nVersion: "+libc+"\n")
 		packageIndexes.Delete(dpkg)
@@ -902,19 +948,31 @@ func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"package binutils:amd64", "package libc6-dev:amd64", "system " + crt, "system " + filepath.Join(system, "lib/gcc"), "system " + filepath.Join(system, "cc")} {
+	for _, want := range []string{"system " + ld, "system " + stdio, "system " + crt, "system " + filepath.Join(system, "lib/gcc"), "system " + filepath.Join(system, "cc")} {
 		if !slices.Contains(got, want) {
 			t.Fatalf("the read set %q lacks %q", got, want)
 		}
+	}
+	if value := systemValue(stdio); value != "package libc6-dev:amd64 version 2.39-0ubuntu8" {
+		t.Fatalf("a file dpkg installed values %q", value)
 	}
 	if _, err := reading(t, port); err != nil {
 		t.Fatal(err)
 	}
 	status("2.39-0ubuntu9")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "package libc6-dev:amd64") {
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
 		t.Fatalf("libc6-dev upgraded and port read as %v", err)
 	}
 	status("2.39-0ubuntu8")
+	// Edited in place, the package's version unchanged: dpkg's md5 no longer matches, so it is keyed by its content.
+	write(t, system, "include/stdio.h", "int printf(const char *, ...); /* patched */")
+	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
+		t.Fatalf("an installed file edited in place, port read as %v", err)
+	}
+	write(t, system, "include/stdio.h", installed[stdio])
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("the file restored: %v", err)
+	}
 	write(t, system, "lib/gcc/crtbegin.o", "another object")
 	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+crt) {
 		t.Fatalf("an unowned file changed and port read as %v", err)

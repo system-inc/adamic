@@ -3,8 +3,10 @@
 //
 //	go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./stage1/cohere/...
 //
-// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS, and
-// ADAMIC_BUILD_STORE=traced on Workshop's tree builder, the one run that publishes). The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
+// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS). Workshop's
+// tree builder, the one run that publishes, sets ADAMIC_BUILD_STORE=traced and ADAMIC_BUILD_STORE_TRUST=main: without
+// the trust, everything it publishes lands in the candidate namespaces (build-candidate, reads-candidate), which a
+// trusted reader never reads. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
 // directory under the build cache, so every process that builds a product marks it in the trace and journals it;
 // the trace streams through a pipe into buildcache.Settle, never to disk. GOENV is off unless set, so go never reads
 // a configuration file in the home directory, which no key can name.
@@ -83,6 +85,9 @@ func run(command []string) (int, error) {
 	pipe := filepath.Join(directory, "trace.fifo")
 	if err = syscall.Mkfifo(pipe, 0o600); err != nil {
 		return 0, err
+	}
+	if store := os.Getenv("ADAMIC_BUILD_STORE"); strings.HasPrefix(store, "traced") && os.Getenv("ADAMIC_BUILD_STORE_TRUST") != "main" {
+		fmt.Fprintln(os.Stderr, "traced: ADAMIC_BUILD_STORE=traced without ADAMIC_BUILD_STORE_TRUST=main publishes to the candidate namespaces only")
 	}
 	before, err := buildcache.TreeState()
 	if err != nil {
