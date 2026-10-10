@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -27,6 +28,55 @@ var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a"
 // local module replacements, rather than an exported package's build ID.
 func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Inputs {
 	t.Helper()
+	sources := bridgeDependencies(t, repository)
+	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
+		"product=" + name,
+		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
+		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -I bridge/tsgo -lpthread -ldl -lm",
+		"native build --tsgo <archive>; --sanitize; --count",
+		"repository=" + repository,
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs.Files = append(inputs.Files, sources.files...)
+	inputs.Flags = append(inputs.Flags, sources.external...)
+
+	// Go reports effective values, including settings loaded from GOENV. Runtime
+	// cache locations and logging switches do not change the compiled product.
+	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
+	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
+		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+	}
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
+	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
+		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+	}
+	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
+		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
+		if len(fields) != 0 {
+			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
+		}
+	}
+	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
+	// asks for what Workshop built. Stage 0, the oracle and the checker archive are the same bytes from any path (with
+	// -trimpath and -buildvcs=false, which cloud/setup.sh exports and GOFLAGS keys); a native product's debug
+	// information still names the path it was built at, until its build maps that prefix.
+	return inputs
+}
+
+// bridgeSources is the part of every bridge product's key that doesn't depend on its name: the repository's files
+// the products compile, sorted, and each module-cache source as a named content fingerprint.
+type bridgeSources struct{ files, external []string }
+
+// bridgeDependencies discovers the bridge's sources with go list, once per process for each repository: every
+// product a unit asks for keys by them, and they ran go list about 86 times a run. Parallel units wait on the
+// first discovery; a failed one isn't remembered. Callers copy the slices into Inputs of their own.
+func bridgeDependencies(t testing.TB, repository string) bridgeSources {
+	t.Helper()
+	bridgeDiscovered.Lock()
+	defer bridgeDiscovered.Unlock()
+	if sources, ok := bridgeDiscovered.sources[repository]; ok {
+		return sources
+	}
 	command := exec.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
 	command.Dir = repository
 	data, err := command.Output()
@@ -91,51 +141,46 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 			files[optional] = true
 		}
 	}
-	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
-		"product=" + name,
-		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
-		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
-		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -I bridge/tsgo -lpthread -ldl -lm",
-		"native build --tsgo <archive>; --sanitize; --count",
-		"repository=" + repository,
-	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	var sources bridgeSources
 	for file := range files {
-		inputs.Files = append(inputs.Files, file)
+		sources.files = append(sources.files, file)
 	}
-	sort.Strings(inputs.Files)
+	sort.Strings(sources.files)
 	var externalNames []string
 	for path := range external {
 		externalNames = append(externalNames, path)
 	}
 	sort.Strings(externalNames)
 	for _, path := range externalNames {
-		inputs.Flags = append(inputs.Flags, "external-source:"+path+"="+external[path])
+		sources.external = append(sources.external, "external-source:"+path+"="+external[path])
 	}
-
-	// Go reports effective values, including settings loaded from GOENV. Runtime
-	// cache locations and logging switches do not change the compiled product.
-	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
-	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
-		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+	if bridgeDiscovered.sources == nil {
+		bridgeDiscovered.sources = map[string]bridgeSources{}
 	}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
-	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
-	}
-	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
-		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
-		if len(fields) != 0 {
-			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
-		}
-	}
-	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
-	// asks for what Workshop built. Stage 0, the oracle and the checker archive are the same bytes from any path (with
-	// -trimpath and -buildvcs=false, which cloud/setup.sh exports and GOFLAGS keys); a native product's debug
-	// information still names the path it was built at, until its build maps that prefix.
-	return inputs
+	bridgeDiscovered.sources[repository] = sources
+	return sources
 }
 
+var bridgeDiscovered struct {
+	sync.Mutex
+	sources map[string]bridgeSources
+}
+
+// bridgeProduct is the product name of the bridge recipe, built ahead. Its path is remembered for the process, since
+// a unit fetches each product more than once and every fetch hashes all of cmd/adamic's sources again.
 func bridgeProduct(t testing.TB, repository, name string) string {
+	t.Helper()
+	if path, ok := bridgeProducts.Load(repository + "\x00" + name); ok {
+		return path.(string)
+	}
+	path := fetchBridgeProduct(t, repository, name)
+	bridgeProducts.Store(repository+"\x00"+name, path)
+	return path
+}
+
+var bridgeProducts sync.Map
+
+func fetchBridgeProduct(t testing.TB, repository, name string) string {
 	t.Helper()
 	inputs := bridgeProductInputs(t, repository, name)
 	directory := buildcache.Product(t, inputs, func(directory string) error {
