@@ -11,6 +11,7 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 )
 
@@ -24,27 +25,55 @@ import (
 // file outside the repository is refused: such a build stays the caller's own.
 func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
 	t.Helper()
-	arguments = reproducible(arguments)
-	var inputs Inputs
-	var err error
-	keying(func() { inputs, err = GoInputs(output, pkg, arguments, environment) })
+	return goProduct(t, goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// GoTest is GoBuild for a test binary: the product of 'go test -c <arguments> -o <output> <pkg>' run in module, a
+// directory of the repository with a go.mod of its own (cohere, cohere/TypeScript/tsc), or the root when empty. It is
+// how a port's test builds its Go oracle: a package of the module with a harness laid over it by -overlay, then run.
+// Its key is GoBuild's, with the test files go list -test names, and the module's own go.mod, go.sum and go.work. An
+// overlay file that adds a path the module doesn't have (a harness, a synthesized main) is keyed through the overlay,
+// never as a file on disk.
+func GoTest(t testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, goRequest{verb: "test -c", module: module, output: output, pkg: pkg, arguments: arguments, environment: environment})
+}
+
+// Adamic is the stage 0 compiler, ./cmd/adamic, as one product every test that runs adamic shares.
+func Adamic(t testing.TB) string {
+	t.Helper()
+	return GoBuild(t, "adamic", "./cmd/adamic", nil)
+}
+
+// A goRequest is one go invocation a product is built by: 'go build', or 'go test -c', of pkg in module (a directory
+// of the repository, its root when empty), with arguments and environment added.
+type goRequest struct {
+	verb, module, output, pkg string
+	arguments, environment    []string
+}
+
+func goProduct(t testing.TB, request goRequest) string {
+	t.Helper()
+	request.arguments = reproducible(request.arguments)
+	inputs, err := request.inputs()
 	if err != nil {
-		t.Fatalf("build %s: %v", pkg, err)
+		t.Fatalf("go %s %s: %v", request.verb, request.pkg, err)
 	}
 	root, _ := repositoryRoot()
+	arguments := request.arguments
 	if slices.Contains(inputs.Flags, rebuildEverything) {
 		arguments = append([]string{"-a"}, arguments...)
 	}
 	directory := Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", append(append(append([]string{"build"}, arguments...), "-o", filepath.Join(directory, output)), pkg)...)
-		command.Dir = root
-		command.Env = append(os.Environ(), environment...)
+		command := exec.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), request.pkg)...)
+		command.Dir = filepath.Join(root, request.module)
+		command.Env = append(os.Environ(), request.environment...)
 		if combined, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("go build %s: %v\n%s", pkg, err, combined)
+			return fmt.Errorf("go %s %s: %v\n%s", request.verb, request.pkg, err, combined)
 		}
 		return nil
 	})
-	return filepath.Join(directory, output)
+	return filepath.Join(directory, request.output)
 }
 
 // reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
@@ -56,7 +85,7 @@ func reproducible(arguments []string) []string {
 	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 	for _, argument := range arguments {
 		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
-			panic("buildcache.GoBuild sets -trimpath, -ldflags and -buildvcs itself, for a product that's the same from any checkout path and commit")
+			panic("buildcache.GoBuild and GoTest set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")
 		}
 	}
 	return append(kept, arguments...)
@@ -184,32 +213,84 @@ func goWorkspace(path string) string {
 
 // GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
 func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
+	return goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment}.inputs()
+}
+
+// inputs is the request's key: from the planner's index when it holds the request (precomputed), else as this process
+// already computed it, else computed here under keying and remembered for the rest of the process, so a unit asking
+// for one product many times keys it once.
+func (request goRequest) inputs() (Inputs, error) {
 	root, err := repositoryRoot()
 	if err != nil {
 		return Inputs{}, err
 	}
+	identity, overlay, err := request.identity(root)
+	if err != nil {
+		return Inputs{}, err
+	}
+	if inputs, ok := precomputed()[identity]; ok {
+		return inputs, nil
+	}
+	if known, ok := computedInputs.Load(identity); ok {
+		return known.(Inputs), nil
+	}
+	var inputs Inputs
+	keying(func() { inputs, err = request.keyInputs(root, overlay) })
+	if err != nil {
+		return Inputs{}, err
+	}
+	computedInputs.Store(identity, inputs)
+	recordInputs(identity, inputs)
+	return inputs, nil
+}
+
+// computedInputs holds each request's inputs this process computed, by identity.
+var computedInputs sync.Map
+
+// identity spells the request the same from every checkout of the tree: the verb, module, package and output, each
+// argument, an -overlay as the map it declares (overlayKey's flags, never the overlay file's temporary path), and each
+// environment value, made portable. It names the request in the planner's index and in this process's memo.
+func (request goRequest) identity(root string) (string, overlayKey, error) {
+	if request.module != "" && (filepath.IsAbs(request.module) || !inside(root, filepath.Join(root, request.module))) {
+		return "", overlayKey{}, fmt.Errorf("module %s isn't a directory of the repository", request.module)
+	}
 	overlayPath, keyed := "", []string{}
-	for index := 0; index < len(arguments); index++ {
-		switch argument := arguments[index]; {
-		case argument == "-overlay" && index+1 < len(arguments):
-			overlayPath = arguments[index+1]
+	for index := 0; index < len(request.arguments); index++ {
+		switch argument := request.arguments[index]; {
+		case argument == "-overlay" && index+1 < len(request.arguments):
+			overlayPath = request.arguments[index+1]
 			index++
 		case strings.HasPrefix(argument, "-overlay="):
 			overlayPath = strings.TrimPrefix(argument, "-overlay=")
 		case argument == "-overlay":
-			return Inputs{}, errors.New("-overlay names no file")
+			return "", overlayKey{}, errors.New("-overlay names no file")
 		default:
 			keyed = append(keyed, argument)
 		}
 	}
 	overlay, err := overlayInputs(root, overlayPath)
 	if err != nil {
-		return Inputs{}, err
+		return "", overlayKey{}, err
 	}
+	overlay.path, overlay.arguments = overlayPath, keyed
+	parts := []string{"go " + request.verb, "module " + request.module, "package " + portable(root, request.pkg), "output " + request.output}
+	for _, argument := range keyed {
+		parts = append(parts, "argument "+portable(root, argument))
+	}
+	parts = append(parts, overlay.flags...)
+	for _, setting := range request.environment {
+		parts = append(parts, "environment "+portable(root, setting))
+	}
+	return strings.Join(parts, "\n"), overlay, nil
+}
+
+// keyInputs computes the request's key with go list and go env, run where the build runs.
+func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, error) {
+	directory := filepath.Join(root, request.module)
 	run := func(arguments ...string) ([]byte, error) {
 		command := exec.Command("go", arguments...)
-		command.Dir = root
-		command.Env = append(os.Environ(), environment...)
+		command.Dir = directory
+		command.Env = append(os.Environ(), request.environment...)
 		output, err := command.Output()
 		if err != nil {
 			var exit *exec.ExitError
@@ -220,23 +301,53 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		}
 		return output, nil
 	}
-	listed := listArguments(arguments)
-	if overlayPath != "" {
-		listed = append(listed, "-overlay="+overlayPath)
+	listed := listArguments(request.arguments)
+	if overlay.path != "" {
+		listed = append(listed, "-overlay="+overlay.path)
 	}
-	listing, err := run(append(append([]string{"list", "-deps", "-json"}, listed...), pkg)...)
+	asked := []string{"list", "-deps", "-json"}
+	if request.verb == "test -c" {
+		// The test variant of each package, so its _test.go files are keyed too.
+		asked = append(asked, "-test")
+	}
+	listing, err := run(append(append(asked, listed...), request.pkg)...)
 	if err != nil {
 		return Inputs{}, err
+	}
+	// go reports paths as the system resolves them, and the repository's root may be spelled through a symbolic link
+	// (macOS's /var is /private/var): a path under either spelling is the repository's, respelled under root, so no
+	// file of the tree drops out of the key unseen.
+	real := resolved(root)
+	respell := func(path string) string {
+		if real != "" && real != root && inside(real, path) {
+			return filepath.Join(root, mustRelative(real, path))
+		}
+		return path
 	}
 	files := map[string]bool{}
 	outsideHeaders := false
 	add := func(directory string, names []string) error {
 		for _, name := range names {
-			relative, err := filepath.Rel(root, filepath.Join(directory, name))
+			// go list -test names some files absolutely, in go's own cache (a test variant's generated sources): not the
+			// repository's, so not keyed.
+			path := name
+			if !filepath.IsAbs(path) {
+				path = filepath.Join(directory, name)
+			}
+			path = respell(path)
+			if !inside(root, path) {
+				continue
+			}
+			relative, err := filepath.Rel(root, path)
 			if err != nil {
 				return err
 			}
-			files[filepath.ToSlash(relative)] = true
+			relative = filepath.ToSlash(relative)
+			// A path the overlay replaces or adds is keyed by the overlay's map and the replacement's content; one the
+			// overlay adds isn't on disk to be hashed at all.
+			if !slices.Contains(overlay.originals, relative) {
+				files[relative] = true
+			}
 		}
 		return nil
 	}
@@ -254,6 +365,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		} else if err != nil {
 			return Inputs{}, err
 		}
+		listed.Dir = respell(listed.Dir)
 		if listed.Standard || !inside(root, listed.Dir) {
 			continue
 		}
@@ -274,6 +386,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 				if !filepath.IsAbs(include) {
 					include = filepath.Join(listed.Dir, include)
 				}
+				include = respell(include)
 				if inside(root, include) {
 					if err := add(root, []string{mustRelative(root, include)}); err != nil {
 						return Inputs{}, err
@@ -284,24 +397,30 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 				}
 			}
 		}
-		if listed.Module != nil && inside(root, listed.Module.GoMod) {
-			module := filepath.Dir(listed.Module.GoMod)
+		if listed.Module != nil && inside(root, respell(listed.Module.GoMod)) {
+			module := filepath.Dir(respell(listed.Module.GoMod))
 			if err := add(module, existing(module, "go.mod", "go.sum")); err != nil {
 				return Inputs{}, err
 			}
 		}
 	}
-	if err := add(root, existing(root, "go.work")); err != nil {
-		return Inputs{}, err
+	for _, place := range []string{root, directory} {
+		if err := add(place, existing(place, "go.work")); err != nil {
+			return Inputs{}, err
+		}
 	}
-	settings, values, err := goSettings(root, environment, goEnvironment)
+	settings, values, err := goSettings(directory, request.environment, goEnvironment)
 	if err != nil {
 		return Inputs{}, err
 	}
 	for _, target := range overlay.files {
 		files[target] = true
 	}
-	inputs := Inputs{Name: "go build " + pkg + " " + output, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
+	name := "go build " + request.pkg + " " + request.output
+	if request.verb != "build" {
+		name = "go " + request.verb + " " + request.module + " " + request.pkg + " " + request.output
+	}
+	inputs := Inputs{Name: name, Flags: append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
@@ -316,10 +435,73 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	return inputs, nil
 }
 
+// The planner's index of go requests' keys (#pc0jvv4): ADAMIC_BUILD_INPUTS names a file of JSON lines, each a request's
+// identity and its Inputs, so a unit reading products runs no go to key them. A tree build writes those lines as it
+// keys (ADAMIC_BUILD_INPUTS_RECORD, appended one line per request), and a planner hands the file on. A request the
+// index doesn't hold is keyed here, as before.
+type indexedInputs struct {
+	Request string `json:"request"`
+	Inputs  Inputs `json:"inputs"`
+}
+
+// precomputed is the index ADAMIC_BUILD_INPUTS names, read once per file.
+func precomputed() map[string]Inputs {
+	path := os.Getenv("ADAMIC_BUILD_INPUTS")
+	if path == "" {
+		return nil
+	}
+	if index, ok := indexes.Load(path); ok {
+		return index.(map[string]Inputs)
+	}
+	index := map[string]Inputs{}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		note("build inputs index %s: %v", path, err)
+		return index
+	}
+	decoder := json.NewDecoder(strings.NewReader(string(content)))
+	for {
+		var line indexedInputs
+		if err := decoder.Decode(&line); err == io.EOF {
+			break
+		} else if err != nil {
+			note("build inputs index %s: %v", path, err)
+			return map[string]Inputs{}
+		}
+		index[line.Request] = line.Inputs
+	}
+	indexes.Store(path, index)
+	return index
+}
+
+var indexes sync.Map
+
+func recordInputs(identity string, inputs Inputs) {
+	path := os.Getenv("ADAMIC_BUILD_INPUTS_RECORD")
+	if path == "" {
+		return
+	}
+	line, err := json.Marshal(indexedInputs{Request: identity, Inputs: inputs})
+	if err != nil {
+		return
+	}
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if err != nil {
+		note("build inputs record %s: %v", path, err)
+		return
+	}
+	file.Write(append(line, '\n'))
+	file.Close()
+}
+
 // overlayKey is what an -overlay adds to a key: one flag per replaced path (the map, as go reads it, made relative to
 // the repository) and the replacement files, whose content the key hashes like any other input file.
 type overlayKey struct {
 	flags, files []string
+	// originals are the paths the overlay replaces or adds, relative to the repository; path is the overlay file the
+	// request names and arguments the request's other arguments.
+	originals, arguments []string
+	path                 string
 }
 
 func overlayInputs(root, path string) (overlayKey, error) {
@@ -348,6 +530,7 @@ func overlayInputs(root, path string) (overlayKey, error) {
 	}
 	var key overlayKey
 	for original, replacement := range declared.Replace {
+		key.originals = append(key.originals, relative(original))
 		if replacement == "" {
 			key.flags = append(key.flags, "overlay "+relative(original)+" deleted")
 			continue

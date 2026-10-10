@@ -1,0 +1,9 @@
+package greet
+
+import (
+	"fmt"
+	"testing"
+)
+
+// TestSide is a harness the overlay adds, as a port lays its oracle over cohere.
+func TestSide(t *testing.T) { fmt.Println("side says", Greeting()) }
