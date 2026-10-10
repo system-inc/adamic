@@ -53,7 +53,7 @@ results.json records complete stdout, stderr, exit, commands and seconds. Saniti
 | Reader guard | timeout 90 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 80s -json; pass 22.720 s. | readers-retry.jsonl |
 | Counts | timeout 180 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 150s -json -args -update-counts; pass 99.402 s. Table regenerated once successfully; all 1,011 rows byte/value unchanged, zero new/removed rows. Every row attributed to unchanged admitted IR. Refusal fixtures are outside the executable oracle census. | counts-retry.jsonl, counts-attribution.json |
 | Vet | timeout 90 go vet ./internal/lower; exit 0, no output. | vet.log |
-| Lane | Required fetch and origin/cloud/merge-tree lane script after member commit: exit 0, gofmt/tools on three Go files, t.Parallel on one test package. Initial vet exceeded its short budget; separate vet passes above. Final delivery lane result is retained separately. | lane-fetch.log, lane-checks.log, lane-final.log |
+| Lane | Required fetch and origin/cloud/merge-tree lane script after member commit: exit 0, gofmt/tools on three Go files, t.Parallel on one test package. Initial vet exceeded its short budget; separate vet passes above. Final delivery lane: exit 0, lane checks 0.8 s, gofmt/tools on three Go files, t.Parallel on one test package, vet one package. | lane-fetch.log, lane-checks.log, lane-final.log |
 
 New test leaf seconds in the full shard proof: TestEEPPresence0 0.06, 1 0.08, 2 0.08, 3 0.03, 4 0.09, 5 0.06, 6 0.06, Supported 0.10. Existing skips are TestOriginalCycleLedger and TestOptionalWideningCensus. No added test skips; no whole-package tests or full gate ran.
 
