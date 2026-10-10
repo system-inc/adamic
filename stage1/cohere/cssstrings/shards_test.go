@@ -326,7 +326,12 @@ func buildStringsNative(t *testing.T, name string, program stringsProgram, sanit
 
 func prepareStringsMutant(t *testing.T, mutation stringsMutation) string {
 	t.Helper()
-	scratch := stringsTopTempDir(t)
+	// stringsCacheInputs keys a generated .ts by its directory's name and its own, so the mutant sits in cssstrings/, a
+	// name every checkout gives it, never in the temporary directory's random one (#sgemgmn).
+	scratch := filepath.Join(stringsTopTempDir(t), "cssstrings")
+	if err := os.Mkdir(scratch, 0755); err != nil {
+		t.Fatal(err)
+	}
 	source, err := os.ReadFile("strings.ts")
 	if err != nil {
 		t.Fatal(err)
