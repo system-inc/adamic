@@ -140,7 +140,7 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 		return string(output), err
 	}
 	output, err := child(tree, cache, "build")
-	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "dependent found") {
+	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") || !strings.Contains(output, "dependent found") {
 		t.Fatalf("building at %s: %v\n%s", tree, err, output)
 	}
 	if output, err = child(tree, cache, "build absolute"); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
@@ -157,11 +157,11 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 	if err = os.Rename(cache, movedCache); err != nil {
 		t.Fatal(err)
 	}
-	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "dependent found") {
+	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") || !strings.Contains(output, "dependent found") {
 		t.Fatalf("reading at %s: %v\n%s", moved, err, output)
 	}
-	// Workshop's two builds, the product and the one keyed by its resolved copy, and only hits on the runner.
-	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 2 {
+	// Three misses, all at Workshop: the product, the inner one it names and the one keyed by its resolved copy.
+	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 3 {
 		t.Fatalf("the runner rebuilt instead of hitting Workshop's product:\n%s", log)
 	}
 
@@ -204,6 +204,15 @@ func TestRelocationChild(t *testing.T) {
 	if mode == "build absolute" {
 		inputs.Name += " absolute"
 	}
+	// An inner product the outer one names, keyed by a flag naming this checkout (as lowering a port is, by
+	// repository=). The runner never gets it itself: it reads it only through the name in the outer product's bytes.
+	inner := Inputs{Name: "relocation inner", Files: []string{"data"}, Flags: []string{"repository=" + root}}
+	var innerDirectory string
+	if mode != "read" {
+		innerDirectory = Product(t, inner, func(directory string) error {
+			return os.WriteFile(filepath.Join(directory, "inner.txt"), []byte("inner"), 0o644)
+		})
+	}
 	product := Product(t, inputs, func(directory string) error {
 		if mode == "read" {
 			return fmt.Errorf("the runner built %s instead of finding it", inputs.Name)
@@ -213,6 +222,9 @@ func TestRelocationChild(t *testing.T) {
 			answer = Relative(answer)
 		}
 		if err := os.WriteFile(filepath.Join(directory, "manifest.txt"), []byte(answer), 0o644); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, "inner.name"), []byte(Relative(filepath.Join(innerDirectory, "inner.txt"))), 0o644); err != nil {
 			return err
 		}
 		// A mutant port whose import reaches back into the tree, written as the build's own steps need it, then made
@@ -253,7 +265,14 @@ func TestRelocationChild(t *testing.T) {
 		t.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
 	}
 	fmt.Println("port resolved")
-
+	name, err := os.ReadFile(filepath.Join(product, "inner.name"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if content, err := os.ReadFile(Absolute(string(name))); err != nil || string(content) != "inner" {
+		t.Fatalf("the inner product named %q read as %q, %v", name, content, err)
+	}
+	fmt.Println("inner read")
 	// A product keyed by a file of the resolved copy, as estree's misc port is keyed by its main.ts: the copy's name holds
 	// a hash of this machine's roots, and the key names the product's file instead, so the runner hits Workshop's
 	// (#sgemgmn).
@@ -266,7 +285,7 @@ func TestRelocationChild(t *testing.T) {
 	fmt.Println("dependent found")
 }
 
-// A key names a product by its key wherever this process holds it (#sgemgmn): in the cache, in the copy Resolved made
+// A key names a product by its name key wherever this process holds it (#sgemgmn, in walk-5b's one naming model): in the cache, in the copy Resolved made
 // of it beside the cache's, whose name holds a hash of this machine's roots, and built uncached in a temporary
 // directory of its own, which main's uncached gate publishes under the key it computes.
 // Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
@@ -285,10 +304,7 @@ func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
 		inputs := thisPackage
 		inputs.Name = "named by its key, cache " + mode
 		product := Product(t, inputs, build)
-		key, err := Key(root, inputs)
-		if err != nil {
-			t.Fatal(err)
-		}
+		key := NameKey(root, inputs)
 		copied, err := Resolved(product)
 		if err != nil {
 			t.Fatal(err)
