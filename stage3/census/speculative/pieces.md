@@ -1,3 +1,7 @@
+Recursive continuation is experimental: watch matches, but createNodeBuilder fails
+with 63 missing sites, 51 added and ten changed depths. See
+[evidence/recursive-pieces/README.md](evidence/recursive-pieces/README.md).
+
 Task #b2wbbha adds statement pieces to the census overlay. Production compiler
 source remains unchanged. The union comparison is the admission check for this
 mode, not an inference that arbitrary splitting preserves a compiler IR.
@@ -105,3 +109,78 @@ Final result: both unions match; five checker samples complete and piece 0 is
 censored at 900 seconds. Publication tools now explicitly reject piece-tagged
 records as complete files; audit_piece_publication.py proves all three guards.
 See evidence/pieces/README.md for the complete report and conditional projection.
+
+Recursive continuation of Task #b2wbbha
+
+Add `--threshold 51200` to the planner (and to plan_remaining.py) for version 2
+plans. Add `--root createNodeBuilder` to restrict a comparison to that named,
+unique function. The legacy atom_definition field names the starting inventory;
+root_name and the explicit cut fields describe its version-2 refinement.
+Oversized function declarations split into their direct nested
+function declarations and a residual atom for the enclosing function's own
+statements, declaration, parameters and syntax envelope. Nested functions split
+again by the same rule. An oversized namespace splits into its contained
+statements plus its syntax envelope. The residual keeps the original function
+span and syntax identity, but its byte weight subtracts the extracted children.
+Other statements remain indivisible. Unsupported oversized atoms or oversized
+own-statement residuals fail planning explicitly. No source is rewritten.
+
+The 50 KiB threshold follows the earlier 42 KiB samples (207 and 287 seconds)
+and the 53 KiB sample (180 seconds). It also accommodates the pinned parser's
+49,243-byte variable initializer; a 48 KiB trial rejected that initializer.
+Every oversized function's own statements in the remaining corpus fit below
+50 KiB. The 14 files now produce 882 pieces, with a 49,302-byte maximum;
+checker.ts has 64 pieces. createNodeBuilder has 136 atoms in eight pieces,
+with three recursive function cuts and a maximum bucket of 40,982 bytes.
+The final watch comparison uses the same 50 KiB threshold; its eight-piece
+partition is unchanged from the initial 48 KiB trial.
+
+A residual function atom enters ordinary signature and body lowering, including
+parameter prologues and nested declaration setup. The speculative structural walk
+and statement recovery filter out nodes owned by another atom, so the residual
+lowers only its own statements and child bodies assigned to the same piece. Nested roots
+receive enclosing signatures from outermost to innermost and checked lexical
+binding seeding. Assigned-root coverage excludes unassigned nested bodies. The
+stock audit independently reconstructs each cut from ancestor chains, checks
+residual and leaf byte weights, and requires exact atom and piece partitions.
+A stock ownership recount checks that spatially overlapping recursive roots
+count each assigned AST node once. A shifted-count mutant must fail this recount.
+The original dropped, duplicated and moved-site mutants remain mandatory.
+
+The createNodeBuilder reference uses the prior binary and its original single
+statement atom, not this new residual path. It has no 600-second piece deadline;
+the isolated job has a 3,600-second cap, a 6 GiB RSS watchdog, a 12 GiB address-space
+cap and a 4 GiB Go heap target. It is backgrounded and supervised at intervals
+under five minutes. Recursive measurements use 600-second per-piece limits,
+3 GiB RSS watchdogs, 6 GiB address-space caps and three workers alongside that
+single-CPU reference. If the reference reaches its cap, the comparison falls
+back to a named nested function, whose whole and recursive records are both
+published. Partial piece records never enter the complete-file depth table.
+
+See evidence/recursive-pieces/README.md for the measured result, comparison
+ledgers, supervision journal, controls and final artifact hashes. The previous
+25.13 core-hour projection describes the older indivisible plan and is not a
+projection for these 882 recursively planned pieces.
+
+Recursive reproduction (stdout and stderr go to named logs):
+
+```sh
+# ROOT retains the original adapted project bytes and source paths.
+timeout 30 node stage3/census/speculative/plan_pieces.cjs ROOT/watch.ts 8 WATCH_PLAN --threshold 51200 > WATCH_PLAN_LOG 2>&1
+timeout 30 node stage3/census/speculative/plan_pieces.cjs ROOT/checker.ts 8 BUILDER_PLAN --threshold 51200 --root createNodeBuilder > BUILDER_PLAN_LOG 2>&1
+timeout 180 python3 stage3/census/latent/make_overlay.py "$PWD" OVERLAY > OVERLAY_LOG 2>&1
+timeout 180 go build -buildvcs=false -overlay=OVERLAY/overlay.json -o CENSUS ./stage3/census/latent/tool > BUILD_LOG 2>&1
+timeout -k 5 1900 python3 stage3/census/speculative/run_pieces.py CENSUS ROOT BUILDER_PLAN BUILDER_RUN 600 3072 3 > BUILDER_RUN_LOG 2>&1
+timeout -k 5 2500 python3 stage3/census/speculative/run_pieces.py CENSUS ROOT WATCH_PLAN WATCH_RUN 600 3072 2 > WATCH_RUN_LOG 2>&1
+timeout 120 python3 stage3/census/speculative/check_piece_union.py ROOT BUILDER_PLAN BUILDER_RUN WHOLE_BUILDER_RECORD STOCK_JSON UNION_OUTPUT > UNION_LOG 2>&1
+# This measured createNodeBuilder comparison exits 2: failed admission.
+# The corresponding watch comparison exits 0.
+timeout 180 python3 stage3/census/speculative/plan_remaining.py ROOT stage3/census/speculative/RESULT.json PLANS 64 --threshold 51200 > PLANS_LOG 2>&1
+```
+
+The archived whole record and original reference plan come from the previous
+binary at 9421a92c. Its supervised invocation sets speculative/full/no-output
+flags, LATENT_ONLY_FILE=ROOT/checker.ts, LATENT_PIECE_ID=0 and
+LATENT_PIECE_PLAN to that original plan; timed_run.py wraps it with 3600 seconds
+and 6144 MiB RSS. Do not substitute the recursive residual plan for that reference.
+No fallback function is used because the whole reference completes.

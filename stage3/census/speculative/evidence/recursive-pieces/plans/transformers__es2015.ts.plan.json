@@ -1,0 +1,2237 @@
+{
+  "version": 2,
+  "threshold_bytes": 51200,
+  "root_name": null,
+  "split_functions": [
+    {
+      "start": 16466,
+      "end": 231787,
+      "name": "transformES2015"
+    }
+  ],
+  "split_containers": [],
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/transformers/es2015.ts",
+  "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+  "source_bytes": 231789,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:5458:ImportDeclaration",
+      "start": 0,
+      "end": 5458,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 5458,
+      "name": ""
+    },
+    {
+      "id": "5458:5694:EnumDeclaration",
+      "start": 5458,
+      "end": 5694,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 236,
+      "name": "ES2015SubstitutionFlags"
+    },
+    {
+      "id": "5694:7277:InterfaceDeclaration",
+      "start": 5694,
+      "end": 7277,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 1583,
+      "name": "LoopOutParameter"
+    },
+    {
+      "id": "7277:7475:EnumDeclaration",
+      "start": 7277,
+      "end": 7475,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 198,
+      "name": "LoopOutParameterFlags"
+    },
+    {
+      "id": "7475:7546:EnumDeclaration",
+      "start": 7475,
+      "end": 7546,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 71,
+      "name": "CopyDirection"
+    },
+    {
+      "id": "7546:7637:EnumDeclaration",
+      "start": 7546,
+      "end": 7637,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 91,
+      "name": "Jump"
+    },
+    {
+      "id": "7637:10460:InterfaceDeclaration",
+      "start": 7637,
+      "end": 10460,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 2823,
+      "name": "ConvertedLoopState"
+    },
+    {
+      "id": "10460:10680:TypeAliasDeclaration",
+      "start": 10460,
+      "end": 10680,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 220,
+      "name": "LoopConverter"
+    },
+    {
+      "id": "10680:15901:EnumDeclaration",
+      "start": 10680,
+      "end": 15901,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 5221,
+      "name": "HierarchyFacts"
+    },
+    {
+      "id": "15901:16240:EnumDeclaration",
+      "start": 15901,
+      "end": 16240,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 339,
+      "name": "SpreadSegmentKind"
+    },
+    {
+      "id": "16240:16331:InterfaceDeclaration",
+      "start": 16240,
+      "end": 16331,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 91,
+      "name": "SpreadSegment"
+    },
+    {
+      "id": "16331:16466:FunctionDeclaration",
+      "start": 16331,
+      "end": 16466,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 135,
+      "name": "createSpreadSegment"
+    },
+    {
+      "id": "16466:231787:FunctionDeclaration",
+      "start": 16466,
+      "end": 231787,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 3624,
+      "name": "transformES2015"
+    },
+    {
+      "id": "17324:17559:FunctionDeclaration",
+      "start": 17324,
+      "end": 17559,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 235,
+      "name": "recordTaggedTemplateString"
+    },
+    {
+      "id": "18029:18556:FunctionDeclaration",
+      "start": 18029,
+      "end": 18556,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 527,
+      "name": "transformSourceFile"
+    },
+    {
+      "id": "18556:19179:FunctionDeclaration",
+      "start": 18556,
+      "end": 19179,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 623,
+      "name": "enterSubtree"
+    },
+    {
+      "id": "19179:19906:FunctionDeclaration",
+      "start": 19179,
+      "end": 19906,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 727,
+      "name": "exitSubtree"
+    },
+    {
+      "id": "19906:20197:FunctionDeclaration",
+      "start": 19906,
+      "end": 20197,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 291,
+      "name": "isReturnVoidStatementInConstructorWithCapturedSuper"
+    },
+    {
+      "id": "20197:20887:FunctionDeclaration",
+      "start": 20197,
+      "end": 20887,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 690,
+      "name": "isOrMayContainReturnCompletion"
+    },
+    {
+      "id": "20887:21405:FunctionDeclaration",
+      "start": 20887,
+      "end": 21405,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 518,
+      "name": "shouldVisitNode"
+    },
+    {
+      "id": "21405:21585:FunctionDeclaration",
+      "start": 21405,
+      "end": 21585,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 180,
+      "name": "visitor"
+    },
+    {
+      "id": "21585:21790:FunctionDeclaration",
+      "start": 21585,
+      "end": 21790,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 205,
+      "name": "visitorWithUnusedExpressionResult"
+    },
+    {
+      "id": "21790:22612:FunctionDeclaration",
+      "start": 21790,
+      "end": 22612,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 822,
+      "name": "classWrapperStatementVisitor"
+    },
+    {
+      "id": "22612:22891:FunctionDeclaration",
+      "start": 22612,
+      "end": 22891,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 279,
+      "name": "callExpressionVisitor"
+    },
+    {
+      "id": "22891:29175:FunctionDeclaration",
+      "start": 22891,
+      "end": 29175,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 6284,
+      "name": "visitorWorker"
+    },
+    {
+      "id": "29175:30348:FunctionDeclaration",
+      "start": 29175,
+      "end": 30348,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1173,
+      "name": "visitSourceFile"
+    },
+    {
+      "id": "30348:30961:FunctionDeclaration",
+      "start": 30348,
+      "end": 30961,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 613,
+      "name": "visitSwitchStatement"
+    },
+    {
+      "id": "30961:31313:FunctionDeclaration",
+      "start": 30961,
+      "end": 31313,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 352,
+      "name": "visitCaseBlock"
+    },
+    {
+      "id": "31313:31478:FunctionDeclaration",
+      "start": 31313,
+      "end": 31478,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 165,
+      "name": "returnCapturedThis"
+    },
+    {
+      "id": "31478:31665:FunctionDeclaration",
+      "start": 31478,
+      "end": 31665,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 187,
+      "name": "createCapturedThis"
+    },
+    {
+      "id": "31665:32741:FunctionDeclaration",
+      "start": 31665,
+      "end": 32741,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1076,
+      "name": "visitReturnStatement"
+    },
+    {
+      "id": "32741:33519:FunctionDeclaration",
+      "start": 32741,
+      "end": 33519,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 778,
+      "name": "visitThisKeyword"
+    },
+    {
+      "id": "33519:33680:FunctionDeclaration",
+      "start": 33519,
+      "end": 33680,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 161,
+      "name": "visitVoidExpression"
+    },
+    {
+      "id": "33680:34361:FunctionDeclaration",
+      "start": 33680,
+      "end": 34361,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 681,
+      "name": "visitIdentifier"
+    },
+    {
+      "id": "34361:37435:FunctionDeclaration",
+      "start": 34361,
+      "end": 37435,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3074,
+      "name": "visitBreakOrContinueStatement"
+    },
+    {
+      "id": "37435:39155:FunctionDeclaration",
+      "start": 37435,
+      "end": 39155,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1720,
+      "name": "visitClassDeclaration"
+    },
+    {
+      "id": "39155:39689:FunctionDeclaration",
+      "start": 39155,
+      "end": 39689,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 534,
+      "name": "visitClassExpression"
+    },
+    {
+      "id": "39689:42699:FunctionDeclaration",
+      "start": 39689,
+      "end": 42699,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3010,
+      "name": "transformClassLikeDeclarationToExpression"
+    },
+    {
+      "id": "42699:44662:FunctionDeclaration",
+      "start": 42699,
+      "end": 44662,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1963,
+      "name": "transformClassBody"
+    },
+    {
+      "id": "44662:45533:FunctionDeclaration",
+      "start": 44662,
+      "end": 45533,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 871,
+      "name": "addExtendsHelperIfNeeded"
+    },
+    {
+      "id": "45533:47268:FunctionDeclaration",
+      "start": 45533,
+      "end": 47268,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1735,
+      "name": "addConstructor"
+    },
+    {
+      "id": "47268:48244:FunctionDeclaration",
+      "start": 47268,
+      "end": 48244,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 976,
+      "name": "transformConstructorParameters"
+    },
+    {
+      "id": "48244:49323:FunctionDeclaration",
+      "start": 48244,
+      "end": 49323,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1079,
+      "name": "createDefaultConstructorBody"
+    },
+    {
+      "id": "49323:49539:FunctionDeclaration",
+      "start": 49323,
+      "end": 49539,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 216,
+      "name": "isUninitializedVariableStatement"
+    },
+    {
+      "id": "49539:50785:FunctionDeclaration",
+      "start": 49539,
+      "end": 50785,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1246,
+      "name": "containsSuperCall"
+    },
+    {
+      "id": "50785:54647:FunctionDeclaration",
+      "start": 50785,
+      "end": 54647,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3862,
+      "name": "transformConstructorBody"
+    },
+    {
+      "id": "56384:56617:FunctionDeclaration",
+      "start": 56384,
+      "end": 56617,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 233,
+      "name": "isCapturedThis"
+    },
+    {
+      "id": "56617:56869:FunctionDeclaration",
+      "start": 56617,
+      "end": 56869,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 252,
+      "name": "isSyntheticSuper"
+    },
+    {
+      "id": "56869:57240:FunctionDeclaration",
+      "start": 56869,
+      "end": 57240,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 371,
+      "name": "isThisCapturingVariableStatement"
+    },
+    {
+      "id": "57240:57534:FunctionDeclaration",
+      "start": 57240,
+      "end": 57534,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 294,
+      "name": "isThisCapturingVariableDeclaration"
+    },
+    {
+      "id": "57534:57830:FunctionDeclaration",
+      "start": 57534,
+      "end": 57830,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 296,
+      "name": "isThisCapturingAssignment"
+    },
+    {
+      "id": "57830:58446:FunctionDeclaration",
+      "start": 57830,
+      "end": 58446,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 616,
+      "name": "isTransformedSuperCall"
+    },
+    {
+      "id": "58446:58848:FunctionDeclaration",
+      "start": 58446,
+      "end": 58848,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 402,
+      "name": "isTransformedSuperCallWithFallback"
+    },
+    {
+      "id": "58848:59488:FunctionDeclaration",
+      "start": 58848,
+      "end": 59488,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 640,
+      "name": "isImplicitSuperCall"
+    },
+    {
+      "id": "59488:59912:FunctionDeclaration",
+      "start": 59488,
+      "end": 59912,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 424,
+      "name": "isImplicitSuperCallWithFallback"
+    },
+    {
+      "id": "59912:60242:FunctionDeclaration",
+      "start": 59912,
+      "end": 60242,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 330,
+      "name": "isThisCapturingTransformedSuperCallWithFallback"
+    },
+    {
+      "id": "60242:60563:FunctionDeclaration",
+      "start": 60242,
+      "end": 60563,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 321,
+      "name": "isThisCapturingImplicitSuperCallWithFallback"
+    },
+    {
+      "id": "60563:60997:FunctionDeclaration",
+      "start": 60563,
+      "end": 60997,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 434,
+      "name": "isTransformedSuperCallLike"
+    },
+    {
+      "id": "60997:65445:FunctionDeclaration",
+      "start": 60997,
+      "end": 65445,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4448,
+      "name": "simplifyConstructorInlineSuperInThisCaptureVariable"
+    },
+    {
+      "id": "65445:69826:FunctionDeclaration",
+      "start": 65445,
+      "end": 69826,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4381,
+      "name": "simplifyConstructorInlineSuperReturn"
+    },
+    {
+      "id": "69826:71552:FunctionDeclaration",
+      "start": 69826,
+      "end": 71552,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1726,
+      "name": "elideUnusedThisCaptureWorker"
+    },
+    {
+      "id": "71552:73523:FunctionDeclaration",
+      "start": 71552,
+      "end": 73523,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1971,
+      "name": "simplifyConstructorElideUnusedThisCapture"
+    },
+    {
+      "id": "73523:75285:FunctionDeclaration",
+      "start": 73523,
+      "end": 75285,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1762,
+      "name": "injectSuperPresenceCheckWorker"
+    },
+    {
+      "id": "75285:76625:FunctionDeclaration",
+      "start": 75285,
+      "end": 76625,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1340,
+      "name": "complicateConstructorInjectSuperPresenceCheck"
+    },
+    {
+      "id": "76625:77643:FunctionDeclaration",
+      "start": 76625,
+      "end": 77643,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1018,
+      "name": "simplifyConstructor"
+    },
+    {
+      "id": "77643:79047:FunctionDeclaration",
+      "start": 77643,
+      "end": 79047,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1404,
+      "name": "isSufficientlyCoveredByReturnStatements"
+    },
+    {
+      "id": "79047:79169:FunctionDeclaration",
+      "start": 79047,
+      "end": 79169,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 122,
+      "name": "createActualThis"
+    },
+    {
+      "id": "79169:79739:FunctionDeclaration",
+      "start": 79169,
+      "end": 79739,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 570,
+      "name": "createDefaultSuperCallOrThis"
+    },
+    {
+      "id": "79739:81542:FunctionDeclaration",
+      "start": 79739,
+      "end": 81542,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1803,
+      "name": "visitParameter"
+    },
+    {
+      "id": "81542:81719:FunctionDeclaration",
+      "start": 81542,
+      "end": 81719,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 177,
+      "name": "hasDefaultValueOrBindingPattern"
+    },
+    {
+      "id": "81719:82980:FunctionDeclaration",
+      "start": 81719,
+      "end": 82980,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1261,
+      "name": "addDefaultValueAssignmentsIfNeeded"
+    },
+    {
+      "id": "82980:85224:FunctionDeclaration",
+      "start": 82980,
+      "end": 85224,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2244,
+      "name": "insertDefaultValueAssignmentForBindingPattern"
+    },
+    {
+      "id": "85224:87431:FunctionDeclaration",
+      "start": 85224,
+      "end": 87431,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2207,
+      "name": "insertDefaultValueAssignmentForInitializer"
+    },
+    {
+      "id": "87431:88109:FunctionDeclaration",
+      "start": 87431,
+      "end": 88109,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 678,
+      "name": "shouldAddRestParameter"
+    },
+    {
+      "id": "88109:93345:FunctionDeclaration",
+      "start": 88109,
+      "end": 93345,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 5236,
+      "name": "addRestParameterIfNeeded"
+    },
+    {
+      "id": "93345:93984:FunctionDeclaration",
+      "start": 93345,
+      "end": 93984,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 639,
+      "name": "insertCaptureThisForNodeIfNeeded"
+    },
+    {
+      "id": "93984:94824:FunctionDeclaration",
+      "start": 93984,
+      "end": 94824,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 840,
+      "name": "insertCaptureThisForNode"
+    },
+    {
+      "id": "94824:98194:FunctionDeclaration",
+      "start": 94824,
+      "end": 98194,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3370,
+      "name": "insertCaptureNewTargetIfNeeded"
+    },
+    {
+      "id": "98194:99958:FunctionDeclaration",
+      "start": 98194,
+      "end": 99958,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1764,
+      "name": "addClassMembers"
+    },
+    {
+      "id": "99958:100293:FunctionDeclaration",
+      "start": 99958,
+      "end": 100293,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 335,
+      "name": "transformSemicolonClassElementToStatement"
+    },
+    {
+      "id": "100293:102408:FunctionDeclaration",
+      "start": 100293,
+      "end": 102408,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2115,
+      "name": "transformClassMethodDeclarationToStatement"
+    },
+    {
+      "id": "102408:103304:FunctionDeclaration",
+      "start": 102408,
+      "end": 103304,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 896,
+      "name": "transformAccessorsToStatement"
+    },
+    {
+      "id": "103304:106683:FunctionDeclaration",
+      "start": 103304,
+      "end": 106683,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3379,
+      "name": "transformAccessorsToExpression"
+    },
+    {
+      "id": "106683:108045:FunctionDeclaration",
+      "start": 106683,
+      "end": 108045,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1362,
+      "name": "visitArrowFunction"
+    },
+    {
+      "id": "108045:109350:FunctionDeclaration",
+      "start": 108045,
+      "end": 109350,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1305,
+      "name": "visitFunctionExpression"
+    },
+    {
+      "id": "109350:110515:FunctionDeclaration",
+      "start": 109350,
+      "end": 110515,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1165,
+      "name": "visitFunctionDeclaration"
+    },
+    {
+      "id": "110515:112430:FunctionDeclaration",
+      "start": 110515,
+      "end": 112430,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1915,
+      "name": "transformFunctionLikeToExpression"
+    },
+    {
+      "id": "112430:117233:FunctionDeclaration",
+      "start": 112430,
+      "end": 117233,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4803,
+      "name": "transformFunctionBody"
+    },
+    {
+      "id": "117233:117934:FunctionDeclaration",
+      "start": 117233,
+      "end": 117934,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 701,
+      "name": "visitBlock"
+    },
+    {
+      "id": "117934:118259:FunctionDeclaration",
+      "start": 117934,
+      "end": 118259,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 325,
+      "name": "visitExpressionStatement"
+    },
+    {
+      "id": "118259:118882:FunctionDeclaration",
+      "start": 118259,
+      "end": 118882,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 623,
+      "name": "visitParenthesizedExpression"
+    },
+    {
+      "id": "118882:120215:FunctionDeclaration",
+      "start": 118882,
+      "end": 120215,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1333,
+      "name": "visitBinaryExpression"
+    },
+    {
+      "id": "120215:121372:FunctionDeclaration",
+      "start": 120215,
+      "end": 121372,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1157,
+      "name": "visitCommaListExpression"
+    },
+    {
+      "id": "121372:121733:FunctionDeclaration",
+      "start": 121372,
+      "end": 121733,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 361,
+      "name": "isVariableStatementOfTypeScriptClassWrapper"
+    },
+    {
+      "id": "121733:123867:FunctionDeclaration",
+      "start": 121733,
+      "end": 123867,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2134,
+      "name": "visitVariableStatement"
+    },
+    {
+      "id": "123867:125522:FunctionDeclaration",
+      "start": 123867,
+      "end": 125522,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1655,
+      "name": "visitVariableDeclarationList"
+    },
+    {
+      "id": "125522:126048:FunctionDeclaration",
+      "start": 125522,
+      "end": 126048,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 526,
+      "name": "getRangeUnion"
+    },
+    {
+      "id": "126048:129134:FunctionDeclaration",
+      "start": 126048,
+      "end": 129134,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3086,
+      "name": "shouldEmitExplicitInitializerForLetDeclaration"
+    },
+    {
+      "id": "129134:130078:FunctionDeclaration",
+      "start": 129134,
+      "end": 130078,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 944,
+      "name": "visitVariableDeclarationInLetDeclarationList"
+    },
+    {
+      "id": "130078:131042:FunctionDeclaration",
+      "start": 130078,
+      "end": 131042,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 964,
+      "name": "visitVariableDeclaration"
+    },
+    {
+      "id": "131042:131171:FunctionDeclaration",
+      "start": 131042,
+      "end": 131171,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 129,
+      "name": "recordLabel"
+    },
+    {
+      "id": "131171:131300:FunctionDeclaration",
+      "start": 131171,
+      "end": 131300,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 129,
+      "name": "resetLabel"
+    },
+    {
+      "id": "131300:132032:FunctionDeclaration",
+      "start": 131300,
+      "end": 132032,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 732,
+      "name": "visitLabeledStatement"
+    },
+    {
+      "id": "132032:132811:FunctionDeclaration",
+      "start": 132032,
+      "end": 132811,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 779,
+      "name": "visitIterationStatement"
+    },
+    {
+      "id": "132811:133354:FunctionDeclaration",
+      "start": 132811,
+      "end": 133354,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 543,
+      "name": "visitIterationStatementWithFacts"
+    },
+    {
+      "id": "133354:133729:FunctionDeclaration",
+      "start": 133354,
+      "end": 133729,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 375,
+      "name": "visitDoOrWhileStatement"
+    },
+    {
+      "id": "133729:134070:FunctionDeclaration",
+      "start": 133729,
+      "end": 134070,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 341,
+      "name": "visitForStatement"
+    },
+    {
+      "id": "134070:134571:FunctionDeclaration",
+      "start": 134070,
+      "end": 134571,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 501,
+      "name": "visitEachChildOfForStatement"
+    },
+    {
+      "id": "134571:134934:FunctionDeclaration",
+      "start": 134571,
+      "end": 134934,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 363,
+      "name": "visitForInStatement"
+    },
+    {
+      "id": "134934:135437:FunctionDeclaration",
+      "start": 134934,
+      "end": 135437,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 503,
+      "name": "visitForOfStatement"
+    },
+    {
+      "id": "135437:139980:FunctionDeclaration",
+      "start": 135437,
+      "end": 139980,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4543,
+      "name": "convertForOfStatementHead"
+    },
+    {
+      "id": "139980:140322:FunctionDeclaration",
+      "start": 139980,
+      "end": 140322,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 342,
+      "name": "createSyntheticBlockForConvertedStatements"
+    },
+    {
+      "id": "140322:143952:FunctionDeclaration",
+      "start": 140322,
+      "end": 143952,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3630,
+      "name": "convertForOfStatementForArray"
+    },
+    {
+      "id": "143952:149933:FunctionDeclaration",
+      "start": 143952,
+      "end": 149933,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 5981,
+      "name": "convertForOfStatementForIterable"
+    },
+    {
+      "id": "149933:152366:FunctionDeclaration",
+      "start": 149933,
+      "end": 152366,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2433,
+      "name": "visitObjectLiteralExpression"
+    },
+    {
+      "id": "152735:152909:FunctionDeclaration",
+      "start": 152735,
+      "end": 152909,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 174,
+      "name": "shouldConvertPartOfIterationStatement"
+    },
+    {
+      "id": "152909:153166:FunctionDeclaration",
+      "start": 152909,
+      "end": 153166,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 257,
+      "name": "shouldConvertInitializerOfForStatement"
+    },
+    {
+      "id": "153166:153415:FunctionDeclaration",
+      "start": 153166,
+      "end": 153415,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 249,
+      "name": "shouldConvertConditionOfForStatement"
+    },
+    {
+      "id": "153415:153672:FunctionDeclaration",
+      "start": 153415,
+      "end": 153672,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 257,
+      "name": "shouldConvertIncrementorOfForStatement"
+    },
+    {
+      "id": "153672:153877:FunctionDeclaration",
+      "start": 153672,
+      "end": 153877,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 205,
+      "name": "shouldConvertIterationStatement"
+    },
+    {
+      "id": "153877:154075:FunctionDeclaration",
+      "start": 153877,
+      "end": 154075,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 198,
+      "name": "shouldConvertBodyOfIterationStatement"
+    },
+    {
+      "id": "154075:154892:FunctionDeclaration",
+      "start": 154075,
+      "end": 154892,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 817,
+      "name": "hoistVariableDeclarationDeclaredInConvertedLoop"
+    },
+    {
+      "id": "154892:158328:FunctionDeclaration",
+      "start": 154892,
+      "end": 158328,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3436,
+      "name": "convertIterationStatementBodyIfNecessary"
+    },
+    {
+      "id": "158328:159359:FunctionDeclaration",
+      "start": 158328,
+      "end": 159359,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1031,
+      "name": "convertIterationStatementCore"
+    },
+    {
+      "id": "159359:160283:FunctionDeclaration",
+      "start": 159359,
+      "end": 160283,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 924,
+      "name": "convertForStatement"
+    },
+    {
+      "id": "160283:160706:FunctionDeclaration",
+      "start": 160283,
+      "end": 160706,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 423,
+      "name": "convertForOfStatement"
+    },
+    {
+      "id": "160706:161087:FunctionDeclaration",
+      "start": 160706,
+      "end": 161087,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 381,
+      "name": "convertForInStatement"
+    },
+    {
+      "id": "161087:161370:FunctionDeclaration",
+      "start": 161087,
+      "end": 161370,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 283,
+      "name": "convertDoStatement"
+    },
+    {
+      "id": "161370:161662:FunctionDeclaration",
+      "start": 161370,
+      "end": 161662,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 292,
+      "name": "convertWhileStatement"
+    },
+    {
+      "id": "161662:164439:FunctionDeclaration",
+      "start": 161662,
+      "end": 164439,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2777,
+      "name": "createConvertedLoopState"
+    },
+    {
+      "id": "164439:168519:FunctionDeclaration",
+      "start": 164439,
+      "end": 168519,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4080,
+      "name": "addExtraDeclarationsForConvertedLoop"
+    },
+    {
+      "id": "168706:168905:FunctionDeclaration",
+      "start": 168706,
+      "end": 168905,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 199,
+      "name": "createOutVariable"
+    },
+    {
+      "id": "168905:172532:FunctionDeclaration",
+      "start": 168905,
+      "end": 172532,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3627,
+      "name": "createFunctionForInitializerOfForStatement"
+    },
+    {
+      "id": "172532:179544:FunctionDeclaration",
+      "start": 172532,
+      "end": 179544,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 7012,
+      "name": "createFunctionForBodyOfIterationStatement"
+    },
+    {
+      "id": "179544:179982:FunctionDeclaration",
+      "start": 179544,
+      "end": 179982,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 438,
+      "name": "copyOutParameter"
+    },
+    {
+      "id": "179982:180381:FunctionDeclaration",
+      "start": 179982,
+      "end": 180381,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 399,
+      "name": "copyOutParameters"
+    },
+    {
+      "id": "180381:180941:FunctionDeclaration",
+      "start": 180381,
+      "end": 180941,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 560,
+      "name": "generateCallToConvertedLoopInitializer"
+    },
+    {
+      "id": "180941:184765:FunctionDeclaration",
+      "start": 180941,
+      "end": 184765,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3824,
+      "name": "generateCallToConvertedLoop"
+    },
+    {
+      "id": "184765:185383:FunctionDeclaration",
+      "start": 184765,
+      "end": 185383,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 618,
+      "name": "setLabeledJump"
+    },
+    {
+      "id": "185383:186668:FunctionDeclaration",
+      "start": 185383,
+      "end": 186668,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1285,
+      "name": "processLabeledJumps"
+    },
+    {
+      "id": "186668:188603:FunctionDeclaration",
+      "start": 186668,
+      "end": 188603,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1935,
+      "name": "processLoopVariableDeclaration"
+    },
+    {
+      "id": "188603:190620:FunctionDeclaration",
+      "start": 188603,
+      "end": 190620,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 2017,
+      "name": "addObjectLiteralMembers"
+    },
+    {
+      "id": "190620:191567:FunctionDeclaration",
+      "start": 190620,
+      "end": 191567,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 947,
+      "name": "transformPropertyAssignmentToExpression"
+    },
+    {
+      "id": "191567:192517:FunctionDeclaration",
+      "start": 191567,
+      "end": 192517,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 950,
+      "name": "transformShorthandPropertyAssignmentToExpression"
+    },
+    {
+      "id": "192517:193525:FunctionDeclaration",
+      "start": 192517,
+      "end": 193525,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1008,
+      "name": "transformObjectLiteralMethodDeclarationToExpression"
+    },
+    {
+      "id": "193525:194981:FunctionDeclaration",
+      "start": 193525,
+      "end": 194981,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1456,
+      "name": "visitCatchClause"
+    },
+    {
+      "id": "194981:195250:FunctionDeclaration",
+      "start": 194981,
+      "end": 195250,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 269,
+      "name": "addStatementToStartOfBlock"
+    },
+    {
+      "id": "195250:196350:FunctionDeclaration",
+      "start": 195250,
+      "end": 196350,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1100,
+      "name": "visitMethodDeclaration"
+    },
+    {
+      "id": "196350:197545:FunctionDeclaration",
+      "start": 196350,
+      "end": 197545,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1195,
+      "name": "visitAccessorDeclaration"
+    },
+    {
+      "id": "197545:198065:FunctionDeclaration",
+      "start": 197545,
+      "end": 198065,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 520,
+      "name": "visitShorthandPropertyAssignment"
+    },
+    {
+      "id": "198065:198200:FunctionDeclaration",
+      "start": 198065,
+      "end": 198200,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 135,
+      "name": "visitComputedPropertyName"
+    },
+    {
+      "id": "198200:198528:FunctionDeclaration",
+      "start": 198200,
+      "end": 198528,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 328,
+      "name": "visitYieldExpression"
+    },
+    {
+      "id": "198528:199130:FunctionDeclaration",
+      "start": 198528,
+      "end": 199130,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 602,
+      "name": "visitArrayLiteralExpression"
+    },
+    {
+      "id": "199130:200153:FunctionDeclaration",
+      "start": 199130,
+      "end": 200153,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1023,
+      "name": "visitCallExpression"
+    },
+    {
+      "id": "200153:208201:FunctionDeclaration",
+      "start": 200153,
+      "end": 208201,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 8048,
+      "name": "visitTypeScriptClassWrapper"
+    },
+    {
+      "id": "208201:211813:FunctionDeclaration",
+      "start": 208201,
+      "end": 211813,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 3612,
+      "name": "visitCallExpressionWithPotentialCapturedThisAssignment"
+    },
+    {
+      "id": "211813:213072:FunctionDeclaration",
+      "start": 211813,
+      "end": 213072,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1259,
+      "name": "visitNewExpression"
+    },
+    {
+      "id": "213072:217164:FunctionDeclaration",
+      "start": 213072,
+      "end": 217164,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 4092,
+      "name": "transformAndSpreadElements"
+    },
+    {
+      "id": "217164:217333:FunctionDeclaration",
+      "start": 217164,
+      "end": 217333,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 169,
+      "name": "partitionSpread"
+    },
+    {
+      "id": "217333:217468:FunctionDeclaration",
+      "start": 217333,
+      "end": 217468,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 135,
+      "name": "visitSpanOfSpreads"
+    },
+    {
+      "id": "217468:218645:FunctionDeclaration",
+      "start": 217468,
+      "end": 218645,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1177,
+      "name": "visitExpressionOfSpread"
+    },
+    {
+      "id": "218645:219255:FunctionDeclaration",
+      "start": 218645,
+      "end": 219255,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 610,
+      "name": "visitSpanOfNonSpreads"
+    },
+    {
+      "id": "219255:219387:FunctionDeclaration",
+      "start": 219255,
+      "end": 219387,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 132,
+      "name": "visitSpreadElement"
+    },
+    {
+      "id": "219387:219659:FunctionDeclaration",
+      "start": 219387,
+      "end": 219659,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 272,
+      "name": "visitTemplateLiteral"
+    },
+    {
+      "id": "219659:220012:FunctionDeclaration",
+      "start": 219659,
+      "end": 220012,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 353,
+      "name": "visitStringLiteral"
+    },
+    {
+      "id": "220012:220390:FunctionDeclaration",
+      "start": 220012,
+      "end": 220390,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 378,
+      "name": "visitNumericLiteral"
+    },
+    {
+      "id": "220390:220832:FunctionDeclaration",
+      "start": 220390,
+      "end": 220832,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 442,
+      "name": "visitTaggedTemplateExpression"
+    },
+    {
+      "id": "220832:221691:FunctionDeclaration",
+      "start": 220832,
+      "end": 221691,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 859,
+      "name": "visitTemplateExpression"
+    },
+    {
+      "id": "221691:221883:FunctionDeclaration",
+      "start": 221691,
+      "end": 221883,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 192,
+      "name": "createSyntheticSuper"
+    },
+    {
+      "id": "221883:222475:FunctionDeclaration",
+      "start": 221883,
+      "end": 222475,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 592,
+      "name": "visitSuperKeyword"
+    },
+    {
+      "id": "222475:222860:FunctionDeclaration",
+      "start": 222475,
+      "end": 222860,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 385,
+      "name": "visitMetaProperty"
+    },
+    {
+      "id": "222860:223974:FunctionDeclaration",
+      "start": 222860,
+      "end": 223974,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1114,
+      "name": "onEmitNode"
+    },
+    {
+      "id": "223974:224463:FunctionDeclaration",
+      "start": 223974,
+      "end": 224463,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 489,
+      "name": "enableSubstitutionsForBlockScopedBindings"
+    },
+    {
+      "id": "224463:225410:FunctionDeclaration",
+      "start": 224463,
+      "end": 225410,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 947,
+      "name": "enableSubstitutionsForCapturedThis"
+    },
+    {
+      "id": "225410:225913:FunctionDeclaration",
+      "start": 225410,
+      "end": 225913,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 503,
+      "name": "onSubstituteNode"
+    },
+    {
+      "id": "225913:226562:FunctionDeclaration",
+      "start": 225913,
+      "end": 226562,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 649,
+      "name": "substituteIdentifier"
+    },
+    {
+      "id": "226562:227314:FunctionDeclaration",
+      "start": 226562,
+      "end": 227314,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 752,
+      "name": "isNameOfDeclarationWithCollidingName"
+    },
+    {
+      "id": "227314:227773:FunctionDeclaration",
+      "start": 227314,
+      "end": 227773,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 459,
+      "name": "substituteExpression"
+    },
+    {
+      "id": "227773:228435:FunctionDeclaration",
+      "start": 227773,
+      "end": 228435,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 662,
+      "name": "substituteExpressionIdentifier"
+    },
+    {
+      "id": "228435:229615:FunctionDeclaration",
+      "start": 228435,
+      "end": 229615,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1180,
+      "name": "isPartOfClassBody"
+    },
+    {
+      "id": "229615:230098:FunctionDeclaration",
+      "start": 229615,
+      "end": 230098,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 483,
+      "name": "substituteThisKeyword"
+    },
+    {
+      "id": "230098:230385:FunctionDeclaration",
+      "start": 230098,
+      "end": 230385,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 287,
+      "name": "getClassMemberPrefix"
+    },
+    {
+      "id": "230385:231784:FunctionDeclaration",
+      "start": 230385,
+      "end": 231784,
+      "kind": "FunctionDeclaration",
+      "parent": "transformES2015",
+      "bytes": 1399,
+      "name": "hasSynthesizedDefaultSuperCall"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "200153:208201:FunctionDeclaration"
+      ],
+      "bytes": 8048
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "172532:179544:FunctionDeclaration"
+      ],
+      "bytes": 7012
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "22891:29175:FunctionDeclaration"
+      ],
+      "bytes": 6284
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "143952:149933:FunctionDeclaration"
+      ],
+      "bytes": 5981
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "0:5458:ImportDeclaration"
+      ],
+      "bytes": 5458
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "88109:93345:FunctionDeclaration"
+      ],
+      "bytes": 5236
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "10680:15901:EnumDeclaration"
+      ],
+      "bytes": 5221
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "112430:117233:FunctionDeclaration"
+      ],
+      "bytes": 4803
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "135437:139980:FunctionDeclaration"
+      ],
+      "bytes": 4543
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "60997:65445:FunctionDeclaration"
+      ],
+      "bytes": 4448
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "65445:69826:FunctionDeclaration"
+      ],
+      "bytes": 4381
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "213072:217164:FunctionDeclaration"
+      ],
+      "bytes": 4092
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "164439:168519:FunctionDeclaration"
+      ],
+      "bytes": 4080
+    },
+    {
+      "id": 13,
+      "atoms": [
+        "50785:54647:FunctionDeclaration"
+      ],
+      "bytes": 3862
+    },
+    {
+      "id": 14,
+      "atoms": [
+        "180941:184765:FunctionDeclaration"
+      ],
+      "bytes": 3824
+    },
+    {
+      "id": 15,
+      "atoms": [
+        "140322:143952:FunctionDeclaration"
+      ],
+      "bytes": 3630
+    },
+    {
+      "id": 16,
+      "atoms": [
+        "168905:172532:FunctionDeclaration"
+      ],
+      "bytes": 3627
+    },
+    {
+      "id": 17,
+      "atoms": [
+        "16466:231787:FunctionDeclaration"
+      ],
+      "bytes": 3624
+    },
+    {
+      "id": 18,
+      "atoms": [
+        "208201:211813:FunctionDeclaration"
+      ],
+      "bytes": 3612
+    },
+    {
+      "id": 19,
+      "atoms": [
+        "154892:158328:FunctionDeclaration"
+      ],
+      "bytes": 3436
+    },
+    {
+      "id": 20,
+      "atoms": [
+        "103304:106683:FunctionDeclaration"
+      ],
+      "bytes": 3379
+    },
+    {
+      "id": 21,
+      "atoms": [
+        "94824:98194:FunctionDeclaration"
+      ],
+      "bytes": 3370
+    },
+    {
+      "id": 22,
+      "atoms": [
+        "126048:129134:FunctionDeclaration"
+      ],
+      "bytes": 3086
+    },
+    {
+      "id": 23,
+      "atoms": [
+        "34361:37435:FunctionDeclaration"
+      ],
+      "bytes": 3074
+    },
+    {
+      "id": 24,
+      "atoms": [
+        "33519:33680:FunctionDeclaration",
+        "39689:42699:FunctionDeclaration"
+      ],
+      "bytes": 3171
+    },
+    {
+      "id": 25,
+      "atoms": [
+        "7637:10460:InterfaceDeclaration",
+        "10460:10680:TypeAliasDeclaration"
+      ],
+      "bytes": 3043
+    },
+    {
+      "id": 26,
+      "atoms": [
+        "153415:153672:FunctionDeclaration",
+        "161662:164439:FunctionDeclaration"
+      ],
+      "bytes": 3034
+    },
+    {
+      "id": 27,
+      "atoms": [
+        "60563:60997:FunctionDeclaration",
+        "149933:152366:FunctionDeclaration",
+        "221691:221883:FunctionDeclaration"
+      ],
+      "bytes": 3059
+    },
+    {
+      "id": 28,
+      "atoms": [
+        "30961:31313:FunctionDeclaration",
+        "82980:85224:FunctionDeclaration",
+        "227314:227773:FunctionDeclaration"
+      ],
+      "bytes": 3055
+    },
+    {
+      "id": 29,
+      "atoms": [
+        "18029:18556:FunctionDeclaration",
+        "60242:60563:FunctionDeclaration",
+        "85224:87431:FunctionDeclaration"
+      ],
+      "bytes": 3055
+    },
+    {
+      "id": 30,
+      "atoms": [
+        "22612:22891:FunctionDeclaration",
+        "118259:118882:FunctionDeclaration",
+        "121733:123867:FunctionDeclaration"
+      ],
+      "bytes": 3036
+    },
+    {
+      "id": 31,
+      "atoms": [
+        "18556:19179:FunctionDeclaration",
+        "57240:57534:FunctionDeclaration",
+        "79047:79169:FunctionDeclaration",
+        "100293:102408:FunctionDeclaration"
+      ],
+      "bytes": 3154
+    },
+    {
+      "id": 32,
+      "atoms": [
+        "31313:31478:FunctionDeclaration",
+        "93345:93984:FunctionDeclaration",
+        "188603:190620:FunctionDeclaration",
+        "219659:220012:FunctionDeclaration"
+      ],
+      "bytes": 3174
+    },
+    {
+      "id": 33,
+      "atoms": [
+        "58848:59488:FunctionDeclaration",
+        "71552:73523:FunctionDeclaration",
+        "134571:134934:FunctionDeclaration",
+        "217164:217333:FunctionDeclaration"
+      ],
+      "bytes": 3143
+    },
+    {
+      "id": 34,
+      "atoms": [
+        "42699:44662:FunctionDeclaration",
+        "121372:121733:FunctionDeclaration",
+        "152735:152909:FunctionDeclaration",
+        "225913:226562:FunctionDeclaration"
+      ],
+      "bytes": 3147
+    },
+    {
+      "id": 35,
+      "atoms": [
+        "21405:21585:FunctionDeclaration",
+        "56869:57240:FunctionDeclaration",
+        "186668:188603:FunctionDeclaration",
+        "227773:228435:FunctionDeclaration"
+      ],
+      "bytes": 3148
+    },
+    {
+      "id": 36,
+      "atoms": [
+        "81542:81719:FunctionDeclaration",
+        "87431:88109:FunctionDeclaration",
+        "110515:112430:FunctionDeclaration",
+        "133354:133729:FunctionDeclaration"
+      ],
+      "bytes": 3145
+    },
+    {
+      "id": 37,
+      "atoms": [
+        "33680:34361:FunctionDeclaration",
+        "79739:81542:FunctionDeclaration",
+        "153877:154075:FunctionDeclaration",
+        "220012:220390:FunctionDeclaration"
+      ],
+      "bytes": 3060
+    },
+    {
+      "id": 38,
+      "atoms": [
+        "20197:20887:FunctionDeclaration",
+        "31478:31665:FunctionDeclaration",
+        "98194:99958:FunctionDeclaration",
+        "160283:160706:FunctionDeclaration"
+      ],
+      "bytes": 3064
+    },
+    {
+      "id": 39,
+      "atoms": [
+        "49323:49539:FunctionDeclaration",
+        "73523:75285:FunctionDeclaration",
+        "117233:117934:FunctionDeclaration",
+        "222475:222860:FunctionDeclaration"
+      ],
+      "bytes": 3064
+    },
+    {
+      "id": 40,
+      "atoms": [
+        "7277:7475:EnumDeclaration",
+        "19179:19906:FunctionDeclaration",
+        "45533:47268:FunctionDeclaration",
+        "179982:180381:FunctionDeclaration"
+      ],
+      "bytes": 3059
+    },
+    {
+      "id": 41,
+      "atoms": [
+        "58446:58848:FunctionDeclaration",
+        "69826:71552:FunctionDeclaration",
+        "131300:132032:FunctionDeclaration",
+        "168706:168905:FunctionDeclaration"
+      ],
+      "bytes": 3059
+    },
+    {
+      "id": 42,
+      "atoms": [
+        "21585:21790:FunctionDeclaration",
+        "37435:39155:FunctionDeclaration",
+        "160706:161087:FunctionDeclaration",
+        "226562:227314:FunctionDeclaration"
+      ],
+      "bytes": 3058
+    },
+    {
+      "id": 43,
+      "atoms": [
+        "32741:33519:FunctionDeclaration",
+        "59488:59912:FunctionDeclaration",
+        "123867:125522:FunctionDeclaration",
+        "153672:153877:FunctionDeclaration"
+      ],
+      "bytes": 3062
+    },
+    {
+      "id": 44,
+      "atoms": [
+        "5694:7277:InterfaceDeclaration",
+        "56384:56617:FunctionDeclaration",
+        "132032:132811:FunctionDeclaration",
+        "179544:179982:FunctionDeclaration"
+      ],
+      "bytes": 3033
+    },
+    {
+      "id": 45,
+      "atoms": [
+        "139980:140322:FunctionDeclaration",
+        "154075:154892:FunctionDeclaration",
+        "193525:194981:FunctionDeclaration",
+        "220390:220832:FunctionDeclaration"
+      ],
+      "bytes": 3057
+    },
+    {
+      "id": 46,
+      "atoms": [
+        "21790:22612:FunctionDeclaration",
+        "77643:79047:FunctionDeclaration",
+        "99958:100293:FunctionDeclaration",
+        "134934:135437:FunctionDeclaration"
+      ],
+      "bytes": 3064
+    },
+    {
+      "id": 47,
+      "atoms": [
+        "15901:16240:EnumDeclaration",
+        "93984:94824:FunctionDeclaration",
+        "229615:230098:FunctionDeclaration",
+        "230385:231784:FunctionDeclaration"
+      ],
+      "bytes": 3061
+    },
+    {
+      "id": 48,
+      "atoms": [
+        "20887:21405:FunctionDeclaration",
+        "106683:108045:FunctionDeclaration",
+        "131171:131300:FunctionDeclaration",
+        "161370:161662:FunctionDeclaration",
+        "220832:221691:FunctionDeclaration"
+      ],
+      "bytes": 3160
+    },
+    {
+      "id": 49,
+      "atoms": [
+        "44662:45533:FunctionDeclaration",
+        "75285:76625:FunctionDeclaration",
+        "197545:198065:FunctionDeclaration",
+        "198200:198528:FunctionDeclaration"
+      ],
+      "bytes": 3059
+    },
+    {
+      "id": 50,
+      "atoms": [
+        "102408:103304:FunctionDeclaration",
+        "117934:118259:FunctionDeclaration",
+        "118882:120215:FunctionDeclaration",
+        "225410:225913:FunctionDeclaration"
+      ],
+      "bytes": 3057
+    },
+    {
+      "id": 51,
+      "atoms": [
+        "59912:60242:FunctionDeclaration",
+        "108045:109350:FunctionDeclaration",
+        "134070:134571:FunctionDeclaration",
+        "159359:160283:FunctionDeclaration"
+      ],
+      "bytes": 3060
+    },
+    {
+      "id": 52,
+      "atoms": [
+        "129134:130078:FunctionDeclaration",
+        "133729:134070:FunctionDeclaration",
+        "185383:186668:FunctionDeclaration",
+        "223974:224463:FunctionDeclaration"
+      ],
+      "bytes": 3059
+    },
+    {
+      "id": 53,
+      "atoms": [
+        "57534:57830:FunctionDeclaration",
+        "81719:82980:FunctionDeclaration",
+        "125522:126048:FunctionDeclaration",
+        "217333:217468:FunctionDeclaration",
+        "224463:225410:FunctionDeclaration"
+      ],
+      "bytes": 3165
+    },
+    {
+      "id": 54,
+      "atoms": [
+        "16331:16466:FunctionDeclaration",
+        "39155:39689:FunctionDeclaration",
+        "190620:191567:FunctionDeclaration",
+        "211813:213072:FunctionDeclaration",
+        "230098:230385:FunctionDeclaration"
+      ],
+      "bytes": 3162
+    },
+    {
+      "id": 55,
+      "atoms": [
+        "19906:20197:FunctionDeclaration",
+        "49539:50785:FunctionDeclaration",
+        "132811:133354:FunctionDeclaration",
+        "191567:192517:FunctionDeclaration",
+        "219255:219387:FunctionDeclaration"
+      ],
+      "bytes": 3162
+    },
+    {
+      "id": 56,
+      "atoms": [
+        "7546:7637:EnumDeclaration",
+        "57830:58446:FunctionDeclaration",
+        "130078:131042:FunctionDeclaration",
+        "152909:153166:FunctionDeclaration",
+        "196350:197545:FunctionDeclaration"
+      ],
+      "bytes": 3123
+    },
+    {
+      "id": 57,
+      "atoms": [
+        "47268:48244:FunctionDeclaration",
+        "184765:185383:FunctionDeclaration",
+        "194981:195250:FunctionDeclaration",
+        "228435:229615:FunctionDeclaration"
+      ],
+      "bytes": 3043
+    },
+    {
+      "id": 58,
+      "atoms": [
+        "17324:17559:FunctionDeclaration",
+        "131042:131171:FunctionDeclaration",
+        "192517:193525:FunctionDeclaration",
+        "217468:218645:FunctionDeclaration",
+        "218645:219255:FunctionDeclaration"
+      ],
+      "bytes": 3159
+    },
+    {
+      "id": 59,
+      "atoms": [
+        "29175:30348:FunctionDeclaration",
+        "76625:77643:FunctionDeclaration",
+        "161087:161370:FunctionDeclaration",
+        "180381:180941:FunctionDeclaration"
+      ],
+      "bytes": 3034
+    },
+    {
+      "id": 60,
+      "atoms": [
+        "109350:110515:FunctionDeclaration",
+        "153166:153415:FunctionDeclaration",
+        "198528:199130:FunctionDeclaration",
+        "199130:200153:FunctionDeclaration"
+      ],
+      "bytes": 3039
+    },
+    {
+      "id": 61,
+      "atoms": [
+        "16240:16331:InterfaceDeclaration",
+        "56617:56869:FunctionDeclaration",
+        "120215:121372:FunctionDeclaration",
+        "158328:159359:FunctionDeclaration",
+        "221883:222475:FunctionDeclaration"
+      ],
+      "bytes": 3123
+    },
+    {
+      "id": 62,
+      "atoms": [
+        "7475:7546:EnumDeclaration",
+        "31665:32741:FunctionDeclaration",
+        "79169:79739:FunctionDeclaration",
+        "219387:219659:FunctionDeclaration",
+        "222860:223974:FunctionDeclaration"
+      ],
+      "bytes": 3103
+    },
+    {
+      "id": 63,
+      "atoms": [
+        "5458:5694:EnumDeclaration",
+        "30348:30961:FunctionDeclaration",
+        "48244:49323:FunctionDeclaration",
+        "195250:196350:FunctionDeclaration",
+        "198065:198200:FunctionDeclaration"
+      ],
+      "bytes": 3163
+    }
+  ]
+}

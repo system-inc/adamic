@@ -1,8 +1,9 @@
-Statement-piece census unions match the 0442c4a9 whole-file observations exactly.
-watch.ts: 315 sites in 8 pieces; transformers/ts.ts: 800 sites in 5 pieces; zero differences.
-Base scaling model: 25.13 core-hours plus an unknown censored completion tail.
-Largest checker piece timed out at 900.070s, peak RSS 1175036KiB; five other samples completed.
-Dropped, duplicated and moved-site mutants are caught; coverage remains 65/79 files.
+Recursive planner built; watch matches, createNodeBuilder fails the union admission check.
+50 KiB threshold: 882 planned pieces across 14 files; checker has 64, createNodeBuilder eight.
+Largest planned piece: 49,302 bytes, 189.813s, peak RSS 1036812KiB.
+Whole createNodeBuilder: 971.045s, peak RSS 4182624KiB; all 30,499 nodes visited.
+Dropped, duplicated, moved and shifted-node mutants caught; full coverage remains 65/79 files.
+
 
 | Depth | NotYet | Refused |
 |---|---:|---:|
@@ -143,3 +144,5 @@ See [continuation method](continuation.md), [coverage and every runtime](evidenc
 Finalization took 61.210s with peak RSS 2540296KiB. Its whole-project boundary union recalibrated 280 raw depth tags before the independent recount. Published totals contain 18163 unique classified sites. All 50 retries received their intended budgets; no file was shortened by the two-hour deadline.
 
 Task #b2wbbha: [piece method and reproduction](pieces.md), [union, measurements and scaling report](evidence/pieces/README.md). The six checker samples are excluded from this table.
+
+Recursive continuation: [result and failed admission](evidence/recursive-pieces/README.md), [every createNodeBuilder difference](evidence/recursive-pieces/DIFFERENCES.md). No recursive observations enter the depth table.

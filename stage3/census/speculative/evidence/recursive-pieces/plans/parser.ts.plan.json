@@ -1,0 +1,6468 @@
+{
+  "version": 2,
+  "threshold_bytes": 51200,
+  "root_name": null,
+  "split_functions": [
+    {
+      "start": 440024,
+      "end": 497150,
+      "name": "parseJSDocCommentWorker"
+    }
+  ],
+  "split_containers": [
+    {
+      "start": 80562,
+      "end": 497160,
+      "name": "Parser"
+    },
+    {
+      "start": 435220,
+      "end": 497157,
+      "name": "JSDocParser"
+    }
+  ],
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/parser.ts",
+  "sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+  "source_bytes": 541260,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:10719:ImportDeclaration",
+      "start": 0,
+      "end": 10719,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 10719,
+      "name": ""
+    },
+    {
+      "id": "10719:10784:ImportDeclaration",
+      "start": 10719,
+      "end": 10784,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 65,
+      "name": ""
+    },
+    {
+      "id": "10784:10954:EnumDeclaration",
+      "start": 10784,
+      "end": 10954,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 170,
+      "name": "SignatureFlags"
+    },
+    {
+      "id": "10954:11034:EnumDeclaration",
+      "start": 10954,
+      "end": 11034,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 80,
+      "name": "SpeculationKind"
+    },
+    {
+      "id": "11034:11116:VariableStatement",
+      "start": 11034,
+      "end": 11116,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 82,
+      "name": ""
+    },
+    {
+      "id": "11116:11197:VariableStatement",
+      "start": 11116,
+      "end": 11197,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 81,
+      "name": ""
+    },
+    {
+      "id": "11197:11294:VariableStatement",
+      "start": 11197,
+      "end": 11294,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 97,
+      "name": ""
+    },
+    {
+      "id": "11294:11405:VariableStatement",
+      "start": 11294,
+      "end": 11405,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 111,
+      "name": ""
+    },
+    {
+      "id": "11405:11502:VariableStatement",
+      "start": 11405,
+      "end": 11502,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 97,
+      "name": ""
+    },
+    {
+      "id": "11502:12482:VariableStatement",
+      "start": 11502,
+      "end": 12482,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 980,
+      "name": ""
+    },
+    {
+      "id": "12482:12628:VariableStatement",
+      "start": 12482,
+      "end": 12628,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 146,
+      "name": ""
+    },
+    {
+      "id": "12628:12758:FunctionDeclaration",
+      "start": 12628,
+      "end": 12758,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 130,
+      "name": "visitNode"
+    },
+    {
+      "id": "12758:13192:FunctionDeclaration",
+      "start": 12758,
+      "end": 13192,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 434,
+      "name": "visitNodes"
+    },
+    {
+      "id": "13192:13487:FunctionDeclaration",
+      "start": 13192,
+      "end": 13487,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 295,
+      "name": "isJSDocLikeText"
+    },
+    {
+      "id": "13487:13886:FunctionDeclaration",
+      "start": 13487,
+      "end": 13886,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 399,
+      "name": "isFileProbablyExternalModule"
+    },
+    {
+      "id": "13886:14279:FunctionDeclaration",
+      "start": 13886,
+      "end": 14279,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 393,
+      "name": "isAnExternalModuleIndicatorNode"
+    },
+    {
+      "id": "14279:14480:FunctionDeclaration",
+      "start": 14279,
+      "end": 14480,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 201,
+      "name": "getImportMetaIfNecessary"
+    },
+    {
+      "id": "14480:14632:FunctionDeclaration",
+      "start": 14480,
+      "end": 14632,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 152,
+      "name": "walkTreeForImportMeta"
+    },
+    {
+      "id": "14632:14859:FunctionDeclaration",
+      "start": 14632,
+      "end": 14859,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 227,
+      "name": "hasModifierOfKind"
+    },
+    {
+      "id": "14859:15030:FunctionDeclaration",
+      "start": 14859,
+      "end": 15030,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 171,
+      "name": "isImportMeta"
+    },
+    {
+      "id": "15030:15195:TypeAliasDeclaration",
+      "start": 15030,
+      "end": 15195,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 165,
+      "name": "ForEachChildFunction"
+    },
+    {
+      "id": "15195:15302:TypeAliasDeclaration",
+      "start": 15195,
+      "end": 15302,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 107,
+      "name": "ForEachChildTable"
+    },
+    {
+      "id": "15302:64545:VariableStatement",
+      "start": 15302,
+      "end": 64545,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 49243,
+      "name": ""
+    },
+    {
+      "id": "64545:64948:FunctionDeclaration",
+      "start": 64545,
+      "end": 64948,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 403,
+      "name": "forEachChildInCallOrConstructSignature"
+    },
+    {
+      "id": "64948:65210:FunctionDeclaration",
+      "start": 64948,
+      "end": 65210,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 262,
+      "name": "forEachChildInUnionOrIntersectionType"
+    },
+    {
+      "id": "65210:65474:FunctionDeclaration",
+      "start": 65210,
+      "end": 65474,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 264,
+      "name": "forEachChildInParenthesizedTypeOrTypeOperator"
+    },
+    {
+      "id": "65474:65721:FunctionDeclaration",
+      "start": 65474,
+      "end": 65721,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 247,
+      "name": "forEachChildInObjectOrArrayBindingPattern"
+    },
+    {
+      "id": "65721:66214:FunctionDeclaration",
+      "start": 65721,
+      "end": 66214,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 493,
+      "name": "forEachChildInCallOrNewExpression"
+    },
+    {
+      "id": "66214:66446:FunctionDeclaration",
+      "start": 66214,
+      "end": 66446,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 232,
+      "name": "forEachChildInBlock"
+    },
+    {
+      "id": "66446:66698:FunctionDeclaration",
+      "start": 66446,
+      "end": 66698,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 252,
+      "name": "forEachChildInContinueOrBreakStatement"
+    },
+    {
+      "id": "66698:67185:FunctionDeclaration",
+      "start": 66698,
+      "end": 67185,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 487,
+      "name": "forEachChildInClassDeclarationOrExpression"
+    },
+    {
+      "id": "67185:67439:FunctionDeclaration",
+      "start": 67185,
+      "end": 67439,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 254,
+      "name": "forEachChildInNamedImportsOrExports"
+    },
+    {
+      "id": "67439:67737:FunctionDeclaration",
+      "start": 67439,
+      "end": 67737,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 298,
+      "name": "forEachChildInImportOrExportSpecifier"
+    },
+    {
+      "id": "67737:68090:FunctionDeclaration",
+      "start": 67737,
+      "end": 68090,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 353,
+      "name": "forEachChildInJsxOpeningOrSelfClosingElement"
+    },
+    {
+      "id": "68090:68455:FunctionDeclaration",
+      "start": 68090,
+      "end": 68455,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 365,
+      "name": "forEachChildInOptionalRestOrJSDocParameterModifier"
+    },
+    {
+      "id": "68455:69019:FunctionDeclaration",
+      "start": 68455,
+      "end": 69019,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 564,
+      "name": "forEachChildInJSDocParameterOrPropertyTag"
+    },
+    {
+      "id": "69019:69499:FunctionDeclaration",
+      "start": 69019,
+      "end": 69499,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 480,
+      "name": "forEachChildInJSDocTypeLikeTag"
+    },
+    {
+      "id": "69499:69754:FunctionDeclaration",
+      "start": 69499,
+      "end": 69754,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 255,
+      "name": "forEachChildInJSDocLinkCodeOrPlain"
+    },
+    {
+      "id": "69754:70205:FunctionDeclaration",
+      "start": 69754,
+      "end": 70205,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 451,
+      "name": "forEachChildInJSDocTag"
+    },
+    {
+      "id": "70205:70679:FunctionDeclaration",
+      "start": 70205,
+      "end": 70679,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 474,
+      "name": "forEachChildInJSDocImportTag"
+    },
+    {
+      "id": "70679:70930:FunctionDeclaration",
+      "start": 70679,
+      "end": 70930,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 251,
+      "name": "forEachChildInPartiallyEmittedExpression"
+    },
+    {
+      "id": "70930:72163:FunctionDeclaration",
+      "start": 70930,
+      "end": 72163,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1233,
+      "name": "forEachChild"
+    },
+    {
+      "id": "72163:74638:FunctionDeclaration",
+      "start": 72163,
+      "end": 74638,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 2475,
+      "name": "forEachChildRecursively"
+    },
+    {
+      "id": "74638:75001:FunctionDeclaration",
+      "start": 74638,
+      "end": 75001,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 363,
+      "name": "gatherPossibleChildren"
+    },
+    {
+      "id": "75001:76021:InterfaceDeclaration",
+      "start": 75001,
+      "end": 76021,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 1020,
+      "name": "CreateSourceFileOptions"
+    },
+    {
+      "id": "76021:76173:FunctionDeclaration",
+      "start": 76021,
+      "end": 76173,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 152,
+      "name": "setExternalModuleIndicator"
+    },
+    {
+      "id": "76173:77714:FunctionDeclaration",
+      "start": 76173,
+      "end": 77714,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1541,
+      "name": "createSourceFile"
+    },
+    {
+      "id": "77714:77898:FunctionDeclaration",
+      "start": 77714,
+      "end": 77898,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 184,
+      "name": "parseIsolatedEntityName"
+    },
+    {
+      "id": "77898:78174:FunctionDeclaration",
+      "start": 77898,
+      "end": 78174,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 276,
+      "name": "parseJsonText"
+    },
+    {
+      "id": "78174:78356:FunctionDeclaration",
+      "start": 78174,
+      "end": 78356,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 182,
+      "name": "isExternalModule"
+    },
+    {
+      "id": "78356:79609:FunctionDeclaration",
+      "start": 78356,
+      "end": 79609,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1253,
+      "name": "updateSourceFile"
+    },
+    {
+      "id": "79609:79724:InterfaceDeclaration",
+      "start": 79609,
+      "end": 79724,
+      "kind": "InterfaceDeclaration",
+      "parent": "file",
+      "bytes": 115,
+      "name": "JsDocWithDiagnostics"
+    },
+    {
+      "id": "79724:80221:FunctionDeclaration",
+      "start": 79724,
+      "end": 80221,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 497,
+      "name": "parseIsolatedJSDocComment"
+    },
+    {
+      "id": "80221:80562:FunctionDeclaration",
+      "start": 80221,
+      "end": 80562,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 341,
+      "name": "parseJSDocTypeExpressionForTests"
+    },
+    {
+      "id": "80562:497160:ModuleDeclaration",
+      "start": 80562,
+      "end": 497160,
+      "kind": "ModuleDeclaration",
+      "parent": "file",
+      "bytes": 226,
+      "name": "Parser"
+    },
+    {
+      "id": "80785:81217:VariableStatement",
+      "start": 80785,
+      "end": 81217,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 432,
+      "name": ""
+    },
+    {
+      "id": "81217:81318:VariableStatement",
+      "start": 81217,
+      "end": 81318,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 101,
+      "name": ""
+    },
+    {
+      "id": "81318:81475:VariableStatement",
+      "start": 81318,
+      "end": 81475,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 157,
+      "name": ""
+    },
+    {
+      "id": "81475:81560:VariableStatement",
+      "start": 81475,
+      "end": 81560,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 85,
+      "name": ""
+    },
+    {
+      "id": "81560:81667:VariableStatement",
+      "start": 81560,
+      "end": 81667,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 107,
+      "name": ""
+    },
+    {
+      "id": "81667:81795:VariableStatement",
+      "start": 81667,
+      "end": 81795,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": ""
+    },
+    {
+      "id": "81795:81902:VariableStatement",
+      "start": 81795,
+      "end": 81902,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 107,
+      "name": ""
+    },
+    {
+      "id": "81902:81993:FunctionDeclaration",
+      "start": 81902,
+      "end": 81993,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 91,
+      "name": "countNode"
+    },
+    {
+      "id": "81993:82775:VariableStatement",
+      "start": 81993,
+      "end": 82775,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 782,
+      "name": ""
+    },
+    {
+      "id": "82775:82941:VariableStatement",
+      "start": 82775,
+      "end": 82941,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 166,
+      "name": ""
+    },
+    {
+      "id": "82941:84614:VariableStatement",
+      "start": 82941,
+      "end": 84614,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 1673,
+      "name": ""
+    },
+    {
+      "id": "84614:84643:VariableStatement",
+      "start": 84614,
+      "end": 84643,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 29,
+      "name": ""
+    },
+    {
+      "id": "84643:84676:VariableStatement",
+      "start": 84643,
+      "end": 84676,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 33,
+      "name": ""
+    },
+    {
+      "id": "84676:84705:VariableStatement",
+      "start": 84676,
+      "end": 84705,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 29,
+      "name": ""
+    },
+    {
+      "id": "84705:84745:VariableStatement",
+      "start": 84705,
+      "end": 84745,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 40,
+      "name": ""
+    },
+    {
+      "id": "84745:84778:VariableStatement",
+      "start": 84745,
+      "end": 84778,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 33,
+      "name": ""
+    },
+    {
+      "id": "84778:84821:VariableStatement",
+      "start": 84778,
+      "end": 84821,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 43,
+      "name": ""
+    },
+    {
+      "id": "84821:84882:VariableStatement",
+      "start": 84821,
+      "end": 84882,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 61,
+      "name": ""
+    },
+    {
+      "id": "84882:84943:VariableStatement",
+      "start": 84882,
+      "end": 84943,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 61,
+      "name": ""
+    },
+    {
+      "id": "84943:85010:VariableStatement",
+      "start": 84943,
+      "end": 85010,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 67,
+      "name": ""
+    },
+    {
+      "id": "85010:85047:VariableStatement",
+      "start": 85010,
+      "end": 85047,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 37,
+      "name": ""
+    },
+    {
+      "id": "85047:85075:VariableStatement",
+      "start": 85047,
+      "end": 85075,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 28,
+      "name": ""
+    },
+    {
+      "id": "85075:85118:VariableStatement",
+      "start": 85075,
+      "end": 85118,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 43,
+      "name": ""
+    },
+    {
+      "id": "85118:85152:VariableStatement",
+      "start": 85118,
+      "end": 85152,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 34,
+      "name": ""
+    },
+    {
+      "id": "85152:85336:VariableStatement",
+      "start": 85152,
+      "end": 85336,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 184,
+      "name": ""
+    },
+    {
+      "id": "85336:85395:VariableStatement",
+      "start": 85336,
+      "end": 85395,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 59,
+      "name": ""
+    },
+    {
+      "id": "85395:88573:VariableStatement",
+      "start": 85395,
+      "end": 88573,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 3178,
+      "name": ""
+    },
+    {
+      "id": "88573:88674:VariableStatement",
+      "start": 88573,
+      "end": 88674,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 101,
+      "name": ""
+    },
+    {
+      "id": "88674:90445:VariableStatement",
+      "start": 88674,
+      "end": 90445,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 1771,
+      "name": ""
+    },
+    {
+      "id": "90445:91981:FunctionDeclaration",
+      "start": 90445,
+      "end": 91981,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1536,
+      "name": "parseSourceFile"
+    },
+    {
+      "id": "91981:92589:FunctionDeclaration",
+      "start": 91981,
+      "end": 92589,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 608,
+      "name": "parseIsolatedEntityName"
+    },
+    {
+      "id": "92589:97051:FunctionDeclaration",
+      "start": 92589,
+      "end": 97051,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4462,
+      "name": "parseJsonText"
+    },
+    {
+      "id": "97051:98986:FunctionDeclaration",
+      "start": 97051,
+      "end": 98986,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1935,
+      "name": "initializeState"
+    },
+    {
+      "id": "98986:99871:FunctionDeclaration",
+      "start": 98986,
+      "end": 99871,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 885,
+      "name": "clearState"
+    },
+    {
+      "id": "99871:102045:FunctionDeclaration",
+      "start": 99871,
+      "end": 102045,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2174,
+      "name": "parseSourceFileWorker"
+    },
+    {
+      "id": "102045:102082:VariableStatement",
+      "start": 102045,
+      "end": 102082,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 37,
+      "name": ""
+    },
+    {
+      "id": "102082:102687:FunctionDeclaration",
+      "start": 102082,
+      "end": 102687,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 605,
+      "name": "withJSDoc"
+    },
+    {
+      "id": "102687:107755:FunctionDeclaration",
+      "start": 102687,
+      "end": 107755,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 5068,
+      "name": "reparseTopLevelAwait"
+    },
+    {
+      "id": "107755:108201:FunctionDeclaration",
+      "start": 107755,
+      "end": 108201,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 446,
+      "name": "fixupParentReferences"
+    },
+    {
+      "id": "108201:110084:FunctionDeclaration",
+      "start": 108201,
+      "end": 110084,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1883,
+      "name": "createSourceFile"
+    },
+    {
+      "id": "110084:110284:FunctionDeclaration",
+      "start": 110084,
+      "end": 110284,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 200,
+      "name": "setContextFlag"
+    },
+    {
+      "id": "110284:110403:FunctionDeclaration",
+      "start": 110284,
+      "end": 110403,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 119,
+      "name": "setDisallowInContext"
+    },
+    {
+      "id": "110403:110512:FunctionDeclaration",
+      "start": 110403,
+      "end": 110512,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 109,
+      "name": "setYieldContext"
+    },
+    {
+      "id": "110512:110629:FunctionDeclaration",
+      "start": 110512,
+      "end": 110629,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 117,
+      "name": "setDecoratorContext"
+    },
+    {
+      "id": "110629:110738:FunctionDeclaration",
+      "start": 110629,
+      "end": 110738,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 109,
+      "name": "setAwaitContext"
+    },
+    {
+      "id": "110738:111734:FunctionDeclaration",
+      "start": 110738,
+      "end": 111734,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 996,
+      "name": "doOutsideOfContext"
+    },
+    {
+      "id": "111734:112722:FunctionDeclaration",
+      "start": 111734,
+      "end": 112722,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 988,
+      "name": "doInsideOfContext"
+    },
+    {
+      "id": "112722:112850:FunctionDeclaration",
+      "start": 112722,
+      "end": 112850,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": "allowInAnd"
+    },
+    {
+      "id": "112850:112980:FunctionDeclaration",
+      "start": 112850,
+      "end": 112980,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 130,
+      "name": "disallowInAnd"
+    },
+    {
+      "id": "112980:113136:FunctionDeclaration",
+      "start": 112980,
+      "end": 113136,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 156,
+      "name": "allowConditionalTypesAnd"
+    },
+    {
+      "id": "113136:113294:FunctionDeclaration",
+      "start": 113136,
+      "end": 113294,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 158,
+      "name": "disallowConditionalTypesAnd"
+    },
+    {
+      "id": "113294:113422:FunctionDeclaration",
+      "start": 113294,
+      "end": 113422,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": "doInYieldContext"
+    },
+    {
+      "id": "113422:113558:FunctionDeclaration",
+      "start": 113422,
+      "end": 113558,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 136,
+      "name": "doInDecoratorContext"
+    },
+    {
+      "id": "113558:113686:FunctionDeclaration",
+      "start": 113558,
+      "end": 113686,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": "doInAwaitContext"
+    },
+    {
+      "id": "113686:113822:FunctionDeclaration",
+      "start": 113686,
+      "end": 113822,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 136,
+      "name": "doOutsideOfAwaitContext"
+    },
+    {
+      "id": "113822:113983:FunctionDeclaration",
+      "start": 113822,
+      "end": 113983,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 161,
+      "name": "doInYieldAndAwaitContext"
+    },
+    {
+      "id": "113983:114152:FunctionDeclaration",
+      "start": 113983,
+      "end": 114152,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 169,
+      "name": "doOutsideOfYieldAndAwaitContext"
+    },
+    {
+      "id": "114152:114251:FunctionDeclaration",
+      "start": 114152,
+      "end": 114251,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 99,
+      "name": "inContext"
+    },
+    {
+      "id": "114251:114344:FunctionDeclaration",
+      "start": 114251,
+      "end": 114344,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 93,
+      "name": "inYieldContext"
+    },
+    {
+      "id": "114344:114447:FunctionDeclaration",
+      "start": 114344,
+      "end": 114447,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 103,
+      "name": "inDisallowInContext"
+    },
+    {
+      "id": "114447:114578:FunctionDeclaration",
+      "start": 114447,
+      "end": 114578,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 131,
+      "name": "inDisallowConditionalTypesContext"
+    },
+    {
+      "id": "114578:114679:FunctionDeclaration",
+      "start": 114578,
+      "end": 114679,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 101,
+      "name": "inDecoratorContext"
+    },
+    {
+      "id": "114679:114772:FunctionDeclaration",
+      "start": 114679,
+      "end": 114772,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 93,
+      "name": "inAwaitContext"
+    },
+    {
+      "id": "114772:115020:FunctionDeclaration",
+      "start": 114772,
+      "end": 115020,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 248,
+      "name": "parseErrorAtCurrentToken"
+    },
+    {
+      "id": "115020:115876:FunctionDeclaration",
+      "start": 115020,
+      "end": 115876,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 856,
+      "name": "parseErrorAtPosition"
+    },
+    {
+      "id": "115876:116120:FunctionDeclaration",
+      "start": 115876,
+      "end": 116120,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 244,
+      "name": "parseErrorAt"
+    },
+    {
+      "id": "116120:116318:FunctionDeclaration",
+      "start": 116120,
+      "end": 116318,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 198,
+      "name": "parseErrorAtRange"
+    },
+    {
+      "id": "116318:116504:FunctionDeclaration",
+      "start": 116318,
+      "end": 116504,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 186,
+      "name": "scanError"
+    },
+    {
+      "id": "116504:116595:FunctionDeclaration",
+      "start": 116504,
+      "end": 116595,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 91,
+      "name": "getNodePos"
+    },
+    {
+      "id": "116595:116699:FunctionDeclaration",
+      "start": 116595,
+      "end": 116699,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 104,
+      "name": "hasPrecedingJSDocComment"
+    },
+    {
+      "id": "116699:117278:FunctionDeclaration",
+      "start": 116699,
+      "end": 117278,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 579,
+      "name": "token"
+    },
+    {
+      "id": "117278:117374:FunctionDeclaration",
+      "start": 117278,
+      "end": 117374,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 96,
+      "name": "nextTokenWithoutCheck"
+    },
+    {
+      "id": "117374:117479:FunctionDeclaration",
+      "start": 117374,
+      "end": 117479,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 105,
+      "name": "nextTokenAnd"
+    },
+    {
+      "id": "117479:117912:FunctionDeclaration",
+      "start": 117479,
+      "end": 117912,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 433,
+      "name": "nextToken"
+    },
+    {
+      "id": "117912:118028:FunctionDeclaration",
+      "start": 117912,
+      "end": 118028,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 116,
+      "name": "nextTokenJSDoc"
+    },
+    {
+      "id": "118028:118232:FunctionDeclaration",
+      "start": 118028,
+      "end": 118232,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 204,
+      "name": "nextJSDocCommentTextToken"
+    },
+    {
+      "id": "118232:118351:FunctionDeclaration",
+      "start": 118232,
+      "end": 118351,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 119,
+      "name": "reScanGreaterToken"
+    },
+    {
+      "id": "118351:118466:FunctionDeclaration",
+      "start": 118351,
+      "end": 118466,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 115,
+      "name": "reScanSlashToken"
+    },
+    {
+      "id": "118466:118628:FunctionDeclaration",
+      "start": 118466,
+      "end": 118628,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 162,
+      "name": "reScanTemplateToken"
+    },
+    {
+      "id": "118628:118749:FunctionDeclaration",
+      "start": 118628,
+      "end": 118749,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 121,
+      "name": "reScanLessThanToken"
+    },
+    {
+      "id": "118749:118862:FunctionDeclaration",
+      "start": 118749,
+      "end": 118862,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 113,
+      "name": "reScanHashToken"
+    },
+    {
+      "id": "118862:118979:FunctionDeclaration",
+      "start": 118862,
+      "end": 118979,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 117,
+      "name": "scanJsxIdentifier"
+    },
+    {
+      "id": "118979:119085:FunctionDeclaration",
+      "start": 118979,
+      "end": 119085,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 106,
+      "name": "scanJsxText"
+    },
+    {
+      "id": "119085:119210:FunctionDeclaration",
+      "start": 119085,
+      "end": 119210,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 125,
+      "name": "scanJsxAttributeValue"
+    },
+    {
+      "id": "119210:120984:FunctionDeclaration",
+      "start": 119210,
+      "end": 120984,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1774,
+      "name": "speculationHelper"
+    },
+    {
+      "id": "120984:121357:FunctionDeclaration",
+      "start": 120984,
+      "end": 121357,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 373,
+      "name": "lookAhead"
+    },
+    {
+      "id": "121357:121851:FunctionDeclaration",
+      "start": 121357,
+      "end": 121851,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 494,
+      "name": "tryParse"
+    },
+    {
+      "id": "121851:122156:FunctionDeclaration",
+      "start": 121851,
+      "end": 122156,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 305,
+      "name": "isBindingIdentifier"
+    },
+    {
+      "id": "122156:122964:FunctionDeclaration",
+      "start": 122156,
+      "end": 122964,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 808,
+      "name": "isIdentifier"
+    },
+    {
+      "id": "122964:123603:FunctionDeclaration",
+      "start": 122964,
+      "end": 123603,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 639,
+      "name": "parseExpected"
+    },
+    {
+      "id": "123603:123712:VariableStatement",
+      "start": 123603,
+      "end": 123712,
+      "kind": "VariableStatement",
+      "parent": "Parser",
+      "bytes": 109,
+      "name": ""
+    },
+    {
+      "id": "123712:127150:FunctionDeclaration",
+      "start": 123712,
+      "end": 127150,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3438,
+      "name": "parseErrorForMissingSemicolonAfter"
+    },
+    {
+      "id": "127150:127927:FunctionDeclaration",
+      "start": 127150,
+      "end": 127927,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 777,
+      "name": "parseErrorForInvalidName"
+    },
+    {
+      "id": "127927:128289:FunctionDeclaration",
+      "start": 127927,
+      "end": 128289,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 362,
+      "name": "getSpaceSuggestion"
+    },
+    {
+      "id": "128289:129541:FunctionDeclaration",
+      "start": 128289,
+      "end": 129541,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1252,
+      "name": "parseSemicolonAfterPropertyName"
+    },
+    {
+      "id": "129541:129866:FunctionDeclaration",
+      "start": 129541,
+      "end": 129866,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 325,
+      "name": "parseExpectedJSDoc"
+    },
+    {
+      "id": "129866:130605:FunctionDeclaration",
+      "start": 129866,
+      "end": 130605,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 739,
+      "name": "parseExpectedMatchingBrackets"
+    },
+    {
+      "id": "130605:130784:FunctionDeclaration",
+      "start": 130605,
+      "end": 130784,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 179,
+      "name": "parseOptional"
+    },
+    {
+      "id": "130784:130870:FunctionDeclaration",
+      "start": 130784,
+      "end": 130870,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 86,
+      "name": "parseOptionalToken"
+    },
+    {
+      "id": "130870:131051:FunctionDeclaration",
+      "start": 130870,
+      "end": 131051,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 181,
+      "name": "parseOptionalToken"
+    },
+    {
+      "id": "131051:131147:FunctionDeclaration",
+      "start": 131051,
+      "end": 131147,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 96,
+      "name": "parseOptionalTokenJSDoc"
+    },
+    {
+      "id": "131147:131343:FunctionDeclaration",
+      "start": 131147,
+      "end": 131343,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 196,
+      "name": "parseOptionalTokenJSDoc"
+    },
+    {
+      "id": "131343:131483:FunctionDeclaration",
+      "start": 131343,
+      "end": 131483,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 140,
+      "name": "parseExpectedToken"
+    },
+    {
+      "id": "131483:131784:FunctionDeclaration",
+      "start": 131483,
+      "end": 131784,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 301,
+      "name": "parseExpectedToken"
+    },
+    {
+      "id": "131784:131880:FunctionDeclaration",
+      "start": 131784,
+      "end": 131880,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 96,
+      "name": "parseExpectedTokenJSDoc"
+    },
+    {
+      "id": "131880:132213:FunctionDeclaration",
+      "start": 131880,
+      "end": 132213,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 333,
+      "name": "parseExpectedTokenJSDoc"
+    },
+    {
+      "id": "132213:132426:FunctionDeclaration",
+      "start": 132213,
+      "end": 132426,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 213,
+      "name": "parseTokenNode"
+    },
+    {
+      "id": "132426:132649:FunctionDeclaration",
+      "start": 132426,
+      "end": 132649,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 223,
+      "name": "parseTokenNodeJSDoc"
+    },
+    {
+      "id": "132649:133081:FunctionDeclaration",
+      "start": 132649,
+      "end": 133081,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 432,
+      "name": "canParseSemicolon"
+    },
+    {
+      "id": "133081:133387:FunctionDeclaration",
+      "start": 133081,
+      "end": 133387,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 306,
+      "name": "tryParseSemicolon"
+    },
+    {
+      "id": "133387:133519:FunctionDeclaration",
+      "start": 133387,
+      "end": 133519,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 132,
+      "name": "parseSemicolon"
+    },
+    {
+      "id": "133519:133835:FunctionDeclaration",
+      "start": 133519,
+      "end": 133835,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 316,
+      "name": "createNodeArray"
+    },
+    {
+      "id": "133835:134565:FunctionDeclaration",
+      "start": 133835,
+      "end": 134565,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 730,
+      "name": "finishNode"
+    },
+    {
+      "id": "134565:134737:FunctionDeclaration",
+      "start": 134565,
+      "end": 134737,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 172,
+      "name": "createMissingNode"
+    },
+    {
+      "id": "134737:134908:FunctionDeclaration",
+      "start": 134737,
+      "end": 134908,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 171,
+      "name": "createMissingNode"
+    },
+    {
+      "id": "134908:136043:FunctionDeclaration",
+      "start": 134908,
+      "end": 136043,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1135,
+      "name": "createMissingNode"
+    },
+    {
+      "id": "136043:136291:FunctionDeclaration",
+      "start": 136043,
+      "end": 136291,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 248,
+      "name": "internIdentifier"
+    },
+    {
+      "id": "136291:138693:FunctionDeclaration",
+      "start": 136291,
+      "end": 138693,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2402,
+      "name": "createIdentifier"
+    },
+    {
+      "id": "138693:138923:FunctionDeclaration",
+      "start": 138693,
+      "end": 138923,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 230,
+      "name": "parseBindingIdentifier"
+    },
+    {
+      "id": "138923:139176:FunctionDeclaration",
+      "start": 138923,
+      "end": 139176,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 253,
+      "name": "parseIdentifier"
+    },
+    {
+      "id": "139176:139362:FunctionDeclaration",
+      "start": 139176,
+      "end": 139362,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 186,
+      "name": "parseIdentifierName"
+    },
+    {
+      "id": "139362:139707:FunctionDeclaration",
+      "start": 139362,
+      "end": 139707,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 345,
+      "name": "parseIdentifierNameErrorOnUnicodeEscapeSequence"
+    },
+    {
+      "id": "139707:139978:FunctionDeclaration",
+      "start": 139707,
+      "end": 139978,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 271,
+      "name": "isLiteralPropertyName"
+    },
+    {
+      "id": "139978:140129:FunctionDeclaration",
+      "start": 139978,
+      "end": 140129,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 151,
+      "name": "isImportAttributeName"
+    },
+    {
+      "id": "140129:140849:FunctionDeclaration",
+      "start": 140129,
+      "end": 140849,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 720,
+      "name": "parsePropertyNameWorker"
+    },
+    {
+      "id": "140849:140986:FunctionDeclaration",
+      "start": 140849,
+      "end": 140986,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 137,
+      "name": "parsePropertyName"
+    },
+    {
+      "id": "140986:141683:FunctionDeclaration",
+      "start": 140986,
+      "end": 141683,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 697,
+      "name": "parseComputedPropertyName"
+    },
+    {
+      "id": "141683:141945:FunctionDeclaration",
+      "start": 141683,
+      "end": 141945,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 262,
+      "name": "parsePrivateIdentifier"
+    },
+    {
+      "id": "141945:142089:FunctionDeclaration",
+      "start": 141945,
+      "end": 142089,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 144,
+      "name": "parseContextualModifier"
+    },
+    {
+      "id": "142089:142303:FunctionDeclaration",
+      "start": 142089,
+      "end": 142303,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 214,
+      "name": "nextTokenIsOnSameLineAndCanFollowModifier"
+    },
+    {
+      "id": "142303:143482:FunctionDeclaration",
+      "start": 142303,
+      "end": 143482,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1179,
+      "name": "nextTokenCanFollowModifier"
+    },
+    {
+      "id": "143482:143794:FunctionDeclaration",
+      "start": 143482,
+      "end": 143794,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 312,
+      "name": "canFollowExportModifier"
+    },
+    {
+      "id": "143794:143928:FunctionDeclaration",
+      "start": 143794,
+      "end": 143928,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 134,
+      "name": "nextTokenCanFollowExportModifier"
+    },
+    {
+      "id": "143928:144072:FunctionDeclaration",
+      "start": 143928,
+      "end": 144072,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 144,
+      "name": "parseAnyContextualModifier"
+    },
+    {
+      "id": "144072:144384:FunctionDeclaration",
+      "start": 144072,
+      "end": 144384,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 312,
+      "name": "canFollowModifier"
+    },
+    {
+      "id": "144384:144542:FunctionDeclaration",
+      "start": 144384,
+      "end": 144542,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 158,
+      "name": "canFollowGetOrSetKeyword"
+    },
+    {
+      "id": "144542:145054:FunctionDeclaration",
+      "start": 144542,
+      "end": 145054,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 512,
+      "name": "nextTokenCanFollowDefaultKeyword"
+    },
+    {
+      "id": "145054:151979:FunctionDeclaration",
+      "start": 145054,
+      "end": 151979,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 6925,
+      "name": "isListElement"
+    },
+    {
+      "id": "151979:152712:FunctionDeclaration",
+      "start": 151979,
+      "end": 152712,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 733,
+      "name": "isValidHeritageClauseObjectLiteral"
+    },
+    {
+      "id": "152712:152815:FunctionDeclaration",
+      "start": 152712,
+      "end": 152815,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 103,
+      "name": "nextTokenIsIdentifier"
+    },
+    {
+      "id": "152815:152948:FunctionDeclaration",
+      "start": 152815,
+      "end": 152948,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 133,
+      "name": "nextTokenIsIdentifierOrKeyword"
+    },
+    {
+      "id": "152948:153107:FunctionDeclaration",
+      "start": 152948,
+      "end": 153107,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 159,
+      "name": "nextTokenIsIdentifierOrKeywordOrGreaterThan"
+    },
+    {
+      "id": "153107:153418:FunctionDeclaration",
+      "start": 153107,
+      "end": 153418,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 311,
+      "name": "isHeritageClauseExtendsOrImplementsKeyword"
+    },
+    {
+      "id": "153418:153535:FunctionDeclaration",
+      "start": 153418,
+      "end": 153535,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 117,
+      "name": "nextTokenIsStartOfExpression"
+    },
+    {
+      "id": "153535:153640:FunctionDeclaration",
+      "start": 153535,
+      "end": 153640,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 105,
+      "name": "nextTokenIsStartOfType"
+    },
+    {
+      "id": "153640:156933:FunctionDeclaration",
+      "start": 153640,
+      "end": 156933,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3293,
+      "name": "isListTerminator"
+    },
+    {
+      "id": "156933:157953:FunctionDeclaration",
+      "start": 156933,
+      "end": 157953,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1020,
+      "name": "isVariableDeclaratorListTerminator"
+    },
+    {
+      "id": "157953:158650:FunctionDeclaration",
+      "start": 157953,
+      "end": 158650,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 697,
+      "name": "isInSomeParsingContext"
+    },
+    {
+      "id": "158650:159379:FunctionDeclaration",
+      "start": 158650,
+      "end": 159379,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 729,
+      "name": "parseList"
+    },
+    {
+      "id": "159379:159668:FunctionDeclaration",
+      "start": 159379,
+      "end": 159668,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 289,
+      "name": "parseListElement"
+    },
+    {
+      "id": "159668:162501:FunctionDeclaration",
+      "start": 159668,
+      "end": 162501,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2833,
+      "name": "currentNode"
+    },
+    {
+      "id": "162501:162709:FunctionDeclaration",
+      "start": 162501,
+      "end": 162709,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 208,
+      "name": "consumeNode"
+    },
+    {
+      "id": "162709:163392:FunctionDeclaration",
+      "start": 162709,
+      "end": 163392,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 683,
+      "name": "isReusableParsingContext"
+    },
+    {
+      "id": "163392:167473:FunctionDeclaration",
+      "start": 163392,
+      "end": 167473,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4081,
+      "name": "canReuseNode"
+    },
+    {
+      "id": "167473:168577:FunctionDeclaration",
+      "start": 167473,
+      "end": 168577,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1104,
+      "name": "isReusableClassMember"
+    },
+    {
+      "id": "168577:168870:FunctionDeclaration",
+      "start": 168577,
+      "end": 168870,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 293,
+      "name": "isReusableSwitchClause"
+    },
+    {
+      "id": "168870:170526:FunctionDeclaration",
+      "start": 168870,
+      "end": 170526,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1656,
+      "name": "isReusableStatement"
+    },
+    {
+      "id": "170526:170637:FunctionDeclaration",
+      "start": 170526,
+      "end": 170637,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 111,
+      "name": "isReusableEnumMember"
+    },
+    {
+      "id": "170637:171087:FunctionDeclaration",
+      "start": 170637,
+      "end": 171087,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 450,
+      "name": "isReusableTypeMember"
+    },
+    {
+      "id": "171087:172082:FunctionDeclaration",
+      "start": 171087,
+      "end": 172082,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 995,
+      "name": "isReusableVariableDeclaration"
+    },
+    {
+      "id": "172082:172421:FunctionDeclaration",
+      "start": 172082,
+      "end": 172421,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 339,
+      "name": "isReusableParameter"
+    },
+    {
+      "id": "172421:172713:FunctionDeclaration",
+      "start": 172421,
+      "end": 172713,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 292,
+      "name": "abortParsingListOrMoveToNextToken"
+    },
+    {
+      "id": "172713:177375:FunctionDeclaration",
+      "start": 172713,
+      "end": 177375,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4662,
+      "name": "parsingContextErrors"
+    },
+    {
+      "id": "177375:177576:FunctionDeclaration",
+      "start": 177375,
+      "end": 177576,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 201,
+      "name": "parseDelimitedList"
+    },
+    {
+      "id": "177576:177762:FunctionDeclaration",
+      "start": 177576,
+      "end": 177762,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 186,
+      "name": "parseDelimitedList"
+    },
+    {
+      "id": "177762:181352:FunctionDeclaration",
+      "start": 177762,
+      "end": 181352,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3590,
+      "name": "parseDelimitedList"
+    },
+    {
+      "id": "181352:181550:FunctionDeclaration",
+      "start": 181352,
+      "end": 181550,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 198,
+      "name": "getExpectedCommaDiagnostic"
+    },
+    {
+      "id": "181550:181655:InterfaceDeclaration",
+      "start": 181550,
+      "end": 181655,
+      "kind": "InterfaceDeclaration",
+      "parent": "Parser",
+      "bytes": 105,
+      "name": "MissingList"
+    },
+    {
+      "id": "181655:181868:FunctionDeclaration",
+      "start": 181655,
+      "end": 181868,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 213,
+      "name": "createMissingList"
+    },
+    {
+      "id": "181868:181998:FunctionDeclaration",
+      "start": 181868,
+      "end": 181998,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 130,
+      "name": "isMissingList"
+    },
+    {
+      "id": "181998:182396:FunctionDeclaration",
+      "start": 181998,
+      "end": 182396,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 398,
+      "name": "parseBracketedList"
+    },
+    {
+      "id": "182396:183392:FunctionDeclaration",
+      "start": 182396,
+      "end": 183392,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 996,
+      "name": "parseEntityName"
+    },
+    {
+      "id": "183392:183573:FunctionDeclaration",
+      "start": 183392,
+      "end": 183573,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 181,
+      "name": "createQualifiedName"
+    },
+    {
+      "id": "183573:185932:FunctionDeclaration",
+      "start": 183573,
+      "end": 185932,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2359,
+      "name": "parseRightSideOfDot"
+    },
+    {
+      "id": "185932:186319:FunctionDeclaration",
+      "start": 185932,
+      "end": 186319,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 387,
+      "name": "parseTemplateSpans"
+    },
+    {
+      "id": "186319:186680:FunctionDeclaration",
+      "start": 186319,
+      "end": 186680,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 361,
+      "name": "parseTemplateExpression"
+    },
+    {
+      "id": "186680:187014:FunctionDeclaration",
+      "start": 186680,
+      "end": 187014,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 334,
+      "name": "parseTemplateType"
+    },
+    {
+      "id": "187014:187379:FunctionDeclaration",
+      "start": 187014,
+      "end": 187379,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 365,
+      "name": "parseTemplateTypeSpans"
+    },
+    {
+      "id": "187379:187717:FunctionDeclaration",
+      "start": 187379,
+      "end": 187717,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 338,
+      "name": "parseTemplateTypeSpan"
+    },
+    {
+      "id": "187717:188269:FunctionDeclaration",
+      "start": 187717,
+      "end": 188269,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 552,
+      "name": "parseLiteralOfTemplateSpan"
+    },
+    {
+      "id": "188269:188612:FunctionDeclaration",
+      "start": 188269,
+      "end": 188612,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 343,
+      "name": "parseTemplateSpan"
+    },
+    {
+      "id": "188612:188743:FunctionDeclaration",
+      "start": 188612,
+      "end": 188743,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 131,
+      "name": "parseLiteralNode"
+    },
+    {
+      "id": "188743:189187:FunctionDeclaration",
+      "start": 188743,
+      "end": 189187,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 444,
+      "name": "parseTemplateHead"
+    },
+    {
+      "id": "189187:189550:FunctionDeclaration",
+      "start": 189187,
+      "end": 189550,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 363,
+      "name": "parseTemplateMiddleOrTemplateTail"
+    },
+    {
+      "id": "189550:189907:FunctionDeclaration",
+      "start": 189550,
+      "end": 189907,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 357,
+      "name": "getTemplateLiteralRawText"
+    },
+    {
+      "id": "189907:191390:FunctionDeclaration",
+      "start": 189907,
+      "end": 191390,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1483,
+      "name": "parseLiteralLikeNode"
+    },
+    {
+      "id": "191390:191553:FunctionDeclaration",
+      "start": 191390,
+      "end": 191553,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 163,
+      "name": "parseEntityNameOfTypeReference"
+    },
+    {
+      "id": "191553:191864:FunctionDeclaration",
+      "start": 191553,
+      "end": 191864,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 311,
+      "name": "parseTypeArgumentsOfTypeReference"
+    },
+    {
+      "id": "191864:192189:FunctionDeclaration",
+      "start": 191864,
+      "end": 192189,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 325,
+      "name": "parseTypeReference"
+    },
+    {
+      "id": "192189:192993:FunctionDeclaration",
+      "start": 192189,
+      "end": 192993,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 804,
+      "name": "typeHasArrowFunctionBlockingParseError"
+    },
+    {
+      "id": "192993:193220:FunctionDeclaration",
+      "start": 192993,
+      "end": 193220,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 227,
+      "name": "parseThisTypePredicate"
+    },
+    {
+      "id": "193220:193399:FunctionDeclaration",
+      "start": 193220,
+      "end": 193399,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 179,
+      "name": "parseThisTypeNode"
+    },
+    {
+      "id": "193399:193598:FunctionDeclaration",
+      "start": 193399,
+      "end": 193598,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 199,
+      "name": "parseJSDocAllType"
+    },
+    {
+      "id": "193598:193827:FunctionDeclaration",
+      "start": 193598,
+      "end": 193827,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 229,
+      "name": "parseJSDocNonNullableType"
+    },
+    {
+      "id": "193827:194854:FunctionDeclaration",
+      "start": 193827,
+      "end": 194854,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1027,
+      "name": "parseJSDocUnknownOrNullableType"
+    },
+    {
+      "id": "194854:195494:FunctionDeclaration",
+      "start": 194854,
+      "end": 195494,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 640,
+      "name": "parseJSDocFunctionType"
+    },
+    {
+      "id": "195494:196331:FunctionDeclaration",
+      "start": 195494,
+      "end": 196331,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 837,
+      "name": "parseJSDocParameter"
+    },
+    {
+      "id": "196331:197761:FunctionDeclaration",
+      "start": 196331,
+      "end": 197761,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1430,
+      "name": "parseJSDocType"
+    },
+    {
+      "id": "197761:198296:FunctionDeclaration",
+      "start": 197761,
+      "end": 198296,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 535,
+      "name": "parseTypeQuery"
+    },
+    {
+      "id": "198296:199970:FunctionDeclaration",
+      "start": 198296,
+      "end": 199970,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1674,
+      "name": "parseTypeParameter"
+    },
+    {
+      "id": "199970:200276:FunctionDeclaration",
+      "start": 199970,
+      "end": 200276,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 306,
+      "name": "parseTypeParameters"
+    },
+    {
+      "id": "200276:200636:FunctionDeclaration",
+      "start": 200276,
+      "end": 200636,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 360,
+      "name": "isStartOfParameter"
+    },
+    {
+      "id": "200636:201676:FunctionDeclaration",
+      "start": 200636,
+      "end": 201676,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1040,
+      "name": "parseNameOfParameter"
+    },
+    {
+      "id": "201676:202145:FunctionDeclaration",
+      "start": 201676,
+      "end": 202145,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 469,
+      "name": "isParameterNameStart"
+    },
+    {
+      "id": "202145:202296:FunctionDeclaration",
+      "start": 202145,
+      "end": 202296,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 151,
+      "name": "parseParameter"
+    },
+    {
+      "id": "202296:202499:FunctionDeclaration",
+      "start": 202296,
+      "end": 202499,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 203,
+      "name": "parseParameterForSpeculation"
+    },
+    {
+      "id": "202499:202589:FunctionDeclaration",
+      "start": 202499,
+      "end": 202589,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 90,
+      "name": "parseParameterWorker"
+    },
+    {
+      "id": "202589:202712:FunctionDeclaration",
+      "start": 202589,
+      "end": 202712,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 123,
+      "name": "parseParameterWorker"
+    },
+    {
+      "id": "202712:204870:FunctionDeclaration",
+      "start": 202712,
+      "end": 204870,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2158,
+      "name": "parseParameterWorker"
+    },
+    {
+      "id": "204870:204978:FunctionDeclaration",
+      "start": 204870,
+      "end": 204978,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 108,
+      "name": "parseReturnType"
+    },
+    {
+      "id": "204978:205120:FunctionDeclaration",
+      "start": 204978,
+      "end": 205120,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 142,
+      "name": "parseReturnType"
+    },
+    {
+      "id": "205120:205390:FunctionDeclaration",
+      "start": 205120,
+      "end": 205390,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 270,
+      "name": "parseReturnType"
+    },
+    {
+      "id": "205390:206139:FunctionDeclaration",
+      "start": 205390,
+      "end": 206139,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 749,
+      "name": "shouldParseReturnType"
+    },
+    {
+      "id": "206139:206256:FunctionDeclaration",
+      "start": 206139,
+      "end": 206256,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 117,
+      "name": "parseParametersWorker"
+    },
+    {
+      "id": "206256:206384:FunctionDeclaration",
+      "start": 206256,
+      "end": 206384,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": "parseParametersWorker"
+    },
+    {
+      "id": "206384:207769:FunctionDeclaration",
+      "start": 206384,
+      "end": 207769,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1385,
+      "name": "parseParametersWorker"
+    },
+    {
+      "id": "207769:208744:FunctionDeclaration",
+      "start": 207769,
+      "end": 208744,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 975,
+      "name": "parseParameters"
+    },
+    {
+      "id": "208744:209154:FunctionDeclaration",
+      "start": 208744,
+      "end": 209154,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 410,
+      "name": "parseTypeMemberSemicolon"
+    },
+    {
+      "id": "209154:210043:FunctionDeclaration",
+      "start": 209154,
+      "end": 210043,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 889,
+      "name": "parseSignatureMember"
+    },
+    {
+      "id": "210043:210197:FunctionDeclaration",
+      "start": 210043,
+      "end": 210197,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 154,
+      "name": "isIndexSignature"
+    },
+    {
+      "id": "210197:211970:FunctionDeclaration",
+      "start": 210197,
+      "end": 211970,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1773,
+      "name": "isUnambiguouslyIndexSignature"
+    },
+    {
+      "id": "211970:212565:FunctionDeclaration",
+      "start": 211970,
+      "end": 212565,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 595,
+      "name": "parseIndexSignatureDeclaration"
+    },
+    {
+      "id": "212565:214118:FunctionDeclaration",
+      "start": 212565,
+      "end": 214118,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1553,
+      "name": "parsePropertyOrMethodSignature"
+    },
+    {
+      "id": "214118:215598:FunctionDeclaration",
+      "start": 214118,
+      "end": 215598,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1480,
+      "name": "isTypeMemberStart"
+    },
+    {
+      "id": "215598:216749:FunctionDeclaration",
+      "start": 215598,
+      "end": 216749,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1151,
+      "name": "parseTypeMember"
+    },
+    {
+      "id": "216749:216924:FunctionDeclaration",
+      "start": 216749,
+      "end": 216924,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 175,
+      "name": "nextTokenIsOpenParenOrLessThan"
+    },
+    {
+      "id": "216924:217019:FunctionDeclaration",
+      "start": 216924,
+      "end": 217019,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 95,
+      "name": "nextTokenIsDot"
+    },
+    {
+      "id": "217019:217306:FunctionDeclaration",
+      "start": 217019,
+      "end": 217306,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 287,
+      "name": "nextTokenIsOpenParenOrLessThanOrDot"
+    },
+    {
+      "id": "217306:217492:FunctionDeclaration",
+      "start": 217306,
+      "end": 217492,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 186,
+      "name": "parseTypeLiteral"
+    },
+    {
+      "id": "217492:217926:FunctionDeclaration",
+      "start": 217492,
+      "end": 217926,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 434,
+      "name": "parseObjectTypeMembers"
+    },
+    {
+      "id": "217926:218372:FunctionDeclaration",
+      "start": 217926,
+      "end": 218372,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 446,
+      "name": "isStartOfMappedType"
+    },
+    {
+      "id": "218372:218722:FunctionDeclaration",
+      "start": 218372,
+      "end": 218722,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 350,
+      "name": "parseMappedTypeParameter"
+    },
+    {
+      "id": "218722:220344:FunctionDeclaration",
+      "start": 218722,
+      "end": 220344,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1622,
+      "name": "parseMappedType"
+    },
+    {
+      "id": "220344:220905:FunctionDeclaration",
+      "start": 220344,
+      "end": 220905,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 561,
+      "name": "parseTupleElementType"
+    },
+    {
+      "id": "220905:221102:FunctionDeclaration",
+      "start": 220905,
+      "end": 221102,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 197,
+      "name": "isNextTokenColonOrQuestionColon"
+    },
+    {
+      "id": "221102:221401:FunctionDeclaration",
+      "start": 221102,
+      "end": 221401,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 299,
+      "name": "isTupleElementName"
+    },
+    {
+      "id": "221401:222143:FunctionDeclaration",
+      "start": 221401,
+      "end": 222143,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 742,
+      "name": "parseTupleElementNameOrTupleElementType"
+    },
+    {
+      "id": "222143:222522:FunctionDeclaration",
+      "start": 222143,
+      "end": 222522,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 379,
+      "name": "parseTupleType"
+    },
+    {
+      "id": "222522:222827:FunctionDeclaration",
+      "start": 222522,
+      "end": 222827,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 305,
+      "name": "parseParenthesizedType"
+    },
+    {
+      "id": "222827:223299:FunctionDeclaration",
+      "start": 222827,
+      "end": 223299,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 472,
+      "name": "parseModifiersForConstructorType"
+    },
+    {
+      "id": "223299:224218:FunctionDeclaration",
+      "start": 223299,
+      "end": 224218,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 919,
+      "name": "parseFunctionOrConstructorType"
+    },
+    {
+      "id": "224218:224406:FunctionDeclaration",
+      "start": 224218,
+      "end": 224406,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 188,
+      "name": "parseKeywordAndNoDot"
+    },
+    {
+      "id": "224406:225154:FunctionDeclaration",
+      "start": 224406,
+      "end": 225154,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 748,
+      "name": "parseLiteralTypeNode"
+    },
+    {
+      "id": "225154:225283:FunctionDeclaration",
+      "start": 225154,
+      "end": 225283,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 129,
+      "name": "isStartOfTypeOfImportType"
+    },
+    {
+      "id": "225283:227330:FunctionDeclaration",
+      "start": 225283,
+      "end": 227330,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2047,
+      "name": "parseImportType"
+    },
+    {
+      "id": "227330:227508:FunctionDeclaration",
+      "start": 227330,
+      "end": 227508,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 178,
+      "name": "nextTokenIsNumericOrBigIntLiteral"
+    },
+    {
+      "id": "227508:230947:FunctionDeclaration",
+      "start": 227508,
+      "end": 230947,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3439,
+      "name": "parseNonArrayType"
+    },
+    {
+      "id": "230947:233334:FunctionDeclaration",
+      "start": 230947,
+      "end": 233334,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2387,
+      "name": "isStartOfType"
+    },
+    {
+      "id": "233334:233545:FunctionDeclaration",
+      "start": 233334,
+      "end": 233545,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 211,
+      "name": "isStartOfParenthesizedOrFunctionType"
+    },
+    {
+      "id": "233545:235157:FunctionDeclaration",
+      "start": 233545,
+      "end": 235157,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1612,
+      "name": "parsePostfixTypeOrHigher"
+    },
+    {
+      "id": "235157:235464:FunctionDeclaration",
+      "start": 235157,
+      "end": 235464,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 307,
+      "name": "parseTypeOperator"
+    },
+    {
+      "id": "235464:235808:FunctionDeclaration",
+      "start": 235464,
+      "end": 235808,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 344,
+      "name": "tryParseConstraintOfInferType"
+    },
+    {
+      "id": "235808:236180:FunctionDeclaration",
+      "start": 235808,
+      "end": 236180,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 372,
+      "name": "parseTypeParameterOfInferType"
+    },
+    {
+      "id": "236180:236416:FunctionDeclaration",
+      "start": 236180,
+      "end": 236416,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 236,
+      "name": "parseInferType"
+    },
+    {
+      "id": "236416:236893:FunctionDeclaration",
+      "start": 236416,
+      "end": 236893,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 477,
+      "name": "parseTypeOperatorOrHigher"
+    },
+    {
+      "id": "236893:238145:FunctionDeclaration",
+      "start": 236893,
+      "end": 238145,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1252,
+      "name": "parseFunctionOrConstructorTypeToError"
+    },
+    {
+      "id": "238145:239088:FunctionDeclaration",
+      "start": 238145,
+      "end": 239088,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 943,
+      "name": "parseUnionOrIntersectionType"
+    },
+    {
+      "id": "239088:239291:FunctionDeclaration",
+      "start": 239088,
+      "end": 239291,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 203,
+      "name": "parseIntersectionTypeOrHigher"
+    },
+    {
+      "id": "239291:239478:FunctionDeclaration",
+      "start": 239291,
+      "end": 239478,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 187,
+      "name": "parseUnionTypeOrHigher"
+    },
+    {
+      "id": "239478:239609:FunctionDeclaration",
+      "start": 239478,
+      "end": 239609,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 131,
+      "name": "nextTokenIsNewKeyword"
+    },
+    {
+      "id": "239609:240056:FunctionDeclaration",
+      "start": 239609,
+      "end": 240056,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 447,
+      "name": "isStartOfFunctionTypeOrConstructorType"
+    },
+    {
+      "id": "240056:240780:FunctionDeclaration",
+      "start": 240056,
+      "end": 240780,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 724,
+      "name": "skipParameterStart"
+    },
+    {
+      "id": "240780:241928:FunctionDeclaration",
+      "start": 240780,
+      "end": 241928,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1148,
+      "name": "isUnambiguouslyStartOfFunctionType"
+    },
+    {
+      "id": "241928:242385:FunctionDeclaration",
+      "start": 241928,
+      "end": 242385,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 457,
+      "name": "parseTypeOrTypePredicate"
+    },
+    {
+      "id": "242385:242622:FunctionDeclaration",
+      "start": 242385,
+      "end": 242622,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 237,
+      "name": "parseTypePredicatePrefix"
+    },
+    {
+      "id": "242622:243098:FunctionDeclaration",
+      "start": 242622,
+      "end": 243098,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 476,
+      "name": "parseAssertsTypePredicate"
+    },
+    {
+      "id": "243098:244184:FunctionDeclaration",
+      "start": 243098,
+      "end": 244184,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1086,
+      "name": "parseType"
+    },
+    {
+      "id": "244184:244333:FunctionDeclaration",
+      "start": 244184,
+      "end": 244333,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 149,
+      "name": "parseTypeAnnotation"
+    },
+    {
+      "id": "244333:245512:FunctionDeclaration",
+      "start": 244333,
+      "end": 245512,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1179,
+      "name": "isStartOfLeftHandSideExpression"
+    },
+    {
+      "id": "245512:247159:FunctionDeclaration",
+      "start": 245512,
+      "end": 247159,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1647,
+      "name": "isStartOfExpression"
+    },
+    {
+      "id": "247159:247575:FunctionDeclaration",
+      "start": 247159,
+      "end": 247575,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 416,
+      "name": "isStartOfExpressionStatement"
+    },
+    {
+      "id": "247575:248572:FunctionDeclaration",
+      "start": 247575,
+      "end": 248572,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 997,
+      "name": "parseExpression"
+    },
+    {
+      "id": "248572:248784:FunctionDeclaration",
+      "start": 248572,
+      "end": 248784,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 212,
+      "name": "parseInitializer"
+    },
+    {
+      "id": "248784:253127:FunctionDeclaration",
+      "start": 248784,
+      "end": 253127,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4343,
+      "name": "parseAssignmentExpressionOrHigher"
+    },
+    {
+      "id": "253127:254604:FunctionDeclaration",
+      "start": 253127,
+      "end": 254604,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1477,
+      "name": "isYieldExpression"
+    },
+    {
+      "id": "254604:254753:FunctionDeclaration",
+      "start": 254604,
+      "end": 254753,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 149,
+      "name": "nextTokenIsIdentifierOnSameLine"
+    },
+    {
+      "id": "254753:255969:FunctionDeclaration",
+      "start": 254753,
+      "end": 255969,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1216,
+      "name": "parseYieldExpression"
+    },
+    {
+      "id": "255969:257228:FunctionDeclaration",
+      "start": 255969,
+      "end": 257228,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1259,
+      "name": "parseSimpleArrowFunctionExpression"
+    },
+    {
+      "id": "257228:258198:FunctionDeclaration",
+      "start": 257228,
+      "end": 258198,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 970,
+      "name": "tryParseParenthesizedArrowFunctionExpression"
+    },
+    {
+      "id": "258198:259211:FunctionDeclaration",
+      "start": 258198,
+      "end": 259211,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1013,
+      "name": "isParenthesizedArrowFunctionExpression"
+    },
+    {
+      "id": "259211:264905:FunctionDeclaration",
+      "start": 259211,
+      "end": 264905,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 5694,
+      "name": "isParenthesizedArrowFunctionExpressionWorker"
+    },
+    {
+      "id": "264905:265473:FunctionDeclaration",
+      "start": 264905,
+      "end": 265473,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 568,
+      "name": "parsePossibleParenthesizedArrowFunctionExpression"
+    },
+    {
+      "id": "265473:266304:FunctionDeclaration",
+      "start": 265473,
+      "end": 266304,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 831,
+      "name": "tryParseAsyncSimpleArrowFunctionExpression"
+    },
+    {
+      "id": "266304:267524:FunctionDeclaration",
+      "start": 266304,
+      "end": 267524,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1220,
+      "name": "isUnParenthesizedAsyncArrowFunctionWorker"
+    },
+    {
+      "id": "267524:273033:FunctionDeclaration",
+      "start": 267524,
+      "end": 273033,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 5509,
+      "name": "parseParenthesizedArrowFunctionExpression"
+    },
+    {
+      "id": "273033:275047:FunctionDeclaration",
+      "start": 273033,
+      "end": 275047,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2014,
+      "name": "parseArrowFunctionExpressionBody"
+    },
+    {
+      "id": "275047:276331:FunctionDeclaration",
+      "start": 275047,
+      "end": 276331,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1284,
+      "name": "parseConditionalExpressionRest"
+    },
+    {
+      "id": "276331:276599:FunctionDeclaration",
+      "start": 276331,
+      "end": 276599,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 268,
+      "name": "parseBinaryExpressionOrHigher"
+    },
+    {
+      "id": "276599:276729:FunctionDeclaration",
+      "start": 276599,
+      "end": 276729,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 130,
+      "name": "isInOrOfKeyword"
+    },
+    {
+      "id": "276729:280119:FunctionDeclaration",
+      "start": 276729,
+      "end": 280119,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3390,
+      "name": "parseBinaryExpressionRest"
+    },
+    {
+      "id": "280119:280335:FunctionDeclaration",
+      "start": 280119,
+      "end": 280335,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 216,
+      "name": "isBinaryOperator"
+    },
+    {
+      "id": "280335:280526:FunctionDeclaration",
+      "start": 280335,
+      "end": 280526,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 191,
+      "name": "makeSatisfiesExpression"
+    },
+    {
+      "id": "280526:280769:FunctionDeclaration",
+      "start": 280526,
+      "end": 280769,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 243,
+      "name": "makeBinaryExpression"
+    },
+    {
+      "id": "280769:280939:FunctionDeclaration",
+      "start": 280769,
+      "end": 280939,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 170,
+      "name": "makeAsExpression"
+    },
+    {
+      "id": "280939:281172:FunctionDeclaration",
+      "start": 280939,
+      "end": 281172,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 233,
+      "name": "parsePrefixUnaryExpression"
+    },
+    {
+      "id": "281172:281363:FunctionDeclaration",
+      "start": 281172,
+      "end": 281363,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 191,
+      "name": "parseDeleteExpression"
+    },
+    {
+      "id": "281363:281554:FunctionDeclaration",
+      "start": 281363,
+      "end": 281554,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 191,
+      "name": "parseTypeOfExpression"
+    },
+    {
+      "id": "281554:281741:FunctionDeclaration",
+      "start": 281554,
+      "end": 281741,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 187,
+      "name": "parseVoidExpression"
+    },
+    {
+      "id": "281741:282125:FunctionDeclaration",
+      "start": 281741,
+      "end": 282125,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 384,
+      "name": "isAwaitExpression"
+    },
+    {
+      "id": "282125:282314:FunctionDeclaration",
+      "start": 282125,
+      "end": 282314,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 189,
+      "name": "parseAwaitExpression"
+    },
+    {
+      "id": "282314:284828:FunctionDeclaration",
+      "start": 282314,
+      "end": 284828,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2514,
+      "name": "parseUnaryExpressionOrHigher"
+    },
+    {
+      "id": "284828:286922:FunctionDeclaration",
+      "start": 284828,
+      "end": 286922,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2094,
+      "name": "parseSimpleUnaryExpression"
+    },
+    {
+      "id": "286922:288403:FunctionDeclaration",
+      "start": 286922,
+      "end": 288403,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1481,
+      "name": "isUpdateExpression"
+    },
+    {
+      "id": "288403:290169:FunctionDeclaration",
+      "start": 288403,
+      "end": 290169,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1766,
+      "name": "parseUpdateExpression"
+    },
+    {
+      "id": "290169:293745:FunctionDeclaration",
+      "start": 290169,
+      "end": 293745,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3576,
+      "name": "parseLeftHandSideExpressionOrHigher"
+    },
+    {
+      "id": "293745:296281:FunctionDeclaration",
+      "start": 293745,
+      "end": 296281,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2536,
+      "name": "parseMemberExpressionOrHigher"
+    },
+    {
+      "id": "296281:297764:FunctionDeclaration",
+      "start": 296281,
+      "end": 297764,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1483,
+      "name": "parseSuperExpression"
+    },
+    {
+      "id": "297764:303076:FunctionDeclaration",
+      "start": 297764,
+      "end": 303076,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 5312,
+      "name": "parseJsxElementOrSelfClosingElementOrFragment"
+    },
+    {
+      "id": "303076:303368:FunctionDeclaration",
+      "start": 303076,
+      "end": 303368,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 292,
+      "name": "parseJsxText"
+    },
+    {
+      "id": "303368:305131:FunctionDeclaration",
+      "start": 303368,
+      "end": 305131,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1763,
+      "name": "parseJsxChild"
+    },
+    {
+      "id": "305131:306215:FunctionDeclaration",
+      "start": 305131,
+      "end": 306215,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1084,
+      "name": "parseJsxChildren"
+    },
+    {
+      "id": "306215:306433:FunctionDeclaration",
+      "start": 306215,
+      "end": 306433,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 218,
+      "name": "parseJsxAttributes"
+    },
+    {
+      "id": "306433:308206:FunctionDeclaration",
+      "start": 306433,
+      "end": 308206,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1773,
+      "name": "parseJsxOpeningOrSelfClosingElementOrOpeningFragment"
+    },
+    {
+      "id": "308206:309440:FunctionDeclaration",
+      "start": 308206,
+      "end": 309440,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1234,
+      "name": "parseJsxElementName"
+    },
+    {
+      "id": "309440:310060:FunctionDeclaration",
+      "start": 309440,
+      "end": 310060,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 620,
+      "name": "parseJsxTagName"
+    },
+    {
+      "id": "310060:311254:FunctionDeclaration",
+      "start": 310060,
+      "end": 311254,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1194,
+      "name": "parseJsxExpression"
+    },
+    {
+      "id": "311254:311595:FunctionDeclaration",
+      "start": 311254,
+      "end": 311595,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 341,
+      "name": "parseJsxAttribute"
+    },
+    {
+      "id": "311595:312310:FunctionDeclaration",
+      "start": 311595,
+      "end": 312310,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 715,
+      "name": "parseJsxAttributeValue"
+    },
+    {
+      "id": "312310:312758:FunctionDeclaration",
+      "start": 312310,
+      "end": 312758,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 448,
+      "name": "parseJsxAttributeName"
+    },
+    {
+      "id": "312758:313144:FunctionDeclaration",
+      "start": 312758,
+      "end": 313144,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 386,
+      "name": "parseJsxSpreadAttribute"
+    },
+    {
+      "id": "313144:313894:FunctionDeclaration",
+      "start": 313144,
+      "end": 313894,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 750,
+      "name": "parseJsxClosingElement"
+    },
+    {
+      "id": "313894:314553:FunctionDeclaration",
+      "start": 313894,
+      "end": 314553,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 659,
+      "name": "parseJsxClosingFragment"
+    },
+    {
+      "id": "314553:315103:FunctionDeclaration",
+      "start": 314553,
+      "end": 315103,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 550,
+      "name": "parseTypeAssertion"
+    },
+    {
+      "id": "315103:315365:FunctionDeclaration",
+      "start": 315103,
+      "end": 315365,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 262,
+      "name": "nextTokenIsIdentifierOrKeywordOrOpenBracketOrTemplate"
+    },
+    {
+      "id": "315365:315576:FunctionDeclaration",
+      "start": 315365,
+      "end": 315576,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 211,
+      "name": "isStartOfOptionalPropertyOrElementAccessChain"
+    },
+    {
+      "id": "315576:316485:FunctionDeclaration",
+      "start": 315576,
+      "end": 316485,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 909,
+      "name": "tryReparseOptionalChain"
+    },
+    {
+      "id": "316485:317708:FunctionDeclaration",
+      "start": 316485,
+      "end": 317708,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1223,
+      "name": "parsePropertyAccessExpressionRest"
+    },
+    {
+      "id": "317708:318797:FunctionDeclaration",
+      "start": 317708,
+      "end": 318797,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1089,
+      "name": "parseElementAccessExpressionRest"
+    },
+    {
+      "id": "318797:321323:FunctionDeclaration",
+      "start": 318797,
+      "end": 321323,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2526,
+      "name": "parseMemberExpressionRest"
+    },
+    {
+      "id": "321323:321491:FunctionDeclaration",
+      "start": 321323,
+      "end": 321491,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 168,
+      "name": "isTemplateStartOfTaggedTemplate"
+    },
+    {
+      "id": "321491:322336:FunctionDeclaration",
+      "start": 321491,
+      "end": 322336,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 845,
+      "name": "parseTaggedTemplateRest"
+    },
+    {
+      "id": "322336:324513:FunctionDeclaration",
+      "start": 322336,
+      "end": 324513,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2177,
+      "name": "parseCallExpressionRest"
+    },
+    {
+      "id": "324513:324790:FunctionDeclaration",
+      "start": 324513,
+      "end": 324790,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 277,
+      "name": "parseArgumentList"
+    },
+    {
+      "id": "324790:325979:FunctionDeclaration",
+      "start": 324790,
+      "end": 325979,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1189,
+      "name": "parseTypeArgumentsInExpression"
+    },
+    {
+      "id": "325979:327180:FunctionDeclaration",
+      "start": 325979,
+      "end": 327180,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1201,
+      "name": "canFollowTypeArgumentsInExpression"
+    },
+    {
+      "id": "327180:329694:FunctionDeclaration",
+      "start": 327180,
+      "end": 329694,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2514,
+      "name": "parsePrimaryExpression"
+    },
+    {
+      "id": "329694:330128:FunctionDeclaration",
+      "start": 329694,
+      "end": 330128,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 434,
+      "name": "parseParenthesizedExpression"
+    },
+    {
+      "id": "330128:330450:FunctionDeclaration",
+      "start": 330128,
+      "end": 330450,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 322,
+      "name": "parseSpreadElement"
+    },
+    {
+      "id": "330450:330803:FunctionDeclaration",
+      "start": 330450,
+      "end": 330803,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 353,
+      "name": "parseArgumentOrArrayLiteralElement"
+    },
+    {
+      "id": "330803:330969:FunctionDeclaration",
+      "start": 330803,
+      "end": 330969,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 166,
+      "name": "parseArgumentExpression"
+    },
+    {
+      "id": "330969:331632:FunctionDeclaration",
+      "start": 330969,
+      "end": 331632,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 663,
+      "name": "parseArrayLiteralExpression"
+    },
+    {
+      "id": "331632:335107:FunctionDeclaration",
+      "start": 331632,
+      "end": 335107,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3475,
+      "name": "parseObjectLiteralElement"
+    },
+    {
+      "id": "335107:335794:FunctionDeclaration",
+      "start": 335107,
+      "end": 335794,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 687,
+      "name": "parseObjectLiteralExpression"
+    },
+    {
+      "id": "335794:337534:FunctionDeclaration",
+      "start": 335794,
+      "end": 337534,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1740,
+      "name": "parseFunctionExpression"
+    },
+    {
+      "id": "337534:337694:FunctionDeclaration",
+      "start": 337534,
+      "end": 337694,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 160,
+      "name": "parseOptionalBindingIdentifier"
+    },
+    {
+      "id": "337694:339134:FunctionDeclaration",
+      "start": 337694,
+      "end": 339134,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1440,
+      "name": "parseNewExpressionOrNewDotTarget"
+    },
+    {
+      "id": "339134:340554:FunctionDeclaration",
+      "start": 339134,
+      "end": 340554,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1420,
+      "name": "parseBlock"
+    },
+    {
+      "id": "340554:341650:FunctionDeclaration",
+      "start": 340554,
+      "end": 341650,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1096,
+      "name": "parseFunctionBlock"
+    },
+    {
+      "id": "341650:341934:FunctionDeclaration",
+      "start": 341650,
+      "end": 341934,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 284,
+      "name": "parseEmptyStatement"
+    },
+    {
+      "id": "341934:342721:FunctionDeclaration",
+      "start": 341934,
+      "end": 342721,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 787,
+      "name": "parseIfStatement"
+    },
+    {
+      "id": "342721:343844:FunctionDeclaration",
+      "start": 342721,
+      "end": 343844,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1123,
+      "name": "parseDoStatement"
+    },
+    {
+      "id": "343844:344519:FunctionDeclaration",
+      "start": 343844,
+      "end": 344519,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 675,
+      "name": "parseWhileStatement"
+    },
+    {
+      "id": "344519:347147:FunctionDeclaration",
+      "start": 344519,
+      "end": 347147,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2628,
+      "name": "parseForOrForInOrForOfStatement"
+    },
+    {
+      "id": "347147:347780:FunctionDeclaration",
+      "start": 347147,
+      "end": 347780,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 633,
+      "name": "parseBreakOrContinueStatement"
+    },
+    {
+      "id": "347780:348199:FunctionDeclaration",
+      "start": 347780,
+      "end": 348199,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 419,
+      "name": "parseReturnStatement"
+    },
+    {
+      "id": "348199:348915:FunctionDeclaration",
+      "start": 348199,
+      "end": 348915,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 716,
+      "name": "parseWithStatement"
+    },
+    {
+      "id": "348915:349409:FunctionDeclaration",
+      "start": 348915,
+      "end": 349409,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 494,
+      "name": "parseCaseClause"
+    },
+    {
+      "id": "349409:349771:FunctionDeclaration",
+      "start": 349409,
+      "end": 349771,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 362,
+      "name": "parseDefaultClause"
+    },
+    {
+      "id": "349771:349939:FunctionDeclaration",
+      "start": 349771,
+      "end": 349939,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 168,
+      "name": "parseCaseOrDefaultClause"
+    },
+    {
+      "id": "349939:350289:FunctionDeclaration",
+      "start": 349939,
+      "end": 350289,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 350,
+      "name": "parseCaseBlock"
+    },
+    {
+      "id": "350289:350806:FunctionDeclaration",
+      "start": 350289,
+      "end": 350806,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 517,
+      "name": "parseSwitchStatement"
+    },
+    {
+      "id": "350806:352001:FunctionDeclaration",
+      "start": 350806,
+      "end": 352001,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1195,
+      "name": "parseThrowStatement"
+    },
+    {
+      "id": "352001:352958:FunctionDeclaration",
+      "start": 352001,
+      "end": 352958,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 957,
+      "name": "parseTryStatement"
+    },
+    {
+      "id": "352958:353621:FunctionDeclaration",
+      "start": 352958,
+      "end": 353621,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 663,
+      "name": "parseCatchClause"
+    },
+    {
+      "id": "353621:353939:FunctionDeclaration",
+      "start": 353621,
+      "end": 353939,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 318,
+      "name": "parseDebuggerStatement"
+    },
+    {
+      "id": "353939:355105:FunctionDeclaration",
+      "start": 353939,
+      "end": 355105,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1166,
+      "name": "parseExpressionOrLabeledStatement"
+    },
+    {
+      "id": "355105:355284:FunctionDeclaration",
+      "start": 355105,
+      "end": 355284,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 179,
+      "name": "nextTokenIsIdentifierOrKeywordOnSameLine"
+    },
+    {
+      "id": "355284:355456:FunctionDeclaration",
+      "start": 355284,
+      "end": 355456,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 172,
+      "name": "nextTokenIsClassKeywordOnSameLine"
+    },
+    {
+      "id": "355456:355634:FunctionDeclaration",
+      "start": 355456,
+      "end": 355634,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 178,
+      "name": "nextTokenIsFunctionKeywordOnSameLine"
+    },
+    {
+      "id": "355634:355945:FunctionDeclaration",
+      "start": 355634,
+      "end": 355945,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 311,
+      "name": "nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine"
+    },
+    {
+      "id": "355945:360691:FunctionDeclaration",
+      "start": 355945,
+      "end": 360691,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4746,
+      "name": "isDeclaration"
+    },
+    {
+      "id": "360691:360790:FunctionDeclaration",
+      "start": 360691,
+      "end": 360790,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 99,
+      "name": "isStartOfDeclaration"
+    },
+    {
+      "id": "360790:363570:FunctionDeclaration",
+      "start": 360790,
+      "end": 363570,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2780,
+      "name": "isStartOfStatement"
+    },
+    {
+      "id": "363570:363793:FunctionDeclaration",
+      "start": 363570,
+      "end": 363793,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 223,
+      "name": "nextTokenIsBindingIdentifierOrStartOfDestructuring"
+    },
+    {
+      "id": "363793:364029:FunctionDeclaration",
+      "start": 363793,
+      "end": 364029,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 236,
+      "name": "isLetDeclaration"
+    },
+    {
+      "id": "364029:364226:FunctionDeclaration",
+      "start": 364029,
+      "end": 364226,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 197,
+      "name": "nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf"
+    },
+    {
+      "id": "364226:364446:FunctionDeclaration",
+      "start": 364226,
+      "end": 364446,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 220,
+      "name": "nextTokenIsEqualsOrSemicolonOrColonToken"
+    },
+    {
+      "id": "364446:364841:FunctionDeclaration",
+      "start": 364446,
+      "end": 364841,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 395,
+      "name": "nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLine"
+    },
+    {
+      "id": "364841:365295:FunctionDeclaration",
+      "start": 364841,
+      "end": 365295,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 454,
+      "name": "isUsingDeclaration"
+    },
+    {
+      "id": "365295:365609:FunctionDeclaration",
+      "start": 365295,
+      "end": 365609,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 314,
+      "name": "nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine"
+    },
+    {
+      "id": "365609:366102:FunctionDeclaration",
+      "start": 365609,
+      "end": 366102,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 493,
+      "name": "isAwaitUsingDeclaration"
+    },
+    {
+      "id": "366102:370046:FunctionDeclaration",
+      "start": 366102,
+      "end": 370046,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3944,
+      "name": "parseStatement"
+    },
+    {
+      "id": "370046:370174:FunctionDeclaration",
+      "start": 370046,
+      "end": 370174,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 128,
+      "name": "isDeclareModifier"
+    },
+    {
+      "id": "370174:371156:FunctionDeclaration",
+      "start": 370174,
+      "end": 371156,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 982,
+      "name": "parseDeclaration"
+    },
+    {
+      "id": "371156:371669:FunctionDeclaration",
+      "start": 371156,
+      "end": 371669,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 513,
+      "name": "tryReuseAmbientDeclaration"
+    },
+    {
+      "id": "371669:374467:FunctionDeclaration",
+      "start": 371669,
+      "end": 374467,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2798,
+      "name": "parseDeclarationWorker"
+    },
+    {
+      "id": "374467:374577:FunctionDeclaration",
+      "start": 374467,
+      "end": 374577,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 110,
+      "name": "nextTokenIsStringLiteral"
+    },
+    {
+      "id": "374577:374752:FunctionDeclaration",
+      "start": 374577,
+      "end": 374752,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 175,
+      "name": "nextTokenIsFromKeywordOrEqualsToken"
+    },
+    {
+      "id": "374752:374958:FunctionDeclaration",
+      "start": 374752,
+      "end": 374958,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 206,
+      "name": "nextTokenIsIdentifierOrStringLiteralOnSameLine"
+    },
+    {
+      "id": "374958:375469:FunctionDeclaration",
+      "start": 374958,
+      "end": 375469,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 511,
+      "name": "parseFunctionBlockOrSemicolon"
+    },
+    {
+      "id": "375469:376037:FunctionDeclaration",
+      "start": 375469,
+      "end": 376037,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 568,
+      "name": "parseArrayBindingElement"
+    },
+    {
+      "id": "376037:376841:FunctionDeclaration",
+      "start": 376037,
+      "end": 376841,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 804,
+      "name": "parseObjectBindingElement"
+    },
+    {
+      "id": "376841:377262:FunctionDeclaration",
+      "start": 376841,
+      "end": 377262,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 421,
+      "name": "parseObjectBindingPattern"
+    },
+    {
+      "id": "377262:377682:FunctionDeclaration",
+      "start": 377262,
+      "end": 377682,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 420,
+      "name": "parseArrayBindingPattern"
+    },
+    {
+      "id": "377682:377963:FunctionDeclaration",
+      "start": 377682,
+      "end": 377963,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 281,
+      "name": "isBindingIdentifierOrPrivateIdentifierOrPattern"
+    },
+    {
+      "id": "377963:378403:FunctionDeclaration",
+      "start": 377963,
+      "end": 378403,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 440,
+      "name": "parseIdentifierOrPattern"
+    },
+    {
+      "id": "378403:378540:FunctionDeclaration",
+      "start": 378403,
+      "end": 378540,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 137,
+      "name": "parseVariableDeclarationAllowExclamation"
+    },
+    {
+      "id": "378540:379488:FunctionDeclaration",
+      "start": 378540,
+      "end": 379488,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 948,
+      "name": "parseVariableDeclaration"
+    },
+    {
+      "id": "379488:381693:FunctionDeclaration",
+      "start": 379488,
+      "end": 381693,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2205,
+      "name": "parseVariableDeclarationList"
+    },
+    {
+      "id": "381693:381845:FunctionDeclaration",
+      "start": 381693,
+      "end": 381845,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 152,
+      "name": "canFollowContextualOfKeyword"
+    },
+    {
+      "id": "381845:382261:FunctionDeclaration",
+      "start": 381845,
+      "end": 382261,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 416,
+      "name": "parseVariableStatement"
+    },
+    {
+      "id": "382261:383709:FunctionDeclaration",
+      "start": 382261,
+      "end": 383709,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1448,
+      "name": "parseFunctionDeclaration"
+    },
+    {
+      "id": "383709:384207:FunctionDeclaration",
+      "start": 383709,
+      "end": 384207,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 498,
+      "name": "parseConstructorName"
+    },
+    {
+      "id": "384207:385252:FunctionDeclaration",
+      "start": 384207,
+      "end": 385252,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1045,
+      "name": "tryParseConstructorDeclaration"
+    },
+    {
+      "id": "385252:386670:FunctionDeclaration",
+      "start": 385252,
+      "end": 386670,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1418,
+      "name": "parseMethodDeclaration"
+    },
+    {
+      "id": "386670:387607:FunctionDeclaration",
+      "start": 386670,
+      "end": 387607,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 937,
+      "name": "parsePropertyDeclaration"
+    },
+    {
+      "id": "387607:388535:FunctionDeclaration",
+      "start": 387607,
+      "end": 388535,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 928,
+      "name": "parsePropertyOrMethodDeclaration"
+    },
+    {
+      "id": "388535:389653:FunctionDeclaration",
+      "start": 388535,
+      "end": 389653,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1118,
+      "name": "parseAccessorDeclaration"
+    },
+    {
+      "id": "389653:392730:FunctionDeclaration",
+      "start": 389653,
+      "end": 392730,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3077,
+      "name": "isClassMemberStart"
+    },
+    {
+      "id": "392730:393213:FunctionDeclaration",
+      "start": 392730,
+      "end": 393213,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 483,
+      "name": "parseClassStaticBlockDeclaration"
+    },
+    {
+      "id": "393213:393625:FunctionDeclaration",
+      "start": 393213,
+      "end": 393625,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 412,
+      "name": "parseClassStaticBlockBody"
+    },
+    {
+      "id": "393625:394330:FunctionDeclaration",
+      "start": 393625,
+      "end": 394330,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 705,
+      "name": "parseDecoratorExpression"
+    },
+    {
+      "id": "394330:394672:FunctionDeclaration",
+      "start": 394330,
+      "end": 394672,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 342,
+      "name": "tryParseDecorator"
+    },
+    {
+      "id": "394672:395801:FunctionDeclaration",
+      "start": 394672,
+      "end": 395801,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1129,
+      "name": "tryParseModifier"
+    },
+    {
+      "id": "395801:396410:FunctionDeclaration",
+      "start": 395801,
+      "end": 396410,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 609,
+      "name": "parseModifiers"
+    },
+    {
+      "id": "396410:396574:FunctionDeclaration",
+      "start": 396410,
+      "end": 396574,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 164,
+      "name": "parseModifiers"
+    },
+    {
+      "id": "396574:398898:FunctionDeclaration",
+      "start": 396574,
+      "end": 398898,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2324,
+      "name": "parseModifiers"
+    },
+    {
+      "id": "398898:399362:FunctionDeclaration",
+      "start": 398898,
+      "end": 399362,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 464,
+      "name": "parseModifiersForArrowFunction"
+    },
+    {
+      "id": "399362:402409:FunctionDeclaration",
+      "start": 399362,
+      "end": 402409,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 3047,
+      "name": "parseClassElement"
+    },
+    {
+      "id": "402409:403131:FunctionDeclaration",
+      "start": 402409,
+      "end": 403131,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 722,
+      "name": "parseDecoratedExpression"
+    },
+    {
+      "id": "403131:403361:FunctionDeclaration",
+      "start": 403131,
+      "end": 403361,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 230,
+      "name": "parseClassExpression"
+    },
+    {
+      "id": "403361:403632:FunctionDeclaration",
+      "start": 403361,
+      "end": 403632,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 271,
+      "name": "parseClassDeclaration"
+    },
+    {
+      "id": "403632:405102:FunctionDeclaration",
+      "start": 403632,
+      "end": 405102,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1470,
+      "name": "parseClassDeclarationOrExpression"
+    },
+    {
+      "id": "405102:405646:FunctionDeclaration",
+      "start": 405102,
+      "end": 405646,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 544,
+      "name": "parseNameOfClassDeclarationOrExpression"
+    },
+    {
+      "id": "405646:405795:FunctionDeclaration",
+      "start": 405646,
+      "end": 405795,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 149,
+      "name": "isImplementsClause"
+    },
+    {
+      "id": "405795:406181:FunctionDeclaration",
+      "start": 405795,
+      "end": 406181,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 386,
+      "name": "parseHeritageClauses"
+    },
+    {
+      "id": "406181:406658:FunctionDeclaration",
+      "start": 406181,
+      "end": 406658,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 477,
+      "name": "parseHeritageClause"
+    },
+    {
+      "id": "406658:407157:FunctionDeclaration",
+      "start": 406658,
+      "end": 407157,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 499,
+      "name": "parseExpressionWithTypeArguments"
+    },
+    {
+      "id": "407157:407435:FunctionDeclaration",
+      "start": 407157,
+      "end": 407435,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 278,
+      "name": "tryParseTypeArguments"
+    },
+    {
+      "id": "407435:407587:FunctionDeclaration",
+      "start": 407435,
+      "end": 407587,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 152,
+      "name": "isHeritageClause"
+    },
+    {
+      "id": "407587:407732:FunctionDeclaration",
+      "start": 407587,
+      "end": 407732,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 145,
+      "name": "parseClassMembers"
+    },
+    {
+      "id": "407732:408319:FunctionDeclaration",
+      "start": 407732,
+      "end": 408319,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 587,
+      "name": "parseInterfaceDeclaration"
+    },
+    {
+      "id": "408319:409101:FunctionDeclaration",
+      "start": 408319,
+      "end": 409101,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 782,
+      "name": "parseTypeAliasDeclaration"
+    },
+    {
+      "id": "409101:409783:FunctionDeclaration",
+      "start": 409101,
+      "end": 409783,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 682,
+      "name": "parseEnumMember"
+    },
+    {
+      "id": "409783:410510:FunctionDeclaration",
+      "start": 409783,
+      "end": 410510,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 727,
+      "name": "parseEnumDeclaration"
+    },
+    {
+      "id": "410510:410993:FunctionDeclaration",
+      "start": 410510,
+      "end": 410993,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 483,
+      "name": "parseModuleBlock"
+    },
+    {
+      "id": "410993:411876:FunctionDeclaration",
+      "start": 410993,
+      "end": 411876,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 883,
+      "name": "parseModuleOrNamespaceDeclaration"
+    },
+    {
+      "id": "411876:412809:FunctionDeclaration",
+      "start": 411876,
+      "end": 412809,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 933,
+      "name": "parseAmbientExternalModuleDeclaration"
+    },
+    {
+      "id": "412809:413628:FunctionDeclaration",
+      "start": 412809,
+      "end": 413628,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 819,
+      "name": "parseModuleDeclaration"
+    },
+    {
+      "id": "413628:413784:FunctionDeclaration",
+      "start": 413628,
+      "end": 413784,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 156,
+      "name": "isExternalModuleReference"
+    },
+    {
+      "id": "413784:413891:FunctionDeclaration",
+      "start": 413784,
+      "end": 413891,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 107,
+      "name": "nextTokenIsOpenParen"
+    },
+    {
+      "id": "413891:413998:FunctionDeclaration",
+      "start": 413891,
+      "end": 413998,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 107,
+      "name": "nextTokenIsOpenBrace"
+    },
+    {
+      "id": "413998:414097:FunctionDeclaration",
+      "start": 413998,
+      "end": 414097,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 99,
+      "name": "nextTokenIsSlash"
+    },
+    {
+      "id": "414097:414787:FunctionDeclaration",
+      "start": 414097,
+      "end": 414787,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 690,
+      "name": "parseNamespaceExportDeclaration"
+    },
+    {
+      "id": "414787:416973:FunctionDeclaration",
+      "start": 414787,
+      "end": 416973,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2186,
+      "name": "parseImportDeclarationOrImportEqualsDeclaration"
+    },
+    {
+      "id": "416973:417732:FunctionDeclaration",
+      "start": 416973,
+      "end": 417732,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 759,
+      "name": "tryParseImportClause"
+    },
+    {
+      "id": "417732:418030:FunctionDeclaration",
+      "start": 417732,
+      "end": 418030,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 298,
+      "name": "tryParseImportAttributes"
+    },
+    {
+      "id": "418030:418485:FunctionDeclaration",
+      "start": 418030,
+      "end": 418485,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 455,
+      "name": "parseImportAttribute"
+    },
+    {
+      "id": "418485:419924:FunctionDeclaration",
+      "start": 418485,
+      "end": 419924,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1439,
+      "name": "parseImportAttributes"
+    },
+    {
+      "id": "419924:420098:FunctionDeclaration",
+      "start": 419924,
+      "end": 420098,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 174,
+      "name": "tokenAfterImportDefinitelyProducesImportDeclaration"
+    },
+    {
+      "id": "420098:420416:FunctionDeclaration",
+      "start": 420098,
+      "end": 420416,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 318,
+      "name": "tokenAfterImportedIdentifierDefinitelyProducesImportDeclaration"
+    },
+    {
+      "id": "420416:420961:FunctionDeclaration",
+      "start": 420416,
+      "end": 420961,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 545,
+      "name": "parseImportEqualsDeclaration"
+    },
+    {
+      "id": "420961:422225:FunctionDeclaration",
+      "start": 420961,
+      "end": 422225,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 1264,
+      "name": "parseImportClause"
+    },
+    {
+      "id": "422225:422425:FunctionDeclaration",
+      "start": 422225,
+      "end": 422425,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 200,
+      "name": "parseModuleReference"
+    },
+    {
+      "id": "422425:422806:FunctionDeclaration",
+      "start": 422425,
+      "end": 422806,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 381,
+      "name": "parseExternalModuleReference"
+    },
+    {
+      "id": "422806:423354:FunctionDeclaration",
+      "start": 422806,
+      "end": 423354,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 548,
+      "name": "parseModuleSpecifier"
+    },
+    {
+      "id": "423354:423724:FunctionDeclaration",
+      "start": 423354,
+      "end": 423724,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 370,
+      "name": "parseNamespaceImport"
+    },
+    {
+      "id": "423724:423878:FunctionDeclaration",
+      "start": 423724,
+      "end": 423878,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 154,
+      "name": "canParseModuleExportName"
+    },
+    {
+      "id": "423878:424078:FunctionDeclaration",
+      "start": 423878,
+      "end": 424078,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 200,
+      "name": "parseModuleExportName"
+    },
+    {
+      "id": "424078:424167:FunctionDeclaration",
+      "start": 424078,
+      "end": 424167,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 89,
+      "name": "parseNamedImportsOrExports"
+    },
+    {
+      "id": "424167:424254:FunctionDeclaration",
+      "start": 424167,
+      "end": 424254,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 87,
+      "name": "parseNamedImportsOrExports"
+    },
+    {
+      "id": "424254:425037:FunctionDeclaration",
+      "start": 424254,
+      "end": 425037,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 783,
+      "name": "parseNamedImportsOrExports"
+    },
+    {
+      "id": "425037:425253:FunctionDeclaration",
+      "start": 425037,
+      "end": 425253,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 216,
+      "name": "parseExportSpecifier"
+    },
+    {
+      "id": "425253:425394:FunctionDeclaration",
+      "start": 425253,
+      "end": 425394,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 141,
+      "name": "parseImportSpecifier"
+    },
+    {
+      "id": "425394:430014:FunctionDeclaration",
+      "start": 425394,
+      "end": 430014,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 4620,
+      "name": "parseImportOrExportSpecifier"
+    },
+    {
+      "id": "430014:430198:FunctionDeclaration",
+      "start": 430014,
+      "end": 430198,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 184,
+      "name": "parseNamespaceExport"
+    },
+    {
+      "id": "430198:432311:FunctionDeclaration",
+      "start": 430198,
+      "end": 432311,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 2113,
+      "name": "parseExportDeclaration"
+    },
+    {
+      "id": "432311:433113:FunctionDeclaration",
+      "start": 432311,
+      "end": 433113,
+      "kind": "FunctionDeclaration",
+      "parent": "Parser",
+      "bytes": 802,
+      "name": "parseExportAssignment"
+    },
+    {
+      "id": "433113:435135:EnumDeclaration",
+      "start": 433113,
+      "end": 435135,
+      "kind": "EnumDeclaration",
+      "parent": "Parser",
+      "bytes": 2022,
+      "name": "ParsingContext"
+    },
+    {
+      "id": "435135:435220:EnumDeclaration",
+      "start": 435135,
+      "end": 435220,
+      "kind": "EnumDeclaration",
+      "parent": "Parser",
+      "bytes": 85,
+      "name": "Tristate"
+    },
+    {
+      "id": "435220:497157:ModuleDeclaration",
+      "start": 435220,
+      "end": 497157,
+      "kind": "ModuleDeclaration",
+      "parent": "Parser",
+      "bytes": 45,
+      "name": "JSDocParser"
+    },
+    {
+      "id": "435258:436361:FunctionDeclaration",
+      "start": 435258,
+      "end": 436361,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 1103,
+      "name": "parseJSDocTypeExpressionForTests"
+    },
+    {
+      "id": "436361:437030:FunctionDeclaration",
+      "start": 436361,
+      "end": 437030,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 669,
+      "name": "parseJSDocTypeExpression"
+    },
+    {
+      "id": "437030:437945:FunctionDeclaration",
+      "start": 437030,
+      "end": 437945,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 915,
+      "name": "parseJSDocNameReference"
+    },
+    {
+      "id": "437945:438675:FunctionDeclaration",
+      "start": 437945,
+      "end": 438675,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 730,
+      "name": "parseIsolatedJSDocComment"
+    },
+    {
+      "id": "438675:439659:FunctionDeclaration",
+      "start": 438675,
+      "end": 439659,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 984,
+      "name": "parseJSDocComment"
+    },
+    {
+      "id": "439659:439865:EnumDeclaration",
+      "start": 439659,
+      "end": 439865,
+      "kind": "EnumDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 206,
+      "name": "JSDocState"
+    },
+    {
+      "id": "439865:440024:EnumDeclaration",
+      "start": 439865,
+      "end": 440024,
+      "kind": "EnumDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 159,
+      "name": "PropertyLikeParse"
+    },
+    {
+      "id": "440024:497150:FunctionDeclaration",
+      "start": 440024,
+      "end": 497150,
+      "kind": "FunctionDeclaration",
+      "parent": "JSDocParser",
+      "bytes": 1185,
+      "name": "parseJSDocCommentWorker"
+    },
+    {
+      "id": "441198:447877:FunctionDeclaration",
+      "start": 441198,
+      "end": 447877,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 6679,
+      "name": "doJSDocScan"
+    },
+    {
+      "id": "447877:448111:FunctionDeclaration",
+      "start": 447877,
+      "end": 448111,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 234,
+      "name": "removeLeadingNewlines"
+    },
+    {
+      "id": "448111:448737:FunctionDeclaration",
+      "start": 448111,
+      "end": 448737,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 626,
+      "name": "removeTrailingWhitespace"
+    },
+    {
+      "id": "448737:449309:FunctionDeclaration",
+      "start": 448737,
+      "end": 449309,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 572,
+      "name": "isNextNonwhitespaceTokenEndOfFile"
+    },
+    {
+      "id": "449309:449897:FunctionDeclaration",
+      "start": 449309,
+      "end": 449897,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 588,
+      "name": "skipWhitespace"
+    },
+    {
+      "id": "449897:451214:FunctionDeclaration",
+      "start": 449897,
+      "end": 451214,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1317,
+      "name": "skipWhitespaceOrAsterisk"
+    },
+    {
+      "id": "451214:455866:FunctionDeclaration",
+      "start": 451214,
+      "end": 455866,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 4652,
+      "name": "parseTag"
+    },
+    {
+      "id": "455866:456268:FunctionDeclaration",
+      "start": 455866,
+      "end": 456268,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 402,
+      "name": "parseTrailingTagComments"
+    },
+    {
+      "id": "456268:462523:FunctionDeclaration",
+      "start": 456268,
+      "end": 462523,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 6255,
+      "name": "parseTagComments"
+    },
+    {
+      "id": "462523:463527:FunctionDeclaration",
+      "start": 462523,
+      "end": 463527,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1004,
+      "name": "parseJSDocLink"
+    },
+    {
+      "id": "463527:464487:FunctionDeclaration",
+      "start": 463527,
+      "end": 464487,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 960,
+      "name": "parseJSDocLinkName"
+    },
+    {
+      "id": "464487:464969:FunctionDeclaration",
+      "start": 464487,
+      "end": 464969,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 482,
+      "name": "parseJSDocLinkPrefix"
+    },
+    {
+      "id": "464969:465127:FunctionDeclaration",
+      "start": 464969,
+      "end": 465127,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 158,
+      "name": "isJSDocLinkTag"
+    },
+    {
+      "id": "465127:465406:FunctionDeclaration",
+      "start": 465127,
+      "end": 465406,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 279,
+      "name": "parseUnknownTag"
+    },
+    {
+      "id": "465406:465804:FunctionDeclaration",
+      "start": 465406,
+      "end": 465804,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 398,
+      "name": "addTag"
+    },
+    {
+      "id": "465804:466052:FunctionDeclaration",
+      "start": 465804,
+      "end": 466052,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 248,
+      "name": "tryParseTypeExpression"
+    },
+    {
+      "id": "466052:467226:FunctionDeclaration",
+      "start": 466052,
+      "end": 467226,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1174,
+      "name": "parseBracketNameInPropertyAndParamTag"
+    },
+    {
+      "id": "467226:467816:FunctionDeclaration",
+      "start": 467226,
+      "end": 467816,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 590,
+      "name": "isObjectOrObjectArrayTypeReference"
+    },
+    {
+      "id": "467816:469205:FunctionDeclaration",
+      "start": 467816,
+      "end": 469205,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1389,
+      "name": "parseParameterOrPropertyTag"
+    },
+    {
+      "id": "469205:470630:FunctionDeclaration",
+      "start": 469205,
+      "end": 470630,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1425,
+      "name": "parseNestedTypeLiteral"
+    },
+    {
+      "id": "470630:471239:FunctionDeclaration",
+      "start": 470630,
+      "end": 471239,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 609,
+      "name": "parseReturnTag"
+    },
+    {
+      "id": "471239:471973:FunctionDeclaration",
+      "start": 471239,
+      "end": 471973,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 734,
+      "name": "parseTypeTag"
+    },
+    {
+      "id": "471973:472745:FunctionDeclaration",
+      "start": 471973,
+      "end": 472745,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 772,
+      "name": "parseSeeTag"
+    },
+    {
+      "id": "472745:473162:FunctionDeclaration",
+      "start": 472745,
+      "end": 473162,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 417,
+      "name": "parseThrowsTag"
+    },
+    {
+      "id": "473162:474067:FunctionDeclaration",
+      "start": 473162,
+      "end": 474067,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 905,
+      "name": "parseAuthorTag"
+    },
+    {
+      "id": "474067:475107:FunctionDeclaration",
+      "start": 474067,
+      "end": 475107,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1040,
+      "name": "parseAuthorNameAndEmail"
+    },
+    {
+      "id": "475107:475505:FunctionDeclaration",
+      "start": 475107,
+      "end": 475505,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 398,
+      "name": "parseImplementsTag"
+    },
+    {
+      "id": "475505:475897:FunctionDeclaration",
+      "start": 475505,
+      "end": 475897,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 392,
+      "name": "parseAugmentsTag"
+    },
+    {
+      "id": "475897:476413:FunctionDeclaration",
+      "start": 475897,
+      "end": 476413,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 516,
+      "name": "parseSatisfiesTag"
+    },
+    {
+      "id": "476413:477382:FunctionDeclaration",
+      "start": 476413,
+      "end": 477382,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 969,
+      "name": "parseImportTag"
+    },
+    {
+      "id": "477382:478386:FunctionDeclaration",
+      "start": 477382,
+      "end": 478386,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1004,
+      "name": "parseExpressionWithTypeArgumentsForAugments"
+    },
+    {
+      "id": "478386:478924:FunctionDeclaration",
+      "start": 478386,
+      "end": 478924,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 538,
+      "name": "parsePropertyAccessEntityNameExpression"
+    },
+    {
+      "id": "478924:479294:FunctionDeclaration",
+      "start": 478924,
+      "end": 479294,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 370,
+      "name": "parseSimpleTag"
+    },
+    {
+      "id": "479294:479722:FunctionDeclaration",
+      "start": 479294,
+      "end": 479722,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 428,
+      "name": "parseThisTag"
+    },
+    {
+      "id": "479722:480150:FunctionDeclaration",
+      "start": 479722,
+      "end": 480150,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 428,
+      "name": "parseEnumTag"
+    },
+    {
+      "id": "480150:483496:FunctionDeclaration",
+      "start": 480150,
+      "end": 483496,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 3346,
+      "name": "parseTypedefTag"
+    },
+    {
+      "id": "483496:484626:FunctionDeclaration",
+      "start": 483496,
+      "end": 484626,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1130,
+      "name": "parseJSDocTypeNameWithNamespace"
+    },
+    {
+      "id": "484626:485442:FunctionDeclaration",
+      "start": 484626,
+      "end": 485442,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 816,
+      "name": "parseCallbackTagParameters"
+    },
+    {
+      "id": "485442:486130:FunctionDeclaration",
+      "start": 485442,
+      "end": 486130,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 688,
+      "name": "parseJSDocSignature"
+    },
+    {
+      "id": "486130:486877:FunctionDeclaration",
+      "start": 486130,
+      "end": 486877,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 747,
+      "name": "parseCallbackTag"
+    },
+    {
+      "id": "486877:487545:FunctionDeclaration",
+      "start": 486877,
+      "end": 487545,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 668,
+      "name": "parseOverloadTag"
+    },
+    {
+      "id": "487545:488098:FunctionDeclaration",
+      "start": 487545,
+      "end": 488098,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 553,
+      "name": "escapedTextsEqual"
+    },
+    {
+      "id": "488098:488333:FunctionDeclaration",
+      "start": 488098,
+      "end": 488333,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 235,
+      "name": "parseChildPropertyTag"
+    },
+    {
+      "id": "488333:490245:FunctionDeclaration",
+      "start": 488333,
+      "end": 490245,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1912,
+      "name": "parseChildParameterOrPropertyTag"
+    },
+    {
+      "id": "490245:491854:FunctionDeclaration",
+      "start": 490245,
+      "end": 491854,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1609,
+      "name": "tryParseChildTag"
+    },
+    {
+      "id": "491854:493034:FunctionDeclaration",
+      "start": 491854,
+      "end": 493034,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1180,
+      "name": "parseTemplateTagTypeParameter"
+    },
+    {
+      "id": "493034:493643:FunctionDeclaration",
+      "start": 493034,
+      "end": 493643,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 609,
+      "name": "parseTemplateTagTypeParameters"
+    },
+    {
+      "id": "493643:495061:FunctionDeclaration",
+      "start": 493643,
+      "end": 495061,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1418,
+      "name": "parseTemplateTag"
+    },
+    {
+      "id": "495061:495311:FunctionDeclaration",
+      "start": 495061,
+      "end": 495311,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 250,
+      "name": "parseOptionalJsdoc"
+    },
+    {
+      "id": "495311:496340:FunctionDeclaration",
+      "start": 495311,
+      "end": 496340,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 1029,
+      "name": "parseJSDocEntityName"
+    },
+    {
+      "id": "496340:497139:FunctionDeclaration",
+      "start": 496340,
+      "end": 497139,
+      "kind": "FunctionDeclaration",
+      "parent": "parseJSDocCommentWorker",
+      "bytes": 799,
+      "name": "parseJSDocIdentifierName"
+    },
+    {
+      "id": "497160:497223:VariableStatement",
+      "start": 497160,
+      "end": 497223,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 63,
+      "name": ""
+    },
+    {
+      "id": "497223:497471:FunctionDeclaration",
+      "start": 497223,
+      "end": 497471,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 248,
+      "name": "markAsIncrementallyParsed"
+    },
+    {
+      "id": "497471:497543:VariableStatement",
+      "start": 497471,
+      "end": 497543,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 72,
+      "name": ""
+    },
+    {
+      "id": "497543:497672:FunctionDeclaration",
+      "start": 497543,
+      "end": 497672,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 129,
+      "name": "intersectsIncrementalChange"
+    },
+    {
+      "id": "497672:497793:FunctionDeclaration",
+      "start": 497672,
+      "end": 497793,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 121,
+      "name": "markAsIntersectingIncrementalChange"
+    },
+    {
+      "id": "497793:528569:ModuleDeclaration",
+      "start": 497793,
+      "end": 528569,
+      "kind": "ModuleDeclaration",
+      "parent": "file",
+      "bytes": 30776,
+      "name": "IncrementalParser"
+    },
+    {
+      "id": "528569:528725:FunctionDeclaration",
+      "start": 528569,
+      "end": 528725,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 156,
+      "name": "isDeclarationFileName"
+    },
+    {
+      "id": "528725:529297:FunctionDeclaration",
+      "start": 528725,
+      "end": 529297,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 572,
+      "name": "getDeclarationFileExtension"
+    },
+    {
+      "id": "529297:529771:FunctionDeclaration",
+      "start": 529297,
+      "end": 529771,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 474,
+      "name": "parseResolutionMode"
+    },
+    {
+      "id": "529771:530672:FunctionDeclaration",
+      "start": 529771,
+      "end": 530672,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 901,
+      "name": "processCommentPragmas"
+    },
+    {
+      "id": "530672:530799:TypeAliasDeclaration",
+      "start": 530672,
+      "end": 530799,
+      "kind": "TypeAliasDeclaration",
+      "parent": "file",
+      "bytes": 127,
+      "name": "PragmaDiagnosticReporter"
+    },
+    {
+      "id": "530799:535283:FunctionDeclaration",
+      "start": 530799,
+      "end": 535283,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 4484,
+      "name": "processPragmasIntoFields"
+    },
+    {
+      "id": "535283:535340:VariableStatement",
+      "start": 535283,
+      "end": 535340,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 57,
+      "name": ""
+    },
+    {
+      "id": "535340:535646:FunctionDeclaration",
+      "start": 535340,
+      "end": 535646,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 306,
+      "name": "getNamedArgRegEx"
+    },
+    {
+      "id": "535646:535718:VariableStatement",
+      "start": 535646,
+      "end": 535718,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 72,
+      "name": ""
+    },
+    {
+      "id": "535718:535796:VariableStatement",
+      "start": 535718,
+      "end": 535796,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 78,
+      "name": ""
+    },
+    {
+      "id": "535796:538445:FunctionDeclaration",
+      "start": 535796,
+      "end": 538445,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 2649,
+      "name": "extractPragmas"
+    },
+    {
+      "id": "538445:539233:FunctionDeclaration",
+      "start": 538445,
+      "end": 539233,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 788,
+      "name": "addPragmaForMatch"
+    },
+    {
+      "id": "539233:539947:FunctionDeclaration",
+      "start": 539233,
+      "end": 539947,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 714,
+      "name": "getNamedPragmaArguments"
+    },
+    {
+      "id": "539947:541258:FunctionDeclaration",
+      "start": 539947,
+      "end": 541258,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1311,
+      "name": "tagNamesAreEquivalent"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "15302:64545:VariableStatement"
+      ],
+      "bytes": 49243
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "497793:528569:ModuleDeclaration"
+      ],
+      "bytes": 30776
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "0:10719:ImportDeclaration"
+      ],
+      "bytes": 10719
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "81217:81318:VariableStatement",
+        "141945:142089:FunctionDeclaration",
+        "145054:151979:FunctionDeclaration",
+        "282125:282314:FunctionDeclaration"
+      ],
+      "bytes": 7359
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "88573:88674:VariableStatement",
+        "141683:141945:FunctionDeclaration",
+        "143928:144072:FunctionDeclaration",
+        "224218:224406:FunctionDeclaration",
+        "441198:447877:FunctionDeclaration"
+      ],
+      "bytes": 7374
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "68090:68455:FunctionDeclaration",
+        "114344:114447:FunctionDeclaration",
+        "205120:205390:FunctionDeclaration",
+        "281363:281554:FunctionDeclaration",
+        "407587:407732:FunctionDeclaration",
+        "424078:424167:FunctionDeclaration",
+        "456268:462523:FunctionDeclaration"
+      ],
+      "bytes": 7418
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "65721:66214:FunctionDeclaration",
+        "77898:78174:FunctionDeclaration",
+        "84821:84882:VariableStatement",
+        "235808:236180:FunctionDeclaration",
+        "259211:264905:FunctionDeclaration",
+        "280769:280939:FunctionDeclaration",
+        "374752:374958:FunctionDeclaration",
+        "497672:497793:FunctionDeclaration"
+      ],
+      "bytes": 7393
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "67185:67439:FunctionDeclaration",
+        "76021:76173:FunctionDeclaration",
+        "168577:168870:FunctionDeclaration",
+        "170637:171087:FunctionDeclaration",
+        "267524:273033:FunctionDeclaration",
+        "405102:405646:FunctionDeclaration",
+        "425253:425394:FunctionDeclaration"
+      ],
+      "bytes": 7343
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "110284:110403:FunctionDeclaration",
+        "118028:118232:FunctionDeclaration",
+        "134737:134908:FunctionDeclaration",
+        "200276:200636:FunctionDeclaration",
+        "242622:243098:FunctionDeclaration",
+        "297764:303076:FunctionDeclaration",
+        "435135:435220:EnumDeclaration",
+        "485442:486130:FunctionDeclaration"
+      ],
+      "bytes": 7415
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "11034:11116:VariableStatement",
+        "65210:65474:FunctionDeclaration",
+        "102687:107755:FunctionDeclaration",
+        "181550:181655:InterfaceDeclaration",
+        "187014:187379:FunctionDeclaration",
+        "254604:254753:FunctionDeclaration",
+        "280335:280526:FunctionDeclaration",
+        "392730:393213:FunctionDeclaration",
+        "393625:394330:FunctionDeclaration"
+      ],
+      "bytes": 7412
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "12758:13192:FunctionDeclaration",
+        "68455:69019:FunctionDeclaration",
+        "110084:110284:FunctionDeclaration",
+        "131784:131880:FunctionDeclaration",
+        "205390:206139:FunctionDeclaration",
+        "235464:235808:FunctionDeclaration",
+        "355945:360691:FunctionDeclaration",
+        "413784:413891:FunctionDeclaration",
+        "430014:430198:FunctionDeclaration"
+      ],
+      "bytes": 7424
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "65474:65721:FunctionDeclaration",
+        "84614:84643:VariableStatement",
+        "172713:177375:FunctionDeclaration",
+        "217019:217306:FunctionDeclaration",
+        "239478:239609:FunctionDeclaration",
+        "398898:399362:FunctionDeclaration",
+        "413628:413784:FunctionDeclaration",
+        "449309:449897:FunctionDeclaration",
+        "496340:497139:FunctionDeclaration"
+      ],
+      "bytes": 7363
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "11294:11405:VariableStatement",
+        "191553:191864:FunctionDeclaration",
+        "192993:193220:FunctionDeclaration",
+        "216924:217019:FunctionDeclaration",
+        "355105:355284:FunctionDeclaration",
+        "377262:377682:FunctionDeclaration",
+        "432311:433113:FunctionDeclaration",
+        "448111:448737:FunctionDeclaration",
+        "451214:455866:FunctionDeclaration"
+      ],
+      "bytes": 7423
+    },
+    {
+      "id": 13,
+      "atoms": [
+        "114251:114344:FunctionDeclaration",
+        "132213:132426:FunctionDeclaration",
+        "139176:139362:FunctionDeclaration",
+        "191864:192189:FunctionDeclaration",
+        "330969:331632:FunctionDeclaration",
+        "413891:413998:FunctionDeclaration",
+        "425394:430014:FunctionDeclaration",
+        "475107:475505:FunctionDeclaration",
+        "484626:485442:FunctionDeclaration"
+      ],
+      "bytes": 7421
+    },
+    {
+      "id": 14,
+      "atoms": [
+        "153418:153535:FunctionDeclaration",
+        "202296:202499:FunctionDeclaration",
+        "216749:216924:FunctionDeclaration",
+        "238145:239088:FunctionDeclaration",
+        "311254:311595:FunctionDeclaration",
+        "405795:406181:FunctionDeclaration",
+        "409101:409783:FunctionDeclaration",
+        "530799:535283:FunctionDeclaration",
+        "535718:535796:VariableStatement"
+      ],
+      "bytes": 7409
+    },
+    {
+      "id": 15,
+      "atoms": [
+        "81667:81795:VariableStatement",
+        "85336:85395:VariableStatement",
+        "92589:97051:FunctionDeclaration",
+        "116120:116318:FunctionDeclaration",
+        "162709:163392:FunctionDeclaration",
+        "191390:191553:FunctionDeclaration",
+        "330450:330803:FunctionDeclaration",
+        "378540:379488:FunctionDeclaration",
+        "465406:465804:FunctionDeclaration"
+      ],
+      "bytes": 7392
+    },
+    {
+      "id": 16,
+      "atoms": [
+        "118466:118628:FunctionDeclaration",
+        "186319:186680:FunctionDeclaration",
+        "225154:225283:FunctionDeclaration",
+        "233334:233545:FunctionDeclaration",
+        "248784:253127:FunctionDeclaration",
+        "406181:406658:FunctionDeclaration",
+        "414097:414787:FunctionDeclaration",
+        "463527:464487:FunctionDeclaration",
+        "535283:535340:VariableStatement"
+      ],
+      "bytes": 7390
+    },
+    {
+      "id": 17,
+      "atoms": [
+        "11502:12482:VariableStatement",
+        "64948:65210:FunctionDeclaration",
+        "131147:131343:FunctionDeclaration",
+        "152712:152815:FunctionDeclaration",
+        "163392:167473:FunctionDeclaration",
+        "189187:189550:FunctionDeclaration",
+        "405646:405795:FunctionDeclaration",
+        "410510:410993:FunctionDeclaration",
+        "497471:497543:VariableStatement",
+        "539233:539947:FunctionDeclaration"
+      ],
+      "bytes": 7403
+    },
+    {
+      "id": 18,
+      "atoms": [
+        "111734:112722:FunctionDeclaration",
+        "120984:121357:FunctionDeclaration",
+        "131343:131483:FunctionDeclaration",
+        "210043:210197:FunctionDeclaration",
+        "324513:324790:FunctionDeclaration",
+        "348915:349409:FunctionDeclaration",
+        "366102:370046:FunctionDeclaration",
+        "402409:403131:FunctionDeclaration",
+        "495061:495311:FunctionDeclaration"
+      ],
+      "bytes": 7342
+    },
+    {
+      "id": 19,
+      "atoms": [
+        "91981:92589:FunctionDeclaration",
+        "177762:181352:FunctionDeclaration",
+        "206139:206256:FunctionDeclaration",
+        "239088:239291:FunctionDeclaration",
+        "340554:341650:FunctionDeclaration",
+        "374577:374752:FunctionDeclaration",
+        "394330:394672:FunctionDeclaration",
+        "471973:472745:FunctionDeclaration",
+        "479294:479722:FunctionDeclaration",
+        "535646:535718:VariableStatement"
+      ],
+      "bytes": 7403
+    },
+    {
+      "id": 20,
+      "atoms": [
+        "114772:115020:FunctionDeclaration",
+        "222827:223299:FunctionDeclaration",
+        "290169:293745:FunctionDeclaration",
+        "407157:407435:FunctionDeclaration",
+        "407732:408319:FunctionDeclaration",
+        "408319:409101:FunctionDeclaration",
+        "435220:497157:ModuleDeclaration",
+        "435258:436361:FunctionDeclaration",
+        "464969:465127:FunctionDeclaration",
+        "497543:497672:FunctionDeclaration"
+      ],
+      "bytes": 7378
+    },
+    {
+      "id": 21,
+      "atoms": [
+        "13487:13886:FunctionDeclaration",
+        "67737:68090:FunctionDeclaration",
+        "113983:114152:FunctionDeclaration",
+        "119085:119210:FunctionDeclaration",
+        "193399:193598:FunctionDeclaration",
+        "194854:195494:FunctionDeclaration",
+        "321491:322336:FunctionDeclaration",
+        "331632:335107:FunctionDeclaration",
+        "483496:484626:FunctionDeclaration"
+      ],
+      "bytes": 7335
+    },
+    {
+      "id": 22,
+      "atoms": [
+        "11116:11197:VariableStatement",
+        "107755:108201:FunctionDeclaration",
+        "118862:118979:FunctionDeclaration",
+        "131483:131784:FunctionDeclaration",
+        "215598:216749:FunctionDeclaration",
+        "220344:220905:FunctionDeclaration",
+        "227508:230947:FunctionDeclaration",
+        "236180:236416:FunctionDeclaration",
+        "419924:420098:FunctionDeclaration",
+        "473162:474067:FunctionDeclaration"
+      ],
+      "bytes": 7411
+    },
+    {
+      "id": 23,
+      "atoms": [
+        "84882:84943:VariableStatement",
+        "115020:115876:FunctionDeclaration",
+        "117912:118028:FunctionDeclaration",
+        "123712:127150:FunctionDeclaration",
+        "211970:212565:FunctionDeclaration",
+        "221102:221401:FunctionDeclaration",
+        "227330:227508:FunctionDeclaration",
+        "239609:240056:FunctionDeclaration",
+        "242385:242622:FunctionDeclaration",
+        "353939:355105:FunctionDeclaration"
+      ],
+      "bytes": 7393
+    },
+    {
+      "id": 24,
+      "atoms": [
+        "138923:139176:FunctionDeclaration",
+        "140849:140986:FunctionDeclaration",
+        "172421:172713:FunctionDeclaration",
+        "223299:224218:FunctionDeclaration",
+        "276729:280119:FunctionDeclaration",
+        "310060:311254:FunctionDeclaration",
+        "364841:365295:FunctionDeclaration",
+        "381693:381845:FunctionDeclaration",
+        "422806:423354:FunctionDeclaration"
+      ],
+      "bytes": 7339
+    },
+    {
+      "id": 25,
+      "atoms": [
+        "12628:12758:FunctionDeclaration",
+        "81318:81475:VariableStatement",
+        "84778:84821:VariableStatement",
+        "136043:136291:FunctionDeclaration",
+        "201676:202145:FunctionDeclaration",
+        "254753:255969:FunctionDeclaration",
+        "377682:377963:FunctionDeclaration",
+        "411876:412809:FunctionDeclaration",
+        "480150:483496:FunctionDeclaration",
+        "487545:488098:FunctionDeclaration"
+      ],
+      "bytes": 7376
+    },
+    {
+      "id": 26,
+      "atoms": [
+        "122964:123603:FunctionDeclaration",
+        "153640:156933:FunctionDeclaration",
+        "218372:218722:FunctionDeclaration",
+        "266304:267524:FunctionDeclaration",
+        "321323:321491:FunctionDeclaration",
+        "370046:370174:FunctionDeclaration",
+        "386670:387607:FunctionDeclaration",
+        "422225:422425:FunctionDeclaration",
+        "455866:456268:FunctionDeclaration"
+      ],
+      "bytes": 7337
+    },
+    {
+      "id": 27,
+      "atoms": [
+        "85395:88573:VariableStatement",
+        "112980:113136:FunctionDeclaration",
+        "316485:317708:FunctionDeclaration",
+        "335107:335794:FunctionDeclaration",
+        "352001:352958:FunctionDeclaration",
+        "378403:378540:FunctionDeclaration",
+        "465127:465406:FunctionDeclaration",
+        "465804:466052:FunctionDeclaration",
+        "529297:529771:FunctionDeclaration"
+      ],
+      "bytes": 7339
+    },
+    {
+      "id": 28,
+      "atoms": [
+        "70930:72163:FunctionDeclaration",
+        "114152:114251:FunctionDeclaration",
+        "118979:119085:FunctionDeclaration",
+        "157953:158650:FunctionDeclaration",
+        "177576:177762:FunctionDeclaration",
+        "236416:236893:FunctionDeclaration",
+        "349409:349771:FunctionDeclaration",
+        "364226:364446:FunctionDeclaration",
+        "389653:392730:FunctionDeclaration",
+        "476413:477382:FunctionDeclaration"
+      ],
+      "bytes": 7426
+    },
+    {
+      "id": 29,
+      "atoms": [
+        "69019:69499:FunctionDeclaration",
+        "85075:85118:VariableStatement",
+        "112850:112980:FunctionDeclaration",
+        "127927:128289:FunctionDeclaration",
+        "139978:140129:FunctionDeclaration",
+        "140986:141683:FunctionDeclaration",
+        "257228:258198:FunctionDeclaration",
+        "308206:309440:FunctionDeclaration",
+        "315103:315365:FunctionDeclaration",
+        "399362:402409:FunctionDeclaration"
+      ],
+      "bytes": 7376
+    },
+    {
+      "id": 30,
+      "atoms": [
+        "12482:12628:VariableStatement",
+        "74638:75001:FunctionDeclaration",
+        "116595:116699:FunctionDeclaration",
+        "159668:162501:FunctionDeclaration",
+        "207769:208744:FunctionDeclaration",
+        "236893:238145:FunctionDeclaration",
+        "276331:276599:FunctionDeclaration",
+        "281172:281363:FunctionDeclaration",
+        "311595:312310:FunctionDeclaration",
+        "424167:424254:FunctionDeclaration",
+        "464487:464969:FunctionDeclaration"
+      ],
+      "bytes": 7416
+    },
+    {
+      "id": 31,
+      "atoms": [
+        "66698:67185:FunctionDeclaration",
+        "128289:129541:FunctionDeclaration",
+        "153535:153640:FunctionDeclaration",
+        "244184:244333:FunctionDeclaration",
+        "348199:348915:FunctionDeclaration",
+        "360691:360790:FunctionDeclaration",
+        "364029:364226:FunctionDeclaration",
+        "370174:371156:FunctionDeclaration",
+        "371669:374467:FunctionDeclaration",
+        "403361:403632:FunctionDeclaration",
+        "478924:479294:FunctionDeclaration"
+      ],
+      "bytes": 7426
+    },
+    {
+      "id": 32,
+      "atoms": [
+        "78356:79609:FunctionDeclaration",
+        "110629:110738:FunctionDeclaration",
+        "114679:114772:FunctionDeclaration",
+        "139707:139978:FunctionDeclaration",
+        "140129:140849:FunctionDeclaration",
+        "202145:202296:FunctionDeclaration",
+        "220905:221102:FunctionDeclaration",
+        "360790:363570:FunctionDeclaration",
+        "365609:366102:FunctionDeclaration",
+        "423354:423724:FunctionDeclaration",
+        "438675:439659:FunctionDeclaration"
+      ],
+      "bytes": 7421
+    },
+    {
+      "id": 33,
+      "atoms": [
+        "78174:78356:FunctionDeclaration",
+        "80562:497160:ModuleDeclaration",
+        "81902:81993:FunctionDeclaration",
+        "121357:121851:FunctionDeclaration",
+        "123603:123712:VariableStatement",
+        "171087:172082:FunctionDeclaration",
+        "222143:222522:FunctionDeclaration",
+        "240056:240780:FunctionDeclaration",
+        "255969:257228:FunctionDeclaration",
+        "355634:355945:FunctionDeclaration",
+        "535796:538445:FunctionDeclaration"
+      ],
+      "bytes": 7419
+    },
+    {
+      "id": 34,
+      "atoms": [
+        "10954:11034:EnumDeclaration",
+        "110738:111734:FunctionDeclaration",
+        "118232:118351:FunctionDeclaration",
+        "134565:134737:FunctionDeclaration",
+        "153107:153418:FunctionDeclaration",
+        "158650:159379:FunctionDeclaration",
+        "193598:193827:FunctionDeclaration",
+        "281741:282125:FunctionDeclaration",
+        "344519:347147:FunctionDeclaration",
+        "383709:384207:FunctionDeclaration",
+        "420961:422225:FunctionDeclaration"
+      ],
+      "bytes": 7410
+    },
+    {
+      "id": 35,
+      "atoms": [
+        "84705:84745:VariableStatement",
+        "113822:113983:FunctionDeclaration",
+        "121851:122156:FunctionDeclaration",
+        "151979:152712:FunctionDeclaration",
+        "156933:157953:FunctionDeclaration",
+        "181868:181998:FunctionDeclaration",
+        "275047:276331:FunctionDeclaration",
+        "293745:296281:FunctionDeclaration",
+        "363793:364029:FunctionDeclaration",
+        "374958:375469:FunctionDeclaration",
+        "472745:473162:FunctionDeclaration"
+      ],
+      "bytes": 7373
+    },
+    {
+      "id": 36,
+      "atoms": [
+        "130784:130870:FunctionDeclaration",
+        "130870:131051:FunctionDeclaration",
+        "133835:134565:FunctionDeclaration",
+        "138693:138923:FunctionDeclaration",
+        "170526:170637:FunctionDeclaration",
+        "235157:235464:FunctionDeclaration",
+        "247159:247575:FunctionDeclaration",
+        "318797:321323:FunctionDeclaration",
+        "371156:371669:FunctionDeclaration",
+        "477382:478386:FunctionDeclaration",
+        "539947:541258:FunctionDeclaration"
+      ],
+      "bytes": 7415
+    },
+    {
+      "id": 37,
+      "atoms": [
+        "79724:80221:FunctionDeclaration",
+        "133081:133387:FunctionDeclaration",
+        "182396:183392:FunctionDeclaration",
+        "206384:207769:FunctionDeclaration",
+        "282314:284828:FunctionDeclaration",
+        "349771:349939:FunctionDeclaration",
+        "409783:410510:FunctionDeclaration",
+        "422425:422806:FunctionDeclaration",
+        "488098:488333:FunctionDeclaration",
+        "530672:530799:TypeAliasDeclaration"
+      ],
+      "bytes": 7336
+    },
+    {
+      "id": 38,
+      "atoms": [
+        "113422:113558:FunctionDeclaration",
+        "162501:162709:FunctionDeclaration",
+        "172082:172421:FunctionDeclaration",
+        "208744:209154:FunctionDeclaration",
+        "327180:329694:FunctionDeclaration",
+        "337534:337694:FunctionDeclaration",
+        "449897:451214:FunctionDeclaration",
+        "462523:463527:FunctionDeclaration",
+        "471239:471973:FunctionDeclaration",
+        "475897:476413:FunctionDeclaration"
+      ],
+      "bytes": 7338
+    },
+    {
+      "id": 39,
+      "atoms": [
+        "72163:74638:FunctionDeclaration",
+        "113686:113822:FunctionDeclaration",
+        "152948:153107:FunctionDeclaration",
+        "181352:181550:FunctionDeclaration",
+        "181998:182396:FunctionDeclaration",
+        "189550:189907:FunctionDeclaration",
+        "247575:248572:FunctionDeclaration",
+        "406658:407157:FunctionDeclaration",
+        "437945:438675:FunctionDeclaration",
+        "467816:469205:FunctionDeclaration"
+      ],
+      "bytes": 7338
+    },
+    {
+      "id": 40,
+      "atoms": [
+        "10784:10954:EnumDeclaration",
+        "85010:85047:VariableStatement",
+        "129866:130605:FunctionDeclaration",
+        "136291:138693:FunctionDeclaration",
+        "144542:145054:FunctionDeclaration",
+        "199970:200276:FunctionDeclaration",
+        "202589:202712:FunctionDeclaration",
+        "258198:259211:FunctionDeclaration",
+        "381845:382261:FunctionDeclaration",
+        "447877:448111:FunctionDeclaration",
+        "493643:495061:FunctionDeclaration"
+      ],
+      "bytes": 7370
+    },
+    {
+      "id": 41,
+      "atoms": [
+        "75001:76021:InterfaceDeclaration",
+        "114578:114679:FunctionDeclaration",
+        "117374:117479:FunctionDeclaration",
+        "129541:129866:FunctionDeclaration",
+        "142089:142303:FunctionDeclaration",
+        "217306:217492:FunctionDeclaration",
+        "221401:222143:FunctionDeclaration",
+        "230947:233334:FunctionDeclaration",
+        "350289:350806:FunctionDeclaration",
+        "385252:386670:FunctionDeclaration",
+        "393213:393625:FunctionDeclaration"
+      ],
+      "bytes": 7427
+    },
+    {
+      "id": 42,
+      "atoms": [
+        "64545:64948:FunctionDeclaration",
+        "82775:82941:VariableStatement",
+        "113558:113686:FunctionDeclaration",
+        "183573:185932:FunctionDeclaration",
+        "193827:194854:FunctionDeclaration",
+        "197761:198296:FunctionDeclaration",
+        "339134:340554:FunctionDeclaration",
+        "349939:350289:FunctionDeclaration",
+        "423878:424078:FunctionDeclaration",
+        "486130:486877:FunctionDeclaration"
+      ],
+      "bytes": 7335
+    },
+    {
+      "id": 43,
+      "atoms": [
+        "77714:77898:FunctionDeclaration",
+        "117479:117912:FunctionDeclaration",
+        "204870:204978:FunctionDeclaration",
+        "224406:225154:FunctionDeclaration",
+        "330128:330450:FunctionDeclaration",
+        "396574:398898:FunctionDeclaration",
+        "413998:414097:FunctionDeclaration",
+        "425037:425253:FunctionDeclaration",
+        "469205:470630:FunctionDeclaration",
+        "478386:478924:FunctionDeclaration",
+        "495311:496340:FunctionDeclaration"
+      ],
+      "bytes": 7426
+    },
+    {
+      "id": 44,
+      "atoms": [
+        "11197:11294:VariableStatement",
+        "15195:15302:TypeAliasDeclaration",
+        "102082:102687:FunctionDeclaration",
+        "196331:197761:FunctionDeclaration",
+        "281554:281741:FunctionDeclaration",
+        "306215:306433:FunctionDeclaration",
+        "329694:330128:FunctionDeclaration",
+        "353621:353939:FunctionDeclaration",
+        "379488:381693:FunctionDeclaration",
+        "424254:425037:FunctionDeclaration",
+        "474067:475107:FunctionDeclaration"
+      ],
+      "bytes": 7424
+    },
+    {
+      "id": 45,
+      "atoms": [
+        "80221:80562:FunctionDeclaration",
+        "206256:206384:FunctionDeclaration",
+        "330803:330969:FunctionDeclaration",
+        "341934:342721:FunctionDeclaration",
+        "384207:385252:FunctionDeclaration",
+        "414787:416973:FunctionDeclaration",
+        "418485:419924:FunctionDeclaration",
+        "439659:439865:EnumDeclaration",
+        "479722:480150:FunctionDeclaration",
+        "493034:493643:FunctionDeclaration"
+      ],
+      "bytes": 7335
+    },
+    {
+      "id": 46,
+      "atoms": [
+        "70205:70679:FunctionDeclaration",
+        "102045:102082:VariableStatement",
+        "116699:117278:FunctionDeclaration",
+        "243098:244184:FunctionDeclaration",
+        "276599:276729:FunctionDeclaration",
+        "322336:324513:FunctionDeclaration",
+        "337694:339134:FunctionDeclaration",
+        "341650:341934:FunctionDeclaration",
+        "416973:417732:FunctionDeclaration",
+        "497223:497471:FunctionDeclaration",
+        "528569:528725:FunctionDeclaration"
+      ],
+      "bytes": 7370
+    },
+    {
+      "id": 47,
+      "atoms": [
+        "99871:102045:FunctionDeclaration",
+        "116504:116595:FunctionDeclaration",
+        "239291:239478:FunctionDeclaration",
+        "280119:280335:FunctionDeclaration",
+        "305131:306215:FunctionDeclaration",
+        "309440:310060:FunctionDeclaration",
+        "313144:313894:FunctionDeclaration",
+        "374467:374577:FunctionDeclaration",
+        "376841:377262:FunctionDeclaration",
+        "382261:383709:FunctionDeclaration",
+        "420098:420416:FunctionDeclaration"
+      ],
+      "bytes": 7419
+    },
+    {
+      "id": 48,
+      "atoms": [
+        "11405:11502:VariableStatement",
+        "80785:81217:VariableStatement",
+        "81560:81667:VariableStatement",
+        "85152:85336:VariableStatement",
+        "133519:133835:FunctionDeclaration",
+        "200636:201676:FunctionDeclaration",
+        "202712:204870:FunctionDeclaration",
+        "363570:363793:FunctionDeclaration",
+        "395801:396410:FunctionDeclaration",
+        "403632:405102:FunctionDeclaration",
+        "538445:539233:FunctionDeclaration"
+      ],
+      "bytes": 7424
+    },
+    {
+      "id": 49,
+      "atoms": [
+        "81795:81902:VariableStatement",
+        "116318:116504:FunctionDeclaration",
+        "117278:117374:FunctionDeclaration",
+        "127150:127927:FunctionDeclaration",
+        "132426:132649:FunctionDeclaration",
+        "132649:133081:FunctionDeclaration",
+        "253127:254604:FunctionDeclaration",
+        "317708:318797:FunctionDeclaration",
+        "365295:365609:FunctionDeclaration",
+        "430198:432311:FunctionDeclaration",
+        "470630:471239:FunctionDeclaration"
+      ],
+      "bytes": 7423
+    },
+    {
+      "id": 50,
+      "atoms": [
+        "14480:14632:FunctionDeclaration",
+        "66446:66698:FunctionDeclaration",
+        "81993:82775:VariableStatement",
+        "167473:168577:FunctionDeclaration",
+        "204978:205120:FunctionDeclaration",
+        "214118:215598:FunctionDeclaration",
+        "284828:286922:FunctionDeclaration",
+        "303076:303368:FunctionDeclaration",
+        "418030:418485:FunctionDeclaration",
+        "467226:467816:FunctionDeclaration"
+      ],
+      "bytes": 7343
+    },
+    {
+      "id": 51,
+      "atoms": [
+        "67439:67737:FunctionDeclaration",
+        "113136:113294:FunctionDeclaration",
+        "115876:116120:FunctionDeclaration",
+        "143794:143928:FunctionDeclaration",
+        "225283:227330:FunctionDeclaration",
+        "286922:288403:FunctionDeclaration",
+        "347147:347780:FunctionDeclaration",
+        "347780:348199:FunctionDeclaration",
+        "376037:376841:FunctionDeclaration",
+        "388535:389653:FunctionDeclaration"
+      ],
+      "bytes": 7336
+    },
+    {
+      "id": 52,
+      "atoms": [
+        "14279:14480:FunctionDeclaration",
+        "110403:110512:FunctionDeclaration",
+        "131051:131147:FunctionDeclaration",
+        "183392:183573:FunctionDeclaration",
+        "188269:188612:FunctionDeclaration",
+        "192189:192993:FunctionDeclaration",
+        "296281:297764:FunctionDeclaration",
+        "312758:313144:FunctionDeclaration",
+        "342721:343844:FunctionDeclaration",
+        "343844:344519:FunctionDeclaration",
+        "433113:435135:EnumDeclaration"
+      ],
+      "bytes": 7423
+    },
+    {
+      "id": 53,
+      "atoms": [
+        "122156:122964:FunctionDeclaration",
+        "144384:144542:FunctionDeclaration",
+        "152815:152948:FunctionDeclaration",
+        "187379:187717:FunctionDeclaration",
+        "189907:191390:FunctionDeclaration",
+        "273033:275047:FunctionDeclaration",
+        "315365:315576:FunctionDeclaration",
+        "394672:395801:FunctionDeclaration",
+        "436361:437030:FunctionDeclaration",
+        "475505:475897:FunctionDeclaration"
+      ],
+      "bytes": 7335
+    },
+    {
+      "id": 54,
+      "atoms": [
+        "90445:91981:FunctionDeclaration",
+        "97051:98986:FunctionDeclaration",
+        "110512:110629:FunctionDeclaration",
+        "134908:136043:FunctionDeclaration",
+        "143482:143794:FunctionDeclaration",
+        "195494:196331:FunctionDeclaration",
+        "202499:202589:FunctionDeclaration",
+        "313894:314553:FunctionDeclaration",
+        "355284:355456:FunctionDeclaration",
+        "364446:364841:FunctionDeclaration",
+        "403131:403361:FunctionDeclaration"
+      ],
+      "bytes": 7418
+    },
+    {
+      "id": 55,
+      "atoms": [
+        "14632:14859:FunctionDeclaration",
+        "76173:77714:FunctionDeclaration",
+        "79609:79724:InterfaceDeclaration",
+        "84943:85010:VariableStatement",
+        "98986:99871:FunctionDeclaration",
+        "130605:130784:FunctionDeclaration",
+        "144072:144384:FunctionDeclaration",
+        "240780:241928:FunctionDeclaration",
+        "377963:378403:FunctionDeclaration",
+        "488333:490245:FunctionDeclaration",
+        "528725:529297:FunctionDeclaration"
+      ],
+      "bytes": 7398
+    },
+    {
+      "id": 56,
+      "atoms": [
+        "13886:14279:FunctionDeclaration",
+        "15030:15195:TypeAliasDeclaration",
+        "84676:84705:VariableStatement",
+        "108201:110084:FunctionDeclaration",
+        "113294:113422:FunctionDeclaration",
+        "186680:187014:FunctionDeclaration",
+        "212565:214118:FunctionDeclaration",
+        "244333:245512:FunctionDeclaration",
+        "248572:248784:FunctionDeclaration",
+        "412809:413628:FunctionDeclaration",
+        "486877:487545:FunctionDeclaration"
+      ],
+      "bytes": 7363
+    },
+    {
+      "id": 57,
+      "atoms": [
+        "69754:70205:FunctionDeclaration",
+        "85047:85075:VariableStatement",
+        "119210:120984:FunctionDeclaration",
+        "133387:133519:FunctionDeclaration",
+        "187717:188269:FunctionDeclaration",
+        "280526:280769:FunctionDeclaration",
+        "325979:327180:FunctionDeclaration",
+        "417732:418030:FunctionDeclaration",
+        "437030:437945:FunctionDeclaration",
+        "439865:440024:EnumDeclaration",
+        "490245:491854:FunctionDeclaration"
+      ],
+      "bytes": 7362
+    },
+    {
+      "id": 58,
+      "atoms": [
+        "85118:85152:VariableStatement",
+        "112722:112850:FunctionDeclaration",
+        "131880:132213:FunctionDeclaration",
+        "181655:181868:FunctionDeclaration",
+        "210197:211970:FunctionDeclaration",
+        "217492:217926:FunctionDeclaration",
+        "218722:220344:FunctionDeclaration",
+        "315576:316485:FunctionDeclaration",
+        "324790:325979:FunctionDeclaration",
+        "375469:376037:FunctionDeclaration",
+        "396410:396574:FunctionDeclaration"
+      ],
+      "bytes": 7367
+    },
+    {
+      "id": 59,
+      "atoms": [
+        "10719:10784:ImportDeclaration",
+        "14859:15030:FunctionDeclaration",
+        "118628:118749:FunctionDeclaration",
+        "222522:222827:FunctionDeclaration",
+        "233545:235157:FunctionDeclaration",
+        "280939:281172:FunctionDeclaration",
+        "306433:308206:FunctionDeclaration",
+        "312310:312758:FunctionDeclaration",
+        "350806:352001:FunctionDeclaration",
+        "387607:388535:FunctionDeclaration",
+        "420416:420961:FunctionDeclaration"
+      ],
+      "bytes": 7396
+    },
+    {
+      "id": 60,
+      "atoms": [
+        "69499:69754:FunctionDeclaration",
+        "84643:84676:VariableStatement",
+        "88674:90445:VariableStatement",
+        "114447:114578:FunctionDeclaration",
+        "159379:159668:FunctionDeclaration",
+        "241928:242385:FunctionDeclaration",
+        "245512:247159:FunctionDeclaration",
+        "314553:315103:FunctionDeclaration",
+        "407435:407587:FunctionDeclaration",
+        "491854:493034:FunctionDeclaration",
+        "529771:530672:FunctionDeclaration"
+      ],
+      "bytes": 7366
+    },
+    {
+      "id": 61,
+      "atoms": [
+        "13192:13487:FunctionDeclaration",
+        "70679:70930:FunctionDeclaration",
+        "84745:84778:VariableStatement",
+        "142303:143482:FunctionDeclaration",
+        "168870:170526:FunctionDeclaration",
+        "188612:188743:FunctionDeclaration",
+        "217926:218372:FunctionDeclaration",
+        "288403:290169:FunctionDeclaration",
+        "410993:411876:FunctionDeclaration",
+        "423724:423878:FunctionDeclaration",
+        "448737:449309:FunctionDeclaration"
+      ],
+      "bytes": 7366
+    },
+    {
+      "id": 62,
+      "atoms": [
+        "82941:84614:VariableStatement",
+        "118351:118466:FunctionDeclaration",
+        "139362:139707:FunctionDeclaration",
+        "177375:177576:FunctionDeclaration",
+        "185932:186319:FunctionDeclaration",
+        "193220:193399:FunctionDeclaration",
+        "265473:266304:FunctionDeclaration",
+        "303368:305131:FunctionDeclaration",
+        "352958:353621:FunctionDeclaration",
+        "466052:467226:FunctionDeclaration",
+        "497160:497223:VariableStatement"
+      ],
+      "bytes": 7394
+    },
+    {
+      "id": 63,
+      "atoms": [
+        "66214:66446:FunctionDeclaration",
+        "81475:81560:VariableStatement",
+        "118749:118862:FunctionDeclaration",
+        "188743:189187:FunctionDeclaration",
+        "198296:199970:FunctionDeclaration",
+        "209154:210043:FunctionDeclaration",
+        "264905:265473:FunctionDeclaration",
+        "335794:337534:FunctionDeclaration",
+        "355456:355634:FunctionDeclaration",
+        "440024:497150:FunctionDeclaration",
+        "535340:535646:FunctionDeclaration"
+      ],
+      "bytes": 7414
+    }
+  ]
+}

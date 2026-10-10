@@ -1,0 +1,5847 @@
+{
+  "version": 2,
+  "threshold_bytes": 51200,
+  "root_name": null,
+  "split_functions": [
+    {
+      "start": 12998,
+      "end": 322874,
+      "name": "createNodeFactory"
+    }
+  ],
+  "split_containers": [],
+  "typescript": "6.0.3",
+  "file": "/tmp/b17vtn1/original-adapted/src/compiler/factory/nodeFactory.ts",
+  "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+  "source_bytes": 336646,
+  "requested_pieces": 64,
+  "atom_definition": "top-level statements; createTypeChecker body statements replace their wrapper",
+  "atoms": [
+    {
+      "id": "0:12239:ImportDeclaration",
+      "start": 0,
+      "end": 12239,
+      "kind": "ImportDeclaration",
+      "parent": "file",
+      "bytes": 12239,
+      "name": ""
+    },
+    {
+      "id": "12239:12270:VariableStatement",
+      "start": 12239,
+      "end": 12270,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 31,
+      "name": ""
+    },
+    {
+      "id": "12270:12774:EnumDeclaration",
+      "start": 12270,
+      "end": 12774,
+      "kind": "EnumDeclaration",
+      "parent": "file",
+      "bytes": 504,
+      "name": "NodeFactoryFlags"
+    },
+    {
+      "id": "12774:12845:VariableStatement",
+      "start": 12774,
+      "end": 12845,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 71,
+      "name": ""
+    },
+    {
+      "id": "12845:12998:FunctionDeclaration",
+      "start": 12845,
+      "end": 12998,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 153,
+      "name": "addNodeFactoryPatcher"
+    },
+    {
+      "id": "12998:322874:FunctionDeclaration",
+      "start": 12998,
+      "end": 322874,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 28185,
+      "name": "createNodeFactory"
+    },
+    {
+      "id": "41180:43258:FunctionDeclaration",
+      "start": 41180,
+      "end": 43258,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2078,
+      "name": "createNodeArray"
+    },
+    {
+      "id": "43258:43395:FunctionDeclaration",
+      "start": 43258,
+      "end": 43395,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 137,
+      "name": "createBaseNode"
+    },
+    {
+      "id": "43395:43733:FunctionDeclaration",
+      "start": 43395,
+      "end": 43733,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 338,
+      "name": "createBaseDeclaration"
+    },
+    {
+      "id": "43733:44067:FunctionDeclaration",
+      "start": 43733,
+      "end": 44067,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 334,
+      "name": "finishUpdateBaseSignatureDeclaration"
+    },
+    {
+      "id": "44067:44794:FunctionDeclaration",
+      "start": 44067,
+      "end": 44794,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 727,
+      "name": "createNumericLiteral"
+    },
+    {
+      "id": "44794:45154:FunctionDeclaration",
+      "start": 44794,
+      "end": 45154,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 360,
+      "name": "createBigIntLiteral"
+    },
+    {
+      "id": "45154:45420:FunctionDeclaration",
+      "start": 45154,
+      "end": 45420,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 266,
+      "name": "createBaseStringLiteral"
+    },
+    {
+      "id": "45420:45818:FunctionDeclaration",
+      "start": 45420,
+      "end": 45818,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 398,
+      "name": "createStringLiteral"
+    },
+    {
+      "id": "45818:46135:FunctionDeclaration",
+      "start": 45818,
+      "end": 46135,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 317,
+      "name": "createStringLiteralFromNode"
+    },
+    {
+      "id": "46135:46395:FunctionDeclaration",
+      "start": 46135,
+      "end": 46395,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 260,
+      "name": "createRegularExpressionLiteral"
+    },
+    {
+      "id": "46395:47507:FunctionDeclaration",
+      "start": 46395,
+      "end": 47507,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1112,
+      "name": "createLiteralLikeNode"
+    },
+    {
+      "id": "47507:47996:FunctionDeclaration",
+      "start": 47507,
+      "end": 47996,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 489,
+      "name": "createBaseIdentifier"
+    },
+    {
+      "id": "47996:48521:FunctionDeclaration",
+      "start": 47996,
+      "end": 48521,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 525,
+      "name": "createBaseGeneratedIdentifier"
+    },
+    {
+      "id": "48521:49540:FunctionDeclaration",
+      "start": 48521,
+      "end": 49540,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1019,
+      "name": "createIdentifier"
+    },
+    {
+      "id": "49540:50102:FunctionDeclaration",
+      "start": 49540,
+      "end": 50102,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 562,
+      "name": "createTempVariable"
+    },
+    {
+      "id": "50102:50520:FunctionDeclaration",
+      "start": 50102,
+      "end": 50520,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 418,
+      "name": "createLoopVariable"
+    },
+    {
+      "id": "50520:51249:FunctionDeclaration",
+      "start": 50520,
+      "end": 51249,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 729,
+      "name": "createUniqueName"
+    },
+    {
+      "id": "51249:52027:FunctionDeclaration",
+      "start": 51249,
+      "end": 52027,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 778,
+      "name": "getGeneratedNameForNode"
+    },
+    {
+      "id": "52027:52361:FunctionDeclaration",
+      "start": 52027,
+      "end": 52361,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 334,
+      "name": "createBasePrivateIdentifier"
+    },
+    {
+      "id": "52361:52642:FunctionDeclaration",
+      "start": 52361,
+      "end": 52642,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 281,
+      "name": "createPrivateIdentifier"
+    },
+    {
+      "id": "52642:53149:FunctionDeclaration",
+      "start": 52642,
+      "end": 53149,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 507,
+      "name": "createBaseGeneratedPrivateIdentifier"
+    },
+    {
+      "id": "53149:53750:FunctionDeclaration",
+      "start": 53149,
+      "end": 53750,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 601,
+      "name": "createUniquePrivateName"
+    },
+    {
+      "id": "53750:54352:FunctionDeclaration",
+      "start": 53750,
+      "end": 54352,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 602,
+      "name": "getGeneratedPrivateNameForNode"
+    },
+    {
+      "id": "54352:54533:FunctionDeclaration",
+      "start": 54352,
+      "end": 54533,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 181,
+      "name": "createBaseToken"
+    },
+    {
+      "id": "54533:54624:FunctionDeclaration",
+      "start": 54533,
+      "end": 54624,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 91,
+      "name": "createToken"
+    },
+    {
+      "id": "54624:54698:FunctionDeclaration",
+      "start": 54624,
+      "end": 54698,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 74,
+      "name": "createToken"
+    },
+    {
+      "id": "54698:54769:FunctionDeclaration",
+      "start": 54698,
+      "end": 54769,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 71,
+      "name": "createToken"
+    },
+    {
+      "id": "54769:54840:FunctionDeclaration",
+      "start": 54769,
+      "end": 54840,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 71,
+      "name": "createToken"
+    },
+    {
+      "id": "54840:54913:FunctionDeclaration",
+      "start": 54840,
+      "end": 54913,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 73,
+      "name": "createToken"
+    },
+    {
+      "id": "54913:54990:FunctionDeclaration",
+      "start": 54913,
+      "end": 54990,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 77,
+      "name": "createToken"
+    },
+    {
+      "id": "54990:55071:FunctionDeclaration",
+      "start": 54990,
+      "end": 55071,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 81,
+      "name": "createToken"
+    },
+    {
+      "id": "55071:55174:FunctionDeclaration",
+      "start": 55071,
+      "end": 55174,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 103,
+      "name": "createToken"
+    },
+    {
+      "id": "55174:55276:FunctionDeclaration",
+      "start": 55174,
+      "end": 55276,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 102,
+      "name": "createToken"
+    },
+    {
+      "id": "55276:55373:FunctionDeclaration",
+      "start": 55276,
+      "end": 55373,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 97,
+      "name": "createToken"
+    },
+    {
+      "id": "55373:55468:FunctionDeclaration",
+      "start": 55373,
+      "end": 55468,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 95,
+      "name": "createToken"
+    },
+    {
+      "id": "55468:55549:FunctionDeclaration",
+      "start": 55468,
+      "end": 55549,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 81,
+      "name": "createToken"
+    },
+    {
+      "id": "55549:58904:FunctionDeclaration",
+      "start": 55549,
+      "end": 58904,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 3355,
+      "name": "createToken"
+    },
+    {
+      "id": "58904:59051:FunctionDeclaration",
+      "start": 58904,
+      "end": 59051,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 147,
+      "name": "createSuper"
+    },
+    {
+      "id": "59051:59155:FunctionDeclaration",
+      "start": 59051,
+      "end": 59155,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 104,
+      "name": "createThis"
+    },
+    {
+      "id": "59155:59259:FunctionDeclaration",
+      "start": 59155,
+      "end": 59259,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 104,
+      "name": "createNull"
+    },
+    {
+      "id": "59259:59363:FunctionDeclaration",
+      "start": 59259,
+      "end": 59363,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 104,
+      "name": "createTrue"
+    },
+    {
+      "id": "59363:59469:FunctionDeclaration",
+      "start": 59363,
+      "end": 59469,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 106,
+      "name": "createFalse"
+    },
+    {
+      "id": "59469:59632:FunctionDeclaration",
+      "start": 59469,
+      "end": 59632,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 163,
+      "name": "createModifier"
+    },
+    {
+      "id": "59632:61297:FunctionDeclaration",
+      "start": 59632,
+      "end": 61297,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1665,
+      "name": "createModifiersFromModifierFlags"
+    },
+    {
+      "id": "61297:61797:FunctionDeclaration",
+      "start": 61297,
+      "end": 61797,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 500,
+      "name": "createQualifiedName"
+    },
+    {
+      "id": "61797:62072:FunctionDeclaration",
+      "start": 61797,
+      "end": 62072,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 275,
+      "name": "updateQualifiedName"
+    },
+    {
+      "id": "62072:62556:FunctionDeclaration",
+      "start": 62072,
+      "end": 62556,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 484,
+      "name": "createComputedPropertyName"
+    },
+    {
+      "id": "62556:62809:FunctionDeclaration",
+      "start": 62556,
+      "end": 62809,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 253,
+      "name": "updateComputedPropertyName"
+    },
+    {
+      "id": "62809:63578:FunctionDeclaration",
+      "start": 62809,
+      "end": 63578,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 769,
+      "name": "createTypeParameterDeclaration"
+    },
+    {
+      "id": "63578:64143:FunctionDeclaration",
+      "start": 63578,
+      "end": 64143,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 565,
+      "name": "updateTypeParameterDeclaration"
+    },
+    {
+      "id": "64143:65757:FunctionDeclaration",
+      "start": 64143,
+      "end": 65757,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1614,
+      "name": "createParameterDeclaration"
+    },
+    {
+      "id": "65757:66584:FunctionDeclaration",
+      "start": 65757,
+      "end": 66584,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 827,
+      "name": "updateParameterDeclaration"
+    },
+    {
+      "id": "66584:67098:FunctionDeclaration",
+      "start": 66584,
+      "end": 67098,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 514,
+      "name": "createDecorator"
+    },
+    {
+      "id": "67098:67318:FunctionDeclaration",
+      "start": 67098,
+      "end": 67318,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 220,
+      "name": "updateDecorator"
+    },
+    {
+      "id": "67318:68131:FunctionDeclaration",
+      "start": 67318,
+      "end": 68131,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 813,
+      "name": "createPropertySignature"
+    },
+    {
+      "id": "68131:68720:FunctionDeclaration",
+      "start": 68131,
+      "end": 68720,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 589,
+      "name": "updatePropertySignature"
+    },
+    {
+      "id": "68720:69049:FunctionDeclaration",
+      "start": 68720,
+      "end": 69049,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 329,
+      "name": "finishUpdatePropertySignature"
+    },
+    {
+      "id": "69049:70731:FunctionDeclaration",
+      "start": 69049,
+      "end": 70731,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1682,
+      "name": "createPropertyDeclaration"
+    },
+    {
+      "id": "70731:71770:FunctionDeclaration",
+      "start": 70731,
+      "end": 71770,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1039,
+      "name": "updatePropertyDeclaration"
+    },
+    {
+      "id": "71770:72893:FunctionDeclaration",
+      "start": 71770,
+      "end": 72893,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1123,
+      "name": "createMethodSignature"
+    },
+    {
+      "id": "72893:73749:FunctionDeclaration",
+      "start": 72893,
+      "end": 73749,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 856,
+      "name": "updateMethodSignature"
+    },
+    {
+      "id": "73749:76507:FunctionDeclaration",
+      "start": 73749,
+      "end": 76507,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2758,
+      "name": "createMethodDeclaration"
+    },
+    {
+      "id": "76507:77568:FunctionDeclaration",
+      "start": 76507,
+      "end": 77568,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1061,
+      "name": "updateMethodDeclaration"
+    },
+    {
+      "id": "77568:77907:FunctionDeclaration",
+      "start": 77568,
+      "end": 77907,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 339,
+      "name": "finishUpdateMethodDeclaration"
+    },
+    {
+      "id": "77907:78696:FunctionDeclaration",
+      "start": 77907,
+      "end": 78696,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 789,
+      "name": "createClassStaticBlockDeclaration"
+    },
+    {
+      "id": "78696:79029:FunctionDeclaration",
+      "start": 78696,
+      "end": 79029,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 333,
+      "name": "updateClassStaticBlockDeclaration"
+    },
+    {
+      "id": "79029:79384:FunctionDeclaration",
+      "start": 79029,
+      "end": 79384,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 355,
+      "name": "finishUpdateClassStaticBlockDeclaration"
+    },
+    {
+      "id": "79384:80816:FunctionDeclaration",
+      "start": 79384,
+      "end": 80816,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1432,
+      "name": "createConstructorDeclaration"
+    },
+    {
+      "id": "80816:81346:FunctionDeclaration",
+      "start": 80816,
+      "end": 81346,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 530,
+      "name": "updateConstructorDeclaration"
+    },
+    {
+      "id": "81346:81709:FunctionDeclaration",
+      "start": 81346,
+      "end": 81709,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 363,
+      "name": "finishUpdateConstructorDeclaration"
+    },
+    {
+      "id": "81709:83418:FunctionDeclaration",
+      "start": 81709,
+      "end": 83418,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1709,
+      "name": "createGetAccessorDeclaration"
+    },
+    {
+      "id": "83418:84104:FunctionDeclaration",
+      "start": 83418,
+      "end": 84104,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 686,
+      "name": "updateGetAccessorDeclaration"
+    },
+    {
+      "id": "84104:84484:FunctionDeclaration",
+      "start": 84104,
+      "end": 84484,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 380,
+      "name": "finishUpdateGetAccessorDeclaration"
+    },
+    {
+      "id": "84484:86155:FunctionDeclaration",
+      "start": 84484,
+      "end": 86155,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1671,
+      "name": "createSetAccessorDeclaration"
+    },
+    {
+      "id": "86155:86759:FunctionDeclaration",
+      "start": 86155,
+      "end": 86759,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 604,
+      "name": "updateSetAccessorDeclaration"
+    },
+    {
+      "id": "86759:87182:FunctionDeclaration",
+      "start": 86759,
+      "end": 87182,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 423,
+      "name": "finishUpdateSetAccessorDeclaration"
+    },
+    {
+      "id": "87182:88064:FunctionDeclaration",
+      "start": 87182,
+      "end": 88064,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 882,
+      "name": "createCallSignature"
+    },
+    {
+      "id": "88064:88615:FunctionDeclaration",
+      "start": 88064,
+      "end": 88615,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 551,
+      "name": "updateCallSignature"
+    },
+    {
+      "id": "88615:89517:FunctionDeclaration",
+      "start": 88615,
+      "end": 89517,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 902,
+      "name": "createConstructSignature"
+    },
+    {
+      "id": "89517:90083:FunctionDeclaration",
+      "start": 89517,
+      "end": 90083,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 566,
+      "name": "updateConstructSignature"
+    },
+    {
+      "id": "90083:91070:FunctionDeclaration",
+      "start": 90083,
+      "end": 91070,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 987,
+      "name": "createIndexSignature"
+    },
+    {
+      "id": "91070:91580:FunctionDeclaration",
+      "start": 91070,
+      "end": 91580,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 510,
+      "name": "updateIndexSignature"
+    },
+    {
+      "id": "91580:91951:FunctionDeclaration",
+      "start": 91580,
+      "end": 91951,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 371,
+      "name": "createTemplateLiteralTypeSpan"
+    },
+    {
+      "id": "91951:92281:FunctionDeclaration",
+      "start": 91951,
+      "end": 92281,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 330,
+      "name": "updateTemplateLiteralTypeSpan"
+    },
+    {
+      "id": "92281:92458:FunctionDeclaration",
+      "start": 92281,
+      "end": 92458,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 177,
+      "name": "createKeywordTypeNode"
+    },
+    {
+      "id": "92458:92944:FunctionDeclaration",
+      "start": 92458,
+      "end": 92944,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 486,
+      "name": "createTypePredicateNode"
+    },
+    {
+      "id": "92944:93411:FunctionDeclaration",
+      "start": 92944,
+      "end": 93411,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 467,
+      "name": "updateTypePredicateNode"
+    },
+    {
+      "id": "93411:93893:FunctionDeclaration",
+      "start": 93411,
+      "end": 93893,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 482,
+      "name": "createTypeReferenceNode"
+    },
+    {
+      "id": "93893:94249:FunctionDeclaration",
+      "start": 93893,
+      "end": 94249,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 356,
+      "name": "updateTypeReferenceNode"
+    },
+    {
+      "id": "94249:95186:FunctionDeclaration",
+      "start": 94249,
+      "end": 95186,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 937,
+      "name": "createFunctionTypeNode"
+    },
+    {
+      "id": "95186:95715:FunctionDeclaration",
+      "start": 95186,
+      "end": 95715,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 529,
+      "name": "updateFunctionTypeNode"
+    },
+    {
+      "id": "95715:96067:FunctionDeclaration",
+      "start": 95715,
+      "end": 96067,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 352,
+      "name": "finishUpdateFunctionTypeNode"
+    },
+    {
+      "id": "96067:96437:FunctionDeclaration",
+      "start": 96067,
+      "end": 96437,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 370,
+      "name": "createConstructorTypeNode"
+    },
+    {
+      "id": "96437:97396:FunctionDeclaration",
+      "start": 96437,
+      "end": 97396,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 959,
+      "name": "createConstructorTypeNode1"
+    },
+    {
+      "id": "97396:97757:FunctionDeclaration",
+      "start": 97396,
+      "end": 97757,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 361,
+      "name": "createConstructorTypeNode2"
+    },
+    {
+      "id": "97757:98127:FunctionDeclaration",
+      "start": 97757,
+      "end": 98127,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 370,
+      "name": "updateConstructorTypeNode"
+    },
+    {
+      "id": "98127:98774:FunctionDeclaration",
+      "start": 98127,
+      "end": 98774,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 647,
+      "name": "updateConstructorTypeNode1"
+    },
+    {
+      "id": "98774:99147:FunctionDeclaration",
+      "start": 98774,
+      "end": 99147,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 373,
+      "name": "updateConstructorTypeNode2"
+    },
+    {
+      "id": "99147:99572:FunctionDeclaration",
+      "start": 99147,
+      "end": 99572,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 425,
+      "name": "createTypeQueryNode"
+    },
+    {
+      "id": "99572:99905:FunctionDeclaration",
+      "start": 99572,
+      "end": 99905,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 333,
+      "name": "updateTypeQueryNode"
+    },
+    {
+      "id": "99905:100234:FunctionDeclaration",
+      "start": 99905,
+      "end": 100234,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 329,
+      "name": "createTypeLiteralNode"
+    },
+    {
+      "id": "100234:100472:FunctionDeclaration",
+      "start": 100234,
+      "end": 100472,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 238,
+      "name": "updateTypeLiteralNode"
+    },
+    {
+      "id": "100472:100817:FunctionDeclaration",
+      "start": 100472,
+      "end": 100817,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 345,
+      "name": "createArrayTypeNode"
+    },
+    {
+      "id": "100817:101066:FunctionDeclaration",
+      "start": 100817,
+      "end": 101066,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 249,
+      "name": "updateArrayTypeNode"
+    },
+    {
+      "id": "101066:101449:FunctionDeclaration",
+      "start": 101066,
+      "end": 101449,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 383,
+      "name": "createTupleTypeNode"
+    },
+    {
+      "id": "101449:101703:FunctionDeclaration",
+      "start": 101449,
+      "end": 101703,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 254,
+      "name": "updateTupleTypeNode"
+    },
+    {
+      "id": "101703:102287:FunctionDeclaration",
+      "start": 101703,
+      "end": 102287,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 584,
+      "name": "createNamedTupleMember"
+    },
+    {
+      "id": "102287:102798:FunctionDeclaration",
+      "start": 102287,
+      "end": 102798,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 511,
+      "name": "updateNamedTupleMember"
+    },
+    {
+      "id": "102798:103124:FunctionDeclaration",
+      "start": 102798,
+      "end": 103124,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 326,
+      "name": "createOptionalTypeNode"
+    },
+    {
+      "id": "103124:103357:FunctionDeclaration",
+      "start": 103124,
+      "end": 103357,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 233,
+      "name": "updateOptionalTypeNode"
+    },
+    {
+      "id": "103357:103618:FunctionDeclaration",
+      "start": 103357,
+      "end": 103618,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 261,
+      "name": "createRestTypeNode"
+    },
+    {
+      "id": "103618:103835:FunctionDeclaration",
+      "start": 103618,
+      "end": 103835,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 217,
+      "name": "updateRestTypeNode"
+    },
+    {
+      "id": "103835:104285:FunctionDeclaration",
+      "start": 103835,
+      "end": 104285,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 450,
+      "name": "createUnionOrIntersectionTypeNode"
+    },
+    {
+      "id": "104285:104648:FunctionDeclaration",
+      "start": 104285,
+      "end": 104648,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 363,
+      "name": "updateUnionOrIntersectionTypeNode"
+    },
+    {
+      "id": "104648:104908:FunctionDeclaration",
+      "start": 104648,
+      "end": 104908,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 260,
+      "name": "createUnionTypeNode"
+    },
+    {
+      "id": "104908:105141:FunctionDeclaration",
+      "start": 104908,
+      "end": 105141,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 233,
+      "name": "updateUnionTypeNode"
+    },
+    {
+      "id": "105141:105436:FunctionDeclaration",
+      "start": 105141,
+      "end": 105436,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 295,
+      "name": "createIntersectionTypeNode"
+    },
+    {
+      "id": "105436:105690:FunctionDeclaration",
+      "start": 105436,
+      "end": 105690,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 254,
+      "name": "updateIntersectionTypeNode"
+    },
+    {
+      "id": "105690:106451:FunctionDeclaration",
+      "start": 105690,
+      "end": 106451,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 761,
+      "name": "createConditionalTypeNode"
+    },
+    {
+      "id": "106451:106942:FunctionDeclaration",
+      "start": 106451,
+      "end": 106942,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 491,
+      "name": "updateConditionalTypeNode"
+    },
+    {
+      "id": "106942:107249:FunctionDeclaration",
+      "start": 106942,
+      "end": 107249,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 307,
+      "name": "createInferTypeNode"
+    },
+    {
+      "id": "107249:107507:FunctionDeclaration",
+      "start": 107249,
+      "end": 107507,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 258,
+      "name": "updateInferTypeNode"
+    },
+    {
+      "id": "107507:107914:FunctionDeclaration",
+      "start": 107507,
+      "end": 107914,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 407,
+      "name": "createTemplateLiteralType"
+    },
+    {
+      "id": "107914:108269:FunctionDeclaration",
+      "start": 107914,
+      "end": 108269,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 355,
+      "name": "updateTemplateLiteralType"
+    },
+    {
+      "id": "108269:109146:FunctionDeclaration",
+      "start": 108269,
+      "end": 109146,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 877,
+      "name": "createImportTypeNode"
+    },
+    {
+      "id": "109146:109861:FunctionDeclaration",
+      "start": 109146,
+      "end": 109861,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 715,
+      "name": "updateImportTypeNode"
+    },
+    {
+      "id": "109861:110145:FunctionDeclaration",
+      "start": 109861,
+      "end": 110145,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 284,
+      "name": "createParenthesizedType"
+    },
+    {
+      "id": "110145:110367:FunctionDeclaration",
+      "start": 110145,
+      "end": 110367,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 222,
+      "name": "updateParenthesizedType"
+    },
+    {
+      "id": "110367:110587:FunctionDeclaration",
+      "start": 110367,
+      "end": 110587,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 220,
+      "name": "createThisTypeNode"
+    },
+    {
+      "id": "110587:111199:FunctionDeclaration",
+      "start": 110587,
+      "end": 111199,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 612,
+      "name": "createTypeOperatorNode"
+    },
+    {
+      "id": "111199:111429:FunctionDeclaration",
+      "start": 111199,
+      "end": 111429,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 230,
+      "name": "updateTypeOperatorNode"
+    },
+    {
+      "id": "111429:111853:FunctionDeclaration",
+      "start": 111429,
+      "end": 111853,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 424,
+      "name": "createIndexedAccessTypeNode"
+    },
+    {
+      "id": "111853:112188:FunctionDeclaration",
+      "start": 111853,
+      "end": 112188,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 335,
+      "name": "updateIndexedAccessTypeNode"
+    },
+    {
+      "id": "112188:113138:FunctionDeclaration",
+      "start": 112188,
+      "end": 113138,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 950,
+      "name": "createMappedTypeNode"
+    },
+    {
+      "id": "113138:113956:FunctionDeclaration",
+      "start": 113138,
+      "end": 113956,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 818,
+      "name": "updateMappedTypeNode"
+    },
+    {
+      "id": "113956:114253:FunctionDeclaration",
+      "start": 113956,
+      "end": 114253,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 297,
+      "name": "createLiteralTypeNode"
+    },
+    {
+      "id": "114253:114495:FunctionDeclaration",
+      "start": 114253,
+      "end": 114495,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 242,
+      "name": "updateLiteralTypeNode"
+    },
+    {
+      "id": "114495:115189:FunctionDeclaration",
+      "start": 114495,
+      "end": 115189,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 694,
+      "name": "createObjectBindingPattern"
+    },
+    {
+      "id": "115189:115449:FunctionDeclaration",
+      "start": 115189,
+      "end": 115449,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 260,
+      "name": "updateObjectBindingPattern"
+    },
+    {
+      "id": "115449:115889:FunctionDeclaration",
+      "start": 115449,
+      "end": 115889,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 440,
+      "name": "createArrayBindingPattern"
+    },
+    {
+      "id": "115889:116151:FunctionDeclaration",
+      "start": 115889,
+      "end": 116151,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 262,
+      "name": "updateArrayBindingPattern"
+    },
+    {
+      "id": "116151:117102:FunctionDeclaration",
+      "start": 116151,
+      "end": 117102,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 951,
+      "name": "createBindingElement"
+    },
+    {
+      "id": "117102:117645:FunctionDeclaration",
+      "start": 117102,
+      "end": 117645,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 543,
+      "name": "updateBindingElement"
+    },
+    {
+      "id": "117645:118621:FunctionDeclaration",
+      "start": 117645,
+      "end": 118621,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 976,
+      "name": "createArrayLiteralExpression"
+    },
+    {
+      "id": "118621:118899:FunctionDeclaration",
+      "start": 118621,
+      "end": 118899,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 278,
+      "name": "updateArrayLiteralExpression"
+    },
+    {
+      "id": "118899:119409:FunctionDeclaration",
+      "start": 118899,
+      "end": 119409,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 510,
+      "name": "createObjectLiteralExpression"
+    },
+    {
+      "id": "119409:119712:FunctionDeclaration",
+      "start": 119409,
+      "end": 119712,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 303,
+      "name": "updateObjectLiteralExpression"
+    },
+    {
+      "id": "119712:120607:FunctionDeclaration",
+      "start": 119712,
+      "end": 120607,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 895,
+      "name": "createBasePropertyAccessExpression"
+    },
+    {
+      "id": "120607:121360:FunctionDeclaration",
+      "start": 120607,
+      "end": 121360,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 753,
+      "name": "createPropertyAccessExpression"
+    },
+    {
+      "id": "121360:121877:FunctionDeclaration",
+      "start": 121360,
+      "end": 121877,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 517,
+      "name": "updatePropertyAccessExpression"
+    },
+    {
+      "id": "121877:122453:FunctionDeclaration",
+      "start": 121877,
+      "end": 122453,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 576,
+      "name": "createPropertyAccessChain"
+    },
+    {
+      "id": "122453:123259:FunctionDeclaration",
+      "start": 122453,
+      "end": 123259,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 806,
+      "name": "updatePropertyAccessChain"
+    },
+    {
+      "id": "123259:124049:FunctionDeclaration",
+      "start": 123259,
+      "end": 124049,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 790,
+      "name": "createBaseElementAccessExpression"
+    },
+    {
+      "id": "124049:124788:FunctionDeclaration",
+      "start": 124049,
+      "end": 124788,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 739,
+      "name": "createElementAccessExpression"
+    },
+    {
+      "id": "124788:125330:FunctionDeclaration",
+      "start": 124788,
+      "end": 125330,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 542,
+      "name": "updateElementAccessExpression"
+    },
+    {
+      "id": "125330:125891:FunctionDeclaration",
+      "start": 125330,
+      "end": 125891,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 561,
+      "name": "createElementAccessChain"
+    },
+    {
+      "id": "125891:126725:FunctionDeclaration",
+      "start": 125891,
+      "end": 126725,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 834,
+      "name": "updateElementAccessChain"
+    },
+    {
+      "id": "126725:127722:FunctionDeclaration",
+      "start": 126725,
+      "end": 127722,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 997,
+      "name": "createBaseCallExpression"
+    },
+    {
+      "id": "127722:128419:FunctionDeclaration",
+      "start": 127722,
+      "end": 128419,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 697,
+      "name": "createCallExpression"
+    },
+    {
+      "id": "128419:129037:FunctionDeclaration",
+      "start": 128419,
+      "end": 129037,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 618,
+      "name": "updateCallExpression"
+    },
+    {
+      "id": "129037:129761:FunctionDeclaration",
+      "start": 129037,
+      "end": 129761,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 724,
+      "name": "createCallChain"
+    },
+    {
+      "id": "129761:130485:FunctionDeclaration",
+      "start": 129761,
+      "end": 130485,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 724,
+      "name": "updateCallChain"
+    },
+    {
+      "id": "130485:131402:FunctionDeclaration",
+      "start": 130485,
+      "end": 131402,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 917,
+      "name": "createNewExpression"
+    },
+    {
+      "id": "131402:131875:FunctionDeclaration",
+      "start": 131402,
+      "end": 131875,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 473,
+      "name": "updateNewExpression"
+    },
+    {
+      "id": "131875:132812:FunctionDeclaration",
+      "start": 131875,
+      "end": 132812,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 937,
+      "name": "createTaggedTemplateExpression"
+    },
+    {
+      "id": "132812:133253:FunctionDeclaration",
+      "start": 132812,
+      "end": 133253,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 441,
+      "name": "updateTaggedTemplateExpression"
+    },
+    {
+      "id": "133253:133748:FunctionDeclaration",
+      "start": 133253,
+      "end": 133748,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 495,
+      "name": "createTypeAssertion"
+    },
+    {
+      "id": "133748:134041:FunctionDeclaration",
+      "start": 133748,
+      "end": 134041,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 293,
+      "name": "updateTypeAssertion"
+    },
+    {
+      "id": "134041:134439:FunctionDeclaration",
+      "start": 134041,
+      "end": 134439,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 398,
+      "name": "createParenthesizedExpression"
+    },
+    {
+      "id": "134439:134701:FunctionDeclaration",
+      "start": 134439,
+      "end": 134701,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 262,
+      "name": "updateParenthesizedExpression"
+    },
+    {
+      "id": "134701:137028:FunctionDeclaration",
+      "start": 134701,
+      "end": 137028,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2327,
+      "name": "createFunctionExpression"
+    },
+    {
+      "id": "137028:137970:FunctionDeclaration",
+      "start": 137028,
+      "end": 137970,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 942,
+      "name": "updateFunctionExpression"
+    },
+    {
+      "id": "137970:140057:FunctionDeclaration",
+      "start": 137970,
+      "end": 140057,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2087,
+      "name": "createArrowFunction"
+    },
+    {
+      "id": "140057:140954:FunctionDeclaration",
+      "start": 140057,
+      "end": 140954,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 897,
+      "name": "updateArrowFunction"
+    },
+    {
+      "id": "140954:141310:FunctionDeclaration",
+      "start": 140954,
+      "end": 141310,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 356,
+      "name": "createDeleteExpression"
+    },
+    {
+      "id": "141310:141551:FunctionDeclaration",
+      "start": 141310,
+      "end": 141551,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 241,
+      "name": "updateDeleteExpression"
+    },
+    {
+      "id": "141551:141907:FunctionDeclaration",
+      "start": 141551,
+      "end": 141907,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 356,
+      "name": "createTypeOfExpression"
+    },
+    {
+      "id": "141907:142148:FunctionDeclaration",
+      "start": 141907,
+      "end": 142148,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 241,
+      "name": "updateTypeOfExpression"
+    },
+    {
+      "id": "142148:142498:FunctionDeclaration",
+      "start": 142148,
+      "end": 142498,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 350,
+      "name": "createVoidExpression"
+    },
+    {
+      "id": "142498:142733:FunctionDeclaration",
+      "start": 142498,
+      "end": 142733,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 235,
+      "name": "updateVoidExpression"
+    },
+    {
+      "id": "142733:143220:FunctionDeclaration",
+      "start": 142733,
+      "end": 143220,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 487,
+      "name": "createAwaitExpression"
+    },
+    {
+      "id": "143220:143458:FunctionDeclaration",
+      "start": 143220,
+      "end": 143458,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 238,
+      "name": "updateAwaitExpression"
+    },
+    {
+      "id": "143458:144409:FunctionDeclaration",
+      "start": 143458,
+      "end": 144409,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 951,
+      "name": "createPrefixUnaryExpression"
+    },
+    {
+      "id": "144409:144668:FunctionDeclaration",
+      "start": 144409,
+      "end": 144668,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 259,
+      "name": "updatePrefixUnaryExpression"
+    },
+    {
+      "id": "144668:145525:FunctionDeclaration",
+      "start": 144668,
+      "end": 145525,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 857,
+      "name": "createPostfixUnaryExpression"
+    },
+    {
+      "id": "145525:145787:FunctionDeclaration",
+      "start": 145525,
+      "end": 145787,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 262,
+      "name": "updatePostfixUnaryExpression"
+    },
+    {
+      "id": "145787:148014:FunctionDeclaration",
+      "start": 145787,
+      "end": 148014,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2227,
+      "name": "createBinaryExpression"
+    },
+    {
+      "id": "148014:148228:FunctionDeclaration",
+      "start": 148014,
+      "end": 148228,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 214,
+      "name": "propagateAssignmentPatternFlags"
+    },
+    {
+      "id": "148228:148605:FunctionDeclaration",
+      "start": 148228,
+      "end": 148605,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 377,
+      "name": "updateBinaryExpression"
+    },
+    {
+      "id": "148605:149767:FunctionDeclaration",
+      "start": 148605,
+      "end": 149767,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1162,
+      "name": "createConditionalExpression"
+    },
+    {
+      "id": "149767:150491:FunctionDeclaration",
+      "start": 149767,
+      "end": 150491,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 724,
+      "name": "updateConditionalExpression"
+    },
+    {
+      "id": "150491:150981:FunctionDeclaration",
+      "start": 150491,
+      "end": 150981,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 490,
+      "name": "createTemplateExpression"
+    },
+    {
+      "id": "150981:151318:FunctionDeclaration",
+      "start": 150981,
+      "end": 151318,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 337,
+      "name": "updateTemplateExpression"
+    },
+    {
+      "id": "151318:152504:FunctionDeclaration",
+      "start": 151318,
+      "end": 152504,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1186,
+      "name": "checkTemplateLiteralLikeNode"
+    },
+    {
+      "id": "152504:152791:FunctionDeclaration",
+      "start": 152504,
+      "end": 152791,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 287,
+      "name": "getTransformFlagsOfTemplateLiteralLike"
+    },
+    {
+      "id": "152791:153571:FunctionDeclaration",
+      "start": 152791,
+      "end": 153571,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 780,
+      "name": "createTemplateLiteralLikeToken"
+    },
+    {
+      "id": "153571:154102:FunctionDeclaration",
+      "start": 153571,
+      "end": 154102,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 531,
+      "name": "createTemplateLiteralLikeDeclaration"
+    },
+    {
+      "id": "154102:154543:FunctionDeclaration",
+      "start": 154102,
+      "end": 154543,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 441,
+      "name": "createTemplateLiteralLikeNode"
+    },
+    {
+      "id": "154543:154891:FunctionDeclaration",
+      "start": 154543,
+      "end": 154891,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 348,
+      "name": "createTemplateHead"
+    },
+    {
+      "id": "154891:155245:FunctionDeclaration",
+      "start": 154891,
+      "end": 155245,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 354,
+      "name": "createTemplateMiddle"
+    },
+    {
+      "id": "155245:155593:FunctionDeclaration",
+      "start": 155245,
+      "end": 155593,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 348,
+      "name": "createTemplateTail"
+    },
+    {
+      "id": "155593:155999:FunctionDeclaration",
+      "start": 155593,
+      "end": 155999,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 406,
+      "name": "createNoSubstitutionTemplateLiteral"
+    },
+    {
+      "id": "155999:156804:FunctionDeclaration",
+      "start": 155999,
+      "end": 156804,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 805,
+      "name": "createYieldExpression"
+    },
+    {
+      "id": "156804:157156:FunctionDeclaration",
+      "start": 156804,
+      "end": 157156,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 352,
+      "name": "updateYieldExpression"
+    },
+    {
+      "id": "157156:157607:FunctionDeclaration",
+      "start": 157156,
+      "end": 157607,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 451,
+      "name": "createSpreadElement"
+    },
+    {
+      "id": "157607:157839:FunctionDeclaration",
+      "start": 157607,
+      "end": 157839,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 232,
+      "name": "updateSpreadElement"
+    },
+    {
+      "id": "157839:159068:FunctionDeclaration",
+      "start": 157839,
+      "end": 159068,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1229,
+      "name": "createClassExpression"
+    },
+    {
+      "id": "159068:159826:FunctionDeclaration",
+      "start": 159068,
+      "end": 159826,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 758,
+      "name": "updateClassExpression"
+    },
+    {
+      "id": "159826:159971:FunctionDeclaration",
+      "start": 159826,
+      "end": 159971,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 145,
+      "name": "createOmittedExpression"
+    },
+    {
+      "id": "159971:160642:FunctionDeclaration",
+      "start": 159971,
+      "end": 160642,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 671,
+      "name": "createExpressionWithTypeArguments"
+    },
+    {
+      "id": "160642:161036:FunctionDeclaration",
+      "start": 160642,
+      "end": 161036,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 394,
+      "name": "updateExpressionWithTypeArguments"
+    },
+    {
+      "id": "161036:161463:FunctionDeclaration",
+      "start": 161036,
+      "end": 161463,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 427,
+      "name": "createAsExpression"
+    },
+    {
+      "id": "161463:161753:FunctionDeclaration",
+      "start": 161463,
+      "end": 161753,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 290,
+      "name": "updateAsExpression"
+    },
+    {
+      "id": "161753:162182:FunctionDeclaration",
+      "start": 161753,
+      "end": 162182,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 429,
+      "name": "createNonNullExpression"
+    },
+    {
+      "id": "162182:162532:FunctionDeclaration",
+      "start": 162182,
+      "end": 162532,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 350,
+      "name": "updateNonNullExpression"
+    },
+    {
+      "id": "162532:162980:FunctionDeclaration",
+      "start": 162532,
+      "end": 162980,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 448,
+      "name": "createSatisfiesExpression"
+    },
+    {
+      "id": "162980:163291:FunctionDeclaration",
+      "start": 162980,
+      "end": 163291,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 311,
+      "name": "updateSatisfiesExpression"
+    },
+    {
+      "id": "163291:163757:FunctionDeclaration",
+      "start": 163291,
+      "end": 163757,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 466,
+      "name": "createNonNullChain"
+    },
+    {
+      "id": "163757:164151:FunctionDeclaration",
+      "start": 163757,
+      "end": 164151,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 394,
+      "name": "updateNonNullChain"
+    },
+    {
+      "id": "164151:164980:FunctionDeclaration",
+      "start": 164151,
+      "end": 164980,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 829,
+      "name": "createMetaProperty"
+    },
+    {
+      "id": "164980:165204:FunctionDeclaration",
+      "start": 164980,
+      "end": 165204,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 224,
+      "name": "updateMetaProperty"
+    },
+    {
+      "id": "165204:165691:FunctionDeclaration",
+      "start": 165204,
+      "end": 165691,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 487,
+      "name": "createTemplateSpan"
+    },
+    {
+      "id": "165691:166014:FunctionDeclaration",
+      "start": 165691,
+      "end": 166014,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 323,
+      "name": "updateTemplateSpan"
+    },
+    {
+      "id": "166014:166262:FunctionDeclaration",
+      "start": 166014,
+      "end": 166262,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 248,
+      "name": "createSemicolonClassElement"
+    },
+    {
+      "id": "166262:166897:FunctionDeclaration",
+      "start": 166262,
+      "end": 166897,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 635,
+      "name": "createBlock"
+    },
+    {
+      "id": "166897:167131:FunctionDeclaration",
+      "start": 166897,
+      "end": 167131,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 234,
+      "name": "updateBlock"
+    },
+    {
+      "id": "167131:168037:FunctionDeclaration",
+      "start": 167131,
+      "end": 168037,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 906,
+      "name": "createVariableStatement"
+    },
+    {
+      "id": "168037:168422:FunctionDeclaration",
+      "start": 168037,
+      "end": 168422,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 385,
+      "name": "updateVariableStatement"
+    },
+    {
+      "id": "168422:168661:FunctionDeclaration",
+      "start": 168422,
+      "end": 168661,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 239,
+      "name": "createEmptyStatement"
+    },
+    {
+      "id": "168661:169212:FunctionDeclaration",
+      "start": 168661,
+      "end": 169212,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 551,
+      "name": "createExpressionStatement"
+    },
+    {
+      "id": "169212:169462:FunctionDeclaration",
+      "start": 169212,
+      "end": 169462,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 250,
+      "name": "updateExpressionStatement"
+    },
+    {
+      "id": "169462:170197:FunctionDeclaration",
+      "start": 169462,
+      "end": 170197,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 735,
+      "name": "createIfStatement"
+    },
+    {
+      "id": "170197:170631:FunctionDeclaration",
+      "start": 170197,
+      "end": 170631,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 434,
+      "name": "updateIfStatement"
+    },
+    {
+      "id": "170631:171202:FunctionDeclaration",
+      "start": 170631,
+      "end": 171202,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 571,
+      "name": "createDoStatement"
+    },
+    {
+      "id": "171202:171510:FunctionDeclaration",
+      "start": 171202,
+      "end": 171510,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 308,
+      "name": "updateDoStatement"
+    },
+    {
+      "id": "171510:172090:FunctionDeclaration",
+      "start": 171510,
+      "end": 172090,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 580,
+      "name": "createWhileStatement"
+    },
+    {
+      "id": "172090:172407:FunctionDeclaration",
+      "start": 172090,
+      "end": 172407,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 317,
+      "name": "updateWhileStatement"
+    },
+    {
+      "id": "172407:173416:FunctionDeclaration",
+      "start": 172407,
+      "end": 173416,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1009,
+      "name": "createForStatement"
+    },
+    {
+      "id": "173416:173945:FunctionDeclaration",
+      "start": 173416,
+      "end": 173945,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 529,
+      "name": "updateForStatement"
+    },
+    {
+      "id": "173945:174809:FunctionDeclaration",
+      "start": 173945,
+      "end": 174809,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 864,
+      "name": "createForInStatement"
+    },
+    {
+      "id": "174809:175221:FunctionDeclaration",
+      "start": 174809,
+      "end": 175221,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 412,
+      "name": "updateForInStatement"
+    },
+    {
+      "id": "175221:176416:FunctionDeclaration",
+      "start": 175221,
+      "end": 176416,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1195,
+      "name": "createForOfStatement"
+    },
+    {
+      "id": "176416:176941:FunctionDeclaration",
+      "start": 176416,
+      "end": 176941,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 525,
+      "name": "updateForOfStatement"
+    },
+    {
+      "id": "176941:177485:FunctionDeclaration",
+      "start": 176941,
+      "end": 177485,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 544,
+      "name": "createContinueStatement"
+    },
+    {
+      "id": "177485:177721:FunctionDeclaration",
+      "start": 177485,
+      "end": 177721,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 236,
+      "name": "updateContinueStatement"
+    },
+    {
+      "id": "177721:178253:FunctionDeclaration",
+      "start": 177721,
+      "end": 178253,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 532,
+      "name": "createBreakStatement"
+    },
+    {
+      "id": "178253:178480:FunctionDeclaration",
+      "start": 178253,
+      "end": 178480,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 227,
+      "name": "updateBreakStatement"
+    },
+    {
+      "id": "178480:179128:FunctionDeclaration",
+      "start": 178480,
+      "end": 179128,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 648,
+      "name": "createReturnStatement"
+    },
+    {
+      "id": "179128:179378:FunctionDeclaration",
+      "start": 179128,
+      "end": 179378,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 250,
+      "name": "updateReturnStatement"
+    },
+    {
+      "id": "179378:179955:FunctionDeclaration",
+      "start": 179378,
+      "end": 179955,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 577,
+      "name": "createWithStatement"
+    },
+    {
+      "id": "179955:180269:FunctionDeclaration",
+      "start": 179955,
+      "end": 180269,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 314,
+      "name": "updateWithStatement"
+    },
+    {
+      "id": "180269:180978:FunctionDeclaration",
+      "start": 180269,
+      "end": 180978,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 709,
+      "name": "createSwitchStatement"
+    },
+    {
+      "id": "180978:181298:FunctionDeclaration",
+      "start": 180978,
+      "end": 181298,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 320,
+      "name": "updateSwitchStatement"
+    },
+    {
+      "id": "181298:181881:FunctionDeclaration",
+      "start": 181298,
+      "end": 181881,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 583,
+      "name": "createLabeledStatement"
+    },
+    {
+      "id": "181881:182184:FunctionDeclaration",
+      "start": 181881,
+      "end": 182184,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 303,
+      "name": "updateLabeledStatement"
+    },
+    {
+      "id": "182184:182633:FunctionDeclaration",
+      "start": 182184,
+      "end": 182633,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 449,
+      "name": "createThrowStatement"
+    },
+    {
+      "id": "182633:182868:FunctionDeclaration",
+      "start": 182633,
+      "end": 182868,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 235,
+      "name": "updateThrowStatement"
+    },
+    {
+      "id": "182868:183560:FunctionDeclaration",
+      "start": 182868,
+      "end": 183560,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 692,
+      "name": "createTryStatement"
+    },
+    {
+      "id": "183560:183982:FunctionDeclaration",
+      "start": 183560,
+      "end": 183982,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 422,
+      "name": "updateTryStatement"
+    },
+    {
+      "id": "183982:184309:FunctionDeclaration",
+      "start": 183982,
+      "end": 184309,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 327,
+      "name": "createDebuggerStatement"
+    },
+    {
+      "id": "184309:185106:FunctionDeclaration",
+      "start": 184309,
+      "end": 185106,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 797,
+      "name": "createVariableDeclaration"
+    },
+    {
+      "id": "185106:185638:FunctionDeclaration",
+      "start": 185106,
+      "end": 185638,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 532,
+      "name": "updateVariableDeclaration"
+    },
+    {
+      "id": "185638:186458:FunctionDeclaration",
+      "start": 185638,
+      "end": 186458,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 820,
+      "name": "createVariableDeclarationList"
+    },
+    {
+      "id": "186458:186760:FunctionDeclaration",
+      "start": 186458,
+      "end": 186760,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 302,
+      "name": "updateVariableDeclarationList"
+    },
+    {
+      "id": "186760:189272:FunctionDeclaration",
+      "start": 186760,
+      "end": 189272,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2512,
+      "name": "createFunctionDeclaration"
+    },
+    {
+      "id": "189272:190224:FunctionDeclaration",
+      "start": 189272,
+      "end": 190224,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 952,
+      "name": "updateFunctionDeclaration"
+    },
+    {
+      "id": "190224:190665:FunctionDeclaration",
+      "start": 190224,
+      "end": 190665,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 441,
+      "name": "finishUpdateFunctionDeclaration"
+    },
+    {
+      "id": "190665:192285:FunctionDeclaration",
+      "start": 190665,
+      "end": 192285,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1620,
+      "name": "createClassDeclaration"
+    },
+    {
+      "id": "192285:193046:FunctionDeclaration",
+      "start": 192285,
+      "end": 193046,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 761,
+      "name": "updateClassDeclaration"
+    },
+    {
+      "id": "193046:193915:FunctionDeclaration",
+      "start": 193046,
+      "end": 193915,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 869,
+      "name": "createInterfaceDeclaration"
+    },
+    {
+      "id": "193915:194675:FunctionDeclaration",
+      "start": 193915,
+      "end": 194675,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 760,
+      "name": "updateInterfaceDeclaration"
+    },
+    {
+      "id": "194675:195538:FunctionDeclaration",
+      "start": 194675,
+      "end": 195538,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 863,
+      "name": "createTypeAliasDeclaration"
+    },
+    {
+      "id": "195538:196129:FunctionDeclaration",
+      "start": 195538,
+      "end": 196129,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 591,
+      "name": "updateTypeAliasDeclaration"
+    },
+    {
+      "id": "196129:196997:FunctionDeclaration",
+      "start": 196129,
+      "end": 196997,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 868,
+      "name": "createEnumDeclaration"
+    },
+    {
+      "id": "196997:197449:FunctionDeclaration",
+      "start": 196997,
+      "end": 197449,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 452,
+      "name": "updateEnumDeclaration"
+    },
+    {
+      "id": "197449:198782:FunctionDeclaration",
+      "start": 197449,
+      "end": 198782,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1333,
+      "name": "createModuleDeclaration"
+    },
+    {
+      "id": "198782:199241:FunctionDeclaration",
+      "start": 198782,
+      "end": 199241,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 459,
+      "name": "updateModuleDeclaration"
+    },
+    {
+      "id": "199241:199634:FunctionDeclaration",
+      "start": 199241,
+      "end": 199634,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 393,
+      "name": "createModuleBlock"
+    },
+    {
+      "id": "199634:199870:FunctionDeclaration",
+      "start": 199634,
+      "end": 199870,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 236,
+      "name": "updateModuleBlock"
+    },
+    {
+      "id": "199870:200352:FunctionDeclaration",
+      "start": 199870,
+      "end": 200352,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 482,
+      "name": "createCaseBlock"
+    },
+    {
+      "id": "200352:200580:FunctionDeclaration",
+      "start": 200352,
+      "end": 200580,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 228,
+      "name": "updateCaseBlock"
+    },
+    {
+      "id": "200580:201133:FunctionDeclaration",
+      "start": 200580,
+      "end": 201133,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 553,
+      "name": "createNamespaceExportDeclaration"
+    },
+    {
+      "id": "201133:201412:FunctionDeclaration",
+      "start": 201133,
+      "end": 201412,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 279,
+      "name": "updateNamespaceExportDeclaration"
+    },
+    {
+      "id": "201412:201764:FunctionDeclaration",
+      "start": 201412,
+      "end": 201764,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 352,
+      "name": "finishUpdateNamespaceExportDeclaration"
+    },
+    {
+      "id": "201764:202858:FunctionDeclaration",
+      "start": 201764,
+      "end": 202858,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1094,
+      "name": "createImportEqualsDeclaration"
+    },
+    {
+      "id": "202858:203453:FunctionDeclaration",
+      "start": 202858,
+      "end": 203453,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 595,
+      "name": "updateImportEqualsDeclaration"
+    },
+    {
+      "id": "203453:204369:FunctionDeclaration",
+      "start": 203453,
+      "end": 204369,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 916,
+      "name": "createImportDeclaration"
+    },
+    {
+      "id": "204369:205008:FunctionDeclaration",
+      "start": 204369,
+      "end": 205008,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 639,
+      "name": "updateImportDeclaration"
+    },
+    {
+      "id": "205008:206034:FunctionDeclaration",
+      "start": 205008,
+      "end": 206034,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1026,
+      "name": "createImportClause"
+    },
+    {
+      "id": "206034:206654:FunctionDeclaration",
+      "start": 206034,
+      "end": 206654,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 620,
+      "name": "updateImportClause"
+    },
+    {
+      "id": "206654:207079:FunctionDeclaration",
+      "start": 206654,
+      "end": 207079,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 425,
+      "name": "createAssertClause"
+    },
+    {
+      "id": "207079:207407:FunctionDeclaration",
+      "start": 207079,
+      "end": 207407,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 328,
+      "name": "updateAssertClause"
+    },
+    {
+      "id": "207407:207731:FunctionDeclaration",
+      "start": 207407,
+      "end": 207731,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 324,
+      "name": "createAssertEntry"
+    },
+    {
+      "id": "207731:208015:FunctionDeclaration",
+      "start": 207731,
+      "end": 208015,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 284,
+      "name": "updateAssertEntry"
+    },
+    {
+      "id": "208015:208366:FunctionDeclaration",
+      "start": 208015,
+      "end": 208366,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 351,
+      "name": "createImportTypeAssertionContainer"
+    },
+    {
+      "id": "208366:208746:FunctionDeclaration",
+      "start": 208366,
+      "end": 208746,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 380,
+      "name": "updateImportTypeAssertionContainer"
+    },
+    {
+      "id": "208746:208876:FunctionDeclaration",
+      "start": 208746,
+      "end": 208876,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 130,
+      "name": "createImportAttributes"
+    },
+    {
+      "id": "208876:209026:FunctionDeclaration",
+      "start": 208876,
+      "end": 209026,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 150,
+      "name": "createImportAttributes"
+    },
+    {
+      "id": "209026:209498:FunctionDeclaration",
+      "start": 209026,
+      "end": 209498,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 472,
+      "name": "createImportAttributes"
+    },
+    {
+      "id": "209498:209858:FunctionDeclaration",
+      "start": 209498,
+      "end": 209858,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 360,
+      "name": "updateImportAttributes"
+    },
+    {
+      "id": "209858:210205:FunctionDeclaration",
+      "start": 209858,
+      "end": 210205,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 347,
+      "name": "createImportAttribute"
+    },
+    {
+      "id": "210205:210512:FunctionDeclaration",
+      "start": 210205,
+      "end": 210512,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 307,
+      "name": "updateImportAttribute"
+    },
+    {
+      "id": "210512:210926:FunctionDeclaration",
+      "start": 210512,
+      "end": 210926,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 414,
+      "name": "createNamespaceImport"
+    },
+    {
+      "id": "210926:211140:FunctionDeclaration",
+      "start": 210926,
+      "end": 211140,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 214,
+      "name": "updateNamespaceImport"
+    },
+    {
+      "id": "211140:211605:FunctionDeclaration",
+      "start": 211140,
+      "end": 211605,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 465,
+      "name": "createNamespaceExport"
+    },
+    {
+      "id": "211605:211825:FunctionDeclaration",
+      "start": 211605,
+      "end": 211825,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 220,
+      "name": "updateNamespaceExport"
+    },
+    {
+      "id": "211825:212272:FunctionDeclaration",
+      "start": 211825,
+      "end": 212272,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 447,
+      "name": "createNamedImports"
+    },
+    {
+      "id": "212272:212509:FunctionDeclaration",
+      "start": 212272,
+      "end": 212509,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 237,
+      "name": "updateNamedImports"
+    },
+    {
+      "id": "212509:213107:FunctionDeclaration",
+      "start": 212509,
+      "end": 213107,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 598,
+      "name": "createImportSpecifier"
+    },
+    {
+      "id": "213107:213518:FunctionDeclaration",
+      "start": 213107,
+      "end": 213518,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 411,
+      "name": "updateImportSpecifier"
+    },
+    {
+      "id": "213518:214493:FunctionDeclaration",
+      "start": 213518,
+      "end": 214493,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 975,
+      "name": "createExportAssignment"
+    },
+    {
+      "id": "214493:214898:FunctionDeclaration",
+      "start": 214493,
+      "end": 214898,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 405,
+      "name": "updateExportAssignment"
+    },
+    {
+      "id": "214898:215918:FunctionDeclaration",
+      "start": 214898,
+      "end": 215918,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1020,
+      "name": "createExportDeclaration"
+    },
+    {
+      "id": "215918:216688:FunctionDeclaration",
+      "start": 215918,
+      "end": 216688,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 770,
+      "name": "updateExportDeclaration"
+    },
+    {
+      "id": "216688:217093:FunctionDeclaration",
+      "start": 216688,
+      "end": 217093,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 405,
+      "name": "finishUpdateExportDeclaration"
+    },
+    {
+      "id": "217093:217526:FunctionDeclaration",
+      "start": 217093,
+      "end": 217526,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 433,
+      "name": "createNamedExports"
+    },
+    {
+      "id": "217526:217763:FunctionDeclaration",
+      "start": 217526,
+      "end": 217763,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 237,
+      "name": "updateNamedExports"
+    },
+    {
+      "id": "217763:218471:FunctionDeclaration",
+      "start": 217763,
+      "end": 218471,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 708,
+      "name": "createExportSpecifier"
+    },
+    {
+      "id": "218471:218888:FunctionDeclaration",
+      "start": 218471,
+      "end": 218888,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 417,
+      "name": "updateExportSpecifier"
+    },
+    {
+      "id": "218888:219168:FunctionDeclaration",
+      "start": 218888,
+      "end": 219168,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 280,
+      "name": "createMissingDeclaration"
+    },
+    {
+      "id": "219168:219650:FunctionDeclaration",
+      "start": 219168,
+      "end": 219650,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 482,
+      "name": "createExternalModuleReference"
+    },
+    {
+      "id": "219650:219912:FunctionDeclaration",
+      "start": 219650,
+      "end": 219912,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 262,
+      "name": "updateExternalModuleReference"
+    },
+    {
+      "id": "219912:220145:FunctionDeclaration",
+      "start": 219912,
+      "end": 220145,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 233,
+      "name": "createJSDocPrimaryTypeWorker"
+    },
+    {
+      "id": "220145:220686:FunctionDeclaration",
+      "start": 220145,
+      "end": 220686,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 541,
+      "name": "createJSDocPrePostfixUnaryTypeWorker"
+    },
+    {
+      "id": "220686:221044:FunctionDeclaration",
+      "start": 220686,
+      "end": 221044,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 358,
+      "name": "createJSDocUnaryTypeWorker"
+    },
+    {
+      "id": "221044:221471:FunctionDeclaration",
+      "start": 221044,
+      "end": 221471,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 427,
+      "name": "updateJSDocPrePostfixUnaryTypeWorker"
+    },
+    {
+      "id": "221471:221866:FunctionDeclaration",
+      "start": 221471,
+      "end": 221866,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 395,
+      "name": "updateJSDocUnaryTypeWorker"
+    },
+    {
+      "id": "221866:222673:FunctionDeclaration",
+      "start": 221866,
+      "end": 222673,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 807,
+      "name": "createJSDocFunctionType"
+    },
+    {
+      "id": "222673:223030:FunctionDeclaration",
+      "start": 222673,
+      "end": 223030,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 357,
+      "name": "updateJSDocFunctionType"
+    },
+    {
+      "id": "223030:223394:FunctionDeclaration",
+      "start": 223030,
+      "end": 223394,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 364,
+      "name": "createJSDocTypeLiteral"
+    },
+    {
+      "id": "223394:223787:FunctionDeclaration",
+      "start": 223394,
+      "end": 223787,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 393,
+      "name": "updateJSDocTypeLiteral"
+    },
+    {
+      "id": "223787:224028:FunctionDeclaration",
+      "start": 223787,
+      "end": 224028,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 241,
+      "name": "createJSDocTypeExpression"
+    },
+    {
+      "id": "224028:224273:FunctionDeclaration",
+      "start": 224028,
+      "end": 224273,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 245,
+      "name": "updateJSDocTypeExpression"
+    },
+    {
+      "id": "224273:224961:FunctionDeclaration",
+      "start": 224273,
+      "end": 224961,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 688,
+      "name": "createJSDocSignature"
+    },
+    {
+      "id": "224961:225441:FunctionDeclaration",
+      "start": 224961,
+      "end": 225441,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 480,
+      "name": "updateJSDocSignature"
+    },
+    {
+      "id": "225441:225732:FunctionDeclaration",
+      "start": 225441,
+      "end": 225732,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 291,
+      "name": "getDefaultTagName"
+    },
+    {
+      "id": "225732:226037:FunctionDeclaration",
+      "start": 225732,
+      "end": 226037,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 305,
+      "name": "createBaseJSDocTag"
+    },
+    {
+      "id": "226037:226361:FunctionDeclaration",
+      "start": 226037,
+      "end": 226361,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 324,
+      "name": "createBaseJSDocTagDeclaration"
+    },
+    {
+      "id": "226361:226879:FunctionDeclaration",
+      "start": 226361,
+      "end": 226879,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 518,
+      "name": "createJSDocTemplateTag"
+    },
+    {
+      "id": "226879:227497:FunctionDeclaration",
+      "start": 226879,
+      "end": 227497,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 618,
+      "name": "updateJSDocTemplateTag"
+    },
+    {
+      "id": "227497:228208:FunctionDeclaration",
+      "start": 227497,
+      "end": 228208,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 711,
+      "name": "createJSDocTypedefTag"
+    },
+    {
+      "id": "228208:228829:FunctionDeclaration",
+      "start": 228208,
+      "end": 228829,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 621,
+      "name": "updateJSDocTypedefTag"
+    },
+    {
+      "id": "228829:229417:FunctionDeclaration",
+      "start": 228829,
+      "end": 229417,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 588,
+      "name": "createJSDocParameterTag"
+    },
+    {
+      "id": "229417:230166:FunctionDeclaration",
+      "start": 229417,
+      "end": 230166,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 749,
+      "name": "updateJSDocParameterTag"
+    },
+    {
+      "id": "230166:230749:FunctionDeclaration",
+      "start": 230166,
+      "end": 230749,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 583,
+      "name": "createJSDocPropertyTag"
+    },
+    {
+      "id": "230749:231494:FunctionDeclaration",
+      "start": 230749,
+      "end": 231494,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 745,
+      "name": "updateJSDocPropertyTag"
+    },
+    {
+      "id": "231494:232204:FunctionDeclaration",
+      "start": 231494,
+      "end": 232204,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 710,
+      "name": "createJSDocCallbackTag"
+    },
+    {
+      "id": "232204:232812:FunctionDeclaration",
+      "start": 232204,
+      "end": 232812,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 608,
+      "name": "updateJSDocCallbackTag"
+    },
+    {
+      "id": "232812:233208:FunctionDeclaration",
+      "start": 232812,
+      "end": 233208,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 396,
+      "name": "createJSDocOverloadTag"
+    },
+    {
+      "id": "233208:233697:FunctionDeclaration",
+      "start": 233208,
+      "end": 233697,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 489,
+      "name": "updateJSDocOverloadTag"
+    },
+    {
+      "id": "233697:234085:FunctionDeclaration",
+      "start": 233697,
+      "end": 234085,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 388,
+      "name": "createJSDocAugmentsTag"
+    },
+    {
+      "id": "234085:234561:FunctionDeclaration",
+      "start": 234085,
+      "end": 234561,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 476,
+      "name": "updateJSDocAugmentsTag"
+    },
+    {
+      "id": "234561:234961:FunctionDeclaration",
+      "start": 234561,
+      "end": 234961,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 400,
+      "name": "createJSDocImplementsTag"
+    },
+    {
+      "id": "234961:235318:FunctionDeclaration",
+      "start": 234961,
+      "end": 235318,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 357,
+      "name": "createJSDocSeeTag"
+    },
+    {
+      "id": "235318:235738:FunctionDeclaration",
+      "start": 235318,
+      "end": 235738,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 420,
+      "name": "updateJSDocSeeTag"
+    },
+    {
+      "id": "235738:235995:FunctionDeclaration",
+      "start": 235738,
+      "end": 235995,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 257,
+      "name": "createJSDocNameReference"
+    },
+    {
+      "id": "235995:236256:FunctionDeclaration",
+      "start": 235995,
+      "end": 236256,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 261,
+      "name": "updateJSDocNameReference"
+    },
+    {
+      "id": "236256:236643:FunctionDeclaration",
+      "start": 236256,
+      "end": 236643,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 387,
+      "name": "createJSDocMemberName"
+    },
+    {
+      "id": "236643:236942:FunctionDeclaration",
+      "start": 236643,
+      "end": 236942,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 299,
+      "name": "updateJSDocMemberName"
+    },
+    {
+      "id": "236942:237216:FunctionDeclaration",
+      "start": 236942,
+      "end": 237216,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 274,
+      "name": "createJSDocLink"
+    },
+    {
+      "id": "237216:237473:FunctionDeclaration",
+      "start": 237216,
+      "end": 237473,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 257,
+      "name": "updateJSDocLink"
+    },
+    {
+      "id": "237473:237763:FunctionDeclaration",
+      "start": 237473,
+      "end": 237763,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 290,
+      "name": "createJSDocLinkCode"
+    },
+    {
+      "id": "237763:238036:FunctionDeclaration",
+      "start": 237763,
+      "end": 238036,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 273,
+      "name": "updateJSDocLinkCode"
+    },
+    {
+      "id": "238036:238330:FunctionDeclaration",
+      "start": 238036,
+      "end": 238330,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 294,
+      "name": "createJSDocLinkPlain"
+    },
+    {
+      "id": "238330:238607:FunctionDeclaration",
+      "start": 238330,
+      "end": 238607,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 277,
+      "name": "updateJSDocLinkPlain"
+    },
+    {
+      "id": "238607:239093:FunctionDeclaration",
+      "start": 238607,
+      "end": 239093,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 486,
+      "name": "updateJSDocImplementsTag"
+    },
+    {
+      "id": "239093:239627:FunctionDeclaration",
+      "start": 239093,
+      "end": 239627,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 534,
+      "name": "createJSDocSimpleTagWorker"
+    },
+    {
+      "id": "239627:240239:FunctionDeclaration",
+      "start": 239627,
+      "end": 240239,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 612,
+      "name": "updateJSDocSimpleTagWorker"
+    },
+    {
+      "id": "240239:240891:FunctionDeclaration",
+      "start": 240239,
+      "end": 240891,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 652,
+      "name": "createJSDocTypeLikeTagWorker"
+    },
+    {
+      "id": "240891:241605:FunctionDeclaration",
+      "start": 240891,
+      "end": 241605,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 714,
+      "name": "updateJSDocTypeLikeTagWorker"
+    },
+    {
+      "id": "241605:241867:FunctionDeclaration",
+      "start": 241605,
+      "end": 241867,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 262,
+      "name": "createJSDocUnknownTag"
+    },
+    {
+      "id": "241867:242219:FunctionDeclaration",
+      "start": 241867,
+      "end": 242219,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 352,
+      "name": "updateJSDocUnknownTag"
+    },
+    {
+      "id": "242219:242803:FunctionDeclaration",
+      "start": 242219,
+      "end": 242803,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 584,
+      "name": "createJSDocEnumTag"
+    },
+    {
+      "id": "242803:243267:FunctionDeclaration",
+      "start": 242803,
+      "end": 243267,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 464,
+      "name": "updateJSDocEnumTag"
+    },
+    {
+      "id": "243267:243838:FunctionDeclaration",
+      "start": 243267,
+      "end": 243838,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 571,
+      "name": "createJSDocImportTag"
+    },
+    {
+      "id": "243838:244506:FunctionDeclaration",
+      "start": 243838,
+      "end": 244506,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 668,
+      "name": "updateJSDocImportTag"
+    },
+    {
+      "id": "244506:244705:FunctionDeclaration",
+      "start": 244506,
+      "end": 244705,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 199,
+      "name": "createJSDocText"
+    },
+    {
+      "id": "244705:244908:FunctionDeclaration",
+      "start": 244705,
+      "end": 244908,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 203,
+      "name": "updateJSDocText"
+    },
+    {
+      "id": "244908:245219:FunctionDeclaration",
+      "start": 244908,
+      "end": 245219,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 311,
+      "name": "createJSDocComment"
+    },
+    {
+      "id": "245219:245547:FunctionDeclaration",
+      "start": 245219,
+      "end": 245547,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 328,
+      "name": "updateJSDocComment"
+    },
+    {
+      "id": "245547:246199:FunctionDeclaration",
+      "start": 245547,
+      "end": 246199,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 652,
+      "name": "createJsxElement"
+    },
+    {
+      "id": "246199:246643:FunctionDeclaration",
+      "start": 246199,
+      "end": 246643,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 444,
+      "name": "updateJsxElement"
+    },
+    {
+      "id": "246643:247398:FunctionDeclaration",
+      "start": 246643,
+      "end": 247398,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 755,
+      "name": "createJsxSelfClosingElement"
+    },
+    {
+      "id": "247398:247862:FunctionDeclaration",
+      "start": 247398,
+      "end": 247862,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 464,
+      "name": "updateJsxSelfClosingElement"
+    },
+    {
+      "id": "247862:248600:FunctionDeclaration",
+      "start": 247862,
+      "end": 248600,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 738,
+      "name": "createJsxOpeningElement"
+    },
+    {
+      "id": "248600:249052:FunctionDeclaration",
+      "start": 248600,
+      "end": 249052,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 452,
+      "name": "updateJsxOpeningElement"
+    },
+    {
+      "id": "249052:249396:FunctionDeclaration",
+      "start": 249052,
+      "end": 249396,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 344,
+      "name": "createJsxClosingElement"
+    },
+    {
+      "id": "249396:249638:FunctionDeclaration",
+      "start": 249396,
+      "end": 249638,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 242,
+      "name": "updateJsxClosingElement"
+    },
+    {
+      "id": "249638:250273:FunctionDeclaration",
+      "start": 249638,
+      "end": 250273,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 635,
+      "name": "createJsxFragment"
+    },
+    {
+      "id": "250273:250730:FunctionDeclaration",
+      "start": 250273,
+      "end": 250730,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 457,
+      "name": "updateJsxFragment"
+    },
+    {
+      "id": "250730:251092:FunctionDeclaration",
+      "start": 250730,
+      "end": 251092,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 362,
+      "name": "createJsxText"
+    },
+    {
+      "id": "251092:251439:FunctionDeclaration",
+      "start": 251092,
+      "end": 251439,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 347,
+      "name": "updateJsxText"
+    },
+    {
+      "id": "251439:251675:FunctionDeclaration",
+      "start": 251439,
+      "end": 251675,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 236,
+      "name": "createJsxOpeningFragment"
+    },
+    {
+      "id": "251675:251914:FunctionDeclaration",
+      "start": 251675,
+      "end": 251914,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 239,
+      "name": "createJsxJsxClosingFragment"
+    },
+    {
+      "id": "251914:252372:FunctionDeclaration",
+      "start": 251914,
+      "end": 252372,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 458,
+      "name": "createJsxAttribute"
+    },
+    {
+      "id": "252372:252693:FunctionDeclaration",
+      "start": 252372,
+      "end": 252693,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 321,
+      "name": "updateJsxAttribute"
+    },
+    {
+      "id": "252693:253071:FunctionDeclaration",
+      "start": 252693,
+      "end": 253071,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 378,
+      "name": "createJsxAttributes"
+    },
+    {
+      "id": "253071:253320:FunctionDeclaration",
+      "start": 253071,
+      "end": 253320,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 249,
+      "name": "updateJsxAttributes"
+    },
+    {
+      "id": "253320:253669:FunctionDeclaration",
+      "start": 253320,
+      "end": 253669,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 349,
+      "name": "createJsxSpreadAttribute"
+    },
+    {
+      "id": "253669:253916:FunctionDeclaration",
+      "start": 253669,
+      "end": 253916,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 247,
+      "name": "updateJsxSpreadAttribute"
+    },
+    {
+      "id": "253916:254409:FunctionDeclaration",
+      "start": 253916,
+      "end": 254409,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 493,
+      "name": "createJsxExpression"
+    },
+    {
+      "id": "254409:254674:FunctionDeclaration",
+      "start": 254409,
+      "end": 254674,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 265,
+      "name": "updateJsxExpression"
+    },
+    {
+      "id": "254674:255107:FunctionDeclaration",
+      "start": 254674,
+      "end": 255107,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 433,
+      "name": "createJsxNamespacedName"
+    },
+    {
+      "id": "255107:255410:FunctionDeclaration",
+      "start": 255107,
+      "end": 255410,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 303,
+      "name": "updateJsxNamespacedName"
+    },
+    {
+      "id": "255410:256012:FunctionDeclaration",
+      "start": 255410,
+      "end": 256012,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 602,
+      "name": "createCaseClause"
+    },
+    {
+      "id": "256012:256332:FunctionDeclaration",
+      "start": 256012,
+      "end": 256332,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 320,
+      "name": "updateCaseClause"
+    },
+    {
+      "id": "256332:256653:FunctionDeclaration",
+      "start": 256332,
+      "end": 256653,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 321,
+      "name": "createDefaultClause"
+    },
+    {
+      "id": "256653:256895:FunctionDeclaration",
+      "start": 256653,
+      "end": 256895,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 242,
+      "name": "updateDefaultClause"
+    },
+    {
+      "id": "256895:257675:FunctionDeclaration",
+      "start": 256895,
+      "end": 257675,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 780,
+      "name": "createHeritageClause"
+    },
+    {
+      "id": "257675:257930:FunctionDeclaration",
+      "start": 257675,
+      "end": 257930,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 255,
+      "name": "updateHeritageClause"
+    },
+    {
+      "id": "257930:258666:FunctionDeclaration",
+      "start": 257930,
+      "end": 258666,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 736,
+      "name": "createCatchClause"
+    },
+    {
+      "id": "258666:259011:FunctionDeclaration",
+      "start": 258666,
+      "end": 259011,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 345,
+      "name": "updateCatchClause"
+    },
+    {
+      "id": "259011:259897:FunctionDeclaration",
+      "start": 259011,
+      "end": 259897,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 886,
+      "name": "createPropertyAssignment"
+    },
+    {
+      "id": "259897:260237:FunctionDeclaration",
+      "start": 259897,
+      "end": 260237,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 340,
+      "name": "updatePropertyAssignment"
+    },
+    {
+      "id": "260237:260749:FunctionDeclaration",
+      "start": 260237,
+      "end": 260749,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 512,
+      "name": "finishUpdatePropertyAssignment"
+    },
+    {
+      "id": "260749:261853:FunctionDeclaration",
+      "start": 260749,
+      "end": 261853,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1104,
+      "name": "createShorthandPropertyAssignment"
+    },
+    {
+      "id": "261853:262303:FunctionDeclaration",
+      "start": 261853,
+      "end": 262303,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 450,
+      "name": "updateShorthandPropertyAssignment"
+    },
+    {
+      "id": "262303:262843:FunctionDeclaration",
+      "start": 262303,
+      "end": 262843,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 540,
+      "name": "finishUpdateShorthandPropertyAssignment"
+    },
+    {
+      "id": "262843:263393:FunctionDeclaration",
+      "start": 262843,
+      "end": 263393,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 550,
+      "name": "createSpreadAssignment"
+    },
+    {
+      "id": "263393:263634:FunctionDeclaration",
+      "start": 263393,
+      "end": 263634,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 241,
+      "name": "updateSpreadAssignment"
+    },
+    {
+      "id": "263634:264274:FunctionDeclaration",
+      "start": 263634,
+      "end": 264274,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 640,
+      "name": "createEnumMember"
+    },
+    {
+      "id": "264274:264578:FunctionDeclaration",
+      "start": 264274,
+      "end": 264578,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 304,
+      "name": "updateEnumMember"
+    },
+    {
+      "id": "264578:266808:FunctionDeclaration",
+      "start": 264578,
+      "end": 266808,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2230,
+      "name": "createSourceFile"
+    },
+    {
+      "id": "266808:267731:FunctionDeclaration",
+      "start": 266808,
+      "end": 267731,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 923,
+      "name": "createRedirectedSourceFile"
+    },
+    {
+      "id": "267731:268325:FunctionDeclaration",
+      "start": 267731,
+      "end": 268325,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 594,
+      "name": "cloneRedirectedSourceFile"
+    },
+    {
+      "id": "268325:269142:FunctionDeclaration",
+      "start": 268325,
+      "end": 269142,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 817,
+      "name": "cloneSourceFileWorker"
+    },
+    {
+      "id": "269142:269372:FunctionDeclaration",
+      "start": 269142,
+      "end": 269372,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 230,
+      "name": "cloneSourceFile"
+    },
+    {
+      "id": "269372:270243:FunctionDeclaration",
+      "start": 269372,
+      "end": 270243,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 871,
+      "name": "cloneSourceFileWithChanges"
+    },
+    {
+      "id": "270243:271173:FunctionDeclaration",
+      "start": 270243,
+      "end": 271173,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 930,
+      "name": "updateSourceFile"
+    },
+    {
+      "id": "271173:271540:FunctionDeclaration",
+      "start": 271173,
+      "end": 271540,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 367,
+      "name": "createBundle"
+    },
+    {
+      "id": "271540:271766:FunctionDeclaration",
+      "start": 271540,
+      "end": 271766,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 226,
+      "name": "updateBundle"
+    },
+    {
+      "id": "271766:272203:FunctionDeclaration",
+      "start": 271766,
+      "end": 272203,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 437,
+      "name": "createSyntheticExpression"
+    },
+    {
+      "id": "272203:272416:FunctionDeclaration",
+      "start": 272203,
+      "end": 272416,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 213,
+      "name": "createSyntaxList"
+    },
+    {
+      "id": "272416:272933:FunctionDeclaration",
+      "start": 272416,
+      "end": 272933,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 517,
+      "name": "createNotEmittedStatement"
+    },
+    {
+      "id": "272933:273695:FunctionDeclaration",
+      "start": 272933,
+      "end": 273695,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 762,
+      "name": "createPartiallyEmittedExpression"
+    },
+    {
+      "id": "273695:273981:FunctionDeclaration",
+      "start": 273695,
+      "end": 273981,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 286,
+      "name": "updatePartiallyEmittedExpression"
+    },
+    {
+      "id": "273981:274138:FunctionDeclaration",
+      "start": 273981,
+      "end": 274138,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 157,
+      "name": "createNotEmittedTypeElement"
+    },
+    {
+      "id": "274138:274632:FunctionDeclaration",
+      "start": 274138,
+      "end": 274632,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 494,
+      "name": "flattenCommaElements"
+    },
+    {
+      "id": "274632:275000:FunctionDeclaration",
+      "start": 274632,
+      "end": 275000,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 368,
+      "name": "createCommaListExpression"
+    },
+    {
+      "id": "275000:275253:FunctionDeclaration",
+      "start": 275000,
+      "end": 275253,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 253,
+      "name": "updateCommaListExpression"
+    },
+    {
+      "id": "275253:275693:FunctionDeclaration",
+      "start": 275253,
+      "end": 275693,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 440,
+      "name": "createSyntheticReferenceExpression"
+    },
+    {
+      "id": "275693:276045:FunctionDeclaration",
+      "start": 275693,
+      "end": 276045,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 352,
+      "name": "updateSyntheticReferenceExpression"
+    },
+    {
+      "id": "276045:276488:FunctionDeclaration",
+      "start": 276045,
+      "end": 276488,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 443,
+      "name": "cloneGeneratedIdentifier"
+    },
+    {
+      "id": "276488:277108:FunctionDeclaration",
+      "start": 276488,
+      "end": 277108,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 620,
+      "name": "cloneIdentifier"
+    },
+    {
+      "id": "277108:277586:FunctionDeclaration",
+      "start": 277108,
+      "end": 277586,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 478,
+      "name": "cloneGeneratedPrivateIdentifier"
+    },
+    {
+      "id": "277586:277920:FunctionDeclaration",
+      "start": 277586,
+      "end": 277920,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 334,
+      "name": "clonePrivateIdentifier"
+    },
+    {
+      "id": "277920:278000:FunctionDeclaration",
+      "start": 277920,
+      "end": 278000,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 80,
+      "name": "cloneNode"
+    },
+    {
+      "id": "278000:279603:FunctionDeclaration",
+      "start": 278000,
+      "end": 279603,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1603,
+      "name": "cloneNode"
+    },
+    {
+      "id": "279603:279758:FunctionDeclaration",
+      "start": 279603,
+      "end": 279758,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 155,
+      "name": "createImmediatelyInvokedFunctionExpression"
+    },
+    {
+      "id": "279758:279941:FunctionDeclaration",
+      "start": 279758,
+      "end": 279941,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 183,
+      "name": "createImmediatelyInvokedFunctionExpression"
+    },
+    {
+      "id": "279941:280632:FunctionDeclaration",
+      "start": 279941,
+      "end": 280632,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 691,
+      "name": "createImmediatelyInvokedFunctionExpression"
+    },
+    {
+      "id": "280632:280754:FunctionDeclaration",
+      "start": 280632,
+      "end": 280754,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 122,
+      "name": "createImmediatelyInvokedArrowFunction"
+    },
+    {
+      "id": "280754:280927:FunctionDeclaration",
+      "start": 280754,
+      "end": 280927,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 173,
+      "name": "createImmediatelyInvokedArrowFunction"
+    },
+    {
+      "id": "280927:281580:FunctionDeclaration",
+      "start": 280927,
+      "end": 281580,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 653,
+      "name": "createImmediatelyInvokedArrowFunction"
+    },
+    {
+      "id": "281580:281687:FunctionDeclaration",
+      "start": 281580,
+      "end": 281687,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 107,
+      "name": "createVoidZero"
+    },
+    {
+      "id": "281687:281910:FunctionDeclaration",
+      "start": 281687,
+      "end": 281910,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 223,
+      "name": "createExportDefault"
+    },
+    {
+      "id": "281910:282265:FunctionDeclaration",
+      "start": 281910,
+      "end": 282265,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 355,
+      "name": "createExternalModuleExport"
+    },
+    {
+      "id": "282265:282653:FunctionDeclaration",
+      "start": 282265,
+      "end": 282653,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 388,
+      "name": "createTypeCheck"
+    },
+    {
+      "id": "282653:283016:FunctionDeclaration",
+      "start": 282653,
+      "end": 283016,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 363,
+      "name": "createIsNotTypeCheck"
+    },
+    {
+      "id": "283016:283707:FunctionDeclaration",
+      "start": 283016,
+      "end": 283707,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 691,
+      "name": "createMethodCall"
+    },
+    {
+      "id": "283707:283913:FunctionDeclaration",
+      "start": 283707,
+      "end": 283913,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 206,
+      "name": "createFunctionBindCall"
+    },
+    {
+      "id": "283913:284119:FunctionDeclaration",
+      "start": 283913,
+      "end": 284119,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 206,
+      "name": "createFunctionCallCall"
+    },
+    {
+      "id": "284119:284325:FunctionDeclaration",
+      "start": 284119,
+      "end": 284325,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 206,
+      "name": "createFunctionApplyCall"
+    },
+    {
+      "id": "284325:284554:FunctionDeclaration",
+      "start": 284325,
+      "end": 284554,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 229,
+      "name": "createGlobalMethodCall"
+    },
+    {
+      "id": "284554:284748:FunctionDeclaration",
+      "start": 284554,
+      "end": 284748,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 194,
+      "name": "createArraySliceCall"
+    },
+    {
+      "id": "284748:284918:FunctionDeclaration",
+      "start": 284748,
+      "end": 284918,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 170,
+      "name": "createArrayConcatCall"
+    },
+    {
+      "id": "284918:285171:FunctionDeclaration",
+      "start": 284918,
+      "end": 285171,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 253,
+      "name": "createObjectDefinePropertyCall"
+    },
+    {
+      "id": "285171:285408:FunctionDeclaration",
+      "start": 285171,
+      "end": 285408,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 237,
+      "name": "createObjectGetOwnPropertyDescriptorCall"
+    },
+    {
+      "id": "285408:285664:FunctionDeclaration",
+      "start": 285408,
+      "end": 285664,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 256,
+      "name": "createReflectGetCall"
+    },
+    {
+      "id": "285664:285953:FunctionDeclaration",
+      "start": 285664,
+      "end": 285953,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 289,
+      "name": "createReflectSetCall"
+    },
+    {
+      "id": "285953:286264:FunctionDeclaration",
+      "start": 285953,
+      "end": 286264,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 311,
+      "name": "tryAddPropertyAssignment"
+    },
+    {
+      "id": "286264:287228:FunctionDeclaration",
+      "start": 286264,
+      "end": 287228,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 964,
+      "name": "createPropertyDescriptor"
+    },
+    {
+      "id": "287228:288410:FunctionDeclaration",
+      "start": 287228,
+      "end": 288410,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1182,
+      "name": "updateOuterExpression"
+    },
+    {
+      "id": "288410:289538:FunctionDeclaration",
+      "start": 288410,
+      "end": 289538,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1128,
+      "name": "isIgnorableParen"
+    },
+    {
+      "id": "289538:290042:FunctionDeclaration",
+      "start": 289538,
+      "end": 290042,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 504,
+      "name": "restoreOuterExpressions"
+    },
+    {
+      "id": "290042:290786:FunctionDeclaration",
+      "start": 290042,
+      "end": 290786,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 744,
+      "name": "restoreEnclosingLabel"
+    },
+    {
+      "id": "290786:291726:FunctionDeclaration",
+      "start": 290786,
+      "end": 291726,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 940,
+      "name": "shouldBeCapturedInTempVariable"
+    },
+    {
+      "id": "291726:294720:FunctionDeclaration",
+      "start": 291726,
+      "end": 294720,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 2994,
+      "name": "createCallBinding"
+    },
+    {
+      "id": "294720:295875:FunctionDeclaration",
+      "start": 294720,
+      "end": 295875,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1155,
+      "name": "createAssignmentTargetWrapper"
+    },
+    {
+      "id": "295875:296260:FunctionDeclaration",
+      "start": 295875,
+      "end": 296260,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 385,
+      "name": "inlineExpressions"
+    },
+    {
+      "id": "296260:297136:FunctionDeclaration",
+      "start": 296260,
+      "end": 297136,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 876,
+      "name": "getName"
+    },
+    {
+      "id": "297136:298037:FunctionDeclaration",
+      "start": 297136,
+      "end": 298037,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 901,
+      "name": "getInternalName"
+    },
+    {
+      "id": "298037:298983:FunctionDeclaration",
+      "start": 298037,
+      "end": 298983,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 946,
+      "name": "getLocalName"
+    },
+    {
+      "id": "298983:299831:FunctionDeclaration",
+      "start": 298983,
+      "end": 299831,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 848,
+      "name": "getExportName"
+    },
+    {
+      "id": "299831:300341:FunctionDeclaration",
+      "start": 299831,
+      "end": 300341,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 510,
+      "name": "getDeclarationName"
+    },
+    {
+      "id": "300341:301284:FunctionDeclaration",
+      "start": 300341,
+      "end": 301284,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 943,
+      "name": "getNamespaceMemberName"
+    },
+    {
+      "id": "301284:302273:FunctionDeclaration",
+      "start": 301284,
+      "end": 302273,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 989,
+      "name": "getExternalModuleOrNamespaceExportName"
+    },
+    {
+      "id": "302273:302982:FunctionDeclaration",
+      "start": 302273,
+      "end": 302982,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 709,
+      "name": "copyPrologue"
+    },
+    {
+      "id": "302982:303154:FunctionDeclaration",
+      "start": 302982,
+      "end": 303154,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 172,
+      "name": "isUseStrictPrologue"
+    },
+    {
+      "id": "303154:303320:FunctionDeclaration",
+      "start": 303154,
+      "end": 303320,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 166,
+      "name": "createUseStrictPrologue"
+    },
+    {
+      "id": "303320:304729:FunctionDeclaration",
+      "start": 303320,
+      "end": 304729,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1409,
+      "name": "copyStandardPrologue"
+    },
+    {
+      "id": "304729:305280:FunctionDeclaration",
+      "start": 304729,
+      "end": 305280,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 551,
+      "name": "copyCustomPrologue"
+    },
+    {
+      "id": "305280:305506:FunctionDeclaration",
+      "start": 305280,
+      "end": 305506,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 226,
+      "name": "copyCustomPrologue"
+    },
+    {
+      "id": "305506:306280:FunctionDeclaration",
+      "start": 305506,
+      "end": 306280,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 774,
+      "name": "copyCustomPrologue"
+    },
+    {
+      "id": "306280:306760:FunctionDeclaration",
+      "start": 306280,
+      "end": 306760,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 480,
+      "name": "ensureUseStrict"
+    },
+    {
+      "id": "306760:307155:FunctionDeclaration",
+      "start": 306760,
+      "end": 307155,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 395,
+      "name": "liftToBlock"
+    },
+    {
+      "id": "307155:307387:FunctionDeclaration",
+      "start": 307155,
+      "end": 307387,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 232,
+      "name": "findSpanEnd"
+    },
+    {
+      "id": "307387:307532:FunctionDeclaration",
+      "start": 307387,
+      "end": 307532,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 145,
+      "name": "mergeLexicalEnvironment"
+    },
+    {
+      "id": "307532:307657:FunctionDeclaration",
+      "start": 307532,
+      "end": 307657,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 125,
+      "name": "mergeLexicalEnvironment"
+    },
+    {
+      "id": "307657:312983:FunctionDeclaration",
+      "start": 307657,
+      "end": 312983,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 5326,
+      "name": "mergeLexicalEnvironment"
+    },
+    {
+      "id": "312983:313101:FunctionDeclaration",
+      "start": 312983,
+      "end": 313101,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 118,
+      "name": "replaceModifiers"
+    },
+    {
+      "id": "313101:317157:FunctionDeclaration",
+      "start": 313101,
+      "end": 317157,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 4056,
+      "name": "replaceModifiers"
+    },
+    {
+      "id": "317157:317292:FunctionDeclaration",
+      "start": 317157,
+      "end": 317292,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 135,
+      "name": "replaceDecoratorsAndModifiers"
+    },
+    {
+      "id": "317292:318593:FunctionDeclaration",
+      "start": 317292,
+      "end": 318593,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1301,
+      "name": "replaceDecoratorsAndModifiers"
+    },
+    {
+      "id": "318593:318791:FunctionDeclaration",
+      "start": 318593,
+      "end": 318791,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 198,
+      "name": "replacePropertyName"
+    },
+    {
+      "id": "318791:320241:FunctionDeclaration",
+      "start": 318791,
+      "end": 320241,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 1450,
+      "name": "replacePropertyName"
+    },
+    {
+      "id": "320241:320321:FunctionDeclaration",
+      "start": 320241,
+      "end": 320321,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 80,
+      "name": "asNodeArray"
+    },
+    {
+      "id": "320321:320423:FunctionDeclaration",
+      "start": 320321,
+      "end": 320423,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 102,
+      "name": "asNodeArray"
+    },
+    {
+      "id": "320423:320593:FunctionDeclaration",
+      "start": 320423,
+      "end": 320593,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 170,
+      "name": "asNodeArray"
+    },
+    {
+      "id": "320593:320887:FunctionDeclaration",
+      "start": 320593,
+      "end": 320887,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 294,
+      "name": "asName"
+    },
+    {
+      "id": "320887:321295:FunctionDeclaration",
+      "start": 320887,
+      "end": 321295,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 408,
+      "name": "asExpression"
+    },
+    {
+      "id": "321295:321457:FunctionDeclaration",
+      "start": 321295,
+      "end": 321457,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 162,
+      "name": "asInitializer"
+    },
+    {
+      "id": "321457:321631:FunctionDeclaration",
+      "start": 321457,
+      "end": 321631,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 174,
+      "name": "asToken"
+    },
+    {
+      "id": "321631:321718:FunctionDeclaration",
+      "start": 321631,
+      "end": 321718,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 87,
+      "name": "asEmbeddedStatement"
+    },
+    {
+      "id": "321718:321827:FunctionDeclaration",
+      "start": 321718,
+      "end": 321827,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 109,
+      "name": "asEmbeddedStatement"
+    },
+    {
+      "id": "321827:322093:FunctionDeclaration",
+      "start": 321827,
+      "end": 322093,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 266,
+      "name": "asEmbeddedStatement"
+    },
+    {
+      "id": "322093:322622:FunctionDeclaration",
+      "start": 322093,
+      "end": 322622,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 529,
+      "name": "asVariableDeclaration"
+    },
+    {
+      "id": "322622:322871:FunctionDeclaration",
+      "start": 322622,
+      "end": 322871,
+      "kind": "FunctionDeclaration",
+      "parent": "createNodeFactory",
+      "bytes": 249,
+      "name": "update"
+    },
+    {
+      "id": "322874:324530:FunctionDeclaration",
+      "start": 322874,
+      "end": 324530,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1656,
+      "name": "getDefaultTagNameForKind"
+    },
+    {
+      "id": "324530:324574:VariableStatement",
+      "start": 324530,
+      "end": 324574,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 44,
+      "name": ""
+    },
+    {
+      "id": "324574:324616:VariableStatement",
+      "start": 324574,
+      "end": 324616,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 42,
+      "name": ""
+    },
+    {
+      "id": "324616:326250:FunctionDeclaration",
+      "start": 324616,
+      "end": 326250,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 1634,
+      "name": "getCookedText"
+    },
+    {
+      "id": "326250:326472:FunctionDeclaration",
+      "start": 326250,
+      "end": 326472,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 222,
+      "name": "propagateNameFlags"
+    },
+    {
+      "id": "326472:326674:FunctionDeclaration",
+      "start": 326472,
+      "end": 326674,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 202,
+      "name": "propagateIdentifierNameFlags"
+    },
+    {
+      "id": "326674:326875:FunctionDeclaration",
+      "start": 326674,
+      "end": 326875,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 201,
+      "name": "propagatePropertyNameFlagsOfChild"
+    },
+    {
+      "id": "326875:327236:FunctionDeclaration",
+      "start": 326875,
+      "end": 327236,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 361,
+      "name": "propagateChildFlags"
+    },
+    {
+      "id": "327236:327401:FunctionDeclaration",
+      "start": 327236,
+      "end": 327401,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 165,
+      "name": "propagateChildrenFlags"
+    },
+    {
+      "id": "327401:327662:FunctionDeclaration",
+      "start": 327401,
+      "end": 327662,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 261,
+      "name": "aggregateChildrenFlags"
+    },
+    {
+      "id": "327662:330912:FunctionDeclaration",
+      "start": 327662,
+      "end": 330912,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 3250,
+      "name": "getTransformFlagsSubtreeExclusions"
+    },
+    {
+      "id": "330912:330960:VariableStatement",
+      "start": 330912,
+      "end": 330960,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 48,
+      "name": ""
+    },
+    {
+      "id": "330960:331082:FunctionDeclaration",
+      "start": 330960,
+      "end": 331082,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 122,
+      "name": "makeSynthetic"
+    },
+    {
+      "id": "331082:331607:VariableStatement",
+      "start": 331082,
+      "end": 331607,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 525,
+      "name": ""
+    },
+    {
+      "id": "331607:331736:VariableStatement",
+      "start": 331607,
+      "end": 331736,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 129,
+      "name": ""
+    },
+    {
+      "id": "331736:331855:VariableStatement",
+      "start": 331736,
+      "end": 331855,
+      "kind": "VariableStatement",
+      "parent": "file",
+      "bytes": 119,
+      "name": ""
+    },
+    {
+      "id": "331855:332188:FunctionDeclaration",
+      "start": 331855,
+      "end": 332188,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 333,
+      "name": "createSourceMapSource"
+    },
+    {
+      "id": "332188:332567:FunctionDeclaration",
+      "start": 332188,
+      "end": 332567,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 379,
+      "name": "setOriginalNode"
+    },
+    {
+      "id": "332567:336366:FunctionDeclaration",
+      "start": 332567,
+      "end": 336366,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 3799,
+      "name": "mergeEmitNode"
+    },
+    {
+      "id": "336366:336644:FunctionDeclaration",
+      "start": 336366,
+      "end": 336644,
+      "kind": "FunctionDeclaration",
+      "parent": "file",
+      "bytes": 278,
+      "name": "mergeTokenSourceMapRanges"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 0,
+      "atoms": [
+        "12998:322874:FunctionDeclaration"
+      ],
+      "bytes": 28185
+    },
+    {
+      "id": 1,
+      "atoms": [
+        "0:12239:ImportDeclaration"
+      ],
+      "bytes": 12239
+    },
+    {
+      "id": 2,
+      "atoms": [
+        "307657:312983:FunctionDeclaration"
+      ],
+      "bytes": 5326
+    },
+    {
+      "id": 3,
+      "atoms": [
+        "12239:12270:VariableStatement",
+        "100234:100472:FunctionDeclaration",
+        "307387:307532:FunctionDeclaration",
+        "313101:317157:FunctionDeclaration",
+        "320593:320887:FunctionDeclaration"
+      ],
+      "bytes": 4764
+    },
+    {
+      "id": 4,
+      "atoms": [
+        "142148:142498:FunctionDeclaration",
+        "251439:251675:FunctionDeclaration",
+        "273695:273981:FunctionDeclaration",
+        "330960:331082:FunctionDeclaration",
+        "332567:336366:FunctionDeclaration"
+      ],
+      "bytes": 4793
+    },
+    {
+      "id": 5,
+      "atoms": [
+        "55549:58904:FunctionDeclaration",
+        "152504:152791:FunctionDeclaration",
+        "199634:199870:FunctionDeclaration",
+        "208015:208366:FunctionDeclaration",
+        "210512:210926:FunctionDeclaration",
+        "280632:280754:FunctionDeclaration"
+      ],
+      "bytes": 4765
+    },
+    {
+      "id": 6,
+      "atoms": [
+        "58904:59051:FunctionDeclaration",
+        "105141:105436:FunctionDeclaration",
+        "168422:168661:FunctionDeclaration",
+        "206654:207079:FunctionDeclaration",
+        "277920:278000:FunctionDeclaration",
+        "281910:282265:FunctionDeclaration",
+        "327662:330912:FunctionDeclaration"
+      ],
+      "bytes": 4791
+    },
+    {
+      "id": 7,
+      "atoms": [
+        "118621:118899:FunctionDeclaration",
+        "214493:214898:FunctionDeclaration",
+        "219912:220145:FunctionDeclaration",
+        "233208:233697:FunctionDeclaration",
+        "251092:251439:FunctionDeclaration",
+        "291726:294720:FunctionDeclaration"
+      ],
+      "bytes": 4746
+    },
+    {
+      "id": 8,
+      "atoms": [
+        "54913:54990:FunctionDeclaration",
+        "73749:76507:FunctionDeclaration",
+        "111429:111853:FunctionDeclaration",
+        "154891:155245:FunctionDeclaration",
+        "159826:159971:FunctionDeclaration",
+        "238036:238330:FunctionDeclaration",
+        "251675:251914:FunctionDeclaration",
+        "299831:300341:FunctionDeclaration"
+      ],
+      "bytes": 4801
+    },
+    {
+      "id": 9,
+      "atoms": [
+        "52027:52361:FunctionDeclaration",
+        "93411:93893:FunctionDeclaration",
+        "110145:110367:FunctionDeclaration",
+        "166014:166262:FunctionDeclaration",
+        "181298:181881:FunctionDeclaration",
+        "186760:189272:FunctionDeclaration",
+        "282653:283016:FunctionDeclaration"
+      ],
+      "bytes": 4744
+    },
+    {
+      "id": 10,
+      "atoms": [
+        "109861:110145:FunctionDeclaration",
+        "134701:137028:FunctionDeclaration",
+        "142498:142733:FunctionDeclaration",
+        "162182:162532:FunctionDeclaration",
+        "174809:175221:FunctionDeclaration",
+        "255410:256012:FunctionDeclaration",
+        "274138:274632:FunctionDeclaration",
+        "321631:321718:FunctionDeclaration"
+      ],
+      "bytes": 4791
+    },
+    {
+      "id": 11,
+      "atoms": [
+        "50102:50520:FunctionDeclaration",
+        "53750:54352:FunctionDeclaration",
+        "133253:133748:FunctionDeclaration",
+        "237473:237763:FunctionDeclaration",
+        "241867:242219:FunctionDeclaration",
+        "264578:266808:FunctionDeclaration",
+        "285171:285408:FunctionDeclaration",
+        "331607:331736:VariableStatement"
+      ],
+      "bytes": 4753
+    },
+    {
+      "id": 12,
+      "atoms": [
+        "61297:61797:FunctionDeclaration",
+        "86155:86759:FunctionDeclaration",
+        "145787:148014:FunctionDeclaration",
+        "177485:177721:FunctionDeclaration",
+        "218471:218888:FunctionDeclaration",
+        "275693:276045:FunctionDeclaration",
+        "285664:285953:FunctionDeclaration",
+        "307532:307657:FunctionDeclaration"
+      ],
+      "bytes": 4750
+    },
+    {
+      "id": 13,
+      "atoms": [
+        "59155:59259:FunctionDeclaration",
+        "79029:79384:FunctionDeclaration",
+        "91070:91580:FunctionDeclaration",
+        "128419:129037:FunctionDeclaration",
+        "137970:140057:FunctionDeclaration",
+        "141310:141551:FunctionDeclaration",
+        "221044:221471:FunctionDeclaration",
+        "236643:236942:FunctionDeclaration",
+        "273981:274138:FunctionDeclaration"
+      ],
+      "bytes": 4798
+    },
+    {
+      "id": 14,
+      "atoms": [
+        "12845:12998:FunctionDeclaration",
+        "41180:43258:FunctionDeclaration",
+        "141551:141907:FunctionDeclaration",
+        "161753:162182:FunctionDeclaration",
+        "186458:186760:FunctionDeclaration",
+        "206034:206654:FunctionDeclaration",
+        "223787:224028:FunctionDeclaration",
+        "260237:260749:FunctionDeclaration",
+        "312983:313101:FunctionDeclaration"
+      ],
+      "bytes": 4809
+    },
+    {
+      "id": 15,
+      "atoms": [
+        "62072:62556:FunctionDeclaration",
+        "77568:77907:FunctionDeclaration",
+        "81709:83418:FunctionDeclaration",
+        "232812:233208:FunctionDeclaration",
+        "237763:238036:FunctionDeclaration",
+        "242219:242803:FunctionDeclaration",
+        "290042:290786:FunctionDeclaration",
+        "321295:321457:FunctionDeclaration",
+        "321718:321827:FunctionDeclaration"
+      ],
+      "bytes": 4800
+    },
+    {
+      "id": 16,
+      "atoms": [
+        "69049:70731:FunctionDeclaration",
+        "101703:102287:FunctionDeclaration",
+        "134041:134439:FunctionDeclaration",
+        "157607:157839:FunctionDeclaration",
+        "230749:231494:FunctionDeclaration",
+        "238607:239093:FunctionDeclaration",
+        "259897:260237:FunctionDeclaration",
+        "336366:336644:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 17,
+      "atoms": [
+        "84484:86155:FunctionDeclaration",
+        "92458:92944:FunctionDeclaration",
+        "228829:229417:FunctionDeclaration",
+        "229417:230166:FunctionDeclaration",
+        "234561:234961:FunctionDeclaration",
+        "236942:237216:FunctionDeclaration",
+        "258666:259011:FunctionDeclaration",
+        "307155:307387:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 18,
+      "atoms": [
+        "45420:45818:FunctionDeclaration",
+        "59632:61297:FunctionDeclaration",
+        "68131:68720:FunctionDeclaration",
+        "100472:100817:FunctionDeclaration",
+        "120607:121360:FunctionDeclaration",
+        "165204:165691:FunctionDeclaration",
+        "238330:238607:FunctionDeclaration",
+        "269142:269372:FunctionDeclaration"
+      ],
+      "bytes": 4744
+    },
+    {
+      "id": 19,
+      "atoms": [
+        "61797:62072:FunctionDeclaration",
+        "111199:111429:FunctionDeclaration",
+        "142733:143220:FunctionDeclaration",
+        "195538:196129:FunctionDeclaration",
+        "216688:217093:FunctionDeclaration",
+        "246643:247398:FunctionDeclaration",
+        "249052:249396:FunctionDeclaration",
+        "322874:324530:FunctionDeclaration"
+      ],
+      "bytes": 4743
+    },
+    {
+      "id": 20,
+      "atoms": [
+        "47507:47996:FunctionDeclaration",
+        "104908:105141:FunctionDeclaration",
+        "155593:155999:FunctionDeclaration",
+        "159068:159826:FunctionDeclaration",
+        "201133:201412:FunctionDeclaration",
+        "209858:210205:FunctionDeclaration",
+        "267731:268325:FunctionDeclaration",
+        "324616:326250:FunctionDeclaration"
+      ],
+      "bytes": 4740
+    },
+    {
+      "id": 21,
+      "atoms": [
+        "52361:52642:FunctionDeclaration",
+        "107507:107914:FunctionDeclaration",
+        "150491:150981:FunctionDeclaration",
+        "154543:154891:FunctionDeclaration",
+        "166897:167131:FunctionDeclaration",
+        "190665:192285:FunctionDeclaration",
+        "193915:194675:FunctionDeclaration",
+        "202858:203453:FunctionDeclaration"
+      ],
+      "bytes": 4735
+    },
+    {
+      "id": 22,
+      "atoms": [
+        "64143:65757:FunctionDeclaration",
+        "106451:106942:FunctionDeclaration",
+        "155245:155593:FunctionDeclaration",
+        "182633:182868:FunctionDeclaration",
+        "192285:193046:FunctionDeclaration",
+        "212509:213107:FunctionDeclaration",
+        "218888:219168:FunctionDeclaration",
+        "320887:321295:FunctionDeclaration"
+      ],
+      "bytes": 4735
+    },
+    {
+      "id": 23,
+      "atoms": [
+        "53149:53750:FunctionDeclaration",
+        "103124:103357:FunctionDeclaration",
+        "105690:106451:FunctionDeclaration",
+        "207731:208015:FunctionDeclaration",
+        "213107:213518:FunctionDeclaration",
+        "253320:253669:FunctionDeclaration",
+        "253916:254409:FunctionDeclaration",
+        "278000:279603:FunctionDeclaration"
+      ],
+      "bytes": 4735
+    },
+    {
+      "id": 24,
+      "atoms": [
+        "161463:161753:FunctionDeclaration",
+        "201412:201764:FunctionDeclaration",
+        "208746:208876:FunctionDeclaration",
+        "217526:217763:FunctionDeclaration",
+        "232204:232812:FunctionDeclaration",
+        "235318:235738:FunctionDeclaration",
+        "272933:273695:FunctionDeclaration",
+        "289538:290042:FunctionDeclaration",
+        "318791:320241:FunctionDeclaration"
+      ],
+      "bytes": 4753
+    },
+    {
+      "id": 25,
+      "atoms": [
+        "12270:12774:EnumDeclaration",
+        "62809:63578:FunctionDeclaration",
+        "79384:80816:FunctionDeclaration",
+        "156804:157156:FunctionDeclaration",
+        "183560:183982:FunctionDeclaration",
+        "212272:212509:FunctionDeclaration",
+        "225441:225732:FunctionDeclaration",
+        "239627:240239:FunctionDeclaration",
+        "317157:317292:FunctionDeclaration"
+      ],
+      "bytes": 4754
+    },
+    {
+      "id": 26,
+      "atoms": [
+        "43258:43395:FunctionDeclaration",
+        "52642:53149:FunctionDeclaration",
+        "86759:87182:FunctionDeclaration",
+        "95715:96067:FunctionDeclaration",
+        "110587:111199:FunctionDeclaration",
+        "133748:134041:FunctionDeclaration",
+        "143220:143458:FunctionDeclaration",
+        "215918:216688:FunctionDeclaration",
+        "303320:304729:FunctionDeclaration"
+      ],
+      "bytes": 4741
+    },
+    {
+      "id": 27,
+      "atoms": [
+        "55373:55468:FunctionDeclaration",
+        "99147:99572:FunctionDeclaration",
+        "107914:108269:FunctionDeclaration",
+        "113956:114253:FunctionDeclaration",
+        "118899:119409:FunctionDeclaration",
+        "197449:198782:FunctionDeclaration",
+        "208876:209026:FunctionDeclaration",
+        "226879:227497:FunctionDeclaration",
+        "263393:263634:FunctionDeclaration",
+        "305506:306280:FunctionDeclaration"
+      ],
+      "bytes": 4798
+    },
+    {
+      "id": 28,
+      "atoms": [
+        "51249:52027:FunctionDeclaration",
+        "102287:102798:FunctionDeclaration",
+        "140954:141310:FunctionDeclaration",
+        "141907:142148:FunctionDeclaration",
+        "161036:161463:FunctionDeclaration",
+        "255107:255410:FunctionDeclaration",
+        "276488:277108:FunctionDeclaration",
+        "279603:279758:FunctionDeclaration",
+        "281580:281687:FunctionDeclaration",
+        "317292:318593:FunctionDeclaration"
+      ],
+      "bytes": 4799
+    },
+    {
+      "id": 29,
+      "atoms": [
+        "66584:67098:FunctionDeclaration",
+        "150981:151318:FunctionDeclaration",
+        "157839:159068:FunctionDeclaration",
+        "200352:200580:FunctionDeclaration",
+        "228208:228829:FunctionDeclaration",
+        "249396:249638:FunctionDeclaration",
+        "250730:251092:FunctionDeclaration",
+        "254674:255107:FunctionDeclaration",
+        "256895:257675:FunctionDeclaration"
+      ],
+      "bytes": 4746
+    },
+    {
+      "id": 30,
+      "atoms": [
+        "54624:54698:FunctionDeclaration",
+        "144409:144668:FunctionDeclaration",
+        "152791:153571:FunctionDeclaration",
+        "166262:166897:FunctionDeclaration",
+        "168037:168422:FunctionDeclaration",
+        "175221:176416:FunctionDeclaration",
+        "179955:180269:FunctionDeclaration",
+        "226361:226879:FunctionDeclaration",
+        "275253:275693:FunctionDeclaration",
+        "318593:318791:FunctionDeclaration"
+      ],
+      "bytes": 4798
+    },
+    {
+      "id": 31,
+      "atoms": [
+        "77907:78696:FunctionDeclaration",
+        "121360:121877:FunctionDeclaration",
+        "145525:145787:FunctionDeclaration",
+        "151318:152504:FunctionDeclaration",
+        "162980:163291:FunctionDeclaration",
+        "190224:190665:FunctionDeclaration",
+        "249638:250273:FunctionDeclaration",
+        "284554:284748:FunctionDeclaration",
+        "295875:296260:FunctionDeclaration",
+        "320241:320321:FunctionDeclaration"
+      ],
+      "bytes": 4800
+    },
+    {
+      "id": 32,
+      "atoms": [
+        "59259:59363:FunctionDeclaration",
+        "123259:124049:FunctionDeclaration",
+        "204369:205008:FunctionDeclaration",
+        "210205:210512:FunctionDeclaration",
+        "223394:223787:FunctionDeclaration",
+        "241605:241867:FunctionDeclaration",
+        "271766:272203:FunctionDeclaration",
+        "272416:272933:FunctionDeclaration",
+        "284748:284918:FunctionDeclaration",
+        "287228:288410:FunctionDeclaration"
+      ],
+      "bytes": 4801
+    },
+    {
+      "id": 33,
+      "atoms": [
+        "98127:98774:FunctionDeclaration",
+        "115889:116151:FunctionDeclaration",
+        "148605:149767:FunctionDeclaration",
+        "160642:161036:FunctionDeclaration",
+        "184309:185106:FunctionDeclaration",
+        "217093:217526:FunctionDeclaration",
+        "225732:226037:FunctionDeclaration",
+        "284119:284325:FunctionDeclaration",
+        "324574:324616:VariableStatement",
+        "331082:331607:VariableStatement"
+      ],
+      "bytes": 4773
+    },
+    {
+      "id": 34,
+      "atoms": [
+        "54769:54840:FunctionDeclaration",
+        "101066:101449:FunctionDeclaration",
+        "155999:156804:FunctionDeclaration",
+        "172090:172407:FunctionDeclaration",
+        "176416:176941:FunctionDeclaration",
+        "235738:235995:FunctionDeclaration",
+        "244705:244908:FunctionDeclaration",
+        "263634:264274:FunctionDeclaration",
+        "276045:276488:FunctionDeclaration",
+        "294720:295875:FunctionDeclaration"
+      ],
+      "bytes": 4799
+    },
+    {
+      "id": 35,
+      "atoms": [
+        "105436:105690:FunctionDeclaration",
+        "122453:123259:FunctionDeclaration",
+        "178480:179128:FunctionDeclaration",
+        "183982:184309:FunctionDeclaration",
+        "210926:211140:FunctionDeclaration",
+        "247398:247862:FunctionDeclaration",
+        "271173:271540:FunctionDeclaration",
+        "288410:289538:FunctionDeclaration",
+        "322093:322622:FunctionDeclaration"
+      ],
+      "bytes": 4737
+    },
+    {
+      "id": 36,
+      "atoms": [
+        "47996:48521:FunctionDeclaration",
+        "71770:72893:FunctionDeclaration",
+        "97396:97757:FunctionDeclaration",
+        "131402:131875:FunctionDeclaration",
+        "164980:165204:FunctionDeclaration",
+        "221866:222673:FunctionDeclaration",
+        "245547:246199:FunctionDeclaration",
+        "253669:253916:FunctionDeclaration",
+        "331855:332188:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 37,
+      "atoms": [
+        "44794:45154:FunctionDeclaration",
+        "46395:47507:FunctionDeclaration",
+        "54698:54769:FunctionDeclaration",
+        "67318:68131:FunctionDeclaration",
+        "95186:95715:FunctionDeclaration",
+        "102798:103124:FunctionDeclaration",
+        "234085:234561:FunctionDeclaration",
+        "237216:237473:FunctionDeclaration",
+        "240239:240891:FunctionDeclaration",
+        "326472:326674:FunctionDeclaration"
+      ],
+      "bytes": 4798
+    },
+    {
+      "id": 38,
+      "atoms": [
+        "80816:81346:FunctionDeclaration",
+        "91951:92281:FunctionDeclaration",
+        "179128:179378:FunctionDeclaration",
+        "222673:223030:FunctionDeclaration",
+        "260749:261853:FunctionDeclaration",
+        "268325:269142:FunctionDeclaration",
+        "280927:281580:FunctionDeclaration",
+        "281687:281910:FunctionDeclaration",
+        "306280:306760:FunctionDeclaration"
+      ],
+      "bytes": 4744
+    },
+    {
+      "id": 39,
+      "atoms": [
+        "92944:93411:FunctionDeclaration",
+        "104285:104648:FunctionDeclaration",
+        "111853:112188:FunctionDeclaration",
+        "113138:113956:FunctionDeclaration",
+        "173416:173945:FunctionDeclaration",
+        "201764:202858:FunctionDeclaration",
+        "224028:224273:FunctionDeclaration",
+        "243838:244506:FunctionDeclaration",
+        "271540:271766:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 40,
+      "atoms": [
+        "55071:55174:FunctionDeclaration",
+        "76507:77568:FunctionDeclaration",
+        "98774:99147:FunctionDeclaration",
+        "159971:160642:FunctionDeclaration",
+        "165691:166014:FunctionDeclaration",
+        "170631:171202:FunctionDeclaration",
+        "185638:186458:FunctionDeclaration",
+        "211825:212272:FunctionDeclaration",
+        "320423:320593:FunctionDeclaration",
+        "327401:327662:FunctionDeclaration"
+      ],
+      "bytes": 4800
+    },
+    {
+      "id": 41,
+      "atoms": [
+        "65757:66584:FunctionDeclaration",
+        "68720:69049:FunctionDeclaration",
+        "70731:71770:FunctionDeclaration",
+        "89517:90083:FunctionDeclaration",
+        "91580:91951:FunctionDeclaration",
+        "224273:224961:FunctionDeclaration",
+        "261853:262303:FunctionDeclaration",
+        "272203:272416:FunctionDeclaration",
+        "284918:285171:FunctionDeclaration"
+      ],
+      "bytes": 4736
+    },
+    {
+      "id": 42,
+      "atoms": [
+        "59051:59155:FunctionDeclaration",
+        "164151:164980:FunctionDeclaration",
+        "170197:170631:FunctionDeclaration",
+        "205008:206034:FunctionDeclaration",
+        "221471:221866:FunctionDeclaration",
+        "230166:230749:FunctionDeclaration",
+        "254409:254674:FunctionDeclaration",
+        "264274:264578:FunctionDeclaration",
+        "279941:280632:FunctionDeclaration",
+        "303154:303320:FunctionDeclaration"
+      ],
+      "bytes": 4797
+    },
+    {
+      "id": 43,
+      "atoms": [
+        "12774:12845:VariableStatement",
+        "115449:115889:FunctionDeclaration",
+        "121877:122453:FunctionDeclaration",
+        "125891:126725:FunctionDeclaration",
+        "127722:128419:FunctionDeclaration",
+        "134439:134701:FunctionDeclaration",
+        "171202:171510:FunctionDeclaration",
+        "214898:215918:FunctionDeclaration",
+        "282265:282653:FunctionDeclaration",
+        "326674:326875:FunctionDeclaration"
+      ],
+      "bytes": 4797
+    },
+    {
+      "id": 44,
+      "atoms": [
+        "48521:49540:FunctionDeclaration",
+        "83418:84104:FunctionDeclaration",
+        "84104:84484:FunctionDeclaration",
+        "180978:181298:FunctionDeclaration",
+        "243267:243838:FunctionDeclaration",
+        "246199:246643:FunctionDeclaration",
+        "283913:284119:FunctionDeclaration",
+        "285408:285664:FunctionDeclaration",
+        "298983:299831:FunctionDeclaration",
+        "324530:324574:VariableStatement"
+      ],
+      "bytes": 4774
+    },
+    {
+      "id": 45,
+      "atoms": [
+        "45818:46135:FunctionDeclaration",
+        "46135:46395:FunctionDeclaration",
+        "55468:55549:FunctionDeclaration",
+        "63578:64143:FunctionDeclaration",
+        "72893:73749:FunctionDeclaration",
+        "162532:162980:FunctionDeclaration",
+        "172407:173416:FunctionDeclaration",
+        "208366:208746:FunctionDeclaration",
+        "279758:279941:FunctionDeclaration",
+        "283016:283707:FunctionDeclaration"
+      ],
+      "bytes": 4790
+    },
+    {
+      "id": 46,
+      "atoms": [
+        "54352:54533:FunctionDeclaration",
+        "54990:55071:FunctionDeclaration",
+        "103357:103618:FunctionDeclaration",
+        "114495:115189:FunctionDeclaration",
+        "126725:127722:FunctionDeclaration",
+        "132812:133253:FunctionDeclaration",
+        "144668:145525:FunctionDeclaration",
+        "179378:179955:FunctionDeclaration",
+        "233697:234085:FunctionDeclaration",
+        "244908:245219:FunctionDeclaration"
+      ],
+      "bytes": 4788
+    },
+    {
+      "id": 47,
+      "atoms": [
+        "88064:88615:FunctionDeclaration",
+        "96067:96437:FunctionDeclaration",
+        "114253:114495:FunctionDeclaration",
+        "180269:180978:FunctionDeclaration",
+        "194675:195538:FunctionDeclaration",
+        "251914:252372:FunctionDeclaration",
+        "277586:277920:FunctionDeclaration",
+        "284325:284554:FunctionDeclaration",
+        "301284:302273:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 48,
+      "atoms": [
+        "90083:91070:FunctionDeclaration",
+        "168661:169212:FunctionDeclaration",
+        "173945:174809:FunctionDeclaration",
+        "231494:232204:FunctionDeclaration",
+        "250273:250730:FunctionDeclaration",
+        "256012:256332:FunctionDeclaration",
+        "257675:257930:FunctionDeclaration",
+        "283707:283913:FunctionDeclaration",
+        "330912:330960:VariableStatement",
+        "332188:332567:FunctionDeclaration"
+      ],
+      "bytes": 4777
+    },
+    {
+      "id": 49,
+      "atoms": [
+        "78696:79029:FunctionDeclaration",
+        "97757:98127:FunctionDeclaration",
+        "100817:101066:FunctionDeclaration",
+        "117102:117645:FunctionDeclaration",
+        "117645:118621:FunctionDeclaration",
+        "129037:129761:FunctionDeclaration",
+        "196129:196997:FunctionDeclaration",
+        "198782:199241:FunctionDeclaration",
+        "326250:326472:FunctionDeclaration"
+      ],
+      "bytes": 4744
+    },
+    {
+      "id": 50,
+      "atoms": [
+        "43733:44067:FunctionDeclaration",
+        "67098:67318:FunctionDeclaration",
+        "124788:125330:FunctionDeclaration",
+        "129761:130485:FunctionDeclaration",
+        "193046:193915:FunctionDeclaration",
+        "211140:211605:FunctionDeclaration",
+        "213518:214493:FunctionDeclaration",
+        "223030:223394:FunctionDeclaration",
+        "253071:253320:FunctionDeclaration"
+      ],
+      "bytes": 4742
+    },
+    {
+      "id": 51,
+      "atoms": [
+        "99905:100234:FunctionDeclaration",
+        "169212:169462:FunctionDeclaration",
+        "185106:185638:FunctionDeclaration",
+        "220686:221044:FunctionDeclaration",
+        "224961:225441:FunctionDeclaration",
+        "257930:258666:FunctionDeclaration",
+        "269372:270243:FunctionDeclaration",
+        "286264:287228:FunctionDeclaration",
+        "305280:305506:FunctionDeclaration"
+      ],
+      "bytes": 4746
+    },
+    {
+      "id": 52,
+      "atoms": [
+        "54533:54624:FunctionDeclaration",
+        "92281:92458:FunctionDeclaration",
+        "96437:97396:FunctionDeclaration",
+        "104648:104908:FunctionDeclaration",
+        "169462:170197:FunctionDeclaration",
+        "207407:207731:FunctionDeclaration",
+        "209498:209858:FunctionDeclaration",
+        "239093:239627:FunctionDeclaration",
+        "277108:277586:FunctionDeclaration",
+        "296260:297136:FunctionDeclaration"
+      ],
+      "bytes": 4794
+    },
+    {
+      "id": 53,
+      "atoms": [
+        "43395:43733:FunctionDeclaration",
+        "81346:81709:FunctionDeclaration",
+        "108269:109146:FunctionDeclaration",
+        "124049:124788:FunctionDeclaration",
+        "163291:163757:FunctionDeclaration",
+        "178253:178480:FunctionDeclaration",
+        "189272:190224:FunctionDeclaration",
+        "220145:220686:FunctionDeclaration",
+        "256653:256895:FunctionDeclaration"
+      ],
+      "bytes": 4745
+    },
+    {
+      "id": 54,
+      "atoms": [
+        "50520:51249:FunctionDeclaration",
+        "55276:55373:FunctionDeclaration",
+        "115189:115449:FunctionDeclaration",
+        "116151:117102:FunctionDeclaration",
+        "176941:177485:FunctionDeclaration",
+        "226037:226361:FunctionDeclaration",
+        "242803:243267:FunctionDeclaration",
+        "259011:259897:FunctionDeclaration",
+        "274632:275000:FunctionDeclaration",
+        "321457:321631:FunctionDeclaration"
+      ],
+      "bytes": 4797
+    },
+    {
+      "id": 55,
+      "atoms": [
+        "62556:62809:FunctionDeclaration",
+        "87182:88064:FunctionDeclaration",
+        "110367:110587:FunctionDeclaration",
+        "143458:144409:FunctionDeclaration",
+        "153571:154102:FunctionDeclaration",
+        "199870:200352:FunctionDeclaration",
+        "207079:207407:FunctionDeclaration",
+        "234961:235318:FunctionDeclaration",
+        "247862:248600:FunctionDeclaration"
+      ],
+      "bytes": 4742
+    },
+    {
+      "id": 56,
+      "atoms": [
+        "101449:101703:FunctionDeclaration",
+        "112188:113138:FunctionDeclaration",
+        "119712:120607:FunctionDeclaration",
+        "125330:125891:FunctionDeclaration",
+        "182184:182633:FunctionDeclaration",
+        "211605:211825:FunctionDeclaration",
+        "240891:241605:FunctionDeclaration",
+        "252693:253071:FunctionDeclaration",
+        "256332:256653:FunctionDeclaration"
+      ],
+      "bytes": 4742
+    },
+    {
+      "id": 57,
+      "atoms": [
+        "44067:44794:FunctionDeclaration",
+        "93893:94249:FunctionDeclaration",
+        "99572:99905:FunctionDeclaration",
+        "103618:103835:FunctionDeclaration",
+        "140057:140954:FunctionDeclaration",
+        "177721:178253:FunctionDeclaration",
+        "219168:219650:FunctionDeclaration",
+        "298037:298983:FunctionDeclaration",
+        "322622:322871:FunctionDeclaration"
+      ],
+      "bytes": 4739
+    },
+    {
+      "id": 58,
+      "atoms": [
+        "148014:148228:FunctionDeclaration",
+        "149767:150491:FunctionDeclaration",
+        "209026:209498:FunctionDeclaration",
+        "245219:245547:FunctionDeclaration",
+        "262303:262843:FunctionDeclaration",
+        "275000:275253:FunctionDeclaration",
+        "297136:298037:FunctionDeclaration",
+        "300341:301284:FunctionDeclaration",
+        "326875:327236:FunctionDeclaration"
+      ],
+      "bytes": 4736
+    },
+    {
+      "id": 59,
+      "atoms": [
+        "45154:45420:FunctionDeclaration",
+        "59363:59469:FunctionDeclaration",
+        "88615:89517:FunctionDeclaration",
+        "109146:109861:FunctionDeclaration",
+        "119409:119712:FunctionDeclaration",
+        "137028:137970:FunctionDeclaration",
+        "163757:164151:FunctionDeclaration",
+        "196997:197449:FunctionDeclaration",
+        "200580:201133:FunctionDeclaration",
+        "327236:327401:FunctionDeclaration"
+      ],
+      "bytes": 4798
+    },
+    {
+      "id": 60,
+      "atoms": [
+        "49540:50102:FunctionDeclaration",
+        "54840:54913:FunctionDeclaration",
+        "103835:104285:FunctionDeclaration",
+        "107249:107507:FunctionDeclaration",
+        "148228:148605:FunctionDeclaration",
+        "167131:168037:FunctionDeclaration",
+        "227497:228208:FunctionDeclaration",
+        "244506:244705:FunctionDeclaration",
+        "252372:252693:FunctionDeclaration",
+        "290786:291726:FunctionDeclaration"
+      ],
+      "bytes": 4797
+    },
+    {
+      "id": 61,
+      "atoms": [
+        "94249:95186:FunctionDeclaration",
+        "130485:131402:FunctionDeclaration",
+        "154102:154543:FunctionDeclaration",
+        "171510:172090:FunctionDeclaration",
+        "182868:183560:FunctionDeclaration",
+        "235995:236256:FunctionDeclaration",
+        "236256:236643:FunctionDeclaration",
+        "280754:280927:FunctionDeclaration",
+        "285953:286264:FunctionDeclaration",
+        "320321:320423:FunctionDeclaration"
+      ],
+      "bytes": 4801
+    },
+    {
+      "id": 62,
+      "atoms": [
+        "55174:55276:FunctionDeclaration",
+        "106942:107249:FunctionDeclaration",
+        "131875:132812:FunctionDeclaration",
+        "199241:199634:FunctionDeclaration",
+        "203453:204369:FunctionDeclaration",
+        "219650:219912:FunctionDeclaration",
+        "248600:249052:FunctionDeclaration",
+        "262843:263393:FunctionDeclaration",
+        "302273:302982:FunctionDeclaration",
+        "302982:303154:FunctionDeclaration"
+      ],
+      "bytes": 4800
+    },
+    {
+      "id": 63,
+      "atoms": [
+        "59469:59632:FunctionDeclaration",
+        "157156:157607:FunctionDeclaration",
+        "181881:182184:FunctionDeclaration",
+        "217763:218471:FunctionDeclaration",
+        "266808:267731:FunctionDeclaration",
+        "270243:271173:FunctionDeclaration",
+        "304729:305280:FunctionDeclaration",
+        "306760:307155:FunctionDeclaration",
+        "321827:322093:FunctionDeclaration",
+        "331736:331855:VariableStatement"
+      ],
+      "bytes": 4809
+    }
+  ]
+}

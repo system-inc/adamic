@@ -1,0 +1,128 @@
+[
+  {
+    "file": "binder.ts",
+    "source_bytes": 195107,
+    "plan": "binder.ts.plan.json",
+    "pieces": 64,
+    "atoms": 175,
+    "atom_bytes": 195105,
+    "largest_piece_bytes": 15387
+  },
+  {
+    "file": "builder.ts",
+    "source_bytes": 117298,
+    "plan": "builder.ts.plan.json",
+    "pieces": 64,
+    "atoms": 85,
+    "atom_bytes": 117296,
+    "largest_piece_bytes": 28044
+  },
+  {
+    "file": "checker.ts",
+    "source_bytes": 3154156,
+    "plan": "checker.ts.plan.json",
+    "pieces": 64,
+    "atoms": 2648,
+    "atom_bytes": 3154058,
+    "largest_piece_bytes": 49302
+  },
+  {
+    "file": "commandLineParser.ts",
+    "source_bytes": 183733,
+    "plan": "commandLineParser.ts.plan.json",
+    "pieces": 64,
+    "atoms": 166,
+    "atom_bytes": 183731,
+    "largest_piece_bytes": 40879
+  },
+  {
+    "file": "emitter.ts",
+    "source_bytes": 274627,
+    "plan": "emitter.ts.plan.json",
+    "pieces": 64,
+    "atoms": 422,
+    "atom_bytes": 274625,
+    "largest_piece_bytes": 26845
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "source_bytes": 54177,
+    "plan": "executeCommandLine.ts.plan.json",
+    "pieces": 50,
+    "atoms": 50,
+    "atom_bytes": 54175,
+    "largest_piece_bytes": 7651
+  },
+  {
+    "file": "factory/nodeFactory.ts",
+    "source_bytes": 336646,
+    "plan": "factory__nodeFactory.ts.plan.json",
+    "pieces": 64,
+    "atoms": 544,
+    "atom_bytes": 336644,
+    "largest_piece_bytes": 28185
+  },
+  {
+    "file": "factory/utilities.ts",
+    "source_bytes": 76615,
+    "plan": "factory__utilities.ts.plan.json",
+    "pieces": 64,
+    "atoms": 108,
+    "atom_bytes": 76613,
+    "largest_piece_bytes": 7010
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "source_bytes": 183618,
+    "plan": "moduleNameResolver.ts.plan.json",
+    "pieces": 64,
+    "atoms": 163,
+    "atom_bytes": 183616,
+    "largest_piece_bytes": 18473
+  },
+  {
+    "file": "parser.ts",
+    "source_bytes": 541260,
+    "plan": "parser.ts.plan.json",
+    "pieces": 64,
+    "atoms": 605,
+    "atom_bytes": 541258,
+    "largest_piece_bytes": 49243
+  },
+  {
+    "file": "program.ts",
+    "source_bytes": 271300,
+    "plan": "program.ts.plan.json",
+    "pieces": 64,
+    "atoms": 221,
+    "atom_bytes": 271298,
+    "largest_piece_bytes": 26303
+  },
+  {
+    "file": "transformers/es2015.ts",
+    "source_bytes": 231789,
+    "plan": "transformers__es2015.ts.plan.json",
+    "pieces": 64,
+    "atoms": 183,
+    "atom_bytes": 231787,
+    "largest_piece_bytes": 8048
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "source_bytes": 114655,
+    "plan": "tsbuildPublic.ts.plan.json",
+    "pieces": 64,
+    "atoms": 106,
+    "atom_bytes": 114653,
+    "largest_piece_bytes": 14389
+  },
+  {
+    "file": "utilities.ts",
+    "source_bytes": 514740,
+    "plan": "utilities.ts.plan.json",
+    "pieces": 64,
+    "atoms": 892,
+    "atom_bytes": 514738,
+    "largest_piece_bytes": 32053
+  }
+]

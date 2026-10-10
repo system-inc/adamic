@@ -7,6 +7,7 @@ import subprocess
 import sys
 root, result_path, output = (Path(p).resolve() for p in sys.argv[1:4])
 count = int(sys.argv[4])
+options = sys.argv[5:]
 result = json.loads(result_path.read_text())
 output.mkdir(parents=True,exist_ok=True)
 files = [f for f in result['unexamined'] if Path(f['file']).suffix in ('.ts','.a')]
@@ -17,7 +18,7 @@ for file in files:
     assert source.stat().st_size == file['bytes']
     plan_path = output / (file['file'].replace('/','__') + '.plan.json')
     with plan_path.with_suffix('.log').open('w') as log:
-        subprocess.run(['node',str(Path(__file__).with_name('plan_pieces.cjs')),str(source),str(count),str(plan_path)],
+        subprocess.run(['node',str(Path(__file__).with_name('plan_pieces.cjs')),str(source),str(count),str(plan_path),*options],
                        stdout=log,stderr=subprocess.STDOUT,timeout=30,check=True)
     plan = json.loads(plan_path.read_text())
     workload.append(dict(file=file['file'], source_bytes=file['bytes'], plan=plan_path.name,

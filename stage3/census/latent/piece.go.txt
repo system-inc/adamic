@@ -26,6 +26,11 @@ type latentPieceRecord struct {
 	Atoms      []string `json:"atoms"`
 }
 type latentPiecePlan struct {
+	Version        int `json:"version"`
+	SplitFunctions []struct {
+		Start int `json:"start"`
+		End   int `json:"end"`
+	} `json:"split_functions"`
 	File   string            `json:"file"`
 	SHA256 string            `json:"sha256"`
 	Atoms  []latentPieceAtom `json:"atoms"`
@@ -89,6 +94,30 @@ func latentPieceStart(program *load.Program, file *ast.SourceFile) {
 			candidates = append(candidates, node)
 		}
 	}
+	if plan.Version == 2 {
+		candidates = nil
+		inventory := map[string]*ast.Node{}
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			inventory[fmt.Sprintf("%d:%d:%s", node.Pos(), node.End(), node.Kind.String())] = node
+			node.ForEachChild(visit)
+			return false
+		}
+		visit(file.AsNode())
+		for _, atom := range plan.Atoms {
+			node := inventory[fmt.Sprintf("%d:%d:Kind%s", atom.Start, atom.End, atom.Kind)]
+			if node == nil {
+				panic("recursive atom missing from AST")
+			}
+			candidates = append(candidates, node)
+		}
+		for _, span := range plan.SplitFunctions {
+			node := inventory[fmt.Sprintf("%d:%d:KindFunctionDeclaration", span.Start, span.End)]
+			if node == nil {
+				panic("recursive function missing from AST")
+			}
+		}
+	}
 	if len(candidates) != len(plan.Atoms) {
 		panic("piece atom inventory mismatch")
 	}
@@ -140,20 +169,30 @@ func latentPieceSkipBody(node *ast.Node) bool {
 	if latentPiece == nil {
 		return false
 	}
-	return node == latentPiece.wrapper || !latentPieceAllows(node)
+	return (node == latentPiece.wrapper && latentPiece.atoms[node] == "") || !latentPieceAllows(node)
 }
 func (l *lowering) latentPiecePrepare(node *ast.Node) {
-	if latentPiece == nil || latentPiece.wrapper == nil || node.Parent != latentPiece.wrapper.Body() {
+	if latentPiece == nil {
 		return
 	}
-	wrapper := latentPiece.wrapper
-	l.latentAncestors = map[*ast.Node]bool{wrapper: true}
-	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "piece enclosing createTypeChecker"})
-	if err := l.signature(index, wrapper, -1); err != nil {
-		panic(err)
+	ancestors := []*ast.Node{}
+	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if ast.IsFunctionLikeDeclaration(parent) && parent.Body() != nil {
+			ancestors = append(ancestors, parent)
+		}
 	}
-	l.functionIndex, l.function = index, &l.result.Functions[index]
+	l.latentAncestors = map[*ast.Node]bool{}
+	for i := len(ancestors) - 1; i >= 0; i-- {
+		wrapper := ancestors[i]
+		l.latentAncestors[wrapper] = true
+		index := len(l.result.Functions)
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "piece enclosing function"})
+		if err := l.signature(index, wrapper, -1); err != nil {
+			panic(err)
+		}
+		l.functionIndex, l.function = index, &l.result.Functions[index]
+	}
+
 }
 func latentPieceFinish(record *LatentFile) {
 	if latentPiece != nil {

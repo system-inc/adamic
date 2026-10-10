@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/workspace/b2wbbha-recursive/verified-census",
+    "/tmp/b17vtn1/original-adapted/src/compiler",
+    "/workspace/b2wbbha-recursive/verified-watch-run/piece-006.pending.jsonl"
+  ],
+  "wall_seconds": 22.8399294489991,
+  "peak_rss_kib": 846120,
+  "exit": 0,
+  "user_cpu_seconds": 21.784733,
+  "system_cpu_seconds": 0.41433699999999996,
+  "phase_first_wall_seconds": {
+    "refusal_scan": 2.287469520999366,
+    "walk": 2.4021087599994644,
+    "completed": 22.739709413999663
+  },
+  "time_limit_seconds": 600.0,
+  "rss_limit_mib": 3072,
+  "address_space_limit_mib": 6144,
+  "rss_limit_killed": false
+}

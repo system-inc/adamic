@@ -48,10 +48,62 @@ for node in stock_file['nodes']:
             expected_atoms.add((node['start'],node['end'],node['kind_code']))
     if wrapper and len(node['ancestors']) == 3 and node['ancestor_kinds'] == [source_kind,function_kind,block_kind] and node['ancestors'][1] == [wrapper['start'],wrapper['end']]:
         expected_atoms.add((node['start'],node['end'],node['kind_code']))
+if plan.get('version') == 2:
+    # Recover each recursive cut from stock parent chains, not planner weights.
+    nodes = stock_file['nodes']
+    by_span_kind = {(n['start'],n['end'],n['kind_code']):n for n in nodes}
+    split_functions = {(n['start'],n['end'],function_kind) for n in plan['split_functions']}
+    split_containers = {(n['start'],n['end'],codes['ModuleDeclaration']) for n in plan['split_containers']}
+    cuts = split_functions | split_containers
+    assert cuts <= by_span_kind.keys(), 'invented recursive envelope'
+    atom_spans = {(a['start'],a['end'],codes[a['kind']]):a for a in plan['atoms']}
+    if plan.get('root_name'):
+        roots = [min(plan['atoms'],key=lambda a:a['start'])]
+        assert roots[0]['name'] == plan['root_name']
+        roots = [(a['start'],a['end'],codes[a['kind']]) for a in roots]
+    else:
+        roots = list(expected_atoms)
+    expected_atoms = set()
+    used_cuts = set()
+    def expand(key):
+        assert key in by_span_kind, 'unknown recursive root'
+        expected_atoms.add(key)
+        if key not in cuts:
+            assert atom_spans[key]['bytes'] == key[1]-key[0], 'incorrect leaf byte size'
+            return
+        used_cuts.add(key)
+        parent = by_span_kind[key]
+        depth = len(parent['ancestors'])
+        children = [n for n in nodes if len(n['ancestors']) == depth + 2
+                    and n['ancestors'][depth] == [parent['start'],parent['end']]
+                    and n['ancestor_kinds'][depth] == parent['kind_code']
+                    and n['ancestor_kinds'][depth+1] == (block_kind if key in split_functions else codes['ModuleBlock'])
+                    and (key not in split_functions or n['kind_code'] == function_kind)]
+        assert children, 'empty recursive cut'
+        own = parent['end']-parent['start']-sum(n['end']-n['start'] for n in children)
+        assert atom_spans[key]['bytes'] == own, 'incorrect recursive own-statement size'
+        for child in children:
+            expand((child['start'],child['end'],child['kind_code']))
+    for key in roots:
+        expand(key)
+    assert used_cuts == cuts, 'unused recursive cut'
+    assert all(p['bytes'] == sum(atom_spans[(a['start'],a['end'],codes[a['kind']])]['bytes'] for a in plan['atoms'] if a['id'] in p['atoms'])
+               and p['bytes'] <= plan['threshold_bytes'] for p in plan['pieces']), 'piece exceeds threshold or size changed'
 assert {(a['start'],a['end'],codes[a['kind']]) for a in plan['atoms']} == expected_atoms, 'planner omitted or invented source statements'
 planned_atoms = {a['id']:a for a in plan['atoms']}
 assigned = [atom for piece in plan['pieces'] for atom in piece['atoms']]
 assert len(assigned) == len(set(assigned)) and set(assigned) == set(planned_atoms), 'plan is not an exact atom partition'
+# Attribute each stock AST node to its nearest planned atom. Recursive roots
+# overlap spatially, but the owned node partition must still count each once.
+atom_keys = {(a['start'],a['end'],codes[a['kind']]):a['id'] for a in plan['atoms']}
+owned_nodes = Counter()
+for node in stock_file['nodes']:
+    chain = [(node['start'],node['end'],node['kind_code'])]
+    chain.extend((*span,kind) for span,kind in reversed(list(zip(node['ancestors'],node['ancestor_kinds'],strict=True))))
+    owner = next((atom_keys[key] for key in chain if key in atom_keys),None)
+    if owner is not None:
+        owned_nodes[owner] += 1
+assert set(owned_nodes) == set(planned_atoms), 'empty or missing owned AST atom'
 rows = []
 header = None
 for piece in plan['pieces']:
@@ -78,6 +130,8 @@ def audit_union(records):
         assert record['file'] == plan['file']
         assert record['piece']['plan_sha256'] == plan_digest and record['piece']['atoms'] == piece['atoms']
         assert record['speculative_coverage']['unvisited_nodes'] == 0
+        assert record['speculative_coverage']['total_nodes'] == sum(owned_nodes[a] for a in piece['atoms']), 'owned AST coverage double-counted or dropped nodes'
+        assert record['speculative_coverage']['source_bytes'] == plan['source_bytes'], 'piece source byte identity changed'
         expected_units = {(planned_atoms[a]['start'], planned_atoms[a]['end'], codes[planned_atoms[a]['kind']]) for a in piece['atoms']}
         assert len(record['units']) == len(expected_units)
         allowed = {'prepass', *piece['atoms']}
@@ -113,6 +167,9 @@ finding = next(f for f in source['findings'] if f['piece_atom'] != 'prepass')
 source['findings'].remove(finding)
 target['findings'].append(finding)
 caught('site moved between pieces',mutant,'site moved')
+mutant = deepcopy(rows)
+mutant[0]['speculative_coverage']['total_nodes'] += 1
+caught('shifted owned AST count',mutant,'owned AST coverage')
 (output / 'MUTANTS.json').write_text(json.dumps(mutants,indent=2)+'\n')
 
 def finding_key(f):
@@ -155,7 +212,9 @@ for file in sorted(whole_boundaries.keys() | piece_boundaries.keys()):
     removed_boundaries.extend(dict(file=file,start=s,end=e,kind_code=k) for s,e,k in sorted(whole_boundaries[file]-piece_boundaries[file]))
     added_boundaries.extend(dict(file=file,start=s,end=e,kind_code=k) for s,e,k in sorted(piece_boundaries[file]-whole_boundaries[file]))
 result = dict(file=plan['file'], baseline_sha256=hashlib.sha256(baseline_path.read_bytes()).hexdigest(),
-              exact_match=not(missing or added or depths), whole_sites=len(whole), piece_sites=len(pieces),
+              exact_match=not(missing or added or depths),
+              owned_stock_nodes=sum(owned_nodes.values()), piece_walk_nodes=sum(r['speculative_coverage']['total_nodes'] for r in rows),
+              whole_walk_nodes=baseline['speculative_coverage']['total_nodes'], whole_sites=len(whole), piece_sites=len(pieces),
               missing_sites=missing, added_sites=added, changed_depths=depths,
               removed_boundaries=removed_boundaries, added_boundaries=added_boundaries,
               raw_depths_recalibrated=dict(whole=whole_changes,pieces=piece_changes),

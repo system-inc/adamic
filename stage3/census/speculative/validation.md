@@ -102,3 +102,5 @@ observations byte for byte. New resume, timing and publication guards pass their
 mutants; stream depth/coverage and C/JS identity witnesses pass again. Five checker
 samples complete and createNodeBuilder times out at 900.070s; no new full-file
 coverage is claimed. See evidence/pieces/README.md and SHA256.json.
+
+Recursive continuation: watch retains 315 sites exactly. The complete createNodeBuilder reference finishes in 971.045s, peak RSS 4182624KiB; recursive ownership and whole traversal both count all 30,499 nodes. Its union is rejected with 63 missing, 51 added and ten depth differences. Dropped, duplicated, moved and shifted-owned-node mutants are caught; progress, resume, stream, publication and C/JS identity controls pass. No recursive result is admitted to full-file coverage. See evidence/recursive-pieces/README.md, DIFFERENCES.md and SHA256.json.
