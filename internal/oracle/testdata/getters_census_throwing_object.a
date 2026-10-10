@@ -1,0 +1,8 @@
+// Reduced from TypeScript 050880ce src/compiler/checker.ts:2187.
+interface Type { readonly id: number; }
+interface IterationTypes { readonly yieldType: Type; }
+function fail(): never { throw new Error('Not supported'); }
+const noIterationTypes: IterationTypes = { get yieldType(): Type { return fail(); } };
+console.log('constructed');
+try { console.log(`${noIterationTypes.yieldType.id}`); }
+catch (error) { if (error instanceof Error) console.log(error.message); }
