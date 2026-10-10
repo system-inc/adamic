@@ -1,0 +1,332 @@
+[
+  {
+    "test": "TestCallbackWideningNumberEvery",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 14.98
+  },
+  {
+    "test": "TestCallbackWideningObjectSort",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 15.01
+  },
+  {
+    "test": "TestCallbackWideningOptionalNumberMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 15.02
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 15.03
+  },
+  {
+    "test": "TestCallbackWideningObjectGeneric",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.67
+  },
+  {
+    "test": "TestCallbackWideningObjectSome",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.73
+  },
+  {
+    "test": "TestCallbackWideningObjectReduce",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCallbackWideningObjectMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCallbackWideningObjectEvery",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.62
+  },
+  {
+    "test": "TestCallbackWideningObjectFilter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.66
+  },
+  {
+    "test": "TestCallbackWideningObjectFind",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.67
+  },
+  {
+    "test": "TestCallbackWideningObjectForEach",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCallbackWideningNumberReduce",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestCallbackWideningNumberSort",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCallbackWideningNumberMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestCallbackWideningNumberSome",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestCallbackWideningNumberGeneric",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.61
+  },
+  {
+    "test": "TestCallbackWideningNumberForEach",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.66
+  },
+  {
+    "test": "TestCallbackWideningNumberFind",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestCallbackWideningNumberFilter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.66
+  },
+  {
+    "test": "TestSelfCompareArrayFill",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestWeakDifferentialHeldUnion",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.62
+  },
+  {
+    "test": "TestWeakDifferentialBooleanFilter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestWeakDifferentialMatchingMethods",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestWeakDifferentialSort",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestWeakDifferentialSome",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestWeakDifferentialReduce",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestWeakDifferentialMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestWeakDifferentialFind",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestWeakDifferentialEach",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestWeakDifferentialViewMethod",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestWeakDifferentialViewMethodParameter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestWeakDifferentialSingleNarrowed",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestWeakDifferentialUnionNarrowed",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.69
+  },
+  {
+    "test": "TestCallbackWideningNumberFindIndex",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.65
+  },
+  {
+    "test": "TestCallbackWideningStringMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.61
+  },
+  {
+    "test": "TestCallbackWideningBooleanMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.6
+  },
+  {
+    "test": "TestCallbackWideningObjectGenericMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.55
+  },
+  {
+    "test": "TestCallbackWideningNumberGenericMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.6
+  },
+  {
+    "test": "TestCallbackWideningNumberToSorted",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.65
+  },
+  {
+    "test": "TestCallbackWideningNumberCapture",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.67
+  },
+  {
+    "test": "TestCallbackWideningNumberFindLast",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.63
+  },
+  {
+    "test": "TestCallbackWideningLibraryMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.62
+  },
+  {
+    "test": "TestCallbackWideningNumberThrow",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.54
+  },
+  {
+    "test": "TestCallbackWideningNumberIndex",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.65
+  },
+  {
+    "test": "TestCallbackWideningNumberReduceAccumulator",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.56
+  },
+  {
+    "test": "TestCallbackWideningNumberNamedSort",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.6
+  },
+  {
+    "test": "TestMiscompile2AConstructorArrow",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestSelfCompareConstantMutant",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 8.78
+  },
+  {
+    "test": "TestMiscompile2AUndefinedError",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.84
+  },
+  {
+    "test": "TestMiscompile2AMarkerUndefined",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 1.07
+  },
+  {
+    "test": "TestMiscompile2AMarker",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 1.04
+  },
+  {
+    "test": "TestSelfCompareClosure",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 13.1
+  },
+  {
+    "test": "TestSelfCompareSweep",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 21.15
+  },
+  {
+    "test": "TestMiscompile2AErrorSubclassSpread",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.57
+  },
+  {
+    "test": "TestMiscompile2AConstructorNumberArrow",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.93
+  },
+  {
+    "test": "TestMiscompile2AMaybeSetter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.65
+  },
+  {
+    "test": "TestMiscompile2AOverrideSource",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.89
+  },
+  {
+    "test": "TestMiscompile2ADerivedSymbol",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.96
+  },
+  {
+    "test": "TestMiscompile2ALongName",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.81
+  },
+  {
+    "test": "TestMiscompile2AErrorSpread",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestCallbackWideningUnrepresentedParameter",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 0.69
+  },
+  {
+    "test": "TestCallbackWideningNumberArguments",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 24.75
+  },
+  {
+    "test": "TestMiscompile2AOptionalError",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 1.91
+  },
+  {
+    "test": "TestCallbackWideningOptionalObjectMap",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 2.22
+  },
+  {
+    "test": "TestMiscompile2AControls",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "seconds": 27.31
+  }
+]

@@ -1,0 +1,1 @@
+interface Item{readonly id:number;}const items:readonly (Item|null)[]=[{id:1},null];console.log(items.map((x:Item|null|number):string=>x===null?'null':typeof x==='number'?`${x}`:`${x.id}`).join(','));

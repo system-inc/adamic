@@ -1,0 +1,32 @@
+[
+  {
+    "commit": "d8e6f59c",
+    "owner": "miscompile-fxspptb-2a",
+    "decision": "Its absent-message preservation is already in the extracted 2a patch. Other additions implement exceptions-21, absent on main and excluded."
+  },
+  {
+    "commit": "9679fbe4",
+    "owner": "self-compare-main",
+    "decision": "Included units.go and units_self_compare_test.go in member commit."
+  },
+  {
+    "commit": "a233eec3",
+    "owner": "self-compare-main",
+    "decision": "Included the self-compare directory owner in main parallel form. Scanner changes repair spread-shorthand multi-push, not this member."
+  },
+  {
+    "commit": "a233eec3",
+    "owner": "miscompile-fxspptb-2a",
+    "decision": "Builtin Error initializer census repair needs exceptions-21 BuiltinError metadata; 2a changes MakeError only on main. No source-site census repair applies."
+  },
+  {
+    "commit": "2b2b1095",
+    "owner": "per-backend-stops",
+    "decision": "Dropped member needs step24 named stack guard. Parser stack and WASI repairs concern excluded members."
+  },
+  {
+    "commit": "f130c846",
+    "owner": "callback-widening/search-shrink interaction",
+    "decision": "Counts attributed to excluded search-shrink implementation, which removes callback adapters. Excluded; regenerate counts for main adapters."
+  }
+]

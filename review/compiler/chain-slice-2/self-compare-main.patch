@@ -1,0 +1,283 @@
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index 3549a0f5..795732f8 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -751,6 +751,9 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
+ 	case operandType == ir.Union && operator == ir.NotEqual:
+ 		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
+ 	}
++	if operator == ir.Equal || operator == ir.NotEqual {
++		return e.scalarEquality(operator, operandType, left, right)
++	}
+ 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
+ }
+ 
+diff --git a/internal/native/self_compare.go b/internal/native/self_compare.go
+new file mode 100644
+index 00000000..3e5bc511
+--- /dev/null
++++ b/internal/native/self_compare.go
+@@ -0,0 +1,30 @@
++package native
++
++import (
++	"fmt"
++	"slices"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// Distinct parameters keep clang from diagnosing identical emitted operands.
++// Number equality remains IEEE equality, including NaN and signed zero.
++func (e *emitter) scalarEquality(operator ir.Operator, operandType ir.Type, left, right string) string {
++	name, representation := "reference", "const void *"
++	switch operandType {
++	case ir.Number:
++		name, representation = "number", "double"
++	case ir.Boolean:
++		name, representation = "boolean", "bool"
++	}
++	helper := "adamic_same_" + name
++	declaration := fmt.Sprintf("static inline bool %s(%s left, %s right) { return left == right; }", helper, representation, representation)
++	if !slices.Contains(e.declarations, declaration) {
++		e.declarations = append(e.declarations, declaration)
++	}
++	comparison := fmt.Sprintf("%s(%s, %s)", helper, left, right)
++	if operator == ir.NotEqual {
++		return "(!" + comparison + ")"
++	}
++	return comparison
++}
+diff --git a/internal/oracle/self_compare_test.go b/internal/oracle/self_compare_test.go
+new file mode 100644
+index 00000000..ded64298
+--- /dev/null
++++ b/internal/oracle/self_compare_test.go
+@@ -0,0 +1,117 @@
++package oracle
++
++import (
++	"os"
++	"path/filepath"
++	"regexp"
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/native"
++)
++
++var selfCompareFixtures = []string{"closure", "array-fill", "sweep"}
++
++func init() {
++	for _, name := range selfCompareFixtures {
++		fixtures = append(fixtures, struct {
++			path            string
++			lowers, checked bool
++		}{"stage3/fixtures/self-compare/" + name + ".a", true, false})
++	}
++}
++
++func TestSelfCompareClosure(t *testing.T) {
++	t.Parallel()
++	selfCompare(t, "closure")
++}
++
++func TestSelfCompareArrayFill(t *testing.T) {
++	t.Parallel()
++	selfCompare(t, "array-fill")
++}
++
++func TestSelfCompareSweep(t *testing.T) {
++	t.Parallel()
++	selfCompare(t, "sweep")
++}
++
++func selfCompare(t *testing.T, name string) {
++	t.Helper()
++	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare", name+".a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	expected := onNode(t, path)
++	compare := func(mode string, actual run) {
++		t.Helper()
++		if difference := disagreement(expected, actual); difference != "" {
++			t.Fatalf("%s: %s; got exit %d stdout %q stderr %q", mode, difference, actual.exitCode, actual.stdout, actual.stderr)
++		}
++	}
++	compare("JavaScript", onJavaScriptBackend(t, program))
++	compare("release", releasedUncached(t, program))
++	sanitized, binary := nativelyUncached(t, program)
++	compare("sanitized", sanitized)
++	if report := leaksUncached(t, program, binary); report != "" {
++		t.Fatal(report)
++	}
++	countedBinary := filepath.Join(t.TempDir(), "counted")
++	if err := native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
++		t.Fatal(err)
++	}
++	counted := execute(t, countedBinary)
++	if report := unbalanced(t, counted); report != "" {
++		t.Fatal(report)
++	}
++	counted.stderr = countsLine.ReplaceAll(counted.stderr, nil)
++	compare("counted", counted)
++	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
++		compare("wasm32-wasi", onWASI(t, native.C(program)))
++	}
++}
++
++func TestSelfCompareConstantMutant(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/self-compare/sweep.a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	source := native.C(program)
++	calls := regexp.MustCompile(`adamic_same_number\((adamic_local_[A-Za-z0-9_]+), (adamic_local_[A-Za-z0-9_]+)\)`)
++	replaced := false
++	source = calls.ReplaceAllStringFunc(source, func(call string) string {
++		operands := calls.FindStringSubmatch(call)
++		if !replaced && operands[1] == operands[2] {
++			replaced = true
++			return "true"
++		}
++		return call
++	})
++	if !replaced {
++		t.Fatal("mutant did not replace numeric self-equality")
++	}
++	binary := filepath.Join(t.TempDir(), "mutant")
++	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
++		t.Fatal(err)
++	}
++	actual := execute(t, binary)
++	if actual.exitCode != 0 || len(actual.stderr) != 0 {
++		t.Fatalf("mutant failed outside the oracle: %+v", actual)
++	}
++	if difference := disagreement(onNode(t, path), actual); difference != "stdout differs" {
++		t.Fatalf("mutant: %q", difference)
++	}
++	if !strings.Contains(string(actual.stdout), "NaN: true true\n") {
++		t.Fatalf("NaN did not catch folding: %q", actual.stdout)
++	}
++	t.Log("constant self-equality mutant compiled and ran; sweep.a caught NaN: true true instead of false true")
++}
+diff --git a/stage3/fixtures/self-compare/array-fill.a b/stage3/fixtures/self-compare/array-fill.a
+new file mode 100644
+index 00000000..978eede0
+--- /dev/null
++++ b/stage3/fixtures/self-compare/array-fill.a
+@@ -0,0 +1,7 @@
++// a-check: compile
++function run() {
++    const zeros: number[] = [0, 0, 0];
++    console.log(String(zeros.fill(99) === zeros));
++    console.log(zeros.join(","));
++}
++run();
+diff --git a/stage3/fixtures/self-compare/closure.a b/stage3/fixtures/self-compare/closure.a
+new file mode 100644
+index 00000000..6c3170fa
+--- /dev/null
++++ b/stage3/fixtures/self-compare/closure.a
+@@ -0,0 +1,6 @@
++// a-check: compile
++function run() {
++    function f(): number { return 1; }
++    console.log(String(f === f));
++}
++run();
+diff --git a/stage3/fixtures/self-compare/status.json b/stage3/fixtures/self-compare/status.json
+new file mode 100644
+index 00000000..73c48ecc
+--- /dev/null
++++ b/stage3/fixtures/self-compare/status.json
+@@ -0,0 +1,50 @@
++[
++  {
++    "file": "closure.a",
++    "tsc": [
++      "task #7c6b4pq; runtime/review-area-on-next 854fec20"
++    ],
++    "reason": "self-comparison preserves identity and IEEE equality",
++    "node": {
++      "stdout": "true\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "array-fill.a",
++    "tsc": [
++      "task #7c6b4pq; runtime/review-area-on-next 854fec20"
++    ],
++    "reason": "self-comparison preserves identity and IEEE equality",
++    "node": {
++      "stdout": "true\n99,99,99\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  },
++  {
++    "file": "sweep.a",
++    "tsc": [
++      "task #7c6b4pq; runtime/review-area-on-next 854fec20"
++    ],
++    "reason": "self-comparison preserves identity and IEEE equality",
++    "node": {
++      "stdout": "closure: true false\nobject: true false\narray: true false\nstring: true false\nboolean: true false\nNaN: false true\n-0: true false\n1: true false\nzero: true\nstring value: true\ndistinct: false\n",
++      "stderr": "",
++      "exit": 0
++    },
++    "stage0": {
++      "outcome": "Compiles",
++      "what": ""
++    }
++  }
++]
+diff --git a/stage3/fixtures/self-compare/sweep.a b/stage3/fixtures/self-compare/sweep.a
+new file mode 100644
+index 00000000..cedd44e1
+--- /dev/null
++++ b/stage3/fixtures/self-compare/sweep.a
+@@ -0,0 +1,23 @@
++// a-check: compile
++function compareNumber(label: string, value: number) {
++    console.log(label + ": " + String(value === value) + " " + String(value !== value));
++}
++function run() {
++    function f(): number { return 1; }
++    const object = { value: 1 };
++    const array: number[] = [1];
++    const text: string = String(array.length);
++    const boolean: boolean = array.length > 0;
++    console.log("closure: " + String(f === f) + " " + String(f !== f));
++    console.log("object: " + String(object === object) + " " + String(object !== object));
++    console.log("array: " + String(array === array) + " " + String(array !== array));
++    console.log("string: " + String(text === text) + " " + String(text !== text));
++    console.log("boolean: " + String(boolean === boolean) + " " + String(boolean !== boolean));
++    compareNumber("NaN", Number.parseFloat("not a number"));
++    compareNumber("-0", -0);
++    compareNumber("1", 1);
++    console.log("zero: " + String(-0 === 0));
++    console.log("string value: " + String(text === String(array.length)));
++    console.log("distinct: " + String(({ value: 1 }) === ({ value: 1 })));
++}
++run();

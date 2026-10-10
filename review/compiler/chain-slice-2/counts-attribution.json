@@ -1,0 +1,332 @@
+{
+  "regenerations_completed": 1,
+  "before_rows": 1011,
+  "after_rows": 1057,
+  "added_rows": 46,
+  "changed_existing_rows": 0,
+  "removed_rows": 0,
+  "rows": [
+    {
+      "path": "internal/oracle/testdata/callback_widening/boolean-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/boolean-map.a | 8 | 8 | 7 | 13 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/library-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/library-map.a | 11 | 11 | 14 | 19 | 7 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/nullable-object-map.a | 9 | 9 | 15 | 20 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-arguments.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-arguments.a | 14 | 14 | 7 | 17 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-capture.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-capture.a | 26 | 26 | 13 | 33 | 11 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-every.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-every.a | 8 | 8 | 10 | 16 | 5 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-filter.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-filter.a | 15 | 15 | 10 | 21 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-find.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-find.a | 8 | 8 | 7 | 13 | 5 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-findIndex.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-findIndex.a | 10 | 10 | 7 | 15 | 6 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-findLast.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-findLast.a | 10 | 10 | 7 | 15 | 6 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-forEach.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-forEach.a | 13 | 13 | 10 | 21 | 7 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-generic-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-generic-map.a | 15 | 15 | 11 | 21 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-generic.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-generic.a | 13 | 13 | 8 | 18 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-index.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-index.a | 16 | 16 | 9 | 21 | 11 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-map.a | 15 | 15 | 10 | 20 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-named-sort.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-named-sort.a | 13 | 13 | 14 | 26 | 6 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-reduce-accumulator.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-reduce-accumulator.a | 12 | 12 | 13 | 23 | 6 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-reduce.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-reduce.a | 16 | 16 | 17 | 31 | 9 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-some.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-some.a | 7 | 7 | 7 | 12 | 5 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-sort.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-sort.a | 17 | 17 | 10 | 23 | 9 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-throw.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-throw.a | 14 | 14 | 10 | 19 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/number-toSorted.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/number-toSorted.a | 14 | 14 | 13 | 25 | 7 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-every.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-every.a | 8 | 8 | 22 | 25 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-filter.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-filter.a | 15 | 15 | 24 | 30 | 13 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-find.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-find.a | 9 | 9 | 16 | 21 | 7 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-forEach.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-forEach.a | 13 | 13 | 25 | 33 | 9 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-generic-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-generic-map.a | 15 | 15 | 23 | 30 | 12 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-generic.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-generic.a | 13 | 13 | 20 | 27 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-map.a | 15 | 15 | 22 | 29 | 12 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-reduce.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-reduce.a | 16 | 16 | 32 | 43 | 10 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-some.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-some.a | 8 | 8 | 16 | 19 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/object-sort.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/object-sort.a | 16 | 16 | 27 | 36 | 12 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/optional-number-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/optional-number-map.a | 10 | 10 | 7 | 15 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/optional-object-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/optional-object-map.a | 9 | 9 | 15 | 20 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/callback_widening/string-map.a",
+      "owner": "callback-widening",
+      "before": null,
+      "after": "| internal/oracle/testdata/callback_widening/string-map.a | 8 | 8 | 13 | 15 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/miscompile_2a/controls.a",
+      "owner": "miscompile-fxspptb-2a",
+      "before": null,
+      "after": "| internal/oracle/testdata/miscompile_2a/controls.a | 33 | 32 | 34 | 56 | 10 | 1 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a",
+      "owner": "miscompile-fxspptb-2a",
+      "before": null,
+      "after": "| internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a | 3 | 3 | 6 | 5 | 1 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/miscompile_2a/error_undefined_message.a",
+      "owner": "miscompile-fxspptb-2a",
+      "before": null,
+      "after": "| internal/oracle/testdata/miscompile_2a/error_undefined_message.a | 9 | 9 | 15 | 15 | 3 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "stage3/fixtures/self-compare/closure.a",
+      "owner": "self-compare-main",
+      "before": null,
+      "after": "| stage3/fixtures/self-compare/closure.a | 1 | 1 | 0 | 1 | 1 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "stage3/fixtures/self-compare/array-fill.a",
+      "owner": "self-compare-main",
+      "before": null,
+      "after": "| stage3/fixtures/self-compare/array-fill.a | 2 | 2 | 0 | 2 | 2 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "stage3/fixtures/self-compare/sweep.a",
+      "owner": "self-compare-main",
+      "before": null,
+      "after": "| stage3/fixtures/self-compare/sweep.a | 37 | 37 | 1 | 38 | 8 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/weak_miscompiles/matching_methods.a",
+      "owner": "miscompile-fxspptb-2b",
+      "before": null,
+      "after": "| internal/oracle/testdata/weak_miscompiles/matching_methods.a | 11 | 11 | 13 | 21 | 7 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/weak_miscompiles/boolean_filter.a",
+      "owner": "miscompile-fxspptb-2b",
+      "before": null,
+      "after": "| internal/oracle/testdata/weak_miscompiles/boolean_filter.a | 12 | 12 | 22 | 28 | 9 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/weak_miscompiles/held_union.a",
+      "owner": "miscompile-fxspptb-2b",
+      "before": null,
+      "after": "| internal/oracle/testdata/weak_miscompiles/held_union.a | 5 | 5 | 13 | 17 | 5 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a",
+      "owner": "miscompile-fxspptb-2b",
+      "before": null,
+      "after": "| internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a | 4 | 2 | 5 | 6 | 4 | 0 |",
+      "cause": "New fixture work from this member."
+    },
+    {
+      "path": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a",
+      "owner": "miscompile-fxspptb-2b",
+      "before": null,
+      "after": "| internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a | 4 | 2 | 4 | 6 | 4 | 0 |",
+      "cause": "New fixture work from this member."
+    }
+  ]
+}
