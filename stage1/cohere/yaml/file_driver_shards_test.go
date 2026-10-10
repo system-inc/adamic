@@ -290,7 +290,8 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 	return output.Bytes()
 }
 
-func fileDriverGoFormat(t *testing.T, cases string) []byte {
+// fileDriverGoFormatProduct is cohere's formatter_comparison built over testdata/format_go.go, as a product.
+func fileDriverGoFormatProduct(t *testing.T) string {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -317,7 +318,19 @@ func fileDriverGoFormat(t *testing.T, cases string) []byte {
 		fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-format"), "./command/formatter_comparison")
 		return nil
 	})
-	goBinary := filepath.Join(product, "go-format")
+	return filepath.Join(product, "go-format")
+}
+
+// TestProduct_YAMLFileDriverGoFormat builds the Go formatter the file driver's shards compare against, so Workshop
+// builds it once and a shard only reads it.
+func TestProduct_YAMLFileDriverGoFormat(t *testing.T) {
+	t.Parallel()
+	fileDriverGoFormatProduct(t)
+}
+
+func fileDriverGoFormat(t *testing.T, cases string) []byte {
+	t.Helper()
+	goBinary := fileDriverGoFormatProduct(t)
 	expected := fileDriverRun(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
