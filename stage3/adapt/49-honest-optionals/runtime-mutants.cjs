@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),ts=require('typescript'),cp=require('node:child_process');
+const [bundle,projects]=process.argv.slice(2),scout=path.resolve(__dirname,'../../scouts/step09/nonnull');
+const sets=JSON.parse(fs.readFileSync(path.join(scout,'input-sets.json'))),rules=JSON.parse(fs.readFileSync(path.join(__dirname,'sites.json'))),scratch=fs.mkdtempSync(path.join(os.tmpdir(),'49-runtime-mutants-')),logs=path.join(scratch,'logs');fs.mkdirSync(logs);
+const text=fs.readFileSync(bundle,'utf8'),source=ts.createSourceFile(bundle,text,99,true,ts.ScriptKind.JS);const helper=source.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='__adamic_nonnull_probe');assert.ok(helper);
+const guard="\nif(id===process.env.ADAMIC_49_MUTANT && value==null){process.stderr.write('checked unwrap '+id+' saw '+String(value)+'\\n');process.exit(70);}\n",at=helper.body.getStart(source)+1;
+const mutated=path.join(scratch,'mutant.cjs');fs.writeFileSync(mutated,text.slice(0,at)+guard+text.slice(at));
+for(const name of fs.readdirSync(path.dirname(bundle)).filter(n=>n.startsWith('lib.')&&n.endsWith('.d.ts')))fs.symlinkSync(path.join(path.dirname(bundle),name),path.join(scratch,name));
+const rows=[];
+for(const r of rules){const input=sets.find(s=>s.id===r.input_set).inputs[0],cwd=path.join(projects,input);assert.ok(fs.existsSync(path.join(cwd,'tsconfig.json')));const run=cp.spawnSync(process.execPath,[mutated,'--project','tsconfig.json','--noEmit','--pretty','false'],{cwd,env:{...process.env,ADAMIC_49_MUTANT:r.id,ADAMIC_NONNULL_LOG:logs},encoding:'utf8',timeout:60000,maxBuffer:4*1024*1024});assert.equal(run.status,70,r.id+' '+run.stderr);assert.ok(run.stderr.includes('checked unwrap '+r.id+' saw undefined'));const stock=Number(fs.readFileSync(path.join(cwd,'actual.exit'),'utf8'));assert.notEqual(stock,70);rows.push({site:r.id,input,stock_exit:stock,mutant_exit:run.status,node_value:'undefined',caught:'process exit and named checked-unwrap diagnostic'});}
+console.log(JSON.stringify({mutants:rows},null,2));

@@ -1,0 +1,78 @@
+{
+  "lane": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "execution": {
+      "commit": "5355a42d2fde948469d2c315af403dc63557b46b",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 462.672
+    },
+    "results": "/workspace/batch6-casts-lane",
+    "cause_counts": {
+      "timeout": 0,
+      "baseline-content": 1,
+      "baseline-missing": 0,
+      "exception": 0,
+      "other": 0
+    },
+    "baseline_previews": [
+      {
+        "path": "api/typescript.d.ts",
+        "preview": "--- reference/api/typescript.d.ts\n+++ local/api/typescript.d.ts\n@@ -4490,10 +4490,10 @@\n         _declarationBrand: void;\n     }\n     interface NamedDeclaration extends Declaration {\n-        readonly name?: DeclarationName;\n+        readonly name?: DeclarationName | undefined;\n     }\n     interface DeclarationStatement extends NamedDeclaration, Statement {\n-        readonly name?: Identifier | StringLiteral | NumericLiteral;\n+        readonly name?: Identifier | StringLiteral | NumericLiteral | undefined;\n     }\n     interface ComputedPropertyName extends Node {\n         readonly kind: SyntaxKind.ComputedPropertyName;\n@@ -4515,16 +4515,16 @@\n     interface TypeParameterDeclaration extends NamedDeclaration, JSDocContainer {\n         readonly kind: SyntaxKind.TypeParameter;\n         readonly parent: DeclarationWithTypeParameterChildren | InferTypeNode;\n-        readonly modifiers?: NodeArray<Modifier>;\n+        readonly modifiers?: NodeArray<Modifier> | undefined;\n         readonly name: Identifier;\n         /** Note: Consider calling `getEffectiveConstraintOfTypeParameter` */\n-        readonly constraint?: TypeNode;\n-        readonly default?: TypeNode;\n-        expression?: Expression;\n+        readonly constraint?: TypeNode | undefined;\n+        readonly default?: TypeNode | undefined;\n+        expression?: Expression | undefined;\n     }\n     interface SignatureDeclarationBase extends NamedDeclaration, JSDocContainer {\n         readonly kind: SignatureDeclaration[\"kind\"];\n-        readonly name?: PropertyName;\n+        readonly name?: PropertyName | undefined;\n         readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined;\n         readonly parameters: NodeArray<ParameterDeclaration>;\n         readonly type?: TypeNode | undefined;\n@@ -4541,9 +4541,9 @@\n         readonly kind: SyntaxKind.VariableDeclaration;\n         readonly parent: VariableDeclarationList | CatchClause;\n",
+        "total_lines": 1079,
+        "truncated": true
+      }
+    ],
+    "verdict": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]"
+  },
+  "historical_reconstruction": {
+    "original_deadline": 600,
+    "resumed": [
+      "70-readonly-views",
+      "71-writable-views",
+      "75-optional-widening",
+      "76-truthful-casts"
+    ],
+    "preserved_completed_adapters": 21,
+    "source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "reconstruction": "855bcfaacb8919a0d61ec34eda785fce9fde8ba2",
+    "extra": "643639ea30051875d2ba1a133866081bc8999e2a:stage3/adapt/43-any-returns"
+  },
+  "verification": "PASS: exact 31-row coverage, measured owners, 21 byte-identical upstream proposals, three Node goldens and mutants, truthful headers and six a-check mutants\n",
+  "header_check": "PASS: a-check 3/3; six real missing/wrong-header mutants caught; restored final check 3/3\n",
+  "observations": "PASS: three Node goldens, three source mutants; native results and required first-line headers recorded\n",
+  "mutants": {
+    "drop-row": "Traceback (most recent call last):\n  File \"/workspace/batch6-casts/stage3/scouts/step09/adapted-casts/verify.py\", line 9, in <module>\n    assert len(rows)==31 and collections.Counter(map(key,rows))==collections.Counter(map(key,expected)),'exact 31-row ledger coverage'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact 31-row ledger coverage\n",
+    "wrong-owner": "Traceback (most recent call last):\n  File \"/workspace/batch6-casts/stage3/scouts/step09/adapted-casts/verify.py\", line 18, in <module>\n    assert row['adaptation']==source[key(row)]['introduction']['adaptation'],'immediate source introduction owner'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: immediate source introduction owner\n",
+    "runtime-edit": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: byte-identical JavaScript: directory helper:/workspace/batch6-casts-measure/adapted/src/compiler/utilities.ts\n    at Object.<anonymous> (/workspace/batch6-casts/stage3/scouts/step09/adapted-casts/measure.cjs:45:68)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  }
+}

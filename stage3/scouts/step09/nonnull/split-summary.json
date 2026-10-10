@@ -1,0 +1,211 @@
+{
+  "ruling": "literal undefined! and null! are placeholders, including resets; every observed nonliteral nullish unwrap is a type lie",
+  "sites": 72,
+  "counts": {
+    "1-placeholder": 50,
+    "2-nullish-read-or-call": 7,
+    "3-other-nullish-unwrap": 15
+  },
+  "type_lies": 22,
+  "bindings": [
+    {
+      "id": "src/compiler/binder.ts:17019:17035",
+      "file": "src/compiler/binder.ts",
+      "line": 513,
+      "column": 9,
+      "start": 17019,
+      "end": 17035,
+      "name": "file"
+    },
+    {
+      "id": "src/compiler/binder.ts:17046:17070",
+      "file": "src/compiler/binder.ts",
+      "line": 514,
+      "column": 9,
+      "start": 17046,
+      "end": 17070,
+      "name": "options"
+    },
+    {
+      "id": "src/compiler/binder.ts:17081:17110",
+      "file": "src/compiler/binder.ts",
+      "line": 515,
+      "column": 9,
+      "start": 17081,
+      "end": 17110,
+      "name": "languageVersion"
+    },
+    {
+      "id": "src/compiler/binder.ts:17121:17133",
+      "file": "src/compiler/binder.ts",
+      "line": 516,
+      "column": 9,
+      "start": 17121,
+      "end": 17133,
+      "name": "parent"
+    },
+    {
+      "id": "src/compiler/binder.ts:17144:17189",
+      "file": "src/compiler/binder.ts",
+      "line": 517,
+      "column": 9,
+      "start": 17144,
+      "end": 17189,
+      "name": "container"
+    },
+    {
+      "id": "src/compiler/binder.ts:17200:17255",
+      "file": "src/compiler/binder.ts",
+      "line": 518,
+      "column": 9,
+      "start": 17200,
+      "end": 17255,
+      "name": "thisParentContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17292:17335",
+      "file": "src/compiler/binder.ts",
+      "line": 519,
+      "column": 9,
+      "start": 17292,
+      "end": 17335,
+      "name": "blockScopeContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17346:17370",
+      "file": "src/compiler/binder.ts",
+      "line": 520,
+      "column": 9,
+      "start": 17346,
+      "end": 17370,
+      "name": "lastContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17381:17454",
+      "file": "src/compiler/binder.ts",
+      "line": 521,
+      "column": 9,
+      "start": 17381,
+      "end": 17454,
+      "name": "delayedTypeAliases"
+    },
+    {
+      "id": "src/compiler/binder.ts:17500:17530",
+      "file": "src/compiler/binder.ts",
+      "line": 523,
+      "column": 9,
+      "start": 17500,
+      "end": 17530,
+      "name": "jsDocImports"
+    },
+    {
+      "id": "src/compiler/binder.ts:17587:17608",
+      "file": "src/compiler/binder.ts",
+      "line": 526,
+      "column": 9,
+      "start": 17587,
+      "end": 17608,
+      "name": "currentFlow"
+    },
+    {
+      "id": "src/compiler/core.ts:66604:66621",
+      "file": "src/compiler/core.ts",
+      "line": 1891,
+      "column": 28,
+      "start": 66604,
+      "end": 66621,
+      "name": "callback"
+    },
+    {
+      "id": "src/compiler/parser.ts:83251:83269",
+      "file": "src/compiler/parser.ts",
+      "line": 1503,
+      "column": 9,
+      "start": 83251,
+      "end": 83269,
+      "name": "sourceText"
+    },
+    {
+      "id": "src/compiler/parser.ts:83280:83309",
+      "file": "src/compiler/parser.ts",
+      "line": 1504,
+      "column": 9,
+      "start": 83280,
+      "end": 83309,
+      "name": "languageVersion"
+    },
+    {
+      "id": "src/compiler/parser.ts:83320:83342",
+      "file": "src/compiler/parser.ts",
+      "line": 1505,
+      "column": 9,
+      "start": 83320,
+      "end": 83342,
+      "name": "scriptKind"
+    },
+    {
+      "id": "src/compiler/parser.ts:83353:83385",
+      "file": "src/compiler/parser.ts",
+      "line": 1506,
+      "column": 9,
+      "start": 83353,
+      "end": 83385,
+      "name": "languageVariant"
+    },
+    {
+      "id": "src/compiler/parser.ts:83396:83446",
+      "file": "src/compiler/parser.ts",
+      "line": 1507,
+      "column": 9,
+      "start": 83396,
+      "end": 83446,
+      "name": "parseDiagnostics"
+    },
+    {
+      "id": "src/compiler/parser.ts:83457:83507",
+      "file": "src/compiler/parser.ts",
+      "line": 1508,
+      "column": 9,
+      "start": 83457,
+      "end": 83507,
+      "name": "jsDocDiagnostics"
+    },
+    {
+      "id": "src/compiler/parser.ts:83650:83682",
+      "file": "src/compiler/parser.ts",
+      "line": 1513,
+      "column": 9,
+      "start": 83650,
+      "end": 83682,
+      "name": "identifiers"
+    },
+    {
+      "id": "src/compiler/program.ts:68142:68328",
+      "file": "src/compiler/program.ts",
+      "line": 1516,
+      "column": 9,
+      "start": 68142,
+      "end": 68328,
+      "name": "_createProgramOptions"
+    },
+    {
+      "id": "src/compiler/program.ts:67931:67992",
+      "file": "src/compiler/program.ts",
+      "line": 1515,
+      "column": 31,
+      "start": 67931,
+      "end": 67992,
+      "name": "_rootNamesOrOptions"
+    },
+    {
+      "id": "src/compiler/scanner.ts:71342:71361",
+      "file": "src/compiler/scanner.ts",
+      "line": 1049,
+      "column": 9,
+      "start": 71342,
+      "end": 71361,
+      "name": "tokenValue"
+    }
+  ],
+  "variable_references": 514
+}
