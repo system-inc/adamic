@@ -7,23 +7,18 @@ package formatfiles
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
-	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -134,89 +129,6 @@ var mutants = []mutant{
 		from: "if (lstat(leftover).exists) {",
 		to:   "if (statExists(leftover)) {",
 	},
-}
-
-// askedCases has cohere's side write every case, and Go cohere's answer to each, returning the cases
-// file's path and the answers.
-func askedCases(t *testing.T) (string, string) {
-	t.Helper()
-	seed := int64(generatedSeed)
-	var err error
-	if value := os.Getenv("COHERE_FORMATFILES_SEED"); value != "" {
-		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
-		}
-	}
-	generated := 400
-	if value := os.Getenv("COHERE_FORMATFILES_GENERATED"); value != "" {
-		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
-		}
-	}
-	directory := t.TempDir()
-	casesPath := filepath.Join(directory, "cases.txt")
-	answersPath := filepath.Join(directory, "answers.txt")
-	// The trees live here, where the port walks them after cohere's side has laid them out; the
-	// directory is the test's own, so it outlives cohere's side and goes when the test ends.
-	scratch := filepath.Join(directory, "trees")
-	if err := os.Mkdir(scratch, 0o755); err != nil {
-		t.Fatal(err)
-	}
-	cohereSide(t, map[string]any{"scratch": scratch, "seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath})
-	answers, err := os.ReadFile(answersPath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if keep := os.Getenv("ADAMIC_FORMATFILES_KEEP"); keep != "" {
-		cases, err := os.ReadFile(casesPath)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	t.Logf("seed %d, %d generated trees", seed, generated)
-	return casesPath, string(answers)
-}
-
-// cohereSide runs testdata/cohere_side_test.go inside cohere's formatfiles package, by overlay, with a
-// request.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
-	requestPath := filepath.Join(directory, "request.json")
-	encoded, err := json.Marshal(request)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
-	command.Dir = cohere
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
-	}
 }
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one,
@@ -333,64 +245,4 @@ func onNode(t *testing.T, path string, arguments ...string) run {
 		t.Fatal(err)
 	}
 	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
-}
-
-// onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	return onNode(t, path, arguments...)
-}
-
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
-// leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
-// an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
-// checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
-	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
 }
