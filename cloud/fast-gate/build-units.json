@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "packages": {
+    "cmd/adamic-gate": "go test in a temp module, to read which leaf tests a -run pattern selects (main_test.go:44)",
+    "cmd/adamic-gocacheprog": "go build -x with this program as GOCACHEPROG, cold then warm, read from go's trace (main_test.go:291)",
+    "cmd/adamic-test262": "go build of ./cmd/adamic outside any product (run.go:63, run.go:662, performance_test.go:24)",
+    "internal/buildcache": "its own builds: byte-identical across checkout paths, fresh = cold = warm, the key follows every input (identity_test.go:33)",
+    "internal/fuzz": "go build of adamic in Prepare (run.go:46)",
+    "internal/ir": "go list -export compiles every dependency for the call target guard (call_targets_guard_test.go:48)",
+    "stage1/cohere/css": "go test -overlay of the Go parser and printer oracles (css_test.go:102, print_test.go:40)",
+    "stage1/cohere/graphql": "go test -overlay of Go cohere's harness (graphql_test.go:346)",
+    "stage1/cohere/json": "go test -overlay per call of the audit oracle (audit_test.go:276)",
+    "stage1/cohere/lint/helpers": "go build -overlay of the Go oracle (helpers_test.go:57)",
+    "stage1/cohere/lint/helpers/comments": "go build -overlay of the Go oracle (comments_test.go:86)",
+    "stage1/cohere/lint/inventory": "go test -c of the engine and its mutant (engine_shards_test.go:74)",
+    "stage1/cohere/lint/regex": "go run of the oracle, census and dialects (regex_test.go:70, shapes_test.go:29)",
+    "stage1/cohere/markdownblocks": "go build -overlay of the AST, chunks, front matter, prefix and mdast oracles (ast_test.go:77)",
+    "stage1/cohere/mediaquery": "go test -overlay of Go cohere's harness (mediaquery_test.go:291)",
+    "stage1/cohere/static_single_assignment": "go test -overlay of Go cohere's harness in its own module (static_single_assignment_test.go:304)",
+    "stage1/cohere/suppression": "go test -overlay of Go cohere's harness (suppression_test.go:288)",
+    "stage1/cohere/tsprinter": "go test -overlay of the doc corpus and statement differences (doc_test.go:20, upstream_test.go:23)",
+    "stage1/cohere/values": "go test -overlay of Go cohere's harness (values_test.go:349)",
+    "stage3/census/latent/refusalrewrite": "go test of a temp module holding Rewrite's output (rewrite_test.go:179)",
+    "stage3/census/latent/statecopy": "go run of the generator (main_test.go:26, publication_unix_test.go:36)",
+    "stage3/census/latent/statementrewrite": "go run of the generator (main_test.go:23)"
+  }
+}
