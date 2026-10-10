@@ -77,6 +77,15 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 		}
 	}
 
+	// A directory that isn't a product is read as it is, even when its text says <repository> (a package whose comments
+	// name it), and nothing is written beside it.
+	if directory, err := Resolved(filepath.Join(root, "internal/buildcache")); err != nil || directory != filepath.Join(root, "internal/buildcache") {
+		t.Fatalf("this package resolved to %s, %v", directory, err)
+	}
+	if copies, _ := filepath.Glob(filepath.Join(root, "internal", ".buildcache.resolved-*")); len(copies) != 0 {
+		t.Fatalf("a copy was written beside a package: %v", copies)
+	}
+
 	// A binary's paths are debug information, and a macOS .dSYM bundle's too: neither is refused.
 	Product(t, inputs("binary"), func(directory string) error {
 		if err := os.MkdirAll(filepath.Join(directory, "port.dSYM"), 0o755); err != nil {
