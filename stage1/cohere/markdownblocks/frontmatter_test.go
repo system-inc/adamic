@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -79,12 +80,8 @@ func TestFrontMatterStage(t *testing.T) {
 	}
 	overlayPath := filepath.Join(dir, "overlay.json")
 	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-parser")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	command.Dir = cohere
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go build: %v\n%s", err, output)
-	}
+	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
+	goBinary := buildcache.GoBuildIn(t, "cohere", "go-parser", mainPath, []string{"-overlay=" + overlayPath})
 	want := execute(t, nil, goBinary, cases)
 	clean(t, "Go front matter", want)
 	main, err := filepath.Abs("testdata/frontmatter_probe.ts")

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
@@ -86,12 +87,8 @@ func TestMicromarkInputChunks(t *testing.T) {
 	}
 	overlayPath := filepath.Join(dir, "overlay.json")
 	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-chunks")
-	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-	build.Dir = cohere
-	if output, err := combinedOutput(build); err != nil {
-		t.Fatalf("Go chunks %v %s", err, output)
-	}
+	// The Go side, cohere with the driver and bridge its overlay lays over it, is a product built ahead (#5qykzj5).
+	goBinary := buildcache.GoBuildIn(t, "cohere", "go-chunks", mainPath, []string{"-overlay=" + overlayPath})
 	fullWant := execute(t, nil, goBinary, fullCases)
 	clean(t, "full Go mutant oracle", fullWant)
 	want := fullWant
