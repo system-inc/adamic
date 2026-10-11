@@ -301,7 +301,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 	if again := build("42"); again != first {
 		t.Fatalf("the same system header made another runtime: %s, then %s", first, again)
 	}
-	headerScans.Clear()
+	// The scan with -isystem is still held; the same sources without it are another scan, which can't find the header.
 	plain, err := headersRead(files, Flags(Options{}), compiler)
 	if err == nil || strings.Contains(plain, header) {
 		t.Fatalf("without -isystem the compile can't find the header, so listing it must fail: %q, %v", plain, err)
