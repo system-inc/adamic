@@ -146,3 +146,45 @@ func TestAGoProductIsTheSameWhateverElseTheEnvironmentHolds(t *testing.T) {
 		t.Errorf("with junk in the environment the product is %d other bytes", len(gotBytes))
 	}
 }
+
+// Outside a sandbox the tools directory and the product cache default under the home, as before; in one
+// (ADAMIC_SANDBOX=1) each is its variable or an error naming it, so a tool entry fails to value rather than resolve
+// under the home, and no product is written there. Mutants: toolsRoot's home default in a sandbox; cacheLocation's.
+// Not parallel: t.Setenv.
+func TestASandboxDeclaresWhereToolsAndProductsLive(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("XDG_CACHE_HOME", "")
+	t.Setenv("ADAMIC_TOOLS", "")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", "")
+	t.Setenv("ADAMIC_SANDBOX", "")
+	user, err := os.UserCacheDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if tools, err := toolsRoot(); err != nil || tools != filepath.Join(home, "adamic-tools") {
+		t.Errorf("outside a sandbox, toolsRoot = %q, %v", tools, err)
+	}
+	if cache, err := cacheLocation(); err != nil || cache != filepath.Join(user, "adamic-build") {
+		t.Errorf("outside a sandbox, cacheLocation = %q, %v", cache, err)
+	}
+	t.Setenv("ADAMIC_SANDBOX", "1")
+	if tools, err := toolsRoot(); err == nil || !strings.Contains(err.Error(), "ADAMIC_TOOLS is unset") {
+		t.Errorf("in a sandbox with no ADAMIC_TOOLS, toolsRoot = %q, %v", tools, err)
+	}
+	if value, err := entryValue(t.TempDir(), t.TempDir(), readEntry{Kind: "tool", Path: "bin/adamic-fake-tool"}, 0, nil); err == nil {
+		t.Errorf("in a sandbox with no ADAMIC_TOOLS, a tool entry valued %q", value)
+	}
+	if cache, err := cacheLocation(); err == nil || !strings.Contains(err.Error(), "ADAMIC_BUILD_CACHE_DIR is unset") {
+		t.Errorf("in a sandbox with no ADAMIC_BUILD_CACHE_DIR, cacheLocation = %q, %v", cache, err)
+	}
+	tools, cache := t.TempDir(), t.TempDir()
+	t.Setenv("ADAMIC_TOOLS", tools)
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	if got, err := toolsRoot(); err != nil || got != tools {
+		t.Errorf("in a sandbox, toolsRoot = %q, %v; want %q", got, err, tools)
+	}
+	if got, err := cacheLocation(); err != nil || got != cache {
+		t.Errorf("in a sandbox, cacheLocation = %q, %v; want %q", got, err, cache)
+	}
+}

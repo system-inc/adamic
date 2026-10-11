@@ -17,6 +17,8 @@ import (
 	"sync/atomic"
 	"syscall"
 	"time"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A product's key is its read set (#vt46geg): what its last traced build read, evaluated on the tree at hand. The
@@ -293,10 +295,18 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		// (home-7's dry run, Oct 11: 6 products, typeaware volume and the two that read it among them).
 		return productDigest(found.directory)
 	case "tool":
-		return Tool(filepath.Join(toolsRoot(), filepath.FromSlash(entry.Path)), "--version"), nil
+		tools, err := toolsRoot()
+		if err != nil {
+			return "", err
+		}
+		return Tool(filepath.Join(tools, filepath.FromSlash(entry.Path)), "--version"), nil
 	case "toolset":
 		// A tools directory read but never run (a sysroot, a resource directory): named by the release it resolves to.
-		if real := resolved(filepath.Join(toolsRoot(), entry.Path)); real != "" {
+		tools, err := toolsRoot()
+		if err != nil {
+			return "", err
+		}
+		if real := resolved(filepath.Join(tools, entry.Path)); real != "" {
 			return filepath.Base(real), nil
 		}
 		return "absent", nil
@@ -560,16 +570,20 @@ func caseSensitivity() string {
 }
 
 // toolsRoot is where Workshop's tools live: ADAMIC_TOOLS, or ~/adamic-tools. A tool entry names a path under it, so
-// the same tools under another home value the same.
-func toolsRoot() string {
+// the same tools under another home value the same. In a sandbox (ADAMIC_SANDBOX=1) it is ADAMIC_TOOLS or an error:
+// a tool entry never resolves under a home the sandbox didn't declare.
+func toolsRoot() (string, error) {
 	if directory := os.Getenv("ADAMIC_TOOLS"); directory != "" {
-		return directory
+		return directory, nil
+	}
+	if toolchain.Sandboxed() {
+		return "", errors.New("ADAMIC_SANDBOX=1 finds tools only where ADAMIC_TOOLS says, and ADAMIC_TOOLS is unset")
 	}
 	home, err := os.UserHomeDir()
 	if err != nil {
-		return "/opt/adamic-tools"
+		return "/opt/adamic-tools", nil
 	}
-	return filepath.Join(home, "adamic-tools")
+	return filepath.Join(home, "adamic-tools"), nil
 }
 
 // found is a product looked up by its read sets: the key and directory of the first set (newest first) whose key
