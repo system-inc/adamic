@@ -34,7 +34,7 @@ go test ./internal/native ./internal/regexp ./bench/regex -count=1 -timeout 15m 
 # PASS: native 208.153s; regexp 5.628s; benchmark has no test files.
 go test ./internal/oracle -run 'TestNativeAgreesWithNode/.*/.*/.*/(regexp|sweeps)' -count=1 -timeout 15m -v > /tmp/regex-speed-oracle.log 2>&1
 # PASS 75.457s: regex fixtures and sweeps, including 63,960 regex method probes.
-go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 15m > /tmp/regex-speed-counts-gate.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m > /tmp/regex-speed-counts-gate.log 2>&1
 # PASS 361.332s; recorded allocation counts unchanged.
 go vet ./... > /tmp/regex-speed-vet.log 2>&1
 # exit 0.
