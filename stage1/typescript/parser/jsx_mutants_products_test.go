@@ -3,6 +3,7 @@ package parser
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -91,12 +92,9 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	setupStarted := time.Now()
 	manifest, count := jsxManifest(t)
 	jsxMutantsRows(t, manifest, count)
-	oracle := goOracle(t)
-	directory, _ := filepath.Abs(".")
 	change := changes[shard]
-	mutant := jsxMutantsSource(t, shard)
-	controlBinary := buildPort(t, directory, true)
-	binary := buildPort(t, mutant, true)
+	prepared := jsxMutantsPrepare(t, shard)
+	oracle, controlBinary, binary, mutant := prepared.Oracle, prepared.Control, prepared.Binary, prepared.Mutant
 	t.Logf("setup %.2fs", time.Since(setupStarted).Seconds())
 	ownStarted := time.Now()
 	deadline := time.AfterFunc(60*time.Second, func() { panic("JSX mutant own work exceeded 60 seconds") })
@@ -123,9 +121,34 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	}
 	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
 	if os.Getenv("ADAMIC_JSX_MUTANTS_PROOF_CHILD") == "" {
-		jsxMutantsPlantedProof(t, shard)
+		jsxMutantsPlantedProof(t, shard, prepared)
 	}
 }
+
+// jsxMutantsPrepared is what a shard runs: the oracle, the control and mutant binaries, and the mutant's source.
+type jsxMutantsPrepared struct{ Oracle, Control, Binary, Mutant string }
+
+// jsxMutantsPrepare fetches a shard's products. The planted-proof child is handed its parent's instead, so the child's
+// fetch never runs on the parent's own-work clock.
+func jsxMutantsPrepare(t *testing.T, shard int) jsxMutantsPrepared {
+	t.Helper()
+	if descriptor := os.Getenv(jsxMutantsPreparedEnv); descriptor != "" {
+		data, err := os.ReadFile(descriptor)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var prepared jsxMutantsPrepared
+		if err := json.Unmarshal(data, &prepared); err != nil {
+			t.Fatal(err)
+		}
+		return prepared
+	}
+	directory, _ := filepath.Abs(".")
+	mutant := jsxMutantsSource(t, shard)
+	return jsxMutantsPrepared{Oracle: goOracle(t), Control: buildPort(t, directory, true), Binary: buildPort(t, mutant, true), Mutant: mutant}
+}
+
+const jsxMutantsPreparedEnv = "ADAMIC_JSX_MUTANTS_PREPARED"
 
 func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
 func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }
@@ -158,10 +181,18 @@ func TestJsxMutantsUnion(t *testing.T) {
 }
 
 // Prove each ownership leaf independently; exactly shard 004 must fail.
-func jsxMutantsPlantedProof(t *testing.T, shard int) {
+func jsxMutantsPlantedProof(t *testing.T, shard int, prepared jsxMutantsPrepared) {
 	t.Helper()
 	executable, err := os.Executable()
 	if err != nil {
+		t.Fatal(err)
+	}
+	encoded, err := json.Marshal(prepared)
+	if err != nil {
+		t.Fatal(err)
+	}
+	descriptor := filepath.Join(t.TempDir(), "prepared.json")
+	if err := os.WriteFile(descriptor, encoded, 0644); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
@@ -169,11 +200,11 @@ func jsxMutantsPlantedProof(t *testing.T, shard int) {
 	name := fmt.Sprintf("TestJsxMutants_%03d", shard)
 	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
 	for _, entry := range os.Environ() {
-		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PROOF_CHILD=") {
+		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PROOF_CHILD=") && !strings.HasPrefix(entry, jsxMutantsPreparedEnv+"=") {
 			cmd.Env = append(cmd.Env, entry)
 		}
 	}
-	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PROOF_CHILD=1")
+	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PROOF_CHILD=1", jsxMutantsPreparedEnv+"="+descriptor)
 	out, err := cmd.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatal("planted proof exceeded 60 seconds")

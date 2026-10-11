@@ -5,7 +5,6 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -113,33 +112,7 @@ func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) 
 	}
 	// Mutant copies live outside the repository. Their bytes, including each
 	// changed site, are inputs too; normalize the scanner's relocation only.
-	var sources strings.Builder
-	scanner, err := filepath.Abs("../scanner/scanner.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, name := range portFiles {
-		data, err := os.ReadFile(filepath.Join(directory, name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		normalized := wholeMutantsTreeScanner.ReplaceAllString(strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"), "../scanner/scanner.ts")
-		// A copy with a scanner of its own (a scanner mutant) imports it by the copy's temporary path.
-		normalized = strings.ReplaceAll(normalized, directory, "$PORT")
-		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
-	}
-	// That scanner's bytes, including its changed site, are inputs like the port's.
-	for _, name := range []string{"scanner.ts", "characters.ts", "tokens.ts"} {
-		data, err := os.ReadFile(filepath.Join(directory, "scanner", name))
-		if errors.Is(err, fs.ErrNotExist) {
-			continue
-		}
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Fprintf(&sources, "scanner/%s %d\n%s", name, len(data), data)
-	}
-	sourceHash := fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
+	sourceHash := wholeMutantsSourceHash(t, directory)
 	flags := append(wholeMutantBuildFlags(), sourceHash)
 	return files, flags
 }
