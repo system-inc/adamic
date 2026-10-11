@@ -7,8 +7,6 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"io"
-	"io/fs"
 	"maps"
 	"os"
 	"os/exec"
@@ -54,114 +52,19 @@ func volumeProfileCorporaNativeInputs(ctx context.Context, h *harness, sanitize 
 	if sanitize {
 		name += " asan"
 	}
-	// Use the compiler source recipe rather than executable metadata: workers
-	// have different Git revisions and Go archives embed different scratch paths.
 	archiveName, archiveFlags := "typeaware checker archive", ""
-	toolContext, cancelTool := context.WithCancel(ctx)
-	defer cancelTool()
-	cc, err := volumeProfileCorporaCommand(toolContext, "go", "env", "CC").Output()
-	if err != nil {
-		h.t.Fatal(err)
-	}
 	if sanitize {
 		archiveName += " asan"
 		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
-		cc = []byte("clang")
 	}
 	inputs := buildcache.Inputs{
-		Name:      name,
-		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build -buildvcs=false ./cmd/adamic", "archive=" + archiveName, "go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
-		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "cohere/go.mod", "cohere/go.sum"},
-		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
+		Name:  name,
+		Flags: []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "go build -buildvcs=false ./cmd/adamic", "archive=" + archiveName, "go build -buildvcs=false -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")},
 	}
-	listContext, cancelList := context.WithCancel(ctx)
-	defer cancelList()
-	list := volumeProfileCorporaCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
-	list.Dir = h.repository
-	data, err := list.Output()
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	files := map[string]bool{}
-	for {
-		var pkg struct {
-			Dir, ImportPath                                                  string
-			Standard                                                         bool
-			GoFiles, CgoFiles, CFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			Module                                                           *struct{ GoMod string }
-		}
-		err := decoder.Decode(&pkg)
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			h.t.Fatal(err)
-		}
-		if pkg.Standard {
-			continue
-		}
-		var paths []string
-		for _, names := range [][]string{pkg.GoFiles, pkg.CgoFiles, pkg.CFiles, pkg.HFiles, pkg.SFiles, pkg.SysoFiles, pkg.EmbedFiles} {
-			for _, name := range names {
-				paths = append(paths, filepath.Join(pkg.Dir, name))
-			}
-		}
-		if pkg.Module != nil {
-			paths = append(paths, pkg.Module.GoMod)
-		}
-		for _, path := range paths {
-			relative, err := filepath.Rel(h.repository, path)
-			if err != nil {
-				h.t.Fatal(err)
-			}
-			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-				data, err := os.ReadFile(path)
-				if err != nil {
-					h.t.Fatal(err)
-				}
-				inputs.Flags = append(inputs.Flags, fmt.Sprintf("dependency %s %s %x", pkg.ImportPath, filepath.Base(path), sha256.Sum256(data)))
-			} else {
-				files[filepath.ToSlash(relative)] = true
-			}
-		}
-	}
-	var compilerFiles []string
-	for path := range files {
-		compilerFiles = append(compilerFiles, path)
-	}
-	slices.Sort(compilerFiles)
-	inputs.Files = append(inputs.Files, compilerFiles...)
-	if _, err := os.Stat(filepath.Join(h.repository, "go.sum")); err == nil {
-		inputs.Files = append(inputs.Files, "go.sum")
-	} else if os.IsNotExist(err) {
-		inputs.Flags = append(inputs.Flags, "go.sum absent")
-	} else {
-		h.t.Fatal(err)
-	}
-	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
-		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				relative, err := filepath.Rel(h.repository, path)
-				if err != nil {
-					return err
-				}
-				inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
-			}
-			return nil
-		})
-		if err != nil {
-			h.t.Fatal(err)
-		}
-	}
+	typeAwareCompilerKey(h, &inputs, sanitize)
 	return inputs
 }
 
-// Emission is a separate cached product shared by both sanitizer modes.
-// Compile products read that immutable C; they never run stage zero again.
 func volumeProfileCorporaNative(ctx context.Context, h *harness, stage0, archive string, inputs buildcache.Inputs, sanitize bool) string {
 	lowered := volumeProfileControlsLowered(h, stage0)
 	source, err := os.ReadFile(lowered)
