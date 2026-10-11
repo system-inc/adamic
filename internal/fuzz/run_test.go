@@ -61,7 +61,8 @@ func TestExecuteCPULimit(t *testing.T) {
 		t.Parallel()
 		// Separate single-threaded processes keep all workers runnable even when
 		// the Go scheduler would preempt busy goroutines in this test process.
-		for i := 0; i < 2*runtime.NumCPU(); i++ {
+		// Twice the unit's CPUs (GOMAXPROCS), never the host's cores.
+		for i := 0; i < 2*runtime.GOMAXPROCS(0); i++ {
 			worker := exec.Command("/bin/sh", "-c", "while :; do :; done")
 			if err := worker.Start(); err != nil {
 				t.Fatal(err)

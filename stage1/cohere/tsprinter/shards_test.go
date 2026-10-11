@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"sort"
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/testguard"
 )
 
 type corpusShard struct {
@@ -101,7 +102,8 @@ func planCorpus(t *testing.T, path string) *corpusPlan {
 		weights[i] = len(rows[i])
 	}
 	directory := t.TempDir()
-	for number, indices := range assignCorpus(weights, min(runtime.NumCPU(), 8)) {
+	// The test's share of the unit, never the host's cores (testguard.Share).
+	for number, indices := range assignCorpus(weights, min(testguard.Share(), 8)) {
 		var batch strings.Builder
 		subset := make([]json.RawMessage, 0, len(indices))
 		for _, index := range indices {

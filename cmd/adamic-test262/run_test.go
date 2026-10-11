@@ -49,13 +49,15 @@ int main(int argc, char **argv) {
 			t.Fatal("spinning child reached the wall backstop instead of the CPU limit")
 		}
 	})
-	// Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs.
+	// Not parallel: changes runtime.GOMAXPROCS and saturates all the unit's CPUs (GOMAXPROCS, never the host's cores, so a
+	// runner's unit saturates its own share and not 128 threads' worth of a 64-core box).
 	t.Run("saturated", func(t *testing.T) {
-		previous := runtime.GOMAXPROCS(2 * runtime.NumCPU())
+		processors := runtime.GOMAXPROCS(0)
+		previous := runtime.GOMAXPROCS(2 * processors)
 		defer runtime.GOMAXPROCS(previous)
 		var stop atomic.Bool
 		var ready, workers sync.WaitGroup
-		for range 2 * runtime.NumCPU() {
+		for range 2 * processors {
 			ready.Add(1)
 			workers.Go(func() {
 				ready.Done()

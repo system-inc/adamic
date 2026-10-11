@@ -10,6 +10,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/testguard"
 )
 
 type nativeChunk struct {
@@ -33,7 +35,8 @@ func chunkRanges(total, cores int) []nativeChunk {
 
 func nativeChunks(t *testing.T, cases []textCase, answers []answer) []nativeChunk {
 	t.Helper()
-	chunks := chunkRanges(len(cases), runtime.NumCPU())
+	// The test's share of the unit, never the host's cores (testguard.Share).
+	chunks := chunkRanges(len(cases), testguard.Share())
 	directory := t.TempDir()
 	for index := range chunks {
 		chunk := &chunks[index]
@@ -43,7 +46,7 @@ func nativeChunks(t *testing.T, cases []textCase, answers []answer) []nativeChun
 			t.Fatal(err)
 		}
 	}
-	t.Logf("native corpus: %d contiguous chunks, %d cores, %d cases", len(chunks), runtime.NumCPU(), len(cases))
+	t.Logf("native corpus: %d contiguous chunks, a share of %d of %d CPUs, %d cases", len(chunks), testguard.Share(), runtime.GOMAXPROCS(0), len(cases))
 	return chunks
 }
 
@@ -140,7 +143,7 @@ func calibrateNativeCases(t *testing.T, binary string, cases []textCase, answers
 	failures := make([]error, len(cases))
 	jobs := make(chan int)
 	var workers sync.WaitGroup
-	for worker := 0; worker < min(runtime.NumCPU(), 8); worker++ {
+	for worker := 0; worker < min(runtime.GOMAXPROCS(0), 8); worker++ {
 		workers.Add(1)
 		go func(worker int) {
 			defer workers.Done()

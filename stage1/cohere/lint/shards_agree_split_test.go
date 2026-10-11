@@ -48,7 +48,8 @@ func testShardsAgree(t *testing.T, shard int) {
 	t.Logf("union %d cases, shard %03d: %d cases", len(products.Rows), shard, len(rows))
 	want := execute(t, "", binary, "--manifest", path)
 	wantCount := execute(t, "", binary, "--manifest", path, "--count")
-	counts := []int{1, 2, runtime.NumCPU()}
+	// The unit's CPUs, never the host's cores: on a runner's 64-core box this ran 64 shard processes in an 8-CPU share.
+	counts := []int{1, 2, runtime.GOMAXPROCS(0)}
 	type answer struct {
 		output, count []byte
 		err           error
@@ -78,7 +79,7 @@ func testShardsAgree(t *testing.T, shard int) {
 			t.Fatalf("%d shards count %q, want %q", count, got.count, wantCount.output)
 		}
 	}
-	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", len(rows), runtime.NumCPU(), len(want.output))
+	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", len(rows), counts[2], len(want.output))
 }
 
 func testShardsAgreeRows(t *testing.T, rows []string) []string {
