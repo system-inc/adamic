@@ -25,6 +25,9 @@ const testVolumeConfigGuardAndMutantShards = 16
 // 43 s alone on one core (Workshop, Oct 11), and its owner moved with the checkout, since it hashed absolute paths.
 const testVolumeConfigGuardCorpusShards = 32
 
+// volumeGuardCheckerShard is the corpus shard that owns src/compiler/checker.ts, the one that runs alone.
+const volumeGuardCheckerShard = 25
+
 type volumeGuardCase struct{ key, text string }
 
 func volumeGuardShard(key string) int {
@@ -311,6 +314,10 @@ func runVolumeConfigGuardCorpusShard(t *testing.T, shard int) {
 // owner alone.
 func TestVolumeConfigGuardCorpusUnion(t *testing.T) {
 	t.Parallel()
+	// checker.ts must stay in the shard that runs alone; a reshuffle that moves it among the parallel ones fails here.
+	if owner := volumeGuardCorpusShard("src/compiler/checker.ts"); owner != volumeGuardCheckerShard {
+		t.Fatalf("checker.ts is owned by corpus shard %03d, not the non-parallel %03d", owner, volumeGuardCheckerShard)
+	}
 	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if corpus == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
@@ -615,9 +622,12 @@ func TestVolumeConfigGuardCorpus_024(t *testing.T) {
 	t.Parallel()
 	runVolumeConfigGuardCorpusShard(t, 24)
 }
+
+// src/compiler/checker.ts is one indivisible case: it can't split by file, and its rules share state. With one small
+// file beside it this shard is 33.8 s alone on one core (Workshop, Oct 11), every other corpus shard 10.6 s or less.
+// Not parallel: holds checker.ts, one indivisible 34 s case, so it runs alone in the unit before the parallel shards resume.
 func TestVolumeConfigGuardCorpus_025(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardCorpusShard(t, 25)
+	runVolumeConfigGuardCorpusShard(t, volumeGuardCheckerShard)
 }
 func TestVolumeConfigGuardCorpus_026(t *testing.T) {
 	t.Parallel()
