@@ -14,7 +14,6 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
-	"regexp"
 	"slices"
 	"sort"
 	"strconv"
@@ -521,16 +520,6 @@ func newTraceState(facts *traceFacts) *traceState {
 }
 
 var (
-	traceLine   = regexp.MustCompile(`^(\d+)\s+(.*)$`)
-	resumedLine = regexp.MustCompile(`^<\.\.\. (\w+) resumed>\s?(.*)$`)
-	callLine    = regexp.MustCompile(`^(\w+)\((.*)\)\s+=\s+(-?\d+|\?)(?:<([^>]*)>)?(?:\s+(E[A-Z0-9]+))?`)
-	exitLine    = regexp.MustCompile(`^\+\+\+ (?:exited with \d+|killed by \w+(?: \(core dumped\))?) \+\+\+$`)
-	directoryFD = regexp.MustCompile(`^(AT_FDCWD|-?\d+)(?:<([^>]*)>)?,\s*`)
-	quoted      = regexp.MustCompile(`^"((?:[^"\\]|\\.)*)"`)
-	fdPath      = regexp.MustCompile(`^-?\d+<([^>]*)>`)
-)
-
-var (
 	atCalls = set("openat", "openat2", "newfstatat", "fstatat64", "statx", "faccessat", "faccessat2", "readlinkat", "execveat", "mkdirat",
 		"unlinkat", "renameat", "renameat2", "utimensat", "fchmodat", "fchownat", "mknodat", "linkat", "name_to_handle_at", "inotify_add_watch")
 	plainCalls = set("open", "creat", "stat", "lstat", "stat64", "lstat64", "access", "readlink", "execve", "chdir", "mkdir", "rmdir", "unlink",
@@ -573,13 +562,12 @@ func (state *traceState) read(trace io.Reader) error {
 }
 
 func (state *traceState) line(text string) {
-	match := traceLine.FindStringSubmatch(text)
-	if match == nil {
+	number, rest, ok := splitTraceLine(text)
+	if !ok {
 		return
 	}
-	pid, _ := strconv.Atoi(match[1])
-	rest := match[2]
-	if exitLine.MatchString(rest) {
+	pid, _ := strconv.Atoi(number)
+	if isExit(rest) {
 		state.exited(pid)
 		return
 	}
@@ -587,24 +575,23 @@ func (state *traceState) line(text string) {
 		state.unfinished[pid] = strings.TrimSpace(strings.TrimSuffix(rest, "<unfinished ...>"))
 		return
 	}
-	if resumed := resumedLine.FindStringSubmatch(rest); resumed != nil {
+	if tail, resumed := resumedTail(rest); resumed {
 		start, ok := state.unfinished[pid]
 		if !ok {
 			return
 		}
 		delete(state.unfinished, pid)
-		tail := resumed[2]
 		if strings.HasPrefix(tail, ")") || strings.HasPrefix(tail, ",") {
 			rest = start + tail
 		} else {
 			rest = start + " " + tail
 		}
 	}
-	call := callLine.FindStringSubmatch(rest)
-	if call == nil {
+	call, ok := parseCall(rest)
+	if !ok {
 		return
 	}
-	state.handle(traceCall{pid: pid, call: call[1], arguments: call[2], value: call[3], opened: call[4], errno: call[5]})
+	state.handle(traceCall{pid: pid, call: call.call, arguments: call.arguments, value: call.value, opened: call.opened, errno: call.errno})
 }
 
 func (state *traceState) handle(call traceCall) {
@@ -645,16 +632,16 @@ func (state *traceState) handle(call traceCall) {
 	kind := 0
 	switch {
 	case call.call == "fchdir":
-		if match := fdPath.FindStringSubmatch(call.arguments); match != nil && call.value == "0" {
-			state.directory[process] = unescape(match[1])
+		if decoded, ok := descriptorPath(call.arguments); ok && call.value == "0" {
+			state.directory[process] = unescape(decoded)
 		}
 		return
 	case call.call == "getdents64" || call.call == "getdents":
-		match := fdPath.FindStringSubmatch(call.arguments)
-		if match == nil {
+		decoded, ok := descriptorPath(call.arguments)
+		if !ok {
 			return
 		}
-		name, kind = filepath.Clean(unescape(match[1])), readListing
+		name, kind = filepath.Clean(unescape(decoded)), readListing
 	default:
 		var rest string
 		name, rest = target(call.call, call.arguments, state.directory[process])
@@ -854,23 +841,23 @@ func (state *traceState) exited(pid int) {
 func target(call, arguments, directory string) (string, string) {
 	base := directory
 	if atCalls[call] {
-		match := directoryFD.FindStringSubmatch(arguments)
-		if match == nil {
+		decoded, length, ok := directoryArgument(arguments)
+		if !ok {
 			return "", arguments
 		}
-		if match[2] != "" {
-			base = unescape(match[2])
+		if decoded != "" {
+			base = unescape(decoded)
 		}
-		arguments = arguments[len(match[0]):]
+		arguments = arguments[length:]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {
 		return "", arguments
 	}
-	match := quoted.FindStringSubmatch(arguments)
-	if match == nil {
+	quotedName, length, ok := quotedArgument(arguments)
+	if !ok {
 		return "", arguments
 	}
-	name := unescape(match[1])
-	rest := arguments[len(match[0]):]
+	name := unescape(quotedName)
+	rest := arguments[length:]
 	if name == "" && strings.Contains(rest, "AT_EMPTY_PATH") {
 		if base == "" {
 			return "", rest
@@ -891,11 +878,11 @@ func secondTarget(call, rest, directory string) string {
 	switch call {
 	case "rename", "link", "symlink":
 		rest = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(rest), ","))
-		match := quoted.FindStringSubmatch(rest)
-		if match == nil {
+		quotedName, _, ok := quotedArgument(rest)
+		if !ok {
 			return ""
 		}
-		name := unescape(match[1])
+		name := unescape(quotedName)
 		if !filepath.IsAbs(name) && directory != "" {
 			name = filepath.Join(directory, name)
 		}
