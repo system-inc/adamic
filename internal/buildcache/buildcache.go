@@ -276,8 +276,11 @@ func filled(target, inputs string, fill func(scratch string) error) (bool, error
 // keyVersion is how buildcache builds and holds what Key addresses, the one input no product declares: a change to what
 // a product's bytes hold for the same inputs moves it, so no key names two products. v2 is relocating's: a product
 // names itself and every other product by name key (relative.go), so the same inputs made other bytes than v1's
-// (Workshop, 02:50Z Oct 11: seven products a v1 tree published under one key, landable-6 built again, different).
-const keyVersion = "v2"
+// (Workshop, 02:50Z Oct 11: seven products a v1 tree published under one key, landable-6 built again, different). v3 is
+// unstamped: Loom's unit environment builds with -buildvcs=false since 05:01Z Oct 11, and a hand-rolled product (a go
+// build, a c-archive) keys the flags it declares, never GOFLAGS, so its v2 keys still named the stamped bytes trees had
+// published before (landable-9b: 54 refs/action conflicts, each against a ref written at 04:14Z).
+const keyVersion = "v3"
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
 func Key(root string, inputs Inputs) (string, error) {

@@ -110,21 +110,25 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 	})
 }
 
-// No product relocating holds is keyed as a v1 product was: Workshop's store held v1 trees' products under the very keys
-// landable-6 asked for, with other bytes (Oct 11). A change to what a product holds for the same inputs is a new
-// keyVersion, and this test names each one, so moving it is a decision. Mutant: keyVersion back to v1.
+// No product is keyed as an earlier version's was: Workshop's store held v1 trees' products under the very keys landable-6
+// asked for (relocating), and stamped v2 trees' under the keys landable-9b asked for (unstamped), each with other bytes
+// (Oct 11). A change to what a product holds for the same inputs is a new keyVersion, and this test names each one, so
+// moving it is a decision. Mutants: keyVersion back to v1, or to v2.
 func TestAKeyNamesHowProductsAreHeld(t *testing.T) {
 	t.Parallel()
 	root := repository(t)
-	if keyVersion != "v2" {
+	if keyVersion != "v3" {
 		t.Fatalf("keyVersion is %q: name the new version here, and why its products' bytes differ, in keyVersion's comment", keyVersion)
 	}
-	old, err := keyAt("v1", root, base)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if now := key(t, root, base); now == old {
-		t.Fatalf("the same inputs key %s under v1 and under %s", now, keyVersion)
+	now := key(t, root, base)
+	for _, earlier := range []string{"v1", "v2"} {
+		old, err := keyAt(earlier, root, base)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if now == old {
+			t.Fatalf("the same inputs key %s under %s and under %s", now, earlier, keyVersion)
+		}
 	}
 }
 
