@@ -18,6 +18,11 @@
 // and one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are
 // neither placed nor published. It exits with the command's status, or 3 when the command passed and a product was
 // refused. Linux only: strace 6 with --seccomp-bpf and --decode-fds=path.
+//
+// With ADAMIC_TRACE_REPORT naming a file, it also writes there one JSON line per product (buildcache.Report: name,
+// nameKey, key and reads when settled, reason when refused), for Loom's tree builder. A run that can't be keyed at all
+// writes one line more, outcome lost, first; one that can't trace or settle (exit 2) writes only that line. The file is
+// emptied before the command runs, so a report left by an earlier run never reads as this one's.
 package main
 
 import (
@@ -51,15 +56,28 @@ func main() {
 		flag.Usage()
 		os.Exit(2)
 	}
-	status, err := run(flag.Args())
+	report := os.Getenv("ADAMIC_TRACE_REPORT")
+	if report != "" {
+		if absolute, err := filepath.Abs(report); err == nil {
+			report = absolute
+		}
+		if err := os.WriteFile(report, nil, 0o644); err != nil {
+			fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", err)
+			os.Exit(2)
+		}
+	}
+	status, err := run(flag.Args(), report)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "traced:", err)
+		if report != "" {
+			buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + err.Error()}})
+		}
 		os.Exit(2)
 	}
 	os.Exit(status)
 }
 
-func run(command []string) (int, error) {
+func run(command []string, report string) (int, error) {
 	if runtime.GOOS != "linux" {
 		return 0, errors.New("tracing is strace's, on Linux (Workshop); here a product builds only with ADAMIC_BUILD_STORE=off, for this machine alone")
 	}
@@ -133,9 +151,14 @@ func run(command []string) (int, error) {
 	if result.err != nil {
 		return 0, fmt.Errorf("settling %s: %v", directory, result.err)
 	}
-	report := strings.Join(append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...), "\n") + "\n"
-	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(report), 0o644)
-	fmt.Print(report)
+	if report != "" {
+		if err = buildcache.WriteReport(report, result.settlement.Reports); err != nil {
+			return 0, fmt.Errorf("ADAMIC_TRACE_REPORT: %v", err)
+		}
+	}
+	lines := strings.Join(append(append([]string{}, result.settlement.Settled...), result.settlement.Refused...), "\n") + "\n"
+	os.WriteFile(filepath.Join(directory, "settled.txt"), []byte(lines), 0o644)
+	fmt.Print(lines)
 	fmt.Printf("traced: %d settled, %d refused; journal and report in %s\n", len(result.settlement.Settled), len(result.settlement.Refused), directory)
 	if status == 0 && len(result.settlement.Refused) > 0 {
 		status = 3
