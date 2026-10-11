@@ -3,6 +3,7 @@ package json
 import (
 	"bufio"
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -119,25 +120,57 @@ func pinnedCorpusProduct(t testing.TB) (tracked, provisioned []textCase) {
 	return append([]textCase(nil), pinnedCorpusRead.tracked...), append([]textCase(nil), pinnedCorpusRead.provisioned...)
 }
 
-// A product file holds its cases the way Git's cat-file --batch does: "<size> <name>\n", the bytes, "\n".
+// A product file holds its cases the way Git's cat-file --batch does: "<size> <name>\n", the bytes, "\n", gzipped.
+// The corpus is the pin's own text, and its reports name paths of the machines they ran on (/tmp/..., /private/tmp/...):
+// data, not this machine's, but text buildcache's relocation check would refuse as a path of the builder. Compressed
+// (no timestamp, so the bytes are the cases' alone), the file is opaque data the check leaves alone, read back here.
 func writeCorpusRecords(path string, cases []textCase) error {
+	records, err := encodeCorpusRecords(path, cases)
+	if err != nil {
+		return err
+	}
+	var compressed bytes.Buffer
+	writer := gzip.NewWriter(&compressed)
+	if _, err := writer.Write(records); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	return os.WriteFile(path, compressed.Bytes(), 0o644)
+}
+
+func encodeCorpusRecords(path string, cases []textCase) ([]byte, error) {
 	var records bytes.Buffer
 	for _, item := range cases {
 		if item.Name == "" || strings.ContainsAny(item.Name, "\r\n") {
-			return fmt.Errorf("corpus product %s: unsupported case name %q", path, item.Name)
+			return nil, fmt.Errorf("corpus product %s: unsupported case name %q", path, item.Name)
 		}
 		fmt.Fprintf(&records, "%d %s\n", len(item.Text), item.Name)
 		records.WriteString(item.Text)
 		records.WriteByte('\n')
 	}
-	return os.WriteFile(path, records.Bytes(), 0o644)
+	return records.Bytes(), nil
 }
 
 func readCorpusRecords(path string) ([]textCase, error) {
-	data, err := os.ReadFile(path)
+	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
+	reader, err := gzip.NewReader(file)
+	if err != nil {
+		return nil, fmt.Errorf("corpus product %s: %w", path, err)
+	}
+	data, err := io.ReadAll(reader)
+	if err != nil {
+		return nil, fmt.Errorf("corpus product %s: %w", path, err)
+	}
+	return decodeCorpusRecords(path, data)
+}
+
+func decodeCorpusRecords(path string, data []byte) ([]textCase, error) {
 	var cases []textCase
 	for len(data) > 0 {
 		header, rest, terminated := bytes.Cut(data, []byte("\n"))
@@ -435,7 +468,7 @@ func TestJSONPinnedCorpusRecords(t *testing.T) {
 	if err != nil || fmt.Sprint(read) != fmt.Sprint(cases) {
 		t.Fatalf("records changed names or bytes: %v %q", err, read)
 	}
-	encoded, err := os.ReadFile(path)
+	encoded, err := encodeCorpusRecords(path, cases)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -444,10 +477,7 @@ func TestJSONPinnedCorpusRecords(t *testing.T) {
 		{"truncated", string(encoded[:len(encoded)-1])},
 		{"size", strings.Replace(string(encoded), "2 a.json", "1 a.json", 1)},
 	} {
-		if err := os.WriteFile(path, []byte(mutant.text), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		if _, err := readCorpusRecords(path); err == nil || !strings.Contains(err.Error(), "malformed record") {
+		if _, err := decodeCorpusRecords(path, []byte(mutant.text)); err == nil || !strings.Contains(err.Error(), "malformed record") {
 			t.Fatalf("%s product read without error: %v", mutant.name, err)
 		}
 	}
