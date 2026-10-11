@@ -3,6 +3,7 @@ package lower
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
@@ -95,6 +96,53 @@ func TestArgumentsLengthRefusalFixtures(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// An override that doesn't read arguments.length still takes the count its signature's other implementations read,
+// as a local named argument_count whose index is in its C name (native's emit_locals.go). Six classes each override
+// such a reader, so one pass adds six of those locals: in an order of Go's choosing, if the pass ranged over its map,
+// and then the same program would lower, and compile, to different C from one run to the next (#m27xj48).
+func TestArgumentsCountLocalsAreNumberedTheSameEveryTime(t *testing.T) {
+	t.Parallel()
+	var source strings.Builder
+	for group := range 6 {
+		fmt.Fprintf(&source, "class Reader%[1]d { read(value?: number): string { return `${arguments.length}:${value ?? %[1]d}`; } }\n", group)
+		fmt.Fprintf(&source, "class Other%[1]d extends Reader%[1]d { read(value?: number): string { return `other:${value ?? %[1]d}`; } }\n", group)
+		fmt.Fprintf(&source, "function call%[1]d(reader: Reader%[1]d): string { return reader.read(); }\n", group)
+		fmt.Fprintf(&source, "console.log(`${call%[1]d(new Reader%[1]d())} ${call%[1]d(new Other%[1]d())}`);\n", group)
+	}
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	checked, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Each local named argument_count, with the function that holds it, in the order the program numbers them.
+	numbering := func() string {
+		program, err := Lower(context.Background(), checked)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var locals []string
+		for _, local := range program.Locals {
+			if local.Name == "argument_count" {
+				locals = append(locals, program.Functions[local.Function].Name)
+			}
+		}
+		return strings.Join(locals, " ")
+	}
+	first := numbering()
+	if strings.Count(first, "read") < 12 {
+		t.Fatalf("want an argument_count local in each of the 12 read methods, got %q", first)
+	}
+	// Go starts each range over a map at a random entry, so twenty runs in one order are no accident.
+	for run := 1; run < 20; run++ {
+		if again := numbering(); again != first {
+			t.Fatalf("run %d numbered the argument_count locals\n%s\nwhere the first run numbered them\n%s", run, again, first)
+		}
 	}
 }
 
