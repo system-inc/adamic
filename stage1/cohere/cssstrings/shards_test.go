@@ -263,16 +263,9 @@ func stringsCacheInputs(t *testing.T, inputs stringsInputs) buildcache.Inputs {
 			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
 		}
 	}
-	if strings.Contains(inputs.Name, "lowering and backends") {
-		// This non-Go build executes the compiler already linked into this test
-		// binary. Its content hash covers every compiled Go dependency and toolchain;
-		// the source-program files above cover the remaining lowering inputs.
-		binary, err := os.Executable()
-		if err != nil {
-			t.Fatal(err)
-		}
-		keyed.Flags = append(keyed.Flags, "lowering-compiler-"+stringsOracleIdentity(t, binary))
-	}
+	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
+	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
+	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
 
 	return keyed
 }
