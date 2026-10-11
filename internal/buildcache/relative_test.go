@@ -566,3 +566,35 @@ func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
 		t.Fatalf("8,000 tokens against 800 declared files took %v", took)
 	}
 }
+
+// places resolves each product directory a process holds once, not once per key: a test that keys many products while
+// holding many (bridge/tsgo's BridgeInputProofs, home-6's dry run, Oct 11) spent its 10 minutes resolving them again for
+// every key, a stat per path element, each a stop under a trace. Mutant: product directories resolved on every call.
+// Not parallel: it adds to productDirectories, which every key in the process reads.
+func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
+	parent := t.TempDir()
+	var directories []string
+	for index := range 50 {
+		directory := filepath.Join(parent, fmt.Sprintf("product-%02d", index))
+		if err := os.Mkdir(directory, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		directories = append(directories, directory)
+		productDirectories.Store(directory, fmt.Sprintf("%064x", index))
+	}
+	t.Cleanup(func() {
+		for _, directory := range directories {
+			productDirectories.Delete(directory)
+			productResolutions.Delete(directory)
+		}
+	})
+	first := places("")
+	before := resolutions.Load()
+	second := places("")
+	if again := resolutions.Load() - before; again > 3 {
+		t.Fatalf("places resolved %d paths the second time, with 50 product directories it had resolved already", again)
+	}
+	if len(first) != len(second) || len(first) < 50 {
+		t.Fatalf("places gave %d, then %d", len(first), len(second))
+	}
+}
