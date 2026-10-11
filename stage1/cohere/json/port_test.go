@@ -222,6 +222,7 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	}
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
+
 // jsonPortTopShard is a top shard's agreement: the Go oracle, Node, release, ASan/UBSan and the JavaScript backend.
 func jsonPortTopShard(t *testing.T, target int) { jsonPortTopRun(t, target, false) }
 
