@@ -60,9 +60,14 @@ func (entry Entry) Submodule() bool {
 	return entry.Mode == "160000"
 }
 
-// Git reports whether git answers for directory: it holds .git, a repository's directory or a submodule's file.
+// Git reports whether git answers for directory: it holds .git, a repository's directory or a submodule's file. The
+// look runs as key-time work (buildcache.Keying): whether a directory is a repository is the tree's structure, which
+// PathsUnder's Tracked filter and a run's tree state already hold, and never a byte a build makes, so a traced build
+// asking it reads no .git (#1p6sent: the second dry run refused cssnumbers' and cssstrings' Go answers for one Lstat
+// of <dir>/.git per directory the walk entered).
 func Git(directory string) bool {
-	_, err := os.Lstat(filepath.Join(directory, ".git"))
+	var err error
+	buildcache.Keying(func() { _, err = os.Lstat(filepath.Join(directory, ".git")) })
 	return err == nil
 }
 
