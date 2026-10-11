@@ -19,8 +19,17 @@ import (
 // rounds, or that lost a fraction or a sign, says so. Every loop is also checked to have been
 // kept in an integer exactly when it should: the ones that fall back to a double must, and the ones
 // that qualify mustn't miss out, so the sweep proves what it's sweeping.
-func TestLoopCountersAgreeWithNode(t *testing.T) {
-	t.Parallel()
+// A loopCounter is one loop of the sweep: its for header and the extra statements its body opens with, each with NAME
+// where its counter's name goes, and the integer verdicts it is held to, by the name each counter takes (NAME, and
+// NAMEj for a nested loop's inner counter). Its key is that text, so a loop belongs to a shard of
+// TestLoopCountersAgreeWithNode's family (families_test.go) by what it is, never by its place in the sweep.
+type loopCounter struct {
+	key, header, extra string
+	kept               map[string]bool
+}
+
+// loopCounters is every loop of the sweep, in the order the sweep makes them.
+func loopCounters() []loopCounter {
 	two32, two53 := 4294967296.0, 9007199254740992.0
 	// Every start and bound with the range it can take, worked out by hand rather than by the pass's
 	// own arithmetic, and whether it's one the pass may keep (whole within 2^53 at both ends and, for a
@@ -68,42 +77,15 @@ func TestLoopCountersAgreeWithNode(t *testing.T) {
 		{"<", "NAME += 0", 0}, {"<", "NAME += 0.5", 0}, {"<", "NAME += 1.5", 0}, {">", "NAME -= 1.5", 0}, {">", "NAME -= -1", 0}, {"<", "NAME += 2 ** 1", 0},
 		{"<", "NAME = 1 + NAME", 0}, {">", "NAME++", 1}, {"<", "NAME--", -1}, {">=", "NAME += 2", 2},
 	}
-	var source strings.Builder
-	source.WriteString(`const values = [10, 20, 30, 40, 50];
-const empty: number[] = [];
-const text = 'héllo';
-const sizes = new Map<string, number>([['a', 1], ['b', 2], ['c', 3]]);
-const wholeConstant = values.length;
-const derived = values.length * 2 - 3;
-const fractionConstant = 4.5;
-let changing = 4;
-changing = 6;
-function report(name: string, seen: number, sum: number, sign: number, last: number): void {
-	console.log(` + "`${name} ${seen} ${sum} ${sign} ${last}`" + `);
-}
-`)
-	expected := map[string]bool{}
-	loop := func(name string, header string, extra string) {
-		fmt.Fprintf(&source, `function %s(): void {
-	let seen = 0;
-	let sum = 0;
-	let sign = 0;
-	let last = 0;
-	for (%s) {
-		if (seen === 0) {
-			sign = 1 / %s;
+	var loops []loopCounter
+	occurrences := map[string]int{}
+	loop := func(header string, extra string, kept map[string]bool) {
+		key := header + "\n" + extra
+		// A loop the crossings below make twice runs twice, as it always did, under a key of its own.
+		if occurrences[key]++; occurrences[key] > 1 {
+			key += fmt.Sprintf("#%d", occurrences[key])
 		}
-%s		last = %s;
-		sum += %s + (values[%s] ?? 0.25);
-		seen += 1;
-		if (seen >= 6) {
-			break;
-		}
-	}
-	report('%s', seen, sum, sign, last);
-}
-%s();
-`, name, header, name, extra, name, name, name, name, name)
+		loops = append(loops, loopCounter{key, header, extra, kept})
 	}
 	// kept is the rule the pass follows, said again: the furthest a counter can go, one step past the
 	// last value its bound lets through, counting toward the bound, is within 2^53. It's worked out in
@@ -128,14 +110,9 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 		}
 		return furthest <= 1<<53 && furthest >= -(1<<53)
 	}
-	cases := 0
 	add := func(start value, bound value, each update) {
-		cases++
-		name := fmt.Sprintf("c%d", cases)
-		header := fmt.Sprintf("let %s = %s; %s %s %s; %s", name, start.source, name, each.comparison, bound.source,
-			strings.ReplaceAll(each.source, "NAME", name))
-		loop(name, header, "")
-		expected[name] = kept(start, bound, each)
+		header := fmt.Sprintf("let NAME = %s; NAME %s %s; %s", start.source, each.comparison, bound.source, each.source)
+		loop(header, "", map[string]bool{"NAME": kept(start, bound, each)})
 	}
 	// Whether a loop qualifies turns on its start alone, and on its bound and step together, so the
 	// sweep crosses each with the edges of the others rather than everything with everything, which
@@ -177,10 +154,7 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 		{"let NAME = 9; NAME >= 0; NAME -= 2", "\t\tconst read = (): number => NAME;\n\t\tsum += read();\n", false},
 	}
 	for _, special := range specials {
-		cases++
-		name := fmt.Sprintf("c%d", cases)
-		loop(name, strings.ReplaceAll(special.header, "NAME", name), strings.ReplaceAll(special.extra, "NAME", name))
-		expected[name] = special.integer
+		loop(special.header, special.extra, map[string]bool{"NAME": special.integer})
 	}
 
 	// Loops in a kept counter's body that read it, for their start or their bound, in the range it
@@ -203,18 +177,84 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 		{"let I = 5; I < 3; I++", "let J = I; J < 9; J++", true, false},
 	}
 	for _, each := range nested {
-		cases++
-		name := fmt.Sprintf("c%d", cases)
-		inner := name + "j"
-		header := strings.ReplaceAll(each.inner, "J", inner)
-		header = strings.ReplaceAll(header, "I", name)
+		header := strings.ReplaceAll(strings.ReplaceAll(each.inner, "J", "NAMEj"), "I", "NAME")
 		extra := fmt.Sprintf("\t\tfor (%s) {\n\t\t\tsign += 1 / %s;\n\t\t\tsum += %s + (values[%s] ?? 0.25);\n"+
-			"\t\t\tseen += 1;\n\t\t\tif (seen >= 6) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n", header, inner, inner, inner)
-		loop(name, strings.ReplaceAll(each.outer, "I", name), extra)
-		expected[name] = each.outerKept
-		expected[inner] = each.innerKept
+			"\t\t\tseen += 1;\n\t\t\tif (seen >= 6) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n", header, "NAMEj", "NAMEj", "NAMEj")
+		loop(strings.ReplaceAll(each.outer, "I", "NAME"), extra, map[string]bool{"NAME": each.outerKept, "NAMEj": each.innerKept})
 	}
+	return loops
 
+}
+
+// loopCounterKeys is every loop's key, in the sweep's order.
+func loopCounterKeys() []string {
+	loops := loopCounters()
+	keys := make([]string, len(loops))
+	for index, each := range loops {
+		keys[index] = each.key
+	}
+	return keys
+}
+
+// TestLoopCountersAgreeWithNode is a family (families_test.go): TestLoopCountersAgreeWithNode_000 and on each build
+// one program of the loops their shard owns, after the sweep's shared declarations, and hold every loop of it to
+// whether it is kept in an integer and the whole program to Node, sanitized and released. Each loop is named c and
+// its place in the whole sweep, so a loop's name, and its line, read the same whichever program it lands in.
+func runLoopCountersShard(t *testing.T, shard int) {
+	t.Helper()
+	loops := loopCounters()
+	planted, probing := familyProbe("TestLoopCountersAgreeWithNode")
+	var source strings.Builder
+	source.WriteString(`const values = [10, 20, 30, 40, 50];
+const empty: number[] = [];
+const text = 'héllo';
+const sizes = new Map<string, number>([['a', 1], ['b', 2], ['c', 3]]);
+const wholeConstant = values.length;
+const derived = values.length * 2 - 3;
+const fractionConstant = 4.5;
+let changing = 4;
+changing = 6;
+function report(name: string, seen: number, sum: number, sign: number, last: number): void {
+	console.log(` + "`${name} ${seen} ${sum} ${sign} ${last}`" + `);
+}
+`)
+	expected := map[string]bool{}
+	cases := 0
+	for _, index := range familyCases(t, "TestLoopCountersAgreeWithNode", shard, loopCounterKeys()) {
+		each := loops[index]
+		name := fmt.Sprintf("c%d", index+1)
+		fmt.Fprintf(&source, `function %s(): void {
+	let seen = 0;
+	let sum = 0;
+	let sign = 0;
+	let last = 0;
+	for (%s) {
+		if (seen === 0) {
+			sign = 1 / %s;
+		}
+%s		last = %s;
+		sum += %s + (values[%s] ?? 0.25);
+		seen += 1;
+		if (seen >= 6) {
+			break;
+		}
+	}
+	report('%s', seen, sum, sign, last);
+}
+%s();
+`, name, strings.ReplaceAll(each.header, "NAME", name), name, strings.ReplaceAll(each.extra, "NAME", name), name, name, name, name, name)
+		for counter, integer := range each.kept {
+			if probing && each.key == planted && counter == "NAME" {
+				// TestFamiliesCatchAPlantedCase's mutant: the loop's verdict, turned over.
+				integer = !integer
+			}
+			expected[strings.ReplaceAll(counter, "NAME", name)] = integer
+		}
+		cases++
+	}
+	if cases == 0 {
+		return
+	}
 	path := filepath.Join(t.TempDir(), "counters.ts")
 	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
 		t.Fatal(err)
