@@ -118,7 +118,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	var looked found
 	keying(func() {
 		described = describe(root, inputs)
-		looked, err = productFor(root, cache, nameKey, 0)
+		looked, err = productFor(root, cache, nameKey, 0, nil)
 	})
 	if err != nil {
 		return "", "", err
@@ -130,7 +130,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			if err = mergeReads(cache, nameKey, inputs.Name, remote); err != nil {
 				return "", "", err
 			}
-			keying(func() { looked, err = productFor(root, cache, nameKey, 0) })
+			keying(func() { looked, err = productFor(root, cache, nameKey, 0, nil) })
 			if err != nil {
 				return "", "", err
 			}
