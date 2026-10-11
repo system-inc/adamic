@@ -529,8 +529,8 @@ func TestFactsDecoderGuards(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	// The stage 0 compiler is the package's shared product, built ahead by TestProduct_stage0.
+	stage0 := h.stage0()
 	binary := filepath.Join(directory, "decoder")
 	h.must("decoder-build", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/testdata/facts_decode.ts"), "-o", binary, "--sanitize"))
 	// Complete schema, one number type. Each record owns no other record.
