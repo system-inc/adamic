@@ -4,7 +4,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
+	"time"
 )
 
 // A Loom runner's source has no .git: build-tree unpacks the tree's tracked files from chunks and ships git's answers
@@ -64,4 +66,89 @@ func TestAKeyFromARunnersSourceIsTheCheckoutsKey(t *testing.T) {
 		t.Fatal("with no manifest the runner's source still keys as the checkout; the untracked package isn't reaching the key")
 	}
 	forgetTracked()
+}
+
+// A runner's source values a clean file by the id its manifest's listing holds, unread, as a checkout values one by
+// its index's (#szswjtc: a runner read and hashed every content entry of a read set, 8 to 27 s a lookup): a file no
+// one may read keys, and keys and values as the checkout does. A file changed after the listing was written is hashed,
+// never taken by the listing's id, which names the content it was unpacked with. A submodule's entry names a commit,
+// not a file's content, so a file where the listing has a gitlink is hashed. Mutants: a file changed after the listing
+// taken by the manifest's id (the listing's time taken as when it was read); the listing's submodule entries taken as
+// files.
+func TestAnUnpackedSourceValuesACleanFileByItsManifest(t *testing.T) {
+	t.Parallel()
+	tree := checkout(t)
+	listing, err := exec.Command("git", "-C", tree, "ls-tree", "-r", "-z", "--full-tree", "HEAD").Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	clean := key(t, tree, declared)
+	// runner is declaredTree unpacked an hour ago, its listing (with extra entries after the tree's) a minute ago.
+	written := time.Now().Add(-time.Minute)
+	runner := func(t *testing.T, extra string) string {
+		t.Helper()
+		root := unpacked(t, nil)
+		old := time.Now().Add(-time.Hour)
+		for name := range declaredTree {
+			if err := os.Chtimes(filepath.Join(root, name), old, old); err != nil {
+				t.Fatal(err)
+			}
+		}
+		write(t, root, ".tracked/files", string(listing)+extra)
+		if err := os.Chtimes(filepath.Join(root, ".tracked/files"), written, written); err != nil {
+			t.Fatal(err)
+		}
+		return root
+	}
+	t.Run("clean", func(t *testing.T) {
+		t.Parallel()
+		root := runner(t, "")
+		unreadable := filepath.Join(root, "source/a.c")
+		if err := os.Chmod(unreadable, 0); err != nil {
+			t.Fatal(err)
+		}
+		t.Cleanup(func() { os.Chmod(unreadable, 0o644) })
+		if _, err := os.ReadFile(unreadable); err == nil {
+			t.Skip("this user reads a file with no permissions, so a file valued unread can't be told from one read")
+		}
+		got, err := Key(root, declared)
+		if err != nil {
+			t.Fatalf("keying a clean file of an unpacked source read it: %v", err)
+		}
+		if got != clean {
+			t.Fatalf("an unpacked source valued by its manifest keys %s, its checkout %s", got, clean)
+		}
+		if value, want := readTreeValue(root, "content", "source/a.c"), readTreeValue(tree, "content", "source/a.c"); value != want {
+			t.Fatalf("a read set values the unpacked source's a.c %q, the checkout's %q", value, want)
+		}
+	})
+	t.Run("changed after the listing", func(t *testing.T) {
+		t.Parallel()
+		root := runner(t, "")
+		changed := map[string]string{"source/a.c": "int Z;\n"}
+		write(t, root, "source/a.c", changed["source/a.c"])
+		// Changed half a minute after the listing was written: a lookup asking now finds it changed long before.
+		since := written.Add(30 * time.Second)
+		if err := os.Chtimes(filepath.Join(root, "source/a.c"), since, since); err != nil {
+			t.Fatal(err)
+		}
+		if got, want := key(t, root, declared), key(t, unpacked(t, changed), declared); got != want || got == clean {
+			t.Fatalf("a file changed after the listing keys %s: its new content keys %s, the listing's id %s", got, want, clean)
+		}
+	})
+	t.Run("a gitlink's path", func(t *testing.T) {
+		t.Parallel()
+		root := runner(t, "160000 commit "+strings.Repeat("ab", 20)+"\tvendor\x00")
+		write(t, root, "vendor", "a file where the commit has a submodule\n")
+		old := time.Now().Add(-time.Hour)
+		if err := os.Chtimes(filepath.Join(root, "vendor"), old, old); err != nil {
+			t.Fatal(err)
+		}
+		if _, held := repositoryAt(root).objects["vendor"]; held {
+			t.Fatal("the listing's submodule entry is held as a file's id")
+		}
+		if value, want := readTreeValue(root, "content", "vendor"), "file false "+blobID([]byte("a file where the commit has a submodule\n"), 40); value != want {
+			t.Fatalf("a file at a gitlink's path values %q, its content %q", value, want)
+		}
+	})
 }
