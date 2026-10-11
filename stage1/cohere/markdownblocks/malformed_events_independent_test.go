@@ -328,19 +328,17 @@ func malformedEventsNode(t *testing.T, ctx context.Context, path string, argumen
 }
 
 func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
-	library, err := native.RuntimeLibraryForSource("", source, options)
-	if err != nil {
+	if err := ctx.Err(); err != nil {
 		return err
 	}
-	sourcePath := filepath.Join(filepath.Dir(output), "main.c")
-	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(filepath.Dir(output), "main.c"), []byte(source), 0644); err != nil {
 		return err
 	}
-	flags := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, sourcePath)
-	flags = append(flags, native.RuntimeLinkFlags(library)...)
-	flags = append(flags, "-lm")
-	if result, err := malformedEventsCommand(ctx, "clang", flags...).CombinedOutput(); err != nil {
-		return fmt.Errorf("native build: %w\n%s", err, result)
+	// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no build
+	// directory: given <build directory>/main.c, the sanitized port kept it in its globals' metadata, random per build
+	// (landable-17c's tree, Oct 11: markdownblocks-malformed-events-native, refs/action/ddf7d5cae0d2).
+	if err := native.Build(source, output, options); err != nil {
+		return fmt.Errorf("native build: %w", err)
 	}
 	return nil
 }
