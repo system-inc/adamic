@@ -62,6 +62,7 @@ func checked(t testing.TB, checkout, pin string, roots, patterns []string) []str
 
 func git(checkout string, args ...string) ([]byte, error) {
 	command := exec.Command("git", append([]string{"-C", checkout}, args...)...)
+	command.Env = tracked.GitEnvironment()
 	output, err := command.CombinedOutput()
 	if err != nil {
 		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(args, " "), checkout, err, output)
