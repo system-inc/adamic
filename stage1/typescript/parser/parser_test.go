@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -28,11 +29,25 @@ func goOracle(t *testing.T) string {
 }
 
 // buildPort is the port in directory built natively, as a product: the tree build makes each one ahead through its
-// TestProduct_ (port_products_test.go), so no test pays for a lower and a native build inside its own time.
+// TestProduct_ (port_products_test.go), so no test pays for a lower and a native build inside its own time. Each
+// source is fetched once per process, since many tests ask for the control.
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	return wholeMutantBuildPortProduct(t, directory, sanitize)
+	value, _ := portBuilds.LoadOrStore(fmt.Sprintf("%s sanitize=%t", wholeMutantsSourceHash(t, directory), sanitize), &portBuild{})
+	build := value.(*portBuild)
+	build.once.Do(func() { build.binary = wholeMutantBuildPortProduct(t, directory, sanitize) })
+	if build.binary == "" {
+		t.Fatal("port product preparation failed in an earlier test")
+	}
+	return build.binary
 }
+
+type portBuild struct {
+	once   sync.Once
+	binary string
+}
+
+var portBuilds sync.Map
 
 func copyPort(t *testing.T, file, from, to string) string {
 	t.Helper()
