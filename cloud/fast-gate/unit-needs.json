@@ -6,6 +6,12 @@
       "memoryMegabytes": 9710,
       "cpus": 16,
       "record": "wall time (Loom 02:08Z, Release 02:21Z): unit ec123b7f's test phase took 1390.9 s wall on 4 contended cores (user 3498.5 s, sys 605.5 s), about 23 minutes, past Kirk's 10-minute rule; on 16 cores it is about 5 to 6 minutes. Declared at 16 cpus because no honest 32-cpu pool exists tonight (Cloud at load 48 of 64; Fabric 02:20Z). Memory measured on Cloud (Fabric 02:05Z): cgroup memory.peak 9710 MB in the test phase, ~/loom-fabric/rss-ec123b7f/memory.log; setup peaked at 9.9 GB (go build ./... at link)"
+    },
+    {
+      "package": "stage1/cohere/json",
+      "memoryMegabytes": 32768,
+      "cpus": 32,
+      "record": "deadline margin (Loom, Oct 11 19:4xZ): at the box share of 8 cpus a different port shard passed its own 90 s deadline on every candidate since landable-16c (17c _122 on Cloud, 18 _113 and _014 on Home, run 4's _014 as Home's only unit, Judge seq 4459). On a clean Workshop at 8 cpus (Tests' 17b proof) the slowest shard took 72.2 s and 4 took over 60 s. testguard.Share sizes the shards' children from GOMAXPROCS, which the runner sets to the share, so 32 cpus gives each shard four times the room. Memory: 8.1's heavy-unit 16384 MB doubled for four times the children, not yet measured. Until Tests splits json's shards to about 30 s at 8 cpus (landable-20); then this entry is removed."
     }
   ]
 }
