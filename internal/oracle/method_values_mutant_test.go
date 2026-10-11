@@ -11,9 +11,20 @@ import (
 
 // Each behavioral mutant compiles and finishes without sanitizer findings. Node's source result,
 // rather than an expected string copied out of the implementation, must kill it.
-func TestLibraryMethodValueMutants(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"search value", "apply bound", "last default", "NaN includes", "trim", "substring bounds", "charAt missing", "object tag", "own field", "map String", "parseInt radix", "parseFloat", "fixed digits", "numeric radix", "Math receiver", "character code", "bound receiver", "null tag", "ignored this evaluation", "map optional String"} {
+// libraryMethodValueMutants is the mutants of library_method_values.a, by name, the key TestLibraryMethodValueMutants'
+// family (families_test.go) owns each by.
+func libraryMethodValueMutants() []string {
+	return []string{"search value", "apply bound", "last default", "NaN includes", "trim", "substring bounds", "charAt missing", "object tag", "own field", "map String", "parseInt radix", "parseFloat", "fixed digits", "numeric radix", "Math receiver", "character code", "bound receiver", "null tag", "ignored this evaluation", "map optional String"}
+}
+
+// TestLibraryMethodValueMutants is a family (families_test.go): TestLibraryMethodValueMutants_000 and on each run the
+// mutants their shard owns, each built and run, and caught only by stdout against the source on Node.
+func runLibraryMethodValueMutantsShard(t *testing.T, shard int) {
+	t.Helper()
+	planted, probing := familyProbe("TestLibraryMethodValueMutants")
+	names := libraryMethodValueMutants()
+	for _, index := range familyCases(t, "TestLibraryMethodValueMutants", shard, names) {
+		name := names[index]
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_method_values.a"))
@@ -152,13 +163,16 @@ func TestLibraryMethodValueMutants(t *testing.T) {
 				}
 				return value
 			}
-			if name == "map String" || name == "map optional String" {
+			switch {
+			case probing && name == planted:
+				// TestFamiliesCatchAPlantedCase's mutant: this mutant withheld, so it changes nothing.
+			case name == "map String" || name == "map optional String":
 				for index := range program.Functions {
 					if program.Functions[index].Name == "library_map_String" {
 						mutateStringExpressions(reflect.ValueOf(&program.Functions[index].Body).Elem(), mutate)
 					}
 				}
-			} else {
+			default:
 				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			}

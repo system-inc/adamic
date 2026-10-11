@@ -2,10 +2,7 @@ package oracle
 
 import "testing"
 
-func init() { additionalFixtureCounts = append(additionalFixtureCounts, checkedViewsV2Counts) }
-func checkedViewsV2Counts(t *testing.T) []string {
-	t.Helper()
-	rows := []string{}
+func init() {
 	for _, path := range []string{
 		"stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a",
 		"stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a",
@@ -58,7 +55,6 @@ func checkedViewsV2Counts(t *testing.T) []string {
 		"stage3/interface-downcasts/v2/tuple-identity-wrong.a",
 		"stage3/interface-downcasts/v2/undefined-read-write.a",
 	} {
-		rows = append(rows, counted(t, path, false, nil, false, false))
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) string { return counted(t, path, false, nil, false, false) }})
 	}
-	return rows
 }
