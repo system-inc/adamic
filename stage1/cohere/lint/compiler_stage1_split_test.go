@@ -58,12 +58,15 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 	}
 	rows := corpusfiles.Upstream(t, source, compilerCommit, []string{"src/compiler"}, []string{"*.ts", "*.a"})
 	upstreamCount := len(rows)
-	rows = append(rows, compilerStage1Sources(t, repository)...)
+	stage1 := compilerStage1Sources(t, repository)
 	generated, err := filepath.Abs(".generated/registry.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	rows = append(rows, generated)
+	if err := compilerRegistryListedOnce(stage1, generated); err != nil {
+		t.Fatal(err)
+	}
+	rows = append(rows, stage1...)
 	descriptors := prepareRegistry(t, ".")
 	var cases []compilerAgreementCase
 	seen := map[string]bool{}
@@ -94,6 +97,23 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 	}
 	compilerAgreementCorpus = cases
 	return cases
+}
+
+// compilerRegistryListedOnce says whether the stage1 sources hold the generated registry exactly once. The registry is
+// tracked (#k01pgng), so the walk of stage1's tracked files lists it from a checkout and from a tree's .tracked manifest
+// alike. The corpus used to append it itself as well, from when it was untracked, and on landable-17 every pair of it
+// was a duplicate (2,348 failing tests). Missing would lose its coverage, and twice is that duplicate.
+func compilerRegistryListedOnce(sources []string, registry string) error {
+	count := 0
+	for _, source := range sources {
+		if filepath.Clean(source) == filepath.Clean(registry) {
+			count++
+		}
+	}
+	if count != 1 {
+		return fmt.Errorf("the stage1 sources list the generated registry %s %d times, want once", registry, count)
+	}
+	return nil
 }
 
 func compilerAgreementOwner(c compilerAgreementCase) int {

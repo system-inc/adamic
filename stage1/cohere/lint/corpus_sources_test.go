@@ -102,3 +102,23 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(t *testing.T) {
 	}
 	t.Logf("all %d sources retained; only %d named-folder fixtures excluded", len(retained), len(excluded))
 }
+
+// The registry must be in the stage1 sources exactly once: missing loses its coverage, and twice is every one of its
+// file/rule pairs a duplicate (landable-17).
+func TestCompilerCorpusListsTheRegistryOnce(t *testing.T) {
+	t.Parallel()
+	registry := "/tree/stage1/cohere/lint/.generated/registry.ts"
+	other := "/tree/stage1/cohere/lint/rules.ts"
+	for _, check := range []struct {
+		sources []string
+		ok      bool
+	}{
+		{[]string{other}, false},
+		{[]string{other, registry}, true},
+		{[]string{registry, other, registry}, false},
+	} {
+		if err := compilerRegistryListedOnce(check.sources, registry); (err == nil) != check.ok {
+			t.Errorf("%q: %v, want ok %t", check.sources, err, check.ok)
+		}
+	}
+}
