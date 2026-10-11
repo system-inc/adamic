@@ -61,8 +61,8 @@ type readSet struct {
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
 // above the tree, relative to it), home (paths in the home directory, ~-relative), product (a name key), tool (a path
 // under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
-// machine file, by the dpkg package that installed it unchanged or by itself) or settings (the build settings of the
-// binary that ran the build). Value is what it was when recorded, shortened, so a miss can
+// machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case: whether the file system
+// is case-sensitive, which osvfs asks as it starts) or settings (the build settings of the binary that ran the build). Value is what it was when recorded, shortened, so a miss can
 // name what changed; the key hashes the full value.
 type readEntry struct {
 	Kind  string `json:"kind"`
@@ -292,6 +292,11 @@ func entryValue(root, cache string, entry readEntry, depth int) (string, error) 
 		return systemValue(entry.Path), nil
 	case "settings":
 		return binarySettings(), nil
+	case "filesystem":
+		if entry.Path != "case" {
+			return "", fmt.Errorf("a file system entry %q names nothing a machine answers", entry.Path)
+		}
+		return caseSensitivity(), nil
 	}
 	return "", fmt.Errorf("a read set entry of unknown kind %q", entry.Kind)
 }
@@ -416,6 +421,26 @@ func existence(path string) string {
 		return fmt.Sprintf("file %t", info.Mode()&0o111 != 0)
 	}
 	return "other " + info.Mode().Type().String()
+}
+
+// caseSensitivity is the file system's answer to osvfs's probe, asked as osvfs asks it: whether this process's own
+// executable exists with every letter's case swapped.
+func caseSensitivity() string {
+	executable, err := os.Executable()
+	if err != nil {
+		return "unknown: " + err.Error()
+	}
+	swapped := swapCase(executable)
+	switch _, err := os.Stat(swapped); {
+	case swapped == executable:
+		return "unknown: its executable's path has no letters"
+	case err == nil:
+		return "insensitive"
+	case errors.Is(err, fs.ErrNotExist):
+		return "sensitive"
+	default:
+		return "unknown: " + err.Error()
+	}
 }
 
 // toolsRoot is where Workshop's tools live: ADAMIC_TOOLS, or ~/adamic-tools. A tool entry names a path under it, so

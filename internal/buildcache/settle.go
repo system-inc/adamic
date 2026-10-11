@@ -19,6 +19,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Settle turns a traced run into keyed products (#vt46geg). The trace is strace -f's output (cmd/traced's flags:
@@ -148,11 +149,13 @@ type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, tools, home string
 	roots, caches, temporary, kernel, system                    []string
 	searched, executables                                       map[string]bool
+	// ran is every program a process of the run executed, as the trace names it.
+	ran map[string]bool
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
 func settleFacts(root, cache, trace string) (*traceFacts, error) {
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
 	facts.roots, facts.caches = variants(root), variants(cache)
 	output, err := exec.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
@@ -209,7 +212,7 @@ func under(path, place string) bool {
 }
 
 // classed is one read as a key names it: kind is an entry kind (content, listing, exists, above, home, product,
-// tool, toolset, go), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
+// tool, toolset, go, filesystem), a refusal (untracked, git, home, tree write, temp, other, local product), or "" for a read no key
 // needs (the kernel, the machine's system files, Go's own cache, the build cache's bookkeeping).
 type classed struct {
 	kind, detail string
@@ -256,6 +259,9 @@ func (facts *traceFacts) throughLink(name string, kinds int) ([]classed, bool) {
 }
 
 func (facts *traceFacts) classifyPath(name string, kinds int) classed {
+	if kinds == readAbsent && facts.caseProbe(name) {
+		return classed{"filesystem", "case"}
+	}
 	looked := kinds&^(readStat|readAbsent) == 0
 	for _, root := range facts.roots {
 		if !under(name, root) {
@@ -372,6 +378,25 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{refusal + "home", name}
 	}
 	return classed{refusal + "other", name}
+}
+
+// caseProbe says whether a lookup that missed was a program asking whether the file system is case-sensitive:
+// typescript-go's osvfs stats its own executable with every letter's case swapped as it starts (os.go's
+// fileSystemCaseSensitivity), in every process that links it, and the answer is the machine's, not a path's. Only a
+// swap of a program the run executed is one; any other path in another case is the path it names.
+func (facts *traceFacts) caseProbe(name string) bool {
+	swapped := swapCase(name)
+	return swapped != name && (facts.ran[swapped] || facts.executables[swapped])
+}
+
+// swapCase is name with each letter's case swapped, as osvfs swaps it.
+func swapCase(name string) string {
+	return strings.Map(func(r rune) rune {
+		if upper := unicode.ToUpper(r); upper != r {
+			return upper
+		}
+		return unicode.ToLower(r)
+	}, name)
 }
 
 func isKey(name string) bool {
@@ -629,6 +654,9 @@ func readKind(call, rest string, failed bool) int {
 }
 
 func (state *traceState) record(pid, process int, name string, kind int) {
+	if kind&readExec != 0 {
+		state.facts.ran[name] = true
+	}
 	if state.keying[pid] > 0 || state.keyingTree[process] {
 		return
 	}

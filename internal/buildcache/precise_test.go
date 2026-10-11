@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -303,6 +304,73 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// typescript-go's osvfs stats its own executable with every letter's case swapped as it starts, in every process that
+// links it (Workshop, Oct 10: all 19 product-test packages were refused for it): that lookup is the file system's case
+// sensitivity, keyed as each machine answers it, never refused as a path outside every place. A path in another case
+// that no program of the run was is still the path it names. Mutants: caseProbe always false; record not filling ran
+// (the program the build made and ran is refused); caseProbe not reading the journal's executables; caseSensitivity a
+// constant.
+// Not parallel: newRig.
+func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
+	r := newRig(t)
+	// A process journals itself once, into the one trace it runs under; this rig's trace is this process's now.
+	journalProcess = sync.Once{}
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := filepath.Join(directory, "oracle")
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, swapCase(executable))
+		r.write(r.pid, program)
+		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, program, program)
+		r.missing(r.pid, swapCase(program))
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("a build whose programs asked the file system's case: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, build.NameKey)
+	if err != nil || len(file.Sets) != 1 || !slices.ContainsFunc(file.Sets[0].Entries, func(entry readEntry) bool { return entry.Kind == "filesystem" && entry.Path == "case" }) {
+		t.Fatalf("the read set doesn't name the file system's case: %+v, %v", file.Sets, err)
+	}
+	if found, err := reading(t, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		t.Fatalf("a runner on the same machine found %q, %v", found, err)
+	}
+
+	r = newRig(t)
+	Product(t, port, building("built"))
+	build = r.built(t)["port"]
+	elsewhere := strings.ToUpper("/opt/elsewhere/lib.h")
+	r.window(build.Build, func() { r.missing(r.pid, elsewhere) })
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "other: "+elsewhere) {
+		t.Fatalf("a path in another case that nothing ran: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+
+	// The value is the file system's own answer: a file made here, asked for in the other case.
+	probe := filepath.Join(directory, "Probe")
+	write(t, directory, "Probe", "")
+	want := "sensitive"
+	if _, err := os.Stat(swapCase(probe)); err == nil {
+		want = "insensitive"
+	}
+	if got := caseSensitivity(); got != want {
+		t.Fatalf("the file system's case reads %q; a file made here says %q", got, want)
+	}
+	for _, entry := range file.Sets[0].Entries {
+		if entry.Kind == "filesystem" && entry.Value != shortValue(want) {
+			t.Fatalf("the read set recorded the file system's case as %s, not %q (%s)", entry.Value, want, shortValue(want))
+		}
 	}
 }
 
