@@ -4,6 +4,7 @@ import (
 	"flag"
 	"runtime"
 	"strconv"
+	"sync"
 )
 
 // Share is how many child processes one test may keep running at once: the unit's CPUs divided among the tests go
@@ -21,4 +22,21 @@ func Share() int {
 		}
 	}
 	return max(1, processors/parallel)
+}
+
+// Each runs work(0) through work(count-1), at most Share() of them at once, and returns when every one has. A test that
+// starts its sides together (a Go oracle, Node, the release build, the sanitizers) runs them one at a time under go
+// test's defaults, so the unit runs about one process per CPU, not a test's whole wave per CPU (landable-20b: json's
+// _445, 29.5 s of work alone on one core, passed 90 s at 8 CPUs beside the top shards' waves of four).
+func Each(count int, work func(index int)) {
+	slots := make(chan struct{}, Share())
+	var group sync.WaitGroup
+	for index := range count {
+		slots <- struct{}{}
+		group.Go(func() {
+			defer func() { <-slots }()
+			work(index)
+		})
+	}
+	group.Wait()
 }

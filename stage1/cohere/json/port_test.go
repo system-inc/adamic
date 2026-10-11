@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
@@ -20,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 )
 
 const repository = "../../.."
@@ -317,22 +317,21 @@ func jsonPortTopShard(t *testing.T, target int) {
 			// The sanitizer processes retain substantially more memory than the
 			// other sides. Run them together after the first wave has exited,
 			// so an isolated four-CPU unit does not compete with Node/Go heaps.
+			// Within a wave, at most the test's share at once (testguard.Each).
 			for _, wave := range [][]int{{0, 1, 2, 4}, {3, 5}} {
-				var workers sync.WaitGroup
+				var present []int
 				for _, side := range wave {
-					if side >= len(sides) {
-						continue
+					if side < len(sides) {
+						present = append(present, side)
 					}
-					workers.Add(1)
-					go func(side int) {
-						defer workers.Done()
-						s := sides[side]
-						began := time.Now()
-						results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
-						timings[side] = time.Since(began)
-					}(side)
 				}
-				workers.Wait()
+				testguard.Each(len(present), func(index int) {
+					side := present[index]
+					s := sides[side]
+					began := time.Now()
+					results[side].result, results[side].err = executeResult(s.environment, s.binary, s.arguments...)
+					timings[side] = time.Since(began)
+				})
 			}
 			for side, timing := range timings {
 				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
