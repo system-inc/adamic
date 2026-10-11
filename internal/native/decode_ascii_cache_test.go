@@ -1,133 +1,164 @@
 package native
 
 import (
-	"context"
-	"errors"
+	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// Decoder setup uses the same content keys as the test cache, but never waits
-// indefinitely on another process. Publish only completed products by rename.
-func decodeCacheGet(ctx context.Context, t *testing.T, repository string) func(buildcache.Inputs, func(string) error) (string, error) {
-	return func(in buildcache.Inputs, build func(string) error) (string, error) {
-		if err := ctx.Err(); err != nil {
-			return "", err
-		}
-		root := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-		if root == "" {
-			user, err := os.UserCacheDir()
-			if err != nil {
-				return "", err
-			}
-			root = filepath.Join(user, "adamic-build")
-		}
-		if err := os.MkdirAll(root, 0755); err != nil {
-			return "", err
-		}
-		if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
-			directory, err := os.MkdirTemp(root, ".decode-uncached-")
-			if err != nil {
-				return "", err
-			}
-			t.Cleanup(func() { os.RemoveAll(directory) })
-			return directory, build(directory)
-		}
-		key, err := buildcache.Key(repository, in)
-		if err != nil {
-			return "", err
-		}
-		product := filepath.Join(root, key)
-		if _, err := os.Stat(product); err == nil {
-			return product, nil
-		}
-		lock, err := os.OpenFile(product+".lock", os.O_CREATE|os.O_RDWR, 0644)
-		if err != nil {
-			return "", err
-		}
-		defer lock.Close()
-		started := time.Now()
-		for {
-			err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX|syscall.LOCK_NB)
-			if err == nil {
-				break
-			}
-			if !errors.Is(err, syscall.EWOULDBLOCK) {
-				return "", err
-			}
-			select {
-			case <-ctx.Done():
-				return "", fmt.Errorf("cache lock %s waited %.3fs: %w", in.Name, time.Since(started).Seconds(), ctx.Err())
-			case <-time.After(10 * time.Millisecond):
-			}
-		}
-		defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
-		t.Logf("cache lock %s wait %.3fs", in.Name, time.Since(started).Seconds())
-		if _, err := os.Stat(product); err == nil {
-			return product, nil
-		}
-		directory, err := os.MkdirTemp(root, ".decode-building-")
-		if err != nil {
-			return "", err
-		}
-		defer os.RemoveAll(directory)
-		if err := build(directory); err != nil {
-			return "", err
-		}
-		if err := ctx.Err(); err != nil {
-			return "", err
-		}
-		if err := os.Rename(directory, product); err != nil {
-			return "", err
-		}
-		return product, nil
+// decodeASCIICorpus is Node's decoder corpus cut into the units' prefix ranges, one file per range, a product built
+// ahead by TestProduct_DecodeASCIICorpus. Node writes all 92014 prefixes in about 20 s, which every unit used to wait
+// on in a cache of its own, under the home directory when ADAMIC_BUILD_CACHE_DIR was unset, the first unit paying
+// for it.
+func decodeASCIICorpus(t *testing.T) string {
+	t.Helper()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
 	}
+	return buildcache.Product(t, buildcache.Inputs{
+		Name:      "decode-ascii-corpus",
+		Files:     []string{"internal/native/decode_ascii/corpus.mjs", "internal/native/decode_ascii_cache_test.go", "internal/native/split_units_test.go"},
+		Flags:     []string{fmt.Sprintf("prefixes=%d", decodePrefixes), fmt.Sprintf("range=%d", decodePrefixUnitSize)},
+		Toolchain: []string{buildcache.Tool("node", "--version")},
+	}, func(directory string) error {
+		corpus := filepath.Join(directory, "corpus.bin")
+		command := exec.Command("node", "internal/native/decode_ascii/corpus.mjs", corpus)
+		command.Dir = repository
+		output, err := command.CombinedOutput()
+		if err != nil {
+			return fmt.Errorf("node corpus.mjs: %w\n%s", err, output)
+		}
+		t.Log(string(output))
+		data, err := os.ReadFile(corpus)
+		if err != nil {
+			return err
+		}
+		offsets := []int{0}
+		for offset := 0; offset < len(data); {
+			if offset+4 > len(data) {
+				return fmt.Errorf("short decoder corpus header")
+			}
+			length := int(binary.LittleEndian.Uint16(data[offset:])) + int(binary.LittleEndian.Uint16(data[offset+2:]))
+			offset += 4 + length
+			if offset > len(data) {
+				return fmt.Errorf("short decoder corpus record")
+			}
+			offsets = append(offsets, offset)
+		}
+		if len(offsets)-1 != decodePrefixes {
+			return fmt.Errorf("decoder prefixes: got %d, want %d", len(offsets)-1, decodePrefixes)
+		}
+		for _, piece := range unitRanges(decodePrefixes, decodePrefixUnitSize) {
+			path := filepath.Join(directory, piece.name()+".bin")
+			if err := os.WriteFile(path, data[offsets[piece.first]:offsets[piece.last]], 0o644); err != nil {
+				return err
+			}
+		}
+		// The units read only their ranges, so the whole corpus would double the product.
+		return os.Remove(corpus)
+	})
 }
 
-func buildDecodeObjects(ctx context.Context, cache *testBuildCache, repository, compiler, target string, flags, sources []string, snapshot []runtimeFile, contents [][]byte) (string, error) {
-	inputs := append([][]byte(nil), contents...)
-	inputs = append(inputs, []byte(compiler), []byte(strings.Join(flags, "\x00")))
-	entry, err := cache.Tree("decode-parallel-"+target, inputs, func(destination string) error {
-		// Headers affect every object; C source content affects only its own object.
-		var headers [][]byte
+// decodeASCIIDecoder is the decoder probe for target, native under ASan and UBSan or wasi: the runtime's C with
+// probe.c and baseline.c, a product built ahead by TestProduct_DecodeASCIINative and TestProduct_DecodeASCIIWASI. Every
+// unit of a target runs its own range of the corpus through the same binary, which each used to wait on in the same
+// cache as the corpus.
+func decodeASCIIDecoder(t *testing.T, target string) string {
+	t.Helper()
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	runtimeDirectory := "internal/native/runtime"
+	inputs := buildcache.Inputs{
+		Name:  "decode-ascii-" + target,
+		Files: []string{runtimeDirectory, "internal/native/decode_ascii/probe.c", "internal/native/decode_ascii/baseline.c", "internal/native/decode_ascii_cache_test.go"},
+	}
+	// A planted runtime (ADAMIC_DECODE_RUNTIME, as the cache mutants plant one) lies outside the tree, so its content
+	// keys the decoder. It is built for this machine alone.
+	if alternate := os.Getenv("ADAMIC_DECODE_RUNTIME"); alternate != "" {
+		runtimeDirectory = alternate
+		snapshot, err := readRuntime(os.DirFS(alternate), ".")
+		if err != nil {
+			t.Fatal(err)
+		}
 		for _, file := range snapshot {
-			if !strings.HasSuffix(file.name, ".c") {
-				headers = append(headers, []byte(file.name), file.contents)
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
+		}
+	}
+	runtimePath := runtimeDirectory
+	if !filepath.IsAbs(runtimePath) {
+		runtimePath = filepath.Join(repository, runtimePath)
+	}
+	sources, err := filepath.Glob(filepath.Join(runtimePath, "*.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(sources) == 0 {
+		t.Fatal("no runtime sources")
+	}
+	// clang reads the tree's files by their names in it, so a sanitized binary's globals name no checkout.
+	var files []string
+	for _, source := range sources {
+		if !filepath.IsAbs(runtimeDirectory) {
+			if source, err = filepath.Rel(repository, source); err != nil {
+				t.Fatal(err)
 			}
 		}
-		files := append([]string(nil), sources...)
-		files = append(files, filepath.Join(repository, "internal/native/decode_ascii/probe.c"), filepath.Join(repository, "internal/native/decode_ascii/baseline.c"))
+		files = append(files, source)
+	}
+	files = append(files, "internal/native/decode_ascii/probe.c", "internal/native/decode_ascii/baseline.c")
+	compiler := "clang"
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls", "-I", runtimeDirectory}
+	if target == "wasi" {
+		sysroot := os.Getenv("WASI_SYSROOT")
+		if sysroot == "" {
+			t.Fatal("WASI_SYSROOT missing")
+		}
+		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin/clang")
+		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+sysroot, "-DADAMIC_TARGET_WASI=1", "-Wl,-z,stack-size=1048576")
+	} else {
+		flags = append(flags, "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+	}
+	inputs.Flags = append(inputs.Flags, flags...)
+	inputs.Toolchain = []string{buildcache.Tool(compiler, "--version")}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		objectDirectory, err := os.MkdirTemp("", "adamic-decode-")
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(objectDirectory)
+		// The checkout's directory is mapped out of the debug information, which would otherwise name it.
+		compileFlags := prefixMaps(repository, "/adamic-decode")
+		for _, flag := range flags {
+			if !strings.HasPrefix(flag, "-Wl,") {
+				compileFlags = append(compileFlags, flag)
+			}
+		}
 		objects := make([]string, len(files))
 		failures := make([]error, len(files))
 		jobs := make(chan int)
 		var workers sync.WaitGroup
-		// One owner builds the binary; siblings wait without launching more compilers.
 		for worker := 0; worker < 4; worker++ {
 			workers.Add(1)
 			go func() {
 				defer workers.Done()
 				for index := range jobs {
-					object := filepath.Join(destination, filepath.Base(files[index])+".o")
-					objects[index] = object
-					compileFlags := make([]string, 0, len(flags))
-					for _, flag := range flags {
-						if !strings.HasPrefix(flag, "-Wl,") {
-							compileFlags = append(compileFlags, flag)
-						}
-					}
-					args := append(compileFlags, "-c", files[index], "-o", object)
-					command := exec.CommandContext(ctx, compiler, args...)
+					objects[index] = filepath.Join(objectDirectory, filepath.Base(files[index])+".o")
+					command := exec.Command(compiler, append(append([]string(nil), compileFlags...), "-c", files[index], "-o", objects[index])...)
 					command.Dir = repository
-					_, failures[index] = cache.Command(command, destination, headers...)
+					if output, err := command.CombinedOutput(); err != nil {
+						failures[index] = fmt.Errorf("compile %s: %w\n%s", files[index], err, output)
+					}
 				}
 			}()
 		}
@@ -136,69 +167,43 @@ func buildDecodeObjects(ctx context.Context, cache *testBuildCache, repository, 
 		}
 		close(jobs)
 		workers.Wait()
-		for index, err := range failures {
+		for _, err := range failures {
 			if err != nil {
-				return fmt.Errorf("compile %s: %w", files[index], err)
+				return err
 			}
 		}
-		args := append(append([]string(nil), flags...), objects...)
-		args = append(args, "-lm", "-o", filepath.Join(destination, "decode-"+target))
-		command := exec.CommandContext(ctx, compiler, args...)
+		arguments := append(append([]string(nil), flags...), objects...)
+		arguments = append(arguments, "-lm", "-o", filepath.Join(directory, "decode-"+target))
+		command := exec.Command(compiler, arguments...)
 		command.Dir = repository
-		output, err := command.CombinedOutput()
-		if err != nil {
+		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("decoder link: %w\n%s", err, output)
 		}
 		return nil
 	})
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(entry, "decode-"+target), nil
+	return filepath.Join(directory, "decode-"+target)
 }
 
-// Hold the same flock as a sibling process: deadline expiry must return an
-// identifiable lock wait error instead of hanging until the test kill.
-func TestDecodeCacheLockDeadline(t *testing.T) {
+// TestProduct_DecodeASCIICorpus builds the corpus every decode unit runs its range of, so the tree build builds it
+// ahead.
+func TestProduct_DecodeASCIICorpus(t *testing.T) {
 	t.Parallel()
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
+	decodeASCIICorpus(t)
+}
+
+// TestProduct_DecodeASCIINative builds the sanitized native decoder the native units run, so the tree build builds it
+// ahead.
+func TestProduct_DecodeASCIINative(t *testing.T) {
+	t.Parallel()
+	decodeASCIIDecoder(t, "native")
+}
+
+// TestProduct_DecodeASCIIWASI builds the WASI decoder the WASI units run, where they run, so the tree build builds it
+// ahead.
+func TestProduct_DecodeASCIIWASI(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
+		t.Skip("set ADAMIC_TEST_WASI=1")
 	}
-	in := buildcache.Inputs{Name: t.TempDir()}
-	key, err := buildcache.Key(repository, in)
-	if err != nil {
-		t.Fatal(err)
-	}
-	root := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
-		t.Skip("cache disabled")
-	}
-	if root == "" {
-		user, err := os.UserCacheDir()
-		if err != nil {
-			t.Fatal(err)
-		}
-		root = filepath.Join(user, "adamic-build")
-	}
-	if err := os.MkdirAll(root, 0755); err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(root, key+".lock")
-	lock, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0644)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer os.Remove(path)
-	defer lock.Close()
-	if err := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); err != nil {
-		t.Fatal(err)
-	}
-	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Millisecond)
-	defer cancel()
-	_, err = decodeCacheGet(ctx, t, repository)(in, func(string) error { t.Error("built while sibling held lock"); return nil })
-	if !errors.Is(err, context.DeadlineExceeded) || !strings.Contains(err.Error(), "cache lock") || !strings.Contains(err.Error(), "waited") {
-		t.Fatalf("missing bounded lock diagnostic: %v", err)
-	}
+	decodeASCIIDecoder(t, "wasi")
 }
