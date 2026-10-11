@@ -200,7 +200,11 @@ type traceFacts struct {
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
 func settleFacts(root, cache, trace string) (*traceFacts, error) {
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: toolsRoot(), searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
+	tools, err := toolsRoot()
+	if err != nil {
+		return nil, err
+	}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
 	facts.roots, facts.caches = variants(root), variants(cache)
 	// Where a product's go keeps things: toolchain's go, under the environment GoBuild gives it.
