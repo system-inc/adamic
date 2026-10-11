@@ -129,7 +129,7 @@ func Build(source string, output string, options Options) error {
 	}
 	// Neither the build directory nor the runtime cache under this machine's home may reach the binary, so its bytes are a
 	// function of its inputs wherever it's built (see cachedRuntime).
-	arguments := append(Flags(options), "-ffile-prefix-map="+directory+"=/adamic-build", "-ffile-prefix-map="+filepath.Dir(library)+"=/adamic-runtime", "-I", filepath.Dir(library), "-o", output)
+	arguments := append(append(append(Flags(options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", filepath.Dir(library), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, filepath.Join(directory, "main.c"))
 	}
