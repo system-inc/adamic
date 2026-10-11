@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"io/fs"
 	"os"
@@ -11,10 +10,6 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const repository = "../../.."
@@ -32,21 +27,11 @@ func goOracle(t *testing.T) string {
 	return parserGuardOracle(t)
 }
 
+// buildPort is the port in directory built natively, as a product: the tree build makes each one ahead through its
+// TestProduct_ (port_products_test.go), so no test pays for a lower and a native build inside its own time.
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	return wholeMutantBuildPortProduct(t, directory, sanitize)
 }
 
 func copyPort(t *testing.T, file, from, to string) string {

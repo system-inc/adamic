@@ -73,8 +73,7 @@ func TestWholeCountCheckCatchesMutant(t *testing.T) {
 	oracle := goOracle(t)
 	wantTree := execute(t, "", oracle, "--manifest", manifest, "--whole").output
 	wantCount := execute(t, "", oracle, "--manifest", manifest, "--whole", "--count").output
-	from := "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;"
-	mutant := copyPort(t, "nodes.ts", from, strings.Replace(from, "let count = 1;", "let count = 0;", 1))
+	mutant := countTreeMutant(t)
 	binary := buildPort(t, mutant, true)
 	for _, side := range []struct {
 		name        string
