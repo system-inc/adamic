@@ -13,6 +13,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -60,10 +61,14 @@ func checked(t testing.TB, checkout, pin string, roots, patterns []string) []str
 	return files
 }
 
+// git runs its checks as key-time work (buildcache.Keying): a commit and a clean status gate the corpus, never change
+// a product's bytes, and a read of .git is never a build's (#1p6sent). The listing is tracked.PathsUnder's.
 func git(checkout string, args ...string) ([]byte, error) {
 	command := exec.Command("git", append([]string{"-C", checkout}, args...)...)
 	command.Env = tracked.GitEnvironment()
-	output, err := command.CombinedOutput()
+	var output []byte
+	var err error
+	buildcache.Keying(func() { output, err = command.CombinedOutput() })
 	if err != nil {
 		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(args, " "), checkout, err, output)
 	}
@@ -156,12 +161,13 @@ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, stri
 				return nil, actual, nil, fmt.Errorf("%s root %s: dirty %s paths against HEAD: %q", checkout, root, side.name, dirty)
 			}
 		}
-		data, err := git(checkout, "ls-files", "--cached", "--full-name", "-z", "--", spec)
+		// git ls-files, or under Workshop's trace a walk the build's read set keys (tracked.PathsUnder).
+		listed, err := tracked.PathsUnder(checkout, root)
 		if err != nil {
 			return nil, actual, nil, err
 		}
 		var missing []string
-		for _, name := range names(data) {
+		for _, name := range listed {
 			if !matches(name, patterns) {
 				continue
 			}

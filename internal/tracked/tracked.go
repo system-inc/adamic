@@ -27,6 +27,7 @@ import (
 	"fmt"
 	"hash"
 	"io"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path"
@@ -35,6 +36,8 @@ import (
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // ManifestDirectory is where a source with no .git carries what git would answer about it, at the tree's root.
@@ -296,6 +299,55 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		ignored[strings.TrimPrefix(name, "./")] = true
 	}
 	return ignored, nil
+}
+
+// PathsUnder is every tracked file at or under root (repository-relative) in directory's repository, sorted and
+// repository-relative, never a submodule's gitlink. Under Workshop's trace (buildcache.Tracing) a checkout is walked
+// from root, keeping what buildcache.Tracked says the tree carries and leaving a nested repository and an untracked
+// directory unentered, so the trace records one listing per directory walked and the build's read set keys the
+// listing itself; git ls-files there would be a read of .git, which no key can name (#1p6sent). Elsewhere it is git's
+// answer, or the manifest's.
+func PathsUnder(directory, root string) ([]string, error) {
+	directory, err := filepath.Abs(directory)
+	if err != nil {
+		return nil, err
+	}
+	var paths []string
+	if !buildcache.Tracing() || !Git(directory) {
+		entries, err := Files(directory)
+		if err != nil {
+			return nil, err
+		}
+		for _, entry := range Under(entries, root) {
+			if !entry.Submodule() {
+				paths = append(paths, entry.Path)
+			}
+		}
+		return paths, nil
+	}
+	start := filepath.Join(directory, filepath.FromSlash(root))
+	err = filepath.WalkDir(start, func(name string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			// A nested repository is its own (git lists only its gitlink), root included; the repository's root never is.
+			if name != directory && (Git(name) || !buildcache.Tracked(directory, name, true)) {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if buildcache.Tracked(directory, name, false) {
+			relative, err := filepath.Rel(directory, name)
+			if err != nil {
+				return err
+			}
+			paths = append(paths, filepath.ToSlash(relative))
+		}
+		return nil
+	})
+	sort.Strings(paths)
+	return paths, err
 }
 
 // Under is the entries at or under root, a repository-relative path; "." is every entry.
@@ -604,12 +656,16 @@ func GitEnvironment() []string {
 		"GIT_CONFIG_KEY_1=core.attributesFile", "GIT_CONFIG_VALUE_1="+os.DevNull)
 }
 
+// git runs as key-time work (buildcache.Keying): a read of .git is never a read of the build that asked, since no
+// product's key can name one (#1p6sent). A build's own listing walks the tree instead (PathsUnder).
 func git(directory string, arguments ...string) ([]byte, error) {
 	command := exec.Command("git", append([]string{"-C", directory}, arguments...)...)
 	command.Env = GitEnvironment()
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	output, err := command.Output()
+	var output []byte
+	var err error
+	buildcache.Keying(func() { output, err = command.Output() })
 	if err != nil {
 		return nil, fmt.Errorf("git %s in %s: %w: %s", strings.Join(arguments, " "), directory, err, strings.TrimSpace(stderr.String()))
 	}

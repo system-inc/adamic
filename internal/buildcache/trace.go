@@ -34,6 +34,19 @@ func mark(event, id string) {
 	}
 }
 
+// Keying runs compute as key-time work, as buildcache's own key computation runs: under Workshop's trace nothing it
+// reads enters a product's read set. It is for answers that can't change a product's bytes (a commit check, a clean
+// status), never for what a build reads, such as a listing of the files it compiles (#1p6sent).
+func Keying(compute func()) {
+	keying(compute)
+}
+
+// Tracing reports whether this process runs under Workshop's trace (ADAMIC_BUILD_TRACE), where what a build reads
+// becomes its key: a caller that lists the tree inside a build walks it then, so the trace records each listing.
+func Tracing() bool {
+	return traceDirectory() != ""
+}
+
 // keying runs compute on one thread between a key-begin and a key-end marker; the processes it starts are its own.
 func keying(compute func()) {
 	if traceDirectory() == "" {
