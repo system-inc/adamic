@@ -62,7 +62,7 @@ type readSet struct {
 }
 
 // A readEntry is one thing the build read, by kind: content, listing, exists or link (paths in the tree), above (paths
-// above the tree, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
+// above the tree, relative to it), above cache (paths beside the build cache's parents, relative to it), home (paths in the home directory, ~-relative), absolute (any other path only looked
 // for, by whether and as what it exists), product (a name key), tool (a path
 // under the tools directory, exec'd), toolset (a tools directory read but not run), go (the release), system (a
 // machine file, by the dpkg package that installed it unchanged or by itself), filesystem (case: whether the file system
@@ -267,6 +267,8 @@ func entryValue(root, cache string, entry readEntry, depth int, known productMem
 		return "link " + target, nil
 	case "above":
 		return existence(filepath.Join(root, filepath.FromSlash(entry.Path))), nil
+	case "above cache":
+		return existence(filepath.Join(cache, filepath.FromSlash(entry.Path))), nil
 	case "absolute":
 		if !filepath.IsAbs(entry.Path) {
 			return "", fmt.Errorf("an absolute entry %q isn't an absolute path", entry.Path)
