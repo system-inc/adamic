@@ -1520,3 +1520,40 @@ func TestTrackedLooksForGitAsKeying(t *testing.T) {
 		t.Fatalf("looked for .git at %q; outside keying at %q", looks, unkeyed)
 	}
 }
+
+// A family of products that read one another and the same directories is valued with each tree entry read once per
+// Settle, not once per pass: 8 products, each reading the ones built before it and listing source, read the tree's
+// few entries a handful of times, where a pass each read them 8 times over (home-5's dry run, Oct 11: css's PostCSS
+// answers settled for over 20 minutes). The held values go when Settle ends. Mutant: Settle holds nothing.
+// Not parallel: newRig.
+func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
+	r := newRig(t)
+	const members = 8
+	var products []string
+	for index := range members {
+		products = append(products, Product(t, Inputs{Name: fmt.Sprintf("member%d", index), Files: []string{"source"}}, building(fmt.Sprint(index))))
+	}
+	built := r.built(t)
+	for index := range members {
+		child := r.pid + 1 + index
+		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+		r.marker(child, "build-begin", built[fmt.Sprintf("member%d", index)].Build)
+		r.open(child, "source/a.c")
+		r.list(child, "source")
+		for before := range index {
+			r.open(child, filepath.Join(products[before], "product"))
+		}
+		r.marker(child, "build-end", built[fmt.Sprintf("member%d", index)].Build)
+		r.add(child, "+++ exited with 0 +++")
+	}
+	read := treeValuesRead.Load()
+	if settlement := r.settle(t); len(settlement.Settled) != members {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if read = treeValuesRead.Load() - read; read > 12 {
+		t.Fatalf("settling %d products read %d tree values; the tree's few entries should each be read once", members, read)
+	}
+	if settledTree.Load() != nil {
+		t.Fatal("the tree's values are still held after Settle")
+	}
+}

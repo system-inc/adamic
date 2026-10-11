@@ -18,6 +18,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"unicode"
 )
 
@@ -62,6 +63,8 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	for _, relative := range slices.Sorted(maps.Keys(state.treeWrites)) {
 		state.lost = append(state.lost, "the run wrote into the tree (tree write: "+relative+")")
 	}
+	settledTree.Store(&sync.Map{})
+	defer settledTree.Store(nil)
 	return state.settle(entries), nil
 }
 
