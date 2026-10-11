@@ -230,7 +230,7 @@ func runVolumeProfileControls(t *testing.T, index int) {
 			if c.sanitize {
 				name += "-asan"
 			}
-			return h.archive(name, "", c.sanitize)
+			return h.archive(name, c.sanitize)
 		}},
 		{&oracle, func(h *harness) string { return volumeOracle(h, "volume-oracle", "oracle_volume.go") }},
 	} {

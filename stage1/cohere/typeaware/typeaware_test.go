@@ -146,34 +146,22 @@ func (h *harness) overlay(name, path, from, to string) string {
 	}
 	return h.write(name+".json", string(data))
 }
-func (h *harness) archive(name, overlay string, sanitize bool) string {
+
+// archive is the unchanged checker archive. A check that plants a change in it reads checkerMutantArchive.
+func (h *harness) archive(name string, sanitize bool) string {
 	h.t.Helper()
-	if overlay == "" {
-		path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
-			archive := filepath.Join(directory, "checker.a")
-			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
-			command.Dir = h.repository
-			if sanitize {
-				command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-			}
-			return archive, buildProduct(h.t, name, command, directory)
-		})
-		if err != nil {
-			h.t.Fatal(err)
+	path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+		archive := filepath.Join(directory, "checker.a")
+		command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+		command.Dir = h.repository
+		if sanitize {
+			command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
-		return path
+		return archive, buildProduct(h.t, name, command, directory)
+	})
+	if err != nil {
+		h.t.Fatal(err)
 	}
-	path := filepath.Join(h.directory, name+".a")
-	args := []string{"build", "-p=1", "-buildmode=c-archive", "-o", path}
-	if overlay != "" {
-		args = append(args, "-overlay", overlay)
-	}
-	args = append(args, "./bridge/tsgo/archive")
-	cmd := exec.Command("go", args...)
-	if sanitize {
-		cmd.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-	}
-	h.must(name, cmd)
 	return path
 }
 
@@ -306,8 +294,8 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
-	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
-	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
+	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
+	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "native-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "native", entry, normal(h), false) }
@@ -475,8 +463,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/stale"}...)
 	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
 		t := h.t
-		staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-		staleArchive := typeAwareArchive(h, "stale-checker", staleOverlay, false)
+		staleArchive := typeAwareMutantArchive(h, "retained-handle")
 		staleBinary := typeAwareBuild(h, stage0, "stale-native", releasedEntry, staleArchive, false)
 		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
 		if len(stale.stderr) != 0 {
@@ -486,17 +473,16 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	})
 
 	// Bad frame mutants must fail explicitly before any finding can be invented.
-	for _, change := range []struct{ name, value, message string }{
-		{"empty-frame", "", "checker returned no type parts"},
-		{"missing-header", "x", "invalid checker type frame"},
-		{"bad-length", "1\n-1\n", "invalid checker type length or flags"},
+	// Each frame's value is planted by its checker mutant (checker_mutants_test.go).
+	for _, change := range []struct{ name, message string }{
+		{"empty-frame", "checker returned no type parts"},
+		{"missing-header", "invalid checker type frame"},
+		{"bad-length", "invalid checker type length or flags"},
 	} {
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
 			t := h.t
-			quoted := strconv.Quote(change.value)
-			overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
-			archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
+			archive := typeAwareMutantArchive(h, change.name)
 			malformed := typeAwareBuild(h, stage0, change.name+"-native", entry, archive, false)
 			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
@@ -529,8 +515,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
 		t := h.t
-		ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
-		ignoredArchive := typeAwareArchive(h, "ignored-kind-checker", ignoredKind, false)
+		ignoredArchive := typeAwareMutantArchive(h, "ignored-kind")
 		ignoredBinary := typeAwareBuild(h, stage0, "ignored-kind-native", badSource, ignoredArchive, false)
 		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
 		if len(ignored.stderr) != 0 {

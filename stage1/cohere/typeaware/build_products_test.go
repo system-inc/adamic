@@ -52,12 +52,12 @@ func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) strin
 	if sanitize {
 		archiveName += "-asan"
 	}
-	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(archiveName, "", sanitize), sanitize)
+	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(archiveName, sanitize), sanitize)
 }
 
 func volumeProfileControlProduct(t *testing.T, sanitize bool) string {
 	h := typeAwareProductHarness(t)
-	return volumeProfileControlsBinary(h, "", h.archive("checker", "", sanitize), sanitize)
+	return volumeProfileControlsBinary(h, "", h.archive("checker", sanitize), sanitize)
 }
 
 func volumeProfileCorpusNativeProduct(t *testing.T, sanitize bool) string {
@@ -85,11 +85,11 @@ func volumeProfileDeclaredMutant(t *testing.T, index int) string {
 func TestProduct_stage0(t *testing.T) { t.Parallel(); typeAwareProductHarness(t).stage0() }
 func TestProduct_checker(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker", "", false)
+	typeAwareProductHarness(t).archive("checker", false)
 }
 func TestProduct_checker_asan(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker-asan", "", true)
+	typeAwareProductHarness(t).archive("checker-asan", true)
 }
 func TestProduct_six_lowered(t *testing.T) {
 	t.Parallel()
@@ -183,7 +183,7 @@ func TestProduct_profile_controls_native(t *testing.T) {
 func TestProduct_profile_missing_binding(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
-	volumeProfileMissingBinding(h, "", h.archive("checker", "", false))
+	volumeProfileMissingBinding(h, "", h.archive("checker", false))
 }
 func TestProduct_profile_mutant_binding_slot(t *testing.T) {
 	t.Parallel()
