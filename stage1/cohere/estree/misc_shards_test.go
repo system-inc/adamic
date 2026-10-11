@@ -187,7 +187,9 @@ func miscBuild(t *testing.T, path string) (string, string) {
 		Name:      "estree-misc-sanitized-emitted",
 		Files:     []string{"internal", "bridge", "go.mod", "stage1/typescript", "stage1/cohere/estree"},
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), miscDigest(t, os.Args[0]), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
+		// The compiler this build runs is keyed by its sources (Files) and the Go release, never by this test binary's bytes,
+		// which differ wherever it was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
 	}, product)
 	t.Logf("build lowered/sanitized/emitted products: %.6fs", time.Since(start).Seconds())
 	return filepath.Join(directory, "port"), filepath.Join(directory, "port.mjs")
