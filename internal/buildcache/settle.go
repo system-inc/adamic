@@ -184,7 +184,7 @@ const (
 
 type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
-	roots, caches, temporary, kernel, system                                                 []string
+	roots, caches, temporary, kernel, system, buildLogs                                      []string
 	searched, executables                                                                    map[string]bool
 	// ran is every program a process of the run executed, as the trace names it.
 	ran map[string]bool
@@ -216,6 +216,12 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
 	}
 	facts.home, _ = os.UserHomeDir()
+	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
+	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a build
+	// tree's log under the home directory refused two estree products).
+	if log := os.Getenv("ADAMIC_BUILD_LOG"); log != "" {
+		facts.buildLogs = variants(filepath.Clean(log))
+	}
 	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
 		facts.temporary = append(facts.temporary, variants(place)...)
 	}
@@ -360,7 +366,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		return classed{}
 	}
 	switch {
-	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]):
+	case under(name, facts.trace) || facts.executables[name] || under(name, traceMarker[:len(traceMarker)-1]) || slices.Contains(facts.buildLogs, name):
 		return classed{}
 	case under(name, facts.goRoot):
 		return classed{"go", "release"}
