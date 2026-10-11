@@ -572,9 +572,48 @@ func repositoryAt(directory string) *trackedFiles {
 				files.directories[parent] = true
 			}
 		}
+	} else if listing, ok := manifestListing(directory); ok {
+		// A Loom runner's source has no .git: build-tree ships git's answers for each repository in a manifest, so the
+		// tracked files are its listing and nothing else, never the npm packages or the manifest the source carries
+		// beside them (#59paqn3). Every file is hashed, which is its git blob id, so the key is a checkout's.
+		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
+		for _, line := range strings.Split(string(listing), "\x00") {
+			// <mode> <type> <id>\t<path>, as git ls-tree -r -z --full-tree HEAD writes it.
+			_, name, ok := strings.Cut(line, "\t")
+			if !ok || name == "" {
+				continue
+			}
+			files.paths[name] = true
+			for parent := path.Dir(name); parent != "."; parent = path.Dir(parent) {
+				files.directories[parent] = true
+			}
+		}
 	}
 	found, _ := repositories.LoadOrStore(directory, files)
 	return found.(*trackedFiles)
+}
+
+// trackedManifestDirectory is where a source with no .git carries git's answers about each of its repositories, at the
+// source's root: the tree's own listing at .tracked/files, a submodule's at .tracked/<its path>/files (Loom's
+// builder/tracked.go writes them, `git ls-tree -r -z --full-tree HEAD` byte for byte).
+const trackedManifestDirectory = ".tracked"
+
+// manifestListing is directory's repository's listing from the manifest at or above it, when the manifest records
+// directory as a repository; a directory it doesn't record isn't one.
+func manifestListing(directory string) ([]byte, bool) {
+	for root := directory; ; root = filepath.Dir(root) {
+		if info, err := os.Stat(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
+			relative, err := filepath.Rel(root, directory)
+			if err != nil || relative == trackedManifestDirectory || strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
+				return nil, false
+			}
+			listing, err := os.ReadFile(filepath.Join(root, trackedManifestDirectory, relative, "files"))
+			return listing, err == nil
+		}
+		if filepath.Dir(root) == root {
+			return nil, false
+		}
+	}
 }
 
 var tools sync.Map
