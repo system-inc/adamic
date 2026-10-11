@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -20,6 +19,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // TestOriginalCycleLedger measures binding-initialization obligations on the pinned
@@ -30,7 +31,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	if root == "" {
 		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
 	}
-	pin, err := exec.Command("git", "-C", root, "rev-parse", "HEAD").Output()
+	pin, err := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
 		t.Fatalf("original source pin: %s %v", pin, err)
 	}
