@@ -340,6 +340,7 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 	}
 	return wholeDocumentPreflightShared
 }
+
 // TestProduct_WholeDocumentPreflightGoProducts builds the Go printer and its three mutants that every preflight unit
 // reads (markdownblocks-whole-document-preflight-go-products, 75 s measured inside a unit on Oct 10), so Workshop
 // builds them once and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
