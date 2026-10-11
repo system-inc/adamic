@@ -1789,3 +1789,39 @@ func TestAProductsDigestIsItsBytes(t *testing.T) {
 		t.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
 	}
 }
+
+// A run that finds a product already built reports it, found, under the key it was found by: a test's products are
+// the ones it settled and the ones it found (Planner's step 5 proof on Home, Oct 11: a tree that counted only
+// settlements lost every product its tests found). One this run built itself is its settlement's line, never found
+// too. Mutant: found products left out of the report.
+// Not parallel: newRig.
+func TestTheReportNamesWhatTheRunFound(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	Product(t, header, building("header"))
+	r.window(r.built(t)["header"].Build, func() { r.open(r.pid, "include/x.h") })
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, NameKey(r.root, header))
+	if err != nil || len(file.Sets) == 0 {
+		t.Fatalf("header's read sets: %+v, %v", file, err)
+	}
+	r.retrace(t, "found")
+	Product(t, header, building("never built: found"))
+	Product(t, port, building("port"))
+	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+	reports := r.settle(t).Reports
+	var found, settled []Report
+	for _, report := range reports {
+		switch report.Outcome {
+		case ReportFound:
+			found = append(found, report)
+		case ReportSettled:
+			settled = append(settled, report)
+		}
+	}
+	if len(found) != 1 || found[0].Name != "header" || found[0].Key != file.Sets[0].Key || len(settled) != 1 || settled[0].Name != "port" {
+		t.Fatalf("the report is %+v; want header found under %s and port settled", reports, file.Sets[0].Key[:12])
+	}
+}
