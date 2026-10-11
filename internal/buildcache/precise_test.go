@@ -1557,3 +1557,28 @@ func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
 		t.Fatal("the tree's values are still held after Settle")
 	}
 }
+
+// The census log (ADAMIC_BUILD_LOG) is buildcache's own bookkeeping, as the trace's journal is: a build that reads or
+// writes it is keyed without it, wherever it lives (Planner's shape B proof on Cloud, Oct 11: a build tree's log under
+// the home directory refused two estree products). Mutant: the log classed by where it is (here, a temporary file the
+// run didn't make).
+// Not parallel: newRig.
+func TestTheCensusLogIsNoInput(t *testing.T) {
+	r := newRig(t)
+	log := os.Getenv("ADAMIC_BUILD_LOG")
+	write(t, filepath.Dir(log), filepath.Base(log), "build earlier 0123456789ab hit 0.01\n")
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.open(r.pid, log)
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	for _, entry := range r.entries(t, build.NameKey) {
+		if strings.Contains(entry, filepath.Base(log)) {
+			t.Fatalf("the read set names the census log: %s", entry)
+		}
+	}
+}
