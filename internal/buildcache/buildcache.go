@@ -90,7 +90,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	keying(func() { nameKey = NameKey(root, inputs) })
 	// Every build site, uncached, traced or for this machine alone, builds through relocating, and every directory
 	// returned is held under its name key: a product names itself and every other product by name key (relative.go).
-	build = relocating(inputs.Name, nameKey, build)
+	build = relocating(inputs, nameKey, build)
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {

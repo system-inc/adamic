@@ -451,3 +451,62 @@ func TestATracedProductNamingItsMachineIsRefused(t *testing.T) {
 		t.Fatalf("a refused traced product was journaled as built: %v", r.built(t))
 	}
 }
+
+// A whole path a product carries from a tracked file among its own declared inputs is that input's text, not this
+// machine's (#arw7837: json's pinned corpus carries the repository's reports, which name /tmp/adamic-gate/... runs), so
+// it builds. The same path from an untracked file, or from a tracked file the product doesn't declare, is refused, as
+// is a path an input names only a prefix of or a longer path under, and a build cache path whatever an input says.
+// Not parallel: inRepository changes the working directory and repositoryRoot; cached and t.Setenv set the environment.
+func TestAPathADeclaredInputCarriesPasses(t *testing.T) {
+	root, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("HOME", home)
+	token := filepath.Join(home, "runs", "report-1", "cold")
+	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
+	write(t, root, "reports/run.json", `{"directory":"`+token+`"}`)
+	write(t, root, "prefix/run.json", `{"directory":"`+filepath.Join(home, "runs")+`"}`)
+	write(t, root, "longer/run.json", `{"directory":"`+filepath.Join(token, "more")+`"}`)
+	write(t, root, "other/run.json", `{"directory":"`+token+`"}`)
+	gitIn(t, root, "init", "-q")
+	gitIn(t, root, "add", ".")
+	gitIn(t, root, "commit", "-q", "-m", "tree")
+	write(t, root, "untracked/run.json", `{"directory":"`+token+`"}`)
+	inRepository(t, root)
+	cache, _ := cached(t)
+	forgetTracked()
+	carrying := func(text string) func(directory string) error {
+		return func(directory string) error {
+			return os.WriteFile(filepath.Join(directory, "corpus"), []byte(text), 0o644)
+		}
+	}
+	if _, err := Get(Inputs{Name: "vouched", Files: []string{"reports"}}, carrying("case "+token+"\n")); err != nil {
+		t.Fatalf("a path a declared tracked input carries was refused: %v", err)
+	}
+	for _, refused := range []struct {
+		name, text string
+		files      []string
+	}{
+		{"an untracked file", "case " + token + "\n", []string{"untracked"}},
+		{"an undeclared tracked file (other/run.json carries it)", "case " + token + "\n", []string{"go.mod"}},
+		{"a prefix in the input", "case " + token + "\n", []string{"prefix"}},
+		{"a longer path in the input", "case " + token + "\n", []string{"longer"}},
+		{"the build cache", "case " + filepath.Join(cache, "local", "product") + "\n", []string{"reports"}},
+	} {
+		if refused.name == "the build cache" {
+			write(t, root, "reports/cache.json", filepath.Join(cache, "local", "product"))
+			gitIn(t, root, "add", ".")
+			gitIn(t, root, "commit", "-q", "-m", "cache")
+			forgetTracked()
+		}
+		_, err := Get(Inputs{Name: "refused " + refused.name, Files: refused.files}, carrying(refused.text))
+		if err == nil || !strings.Contains(err.Error(), "holds a path of the machine that built it") {
+			t.Errorf("%s: the build gave %v, want a refusal", refused.name, err)
+		}
+	}
+}

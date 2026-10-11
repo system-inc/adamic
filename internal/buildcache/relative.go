@@ -127,12 +127,12 @@ func holding(nameKey, directory string) string {
 // has built, relocatable reads what it made, under keying so the check's reads are never the build's own or a later
 // build's (trace.go). The scratch directory is forgotten either way: filled renames it, and get holds the product
 // where it ends up.
-func relocating(name, nameKey string, build func(directory string) error) func(directory string) error {
+func relocating(inputs Inputs, nameKey string, build func(directory string) error) func(directory string) error {
 	return func(directory string) error {
 		located(nameKey, directory)
 		err := build(directory)
 		if err == nil {
-			keying(func() { err = relocatable(name, directory) })
+			keying(func() { err = relocatable(inputs, directory) })
 		}
 		productDirectories.Delete(directory)
 		productKeys.CompareAndDelete(nameKey, directory)
@@ -248,21 +248,108 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 // temporary directory, or a location an ADAMIC_ variable names (ADAMIC_TYPESCRIPT_SOURCE). A file holding a zero byte
 // is a binary, whose paths are debug information no test reads (native prefix maps are their own work), and so is a
 // macOS .dSYM bundle; every other file is text a reader parses, and must say <repository> and <build cache>/<name key>.
-func relocatable(name, directory string) error {
+//
+// One path is not the builder's: a whole path token that occurs, as the same whole token, in a tracked file among the
+// product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries (#arw7837:
+// json's pinned corpus is the repository's JSON, whose reports name /tmp/adamic-gate/... runs). It passes. A token naming
+// the build cache or a product directory never does, since no input can vouch for where this machine builds.
+func relocatable(inputs Inputs, directory string) error {
 	places := machinePlaces()
+	vouching := declaredText(inputs.Files)
 	return textFiles(directory, func(file string, content []byte, _ fs.FileMode) error {
 		text := string(content)
 		for _, place := range places {
-			if containsPath(text, place.path) {
+			for _, token := range pathTokens(text, place.path) {
+				if vouching.holds(token, places) {
+					continue
+				}
 				relative, _ := filepath.Rel(directory, file)
 				return fmt.Errorf("product %s holds a path of the machine that built it: %s names %s (%s). A runner fetches this product and "+
 					"reads it elsewhere, so a product names the tree as <repository> and a product as <build cache>/<name key> "+
 					"(buildcache.Relative, read back with buildcache.Absolute), or keeps the path out of its bytes (#tqrqx60)",
-					name, filepath.ToSlash(relative), place.path, place.name)
+					inputs.Name, filepath.ToSlash(relative), place.path, place.name)
 			}
 		}
 		return nil
 	})
+}
+
+// pathTokens are the whole path tokens of text in which path stands as a whole path, by replacePath's rule: each runs
+// from where path starts to the last path byte or separator after it, so /tmp/adamic-gate/x/y.json is one token.
+func pathTokens(text, path string) []string {
+	var tokens []string
+	for offset := 0; ; {
+		index := strings.Index(text[offset:], path)
+		if index < 0 {
+			return tokens
+		}
+		start := offset + index
+		end := start + len(path)
+		before := start == 0 || !pathByte(text[start-1]) && text[start-1] != '/'
+		after := end == len(text) || text[end] == '/' || !pathByte(text[end])
+		if before && after {
+			for end < len(text) && (pathByte(text[end]) || text[end] == '/') {
+				end++
+			}
+			tokens = append(tokens, text[start:end])
+		}
+		offset = start + len(path)
+	}
+}
+
+// declaredVouching is the text of a product's declared, tracked inputs, read once and only when a token needs it.
+type declaredVouching struct {
+	files []string
+	once  sync.Once
+	texts [][]byte
+}
+
+func declaredText(files []string) *declaredVouching {
+	return &declaredVouching{files: files}
+}
+
+// holds says whether token occurs as a whole token (the same token, not a prefix of a longer path nor a part of one) in
+// a tracked file among the declared inputs, and names no build cache or product directory.
+func (vouching *declaredVouching) holds(token string, places []place) bool {
+	for _, place := range places {
+		if (place.name == "the build cache" || place.name == "a product directory") && containsPath(token, place.path) {
+			return false
+		}
+	}
+	vouching.once.Do(func() {
+		root, err := repositoryRoot()
+		if err != nil {
+			return
+		}
+		for _, name := range vouching.files {
+			start := filepath.Join(root, name)
+			filepath.WalkDir(start, func(file string, entry fs.DirEntry, err error) error {
+				if err != nil {
+					return nil
+				}
+				if entry.IsDir() {
+					if file != start && !Tracked(root, file, true) {
+						return filepath.SkipDir
+					}
+					return nil
+				}
+				if entry.Type().IsRegular() && Tracked(root, file, false) {
+					if content, err := os.ReadFile(file); err == nil {
+						vouching.texts = append(vouching.texts, content)
+					}
+				}
+				return nil
+			})
+		}
+	})
+	for _, text := range vouching.texts {
+		for _, found := range pathTokens(string(text), token) {
+			if found == token {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // textFiles calls each with every text file under directory: a regular file holding no zero byte in its first 8000
