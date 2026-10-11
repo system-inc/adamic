@@ -14,6 +14,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const repository = "../../.."
@@ -123,14 +124,14 @@ func compilerSource(t *testing.T) string {
 	if directory == "" {
 		directory = filepath.Join(t.TempDir(), "typescript")
 		// Clone messages are expected on stderr, so this setup command has its own log.
-		command := exec.Command("git", "clone", "--quiet", "--depth", "1", "--branch", "v6.0.3", "https://github.com/microsoft/TypeScript.git", directory)
+		command := toolchain.GitCommand("clone", "--quiet", "--depth", "1", "--branch", "v6.0.3", "https://github.com/microsoft/TypeScript.git", directory)
 		output, err := command.CombinedOutput()
 		if err != nil {
 			t.Fatalf("clone pinned corpus: %v\n%s", err, output)
 		}
 	}
 	// An environment override must be the same pinned checkout, not merely a directory with .ts files.
-	command := exec.Command("git", "-C", directory, "rev-parse", "HEAD")
+	command := toolchain.GitCommand("-C", directory, "rev-parse", "HEAD")
 	output, err := command.Output()
 	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
 		t.Fatalf("TypeScript corpus must be v6.0.3 at %s, got %q (%v)", compilerCommit, output, err)
