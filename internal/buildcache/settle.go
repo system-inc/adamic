@@ -129,10 +129,45 @@ func TreeState() (string, error) {
 	return state.String(), err
 }
 
-// A Settlement is what Settle did with each build, in the order the builds ended.
+// A Settlement is what Settle did with each build, in the order the builds ended: a line each for people, and a
+// Report each for Loom's tree builder.
 type Settlement struct {
 	Settled []string
 	Refused []string
+	Reports []Report
+}
+
+// A Report is one product's outcome as cmd/traced writes it to ADAMIC_TRACE_REPORT, one JSON line each, for Loom's
+// tree builder: settled under Key (with how many reads its set names), or refused for Reason. When the whole run can't
+// be keyed (a lost trace, the tree changed or written), one line more comes first, with outcome lost, its Reason and
+// no product; every product of that run is refused too.
+type Report struct {
+	Name    string `json:"name,omitempty"`
+	NameKey string `json:"nameKey,omitempty"`
+	Key     string `json:"key,omitempty"`
+	Outcome string `json:"outcome"`
+	Reason  string `json:"reason,omitempty"`
+	Reads   int    `json:"reads,omitempty"`
+}
+
+// Report outcomes.
+const (
+	ReportSettled = "settled"
+	ReportRefused = "refused"
+	ReportLost    = "lost"
+)
+
+// WriteReport writes reports to file, one JSON line each, replacing what it held.
+func WriteReport(file string, reports []Report) error {
+	var lines []byte
+	for _, report := range reports {
+		line, err := json.Marshal(report)
+		if err != nil {
+			return err
+		}
+		lines = append(append(lines, line...), '\n')
+	}
+	return os.WriteFile(file, lines, 0o644)
 }
 
 // Read kinds, as bits: what a key must name about a path.
@@ -925,8 +960,12 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			built[entry.Build] = entry
 		}
 	}
+	if len(state.lost) > 0 {
+		settlement.Reports = append(settlement.Reports, Report{Outcome: ReportLost, Reason: "the whole run can't be keyed: " + strings.Join(state.lost, "; ")})
+	}
 	refuse := func(entry journalEntry, reason string) {
 		settlement.Refused = append(settlement.Refused, fmt.Sprintf("refused %s (name key %s): %s", entry.Name, entry.NameKey[:min(12, len(entry.NameKey))], reason))
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Outcome: ReportRefused, Reason: reason})
 		// Never placed: a pending product that can't be keyed leaves the cache.
 		if under(entry.Directory, filepath.Join(facts.cache, "pending")) {
 			os.RemoveAll(entry.Directory)
@@ -983,15 +1022,19 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		}
 		// Only Workshop's tree builder publishes: the product, then its read set, so a set never names a product the
 		// store doesn't hold.
+		report := Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries)}
 		if publishing() {
 			if err = publish(evaluated.key, entry.Name, product); err == nil {
 				err = publishReads(facts.cache, entry.NameKey)
 			}
 			if err != nil {
-				line += "; publish failed: " + err.Error()
+				// Still settled: placed under its key here, and only the store lacks it.
+				report.Reason = "publish failed: " + err.Error()
+				line += "; " + report.Reason
 			}
 		}
 		settlement.Settled = append(settlement.Settled, line)
+		settlement.Reports = append(settlement.Reports, report)
 	}
 	for id, entry := range built {
 		if !settled[id] {
