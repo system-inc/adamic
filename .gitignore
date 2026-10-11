@@ -44,5 +44,3 @@ Thumbs.db
 # CLAUDE.md), and that file should never reach a commit.
 *.log
 
-# Static lint dispatch is regenerated before builds and tests.
-/stage1/cohere/lint/.generated/

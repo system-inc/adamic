@@ -17,7 +17,8 @@ import (
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
 // Not parallel: TestMain owns the shared temporary directory and registry initialization.
 func TestMain(m *testing.M) {
-	if _, err := registry.Generate("."); err != nil {
+	// The committed registry is checked, never rewritten: the tests don't write the tree (#k01pgng).
+	if _, err := registry.Stale("."); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
