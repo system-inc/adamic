@@ -1684,3 +1684,108 @@ func TestTheSettlementHoldsTheCommandsExit(t *testing.T) {
 		}
 	}
 }
+
+// A reader is keyed by the bytes it read of another product, not by the key they're under: when a second settlement of
+// the other product records the union of both read sets, its key moves and its bytes don't, and the reader still finds
+// its product (home-7's dry run, Oct 11: 6 products went stale this way). New bytes still miss it, which
+// TestAProductReadingAnotherIsKeyedByItsKey holds. Mutant: a product read valued by its key.
+// Not parallel: newRig.
+func TestAReaderOutlivesItsInputsKeyMoving(t *testing.T) {
+	r := newRig(t)
+	header := Inputs{Name: "header", Files: []string{"include"}}
+	headerProduct := Product(t, header, building("header"))
+	Product(t, port, func(directory string) error {
+		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
+	})
+	built := r.built(t)
+	r.window(built["header"].Build, func() {
+		r.open(r.pid, "include/x.h")
+		r.write(r.pid, filepath.Join(headerProduct, "product"))
+	})
+	r.window(built["port"].Build, func() {
+		r.open(r.pid, filepath.Join(headerProduct, "product"))
+		r.open(r.pid, "source/a.c")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 2 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	before, err := reading(t, header)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("port before header's key moved: %v", err)
+	}
+	// Another settlement of header that also read notes.txt: the union of the two sets, under a new key, the same bytes.
+	set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "include/x.h"}, {Kind: "content", Path: "notes.txt"}, {Kind: "content", Path: "go.mod"}, {Kind: "settings", Path: "binary"}})}
+	_, evaluated, _, err := recordUnion(r.root, r.cache, built["header"].NameKey, "header", set, func(key string) string {
+		moved := filepath.Join(r.cache, key)
+		if err := os.MkdirAll(moved, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		content, _ := os.ReadFile(filepath.Join(before, "product"))
+		write(t, moved, "product", string(content))
+		return moved
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if after, err := reading(t, header); err != nil || after == before || after != filepath.Join(r.cache, evaluated.key) {
+		t.Fatalf("header's key didn't move: %s, then %s (%v)", before, after, err)
+	}
+	if _, err := reading(t, port); err != nil {
+		t.Fatalf("port, whose header's key moved and bytes didn't, read as %v", err)
+	}
+}
+
+// A product's digest is its bytes wherever it sits: the same files in another directory digest the same, and a
+// file's content, its executable bit or a link's target each move it. A later process reads it from beside the
+// product. Mutants: the executable bit left out; the digest naming its directory.
+func TestAProductsDigestIsItsBytes(t *testing.T) {
+	t.Parallel()
+	product := func(executable bool, content, target string) string {
+		directory := filepath.Join(t.TempDir(), strings.Repeat("ab", 32))
+		write(t, directory, "bin/tool", content)
+		mode := os.FileMode(0o644)
+		if executable {
+			mode = 0o755
+		}
+		if err := os.Chmod(filepath.Join(directory, "bin/tool"), mode); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Symlink(target, filepath.Join(directory, "current")); err != nil {
+			t.Fatal(err)
+		}
+		return directory
+	}
+	digest := func(directory string) string {
+		t.Helper()
+		value, err := productDigest(directory)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return value
+	}
+	base := digest(product(true, "tool", "bin/tool"))
+	if again := digest(product(true, "tool", "bin/tool")); again != base {
+		t.Fatalf("the same files elsewhere digest %s, then %s", base, again)
+	}
+	for name, other := range map[string]string{"content": product(true, "tool 2", "bin/tool"), "executable bit": product(false, "tool", "bin/tool"), "link target": product(true, "tool", "bin")} {
+		if digest(other) == base {
+			t.Errorf("a product differing in its %s digests the same", name)
+		}
+	}
+	kept := product(true, "tool", "bin/tool")
+	digest(kept)
+	productDigests.Delete(kept)
+	if err := os.WriteFile(kept+".digest", []byte(strings.Repeat("c", 64)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if got := digest(kept); got != strings.Repeat("c", 64) {
+		t.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
+	}
+}
