@@ -222,7 +222,15 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	}
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
-func jsonPortTopShard(t *testing.T, target int) {
+// jsonPortTopShard is a top shard's agreement: the Go oracle, Node, release, ASan/UBSan and the JavaScript backend.
+func jsonPortTopShard(t *testing.T, target int) { jsonPortTopRun(t, target, false) }
+
+// jsonPortTopLeakShard is the same shard's leak pass, its own test: the Go oracle, release and LeakSanitizer (macOS's
+// leaks --atExit off Linux). A shard can be one heavy case, so no test runs both sanitizer passes over it: with both,
+// _1345 was 43.4 s alone on one core (ASan 13.6 s, LeakSanitizer 17.8 s; Workshop, Oct 11).
+func jsonPortTopLeakShard(t *testing.T, target int) { jsonPortTopRun(t, target, true) }
+
+func jsonPortTopRun(t *testing.T, target int, leak bool) {
 	portMatchesPrepare(t)
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
@@ -296,21 +304,28 @@ func jsonPortTopShard(t *testing.T, target int) {
 			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 				t.Fatal(err)
 			}
-			sides := []struct {
+			// Sides 0 to 2 are the Go oracle, Node (agreement only) and release; side 3 on is checked against release too.
+			// The agreement test runs ASan/UBSan and the JavaScript backend, the leak test LeakSanitizer.
+			type side struct {
 				name, binary           string
 				arguments, environment []string
-			}{
+			}
+			sides := []side{
 				{"Go", oracle, []string{"--cases", path}, nil},
 				{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", path}, nil},
 				{"release", release, []string{"--cases", path}, nil},
 				{"ASan/UBSan", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=0"}},
 				{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", runner, script, "--cases", path}, nil},
 			}
-			if runtime.GOOS == "linux" {
-				sides = append(sides, struct {
-					name, binary           string
-					arguments, environment []string
-				}{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
+			waves := [][]int{{0, 1, 2, 4}, {3}}
+			if leak {
+				sides = sides[:3]
+				sides[1] = side{}
+				waves = [][]int{{0, 2}}
+				if runtime.GOOS == "linux" {
+					sides = append(sides, side{"LeakSanitizer", sanitized, []string{"--cases", path}, []string{"ASAN_OPTIONS=detect_leaks=1"}})
+					waves = append(waves, []int{3})
+				}
 			}
 			results := make([]chunkResult, len(sides))
 			timings := make([]time.Duration, len(sides))
@@ -318,7 +333,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 			// other sides. Run them together after the first wave has exited,
 			// so an isolated four-CPU unit does not compete with Node/Go heaps.
 			// Within a wave, at most the test's share at once (testguard.Each).
-			for _, wave := range [][]int{{0, 1, 2, 4}, {3, 5}} {
+			for _, wave := range waves {
 				var present []int
 				for _, side := range wave {
 					if side < len(sides) {
@@ -334,18 +349,25 @@ func jsonPortTopShard(t *testing.T, target int) {
 				})
 			}
 			for side, timing := range timings {
-				t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+				if sides[side].name != "" {
+					t.Logf("%s %.3fs", sides[side].name, timing.Seconds())
+				}
 			}
 			reference := results[0]
 			if reference.err != nil || reference.result.exitCode != 0 || len(reference.result.stderr) != 0 {
 				t.Fatalf("%s Go oracle: %v exit %d: %s", t.Name(), reference.err, reference.result.exitCode, reference.result.stderr)
 			}
 			expected := string(reference.result.stdout)
-			references[ordinal] = expected
+			if !leak {
+				references[ordinal] = expected
+			}
 			if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
 				t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
 			}
 			for side := 1; side < len(sides); side++ {
+				if sides[side].name == "" {
+					continue
+				}
 				if results[side].err != nil {
 					t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
 				}
@@ -354,13 +376,13 @@ func jsonPortTopShard(t *testing.T, target int) {
 					compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
 				}
 			}
-			if runtime.GOOS != "linux" {
+			if leak && runtime.GOOS != "linux" {
 				report := execute(t, nil, "leaks", "--atExit", "--", release, "--cases", path)
 				if report.exitCode != 0 {
 					t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
 				}
 			}
-			if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+			if !leak && os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
 				// Calibration uses the same per-case Go answers as mandatory comparisons.
 				answers, err := jsonPortAnswers(expected, len(items))
 				if err != nil {
@@ -368,7 +390,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 				}
 				calibrateNativeCases(t, sanitized, items, answers)
 			}
-			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
+			if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" && !leak {
 				directory := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", ordinal))
 				if err := os.MkdirAll(directory, 0755); err != nil {
 					t.Fatal(err)
@@ -413,7 +435,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 	})
 	// Opt-in measurements reuse the explicitly selected agreement bucket.
 	// Benchmark rounds are never independent gate units.
-	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
+	if !leak && os.Getenv("ADAMIC_JSON_BENCH") == "1" {
 		for ordinal, shard := range allShards {
 			for round := 0; round < 3; round++ {
 				unit := ordinal
