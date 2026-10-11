@@ -7,15 +7,23 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 )
+
+// TestProduct_Adamic declares the stage 0 compiler interfaceCastCounts runs, so the tree build builds it ahead.
+func TestProduct_Adamic(t *testing.T) {
+	t.Parallel()
+	buildcache.Adamic(t)
+}
 
 // Default cast fixtures use the same counted runtime and table as ordinary fixtures.
 func interfaceCastCounts(t *testing.T) []string {
 	t.Helper()
 	rows := []string{}
 	for _, path := range []string{"stage3/interface-downcasts/visitor.a", "stage3/interface-downcasts/wrong-kind.a"} {
-		command := exec.Command("go", "run", "./cmd/adamic", "c", path)
+		// The stage 0 compiler is a product built ahead (buildcache.Adamic), run here as go run ran it (#5qykzj5).
+		command := exec.Command(buildcache.Adamic(t), "c", path)
 		command.Dir = repository
 
 		source, err := command.Output()
