@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 	"sort"
@@ -14,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -64,8 +64,7 @@ func checked(t testing.TB, checkout, pin string, roots, patterns []string) []str
 // git runs its checks as key-time work (buildcache.Keying): a commit and a clean status gate the corpus, never change
 // a product's bytes, and a read of .git is never a build's (#1p6sent). The listing is tracked.PathsUnder's.
 func git(checkout string, args ...string) ([]byte, error) {
-	command := exec.Command("git", append([]string{"-C", checkout}, args...)...)
-	command.Env = tracked.GitEnvironment()
+	command := toolchain.GitCommand(append([]string{"-C", checkout}, args...)...)
 	var output []byte
 	var err error
 	buildcache.Keying(func() { output, err = command.CombinedOutput() })

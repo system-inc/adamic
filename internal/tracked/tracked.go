@@ -38,6 +38,7 @@ import (
 	"sync"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // ManifestDirectory is where a source with no .git carries what git would answer about it, at the tree's root.
@@ -267,9 +268,7 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		return nil, err
 	}
 	defer os.RemoveAll(scratch)
-	environment := GitEnvironment()
-	initialize := exec.Command("git", "init", "-q", "--bare", scratch)
-	initialize.Env = environment
+	initialize := toolchain.GitCommand("init", "-q", "--bare", scratch)
 	if output, err := initialize.CombinedOutput(); err != nil {
 		return nil, fmt.Errorf("git init for the ignore rules: %w: %s", err, output)
 	}
@@ -284,10 +283,9 @@ func ignoredPaths(directory string, asked []string) (map[string]bool, error) {
 		input.WriteString("./" + name)
 		input.WriteByte(0)
 	}
-	command := exec.Command("git", "--git-dir="+scratch, "--work-tree="+directory, "-c", "core.bare=false", "-c", "core.excludesFile="+os.DevNull,
+	command := toolchain.GitCommand("--git-dir="+scratch, "--work-tree="+directory, "-c", "core.bare=false", "-c", "core.excludesFile="+os.DevNull,
 		"check-ignore", "--no-index", "-z", "--stdin")
 	command.Dir = directory
-	command.Env = environment
 	command.Stdin = &input
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
@@ -651,21 +649,13 @@ func names(data []byte) []string {
 	return strings.Split(string(data), "\x00")
 }
 
-// GitEnvironment is the environment every git this package and its callers run gets: the process's own, with git's
-// global and system configuration out of reach, and the excludes and attributes files that default under the home
-// directory pointed at nothing. A git answer then depends on the repository alone, never on the machine's home
-// (#1p6sent: a product build read ~/.gitconfig through it, which no key can name).
-func GitEnvironment() []string {
-	return append(os.Environ(), "GIT_CONFIG_GLOBAL="+os.DevNull, "GIT_CONFIG_NOSYSTEM=1",
-		"GIT_CONFIG_COUNT=2", "GIT_CONFIG_KEY_0=core.excludesFile", "GIT_CONFIG_VALUE_0="+os.DevNull,
-		"GIT_CONFIG_KEY_1=core.attributesFile", "GIT_CONFIG_VALUE_1="+os.DevNull)
-}
-
 // git runs as key-time work (buildcache.Keying): a read of .git is never a read of the build that asked, since no
-// product's key can name one (#1p6sent). A build's own listing walks the tree instead (PathsUnder).
+// product's key can name one (#1p6sent). A build's own listing walks the tree instead (PathsUnder). It runs with
+// toolchain's git environment: git's global and system configuration, and the excludes and attributes files that
+// default under the home, out of reach, so its answer depends on the repository alone (#1p6sent: a product build read
+// ~/.gitconfig through it, which no key can name).
 func git(directory string, arguments ...string) ([]byte, error) {
-	command := exec.Command("git", append([]string{"-C", directory}, arguments...)...)
-	command.Env = GitEnvironment()
+	command := toolchain.GitCommand(append([]string{"-C", directory}, arguments...)...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	var output []byte

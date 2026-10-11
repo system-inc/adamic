@@ -2,20 +2,21 @@ package tracked
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"reflect"
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// runGit runs git in directory with no user or system configuration, so a fixture is the same on every machine.
+// runGit runs git in directory with no user or system configuration (toolchain's git environment), so a fixture is the
+// same on every machine.
 func runGit(t *testing.T, directory string, arguments ...string) string {
 	t.Helper()
-	command := exec.Command("git", append([]string{"-C", directory, "-c", "user.name=Tracked fixture", "-c", "user.email=tracked@example.invalid",
+	command := toolchain.GitCommand(append([]string{"-C", directory, "-c", "user.name=Tracked fixture", "-c", "user.email=tracked@example.invalid",
 		"-c", "commit.gpgsign=false", "-c", "init.defaultBranch=main", "-c", "protocol.file.allow=always"}, arguments...)...)
-	command.Env = append(os.Environ(), "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_NOSYSTEM=1")
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("git %v in %s: %v\n%s", arguments, directory, err, output)
@@ -407,5 +408,39 @@ func TestUnrecordedNamesArePathsNotPathspecs(t *testing.T) {
 	extra, err := Unrecorded(source, ".")
 	if err != nil || !reflect.DeepEqual(extra, []string{":!y.md", ":(glob)x.md"}) {
 		t.Fatalf("names that look like pathspecs: %q (%v)", extra, err)
+	}
+}
+
+// A caller's git variables never redirect what this package asks a checkout: a hook that runs the tests sets GIT_DIR,
+// GIT_INDEX_FILE and GIT_WORK_TREE for its own repository, and Head, Files and Recursive answer as they do without
+// them. Mutant: git run with the process's whole environment.
+// Not parallel: t.Setenv.
+func TestACallersGitVariablesNeverRedirectAnAnswer(t *testing.T) {
+	top := checkout(t)
+	answers := func() (string, []Entry, []string) {
+		t.Helper()
+		head, err := Head(top)
+		if err != nil {
+			t.Fatal(err)
+		}
+		files, err := Files(top)
+		if err != nil {
+			t.Fatal(err)
+		}
+		recursive, err := Recursive(top)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return head, files, recursive
+	}
+	wantHead, wantFiles, wantRecursive := answers()
+	other := repository(t, map[string]string{"other.txt": "other\n"})
+	t.Setenv("GIT_DIR", filepath.Join(other, ".git"))
+	t.Setenv("GIT_INDEX_FILE", filepath.Join(other, ".git", "index"))
+	t.Setenv("GIT_WORK_TREE", other)
+	gotHead, gotFiles, gotRecursive := answers()
+	if gotHead != wantHead || !reflect.DeepEqual(gotFiles, wantFiles) || !reflect.DeepEqual(gotRecursive, wantRecursive) {
+		t.Fatalf("with another repository's GIT_DIR, tracked answered HEAD %s and %d files, %d recursive; without, %s, %d and %d",
+			gotHead, len(gotFiles), len(gotRecursive), wantHead, len(wantFiles), len(wantRecursive))
 	}
 }
