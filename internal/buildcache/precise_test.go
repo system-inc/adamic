@@ -353,8 +353,12 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
 	build = r.built(t)["port"]
 	elsewhere := strings.ToUpper("/opt/elsewhere/lib.h")
 	r.window(build.Build, func() { r.missing(r.pid, elsewhere) })
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "other: "+elsewhere) {
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
 		t.Fatalf("a path in another case that nothing ran: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) != 1 || !slices.Contains(sortedEntries(file.Sets[0].Entries), readEntry{Kind: "absolute", Path: elsewhere}) ||
+		slices.ContainsFunc(file.Sets[0].Entries, func(entry readEntry) bool { return entry.Kind == "filesystem" }) {
+		t.Fatalf("a path in another case that nothing ran isn't the path it names: %+v", file.Sets)
 	}
 
 	// The value is the file system's own answer: a file made here, asked for in the other case.
@@ -414,6 +418,67 @@ func TestGosTelemetryIsGosOwnBookkeeping(t *testing.T) {
 	r.window(build.Build, func() { r.open(r.pid, beside) })
 	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
 		t.Fatalf("a configuration file beside the telemetry: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+}
+
+// Three reads Workshop's native products made that no class held (Oct 11, TestProduct_ExpressionsNative000 under
+// cmd/traced): a lookup of a path outside every place (the module resolver's /adamic-prelude/package.json, clang's
+// /opt/rh), keyed by whether and as what it exists; clang run through a link to the tools directory (~/.adamic-tools),
+// keyed as the tool it resolves to; and go's os.RemoveAll opening the temporary directory without O_DIRECTORY, a
+// directory with no content to read. Reading what a path outside every place holds is still refused. Mutants: looked
+// paths outside every place refused; links not resolved; a temporary directory's open read as content.
+// Not parallel: newRig.
+func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
+	tools, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	write(t, tools, "bin/clang", "#!/bin/sh\necho clang version 20.1.8\n")
+	if err := os.Chmod(filepath.Join(tools, "bin", "clang"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_TOOLS", tools)
+	scratch, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	dotted := filepath.Join(scratch, ".adamic-tools")
+	if err := os.Symlink(tools, dotted); err != nil {
+		t.Fatal(err)
+	}
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	r.window(build.Build, func() {
+		r.open(r.pid, "source/a.c")
+		r.missing(r.pid, "/adamic-prelude/package.json")
+		r.missing(r.pid, "/opt/rh")
+		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, filepath.Join(dotted, "bin", "clang"), "clang")
+		r.add(r.pid, `openat(AT_FDCWD, %q, O_RDONLY|O_CLOEXEC) = 8<%s>`, scratch, scratch)
+	})
+	settlement := r.settle(t)
+	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	file, err := loadReads(r.cache, build.NameKey)
+	if err != nil || len(file.Sets) != 1 {
+		t.Fatalf("read sets: %+v, %v", file, err)
+	}
+	for _, want := range []readEntry{{Kind: "absolute", Path: "/adamic-prelude/package.json"}, {Kind: "absolute", Path: "/opt/rh"}, {Kind: "tool", Path: "bin/clang"}} {
+		if !slices.Contains(sortedEntries(file.Sets[0].Entries), want) {
+			t.Fatalf("the read set doesn't hold %+v: %+v", want, file.Sets[0].Entries)
+		}
+	}
+	if found, err := reading(t, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		t.Fatalf("a runner on the same machine found %q, %v", found, err)
+	}
+
+	r = newRig(t)
+	Product(t, port, building("built"))
+	build = r.built(t)["port"]
+	r.window(build.Build, func() { r.open(r.pid, "/opt/elsewhere/lib.h") })
+	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "other: /opt/elsewhere/lib.h") {
+		t.Fatalf("content outside every place: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
