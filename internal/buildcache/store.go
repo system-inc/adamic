@@ -427,10 +427,11 @@ func newestReads(store, namespace, nameKey string) (day, index int, ok bool) {
 	return 0, 0, false
 }
 
-// fetchReads is nameKey's read sets in the store, newest first. An unreachable store, or a file that doesn't check, is
-// no sets: a lookup then misses, never trusts it.
-func fetchReads(nameKey string) []readSet {
+// fetchReads is nameKey's read sets in the store, newest first, and the product's name as the newest file holding any
+// names it. An unreachable store, or a file that doesn't check, is no sets: a lookup then misses, never trusts it.
+func fetchReads(nameKey string) (string, []readSet) {
 	store := storeAddress()
+	var name string
 	var sets []readSet
 	for _, namespace := range readsNamespaces() {
 		day, index, ok := newestReads(store, namespace, nameKey)
@@ -447,10 +448,13 @@ func fetchReads(nameKey string) []readSet {
 		}
 		var published publishedReads
 		if json.Unmarshal(content, &published) == nil && published.NameKey == nameKey && published.File.Version == readsVersion {
+			if name == "" && len(published.File.Sets) > 0 {
+				name = published.File.Name
+			}
 			sets = append(sets, published.File.Sets...)
 		}
 	}
-	return sets
+	return name, sets
 }
 
 // publishReads stores nameKey's read set file as today's next ref, after its blob.
