@@ -1275,21 +1275,27 @@ func declaredDrift(declared, reads []string) *drift {
 		}
 		if !declaredHere && name != "." {
 			result.Undeclared++
-			if len(result.UndeclaredPaths) < 20 {
-				result.UndeclaredPaths = append(result.UndeclaredPaths, name)
-			}
+			result.UndeclaredPaths = append(result.UndeclaredPaths, name)
 		}
 	}
 	for _, entry := range declared {
 		if !read[entry] && !unkeyed(entry) {
 			result.Unread++
-			if len(result.UnreadPaths) < 20 {
-				result.UnreadPaths = append(result.UnreadPaths, entry)
-			}
+			result.UnreadPaths = append(result.UnreadPaths, entry)
 		}
 	}
-	sort.Strings(result.UndeclaredPaths)
+	result.UndeclaredPaths, result.UnreadPaths = driftSample(result.UndeclaredPaths), driftSample(result.UnreadPaths)
 	return result
+}
+
+// driftSample is the first 20 of paths in order, sorted before it is cut: the reads come from a map, so a sample taken
+// first and sorted after named another 20 each run, and the read set recorded it (Loom, Oct 11).
+func driftSample(paths []string) []string {
+	sort.Strings(paths)
+	if len(paths) > 20 {
+		paths = paths[:20:20]
+	}
+	return paths
 }
 
 func recipeName(process journalEntry) string {
