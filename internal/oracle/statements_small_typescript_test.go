@@ -29,23 +29,21 @@ func statementsSmallTypeScript(t *testing.T, path string) string {
 }
 
 func init() {
-	additionalFixtureCounts = append(additionalFixtureCounts, func(t *testing.T) []string {
-		rows := []string{}
-		base, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		for _, path := range statementsSmallTypeScriptFixtures {
+	for _, path := range statementsSmallTypeScriptFixtures {
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) string {
+			base, err := filepath.Abs(repository)
+			if err != nil {
+				t.Fatal(err)
+			}
 			typed := statementsSmallTypeScript(t, path)
 			relative, err := filepath.Rel(base, typed)
 			if err != nil {
 				t.Fatal(err)
 			}
 			row := counted(t, relative, false, nil, false, false)
-			rows = append(rows, strings.Replace(row, "| "+relative+" |", "| "+path+" |", 1))
-		}
-		return rows
-	})
+			return strings.Replace(row, "| "+relative+" |", "| "+path+" |", 1)
+		}})
+	}
 }
 
 func TestStatementsSmallTypeScriptIncrement(t *testing.T) {
